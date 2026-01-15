@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
+    <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
+    <ClCompile Include="Source\Engine\Core\Application.cpp" />
+    <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
+    <ClCompile Include="Source\Engine\Core\Time.cpp" />
+    <ClCompile Include="Source\Engine\Core\Transform.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
+    <ClCompile Include="Source\Engine\Input\Input.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Physics2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Rigidbody2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\TileMapCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Game\FPSController.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Engine Math -->
+    <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
+    <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
+    <ClInclude Include="Source\Engine\Math\Vector3.hpp" />
+    <ClInclude Include="Source\Engine\Math\Mathf.hpp" />
+    <!-- Engine Core -->
+    <ClInclude Include="Source\Engine\Core\Application.hpp" />
+    <ClInclude Include="Source\Engine\Core\Time.hpp" />
+    <ClInclude Include="Source\Engine\Core\Component.hpp" />
+    <ClInclude Include="Source\Engine\Core\Transform.hpp" />
+    <ClInclude Include="Source\Engine\Core\GameObject.hpp" />
+    <!-- Engine Graphics -->
+    <ClInclude Include="Source\Engine\Graphics\Color.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Sprite.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Camera.hpp" />
+    <!-- Engine Input -->
+    <ClInclude Include="Source\Engine\Input\KeyCode.hpp" />
+    <ClInclude Include="Source\Engine\Input\Input.hpp" />
+    <!-- Engine Audio -->
+    <ClInclude Include="Source\Engine\Audio\AudioClip.hpp" />
+    <ClInclude Include="Source\Engine\Audio\AudioSource.hpp" />
+    <ClInclude Include="Source\Engine\Physics\BoxCollider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\CircleCollider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Collider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Collision2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Physics2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Rigidbody2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\TileMapCollider2D.hpp" />
+    <!-- Engine Physics -->
+    <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp" />
+    <!-- Engine Scene -->
+    <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
+    <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
+    <!-- Engine Raycast -->
+    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
+    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
+    <!-- Game -->
+    <ClInclude Include="Source\Game\FPSController.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7cee9319-1f54-4a03-895b-240bc6151df9}</ProjectGuid>
+    <RootNamespace>AlphaEngine2_5D</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Alpha_EngineD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Assets\" "$(OutDir)Assets\" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\freetype.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_EngineD.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Alpha_Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Assets\" "$(OutDir)Assets\" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\freetype.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_Engine.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmod.dll" "$(OutDir)" /s /r /y /q</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
