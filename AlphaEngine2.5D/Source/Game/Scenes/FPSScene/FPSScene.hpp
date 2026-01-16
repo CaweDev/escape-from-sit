@@ -14,6 +14,7 @@
 #include "Game/FPSController.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
+#include "Game/SecurityGuard.hpp"
 
 namespace Game {
 
@@ -88,7 +89,11 @@ public:
         enemy->transform->position = Vector2(3.5f, 1.5f);
         enemy->transform->rotation = 0.0f;
         enemy->transform->localScale = Vector2(1.0f, 1.0f);
-        
+        auto guard = enemy->AddComponent<SecurityGuard>();
+        guard->pointA = Vector2(3.5f, 1.5f);
+        guard->pointB = Vector2(6.5f, 1.5f);
+        guard->speed = 1.5f;
+        guard->arriveDistance = 0.1f;
         // Enemy collider (static body)
         auto enemyRb = enemy->AddComponent<Rigidbody2D>();
         enemyRb->bodyType = RigidbodyType2D::Static;

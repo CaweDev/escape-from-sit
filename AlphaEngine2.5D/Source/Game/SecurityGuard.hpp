@@ -9,7 +9,7 @@ namespace Game {
 		Engine::Vector2 pointA;
 		Engine::Vector2 pointB;
 		float speed = 1.5f;
-		float arriveDist = 0.1f;
+		float arriveDistance = 0.1f;
 		
 		void Initialize() override;
 		void Update() override;
