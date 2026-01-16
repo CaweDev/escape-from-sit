@@ -37,6 +37,11 @@ void FPSController::Update() {
     f32 dt = Time::deltaTime;
     if (dt <= 0) dt = 0.016f;
     
+    jumpCooldown -= dt;
+    if (jumpCooldown < 0.0f) {
+        jumpCooldown = 0.0f;
+    }
+
     // Skip first frame to avoid spinning (cursor not centered yet)
     if (firstFrame) {
         firstFrame = false;
@@ -117,9 +122,14 @@ void FPSController::Update() {
     rigidbody->velocity = worldVelocity;
     
     // Jumping
-    if (Input::GetKeyDown(KeyCode::Space) && rigidbody->isGrounded) {
+    bool spaceNow = Input::GetKey(KeyCode::Space);
+    bool spaceDown = spaceNow && !prevSpace;
+
+    if (spaceDown && jumpCooldown <= 0.0f ) {
         rigidbody->Jump(jumpForce);
+        jumpCooldown = 0.25f;
     }
+    prevSpace = spaceNow;
     
     // Crouching (Ctrl or C)
     if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {
@@ -131,20 +141,8 @@ void FPSController::Update() {
     targetViewHeight = rigidbody->currentHeight + (bodyHeight * eyeHeightRatio);
     f32 actualSpeed = sqrtf(rigidbody->velocity.x * rigidbody->velocity.x +
         rigidbody->velocity.y * rigidbody->velocity.y);
-
-    //debugging
-    std::cout << "Chosen: " << speed
-        << "  Actual: " << actualSpeed << "\r";
-    std::cout << "\n";
-  
-            std::cout
-                << "Stamina: "
-                << playerComp->GetStamina()
-                << " / "
-                << playerComp->GetStaminaMax()
-                << "\r";
-        
     
+   
 }
 
 void FPSController::LateUpdate() {

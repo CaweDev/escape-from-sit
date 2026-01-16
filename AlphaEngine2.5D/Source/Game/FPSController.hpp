@@ -55,12 +55,16 @@ public:
     void LateUpdate() override;
     
     void OnDestroy() override;
-
+ 
 private:
     HWND hwnd = nullptr;
     int centerX = 0;
     int centerY = 0;
     
+    bool prevSpace = false;
+
+    f32 jumpCooldown = 0.0f;
+
     /** Skip first frame to avoid spinning on spawn */
     bool firstFrame = true;
     
