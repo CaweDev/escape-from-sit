@@ -13,6 +13,7 @@
 #include "Engine/Physics/TileMapCollider2D.hpp"
 #include "Game/FPSController.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
+#include "Game/Player.hpp"
 
 namespace Game {
 
@@ -78,6 +79,7 @@ public:
         
         // Add controller (requires Rigidbody2D)
         playerController = player->AddComponent<FPSController>();
+        player->AddComponent<Player>();
         player->transform->position = Vector2(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
 
@@ -99,7 +101,7 @@ public:
         // Enemy sprite
         auto enemySR = enemy->AddComponent<SpriteRenderer>();
         std::shared_ptr<Sprite> enemySprite = std::make_shared<Sprite>();
-        enemySprite->Load("../Assets/PlanetTexture.png", 500, 500);
+        enemySprite->Load("Assets/PlanetTexture.png", 500, 500);
         enemySR->SetSprite(enemySprite);
         enemySR->billboard = true;
         enemySR->enabled = true;

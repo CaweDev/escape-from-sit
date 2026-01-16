@@ -11,7 +11,7 @@
 #include "Engine/Physics/Rigidbody2D.hpp"
 #include <cmath>
 #include <Windows.h>
-
+#include "Game/Player.hpp"
 namespace Game {
 
 using namespace Engine;
@@ -24,9 +24,12 @@ class FPSController : public Component {
 public:
     REQUIRE_COMPONENT(Rigidbody2D)
     
+
     /** Movement speed in units per second */
     f32 moveSpeed = 3.0f;
     
+    f32 sprintSpeed = 6.0f;
+
     /** Rotation speed in degrees per second */
     f32 rotateSpeed = 60.0f;
     

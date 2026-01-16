@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,7 @@
     <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
+    <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->
     <ClInclude Include="Source\Game\FPSController.hpp" />

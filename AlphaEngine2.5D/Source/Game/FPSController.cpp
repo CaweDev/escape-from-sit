@@ -7,6 +7,8 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Math/Mathf.hpp"
 #include <iostream>
+#include "Game/Player.hpp"
+#include "AEInput.h"
 
 namespace Game {
 
@@ -72,6 +74,33 @@ void FPSController::Update() {
     if (Input::GetKey(KeyCode::A)) inputMovement.x -= 1.0f;
     if (Input::GetKey(KeyCode::D)) inputMovement.x += 1.0f;
     
+    Player* playerComp = gameObject->GetComponent<Player>();
+    
+    bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
+    bool wantsSprint = Input::GetKey(KeyCode::LeftShift);
+    bool canSprint = playerComp && playerComp->CanSprint() && !rigidbody->isCrouching;
+
+    f32 speed = moveSpeed;
+
+    if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
+        if (playerComp->CanSprint()) {
+            speed = sprintSpeed;
+            playerComp->isSprinting = true;
+            playerComp->DrainSprint(dt);
+        }
+        else {
+            playerComp->isSprinting = false;
+        }
+    }
+    else {
+        if (playerComp) {
+            playerComp->isSprinting = false;
+            playerComp->Regen(dt);
+        }
+    }
+
+
+
     // Calculate movement direction based on current angle
     f32 angleRad = transform->rotation * 3.14159f / 180.0f;
     f32 cosA = cosf(angleRad);
@@ -79,10 +108,10 @@ void FPSController::Update() {
     
     // Forward/back movement in look direction
     Vector2 worldVelocity = Vector2::zero();
-    worldVelocity.x = (cosA * inputMovement.y * moveSpeed) // forward 
-                    + (-sinA * inputMovement.x * moveSpeed); // strafe
-    worldVelocity.y = (sinA * inputMovement.y * moveSpeed) // forward
-                    + (cosA * inputMovement.x * moveSpeed); // strafe
+    worldVelocity.x = (cosA * inputMovement.y * speed) // forward 
+                    + (-sinA * inputMovement.x * speed); // strafe
+    worldVelocity.y = (sinA * inputMovement.y * speed) // forward
+                    + (cosA * inputMovement.x * speed); // strafe
    
     // Set velocity on rigidbody (physics will handle collision)
     rigidbody->velocity = worldVelocity;
@@ -100,6 +129,22 @@ void FPSController::Update() {
     // Calculate target view height based on crouch state and jump
     f32 bodyHeight = rigidbody->isCrouching ? rigidbody->crouchHeight : rigidbody->standingHeight;
     targetViewHeight = rigidbody->currentHeight + (bodyHeight * eyeHeightRatio);
+    f32 actualSpeed = sqrtf(rigidbody->velocity.x * rigidbody->velocity.x +
+        rigidbody->velocity.y * rigidbody->velocity.y);
+
+    //debugging
+    std::cout << "Chosen: " << speed
+        << "  Actual: " << actualSpeed << "\r";
+    std::cout << "\n";
+  
+            std::cout
+                << "Stamina: "
+                << playerComp->GetStamina()
+                << " / "
+                << playerComp->GetStaminaMax()
+                << "\r";
+        
+    
 }
 
 void FPSController::LateUpdate() {
