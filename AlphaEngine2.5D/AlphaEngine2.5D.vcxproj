@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Puzzle\Puzzle.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
@@ -40,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="Source\Game\Puzzle\Puzzle.h" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
