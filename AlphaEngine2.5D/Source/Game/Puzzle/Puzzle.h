@@ -17,14 +17,15 @@ bool isReading;
 struct Book {
 	int BookId;
 	Engine::Vector3 BookPosition;
-	AEGfxVertexList* BookMesh;
-	AEGfxTexture BookTexture;
 	bool BookCollected;
+	AEGfxVertexList* BookMesh;
+	AEGfxTexture *BookTexture;
 	std::string BookText;
 };
 
-std::vector<Book> allBook;
 
 void BookInit();
+void BookUpdate();
+void BookExit();
 AEGfxVertexList* CreateMesh();
 
