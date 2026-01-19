@@ -1,31 +1,34 @@
 #include "AEEngine.h"
+#include "Engine/Core/Component.hpp"
 #include "Engine/Math/Vector3.hpp"
 #include <iostream>
 #include<vector>
-class Puzzle
-{
-
-	bool PuzzleCompleted;
-
-
-
-};
-
-bool isReading;
-
+#include"Engine/Graphics/SpriteRenderer.hpp"
 
 struct Book {
 	int BookId;
 	Engine::Vector3 BookPosition;
 	bool BookCollected;
 	AEGfxVertexList* BookMesh;
-	AEGfxTexture *BookTexture;
+	AEGfxTexture* BookTexture;
 	std::string BookText;
 };
 
+class PuzzleObject : Engine::Component
+{
+	REQUIRE_COMPONENT(Engine::SpriteRenderer);
+	bool PuzzleCompleted;
+	Book Reference;
+	void Update() override;
+	bool isReading;
+ 
+
+
+};
+
+
 
 void BookInit();
-void BookUpdate();
 void BookExit();
 AEGfxVertexList* CreateMesh();
 

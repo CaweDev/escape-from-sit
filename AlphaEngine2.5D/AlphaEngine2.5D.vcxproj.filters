@@ -93,7 +93,10 @@
     <ClCompile Include="Source\Game\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Puzzle\Puzzle.cpp">
+    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -200,7 +203,13 @@
     <ClInclude Include="Source\Game\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Puzzle\Puzzle.h">
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

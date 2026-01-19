@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Game\Puzzle\Puzzle.cpp" />
+    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
@@ -37,11 +37,12 @@
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
-    <ClInclude Include="Source\Game\Puzzle\Puzzle.h" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
@@ -80,6 +81,8 @@
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
+    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->
     <ClInclude Include="Source\Game\FPSController.hpp" />
