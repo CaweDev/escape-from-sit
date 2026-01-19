@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +83,7 @@
     <!-- Game -->
     <ClInclude Include="Source\Game\FPSController.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+    <ClInclude Include="Source\Game\SecurityGuard.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

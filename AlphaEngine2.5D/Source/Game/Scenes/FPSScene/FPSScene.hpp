@@ -14,6 +14,7 @@
 #include "Game/FPSController.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
+#include "Game/SecurityGuard.hpp"
 
 namespace Game {
 
@@ -80,7 +81,7 @@ public:
         // Add controller (requires Rigidbody2D)
         playerController = player->AddComponent<FPSController>();
         player->AddComponent<Player>();
-        player->transform->position = Vector2(1.5f, 1.5f);
+        player->transform->position = Vector3(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
 
         // Create dummy enemy with collider
@@ -88,10 +89,21 @@ public:
         enemy->transform->position = Vector2(3.5f, 1.5f);
         enemy->transform->rotation = 0.0f;
         enemy->transform->localScale = Vector2(1.0f, 1.0f);
-        
+
+        auto guard = enemy->AddComponent<SecurityGuard>();
+        //hardcoded point to point
+       /* guard->pointA = Vector2(3.5f, 1.5f);
+        guard->pointB = Vector2(6.5f, 1.5f);*/
+
+        //add tilemap pointer to guard
+        guard->tileMap = map;
+
+        guard->speed = 1.5f;
+        guard->arriveDistance = 0.1f;
+
         // Enemy collider (static body)
         auto enemyRb = enemy->AddComponent<Rigidbody2D>();
-        enemyRb->bodyType = RigidbodyType2D::Static;
+        enemyRb->bodyType = RigidbodyType2D::Kinematic;
         
         auto enemyCollider = enemy->AddComponent<CircleCollider2D>();
         enemyCollider->radius = 0.5f;
@@ -107,6 +119,7 @@ public:
         enemySR->enabled = true;
         enemySR->sortingOrder = 100;
     }
+
     
     void OnUpdate() override {
         // Physics and rendering handled by components

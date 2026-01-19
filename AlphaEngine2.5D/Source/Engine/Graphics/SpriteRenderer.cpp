@@ -112,8 +112,10 @@ namespace Engine {
 			bool inStrip = false;
 			int stripStart = 0;
 
-			f32 yTop = sh / 2.0f - proj.screenY + spriteHeight / 2.0f;
-			f32 yBottom = yTop - spriteHeight;
+			// Position sprite so its bottom (feet) is at proj.screenY, extending upward
+			// This matches how characters/objects stand on the ground
+			f32 yBottom = sh / 2.0f - proj.screenY;
+			f32 yTop = yBottom + spriteHeight;
 
 			for (int x = screenStart; x <= screenEnd; ++x) {
 				// Calculate per-column depth:

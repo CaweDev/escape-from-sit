@@ -4,6 +4,7 @@
  */
 #include "TileMapRenderer.hpp"
 #include "ZBuffer.hpp"
+#include "../Raycasting/ProjectionHelper.hpp"
 #include <cmath>
 
 namespace Engine {
@@ -39,6 +40,8 @@ namespace Engine {
 		if (!camTransform) return;
 
 		Vector2 pos = Vector2(camTransform->position.x, camTransform->position.y);
+		// Z=0 is ground, Z=0.5 is eye level (wall center), Z=1.0 is ceiling
+		f32 camZ = camTransform->position.z;
 		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
 
 		// Direction and camera plane vectors (standard raycasting approach)
@@ -128,11 +131,17 @@ namespace Engine {
 			// Calculate height of line to draw on screen
 			f32 wallHeight = (f32)screenHeight / perpWallDist;
 
+			// Calculate height offset based on camera Z position relative to wall center (0.5)
+			// camZ = 0.5 (eye level) -> no offset, walls centered
+			// camZ > 0.5 (above eye level) -> walls appear lower on screen
+			// camZ < 0.5 (below eye level) -> walls appear higher on screen
+			f32 heightOffset = (camZ - 0.5f) * ((f32)screenHeight / perpWallDist);
+
 			// Calculate lowest and highest pixel to fill in current stripe
-			f32 drawStart = (screenHeight - wallHeight) / 2.0f;
+			f32 drawStart = (screenHeight - wallHeight) / 2.0f + heightOffset;
 			if (drawStart < 0) drawStart = 0;
 
-			f32 drawEnd = (screenHeight + wallHeight) / 2.0f;
+			f32 drawEnd = (screenHeight + wallHeight) / 2.0f + heightOffset;
 			if (drawEnd >= screenHeight) drawEnd = (f32)screenHeight - 1;
 
 			// Choose wall color
