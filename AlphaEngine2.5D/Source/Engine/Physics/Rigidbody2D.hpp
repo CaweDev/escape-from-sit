@@ -58,13 +58,13 @@ public:
     f32 currentHeight = 0.0f;
     
     /** Height of player when standing */
-    f32 standingHeight = 1.8f;
+    f32 standingHeight = 0.75f;
     
     /** Height of player when crouching */
-    f32 crouchHeight = 0.9f;
+    f32 crouchHeight = 0.3f;
     
     /** Current collision height (changes when crouching) */
-    f32 collisionHeight = 1.8f;
+    f32 collisionHeight = crouchHeight;
     
     /** Whether currently crouching */
     bool isCrouching = false;

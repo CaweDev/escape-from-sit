@@ -81,7 +81,7 @@ public:
         // Add controller (requires Rigidbody2D)
         playerController = player->AddComponent<FPSController>();
         player->AddComponent<Player>();
-        player->transform->position = Vector2(1.5f, 1.5f);
+        player->transform->position = Vector3(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
 
         // Create dummy enemy with collider
