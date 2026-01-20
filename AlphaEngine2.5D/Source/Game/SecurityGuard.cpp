@@ -131,10 +131,10 @@ namespace Game {
         //4 direction movement
         /*
         k	dx[k]	dy[k]	Meaning	New tile
-        0	1	0	Right	(cx+1, cy)
-        1	-1	0	Left	(cx-1, cy)
-        2	0	1	Down	(cx, cy+1)
-        3	0	-1	Up	    (cx, cy-1)
+        0	 1	     0	    Right	(cx+1, cy)
+        1	-1	     0	    Left	(cx-1, cy)
+        2	 0	     1	    Down	(cx, cy+1)
+        3	 0	    -1	    Up	    (cx, cy-1)
         */
         const int dX[4] = { 1,-1,0,0 };
         const int dY[4] = { 0,0,1,-1 };
@@ -170,10 +170,7 @@ namespace Game {
                 }
                 parent[neighbourID]= current;
                 q.push(neighbourID);
-
             }
-
-           
         }
         //construct the path
         if (!found) {

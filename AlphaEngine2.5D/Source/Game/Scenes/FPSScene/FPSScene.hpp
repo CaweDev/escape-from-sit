@@ -25,10 +25,12 @@ using namespace Engine;
  * @class FPSScene
  * @brief Doom-style first-person demo with physics
  */
+
 class FPSScene : public Scene {
 public:
-    FPSScene() : Scene("FPSScene") {}
 
+    FPSScene() : Scene("FPSScene") {}
+    bool gameEnded = false;
     FPSController* playerController = nullptr;
 
     //simple win condition data
@@ -133,7 +135,8 @@ public:
 
         //add tilemap pointer to guard
         guard->tileMap = map;
-
+        guard->playerTf = playerTf;       
+        guard->playerData = playerData;
         guard->speed = 1.5f;
         guard->arriveDistance = 0.1f;
 
@@ -167,7 +170,6 @@ public:
         if (playerData->GetState() != PlayerState::Normal) {
             return;
         }
-
         //win conditiono check
         Vector2 p(playerTf->position.x, playerTf->position.y);
         float dx = exitPos.x - p.x;
@@ -176,10 +178,11 @@ public:
         if (!printedWin && (dx * dx + dy * dy) <= winRadius * winRadius) {
             printedWin = true;
             playerData->Win();
+            gameEnded = true;
             std::cout << "congrats macha You WIN";
         }
 
-
+       
     }
 };
 

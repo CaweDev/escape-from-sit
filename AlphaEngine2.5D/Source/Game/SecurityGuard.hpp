@@ -28,7 +28,6 @@ namespace Game {
 		Engine::Vector2 pointB;*/
 		float speed = 1.5f;
 		
-		
 		void Initialize() override;
 		void Update() override;
 
@@ -46,18 +45,13 @@ namespace Game {
 		float searchTimer = 0.0f;
 		float repathTimer = 0.0f;
 
-
-
 		void BuildPathBFS();
 		int iD(int x, int y) const {
 			return y *tileMap->width + x;
 		}
 		Engine::Vector2 WorldFromTile(int x, int y)const {
 			return Engine::Vector2((float)x + 0.5f, (float)y + 0.5f);
-
 		}
-
-
 		/*bool goingtonextPoint = true;*/
 	};
 }
