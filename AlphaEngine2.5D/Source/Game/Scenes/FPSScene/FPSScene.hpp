@@ -113,7 +113,7 @@ public:
         // Enemy sprite
         auto enemySR = enemy->AddComponent<SpriteRenderer>();
         std::shared_ptr<Sprite> enemySprite = std::make_shared<Sprite>();
-        enemySprite->Load("Assets/PlanetTexture.png", 500, 500);
+        enemySprite->Load("../Assets/PlanetTexture.png", 500, 500);
         enemySR->SetSprite(enemySprite);
         enemySR->billboard = true;
         enemySR->enabled = true;

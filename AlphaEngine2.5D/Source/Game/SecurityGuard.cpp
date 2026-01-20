@@ -191,7 +191,6 @@ namespace Game {
             int id = tiles[i];
             int x = id % tileMap->width;
             int y = id / tileMap->width;
-
             path.push_back(WorldFromTile(x, y));
         }
     }
