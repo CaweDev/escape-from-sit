@@ -27,7 +27,7 @@ namespace Engine {
 	private:
 		// Rendering resolution constants
 		static constexpr int COLUMN_STEP = 1;
-		static constexpr int ROW_STEP = 8;
+		static constexpr int ROW_STEP = 16;
 		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
 
 	public:
