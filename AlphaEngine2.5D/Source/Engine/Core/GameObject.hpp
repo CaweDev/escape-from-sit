@@ -17,6 +17,7 @@
 #include "../Graphics/IRenderer.hpp"
 
 namespace Engine {
+class Scene;
 
 /**
  * @class GameObject
@@ -35,6 +36,12 @@ public:
     
     /** Transform component (always present) */
     Transform* transform = nullptr;
+
+    /** Owner scene */
+    Scene* scene = nullptr;
+
+    /** Whether the GameObject is scheduled for destruction */
+    bool isPendingDestruction = false;
 
     // Constructors
     

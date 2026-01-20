@@ -49,14 +49,14 @@ std::vector<GameObject*> GameObject::FindGameObjectsWithTag(const std::string& t
 
 void GameObject::Destroy(GameObject* obj) {
     if (obj) {
+        obj->isPendingDestruction = true;
         objectsToDestroy.push_back(obj);
     }
 }
 
 void GameObject::ProcessDestroyQueue() {
-    for (auto* obj : objectsToDestroy) {
-        delete obj;
-    }
+    // We no longer delete here. 
+    // The Scene will remove the object from its list, which triggers unique_ptr cleanup.
     objectsToDestroy.clear();
 }
 
