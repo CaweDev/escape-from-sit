@@ -60,11 +60,11 @@ public:
         renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
 		{   // Load map sprites into TileMapRenderer
             auto skySprite = std::make_shared<Sprite>();
-            skySprite->Load("Assets/PlanetTexture.png");
+            skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
             auto groundSprite = std::make_shared<Sprite>();
-            groundSprite->Load("Assets/PlanetTexture.png");
+            groundSprite->Load("Assets/Tilemap/modern_school_floor.png");
             auto wallSprite = std::make_shared<Sprite>();
-            wallSprite->Load("Assets/PlanetTexture.png");
+            wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
             // Set on TileMapRenderer
             renderer->SetCeilingSprite(skySprite);
             renderer->SetFloorSprite(groundSprite);

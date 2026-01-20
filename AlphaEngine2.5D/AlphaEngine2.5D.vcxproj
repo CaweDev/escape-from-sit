@@ -85,6 +85,9 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
