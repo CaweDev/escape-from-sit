@@ -15,6 +15,7 @@
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
 #include "Game/SecurityGuard.hpp"
+#include <iostream>
 
 namespace Game {
 
@@ -29,6 +30,14 @@ public:
     FPSScene() : Scene("FPSScene") {}
 
     FPSController* playerController = nullptr;
+
+    //simple win condition data
+    Player* playerData = nullptr;
+    Engine::Transform* playerTf = nullptr;
+
+    Vector2 exitPos = Vector2(14.5f, 1.5f);
+    float winRadius = 0.6f;
+    bool printedWin = false;
 
     void OnLoad() override {
         // Define a simple maze level
@@ -92,9 +101,24 @@ public:
         
         // Add controller (requires Rigidbody2D)
         playerController = player->AddComponent<FPSController>();
-        player->AddComponent<Player>();
+        playerData = player->AddComponent<Player>();
+        playerTf = player->transform;
+
         player->transform->position = Vector3(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
+
+        auto exit = CreateGameObject("Exit");
+        exit->transform->position = exitPos;
+
+        auto exitSR = exit->AddComponent<SpriteRenderer>();
+        auto exitSprite = std::make_shared<Sprite>();
+        exitSprite->Load("Assets/PlanetTexture.png", 500, 500);
+        exitSR->SetSprite(exitSprite);
+        exitSR->billboard = true;
+        exitSR->enabled = true;
+        exitSR->sortingOrder = 95;
+
+
 
         // Create dummy enemy with collider
         auto enemy = CreateGameObject("Enemy");
@@ -125,7 +149,7 @@ public:
         // Enemy sprite
         auto enemySR = enemy->AddComponent<SpriteRenderer>();
         std::shared_ptr<Sprite> enemySprite = std::make_shared<Sprite>();
-        enemySprite->Load("../Assets/PlanetTexture.png", 500, 500);
+        enemySprite->Load("Assets/PlanetTexture.png", 500, 500);
         enemySR->SetSprite(enemySprite);
         enemySR->billboard = true;
         enemySR->enabled = true;
@@ -135,6 +159,27 @@ public:
     
     void OnUpdate() override {
         // Physics and rendering handled by components
+
+        if (!playerData || !playerTf) {
+            return;
+        }
+        //if win stop checking
+        if (playerData->GetState() != PlayerState::Normal) {
+            return;
+        }
+
+        //win conditiono check
+        Vector2 p(playerTf->position.x, playerTf->position.y);
+        float dx = exitPos.x - p.x;
+        float dy = exitPos.y - p.y;
+
+        if (!printedWin && (dx * dx + dy * dy) <= winRadius * winRadius) {
+            printedWin = true;
+            playerData->Win();
+            std::cout << "congrats macha You WIN";
+        }
+
+
     }
 };
 
