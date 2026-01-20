@@ -24,6 +24,12 @@ namespace Engine {
 	 * @brief Renders walls, floor, and ceiling using DDA raycasting algorithm
 	 */
 	class TileMapRenderer : public IRenderer {
+	private:
+		// Rendering resolution constants
+		static constexpr int COLUMN_STEP = 1;
+		static constexpr int ROW_STEP = 8;
+		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
+
 	public:
 		REQUIRE_COMPONENT(TileMap);
 
@@ -80,11 +86,6 @@ namespace Engine {
 		std::unordered_map<int, std::shared_ptr<Sprite>> ceilingSprites;
 		std::unordered_map<int, std::shared_ptr<Sprite>> floorSprites;
 
-		// Rendering resolution constants
-		static constexpr int COLUMN_STEP = 2;
-		static constexpr int ROW_STEP = 8;
-		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
-
 		// Helper struct for raycast result
 		struct RaycastResult {
 			f32 perpWallDist;
@@ -105,6 +106,18 @@ namespace Engine {
 			f32 fogFactor;
 		};
 
+		// Cached scanline data to avoid per-frame recalculation
+		struct ScanlineInfo {
+			f32 rowDist;      // Distance from camera to this scanline's floor/ceiling
+			f32 aeY;          // Screen Y coordinate in AE space
+		};
+
+		// Cached scanline tables (indexed by screen Y)
+		std::vector<ScanlineInfo> ceilingScanlines;  // For rows 0 to horizon
+		std::vector<ScanlineInfo> floorScanlines;    // For rows horizon to screenHeight
+		int cachedScreenHeight = 0;
+		f32 cachedCamZ = -999.0f;
+
 		void CreateColumnMesh();
 		
 		// Raycast helper
@@ -117,6 +130,9 @@ namespace Engine {
 		void RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
 			const std::vector<ColumnInfo>& columns, TileMap* map);
 		void RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns);
+
+		// Precompute scanline distances for floor/ceiling
+		void CacheScanlineDistances(int screenHeight, f32 camZ);
 
 		// Column drawing helpers
 		void DrawColumn(f32 x, f32 y, f32 h, const Color& color, int sw, int sh);

@@ -35,6 +35,7 @@ enum class TileType : int {
  */
 class TileMap : public Component {
 public:
+
     int width = 0;
     int height = 0;
 
