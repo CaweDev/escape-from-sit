@@ -128,7 +128,7 @@ void FPSController::Update() {
         jumpCooldown = 0.25f;
     }
     prevSpace = spaceNow;
-	std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
+	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
     
     // Crouching (Ctrl or C)
     if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {

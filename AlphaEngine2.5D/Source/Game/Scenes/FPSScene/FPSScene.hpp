@@ -35,8 +35,8 @@ public:
         const int mapData[] = {
             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,
-            1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,
+            1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
             1,0,1,0,1,1,1,0,1,1,1,0,0,1,0,1,
             1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,
             1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,
@@ -47,7 +47,7 @@ public:
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         };
-        
+
         // Create world object with TileMap
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
@@ -58,6 +58,18 @@ public:
         renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
         renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
         renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+		{   // Load map sprites into TileMapRenderer
+            auto skySprite = std::make_shared<Sprite>();
+            skySprite->Load("Assets/PlanetTexture.png");
+            auto groundSprite = std::make_shared<Sprite>();
+            groundSprite->Load("Assets/PlanetTexture.png");
+            auto wallSprite = std::make_shared<Sprite>();
+            wallSprite->Load("Assets/PlanetTexture.png");
+            // Set on TileMapRenderer
+            renderer->SetCeilingSprite(skySprite);
+            renderer->SetFloorSprite(groundSprite);
+            renderer->SetWallSprite(wallSprite);
+        }
         
         // Add tilemap collider for physics
         auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
