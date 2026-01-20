@@ -13,13 +13,20 @@ namespace Engine {
 /**
  * @enum TileType
  * @brief Types of tiles in the map
+ * Negative values = walkable floors with different textures
+ * Zero = empty/walkable
+ * Positive values = walls (not walkable)
  */
 enum class TileType : int {
-    Empty = 0,
-    Wall = 1,
-    Wall2 = 2,  // Different wall texture
-    Wall3 = 3,
-    Wall4 = 4
+    Floor4 = -4, // Walkable floor variant 4
+    Floor3 = -3, // Walkable floor variant 3
+    Floor2 = -2, // Walkable floor variant 2
+    Floor1 = -1, // Walkable floor variant 1
+    Empty = 0,   // Default walkable
+    Wall = 1,    // Wall type 1
+    Wall2 = 2,   // Wall type 2
+    Wall3 = 3,   // Wall type 3
+    Wall4 = 4    // Wall type 4
 };
 
 /**
@@ -62,12 +69,12 @@ public:
         }
     }
 
-    /** Check if position is a wall */
+    /** Check if position is a wall (positive tile values) */
     bool IsWall(int x, int y) const {
-        return GetTile(x, y) != TileType::Empty;
+        return static_cast<int>(GetTile(x, y)) > 0;
     }
 
-    /** Check if world position is walkable */
+    /** Check if world position is walkable (zero or negative tile values) */
     bool IsWalkable(f32 worldX, f32 worldY) const {
         int tileX = static_cast<int>(worldX);
         int tileY = static_cast<int>(worldY);
@@ -79,3 +86,4 @@ private:
 };
 
 } // namespace Engine
+

@@ -15,6 +15,7 @@
 #include <cmath>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 namespace Engine {
 
@@ -42,22 +43,42 @@ namespace Engine {
 
 		void Render() override;
 
-		// Sprite setters
-		void SetWallSprite(std::shared_ptr<Sprite> sprite) { wallSprite = sprite; }
-		void SetCeilingSprite(std::shared_ptr<Sprite> sprite) { ceilingSprite = sprite; }
-		void SetFloorSprite(std::shared_ptr<Sprite> sprite) { floorSprite = sprite; }
+		// Type-indexed sprite setters (use int for tile type ID)
+		void SetWallSprite(int tileType, std::shared_ptr<Sprite> sprite) { wallSprites[tileType] = sprite; }
+		void SetCeilingSprite(int tileType, std::shared_ptr<Sprite> sprite) { ceilingSprites[tileType] = sprite; }
+		void SetFloorSprite(int tileType, std::shared_ptr<Sprite> sprite) { floorSprites[tileType] = sprite; }
 
-		// Sprite getters
-		std::shared_ptr<Sprite> GetWallSprite() const { return wallSprite; }
-		std::shared_ptr<Sprite> GetCeilingSprite() const { return ceilingSprite; }
-		std::shared_ptr<Sprite> GetFloorSprite() const { return floorSprite; }
+		// Convenience setters for default sprite (type 1)
+		void SetWallSprite(std::shared_ptr<Sprite> sprite) { wallSprites[1] = sprite; }
+		void SetCeilingSprite(std::shared_ptr<Sprite> sprite) { ceilingSprites[1] = sprite; }
+		void SetFloorSprite(std::shared_ptr<Sprite> sprite) { floorSprites[1] = sprite; }
+
+		// Type-indexed sprite getters
+		std::shared_ptr<Sprite> GetWallSprite(int tileType) const {
+			auto it = wallSprites.find(tileType);
+			return (it != wallSprites.end()) ? it->second : nullptr;
+		}
+		std::shared_ptr<Sprite> GetCeilingSprite(int tileType) const {
+			auto it = ceilingSprites.find(tileType);
+			return (it != ceilingSprites.end()) ? it->second : nullptr;
+		}
+		std::shared_ptr<Sprite> GetFloorSprite(int tileType) const {
+			auto it = floorSprites.find(tileType);
+			return (it != floorSprites.end()) ? it->second : nullptr;
+		}
+
+		// Convenience getters for default sprite (type 1)
+		std::shared_ptr<Sprite> GetWallSprite() const { return GetWallSprite(1); }
+		std::shared_ptr<Sprite> GetCeilingSprite() const { return GetCeilingSprite(1); }
+		std::shared_ptr<Sprite> GetFloorSprite() const { return GetFloorSprite(1); }
 
 	private:
 		AEGfxVertexList* columnMesh = nullptr;
 
-		std::shared_ptr<Sprite> wallSprite = nullptr;
-		std::shared_ptr<Sprite> ceilingSprite = nullptr;
-		std::shared_ptr<Sprite> floorSprite = nullptr;
+		// Maps from tile type ID to sprite
+		std::unordered_map<int, std::shared_ptr<Sprite>> wallSprites;
+		std::unordered_map<int, std::shared_ptr<Sprite>> ceilingSprites;
+		std::unordered_map<int, std::shared_ptr<Sprite>> floorSprites;
 
 		// Rendering resolution constants
 		static constexpr int COLUMN_STEP = 2;
@@ -69,6 +90,7 @@ namespace Engine {
 			f32 perpWallDist;
 			f32 wallX;  // Where on the wall the ray hit (0-1)
 			int side;   // 0 = NS, 1 = EW
+			int tileType; // The tile type that was hit
 			f32 drawStart;
 			f32 drawEnd;
 		};
@@ -91,9 +113,9 @@ namespace Engine {
 
 		// Separate render functions
 		void RenderCeiling(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
-			const std::vector<ColumnInfo>& columns);
+			const std::vector<ColumnInfo>& columns, TileMap* map);
 		void RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
-			const std::vector<ColumnInfo>& columns);
+			const std::vector<ColumnInfo>& columns, TileMap* map);
 		void RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns);
 
 		// Column drawing helpers

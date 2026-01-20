@@ -84,8 +84,8 @@ namespace Engine {
 		}
 
 		// Render in order: ceiling, floor, walls (walls on top)
-		RenderCeiling(pos, camZ, screenWidth, screenHeight, columns);
-		RenderFloor(pos, camZ, screenWidth, screenHeight, columns);
+		RenderCeiling(pos, camZ, screenWidth, screenHeight, columns, map);
+		RenderFloor(pos, camZ, screenWidth, screenHeight, columns, map);
 		RenderWalls(screenHeight, columns);
 	}
 
@@ -112,6 +112,9 @@ namespace Engine {
 			else { sideDistY += deltaDistY; mapY += stepY; result.side = 1; }
 		}
 
+		// Store the tile type that was hit
+		result.tileType = static_cast<int>(map->GetTile(mapX, mapY));
+
 		result.perpWallDist = (result.side == 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
 		if (result.perpWallDist < 0.1f) result.perpWallDist = 0.1f;
 
@@ -132,10 +135,10 @@ namespace Engine {
 	}
 
 	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
-		const std::vector<ColumnInfo>& columns) {
+		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
-		bool hasSprite = ceilingSprite && ceilingSprite->IsLoaded();
-		if (!hasSprite) return;
+		// Check if we have any ceiling sprites
+		if (ceilingSprites.empty()) return;
 
 		// Pre-calculate row distances to avoid divisions in the inner loop
 		std::vector<f32> rowDists(screenHeight);
@@ -185,17 +188,20 @@ namespace Engine {
 				if (triCount >= MAX_TRIANGLES_PER_MESH) {
 					AEGfxVertexList* mesh = AEGfxMeshEnd();
 					if (mesh) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(ceilingSprite->GetTexture(), 0, 0);
+						auto sprite = GetCeilingSprite(1);
+						if (sprite && sprite->IsLoaded()) {
+							AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+							AEGfxTextureSet(sprite->GetTexture(), 0, 0);
 						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
 						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 						AEGfxSetTransparency(1.0f);
 						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
 						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-						AEGfxMeshFree(mesh);
 					}
-					meshIsOpen = false;
+					AEGfxMeshFree(mesh);
+				}
+				meshIsOpen = false;
 				}
 			}
 		}
@@ -203,24 +209,27 @@ namespace Engine {
 		if (meshIsOpen) {
 			AEGfxVertexList* mesh = AEGfxMeshEnd();
 			if (mesh) {
-				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-				AEGfxTextureSet(ceilingSprite->GetTexture(), 0, 0);
+				auto sprite = GetCeilingSprite(1);
+				if (sprite && sprite->IsLoaded()) {
+					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
 				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
 				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
 				AEGfxSetColorToAdd(0, 0, 0, 0);
 				AEGfxSetTransparency(1.0f);
 				AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
 				AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-				AEGfxMeshFree(mesh);
 			}
+			AEGfxMeshFree(mesh);
+		}
 		}
 	}
 
 	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
-		const std::vector<ColumnInfo>& columns) {
+		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
-		bool hasSprite = floorSprite && floorSprite->IsLoaded();
-		if (!hasSprite) return;
+		// Check if we have any floor sprites
+		if (floorSprites.empty()) return;
 
 		// Pre-calculate row distances
 		std::vector<f32> rowDists(screenHeight);
@@ -270,14 +279,17 @@ namespace Engine {
 				if (triCount >= MAX_TRIANGLES_PER_MESH) {
 					AEGfxVertexList* mesh = AEGfxMeshEnd();
 					if (mesh) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(floorSprite->GetTexture(), 0, 0);
-						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
-						AEGfxSetColorToAdd(0, 0, 0, 0);
-						AEGfxSetTransparency(1.0f);
-						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
-						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						auto sprite = GetFloorSprite(1);
+						if (sprite && sprite->IsLoaded()) {
+							AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+							AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+							AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+							AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+							AEGfxSetColorToAdd(0, 0, 0, 0);
+							AEGfxSetTransparency(1.0f);
+							AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+							AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						}
 						AEGfxMeshFree(mesh);
 					}
 					meshIsOpen = false;
@@ -288,14 +300,17 @@ namespace Engine {
 		if (meshIsOpen) {
 			AEGfxVertexList* mesh = AEGfxMeshEnd();
 			if (mesh) {
-				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-				AEGfxTextureSet(floorSprite->GetTexture(), 0, 0);
-				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
-				AEGfxSetColorToAdd(0, 0, 0, 0);
-				AEGfxSetTransparency(1.0f);
-				AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
-				AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+				auto sprite = GetFloorSprite(1);
+				if (sprite && sprite->IsLoaded()) {
+					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+					AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+					AEGfxSetColorToAdd(0, 0, 0, 0);
+					AEGfxSetTransparency(1.0f);
+					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+				}
 				AEGfxMeshFree(mesh);
 			}
 		}
@@ -303,12 +318,11 @@ namespace Engine {
 
 	void TileMapRenderer::RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns) {
 		
-		bool hasWallSprite = wallSprite && wallSprite->IsLoaded();
-		bool hasCeilingSprite = ceilingSprite && ceilingSprite->IsLoaded();
-		bool hasFloorSprite = floorSprite && floorSprite->IsLoaded();
+		bool hasCeilingSprites = !ceilingSprites.empty();
+		bool hasFloorSprites = !floorSprites.empty();
 
 		// Sequential Batch 1: Ceiling Fallback
-		if (!hasCeilingSprite) {
+		if (!hasCeilingSprites) {
 			u32 ceilColorU32 = (((u32)(ceilingColor.r * 255)) << 24) | (((u32)(ceilingColor.g * 255)) << 16) | (((u32)(ceilingColor.b * 255)) << 8) | (u32)(ceilingColor.a * 255);
 			int triCount = 0;
 			bool meshIsOpen = false;
@@ -360,7 +374,7 @@ namespace Engine {
 		}
 
 		// Sequential Batch 2: Floor Fallback
-		if (!hasFloorSprite) {
+		if (!hasFloorSprites) {
 			u32 floorColorU32 = (((u32)(floorColor.r * 255)) << 24) | (((u32)(floorColor.g * 255)) << 16) | (((u32)(floorColor.b * 255)) << 8) | (u32)(floorColor.a * 255);
 			int triCount = 0;
 			bool meshIsOpen = false;
@@ -411,13 +425,28 @@ namespace Engine {
 			}
 		}
 
-		// Sequential Batch 3: Walls (Textured or Fallback)
-		{
+		// Sequential Batch 3: Walls (Textured by tile type, or Fallback)
+		// Group columns by tile type for batching
+		std::unordered_map<int, std::vector<const ColumnInfo*>> columnsByType;
+		for (const auto& col : columns) {
+			columnsByType[col.ray.tileType].push_back(&col);
+		}
+
+		// Render each tile type's walls
+		for (const auto& pair : columnsByType) {
+			int tileType = pair.first;
+			const auto& typeCols = pair.second;
+			
+			auto sprite = GetWallSprite(tileType);
+			bool hasSprite = sprite && sprite->IsLoaded();
+
 			int triCount = 0;
 			bool meshIsOpen = false;
 			
-			for (const auto& col : columns) {
-				if (hasWallSprite) {
+			for (const ColumnInfo* colPtr : typeCols) {
+				const ColumnInfo& col = *colPtr;
+				
+				if (hasSprite) {
 					u32 fogColor = (((u32)(col.fogFactor * 255)) << 24) | (((u32)(col.fogFactor * 255)) << 16) | (((u32)(col.fogFactor * 255)) << 8) | 0xFF;
 					for (f32 y = col.screenY2; y > col.screenY; y -= ROW_STEP) {
 						if (!meshIsOpen) {
@@ -440,7 +469,7 @@ namespace Engine {
 							AEGfxVertexList* mesh = AEGfxMeshEnd();
 							if (mesh) {
 								AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-								AEGfxTextureSet(wallSprite->GetTexture(), 0, 0);
+								AEGfxTextureSet(sprite->GetTexture(), 0, 0);
 								AEGfxSetBlendMode(AE_GFX_BM_BLEND);
 								AEGfxSetColorToMultiply(1, 1, 1, 1);
 								AEGfxSetColorToAdd(0, 0, 0, 0);
@@ -488,9 +517,9 @@ namespace Engine {
 			if (meshIsOpen) {
 				AEGfxVertexList* mesh = AEGfxMeshEnd();
 				if (mesh) {
-					if (hasWallSprite) {
+					if (hasSprite) {
 						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(wallSprite->GetTexture(), 0, 0);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
 						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
 						AEGfxSetColorToMultiply(1, 1, 1, 1);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
