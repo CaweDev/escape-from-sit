@@ -4,8 +4,6 @@
 *.pdb
 *.exe
 *.ilk
-.vs
-.tmp
 *.tlog
 *.obj
 *.idb
@@ -13,6 +11,11 @@
 *.exp
 *.iobj
 *.ipdb
+.tmp
 bin
 Debug
 Release
+.vscode
+CMakeLists.txt
+CMakePresets.json
+.vs
