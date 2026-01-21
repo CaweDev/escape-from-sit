@@ -37,10 +37,10 @@ public:
     f32 mouseSensitivity = 0.15f;
     
     /** Jump force */
-    f32 jumpForce = 5.0f;
+    f32 jumpForce = 3.0f;
     
-    /** Eye height as ratio of body height (0.9 = eyes at 90% of body height) */
-    f32 eyeHeightRatio = 0.9f;
+    /** Eye height in world units (0.5 = center of wall, standard eye level) */
+    f32 eyeHeight = 0.5f;
     
     /** Smoothing speed for camera height changes */
     f32 viewHeightSmoothSpeed = 15.0f;
@@ -69,10 +69,10 @@ private:
     bool firstFrame = true;
     
     /** Current smoothed view height */
-    f32 currentViewHeight = 1.6f;
+    f32 currentViewHeight = 0.5f;
     
     /** Target view height (based on crouch/jump state) */
-    f32 targetViewHeight = 1.6f;
+    f32 targetViewHeight = 0.5f;
     
     void UpdateCenter();
     

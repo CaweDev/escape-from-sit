@@ -14,6 +14,7 @@
 #include "Game/FPSController.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
+#include "Game/SecurityGuard.hpp"
 
 namespace Game {
 
@@ -34,8 +35,8 @@ public:
         const int mapData[] = {
             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-            1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,
-            1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,
+            1,0,0,0,1,0,1,1,1,1,0,1,1,1,0,1,
+            1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
             1,0,1,0,1,1,1,0,1,1,1,0,0,1,0,1,
             1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,
             1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,
@@ -46,7 +47,7 @@ public:
             1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
             1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
         };
-        
+
         // Create world object with TileMap
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
@@ -57,6 +58,18 @@ public:
         renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
         renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
         renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+		{   // Load map sprites into TileMapRenderer
+            auto skySprite = std::make_shared<Sprite>();
+            skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
+            auto groundSprite = std::make_shared<Sprite>();
+            groundSprite->Load("Assets/Tilemap/modern_school_floor.png");
+            auto wallSprite = std::make_shared<Sprite>();
+            wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
+            // Set on TileMapRenderer
+            renderer->SetCeilingSprite(skySprite);
+            renderer->SetFloorSprite(groundSprite);
+            renderer->SetWallSprite(wallSprite);
+        }
         
         // Add tilemap collider for physics
         auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
@@ -80,7 +93,7 @@ public:
         // Add controller (requires Rigidbody2D)
         playerController = player->AddComponent<FPSController>();
         player->AddComponent<Player>();
-        player->transform->position = Vector2(1.5f, 1.5f);
+        player->transform->position = Vector3(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
 
         // Create dummy enemy with collider
@@ -88,10 +101,21 @@ public:
         enemy->transform->position = Vector2(3.5f, 1.5f);
         enemy->transform->rotation = 0.0f;
         enemy->transform->localScale = Vector2(1.0f, 1.0f);
-        
+
+        auto guard = enemy->AddComponent<SecurityGuard>();
+        //hardcoded point to point
+       /* guard->pointA = Vector2(3.5f, 1.5f);
+        guard->pointB = Vector2(6.5f, 1.5f);*/
+
+        //add tilemap pointer to guard
+        guard->tileMap = map;
+
+        guard->speed = 1.5f;
+        guard->arriveDistance = 0.1f;
+
         // Enemy collider (static body)
         auto enemyRb = enemy->AddComponent<Rigidbody2D>();
-        enemyRb->bodyType = RigidbodyType2D::Static;
+        enemyRb->bodyType = RigidbodyType2D::Kinematic;
         
         auto enemyCollider = enemy->AddComponent<CircleCollider2D>();
         enemyCollider->radius = 0.5f;
@@ -107,6 +131,7 @@ public:
         enemySR->enabled = true;
         enemySR->sortingOrder = 100;
     }
+
     
     void OnUpdate() override {
         // Physics and rendering handled by components

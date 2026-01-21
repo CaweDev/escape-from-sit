@@ -17,14 +17,21 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
 {
     ProjectionResult result;
     
-    // 1. Calculate relative position
+    // 1. Calculate relative position (including height)
+    // Z=0 is ground, Z=0.5 is eye level (wall center), Z=1.0 is ceiling
     f32 dx = worldPos.x - camPos.x;
     f32 dy = worldPos.y - camPos.y;
-    result.distance = std::sqrt(dx * dx + dy * dy);
+    f32 dz = worldPos.z - camPos.z;
     
-    if (result.distance < 0.1f) return result; // Too close
+    // 2D distance for angle calculations
+    f32 dist2D = std::sqrt(dx * dx + dy * dy);
+    
+    // 3D distance for accurate scaling
+    result.distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+    
+    if (dist2D < 0.1f) return result; // Too close
 
-    // 2. Calculate angle relative to camera
+    // 2. Calculate angle relative to camera (horizontal plane)
     f32 angleToObj = std::atan2(dy, dx);
     f32 camAngleRad = camRotationDeg * 3.14159f / 180.0f;
     
@@ -35,8 +42,8 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     while (relAngle < -3.14159f) relAngle += 6.28318f;
     while (relAngle > 3.14159f) relAngle -= 6.28318f;
     
-    // 4. Fisheye correction (perpendicular distance)
-    f32 perpDist = result.distance * std::cos(relAngle);
+    // 4. Fisheye correction (perpendicular distance on horizontal plane)
+    f32 perpDist = dist2D * std::cos(relAngle);
     result.perpDistance = perpDist;
 
     // 5. Calculate screen X and scale ALWAYS (even if off-screen/behind)
@@ -47,8 +54,9 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     // Scale is based on perpDistance. Prevent division by zero.
     result.scale = static_cast<f32>(screenHeight) / (std::abs(perpDist) > 0.01f ? std::abs(perpDist) : 0.01f);
 
-    // Screen Y is at center (standard raycaster - objects are at eye level)
-    result.screenY = static_cast<f32>(screenHeight) / 2.0f;
+    // Screen Y accounts for height difference (objects above camera appear higher on screen)
+    f32 projectedHeight = dz * result.scale;
+    result.screenY = (static_cast<f32>(screenHeight) / 2.0f) - projectedHeight;
 
     // 6. Check visibility for return status
     if (perpDist < 0.1f) return result; // Behind camera

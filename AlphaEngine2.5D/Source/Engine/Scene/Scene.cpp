@@ -5,6 +5,7 @@
 #include "Scene.hpp"
 #include "Engine/Graphics/Camera.hpp"
 #include "Engine/Physics/Physics2D.hpp"
+#include <algorithm>
 
 namespace Engine {
 
@@ -17,6 +18,7 @@ Scene::~Scene() {
 GameObject* Scene::CreateGameObject(const std::string& name) {
     auto obj = std::make_unique<GameObject>(name);
     GameObject* ptr = obj.get();
+    ptr->scene = this;
     gameObjects.push_back(std::move(obj));
     return ptr;
 }
@@ -69,6 +71,16 @@ void Scene::UpdateInternal() {
     
     // Process pending destructions
     GameObject::ProcessDestroyQueue();
+
+    // Remove destroyed objects from the scene
+    // This will trigger unique_ptr deletion and call the GameObject destructor
+    gameObjects.erase(
+        std::remove_if(gameObjects.begin(), gameObjects.end(), 
+            [](const std::unique_ptr<GameObject>& obj) {
+                return obj->isPendingDestruction;
+            }),
+        gameObjects.end()
+    );
 }
 
 void Scene::RenderInternal() {

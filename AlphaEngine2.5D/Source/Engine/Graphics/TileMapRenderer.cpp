@@ -5,6 +5,7 @@
 #include "TileMapRenderer.hpp"
 #include "ZBuffer.hpp"
 #include <cmath>
+#include <vector>
 
 namespace Engine {
 
@@ -22,7 +23,6 @@ namespace Engine {
 		TileMap* map = gameObject->GetComponent<TileMap>();
 		if (!map) return;
 
-		// Lazy init mesh
 		if (!columnMesh) {
 			CreateColumnMesh();
 		}
@@ -30,125 +30,555 @@ namespace Engine {
 		int screenWidth = AEGfxGetWindowWidth();
 		int screenHeight = AEGfxGetWindowHeight();
 
-		// Update Z-buffer
 		ZBuffer::Resize(screenWidth);
 		ZBuffer::Clear();
 
-		// Use camera transform if available, otherwise fall back to own transform
 		Transform* camTransform = (Camera::main) ? Camera::main->transform : transform;
 		if (!camTransform) return;
 
 		Vector2 pos = Vector2(camTransform->position.x, camTransform->position.y);
+		f32 camZ = camTransform->position.z;
 		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
 
-		// Direction and camera plane vectors (standard raycasting approach)
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
-
-		// Plane is perpendicular to direction, length determined by FOV
-		// planeLength = tan(fovRad / 2)
 		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 		f32 planeX = -dirY * planeLength;
 		f32 planeY = dirX * planeLength;
 
-		// Draw ceiling
-		DrawRect(0, 0, (f32)screenWidth, (f32)screenHeight / 2.0f, ceilingColor, screenWidth, screenHeight);
+		// Perform unified raycasting pass
+		std::vector<ColumnInfo> columns;
+		columns.reserve(screenWidth / COLUMN_STEP + 1);
 
-		// Draw floor  
-		DrawRect(0, (f32)screenHeight / 2.0f, (f32)screenWidth, (f32)screenHeight / 2.0f, floorColor, screenWidth, screenHeight);
+		for (int x = 0; x < screenWidth; x += COLUMN_STEP) {
+			f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
+			ColumnInfo info;
+			info.rayDirX = dirX + planeX * cameraX;
+			info.rayDirY = dirY + planeY * cameraX;
 
-		for (int x = 0; x < screenWidth; ++x) {
-			// Calculate ray position and direction
-			f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f; // x-coordinate in camera space
-			f32 rayDirX = dirX + planeX * cameraX;
-			f32 rayDirY = dirY + planeY * cameraX;
+			info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, screenHeight, map);
 
-			// Which box of the map we're in
-			int mapX = (int)pos.x;
-			int mapY = (int)pos.y;
+			f32 drawStart = info.ray.drawStart < 0 ? 0 : info.ray.drawStart;
+			f32 drawEnd = info.ray.drawEnd >= screenHeight ? (f32)screenHeight - 1 : info.ray.drawEnd;
 
-			// Length of ray from one x or y-side to next x or y-side
-			f32 deltaDistX = (rayDirX == 0) ? 1e30f : fabsf(1.0f / rayDirX);
-			f32 deltaDistY = (rayDirY == 0) ? 1e30f : fabsf(1.0f / rayDirY);
+			info.fogFactor = 1.0f - (info.ray.perpWallDist / 20.0f);
+			if (info.fogFactor < 0.2f) info.fogFactor = 0.2f;
 
-			f32 sideDistX, sideDistY;
+			info.screenX = (f32)x - screenWidth / 2.0f;
+			info.screenX2 = (f32)(x + COLUMN_STEP) - screenWidth / 2.0f;
+			if (info.screenX2 > screenWidth / 2.0f) info.screenX2 = screenWidth / 2.0f;
 
-			// What direction to step in x or y-direction (either +1 or -1)
-			int stepX, stepY;
+			info.screenY = screenHeight / 2.0f - drawEnd;
+			info.screenY2 = screenHeight / 2.0f - drawStart;
 
-			// Calculate step and initial sideDist
-			if (rayDirX < 0) {
-				stepX = -1;
-				sideDistX = (pos.x - mapX) * deltaDistX;
+			f32 unclippedHeight = info.ray.drawEnd - info.ray.drawStart;
+			info.vTop = (drawStart - info.ray.drawStart) / unclippedHeight;
+			info.vBottom = (drawEnd - info.ray.drawStart) / unclippedHeight;
+
+			columns.push_back(info);
+
+			// Fill Z-buffer
+			for (int i = 0; i < COLUMN_STEP && (x + i) < screenWidth; ++i) {
+				ZBuffer::SetDepth(x + i, info.ray.perpWallDist);
 			}
-			else {
-				stepX = 1;
-				sideDistX = (mapX + 1.0f - pos.x) * deltaDistX;
-			}
+		}
 
-			if (rayDirY < 0) {
-				stepY = -1;
-				sideDistY = (pos.y - mapY) * deltaDistY;
-			}
-			else {
-				stepY = 1;
-				sideDistY = (mapY + 1.0f - pos.y) * deltaDistY;
-			}
+		// Pre-cache scanline distances (only recomputes if screenHeight or camZ changed)
+		CacheScanlineDistances(screenHeight, camZ);
 
-			bool hit = false;
-			int side = 0; // Was a NS or a EW wall hit?
+		// Render in order: ceiling, floor, walls (walls on top)
+		RenderCeiling(pos, camZ, screenWidth, screenHeight, columns, map);
+		RenderFloor(pos, camZ, screenWidth, screenHeight, columns, map);
+		RenderWalls(screenHeight, columns);
+	}
 
-			// DDA algorithm
-			while (!hit) {
-				// Jump to next map square, either in x-direction, or in y-direction
-				if (sideDistX < sideDistY) {
-					sideDistX += deltaDistX;
-					mapX += stepX;
-					side = 0;
-				}
-				else {
-					sideDistY += deltaDistY;
-					mapY += stepY;
-					side = 1;
-				}
+	TileMapRenderer::RaycastResult TileMapRenderer::CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, 
+		f32 camZ, int screenHeight, TileMap* map) {
+		
+		RaycastResult result;
+		
+		int mapX = (int)pos.x;
+		int mapY = (int)pos.y;
+		f32 deltaDistX = (rayDirX == 0) ? 1e30f : fabsf(1.0f / rayDirX);
+		f32 deltaDistY = (rayDirY == 0) ? 1e30f : fabsf(1.0f / rayDirY);
+		f32 sideDistX, sideDistY;
+		int stepX, stepY;
 
-				// Check if ray has hit a wall
-				if (map->IsWall(mapX, mapY)) {
-					hit = true;
-				}
-			}
+		if (rayDirX < 0) { stepX = -1; sideDistX = (pos.x - mapX) * deltaDistX; }
+		else { stepX = 1; sideDistX = (mapX + 1.0f - pos.x) * deltaDistX; }
+		if (rayDirY < 0) { stepY = -1; sideDistY = (pos.y - mapY) * deltaDistY; }
+		else { stepY = 1; sideDistY = (mapY + 1.0f - pos.y) * deltaDistY; }
 
-			// Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
-			f32 perpWallDist;
-			if (side == 0) perpWallDist = (sideDistX - deltaDistX);
-			else           perpWallDist = (sideDistY - deltaDistY);
+		result.side = 0;
+		while (!map->IsWall(mapX, mapY)) {
+			if (sideDistX < sideDistY) { sideDistX += deltaDistX; mapX += stepX; result.side = 0; }
+			else { sideDistY += deltaDistY; mapY += stepY; result.side = 1; }
+		}
 
-			if (perpWallDist < 0.1f) perpWallDist = 0.1f; // Avoid division by zero
+		// Store the tile type that was hit
+		result.tileType = static_cast<int>(map->GetTile(mapX, mapY));
 
-			// Calculate height of line to draw on screen
-			f32 wallHeight = (f32)screenHeight / perpWallDist;
+		result.perpWallDist = (result.side == 0) ? (sideDistX - deltaDistX) : (sideDistY - deltaDistY);
+		if (result.perpWallDist < 0.1f) result.perpWallDist = 0.1f;
 
-			// Calculate lowest and highest pixel to fill in current stripe
-			f32 drawStart = (screenHeight - wallHeight) / 2.0f;
-			if (drawStart < 0) drawStart = 0;
+		// Calculate where on the wall the ray hit (for texture mapping)
+		if (result.side == 0) {
+			result.wallX = pos.y + result.perpWallDist * rayDirY;
+		} else {
+			result.wallX = pos.x + result.perpWallDist * rayDirX;
+		}
+		// result.wallX is now the absolute world coordinate (for U mapping)
 
-			f32 drawEnd = (screenHeight + wallHeight) / 2.0f;
-			if (drawEnd >= screenHeight) drawEnd = (f32)screenHeight - 1;
+		f32 wallHeight = (f32)screenHeight / result.perpWallDist;
+		f32 heightOffset = (camZ - 0.5f) * ((f32)screenHeight / result.perpWallDist);
+		result.drawStart = (screenHeight - wallHeight) / 2.0f + heightOffset;
+		result.drawEnd = (screenHeight + wallHeight) / 2.0f + heightOffset;
 
-			// Choose wall color
-			Color wallColor = (side == 0) ? wallColorNS : wallColorEW;
+		return result;
+	}
 
-			// Simple depth shading (fog)
-			f32 fogFactor = 1.0f - (perpWallDist / 20.0f);
-			if (fogFactor < 0.2f) fogFactor = 0.2f;
-			wallColor.r *= fogFactor;
-			wallColor.g *= fogFactor;
-			wallColor.b *= fogFactor;
+	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+		const std::vector<ColumnInfo>& columns, TileMap* map) {
+		
+		// Check if we have any ceiling sprites
+		if (ceilingSprites.empty()) return;
+		if (columns.empty()) return;
 
-			DrawColumn((f32)x, drawStart, drawEnd - drawStart, wallColor, screenWidth, screenHeight);
+		auto sprite = GetCeilingSprite(1);
+		if (!sprite || !sprite->IsLoaded()) return;
+
+		// Ceiling height is 1.0 - camZ above the viewer
+		f32 posZ = 1.0f - camZ;
+		int horizon = screenHeight / 2;
+
+		int triCount = 0;
+		bool meshIsOpen = false;
+
+		// Scanline-based rendering: use original loop structure with cached rowDist lookup
+		for (int y = 0; y < horizon; y += ROW_STEP) {
+			int scanIdx = y / ROW_STEP;
+			if (scanIdx >= (int)ceilingScanlines.size()) continue;
 			
-			// Store depth in Z-buffer
-			ZBuffer::SetDepth(x, perpWallDist);
+			f32 rowDist = ceilingScanlines[scanIdx].rowDist;
+			if (rowDist < 0) continue; // Invalid scanline
+
+			int yNext = y + ROW_STEP;
+			if (yNext > horizon) yNext = horizon;
+			
+			int scanIdxNext = yNext / ROW_STEP;
+			f32 rowDistNext = (scanIdxNext < (int)ceilingScanlines.size()) 
+				? ceilingScanlines[scanIdxNext].rowDist 
+				: rowDist;
+			if (rowDistNext < 0) rowDistNext = rowDist;
+
+			f32 aeY1 = (f32)horizon - (f32)yNext;
+			f32 aeY2 = (f32)horizon - (f32)y;
+
+			// Now iterate columns for this scanline
+			for (const auto& col : columns) {
+				// Calculate clamped Y coordinates for this column
+				// This prevents gaps at wall-ceiling boundary
+				f32 clampedAeY1 = aeY1;
+				f32 clampedRowDistNext = rowDistNext;
+				
+				// If this scanline band's bottom is below wall start, clamp to wall start
+				if (yNext > (int)col.ray.drawStart) {
+					// Skip entirely if even the top of this band is below wall start
+					if (y >= (int)col.ray.drawStart) continue;
+					
+					// Clamp bottom of quad to wall boundary
+					clampedAeY1 = (f32)horizon - col.ray.drawStart;
+					f32 clampedP = (f32)horizon - col.ray.drawStart;
+					if (fabsf(clampedP) > 0.1f) {
+						clampedRowDistNext = posZ * (f32)screenHeight / clampedP;
+					}
+				}
+
+				if (!meshIsOpen) {
+					AEGfxMeshStart();
+					meshIsOpen = true;
+					triCount = 0;
+				}
+
+				// UV computed using shared rowDist (or clamped version for bottom)
+				f32 u1 = pos.x + rowDist * col.rayDirX;
+				f32 v1 = pos.y + rowDist * col.rayDirY;
+				f32 u2 = pos.x + clampedRowDistNext * col.rayDirX;
+				f32 v2 = pos.y + clampedRowDistNext * col.rayDirY;
+
+				AEGfxTriAdd(col.screenX, aeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX, clampedAeY1, 0xFFFFFFFF, u2, v2);
+				AEGfxTriAdd(col.screenX, clampedAeY1, 0xFFFFFFFF, u2, v2, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX2, clampedAeY1, 0xFFFFFFFF, u2, v2);
+				triCount += 2;
+
+				if (triCount >= MAX_TRIANGLES_PER_MESH) {
+					AEGfxVertexList* mesh = AEGfxMeshEnd();
+					if (mesh) {
+						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+						AEGfxSetTransparency(1.0f);
+						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						AEGfxMeshFree(mesh);
+					}
+					meshIsOpen = false;
+				}
+			}
+		}
+		
+		if (meshIsOpen) {
+			AEGfxVertexList* mesh = AEGfxMeshEnd();
+			if (mesh) {
+				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+				AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+				AEGfxSetColorToAdd(0, 0, 0, 0);
+				AEGfxSetTransparency(1.0f);
+				AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+				AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+				AEGfxMeshFree(mesh);
+			}
+		}
+	}
+
+	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+		const std::vector<ColumnInfo>& columns, TileMap* map) {
+		
+		// Check if we have any floor sprites
+		if (floorSprites.empty()) return;
+		if (columns.empty()) return;
+
+		auto sprite = GetFloorSprite(1);
+		if (!sprite || !sprite->IsLoaded()) return;
+
+		// Pre-calculate row distances (done once, outside scanline loop)
+		f32 posZ = camZ;
+		int horizon = screenHeight / 2;
+
+		int triCount = 0;
+		bool meshIsOpen = false;
+
+		// Scanline-based rendering: use original loop structure with cached rowDist lookup
+		for (int y = horizon; y < screenHeight; y += ROW_STEP) {
+			int scanIdx = (y - horizon) / ROW_STEP;
+			if (scanIdx >= (int)floorScanlines.size()) continue;
+			
+			f32 rowDist = floorScanlines[scanIdx].rowDist;
+			if (rowDist < 0) continue; // Invalid scanline
+
+			int yNext = y + ROW_STEP;
+			if (yNext > screenHeight) yNext = screenHeight;
+			
+			int scanIdxNext = (yNext - horizon) / ROW_STEP;
+			f32 rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
+				? floorScanlines[scanIdxNext].rowDist 
+				: rowDist;
+			if (rowDistNext < 0) rowDistNext = rowDist;
+
+			f32 aeY1 = (f32)horizon - (f32)yNext;
+			f32 aeY2 = (f32)horizon - (f32)y;
+
+		// Now iterate columns for this scanline
+			for (const auto& col : columns) {
+				// Calculate clamped Y coordinates for this column
+				// This prevents gaps at wall-floor boundary
+				f32 clampedAeY2 = aeY2;
+				f32 clampedRowDist = rowDist;
+				
+				// If this scanline row starts above the wall end, clamp to wall end
+				if (y < (int)col.ray.drawEnd) {
+					// Skip entirely if even the bottom of this band is above wall end
+					if (yNext <= (int)col.ray.drawEnd) continue;
+					
+					// Clamp top of quad to wall boundary
+					clampedAeY2 = (f32)horizon - col.ray.drawEnd;
+					f32 clampedP = col.ray.drawEnd - (f32)horizon;
+					if (fabsf(clampedP) > 0.1f) {
+						clampedRowDist = posZ * (f32)screenHeight / clampedP;
+					}
+				}
+
+				if (!meshIsOpen) {
+					AEGfxMeshStart();
+					meshIsOpen = true;
+					triCount = 0;
+				}
+
+				// UV computed using shared rowDist (or clamped version)
+				f32 u1 = pos.x + clampedRowDist * col.rayDirX;
+				f32 v1 = pos.y + clampedRowDist * col.rayDirY;
+				f32 u2 = pos.x + rowDistNext * col.rayDirX;
+				f32 v2 = pos.y + rowDistNext * col.rayDirY;
+
+				AEGfxTriAdd(col.screenX, clampedAeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX, aeY1, 0xFFFFFFFF, u2, v2);
+				AEGfxTriAdd(col.screenX, aeY1, 0xFFFFFFFF, u2, v2, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1, v1, 
+				            col.screenX2, aeY1, 0xFFFFFFFF, u2, v2);
+				triCount += 2;
+
+				if (triCount >= MAX_TRIANGLES_PER_MESH) {
+					AEGfxVertexList* mesh = AEGfxMeshEnd();
+					if (mesh) {
+						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+						AEGfxSetTransparency(1.0f);
+						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						AEGfxMeshFree(mesh);
+					}
+					meshIsOpen = false;
+				}
+			}
+		}
+
+		if (meshIsOpen) {
+			AEGfxVertexList* mesh = AEGfxMeshEnd();
+			if (mesh) {
+				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+				AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+				AEGfxSetColorToAdd(0, 0, 0, 0);
+				AEGfxSetTransparency(1.0f);
+				AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+				AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+				AEGfxMeshFree(mesh);
+			}
+		}
+	}
+
+	void TileMapRenderer::RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns) {
+		
+		bool hasCeilingSprites = !ceilingSprites.empty();
+		bool hasFloorSprites = !floorSprites.empty();
+		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
+
+		// Sequential Batch 1: Ceiling Fallback
+		if (!hasCeilingSprites) {
+			u32 ceilColorU32 = (((u32)(ceilingColor.r * 255)) << 24) | (((u32)(ceilingColor.g * 255)) << 16) | (((u32)(ceilingColor.b * 255)) << 8) | (u32)(ceilingColor.a * 255);
+			int triCount = 0;
+			bool meshIsOpen = false;
+			
+			for (const auto& col : columns) {
+				f32 topY = screenHeight / 2.0f;
+				f32 wallStart = col.screenY2;
+				for (f32 y = topY; y > wallStart; y -= ROW_STEP) {
+					if (!meshIsOpen) {
+						AEGfxMeshStart();
+						meshIsOpen = true;
+						triCount = 0;
+					}
+
+					f32 yNext = y - ROW_STEP;
+					if (yNext < wallStart) yNext = wallStart;
+					AEGfxTriAdd(col.screenX, y, ceilColorU32, 0, 0, col.screenX2, y, ceilColorU32, 0, 0, col.screenX, yNext, ceilColorU32, 0, 0);
+					AEGfxTriAdd(col.screenX, yNext, ceilColorU32, 0, 0, col.screenX2, y, ceilColorU32, 0, 0, col.screenX2, yNext, ceilColorU32, 0, 0);
+					triCount += 2;
+
+					if (triCount >= MAX_TRIANGLES_PER_MESH) {
+						AEGfxVertexList* mesh = AEGfxMeshEnd();
+						if (mesh) {
+							AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+							AEGfxSetBlendMode(AE_GFX_BM_NONE);
+							AEGfxSetColorToMultiply(1, 1, 1, 1);
+							AEGfxSetColorToAdd(0, 0, 0, 0);
+							AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+							AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+							AEGfxMeshFree(mesh);
+						}
+						meshIsOpen = false;
+					}
+				}
+			}
+
+			if (meshIsOpen) {
+				AEGfxVertexList* mesh = AEGfxMeshEnd();
+				if (mesh) {
+					AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+					AEGfxSetBlendMode(AE_GFX_BM_NONE);
+					AEGfxSetColorToMultiply(1, 1, 1, 1);
+					AEGfxSetColorToAdd(0, 0, 0, 0);
+					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+					AEGfxMeshFree(mesh);
+				}
+			}
+		}
+
+		// Sequential Batch 2: Floor Fallback
+		if (!hasFloorSprites) {
+			u32 floorColorU32 = (((u32)(floorColor.r * 255)) << 24) | (((u32)(floorColor.g * 255)) << 16) | (((u32)(floorColor.b * 255)) << 8) | (u32)(floorColor.a * 255);
+			int triCount = 0;
+			bool meshIsOpen = false;
+			
+			for (const auto& col : columns) {
+				f32 wallEnd = col.screenY;
+				f32 bottomY = -screenHeight / 2.0f;
+				for (f32 y = wallEnd; y > bottomY; y -= ROW_STEP) {
+					if (!meshIsOpen) {
+						AEGfxMeshStart();
+						meshIsOpen = true;
+						triCount = 0;
+					}
+
+					f32 yNext = y - ROW_STEP;
+					if (yNext < bottomY) yNext = bottomY;
+					AEGfxTriAdd(col.screenX, y, floorColorU32, 0, 0, col.screenX2, y, floorColorU32, 0, 0, col.screenX, yNext, floorColorU32, 0, 0);
+					AEGfxTriAdd(col.screenX, yNext, floorColorU32, 0, 0, col.screenX2, y, floorColorU32, 0, 0, col.screenX2, yNext, floorColorU32, 0, 0);
+					triCount += 2;
+
+					if (triCount >= MAX_TRIANGLES_PER_MESH) {
+						AEGfxVertexList* mesh = AEGfxMeshEnd();
+						if (mesh) {
+							AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+							AEGfxSetBlendMode(AE_GFX_BM_NONE);
+							AEGfxSetColorToMultiply(1, 1, 1, 1);
+							AEGfxSetColorToAdd(0, 0, 0, 0);
+							AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+							AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+							AEGfxMeshFree(mesh);
+						}
+						meshIsOpen = false;
+					}
+				}
+			}
+
+			if (meshIsOpen) {
+				AEGfxVertexList* mesh = AEGfxMeshEnd();
+				if (mesh) {
+					AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+					AEGfxSetBlendMode(AE_GFX_BM_NONE);
+					AEGfxSetColorToMultiply(1, 1, 1, 1);
+					AEGfxSetColorToAdd(0, 0, 0, 0);
+					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+					AEGfxMeshFree(mesh);
+				}
+			}
+		}
+
+		// Sequential Batch 3: Walls (Textured by tile type, or Fallback)
+		// Group columns by tile type for batching
+		std::unordered_map<int, std::vector<const ColumnInfo*>> columnsByType;
+		for (const auto& col : columns) {
+			columnsByType[col.ray.tileType].push_back(&col);
+		}
+
+		// Render each tile type's walls
+		for (const auto& pair : columnsByType) {
+			int tileType = pair.first;
+			const auto& typeCols = pair.second;
+			
+			auto sprite = GetWallSprite(tileType);
+			bool hasSprite = sprite && sprite->IsLoaded();
+
+			int triCount = 0;
+			bool meshIsOpen = false;
+			
+			for (const ColumnInfo* colPtr : typeCols) {
+				const ColumnInfo& col = *colPtr;
+				
+				if (hasSprite) {
+					u32 fogColor = (((u32)(col.fogFactor * 255)) << 24) | (((u32)(col.fogFactor * 255)) << 16) | (((u32)(col.fogFactor * 255)) << 8) | 0xFF;
+					
+					if (!meshIsOpen) {
+						AEGfxMeshStart();
+						meshIsOpen = true;
+						triCount = 0;
+					}
+
+					// Single quad per column - GPU handles texture interpolation
+					AEGfxTriAdd(col.screenX, col.screenY2, fogColor, col.ray.wallX, col.vTop,
+					            col.screenX2, col.screenY2, fogColor, col.ray.wallX, col.vTop,
+					            col.screenX, col.screenY, fogColor, col.ray.wallX, col.vBottom);
+					AEGfxTriAdd(col.screenX, col.screenY, fogColor, col.ray.wallX, col.vBottom,
+					            col.screenX2, col.screenY2, fogColor, col.ray.wallX, col.vTop,
+					            col.screenX2, col.screenY, fogColor, col.ray.wallX, col.vBottom);
+					triCount += 2;
+
+					if (triCount >= MAX_TRIANGLES_PER_MESH) {
+						AEGfxVertexList* mesh = AEGfxMeshEnd();
+						if (mesh) {
+							AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+							AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+							AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+							AEGfxSetColorToMultiply(1, 1, 1, 1);
+							AEGfxSetColorToAdd(0, 0, 0, 0);
+							AEGfxSetTransparency(1.0f);
+							AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+							AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+							AEGfxMeshFree(mesh);
+						}
+						meshIsOpen = false;
+					}
+				} else {
+					Color c = (col.ray.side == 0) ? wallColorNS : wallColorEW;
+					u32 wallColorU32 = (((u32)(c.r * col.fogFactor * 255)) << 24) | (((u32)(c.g * col.fogFactor * 255)) << 16) | (((u32)(c.b * col.fogFactor * 255)) << 8) | 0xFF;
+					
+					if (!meshIsOpen) {
+						AEGfxMeshStart();
+						meshIsOpen = true;
+						triCount = 0;
+					}
+
+					// Single quad per column - no ROW_STEP subdivision needed
+					AEGfxTriAdd(col.screenX, col.screenY2, wallColorU32, 0, 0,
+					            col.screenX2, col.screenY2, wallColorU32, 0, 0,
+					            col.screenX, col.screenY, wallColorU32, 0, 0);
+					AEGfxTriAdd(col.screenX, col.screenY, wallColorU32, 0, 0,
+					            col.screenX2, col.screenY2, wallColorU32, 0, 0,
+					            col.screenX2, col.screenY, wallColorU32, 0, 0);
+					triCount += 2;
+
+					if (triCount >= MAX_TRIANGLES_PER_MESH) {
+						AEGfxVertexList* mesh = AEGfxMeshEnd();
+						if (mesh) {
+							AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+							AEGfxSetBlendMode(AE_GFX_BM_NONE);
+							AEGfxSetColorToMultiply(1, 1, 1, 1);
+							AEGfxSetColorToAdd(0, 0, 0, 0);
+							AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+							AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+							AEGfxMeshFree(mesh);
+						}
+						meshIsOpen = false;
+					}
+				}
+			}
+
+			if (meshIsOpen) {
+				AEGfxVertexList* mesh = AEGfxMeshEnd();
+				if (mesh) {
+					if (hasSprite) {
+						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+						AEGfxSetColorToMultiply(1, 1, 1, 1);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+						AEGfxSetTransparency(1.0f);
+					} else {
+						AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+						AEGfxSetBlendMode(AE_GFX_BM_NONE);
+						AEGfxSetColorToMultiply(1, 1, 1, 1);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+					}
+					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+					AEGfxMeshFree(mesh);
+				}
+			}
 		}
 	}
 
@@ -175,20 +605,53 @@ namespace Engine {
 		AEGfxMeshDraw(columnMesh, AE_GFX_MDM_TRIANGLES);
 	}
 
-	void TileMapRenderer::DrawRect(f32 x, f32 y, f32 w, f32 h, const Color& color, int sw, int sh) {
-		AEGfxSetRenderMode(AE_GFX_RM_COLOR);
-		AEGfxSetBlendMode(AE_GFX_BM_NONE);
-		AEGfxSetColorToMultiply(color.r, color.g, color.b, color.a);
-		AEGfxSetColorToAdd(0, 0, 0, 0);
 
-		AEMtx33 scale, trans, result;
-		AEMtx33Scale(&scale, w, h);
-		f32 screenX = x - sw / 2.0f;
-		f32 screenY = sh / 2.0f - y - h;
-		AEMtx33Trans(&trans, screenX, screenY);
-		AEMtx33Concat(&result, &trans, &scale);
-		AEGfxSetTransform(result.m);
-		AEGfxMeshDraw(columnMesh, AE_GFX_MDM_TRIANGLES);
+	void TileMapRenderer::CacheScanlineDistances(int screenHeight, f32 camZ) {
+		// Only recompute if screen size or camera height changed
+		if (screenHeight == cachedScreenHeight && fabsf(camZ - cachedCamZ) < 0.0001f) {
+			return;
+		}
+
+		cachedScreenHeight = screenHeight;
+		cachedCamZ = camZ;
+		int horizon = screenHeight / 2;
+
+		// Cache ceiling scanlines (from top toward horizon)
+		// Ceiling is at height 1.0, so posZ = 1.0 - camZ
+		f32 ceilingPosZ = 1.0f - camZ;
+		int ceilingRows = (horizon + ROW_STEP - 1) / ROW_STEP + 1;
+		ceilingScanlines.resize(ceilingRows);
+		
+		int idx = 0;
+		for (int y = 0; y < horizon; y += ROW_STEP) {
+			f32 p = (f32)horizon - (f32)y;
+			if (fabsf(p) < 0.1f) {
+				ceilingScanlines[idx].rowDist = -1.0f; // Invalid, skip
+			} else {
+				ceilingScanlines[idx].rowDist = ceilingPosZ * (f32)screenHeight / p;
+			}
+			ceilingScanlines[idx].aeY = (f32)horizon - (f32)y; // aeY2 (top of band)
+			idx++;
+		}
+
+		// Cache floor scanlines (from horizon toward bottom)
+		// Floor is at height 0.0, so posZ = camZ
+		f32 floorPosZ = camZ;
+		int floorRows = ((screenHeight - horizon) + ROW_STEP - 1) / ROW_STEP + 2; // +2 for final edge
+		floorScanlines.resize(floorRows);
+		
+		idx = 0;
+		for (int y = horizon; y <= screenHeight; y += ROW_STEP) {
+			f32 p = (f32)y - (f32)horizon;
+			if (fabsf(p) < 0.1f) {
+				floorScanlines[idx].rowDist = -1.0f; // Invalid, skip
+			} else {
+				floorScanlines[idx].rowDist = floorPosZ * (f32)screenHeight / p;
+			}
+			floorScanlines[idx].aeY = (f32)horizon - (f32)y; // aeY2 (top of band)
+			idx++;
+			if (idx >= floorRows) break; // Safety bounds check
+		}
 	}
 
 } // namespace Engine

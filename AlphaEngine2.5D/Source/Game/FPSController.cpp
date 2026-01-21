@@ -17,10 +17,8 @@ void FPSController::Initialize() {
     rigidbody = gameObject->GetComponent<Rigidbody2D>();
     
     // Initialize view height
-    if (rigidbody) {
-        currentViewHeight = rigidbody->standingHeight * eyeHeightRatio;
-        targetViewHeight = currentViewHeight;
-    }
+    currentViewHeight = eyeHeight;
+    targetViewHeight = eyeHeight;
     
     // Hide cursor
     ShowCursor(FALSE);
@@ -130,6 +128,7 @@ void FPSController::Update() {
         jumpCooldown = 0.25f;
     }
     prevSpace = spaceNow;
+	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
     
     // Crouching (Ctrl or C)
     if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {
@@ -137,8 +136,9 @@ void FPSController::Update() {
     }
     
     // Calculate target view height based on crouch state and jump
-    f32 bodyHeight = rigidbody->isCrouching ? rigidbody->crouchHeight : rigidbody->standingHeight;
-    targetViewHeight = rigidbody->currentHeight + (bodyHeight * eyeHeightRatio);
+    // Z=0 is ground, Z=0.5 is eye level (standing), jumping adds to this
+    f32 crouchOffset = rigidbody->isCrouching ? -0.25f : 0.0f; // Crouch lowers view
+    targetViewHeight = eyeHeight + rigidbody->currentHeight + crouchOffset;
     f32 actualSpeed = sqrtf(rigidbody->velocity.x * rigidbody->velocity.x +
         rigidbody->velocity.y * rigidbody->velocity.y);
     
