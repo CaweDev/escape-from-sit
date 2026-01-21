@@ -1,10 +1,4 @@
 #include "PuzzleObject.h"
-std::vector<Book> allBooks;
-AEGfxVertexList* BookMesh = nullptr;
-AEGfxTexture* HLP1 = nullptr;
-AEGfxTexture* HLP2 = nullptr;
-AEGfxTexture* HLP3 = nullptr;
-
 
 AEGfxVertexList* CreateMesh()
 {   

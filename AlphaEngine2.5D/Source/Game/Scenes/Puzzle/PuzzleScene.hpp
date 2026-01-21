@@ -58,6 +58,18 @@ public:
         renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
         renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
         renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+        {   // Load map sprites into TileMapRenderer
+            auto skySprite = std::make_shared<Sprite>();
+            skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
+            auto groundSprite = std::make_shared<Sprite>();
+            groundSprite->Load("Assets/Tilemap/modern_school_floor.png");
+            auto wallSprite = std::make_shared<Sprite>();
+            wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
+            // Set on TileMapRenderer
+            renderer->SetCeilingSprite(skySprite);
+            renderer->SetFloorSprite(groundSprite);
+            renderer->SetWallSprite(wallSprite);
+        }
         
         // Add tilemap collider for physics
         auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
@@ -83,30 +95,10 @@ public:
         player->AddComponent<Player>();
         player->transform->position = Vector2(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
-
-        // Create dummy enemy with collider
-        auto enemy = CreateGameObject("Book");
-        enemy->transform->position = Vector2(Engin, 1.5f);
-        enemy->transform->rotation = 0.0f;
-        enemy->transform->localScale = Vector2(1.0f, 1.0f);
         
-        // Enemy collider (static body)
-        auto enemyRb = enemy->AddComponent<Rigidbody2D>();
-        enemyRb->bodyType = RigidbodyType2D::Static;
+        PuzzleManager::BookDataInit();
+        PuzzleManager::Init();
         
-        auto enemyCollider = enemy->AddComponent<CircleCollider2D>();
-        enemyCollider->radius = 0.5f;
-        enemyCollider->minHeight = 0.0f;
-        enemyCollider->maxHeight = 2.0f;
-        
-        // Enemy sprite
-        auto enemySR = enemy->AddComponent<SpriteRenderer>();
-        std::shared_ptr<Sprite> enemySprite = std::make_shared<Sprite>();
-        enemySprite->Load("Assets/book.png", 500, 500);
-        enemySR->SetSprite(enemySprite);
-        enemySR->billboard = true;
-        enemySR->enabled = true;
-        enemySR->sortingOrder = 100;
     }
     
     void OnUpdate() override {

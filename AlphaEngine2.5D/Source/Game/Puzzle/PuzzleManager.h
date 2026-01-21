@@ -3,8 +3,15 @@
 
 class PuzzleManager
 {
-	void CreatePuzzleObject();
-	std::vector<Book>Books;
-	void Init();
+public:
+	static std::vector<Book> allBooks;
+	static AEGfxVertexList* BookMesh;
+	static AEGfxTexture* HLP1[3];
+	static void CreatePuzzleObject(Book book);
+	static void BookDataInit();
+	static std::vector<Book>Books;
+	static void Init();
+
 
 };
+

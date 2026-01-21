@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
