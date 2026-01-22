@@ -23,6 +23,7 @@ namespace Engine {
 	 * @class TileMapRenderer
 	 * @brief Renders walls, floor, and ceiling using DDA raycasting algorithm
 	 */
+	 // TODO: [Caleb.A] Fix dead cells on top and right borders when moving further in their respective axis
 	class TileMapRenderer : public IRenderer {
 	private:
 		// Rendering resolution constants

@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp" />
     <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
     <ClCompile Include="Source\Engine\Input\Input.cpp" />
@@ -34,14 +35,28 @@
     <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\Button.cpp" />
+    <ClCompile Include="Source\Engine\UI\Canvas.cpp" />
+    <ClCompile Include="Source\Engine\UI\HorizontalLayoutGroup.cpp" />
+    <ClCompile Include="Source\Engine\UI\Image.cpp" />
+    <ClCompile Include="Source\Engine\UI\LayoutGroup.cpp" />
+    <ClCompile Include="Source\Engine\UI\Panel.cpp" />
+    <ClCompile Include="Source\Engine\UI\Text.cpp" />
+    <ClCompile Include="Source\Engine\UI\Texture2D.cpp" />
+    <ClCompile Include="Source\Engine\UI\UIElement.cpp" />
+    <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
@@ -78,11 +93,26 @@
     <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
+    <ClInclude Include="Source\Engine\UI\Button.hpp" />
+    <ClInclude Include="Source\Engine\UI\Canvas.hpp" />
+    <ClInclude Include="Source\Engine\UI\HorizontalLayoutGroup.hpp" />
+    <ClInclude Include="Source\Engine\UI\Image.hpp" />
+    <ClInclude Include="Source\Engine\UI\LayoutGroup.hpp" />
+    <ClInclude Include="Source\Engine\UI\Panel.hpp" />
+    <ClInclude Include="Source\Engine\UI\RectTransform.hpp" />
+    <ClInclude Include="Source\Engine\UI\Text.hpp" />
+    <ClInclude Include="Source\Engine\UI\Texture2D.hpp" />
+    <ClInclude Include="Source\Engine\UI\UI.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIElement.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIEventSystem.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIManager.hpp" />
+    <ClInclude Include="Source\Engine\UI\VerticalLayoutGroup.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->
     <ClInclude Include="Source\Game\FPSController.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard.hpp" />
   </ItemGroup>
   <ItemGroup>

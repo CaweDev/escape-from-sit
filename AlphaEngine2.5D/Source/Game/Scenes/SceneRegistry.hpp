@@ -6,6 +6,7 @@
 
 #include "Engine/Scene/SceneManager.hpp"
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
+#include "Game/Scenes/UITestScene/UITestScene.hpp"
 
 namespace Game {
 
@@ -13,12 +14,14 @@ using namespace Engine;
 
 // Scene instances
 inline FPSScene fpsScene;
+inline UITestScene uiTestScene;
 
 /**
  * @brief Register all game scenes with the SceneManager
  * Call this once after engine initialization
  */
 inline void RegisterAllScenes() {
+    SceneManager::RegisterScene("UI", &uiTestScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
 }
 

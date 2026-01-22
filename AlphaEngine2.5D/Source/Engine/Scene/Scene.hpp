@@ -37,6 +37,12 @@ public:
     /** Called every frame while scene is active */
     virtual void OnUpdate() {}
 
+    /** Called every frame before scene is about to render */
+    virtual void OnPreRender() {}
+
+    /** Called every frame after scene renders gameobjects */
+    virtual void OnAfterRender() {}
+
     // GameObject management
     
     /** Create a new GameObject in this scene */

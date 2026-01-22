@@ -42,10 +42,10 @@ bool Sprite::Load(const std::string& filepath) {
     // Create quad mesh (1x1 unit, centered) regardless of texture success
     CreateQuadMesh();
     
-    texture = AEGfxTextureLoad(filepath.c_str());
-    if (!texture) {
+    texture = new Texture2D(filepath);
+    if (!texture->IsLoaded()) {
         printf("[Error] Sprite: Failed to load texture from %s. Rendering as fallback quad.\n", filepath.c_str());
-        // Return true because we have a mesh and can render as color quad
+        // We still have the mesh, so we can render a color quad if needed
         return true; 
     }
     
@@ -60,7 +60,7 @@ bool Sprite::Load(const std::string& filepath, int w, int h) {
 
 void Sprite::Unload() {
     if (texture) {
-        AEGfxTextureUnload(texture);
+        delete texture;
         texture = nullptr;
     }
     if (mesh) {
@@ -70,12 +70,13 @@ void Sprite::Unload() {
 }
 
 bool Sprite::IsLoaded() const {
-    return texture != nullptr && mesh != nullptr;
+    return texture != nullptr && texture->IsLoaded() && mesh != nullptr;
 }
 
 AEGfxTexture* Sprite::GetTexture() const {
-    return texture;
+    return texture ? texture->GetNativeTexture() : nullptr;
 }
+
 
 AEGfxVertexList* Sprite::GetMesh() const {
     return mesh;

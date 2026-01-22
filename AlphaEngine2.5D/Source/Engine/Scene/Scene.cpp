@@ -85,6 +85,7 @@ void Scene::UpdateInternal() {
 
 void Scene::RenderInternal() {
     if (!isLoaded) return;
+	OnPreRender();
     
     // Apply camera settings if a main camera exists
     if (Camera::main) {
@@ -94,6 +95,8 @@ void Scene::RenderInternal() {
     for (auto& obj : gameObjects) {
         obj->InternalRender();
     }
+
+	OnAfterRender();
 }
 
 bool Scene::IsLoaded() const {

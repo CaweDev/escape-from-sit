@@ -1,0 +1,267 @@
+/**
+ * @file UIManager.cpp
+ * @brief UIManager implementation
+ */
+
+#include "UIManager.hpp"
+#include "../Graphics/Texture2D.hpp"
+#include "UIEventSystem.hpp"
+#include "UIElement.hpp"
+#include "../Core/Application.hpp"
+
+namespace UI
+{
+    // Static member initialization
+    UIManager* UIManager::s_instance = nullptr;
+    AEGfxVertexList* UIManager::s_quadMesh = nullptr;
+
+    bool UIManager::Initialize()
+    {
+        if (s_instance)
+        {
+            return true; // Already initialized
+        }
+
+        s_instance = new UIManager();
+		s_instance->LoadDefaultFont("Assets/liberation-mono.ttf", 16);
+
+        // Create shared resources
+        CreateQuadMesh();
+        Engine::Texture2D::InitializeStatics();
+
+        return true;
+    }
+
+    void UIManager::Shutdown()
+    {
+        if (!s_instance) return;
+
+        // Destroy all canvases
+        for (auto* canvas : s_instance->m_canvases)
+        {
+            delete canvas;
+        }
+        s_instance->m_canvases.clear();
+
+        // Destroy default font
+        if (s_instance->m_defaultFont >= 0)
+        {
+            AEGfxDestroyFont(s_instance->m_defaultFont);
+            s_instance->m_defaultFont = -1;
+        }
+
+        // Cleanup shared resources
+        if (s_quadMesh)
+        {
+            AEGfxMeshFree(s_quadMesh);
+            s_quadMesh = nullptr;
+        }
+
+        Engine::Texture2D::ShutdownStatics();
+
+        delete s_instance;
+        s_instance = nullptr;
+    }
+
+    void UIManager::CreateQuadMesh()
+    {
+        if (s_quadMesh) return;
+
+        // Create a 1x1 quad centered at origin
+        AEGfxMeshStart();
+
+        // Triangle 1: bottom-left, bottom-right, top-left
+        AEGfxTriAdd(
+            -0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,  // bottom-left
+             0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,  // bottom-right
+            -0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f   // top-left
+        );
+
+        // Triangle 2: bottom-right, top-right, top-left
+        AEGfxTriAdd(
+             0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f,  // bottom-right
+             0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,  // top-right
+            -0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f   // top-left
+        );
+
+        s_quadMesh = AEGfxMeshEnd();
+    }
+
+    void UIManager::Update(f32 dt)
+    {
+        // Process input first
+        ProcessInput();
+
+        // Update all canvases
+        for (auto* canvas : m_canvases)
+        {
+            canvas->Update(dt);
+        }
+    }
+
+    void UIManager::Render()
+    {
+        // Reset camera position to origin for UI rendering (Standard Center-Origin World)
+        AEGfxSetCamPosition(0.0f, 0.0f);
+
+        // Render all canvases in order
+        for (auto* canvas : m_canvases)
+        {
+            canvas->Render();
+        }
+    }
+
+    Canvas* UIManager::CreateCanvas()
+    {
+        Canvas* canvas = new Canvas();
+        m_canvases.push_back(canvas);
+        return canvas;
+    }
+
+    void UIManager::DestroyCanvas(Canvas* canvas)
+    {
+        if (!canvas) return;
+
+        auto it = std::find(m_canvases.begin(), m_canvases.end(), canvas);
+        if (it != m_canvases.end())
+        {
+            m_canvases.erase(it);
+            delete canvas;
+        }
+    }
+
+    bool UIManager::LoadDefaultFont(const char* fontPath, s32 fontSize)
+    {
+        if (m_defaultFont >= 0)
+        {
+            AEGfxDestroyFont(m_defaultFont);
+        }
+
+        m_defaultFont = AEGfxCreateFont(fontPath, fontSize);
+        return m_defaultFont >= 0;
+    }
+
+    void UIManager::ScreenToWorld(s32 screenX, s32 screenY, f32& outWorldX, f32& outWorldY)
+    {
+        f32 screenWidth = static_cast<f32>(Engine::Application::GetWindowWidth());
+        f32 screenHeight = static_cast<f32>(Engine::Application::GetWindowHeight());
+ 
+        // Screen coordinates: (0,0) at top-left, Y increases downward
+        // World coordinates: (0,0) at center, Y increases upward
+        outWorldX = static_cast<f32>(screenX) - screenWidth * 0.5f;
+        outWorldY = screenHeight * 0.5f - static_cast<f32>(screenY);
+    }
+
+    void UIManager::OnElementDestroyed(UIElement* element)
+    {
+        if (m_hoveredElement == element)
+        {
+            m_hoveredElement = nullptr;
+        }
+        if (m_pressedElement == element)
+        {
+            m_pressedElement = nullptr;
+        }
+    }
+
+    void UIManager::ProcessInput()
+    {
+        // Get mouse position
+        s32 mouseX, mouseY;
+        AEInputGetCursorPosition(&mouseX, &mouseY);
+
+        f32 worldX, worldY;
+        ScreenToWorld(mouseX, mouseY, worldX, worldY);
+
+        // Raycast to find element under mouse
+        UIElement* hitElement = RaycastAll(worldX, worldY);
+
+        // Prepare event data
+        PointerEventData eventData;
+        eventData.worldX = worldX;
+        eventData.worldY = worldY;
+        eventData.screenX = mouseX;
+        eventData.screenY = mouseY;
+        eventData.isPressed = AEInputCheckCurr(AEVK_LBUTTON);
+        eventData.target = hitElement;
+
+        // Handle hover state changes
+        if (hitElement != m_hoveredElement)
+        {
+            // Dispatch OnPointerExit to old element
+            if (m_hoveredElement)
+            {
+                auto* exitHandler = dynamic_cast<IPointerExitHandler*>(m_hoveredElement);
+                if (exitHandler)
+                {
+                    exitHandler->OnPointerExit(eventData);
+                }
+            }
+
+            // Dispatch OnPointerEnter to new element
+            if (hitElement)
+            {
+                auto* enterHandler = dynamic_cast<IPointerEnterHandler*>(hitElement);
+                if (enterHandler)
+                {
+                    enterHandler->OnPointerEnter(eventData);
+                }
+            }
+
+            m_hoveredElement = hitElement;
+        }
+
+        // Handle mouse button
+        bool mousePressed = eventData.isPressed;
+
+        if (mousePressed && !m_mouseWasPressed)
+        {
+            // Mouse just pressed
+            m_pressedElement = m_hoveredElement;
+            if (m_pressedElement)
+            {
+                auto* downHandler = dynamic_cast<IPointerDownHandler*>(m_pressedElement);
+                if (downHandler)
+                {
+                    downHandler->OnPointerDown(eventData);
+                }
+            }
+        }
+        else if (!mousePressed && m_mouseWasPressed)
+        {
+            // Mouse just released
+            if (m_pressedElement)
+            {
+                auto* upHandler = dynamic_cast<IPointerUpHandler*>(m_pressedElement);
+                if (upHandler)
+                {
+                    upHandler->OnPointerUp(eventData);
+                }
+
+                if (m_pressedElement == m_hoveredElement)
+                {
+                    auto* clickHandler = dynamic_cast<IPointerClickHandler*>(m_pressedElement);
+                    if (clickHandler)
+                    {
+                        clickHandler->OnPointerClick(eventData);
+                    }
+                }
+            }
+            m_pressedElement = nullptr;
+        }
+
+        m_mouseWasPressed = mousePressed;
+    }
+
+    UIElement* UIManager::RaycastAll(f32 worldX, f32 worldY) const
+    {
+        // Raycast through canvases in reverse order (later canvases are on top)
+        for (auto it = m_canvases.rbegin(); it != m_canvases.rend(); ++it)
+        {
+            UIElement* hit = (*it)->Raycast(worldX, worldY);
+            if (hit) return hit;
+        }
+        return nullptr;
+    }
+
+} // namespace UI

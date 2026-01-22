@@ -16,6 +16,9 @@
 // Engine Scene
 #include "Engine/Scene/SceneManager.hpp"
 
+// Engine UI
+#include "Engine/UI/UI.hpp"
+
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
 
@@ -34,6 +37,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1280, 720, 1, 60, false, NULL);
     AESysSetWindowTitle("Totally not Unity Engine. It's Alpha Engine!!!");
+
+    // Initialize UI System
+    UI::UIManager::Initialize();
+
+    // Set default background color (Solid Black)
+    AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
 
     // Register all scenes and load the first one
     Game::RegisterAllScenes();
@@ -56,11 +65,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // Update scene (handles input, physics, rendering)
         SceneManager::UpdateActiveScene();
 
+        // Update UI System
+        if (UI::UIManager::GetInstance()) {
+            UI::UIManager::GetInstance()->Update(Time::deltaTime);
+        }
+
         SceneManager::RenderActiveScene();
+
+        // Render UI System on top
+        if (UI::UIManager::GetInstance()) {
+            UI::UIManager::GetInstance()->Render();
+        }
 
         // Frame end
         AESysFrameEnd();
     }
+
+    // Cleanup UI System
+    UI::UIManager::Shutdown();
 
     // Cleanup
     AESysExit();
