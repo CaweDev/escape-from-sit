@@ -46,7 +46,7 @@ void PuzzleManager::BookDataInit()
 
     std::string BookText[3] = { {"Book1"},{"Book2"},{"Book3"} };
 
-    Engine::Vector3 BookCoord[3] = { {10.0f, 0.0f, 5.0f} ,{10.0f, 0.0f, 5.0f},{10.0f, 0.0f, 5.0f} };
+    Engine::Vector3 BookCoord[3] = { {1.5f, 1.5f, 0.4F} ,{10.0f, 0.0f, 5.0f},{10.0f, 0.0f, 5.0f} };
 
 
     for (int i{}; i < 3; ++i) {
