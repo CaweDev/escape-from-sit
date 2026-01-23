@@ -278,7 +278,7 @@ namespace Game {
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
-            const float floatAmplitude = 0.25f;
+            const float floatAmplitude = 0.15f;
             const float floatSpeed = 2.0f;
             for (size_t i = 0; i < powerUps.size(); ++i) {
                 auto& pos = powerUps[i]->transform->position;
