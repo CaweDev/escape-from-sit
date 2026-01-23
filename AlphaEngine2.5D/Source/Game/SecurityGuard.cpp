@@ -2,10 +2,9 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
 #include <cmath>
-#include <vector>
-#include <queue>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 namespace Game {
 
@@ -13,184 +12,227 @@ namespace Game {
 
     void SecurityGuard::Initialize()
     {
-       //random generateed once used for path ltr
         if (!seeded) {
             std::srand((unsigned)std::time(nullptr));
             seeded = true;
         }
-        BuildPathBFS();
+
+        BuildPathBFS_Random();
     }
 
     void SecurityGuard::Update()
     {
-        if (!tileMap) {
-            return;
-        }
-        if (path.empty() || pathIndex >= (int)path.size()) {
-            BuildPathBFS();
-            return; //if not path createed or walk finish generate new path
-        }
-        //Creates a reference to the original value, with the type automatically deduced.
-        auto& currentPos = gameObject->transform->position;
-        Engine::Vector2 target = path[pathIndex];
+        if (!tileMap || !playerTf || !playerData) return;
 
-        //calculate dist
-        Engine::Vector2 distance(target.x - currentPos.x, target.y - currentPos.y);
-        float distanceSquare = (distance.x * distance.x) + (distance.y * distance.y);
-        if (distanceSquare <= arriveDistance * arriveDistance) {
-            pathIndex++; //move to the next tile
-            if (pathIndex >= (int)path.size()) {
-                BuildPathBFS();
-            }
-            return;
-        }
-
-
-        float dist = std::sqrt(distanceSquare);
-        if (dist <= 0.00001f) return;
-        Engine::Vector2 direction(distance.x / dist, distance.y / dist);
-        currentPos.x += direction.x * speed * Engine::Time::deltaTime;
-        currentPos.y += direction.y * speed * Engine::Time::deltaTime;
-        /*
-        point A to B simple walking
-        if (!transform) return;
-
-        Engine::Vector2 target;
-        if (goingtonextPoint) {
-            target = pointB;
-        }
-        else {
-            target = pointA;
-        }
-        Engine::Vector2 delta;
-        delta.x = target.x - transform->position.x;
-        delta.y = target.y - transform->position.y;
-        float distanceSq = delta.x * delta.x + delta.y * delta.y;
-        if (distanceSq <= arriveDistance * arriveDistance)
+        switch (state)
         {
-            goingtonextPoint = !goingtonextPoint;
-            return;
+        case GuardState::Patrol:
+            PatrolUpdate();
+
+            if (CanSeePlayer()) {
+                state = GuardState::Chase;
+                hasLastSeen = true;
+                lastSeenPos = {
+                    playerTf->position.x,
+                    playerTf->position.y
+                };
+                lostSightTimer = 0.0f;
+                repathTimer = 0.0f;
+            }
+            break;
+
+        case GuardState::Chase:
+            ChaseUpdate();
+            break;
+
+        case GuardState::Catch:
+            std::cout << "YOU GOT CAUGHT. GAME OVER\n";
+            break;
         }
-        float length = std::sqrt(distanceSq);
-        Engine::Vector2 dir(delta.x / length, delta.y / length);
-        transform->position.x += dir.x * speed * Engine::Time::deltaTime;
-        transform->position.y += dir.y * speed * Engine::Time::deltaTime;*/
+        //debug 
+        std::cout << "\r[Guard FSM] "
+            << "State=" << (int)state
+            << " Guard=("
+            << gameObject->transform->position.x << ", "
+            << gameObject->transform->position.y << ") "
+            << "Player=("
+            << playerTf->position.x << ", "
+            << playerTf->position.y << ") "
+            << "LastSeen="
+            << (hasLastSeen
+                ? "(" + std::to_string(lastSeenPos.x) + ", " + std::to_string(lastSeenPos.y) + ")"
+                : "(none)")
+            << " LostSight=" << lostSightTimer
+            << "        "
+            << std::flush;
     }
 
-    /*
-        pseudo code
-        pick random tile
-        breadth first search
-        convert bfs search into path
-        guard follow it
-        when reach pick new dest
-        repeat bfs agan
+  
+    void SecurityGuard::PatrolUpdate()
+    {
+        if (path.empty() || pathIndex >= (int)path.size()) {
+            BuildPathBFS_Random();
+            return;
+        }
 
+        FollowPath(patrolSpeed);
+    }
 
-    */
-    void SecurityGuard::BuildPathBFS() {
+  
+    void SecurityGuard::ChaseUpdate()
+    {
+        if (IsCaught()) {
+            state = GuardState::Catch;
+            return;
+        }
+
+        bool seesPlayer = CanSeePlayer();
+
+        if (seesPlayer) {
+           
+            lastSeenPos = {
+                playerTf->position.x,
+                playerTf->position.y
+            };
+            hasLastSeen = true;
+            lostSightTimer = 0.0f;
+        }
+        else {
+            lostSightTimer += Engine::Time::deltaTime;
+        }
+
+        
+        repathTimer -= Engine::Time::deltaTime;
+        if (repathTimer <= 0.0f && hasLastSeen) {
+            BuildPathBFS_ToGoal(
+                (int)lastSeenPos.x,
+                (int)lastSeenPos.y
+            );
+            repathTimer = 0.35f;
+        }
+
+       
+        if (!path.empty()) {
+            FollowPath(chaseSpeed);
+        }
+
+        if (!seesPlayer && lostSightTimer >= maxLostSightTime) {
+            hasLastSeen = false;
+            state = GuardState::Patrol;
+            BuildPathBFS_Random();
+            return;
+        }
+
+     
+        if (!seesPlayer && (path.empty() || pathIndex >= (int)path.size())) {
+            hasLastSeen = false;
+            state = GuardState::Patrol;
+            BuildPathBFS_Random();
+            return;
+        }
+    }
+
+   
+    bool SecurityGuard::CanSeePlayer() const
+    {
+        float dx = playerTf->position.x - gameObject->transform->position.x;
+        float dy = playerTf->position.y - gameObject->transform->position.y;
+        return (dx * dx + dy * dy) <= detectRadius * detectRadius;
+    }
+
+    bool SecurityGuard::IsCaught() const
+    {
+        float dx = playerTf->position.x - gameObject->transform->position.x;
+        float dy = playerTf->position.y - gameObject->transform->position.y;
+        return (dx * dx + dy * dy) <= catchRadius * catchRadius;
+    }
+
+    void SecurityGuard::FollowPath(float speed)
+    {
+        if (pathIndex >= (int)path.size()) return;
+
+        auto& pos = gameObject->transform->position;
+        auto target = path[pathIndex];
+
+        Engine::Vector2 delta(target.x - pos.x, target.y - pos.y);
+        float d2 = delta.x * delta.x + delta.y * delta.y;
+
+        if (d2 <= arriveDistance * arriveDistance) {
+            pathIndex++;
+            return;
+        }
+
+        float d = std::sqrt(d2);
+        Engine::Vector2 dir(delta.x / d, delta.y / d);
+
+        pos.x += dir.x * speed * Engine::Time::deltaTime;
+        pos.y += dir.y * speed * Engine::Time::deltaTime;
+    }
+
+    void SecurityGuard::BuildPathBFS_Random()
+    {
+        int gx, gy;
+        do {
+            gx = std::rand() % tileMap->width;
+            gy = std::rand() % tileMap->height;
+        } while (!tileMap->IsWalkable(gx + 0.5f, gy + 0.5f));
+
+        BuildPathBFS_ToGoal(gx, gy);
+    }
+
+    void SecurityGuard::BuildPathBFS_ToGoal(int gx, int gy)
+    {
         path.clear();
         pathIndex = 0;
-        if (!tileMap) {
-            return;
-        }
-        //convert position 
-        int startX = (int)gameObject->transform->position.x;
-        int startY = (int)gameObject->transform->position.y;
-        //pick random goal tile
-        //check if tile walkable
-        if (!tileMap->IsWalkable(startX + 0.5f, startY + 0.5f)) {
-            return;
-        }
-        int goalX = startX;
-        int goalY = startY;
 
-        //try 300 times;
-        for (int tries = 0; tries < 300; ++tries) {
-            //randomindex
-            int randomX = std::rand() % tileMap->width;
-            int randomY = std::rand() % tileMap->height;
-            //if can walk then set as goal
-            if (tileMap->IsWalkable(randomX + 0.5f, randomY + 0.5f)) {
-                goalX = randomX;
-                goalY = randomY;
-                break;
-            }
-        }
-        //setup bfs
-        int start = iD(startX, startY);
-        int goal = iD(goalX, goalY);
-        //store parent bfs -1 is for unvisited
+        int sx = (int)gameObject->transform->position.x;
+        int sy = (int)gameObject->transform->position.y;
+
         std::vector<int> parent(tileMap->width * tileMap->height, -1);
-        //bfs queue
         std::queue<int> q;
+
+        int start = iD(sx, sy);
+        int goal = iD(gx, gy);
 
         parent[start] = start;
         q.push(start);
 
-        //4 direction movement
-        /*
-        k	dx[k]	dy[k]	Meaning	New tile
-        0	 1	     0	    Right	(cx+1, cy)
-        1	-1	     0	    Left	(cx-1, cy)
-        2	 0	     1	    Down	(cx, cy+1)
-        3	 0	    -1	    Up	    (cx, cy-1)
-        */
         const int dX[4] = { 1,-1,0,0 };
         const int dY[4] = { 0,0,1,-1 };
-        //bfs loop
-        bool found = false;
+
         while (!q.empty()) {
-            int current = q.front();
-            q.pop();
-            if (current == goal) {
-                //stop when reach
-                found = true;
-                break;
-            }
+            int cur = q.front(); q.pop();
+            if (cur == goal) break;
 
-            //convert id to x n y
-            int convertX = current % tileMap->width;
-            int convertY = current / tileMap->width;
+            int cx = cur % tileMap->width;
+            int cy = cur / tileMap->width;
 
-            //explore neighbour
-            for (int k = 0; k < 4; ++k) {
-                int neighbourX = convertX + dX[k];
-                int neighbourY = convertY + dY[k];
-                if (neighbourX < 0 || neighbourX >= tileMap->width || neighbourY < 0 || neighbourY >= tileMap->height) {
-                    continue;//bounds checl
-                }
-                if (!tileMap->IsWalkable(neighbourX + 0.5f, neighbourY + 0.5f) ){
-                    //if is wall skip
-                    continue;
-                }
-                int neighbourID = iD(neighbourX, neighbourY);
-                if (parent[neighbourID] != -1) {
-                    continue; //visit alr skip
-                }
-                parent[neighbourID]= current;
-                q.push(neighbourID);
+            for (int i = 0; i < 4; ++i) {
+                int nx = cx + dX[i];
+                int ny = cy + dY[i];
+
+                if (nx < 0 || ny < 0 ||
+                    nx >= tileMap->width || ny >= tileMap->height) continue;
+                if (!tileMap->IsWalkable(nx + 0.5f, ny + 0.5f)) continue;
+
+                int nid = iD(nx, ny);
+                if (parent[nid] != -1) continue;
+
+                parent[nid] = cur;
+                q.push(nid);
             }
         }
-        //construct the path
-        if (!found) {
-            return; //no path stop
-        }
-        std::vector<int> tiles;
-        int current = goal;//backtrack from goal;
-        while (current != start) {
-            tiles.push_back(current);
-            current = parent[current];
-        }
-        tiles.push_back(start);//collect path goal n start
-        //convert to world space
-        for (int i = (int)tiles.size() - 1; i >= 0; --i) {
-            int id = tiles[i];
-            int x = id % tileMap->width;
-            int y = id / tileMap->width;
+
+        int cur = goal;
+        while (cur != start) {
+            int x = cur % tileMap->width;
+            int y = cur / tileMap->width;
             path.push_back(WorldFromTile(x, y));
+            cur = parent[cur];
+            if (cur < 0) return;
         }
+
+        std::reverse(path.begin(), path.end());
     }
 
 }
-

@@ -1,67 +1,70 @@
 #pragma once
 #include "Engine/Core/Component.hpp"
+#include "Engine/Core/Transform.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/TileMap/TileMap.hpp"
+#include "Player.hpp"
 #include <vector>
 #include <queue>
-#include <cstdlib>
-#include <ctime>
+
 namespace Game {
-	
-	class SecurityGuard : public Engine::Component {
-	public:
-		Engine::TileMap* tileMap = nullptr;
-		Engine::Transform* playerTf = nullptr;
-		Player* playerData = nullptr;
 
-		float patrolSpeed = 1.5f;
-		float chaseSpeed = 2.4f;
-		float arriveDistance = 0.10f;
+    class SecurityGuard : public Engine::Component {
+    public:
+        Engine::TileMap* tileMap = nullptr;
+        Engine::Transform* playerTf = nullptr;
+        Player* playerData = nullptr;
 
-		float detectRadius = 4.0f;
-		float catchRadius = 0.7f;
+        float patrolSpeed = 1.5f;
+        float chaseSpeed = 2.4f;
+        float arriveDistance = 0.10f;
 
-		float searchDuration = 6.0f;
-		int SearchRoamRadius = 3;
+        float detectRadius = 4.0f;
+        float catchRadius = 0.7f;
 
-		/*Engine::Vector2 pointA;
-		Engine::Vector2 pointB;*/
-		float speed = 1.5f;
-		
-		void Initialize() override;
-		void Update() override;
+        void Initialize() override;
+        void Update() override;
 
-	private:
-		enum class GuardState{Patrol,Chase,Search};
-		GuardState state = GuardState::Patrol;
+    private:
+        enum class GuardState {
+            Patrol = 0,
+            Chase,
+            Catch
+        };
 
-		std::vector<Engine::Vector2> path; //store path 
-		int pathIndex = 0;
+        GuardState state = GuardState::Patrol;
 
-		static bool seeded;
-		Engine::Vector2 lastSeenPos = Engine::Vector2(0, 0);
-		bool hasLastSeen = false;
+        std::vector<Engine::Vector2> path;
+        int pathIndex = 0;
 
-		float searchTimer = 0.0f;
-		float repathTimer = 0.0f;
+        static bool seeded;
 
-		void BuildPathBFS();
-		int iD(int x, int y) const {
-			return y *tileMap->width + x;
-		}
-		Engine::Vector2 WorldFromTile(int x, int y)const {
-			return Engine::Vector2((float)x + 0.5f, (float)y + 0.5f);
-		}
-		/*bool goingtonextPoint = true;*/
-	};
+        Engine::Vector2 lastSeenPos{};
+        bool hasLastSeen = false;
+
+        float lostSightTimer = 0.0f;
+        float maxLostSightTime = 2.5f;
+        float repathTimer = 0.0f;
+
+    private:
+        void PatrolUpdate();
+        void ChaseUpdate();
+
+        bool CanSeePlayer() const;
+        bool IsCaught() const;
+
+        void FollowPath(float speed);
+
+        void BuildPathBFS_Random();
+        void BuildPathBFS_ToGoal(int gx, int gy);
+
+        int iD(int x, int y) const {
+            return y * tileMap->width + x;
+        }
+
+        Engine::Vector2 WorldFromTile(int x, int y) const {
+            return Engine::Vector2((float)x + 0.5f, (float)y + 0.5f);
+        }
+    };
+
 }
-
-/*
-	pseudo code
-	pick random tile
-	breadth first search
-	convert bfs search into path
-	guard follow it
-	when reach pick new dest
-	repeat bfs agan
-*/
