@@ -13,9 +13,10 @@
 #include "Game/FPSController.hpp"
 #include "Game/Player.hpp"
 #include "Game/SecurityGuard.hpp"
+#include "Game/CCTVCamera.hpp"
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
-
+#include "Engine/Input/KeyCode.hpp"
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -35,14 +36,50 @@ namespace Game {
         FPSController* playerController = nullptr;
         Player* playerData = nullptr;
         Transform* playerTf = nullptr;
-
+        Camera* playerCam = nullptr;
        
+        std::vector<Camera*> cctvCams;
+        std::vector<CCTVCamera*> cctvSensors;
+        int activeCCTV = -1; 
+
         Vector2 exitPos = Vector2(14.5f, 1.5f);
         float winRadius = 0.6f;
         bool printedWin = false;
+
         std::vector<GameObject*> powerUps;
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
+
+        void SwitchToPlayerCam() {
+            activeCCTV = -1;
+
+          
+            if (playerCam) playerCam->enabled = true;
+
+           
+            for (auto* cam : cctvCams) {
+                if (cam) cam->enabled = false;
+            }
+
+            std::cout << "\n[VIEW] Player Camera\n";
+        }
+
+        void SwitchToCCTV(int idx) {
+            if (idx < 0 || idx >= (int)cctvCams.size()) return;
+
+            activeCCTV = idx;
+
+          
+            if (playerCam) playerCam->enabled = false;
+
+          
+            for (int i = 0; i < (int)cctvCams.size(); ++i) {
+                if (cctvCams[i]) cctvCams[i]->enabled = (i == idx);
+            }
+
+            std::cout << "\n[VIEW] CCTV " << (idx + 1) << "\n";
+        }
+
         void OnLoad() override {
             const int mapData[] = {
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -87,6 +124,9 @@ namespace Game {
           
             auto player = CreateGameObject("Player");
             player->AddComponent<Camera>();
+            playerController = player->AddComponent<FPSController>();
+            playerData = player->AddComponent<Player>();
+            playerTf = player->transform;
 
             auto rb = player->AddComponent<Rigidbody2D>();
             rb->gravityScale = 1.0f;
@@ -233,51 +273,52 @@ namespace Game {
 
 
             auto cctvSprite = std::make_shared<Sprite>();
-            cctvSprite->Load("Assets/cctv.png",64, 64);
+            cctvSprite->Load("Assets/cctv.png", 64, 64);
+
             const float CCTV_Z = 0.85f;
             const float EPS = 0.02f;
 
-            struct CCTVInfo { Vector3 pos; };
+            struct CCTVInfo { Vector3 pos; float rot; };
             CCTVInfo cams[6] = {
-               
-                { Vector3(1.0f + EPS,  2.4f, CCTV_Z) },
-                { Vector3(1.0f + EPS,  9.4f, CCTV_Z) },
-
-            
-                { Vector3(15.0f - EPS, 2.4f, CCTV_Z) },
-                { Vector3(15.0f - EPS, 9.4f, CCTV_Z) },
-
-              
-                { Vector3(5.5f,  1.0f + EPS, CCTV_Z) },
-                { Vector3(10.5f, 1.0f + EPS, CCTV_Z) }
+                { Vector3(1.0f + EPS,  2.4f, CCTV_Z),   0.0f   },
+                { Vector3(1.0f + EPS,  9.4f, CCTV_Z),   0.0f   },
+                { Vector3(15.0f - EPS, 2.4f, CCTV_Z), 180.0f   },
+                { Vector3(15.0f - EPS, 9.4f, CCTV_Z), 180.0f   },
+                { Vector3(5.5f,  1.0f + EPS, CCTV_Z), 270.0f   },
+                { Vector3(10.5f, 1.0f + EPS, CCTV_Z), 270.0f   }
             };
 
             for (int i = 0; i < 6; ++i) {
-                auto cam = CreateGameObject("CCTV_" + std::to_string(i + 1));
-                cam->transform->position = cams[i].pos;
-       
-                cam->transform->localScale = Vector2(0.25f, 0.25f);
-                auto sr = cam->AddComponent<SpriteRenderer>();
+                auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
+                camObj->transform->position = cams[i].pos;
+                camObj->transform->rotation = cams[i].rot;
+                camObj->transform->localScale = Vector2(0.25f, 0.25f);
+
+                auto sr = camObj->AddComponent<SpriteRenderer>();
                 sr->SetSprite(cctvSprite);
-
-                // Must be true in your raycaster to render consistently
                 sr->billboard = true;
-
-                // Draw on top
                 sr->sortingOrder = 300;
+
+                // feed camera
+                auto cam = camObj->AddComponent<Camera>();
+                cam->enabled = false;         // start OFF
+                cctvCams.push_back(cam);
+
+                // sensor logic
+                auto sensor = camObj->AddComponent<CCTVCamera>();
+                sensor->id = i + 1;
+                sensor->tile = map;
+                sensor->tf = playerTf;
+                sensor->detectRadius = 3.0f;  // tune
+                cctvSensors.push_back(sensor);
             }
 
-
+            SwitchToPlayerCam();
         }
-
-            
 
         void OnUpdate() override {
             powerUpTime += Engine::Time::deltaTime;
-            
-            if (!playerData || !playerTf) return;
-            if (playerData->GetState() != PlayerState::Normal) return;
-
+          
             const float floatAmplitude = 0.15f;
             const float floatSpeed = 2.0f;
             for (size_t i = 0; i < powerUps.size(); ++i) {
@@ -285,6 +326,41 @@ namespace Game {
                 pos.z = powerUpBaseZ[i]+ std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
+            if (Input::GetKey(KeyCode::Alpha1)) {
+                SwitchToCCTV(1);
+            }
+            if (Input::GetKey(KeyCode::Alpha2)) {
+                SwitchToCCTV(2);
+            }
+            if (Input::GetKey(KeyCode::Alpha3)) {
+                SwitchToCCTV(3);
+            }
+            if (Input::GetKey(KeyCode::Alpha4)) {
+                SwitchToCCTV(4);
+            }
+            if (Input::GetKey(KeyCode::Alpha5)) {
+                SwitchToCCTV(5);
+            }
+            if (Input::GetKey(KeyCode::Alpha6)) {
+                SwitchToCCTV(6);
+            }
+            if (Input::GetKey(KeyCode::Alpha0)) {
+                SwitchToPlayerCam();
+            }
+
+          
+
+            for (auto* s : cctvSensors) {
+                if (s && s->hasLastSeen) {
+                    std::cout << "\r[CCTV " << s->id << "] LastSeenTile=("
+                        << (int)s->lastSeenTile.x << "," << (int)s->lastSeenTile.y << ")   "
+                        << std::flush;
+                    break;
+                }
+            }
+
+            if (!playerData || !playerTf) return;
+            if (playerData->GetState() != PlayerState::Normal) return;
 
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
