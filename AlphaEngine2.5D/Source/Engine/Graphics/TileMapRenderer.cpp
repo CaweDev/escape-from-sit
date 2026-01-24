@@ -27,6 +27,9 @@ namespace Engine {
 			CreateColumnMesh();
 		}
 
+		// Reset AE camera to origin for screen-space rendering
+		AEGfxSetCamPosition(0.0f, 0.0f);
+
 		int screenWidth = AEGfxGetWindowWidth();
 		int screenHeight = AEGfxGetWindowHeight();
 
@@ -103,8 +106,9 @@ namespace Engine {
 		
 		RaycastResult result;
 		
-		int mapX = (int)pos.x;
-		int mapY = (int)pos.y;
+		// Convert world position to tile grid coordinates
+		int mapX = (int)floorf(pos.x);
+		int mapY = (int)floorf(pos.y);
 		f32 deltaDistX = (rayDirX == 0) ? 1e30f : fabsf(1.0f / rayDirX);
 		f32 deltaDistY = (rayDirY == 0) ? 1e30f : fabsf(1.0f / rayDirY);
 		f32 sideDistX, sideDistY;
@@ -181,18 +185,18 @@ namespace Engine {
 
 			// Now iterate columns for this scanline
 			for (const auto& col : columns) {
-				// Calculate clamped Y coordinates for this column
-				// This prevents gaps at wall-ceiling boundary
+				// Clamp ceiling quad to wall boundary for this column
 				f32 clampedAeY1 = aeY1;
 				f32 clampedRowDistNext = rowDistNext;
 				
-				// If this scanline band's bottom is below wall start, clamp to wall start
-				if (yNext > (int)col.ray.drawStart) {
-					// Skip entirely if even the top of this band is below wall start
-					if (y >= (int)col.ray.drawStart) continue;
+				// Check if scanline band overlaps with wall
+				int wallStartInt = (int)floorf(col.ray.drawStart);
+				if (yNext > wallStartInt) {
+					// Skip if entire band is behind wall
+					if (y >= wallStartInt) continue;
 					
-					// Clamp bottom of quad to wall boundary
-					clampedAeY1 = screenHeight / 2.0f - col.ray.drawStart;
+					// Clamp to wall top position
+					clampedAeY1 = col.screenY2;
 					f32 clampedP = (f32)horizon - col.ray.drawStart;
 					if (fabsf(clampedP) > 0.1f) {
 						clampedRowDistNext = posZ * (f32)screenHeight / clampedP;
@@ -296,18 +300,18 @@ namespace Engine {
 
 		// Now iterate columns for this scanline
 			for (const auto& col : columns) {
-				// Calculate clamped Y coordinates for this column
-				// This prevents gaps at wall-floor boundary
+				// Clamp floor quad to wall boundary for this column
 				f32 clampedAeY2 = aeY2;
 				f32 clampedRowDist = rowDist;
 				
-				// If this scanline row starts above the wall end, clamp to wall end
-				if (y < (int)col.ray.drawEnd) {
-					// Skip entirely if even the bottom of this band is above wall end
-					if (yNext <= (int)col.ray.drawEnd) continue;
+				// Check if scanline band overlaps with wall
+				int wallEndInt = (int)ceilf(col.ray.drawEnd);
+				if (y < wallEndInt) {
+					// Skip if entire band is behind wall
+					if (yNext <= wallEndInt) continue;
 					
-					// Clamp top of quad to wall boundary
-					clampedAeY2 = screenHeight / 2.0f - col.ray.drawEnd;
+					// Clamp to wall bottom position
+					clampedAeY2 = col.screenY;
 					f32 clampedP = col.ray.drawEnd - (f32)horizon;
 					if (fabsf(clampedP) > 0.1f) {
 						clampedRowDist = posZ * (f32)screenHeight / clampedP;

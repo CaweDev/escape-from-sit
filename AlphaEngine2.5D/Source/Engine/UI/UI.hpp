@@ -6,12 +6,14 @@
  * Include this file to use all UI components.
  */
 
+// Graphics Dependency
+#include "Engine/Graphics/Texture2D.hpp"
+
 // Foundation
 #include "RectTransform.hpp"
 #include "UIElement.hpp"
 #include "Canvas.hpp"
 #include "UIManager.hpp"
-#include "Texture2D.hpp"
 
 // Components (Phase 2)
 #include "Image.hpp"

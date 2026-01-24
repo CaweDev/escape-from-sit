@@ -42,7 +42,6 @@
     <ClCompile Include="Source\Engine\UI\LayoutGroup.cpp" />
     <ClCompile Include="Source\Engine\UI\Panel.cpp" />
     <ClCompile Include="Source\Engine\UI\Text.cpp" />
-    <ClCompile Include="Source\Engine\UI\Texture2D.cpp" />
     <ClCompile Include="Source\Engine\UI\UIElement.cpp" />
     <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
     <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp" />
@@ -101,7 +100,6 @@
     <ClInclude Include="Source\Engine\UI\Panel.hpp" />
     <ClInclude Include="Source\Engine\UI\RectTransform.hpp" />
     <ClInclude Include="Source\Engine\UI\Text.hpp" />
-    <ClInclude Include="Source\Engine\UI\Texture2D.hpp" />
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
     <ClInclude Include="Source\Engine\UI\UIElement.hpp" />
     <ClInclude Include="Source\Engine\UI\UIEventSystem.hpp" />
