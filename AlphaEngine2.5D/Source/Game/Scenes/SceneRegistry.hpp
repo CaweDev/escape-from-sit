@@ -21,8 +21,8 @@ inline UITestScene uiTestScene;
  * Call this once after engine initialization
  */
 inline void RegisterAllScenes() {
-    SceneManager::RegisterScene("UI", &uiTestScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
+    SceneManager::RegisterScene("UI", &uiTestScene);
 }
 
 } // namespace Game

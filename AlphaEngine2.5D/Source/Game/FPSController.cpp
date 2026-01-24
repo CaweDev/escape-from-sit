@@ -6,6 +6,7 @@
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Math/Mathf.hpp"
+#include "Engine/Graphics/Camera.hpp"
 #include <iostream>
 #include "Game/Player.hpp"
 #include "AEInput.h"
@@ -60,6 +61,14 @@ void FPSController::Update() {
     
     // Apply mouse rotation
     transform->rotation += mouseDeltaX * mouseSensitivity;
+
+    // Apply vertical look (pitch)
+    if (Camera::main) {
+        Camera::main->pitch -= mouseDeltaY * mouseSensitivity * 5.f;
+        // Clamp pitch to avoid extreme distortion (equivalent to screen height offset)
+        // Adjusting horizon by +/- 0.8 * screenHeight is usually a safe limit
+        Camera::main->pitch = Mathf::Clamp(Camera::main->pitch, -400.f, 400.f);
+    }
     
     // Keyboard rotation
     if (Input::GetKey(KeyCode::LeftArrow)) transform->rotation -= rotateSpeed * dt;

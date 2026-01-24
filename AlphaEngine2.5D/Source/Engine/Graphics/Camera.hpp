@@ -25,6 +25,9 @@ public:
     
     f32 fov = 75.0f;
 
+    /** Vertical rotation (pitch) for 2.5D dynamic horizon */
+    f32 pitch = 0.0f;
+
     /** Static reference to main camera */
     static Camera* main;
 

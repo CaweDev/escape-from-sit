@@ -100,7 +100,8 @@ namespace Engine {
 		// Shared column data to avoid redundant work
 		struct ColumnInfo {
 			RaycastResult ray;
-			f32 rayDirX, rayDirY; // Store these for floor/ceiling calc
+			f32 rayDirX, rayDirY;   // Left side ray
+			f32 rayDirX2, rayDirY2; // Right side ray
 			f32 screenX, screenX2;
 			f32 screenY, screenY2;
 			f32 vTop, vBottom;
@@ -118,22 +119,23 @@ namespace Engine {
 		std::vector<ScanlineInfo> floorScanlines;    // For rows horizon to screenHeight
 		int cachedScreenHeight = 0;
 		f32 cachedCamZ = -999.0f;
+		int cachedHorizon = -999;
 
 		void CreateColumnMesh();
 		
+		// Precompute scanline distances for floor/ceiling
+		void CacheScanlineDistances(int screenHeight, f32 camZ, int horizon);
+
 		// Raycast helper
 		RaycastResult CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, f32 camZ, 
-			int screenHeight, TileMap* map);
+			int horizon, int screenHeight, TileMap* map);
 
 		// Separate render functions
-		void RenderCeiling(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+		void RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 			const std::vector<ColumnInfo>& columns, TileMap* map);
-		void RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+		void RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 			const std::vector<ColumnInfo>& columns, TileMap* map);
-		void RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns);
-
-		// Precompute scanline distances for floor/ceiling
-		void CacheScanlineDistances(int screenHeight, f32 camZ);
+		void RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns);
 
 		// Column drawing helpers
 		void DrawColumn(f32 x, f32 y, f32 h, const Color& color, int sw, int sh);

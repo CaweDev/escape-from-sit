@@ -3,7 +3,8 @@
  * @brief Implementation of ProjectionHelper class
  */
 #include "ProjectionHelper.hpp"
-#include <cmath>
+#include "Engine/Graphics/Camera.hpp"
+
 
 namespace Engine {
 
@@ -55,8 +56,10 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     result.scale = static_cast<f32>(screenHeight) / (std::abs(perpDist) > 0.01f ? std::abs(perpDist) : 0.01f);
 
     // Screen Y accounts for height difference (objects above camera appear higher on screen)
+    // Plus the dynamic horizon (pitch)
     f32 projectedHeight = dz * result.scale;
-    result.screenY = (static_cast<f32>(screenHeight) / 2.0f) - projectedHeight;
+    f32 pitchOffset = (Camera::main) ? Camera::main->pitch : 0.0f;
+    result.screenY = (static_cast<f32>(screenHeight) / 2.0f) + pitchOffset - projectedHeight;
 
     // 6. Check visibility for return status
     if (perpDist < 0.1f) return result; // Behind camera
