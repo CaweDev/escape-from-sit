@@ -23,6 +23,19 @@ namespace Game {
     void SecurityGuard::Update()
     {
         if (!tileMap || !playerTf || !playerData) return;
+        
+        if (hasCctvLastSeen && !CanSeePlayer()) {
+            hasLastSeen = true;
+            lastSeenPos = cctvLastSeenPos;
+
+            lostSightTimer = 0.0f;
+            repathTimer = 0.0f;
+
+            if (state == GuardState::Patrol) {
+                state = GuardState::Chase;
+            }
+            hasCctvLastSeen = false;
+        }
 
         switch (state)
         {

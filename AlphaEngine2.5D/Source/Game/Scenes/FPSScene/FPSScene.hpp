@@ -37,7 +37,7 @@ namespace Game {
         Player* playerData = nullptr;
         Transform* playerTf = nullptr;
         Camera* playerCam = nullptr;
-
+        SecurityGuard* guardComp = nullptr;
         Vector3 playerViewPos{};
         float playerViewRot = 0.0f;
 
@@ -171,6 +171,8 @@ namespace Game {
             guard->playerData = playerData;
             guard->patrolSpeed = 1.5f;
             guard->chaseSpeed = 2.4f;
+            guardComp = guard;
+
 
             auto enemyRb = enemy->AddComponent<Rigidbody2D>();
             enemyRb->bodyType = RigidbodyType2D::Kinematic;
@@ -287,6 +289,7 @@ namespace Game {
             if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
 
          
+
             for (auto* s : cctvSensors) {
                 if (s && s->hasLastSeen) {
                     std::cout << "\r[CCTV " << s->id << "] LastSeenTile=("
@@ -296,6 +299,8 @@ namespace Game {
                 }
             }
 
+
+
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
@@ -303,6 +308,16 @@ namespace Game {
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
+
+            if (guardComp) {
+                for (auto* s : cctvSensors) {
+                    if (s && s->hasLastSeen) {
+                        guardComp->SetCCTVLastSeen(s->lastSeenWorld);
+                        s->hasLastSeen = false;
+                        break;
+                    }
+                }
+            }
 
             if (!printedWin && (dx * dx + dy * dy) <= winRadius * winRadius) {
                 printedWin = true;

@@ -25,6 +25,14 @@ namespace Game {
         void Initialize() override;
         void Update() override;
 
+        Engine::Vector2 cctvLastSeenPos{};
+        bool hasCctvLastSeen = false;
+
+        void SetCCTVLastSeen(Engine::Vector2 worldPos) {
+            cctvLastSeenPos = worldPos;
+            hasCctvLastSeen = true;
+        }
+
     private:
         enum class GuardState {
             Patrol = 0,
