@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "Engine/Scene/Scene.hpp"
@@ -17,6 +16,7 @@
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
+
 #include <iostream>
 #include <vector>
 #include <memory>
@@ -37,10 +37,17 @@ namespace Game {
         Player* playerData = nullptr;
         Transform* playerTf = nullptr;
         Camera* playerCam = nullptr;
+
        
-        std::vector<Camera*> cctvCams;
-        std::vector<CCTVCamera*> cctvSensors;
+        Vector3 playerViewPos{};
+        float playerViewRot = 0.0f;
+
+        std::vector<Vector3> cctvViewPos;
+        std::vector<float>   cctvViewRot;
         int activeCCTV = -1; 
+
+    
+        std::vector<CCTVCamera*> cctvSensors;
 
         Vector2 exitPos = Vector2(14.5f, 1.5f);
         float winRadius = 0.6f;
@@ -52,30 +59,22 @@ namespace Game {
 
         void SwitchToPlayerCam() {
             activeCCTV = -1;
+            if (!playerTf) return;
 
-          
-            if (playerCam) playerCam->enabled = true;
-
-           
-            for (auto* cam : cctvCams) {
-                if (cam) cam->enabled = false;
-            }
+            playerTf->position = playerViewPos;
+            playerTf->rotation = playerViewRot;
 
             std::cout << "\n[VIEW] Player Camera\n";
         }
 
         void SwitchToCCTV(int idx) {
-            if (idx < 0 || idx >= (int)cctvCams.size()) return;
+            if (!playerTf) return;
+            if (idx < 0 || idx >= (int)cctvViewPos.size()) return;
 
             activeCCTV = idx;
 
-          
-            if (playerCam) playerCam->enabled = false;
-
-          
-            for (int i = 0; i < (int)cctvCams.size(); ++i) {
-                if (cctvCams[i]) cctvCams[i]->enabled = (i == idx);
-            }
+            playerTf->position = cctvViewPos[idx];
+            playerTf->rotation = cctvViewRot[idx];
 
             std::cout << "\n[VIEW] CCTV " << (idx + 1) << "\n";
         }
@@ -97,36 +96,36 @@ namespace Game {
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             };
 
-          
+           
             auto world = CreateGameObject("World");
             auto map = world->AddComponent<TileMap>();
             map->LoadFromArray(mapData, 16, 13);
 
-            auto renderer = world->AddComponent<TileMapRenderer>(); 
-            renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f); 
+            auto renderer = world->AddComponent<TileMapRenderer>();
+            renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
             renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
             renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
-            renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f); { 
-             auto skySprite = std::make_shared<Sprite>();
-             skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
-             auto groundSprite = std::make_shared<Sprite>();
-             groundSprite->Load("Assets/Tilemap/modern_school_floor.png"); 
-             auto wallSprite = std::make_shared<Sprite>(); 
-             wallSprite->Load("Assets/Tilemap/modern_school_wall.png"); 
-             renderer->SetCeilingSprite(skySprite); 
-             renderer->SetFloorSprite(groundSprite);
-             renderer->SetWallSprite(wallSprite); }
+            renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+
+            {
+                auto skySprite = std::make_shared<Sprite>();
+                skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
+                auto groundSprite = std::make_shared<Sprite>();
+                groundSprite->Load("Assets/Tilemap/modern_school_floor.png");
+                auto wallSprite = std::make_shared<Sprite>();
+                wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
+                renderer->SetCeilingSprite(skySprite);
+                renderer->SetFloorSprite(groundSprite);
+                renderer->SetWallSprite(wallSprite);
+            }
 
             auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
             tileMapCollider->minHeight = 0.0f;
             tileMapCollider->maxHeight = 3.0f;
 
-          
+         
             auto player = CreateGameObject("Player");
-            player->AddComponent<Camera>();
-            playerController = player->AddComponent<FPSController>();
-            playerData = player->AddComponent<Player>();
-            playerTf = player->transform;
+            playerCam = player->AddComponent<Camera>();
 
             auto rb = player->AddComponent<Rigidbody2D>();
             rb->gravityScale = 1.0f;
@@ -141,8 +140,12 @@ namespace Game {
             playerData = player->AddComponent<Player>();
             playerTf = player->transform;
 
-            playerTf->position = Vector3(1.5f, 1.5f);
+            playerTf->position = Vector3(1.5f, 1.5f, 0.0f);
             playerTf->rotation = 0.0f;
+
+            
+            playerViewPos = playerTf->position;
+            playerViewRot = playerTf->rotation;
 
             
             auto exit = CreateGameObject("Exit");
@@ -155,7 +158,7 @@ namespace Game {
             exitSR->billboard = true;
             exitSR->sortingOrder = 95;
 
-         
+            
             auto enemy = CreateGameObject("SecurityGuard");
             enemy->transform->position = Vector2(3.5f, 1.5f);
 
@@ -182,96 +185,37 @@ namespace Game {
             enemySR->sortingOrder = 100;
 
             
-            auto powerup1 = std::make_shared<Sprite>();
-            powerup1->Load("Assets/powerup1.png", 20,20);
-
-            auto powerup2 = std::make_shared<Sprite>();
-            powerup2->Load("Assets/powerup2.png", 20, 20);
-
-            auto powerup3 = std::make_shared<Sprite>();
-            powerup3->Load("Assets/powerup3.png", 20, 20);
-
-            auto powerup4 = std::make_shared<Sprite>();
-            powerup4->Load("Assets/powerup4.png", 20, 20);
-
-            auto powerup5 = std::make_shared<Sprite>();
-            powerup5->Load("Assets/powerup5.png", 20, 20);
-
+            auto powerup1 = std::make_shared<Sprite>(); powerup1->Load("Assets/powerup1.png", 20, 20);
+            auto powerup2 = std::make_shared<Sprite>(); powerup2->Load("Assets/powerup2.png", 20, 20);
+            auto powerup3 = std::make_shared<Sprite>(); powerup3->Load("Assets/powerup3.png", 20, 20);
+            auto powerup4 = std::make_shared<Sprite>(); powerup4->Load("Assets/powerup4.png", 20, 20);
+            auto powerup5 = std::make_shared<Sprite>(); powerup5->Load("Assets/powerup5.png", 20, 20);
 
             const float PU_Z = 0.20f;
             const int PU_ORDER = 300;
 
-         
-            auto pu1 = CreateGameObject("PU_Top_1");
-            pu1->transform->position = Vector3(2.5f, 1.5f, PU_Z);
-            pu1->transform->localScale = Vector2(0.25f, 0.25f);
+            auto SpawnPU = [&](char const* name, float x, float y, std::shared_ptr<Sprite> spr) {
+                auto pu = CreateGameObject(name);
+                pu->transform->position = Vector3(x, y, PU_Z);
+                pu->transform->localScale = Vector2(0.25f, 0.25f);
 
-            auto pu1SR = pu1->AddComponent<SpriteRenderer>();
-            pu1SR->SetSprite(powerup1);
-            pu1SR->billboard = true;
-            pu1SR->sortingOrder = PU_ORDER;
-            powerUps.push_back(pu1); 
-            powerUpBaseZ.push_back(pu1->transform->position.z);
+                auto sr = pu->AddComponent<SpriteRenderer>();
+                sr->SetSprite(spr);
+                sr->billboard = true;
+                sr->sortingOrder = PU_ORDER;
 
-            auto pu2 = CreateGameObject("PU_Top_2");
-            pu2->transform->position = Vector3(5.5f, 1.5f, PU_Z);
-            pu2->transform->localScale = Vector2(0.25f, 0.25f);
+                powerUps.push_back(pu);
+                powerUpBaseZ.push_back(pu->transform->position.z);
+                };
 
-            auto pu2SR = pu2->AddComponent<SpriteRenderer>();
-            pu2SR->SetSprite(powerup2);
-            pu2SR->billboard = true;
-            pu2SR->sortingOrder = PU_ORDER;
-            powerUps.push_back(pu2); 
-            powerUpBaseZ.push_back(pu2->transform->position.z);
+            SpawnPU("PU1", 2.5f, 1.5f, powerup1);
+            SpawnPU("PU2", 5.5f, 1.5f, powerup2);
+            SpawnPU("PU3", 8.5f, 1.5f, powerup3);
+            SpawnPU("PU4", 11.5f, 1.5f, powerup4);
+            SpawnPU("PU5", 14.5f, 1.5f, powerup5);
+            SpawnPU("PU6", 1.5f, 3.5f, powerup5);
 
-
-            auto pu3 = CreateGameObject("PU_Top_3");
-            pu3->transform->position = Vector3(8.5f, 1.5f, PU_Z);
-            pu3->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto pu3SR = pu3->AddComponent<SpriteRenderer>();
-            pu3SR->SetSprite(powerup3);
-            pu3SR->billboard = true;
-            pu3SR->sortingOrder = PU_ORDER;
-            powerUps.push_back(pu3); 
-            powerUpBaseZ.push_back(pu3->transform->position.z);
-
-            auto pu4 = CreateGameObject("PU_Top_4");
-            pu4->transform->position = Vector3(11.5f, 1.5f, PU_Z);
-            pu4->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto pu4SR = pu4->AddComponent<SpriteRenderer>();
-            pu4SR->SetSprite(powerup4);
-            pu4SR->billboard = true;
-            pu4SR->sortingOrder = PU_ORDER;
-            powerUps.push_back(pu4); 
-            powerUpBaseZ.push_back(pu4->transform->position.z);
-
-            auto pu5 = CreateGameObject("PU_Top_5");
-            pu5->transform->position = Vector3(14.5f, 1.5f, PU_Z);
-            pu5->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto pu5SR = pu5->AddComponent<SpriteRenderer>();
-            pu5SR->SetSprite(powerup5);
-            pu5SR->billboard = true;
-            pu5SR->sortingOrder = PU_ORDER;
-            powerUps.push_back(pu5); 
-            powerUpBaseZ.push_back(pu5->transform->position.z);
-           
-            auto pu6 = CreateGameObject("PU_Left_1");
-            pu6->transform->position = Vector3(1.5f, 3.5f, PU_Z);
-            pu6->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto pu6SR = pu6->AddComponent<SpriteRenderer>();
-            pu6SR->SetSprite(powerup5);
-            pu6SR->billboard = true;
-            pu6SR->sortingOrder = PU_ORDER;
-
-            powerUps.push_back(pu6); 
-            powerUpBaseZ.push_back(pu6->transform->position.z);
-
-
-
+          
             auto cctvSprite = std::make_shared<Sprite>();
             cctvSprite->Load("Assets/cctv.png", 64, 64);
 
@@ -289,6 +233,10 @@ namespace Game {
             };
 
             for (int i = 0; i < 6; ++i) {
+             
+                cctvViewPos.push_back(cams[i].pos);
+                cctvViewRot.push_back(cams[i].rot);
+
                 auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
                 camObj->transform->position = cams[i].pos;
                 camObj->transform->rotation = cams[i].rot;
@@ -299,17 +247,11 @@ namespace Game {
                 sr->billboard = true;
                 sr->sortingOrder = 300;
 
-                // feed camera
-                auto cam = camObj->AddComponent<Camera>();
-                cam->enabled = false;         // start OFF
-                cctvCams.push_back(cam);
-
-                // sensor logic
                 auto sensor = camObj->AddComponent<CCTVCamera>();
                 sensor->id = i + 1;
                 sensor->tile = map;
                 sensor->tf = playerTf;
-                sensor->detectRadius = 3.0f;  // tune
+                sensor->detectRadius = 3.0f;
                 cctvSensors.push_back(sensor);
             }
 
@@ -317,39 +259,26 @@ namespace Game {
         }
 
         void OnUpdate() override {
+  
             powerUpTime += Engine::Time::deltaTime;
-          
             const float floatAmplitude = 0.15f;
             const float floatSpeed = 2.0f;
+
             for (size_t i = 0; i < powerUps.size(); ++i) {
                 auto& pos = powerUps[i]->transform->position;
-                pos.z = powerUpBaseZ[i]+ std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
+                pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-            if (Input::GetKey(KeyCode::Alpha1)) {
-                SwitchToCCTV(1);
-            }
-            if (Input::GetKey(KeyCode::Alpha2)) {
-                SwitchToCCTV(2);
-            }
-            if (Input::GetKey(KeyCode::Alpha3)) {
-                SwitchToCCTV(3);
-            }
-            if (Input::GetKey(KeyCode::Alpha4)) {
-                SwitchToCCTV(4);
-            }
-            if (Input::GetKey(KeyCode::Alpha5)) {
-                SwitchToCCTV(5);
-            }
-            if (Input::GetKey(KeyCode::Alpha6)) {
-                SwitchToCCTV(6);
-            }
-            if (Input::GetKey(KeyCode::Alpha0)) {
-                SwitchToPlayerCam();
-            }
+         
+            if (Input::GetKeyDown(KeyCode::Alpha1)) SwitchToCCTV(0);
+            if (Input::GetKeyDown(KeyCode::Alpha2)) SwitchToCCTV(1);
+            if (Input::GetKeyDown(KeyCode::Alpha3)) SwitchToCCTV(2);
+            if (Input::GetKeyDown(KeyCode::Alpha4)) SwitchToCCTV(3);
+            if (Input::GetKeyDown(KeyCode::Alpha5)) SwitchToCCTV(4);
+            if (Input::GetKeyDown(KeyCode::Alpha6)) SwitchToCCTV(5);
+            if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
 
-          
-
+         
             for (auto* s : cctvSensors) {
                 if (s && s->hasLastSeen) {
                     std::cout << "\r[CCTV " << s->id << "] LastSeenTile=("
@@ -372,7 +301,6 @@ namespace Game {
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
             }
-
         }
     };
 
