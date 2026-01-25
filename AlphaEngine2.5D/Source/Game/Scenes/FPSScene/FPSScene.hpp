@@ -38,15 +38,13 @@ namespace Game {
         Transform* playerTf = nullptr;
         Camera* playerCam = nullptr;
 
-       
         Vector3 playerViewPos{};
         float playerViewRot = 0.0f;
 
         std::vector<Vector3> cctvViewPos;
         std::vector<float>   cctvViewRot;
-        int activeCCTV = -1; 
+        int activeCCTV = -1;
 
-    
         std::vector<CCTVCamera*> cctvSensors;
 
         Vector2 exitPos = Vector2(14.5f, 1.5f);
@@ -79,6 +77,12 @@ namespace Game {
             std::cout << "\n[VIEW] CCTV " << (idx + 1) << "\n";
         }
 
+        
+        void ToggleCCTV(int idx) {
+            if (activeCCTV == idx) SwitchToPlayerCam();
+            else SwitchToCCTV(idx);
+        }
+
         void OnLoad() override {
             const int mapData[] = {
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -96,7 +100,7 @@ namespace Game {
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             };
 
-           
+            
             auto world = CreateGameObject("World");
             auto map = world->AddComponent<TileMap>();
             map->LoadFromArray(mapData, 16, 13);
@@ -123,7 +127,7 @@ namespace Game {
             tileMapCollider->minHeight = 0.0f;
             tileMapCollider->maxHeight = 3.0f;
 
-         
+            
             auto player = CreateGameObject("Player");
             playerCam = player->AddComponent<Camera>();
 
@@ -143,7 +147,6 @@ namespace Game {
             playerTf->position = Vector3(1.5f, 1.5f, 0.0f);
             playerTf->rotation = 0.0f;
 
-            
             playerViewPos = playerTf->position;
             playerViewRot = playerTf->rotation;
 
@@ -215,7 +218,7 @@ namespace Game {
             SpawnPU("PU5", 14.5f, 1.5f, powerup5);
             SpawnPU("PU6", 1.5f, 3.5f, powerup5);
 
-          
+            
             auto cctvSprite = std::make_shared<Sprite>();
             cctvSprite->Load("Assets/cctv.png", 64, 64);
 
@@ -233,8 +236,10 @@ namespace Game {
             };
 
             for (int i = 0; i < 6; ++i) {
-             
-                cctvViewPos.push_back(cams[i].pos);
+                
+                Vector3 view = cams[i].pos;
+                view.z = 1.6f; 
+                cctvViewPos.push_back(view);
                 cctvViewRot.push_back(cams[i].rot);
 
                 auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
@@ -252,6 +257,9 @@ namespace Game {
                 sensor->tile = map;
                 sensor->tf = playerTf;
                 sensor->detectRadius = 3.0f;
+                sensor->maxRange = 6.0f;
+                sensor->coneWidth = 70.0f;
+                sensor->needLOS = true;
                 cctvSensors.push_back(sensor);
             }
 
@@ -259,7 +267,7 @@ namespace Game {
         }
 
         void OnUpdate() override {
-  
+         
             powerUpTime += Engine::Time::deltaTime;
             const float floatAmplitude = 0.15f;
             const float floatSpeed = 2.0f;
@@ -269,13 +277,13 @@ namespace Game {
                 pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-         
-            if (Input::GetKeyDown(KeyCode::Alpha1)) SwitchToCCTV(0);
-            if (Input::GetKeyDown(KeyCode::Alpha2)) SwitchToCCTV(1);
-            if (Input::GetKeyDown(KeyCode::Alpha3)) SwitchToCCTV(2);
-            if (Input::GetKeyDown(KeyCode::Alpha4)) SwitchToCCTV(3);
-            if (Input::GetKeyDown(KeyCode::Alpha5)) SwitchToCCTV(4);
-            if (Input::GetKeyDown(KeyCode::Alpha6)) SwitchToCCTV(5);
+      
+            if (Input::GetKeyDown(KeyCode::Alpha1)) ToggleCCTV(0);
+            if (Input::GetKeyDown(KeyCode::Alpha2)) ToggleCCTV(1);
+            if (Input::GetKeyDown(KeyCode::Alpha3)) ToggleCCTV(2);
+            if (Input::GetKeyDown(KeyCode::Alpha4)) ToggleCCTV(3);
+            if (Input::GetKeyDown(KeyCode::Alpha5)) ToggleCCTV(4);
+            if (Input::GetKeyDown(KeyCode::Alpha6)) ToggleCCTV(5);
             if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
 
          
@@ -291,6 +299,7 @@ namespace Game {
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
+      
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
