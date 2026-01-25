@@ -309,10 +309,12 @@ namespace Game {
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
 
-            if (guardComp) {
+            if(guardComp) {
                 for (auto* s : cctvSensors) {
                     if (s && s->hasLastSeen) {
-                        guardComp->SetCCTVLastSeen(s->lastSeenWorld);
+                        guardComp->OnCCTVSpotted(s->lastSeenWorld);
+
+                        // consume so it triggers once per detection
                         s->hasLastSeen = false;
                         break;
                     }

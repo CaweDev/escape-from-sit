@@ -25,21 +25,11 @@ namespace Game {
         void Initialize() override;
         void Update() override;
 
-        Engine::Vector2 cctvLastSeenPos{};
-        bool hasCctvLastSeen = false;
-
-        void SetCCTVLastSeen(Engine::Vector2 worldPos) {
-            cctvLastSeenPos = worldPos;
-            hasCctvLastSeen = true;
-        }
+    
+        void OnCCTVSpotted(const Engine::Vector2& worldPos);
 
     private:
-        enum class GuardState {
-            Patrol = 0,
-            Chase,
-            Catch
-        };
-
+        enum class GuardState { Patrol = 0, Chase, Catch };
         GuardState state = GuardState::Patrol;
 
         std::vector<Engine::Vector2> path;
@@ -66,13 +56,11 @@ namespace Game {
         void BuildPathBFS_Random();
         void BuildPathBFS_ToGoal(int gx, int gy);
 
-        int iD(int x, int y) const {
-            return y * tileMap->width + x;
-        }
+        int iD(int x, int y) const { return y * tileMap->width + x; }
 
         Engine::Vector2 WorldFromTile(int x, int y) const {
             return Engine::Vector2((float)x + 0.5f, (float)y + 0.5f);
         }
     };
 
-}
+} // namespace Game
