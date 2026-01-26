@@ -6,6 +6,7 @@
 #include "UITestScene.hpp"
 #include "Engine/Core/Time.hpp"
 #include <iostream>
+#include <Engine/Graphics/Sprite.hpp>
 
 namespace Game {
 
@@ -25,6 +26,10 @@ void UITestScene::OnLoad() {
     panel->name = "MainPanel";
     panel->rectTransform.SetCentered(400, 600);
     panel->SetBackgroundColor(Engine::Color(0.1f, 0.1f, 0.1f, 0.8f));
+    //auto skySprite = new Texture2D();
+    //skySprite->Load("Assets/Tilemap/modern_school_floor.png");
+    //panel->SetBackgroundSprite(skySprite);
+
 
     // 2. Add a title text at the top of the panel
     Text* title = panel->CreateChild<Text>();
