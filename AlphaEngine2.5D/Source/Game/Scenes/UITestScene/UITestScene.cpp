@@ -18,7 +18,7 @@ void UITestScene::OnLoad() {
     
     // Create the main canvas
     mainCanvas = UIManager::GetInstance()->CreateCanvas();
-    mainCanvas->SetReferenceResolution(1600, 900);
+    mainCanvas->SetReferenceResolution(1280.f, 720.f);
     mainCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
 
     // 1. Create a semi-transparent background panel in the center

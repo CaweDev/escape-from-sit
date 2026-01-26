@@ -34,8 +34,8 @@ namespace UI
         mutable std::vector<UIElement*> m_rootElements;
         
         // Reference resolution for scaling
-        f32 m_referenceWidth = 1600.0f;
-        f32 m_referenceHeight = 900.0f;
+        f32 m_referenceWidth = 1280.f;
+        f32 m_referenceHeight = 720.0f;
         
         CanvasScaleMode m_scaleMode = CanvasScaleMode::ScaleWithScreenSize;
         

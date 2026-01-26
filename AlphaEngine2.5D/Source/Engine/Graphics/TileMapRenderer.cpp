@@ -4,6 +4,7 @@
  */
 #include "TileMapRenderer.hpp"
 #include "ZBuffer.hpp"
+#include "Engine/Core/Application.hpp"
 #include <cmath>
 #include <vector>
 
@@ -139,8 +140,11 @@ namespace Engine {
 		}
 		// result.wallX is now the absolute world coordinate (for U mapping)
 
-		f32 wallHeight = (f32)screenHeight / result.perpWallDist;
-		f32 heightOffset = (camZ - 0.5f) * ((f32)screenHeight / result.perpWallDist);
+		// Wall height with aspect ratio correction
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		int screenWidth = Application::GetWindowWidth();
+		f32 wallHeight = (f32)screenWidth / (result.perpWallDist * planeLength * 2.0f);
+		f32 heightOffset = (camZ - 0.5f) * ((f32)screenWidth / (result.perpWallDist * planeLength * 2.0f));
 		result.drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
 		result.drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
@@ -159,6 +163,7 @@ namespace Engine {
 
 		// Ceiling height is 1.0 - camZ above the viewer
 		f32 posZ = 1.0f - camZ;
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 
 		int triCount = 0;
 		bool meshIsOpen = false;
@@ -199,7 +204,7 @@ namespace Engine {
 					clampedAeY1 = col.screenY2;
 					f32 clampedP = (f32)horizon - col.ray.drawStart;
 					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDistNext = posZ * (f32)screenHeight / clampedP;
+						clampedRowDistNext = posZ * (f32)screenWidth / (clampedP * planeLength * 2.0f);
 					}
 				}
 
@@ -274,6 +279,7 @@ namespace Engine {
 
 		// Pre-calculate row distances (done once, outside scanline loop)
 		f32 posZ = camZ;
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 
 		int triCount = 0;
 		bool meshIsOpen = false;
@@ -287,13 +293,21 @@ namespace Engine {
 			if (rowDist < 0) continue; // Invalid scanline
 
 			int yNext = y + ROW_STEP;
-			if (yNext > screenHeight) yNext = screenHeight;
+			bool yNextClamped = (yNext > screenHeight);
+			if (yNextClamped) yNext = screenHeight;
 			
-			int scanIdxNext = (yNext - horizon) / ROW_STEP;
-			f32 rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
-				? floorScanlines[scanIdxNext].rowDist 
-				: rowDist;
-			if (rowDistNext < 0) rowDistNext = rowDist;
+			f32 rowDistNext;
+			if (yNextClamped) {
+				// Compute directly for screen bottom edge to avoid cache misalignment
+				f32 p = (f32)yNext - (f32)horizon;
+				rowDistNext = (fabsf(p) > 0.1f) ? (posZ * (f32)screenWidth / (p * planeLength * 2.0f)) : rowDist;
+			} else {
+				int scanIdxNext = (yNext - horizon) / ROW_STEP;
+				rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
+					? floorScanlines[scanIdxNext].rowDist 
+					: rowDist;
+				if (rowDistNext < 0) rowDistNext = rowDist;
+			}
 
 			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
 			f32 aeY2 = screenHeight / 2.0f - (f32)y;
@@ -314,7 +328,7 @@ namespace Engine {
 					clampedAeY2 = col.screenY;
 					f32 clampedP = col.ray.drawEnd - (f32)horizon;
 					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDist = posZ * (f32)screenHeight / clampedP;
+						clampedRowDist = posZ * (f32)screenWidth / (clampedP * planeLength * 2.0f);
 					}
 				}
 
@@ -625,6 +639,9 @@ namespace Engine {
 
 
 	void TileMapRenderer::CacheScanlineDistances(int screenHeight, f32 camZ, int horizon) {
+		int screenWidth = Application::GetWindowWidth();
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		
 		// Only recompute if screen size or camera height or horizon changed
 		if (screenHeight == cachedScreenHeight && fabsf(camZ - cachedCamZ) < 0.0001f && horizon == cachedHorizon) {
 			return;
@@ -642,12 +659,13 @@ namespace Engine {
 		ceilingScanlines.resize(ceilingRows);
 		
 		int idx = 0;
-		for (int y = 0; y < horizon; y += ROW_STEP) {
+		for (int y = 0; y <= horizon; y += ROW_STEP) {
 			f32 p = (f32)horizon - (f32)y;
 			if (fabsf(p) < 0.1f) {
 				ceilingScanlines[idx].rowDist = -1.0f; // Invalid, skip
 			} else {
-				ceilingScanlines[idx].rowDist = ceilingPosZ * (f32)screenHeight / p;
+				// Aspect-ratio-corrected formula: posZ * screenWidth / (2 * p * planeLength)
+				ceilingScanlines[idx].rowDist = ceilingPosZ * (f32)screenWidth / (p * planeLength * 2.0f);
 			}
 			ceilingScanlines[idx].aeY = screenCenterY - (f32)y; // aeY2 (top of band)
 			idx++;
@@ -665,7 +683,8 @@ namespace Engine {
 			if (fabsf(p) < 0.1f) {
 				floorScanlines[idx].rowDist = -1.0f; // Invalid, skip
 			} else {
-				floorScanlines[idx].rowDist = floorPosZ * (f32)screenHeight / p;
+				// Aspect-ratio-corrected formula: posZ * screenWidth / (2 * p * planeLength)
+				floorScanlines[idx].rowDist = floorPosZ * (f32)screenWidth / (p * planeLength * 2.0f);
 			}
 			floorScanlines[idx].aeY = screenCenterY - (f32)y; // aeY2 (top of band)
 			idx++;
