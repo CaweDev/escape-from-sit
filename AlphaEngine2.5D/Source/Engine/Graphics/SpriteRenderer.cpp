@@ -235,7 +235,24 @@ namespace Engine {
 
 	f32 SpriteRenderer::GetSortingKey() const {
 		if (!transform) return static_cast<f32>(sortingOrder);
-		// Use z position as primary sort, sortingOrder as secondary
+
+		if (Camera::main && Camera::main->transform) {
+			// Calculate planar distance (dot product along camera forward vector)
+			// This prevents popping when rotating the camera
+			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+			f32 camForwardX = cosf(camRotRad);
+			f32 camForwardY = sinf(camRotRad);
+
+			f32 dx = transform->position.x - Camera::main->transform->position.x;
+			f32 dy = transform->position.y - Camera::main->transform->position.y;
+
+			// Distance along the camera's view direction
+			f32 dist = dx * camForwardX + dy * camForwardY;
+
+			return dist;
+		}
+
+		// Fallback if no camera
 		return transform->position.z * 10000.0f + static_cast<f32>(sortingOrder);
 	}
 

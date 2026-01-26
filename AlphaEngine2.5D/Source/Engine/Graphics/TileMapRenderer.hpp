@@ -48,6 +48,9 @@ namespace Engine {
 		~TileMapRenderer();
 
 		void Render() override;
+		
+		/** Ensure TileMap renders first by returning max distance */
+		f32 GetSortingKey() const override { return FLT_MAX; }
 
 		// Type-indexed sprite setters (use int for tile type ID)
 		void SetWallSprite(int tileType, std::shared_ptr<Sprite> sprite) { wallSprites[tileType] = sprite; }
