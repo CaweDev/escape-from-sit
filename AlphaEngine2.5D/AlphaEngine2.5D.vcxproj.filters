@@ -130,6 +130,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp">
+    <ClCompile Include="Source\Game\CCTVCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -285,6 +286,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp">
+    <ClInclude Include="Source\Game\CCTVCamera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

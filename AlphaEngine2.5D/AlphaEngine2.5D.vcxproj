@@ -45,6 +45,7 @@
     <ClCompile Include="Source\Engine\UI\UIElement.cpp" />
     <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
     <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp" />
+    <ClCompile Include="Source\Game\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Source\Engine\UI\UIEventSystem.hpp" />
     <ClInclude Include="Source\Engine\UI\UIManager.hpp" />
     <ClInclude Include="Source\Engine\UI\VerticalLayoutGroup.hpp" />
+    <ClInclude Include="Source\Game\CCTVCamera.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->
