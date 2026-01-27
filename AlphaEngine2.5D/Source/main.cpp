@@ -63,7 +63,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // Update UI System
         if (UI::UIManager::GetInstance()) {
-            UI::UIManager::GetInstance()->Update(Time::deltaTime);
+            UI::UIManager::GetInstance()->Update(Time::unscaledDeltaTime);
         }
 
         SceneManager::RenderActiveScene();
