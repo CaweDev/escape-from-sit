@@ -21,13 +21,8 @@ void FPSController::Initialize() {
     currentViewHeight = eyeHeight;
     targetViewHeight = eyeHeight;
     
-    // Hide cursor
-    ShowCursor(FALSE);
-    
-    // Get window handle and center
-    hwnd = GetActiveWindow();
-    UpdateCenter();
-    CenterCursor();
+    // Register for cursor lock
+    Input::RegisterCursorLock("FPSController");
 }
 
 void FPSController::Update() {
@@ -41,30 +36,15 @@ void FPSController::Update() {
         jumpCooldown = 0.0f;
     }
 
-    // Skip first frame to avoid spinning (cursor not centered yet)
-    if (firstFrame) {
-        firstFrame = false;
-        CenterCursor();
-        return;
-    }
-    
-    // Get current cursor position
-    POINT cursorPos;
-    GetCursorPos(&cursorPos);
-    
-    // Calculate delta from center
-    f32 mouseDeltaX = static_cast<f32>(cursorPos.x - centerX);
-    f32 mouseDeltaY = static_cast<f32>(cursorPos.y - centerY);
-    
-    // Re-center cursor immediately
-    CenterCursor();
+    // Get mouse delta from Input system
+    Vector2 mouseDelta = Input::GetMouseDelta();
     
     // Apply mouse rotation
-    transform->rotation += mouseDeltaX * mouseSensitivity;
+    transform->rotation += mouseDelta.x * mouseSensitivity;
 
     // Apply vertical look (pitch)
     if (Camera::main) {
-        Camera::main->pitch -= mouseDeltaY * mouseSensitivity * 5.f;
+        Camera::main->pitch -= mouseDelta.y * mouseSensitivity * 5.f;
         // Clamp pitch to avoid extreme distortion (equivalent to screen height offset)
         // Adjusting horizon by +/- 0.8 * screenHeight is usually a safe limit
         Camera::main->pitch = Mathf::Clamp(Camera::main->pitch, -400.f, 400.f);
@@ -168,21 +148,7 @@ void FPSController::LateUpdate() {
 }
 
 void FPSController::OnDestroy() {
-    ShowCursor(TRUE);
-}
-
-void FPSController::UpdateCenter() {
-    if (!hwnd) hwnd = GetActiveWindow();
-    if (hwnd) {
-        RECT rect;
-        GetWindowRect(hwnd, &rect);
-        centerX = (rect.left + rect.right) / 2;
-        centerY = (rect.top + rect.bottom) / 2;
-    }
-}
-
-void FPSController::CenterCursor() {
-    SetCursorPos(centerX, centerY);
+    Input::UnregisterCursorLock("FPSController");
 }
 
 } // namespace Game

@@ -10,7 +10,6 @@
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
 #include <cmath>
-#include <Windows.h>
 #include "Game/Player.hpp"
 namespace Game {
 
@@ -57,26 +56,15 @@ public:
     void OnDestroy() override;
  
 private:
-    HWND hwnd = nullptr;
-    int centerX = 0;
-    int centerY = 0;
-    
     bool prevSpace = false;
 
     f32 jumpCooldown = 0.0f;
-
-    /** Skip first frame to avoid spinning on spawn */
-    bool firstFrame = true;
     
     /** Current smoothed view height */
     f32 currentViewHeight = 0.5f;
     
     /** Target view height (based on crouch/jump state) */
     f32 targetViewHeight = 0.5f;
-    
-    void UpdateCenter();
-    
-    void CenterCursor();
 };
 
 } // namespace Game

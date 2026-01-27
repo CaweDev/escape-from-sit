@@ -50,6 +50,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // Update time
         Time::Update();
         
+        // Update input (processes cursor centering when locked)
+        Input::Update();
+        
         // Check for exit conditions
         if (AEInputCheckTriggered(AEVK_ESCAPE) || !AESysDoesWindowExist()) {
             Application::Quit();

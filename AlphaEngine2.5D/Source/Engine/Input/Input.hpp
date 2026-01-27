@@ -8,6 +8,8 @@
 #include "../Math/Vector2.hpp"
 #include "AEEngine.h"
 #include <string>
+#include <set>
+#include <Windows.h>
 
 namespace Engine {
 
@@ -42,7 +44,7 @@ public:
     /** Get current mouse position in screen coordinates */
     static Vector2 GetMousePosition();
     
-    /** Get mouse movement delta since last frame */
+    /** Get mouse movement delta since last frame (uses centered cursor when locked) */
     static Vector2 GetMouseDelta();
     
     /** Get mouse scroll wheel delta */
@@ -60,9 +62,34 @@ public:
     
     /** Show or hide the cursor */
     static void SetCursorVisible(bool visible);
+    
+    // Cursor lock registration system
+    
+    /** Register a component for cursor lock. Cursor is hidden & centered when count > 0 */
+    static void RegisterCursorLock(const std::string& id);
+    
+    /** Unregister a component. Cursor is shown when count reaches 0 */
+    static void UnregisterCursorLock(const std::string& id);
+    
+    /** Check if cursor is currently locked */
+    static bool IsCursorLocked();
+    
+    /** Must be called each frame to update mouse state */
+    static void Update();
 
 private:
     Input() = delete; // Static class
+    
+    static void UpdateWindowCenter();
+    static void CenterCursor();
+    
+    static std::set<std::string> cursorLockRegistrations;
+    static HWND hwnd;
+    static int centerX;
+    static int centerY;
+    static f32 mouseDeltaX;
+    static f32 mouseDeltaY;
+    static bool firstFrame;
 };
 
 } // namespace Engine
