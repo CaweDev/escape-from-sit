@@ -110,4 +110,7 @@
   <ItemGroup>
     <None Include="cpp.hint" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\map.txt" />
+  </ItemGroup>
 </Project>
