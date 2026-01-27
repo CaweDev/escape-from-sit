@@ -1,296 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
+    <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
+    <ClCompile Include="Source\Engine\Core\Application.cpp" />
+    <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
+    <ClCompile Include="Source\Engine\Core\Time.cpp" />
+    <ClCompile Include="Source\Engine\Core\Transform.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
+    <ClCompile Include="Source\Engine\Input\Input.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collider2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Physics2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Rigidbody2D.cpp" />
+    <ClCompile Include="Source\Engine\Physics\TileMapCollider2D.cpp" />
+    <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\Button.cpp" />
+    <ClCompile Include="Source\Engine\UI\Canvas.cpp" />
+    <ClCompile Include="Source\Engine\UI\HorizontalLayoutGroup.cpp" />
+    <ClCompile Include="Source\Engine\UI\Image.cpp" />
+    <ClCompile Include="Source\Engine\UI\LayoutGroup.cpp" />
+    <ClCompile Include="Source\Engine\UI\Panel.cpp" />
+    <ClCompile Include="Source\Engine\UI\Text.cpp" />
+    <ClCompile Include="Source\Engine\UI\UIElement.cpp" />
+    <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp" />
+    <ClCompile Include="Source\Game\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\FPSController.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
+    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
+    <ClCompile Include="Source\Game\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Audio\AudioClip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Audio\AudioSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Core\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Core\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Core\Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Core\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\Sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Input\Input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Scene\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Scene\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\FPSController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\Collider2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\Physics2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\Rigidbody2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Physics\TileMapCollider2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\SecurityGuard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\Canvas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\HorizontalLayoutGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\LayoutGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\Panel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\UIElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\UIManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp">
-    <ClCompile Include="Source\Game\CCTVCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Math\Vector2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Math\Vector3.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Math\Mathf.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Core\Application.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Core\Time.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Core\Component.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Core\Transform.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Core\GameObject.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\Color.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\Sprite.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\SpriteRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\Camera.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Input\KeyCode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Input\Input.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Audio\AudioClip.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Audio\AudioSource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Scene\Scene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Scene\SceneManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\FPSController.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\BoxCollider2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\CircleCollider2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\Collider2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\Collision2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\Physics2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\Rigidbody2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Physics\TileMapCollider2D.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\SecurityGuard.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\Button.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\Canvas.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\HorizontalLayoutGroup.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\Image.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\LayoutGroup.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\Panel.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\RectTransform.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\Text.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\UI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\UIElement.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\UIEventSystem.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\UIManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\UI\VerticalLayoutGroup.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp">
-    <ClInclude Include="Source\Game\CCTVCamera.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
+    <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
+    <ClInclude Include="Source\Engine\Math\Vector3.hpp" />
+    <ClInclude Include="Source\Engine\Math\Mathf.hpp" />
+    <ClInclude Include="Source\Engine\Core\Application.hpp" />
+    <ClInclude Include="Source\Engine\Core\Time.hpp" />
+    <ClInclude Include="Source\Engine\Core\Component.hpp" />
+    <ClInclude Include="Source\Engine\Core\Transform.hpp" />
+    <ClInclude Include="Source\Engine\Core\GameObject.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Color.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Sprite.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\Camera.hpp" />
+    <ClInclude Include="Source\Engine\Input\KeyCode.hpp" />
+    <ClInclude Include="Source\Engine\Input\Input.hpp" />
+    <ClInclude Include="Source\Engine\Audio\AudioClip.hpp" />
+    <ClInclude Include="Source\Engine\Audio\AudioSource.hpp" />
+    <ClInclude Include="Source\Engine\Physics\BoxCollider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\CircleCollider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Collider2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Collision2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Physics2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\Rigidbody2D.hpp" />
+    <ClInclude Include="Source\Engine\Physics\TileMapCollider2D.hpp" />
+    <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp" />
+    <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
+    <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
+    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
+    <ClInclude Include="Source\Engine\UI\Button.hpp" />
+    <ClInclude Include="Source\Engine\UI\Canvas.hpp" />
+    <ClInclude Include="Source\Engine\UI\HorizontalLayoutGroup.hpp" />
+    <ClInclude Include="Source\Engine\UI\Image.hpp" />
+    <ClInclude Include="Source\Engine\UI\LayoutGroup.hpp" />
+    <ClInclude Include="Source\Engine\UI\Panel.hpp" />
+    <ClInclude Include="Source\Engine\UI\RectTransform.hpp" />
+    <ClInclude Include="Source\Engine\UI\Text.hpp" />
+    <ClInclude Include="Source\Engine\UI\UI.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIElement.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIEventSystem.hpp" />
+    <ClInclude Include="Source\Engine\UI\UIManager.hpp" />
+    <ClInclude Include="Source\Engine\UI\VerticalLayoutGroup.hpp" />
+    <ClInclude Include="Source\Game\CCTVCamera.hpp" />
+    <ClInclude Include="Source\Game\Player.hpp" />
+    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
+    <ClInclude Include="Source\Game\FPSController.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
+    <ClInclude Include="Source\Game\SecurityGuard.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\map.txt" />
   </ItemGroup>
 </Project>
