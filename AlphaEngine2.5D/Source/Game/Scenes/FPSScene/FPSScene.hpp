@@ -156,7 +156,7 @@ namespace Game {
 
             auto exitSR = exit->AddComponent<SpriteRenderer>();
             auto exitSprite = std::make_shared<Sprite>();
-            exitSprite->Load("Assets/PlanetTexture.png", 500, 500);
+            exitSprite->Load("Assets/PlanetTexture.png");
             exitSR->SetSprite(exitSprite);
             exitSR->billboard = true;
             exitSR->sortingOrder = 95;
@@ -184,17 +184,17 @@ namespace Game {
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
             auto enemySprite = std::make_shared<Sprite>();
-            enemySprite->Load("Assets/PlanetTexture.png", 500, 500);
+            enemySprite->Load("Assets/PlanetTexture.png");
             enemySR->SetSprite(enemySprite);
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
 
             
-            auto powerup1 = std::make_shared<Sprite>(); powerup1->Load("Assets/powerup1.png", 20, 20);
-            auto powerup2 = std::make_shared<Sprite>(); powerup2->Load("Assets/powerup2.png", 20, 20);
-            auto powerup3 = std::make_shared<Sprite>(); powerup3->Load("Assets/powerup3.png", 20, 20);
-            auto powerup4 = std::make_shared<Sprite>(); powerup4->Load("Assets/powerup4.png", 20, 20);
-            auto powerup5 = std::make_shared<Sprite>(); powerup5->Load("Assets/powerup5.png", 20, 20);
+            auto powerup1 = std::make_shared<Sprite>(); powerup1->Load("Assets/powerup1.png");
+            auto powerup2 = std::make_shared<Sprite>(); powerup2->Load("Assets/powerup2.png");
+            auto powerup3 = std::make_shared<Sprite>(); powerup3->Load("Assets/powerup3.png");
+            auto powerup4 = std::make_shared<Sprite>(); powerup4->Load("Assets/powerup4.png");
+            auto powerup5 = std::make_shared<Sprite>(); powerup5->Load("Assets/powerup5.png");
 
             const float PU_Z = 0.20f;
             const int PU_ORDER = 300;
@@ -222,7 +222,7 @@ namespace Game {
 
             
             auto cctvSprite = std::make_shared<Sprite>();
-            cctvSprite->Load("Assets/cctv.png", 64, 64);
+            cctvSprite->Load("Assets/cctv.png");
 
             const float CCTV_Z = 0.85f;
             const float EPS = 0.02f;

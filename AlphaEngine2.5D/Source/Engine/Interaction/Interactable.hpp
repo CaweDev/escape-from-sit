@@ -3,12 +3,21 @@
  * @brief Component that marks a GameObject as interactable
  */
 #pragma once
-
-#include "Engine/Core/Component.hpp"
 #include "AEEngine.h"
+#include "Engine/Core/Component.hpp"
 #include <string>
 #include <functional>
+
 namespace Engine {
+
+/**
+ * @enum HitShape
+ * @brief Shape used for interaction hit detection
+ */
+enum class InteractableHitShape {
+    Rectangle,  // Uses full bounding box
+    Ellipse     // Uses ellipse inscribed in bounding box
+};
 
 /**
  * @class Interactable
@@ -25,6 +34,9 @@ public:
     
     /** Maximum distance from camera for interaction (world units) */
     f32 maxDistance = 5.0f;
+    
+    /** Shape used for hit detection */
+    InteractableHitShape hitShape = InteractableHitShape::Rectangle;
     
     /** Callback when player interacts (optional, for C++ usage) */
     std::function<void()> onInteract;

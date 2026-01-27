@@ -7,7 +7,7 @@
 
 namespace Engine {
 
-Sprite::Sprite() : width(0), height(0), pixelsPerUnit(100.0f), texture(nullptr), mesh(nullptr) {}
+Sprite::Sprite() : texture(nullptr), mesh(nullptr) {}
 
 Sprite::~Sprite() {
     Unload();
@@ -16,9 +16,6 @@ Sprite::~Sprite() {
 Sprite::Sprite(Sprite&& other) noexcept {
     texture = other.texture;
     mesh = other.mesh;
-    width = other.width;
-    height = other.height;
-    pixelsPerUnit = other.pixelsPerUnit;
     other.texture = nullptr;
     other.mesh = nullptr;
 }
@@ -28,9 +25,6 @@ Sprite& Sprite::operator=(Sprite&& other) noexcept {
         Unload();
         texture = other.texture;
         mesh = other.mesh;
-        width = other.width;
-        height = other.height;
-        pixelsPerUnit = other.pixelsPerUnit;
         other.texture = nullptr;
         other.mesh = nullptr;
     }
@@ -54,11 +48,7 @@ bool Sprite::Load(const std::string& filepath) {
     return true;
 }
 
-bool Sprite::Load(const std::string& filepath, int w, int h) {
-    width = w;
-    height = h;
-    return Load(filepath);
-}
+
 
 void Sprite::Unload() {
     // Texture is now managed by AssetManager, don't delete it
@@ -110,12 +100,7 @@ void Sprite::CreateQuadMesh() {
     mesh = AEGfxMeshEnd();
 }
 
-void Sprite::CreateMeshOnly(int w, int h) {
-    width = w;
-    height = h;
-    pixelsPerUnit = 1.0f;  // Direct pixel sizing for colored quads
-    CreateQuadMesh();
-}
+
 
 bool Sprite::IsReady() const {
     return mesh != nullptr;

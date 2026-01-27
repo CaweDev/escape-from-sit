@@ -16,15 +16,6 @@ namespace Engine {
  */
 class Sprite {
 public:
-    /** Width of the sprite in pixels */
-    int width = 0;
-    
-    /** Height of the sprite in pixels */
-    int height = 0;
-    
-    /** Pixels per unit (for scaling) */
-    f32 pixelsPerUnit = 100.0f;
-
     Sprite();
     ~Sprite();
 
@@ -38,9 +29,6 @@ public:
 
     /** Load sprite from file */
     bool Load(const std::string& filepath);
-    
-    /** Create sprite with dimensions */
-    bool Load(const std::string& filepath, int w, int h);
     
     /** Unload resources */
     void Unload();
@@ -65,9 +53,6 @@ private:
     void CreateQuadMesh();
     
 public:
-    /** Create a colored quad without texture (sets pixelsPerUnit to 1 for direct pixel sizing) */
-    void CreateMeshOnly(int w = 100, int h = 100);
-    
     /** Check if mesh is ready (texture optional) */
     bool IsReady() const;
 };

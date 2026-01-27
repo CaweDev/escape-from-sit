@@ -77,14 +77,13 @@ namespace Engine {
 			if (!proj.isVisible) return;
 
 			// Calculate sprite screen size
-			// spriteHeight = proj.scale (like a wall) * localScale.y
-			// spriteWidth = spriteHeight * aspect ratio * localScale.x
-			f32 aspectRatio = static_cast<f32>(sprite->width) / static_cast<f32>(sprite->height);
+			// spriteHeight = proj.scale (pixels per unit) * localScale.y
+			// spriteWidth = proj.scale (pixels per unit) * localScale.x
 			f32 spriteHeight = proj.scale * transform->localScale.y;
-			f32 spriteWidth = spriteHeight * aspectRatio * transform->localScale.x / transform->localScale.y;
+			f32 spriteWidth = proj.scale * transform->localScale.x;
 
 			// Calculate world width for per-column depth
-			f32 worldWidth = transform->localScale.x * aspectRatio;
+			f32 worldWidth = transform->localScale.x;
 			
 			// Camera vectors for per-column depth calculation
 			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
@@ -166,8 +165,8 @@ namespace Engine {
 		}
 		else {
 			// Standard 2D rendering logic (existing)
-			f32 scaleX = transform->localScale.x * (sprite->width / sprite->pixelsPerUnit);
-			f32 scaleY = transform->localScale.y * (sprite->height / sprite->pixelsPerUnit);
+			f32 scaleX = transform->localScale.x;
+			f32 scaleY = transform->localScale.y;
 
 			if (flipX) scaleX = -scaleX;
 			if (flipY) scaleY = -scaleY;

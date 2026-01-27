@@ -124,13 +124,13 @@ public:
         // Load interactable object sprites
         // Using existing powerup sprites as placeholders
         doorSprite = std::make_shared<Sprite>();
-        doorSprite->Load("Assets/powerup1.png", 64, 64);
+        doorSprite->Load("Assets/powerup1.png");
         
         keySprite = std::make_shared<Sprite>();
-        keySprite->Load("Assets/powerup2.png", 64, 64);
+        keySprite->Load("Assets/powerup2.png");
         
         chestSprite = std::make_shared<Sprite>();
-        chestSprite->Load("Assets/powerup3.png", 64, 64);
+        chestSprite->Load("Assets/powerup3.png");
 
         // === INTERACTABLE OBJECTS ===
 

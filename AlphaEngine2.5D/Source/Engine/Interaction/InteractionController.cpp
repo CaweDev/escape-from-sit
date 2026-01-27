@@ -113,10 +113,8 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
         if (proj.perpDistance > interactable->maxDistance) continue;
         
         // Calculate screen bounds of the sprite
-        f32 aspectRatio = static_cast<f32>(renderer->sprite->width) / 
-                         static_cast<f32>(renderer->sprite->height);
         f32 spriteHeight = proj.scale * obj->transform->localScale.y;
-        f32 spriteWidth = spriteHeight * aspectRatio * obj->transform->localScale.x / obj->transform->localScale.y;
+        f32 spriteWidth = proj.scale * obj->transform->localScale.x;
         
         // Screen bounds (screenY is at the sprite's bottom)
         f32 left = proj.screenX - spriteWidth / 2.0f;
@@ -124,10 +122,28 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
         f32 bottom = proj.screenY;
         f32 top = proj.screenY - spriteHeight;
         
-        // Check if screen center is inside sprite bounds
-        if (screenCenterX >= left && screenCenterX <= right &&
-            screenCenterY >= top && screenCenterY <= bottom) {
+        // Calculate center of sprite on screen
+        f32 spriteCenterX = proj.screenX;
+        f32 spriteCenterY = proj.screenY - spriteHeight / 2.0f;
+        
+        bool isHit = false;
+        
+        if (interactable->hitShape == InteractableHitShape::Ellipse) {
+            // Ellipse check: (x-cx)^2/a^2 + (y-cy)^2/b^2 <= 1
+            f32 a = spriteWidth / 2.0f;   // Semi-major axis (horizontal)
+            f32 b = spriteHeight / 2.0f;  // Semi-minor axis (vertical)
+            f32 dx = screenCenterX - spriteCenterX;
+            f32 dy = screenCenterY - spriteCenterY;
             
+            f32 ellipseTest = (dx * dx) / (a * a) + (dy * dy) / (b * b);
+            isHit = (ellipseTest <= 1.0f);
+        } else {
+            // Rectangle check (default)
+            isHit = (screenCenterX >= left && screenCenterX <= right &&
+                     screenCenterY >= top && screenCenterY <= bottom);
+        }
+        
+        if (isHit) {
             // Pick the closest one
             if (proj.perpDistance < closestDist) {
                 closestDist = proj.perpDistance;
