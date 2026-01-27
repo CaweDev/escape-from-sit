@@ -3,6 +3,7 @@
  * @brief Implementation of Sprite class
  */
 #include "Sprite.hpp"
+#include "../Core/AssetManager.hpp"
 
 namespace Engine {
 
@@ -42,8 +43,9 @@ bool Sprite::Load(const std::string& filepath) {
     // Create quad mesh (1x1 unit, centered) regardless of texture success
     CreateQuadMesh();
     
-    texture = new Texture2D(filepath);
-    if (!texture->IsLoaded()) {
+    // Use AssetManager to get cached texture (non-owning pointer)
+    texture = AssetManager::GetTexture(filepath);
+    if (!texture || !texture->IsLoaded()) {
         printf("[Error] Sprite: Failed to load texture from %s. Rendering as fallback quad.\n", filepath.c_str());
         // We still have the mesh, so we can render a color quad if needed
         return true; 
@@ -59,10 +61,9 @@ bool Sprite::Load(const std::string& filepath, int w, int h) {
 }
 
 void Sprite::Unload() {
-    if (texture) {
-        delete texture;
-        texture = nullptr;
-    }
+    // Texture is now managed by AssetManager, don't delete it
+    texture = nullptr;
+    
     if (mesh) {
         AEGfxMeshFree(mesh);
         mesh = nullptr;

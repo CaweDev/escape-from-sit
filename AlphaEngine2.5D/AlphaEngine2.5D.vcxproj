@@ -14,6 +14,7 @@
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
+    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
     <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
     <ClCompile Include="Source\Engine\Core\Time.cpp" />
     <ClCompile Include="Source\Engine\Core\Transform.cpp" />
@@ -55,6 +56,7 @@
   <ItemGroup>
     <!-- Engine Math -->
     <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />

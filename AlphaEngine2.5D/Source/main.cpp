@@ -10,14 +10,7 @@
 #include "AEEngine.h"
 
 // Engine Core
-#include "Engine/Core/Application.hpp"
-#include "Engine/Core/Time.hpp"
-
-// Engine Scene
-#include "Engine/Scene/SceneManager.hpp"
-
-// Engine UI
-#include "Engine/UI/UI.hpp"
+#include "Engine.hpp"
 
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
@@ -83,6 +76,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Cleanup UI System
     UI::UIManager::Shutdown();
+
+    // Cleanup Asset Manager
+	AssetManager::UnloadAll();
 
     // Cleanup
     AESysExit();

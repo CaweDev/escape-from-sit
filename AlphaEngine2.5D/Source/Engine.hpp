@@ -15,6 +15,7 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
 #include "Engine/Core/Transform.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 // Graphics
 #include "Engine/Graphics/Camera.hpp"
@@ -52,4 +53,7 @@
 
 // TileMap
 #include "Engine/TileMap/TileMap.hpp"
+
+// UI
+#include "Engine/UI/UI.hpp"
 #endif

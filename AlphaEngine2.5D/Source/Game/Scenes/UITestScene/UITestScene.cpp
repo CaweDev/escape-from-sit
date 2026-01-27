@@ -3,10 +3,10 @@
  * @brief Implementation of the UI test scene
  */
 
-#include "UITestScene.hpp"
-#include "Engine/Core/Time.hpp"
 #include <iostream>
-#include <Engine/Graphics/Sprite.hpp>
+#include "Engine.hpp"
+
+#include "UITestScene.hpp"
 
 namespace Game {
 
@@ -29,6 +29,7 @@ void UITestScene::OnLoad() {
     //auto skySprite = new Texture2D();
     //skySprite->Load("Assets/Tilemap/modern_school_floor.png");
     //panel->SetBackgroundSprite(skySprite);
+	panel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/Tilemap/modern_school_floor.png"));
 
 
     // 2. Add a title text at the top of the panel
