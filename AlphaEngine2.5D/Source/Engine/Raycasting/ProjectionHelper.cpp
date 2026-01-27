@@ -49,14 +49,18 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
 
     // 5. Calculate screen X and scale ALWAYS (even if off-screen/behind)
     f32 fovRad = fovDeg * 3.14159f / 180.0f;
-    f32 cameraX = std::tan(relAngle) / std::tan(fovRad / 2.0f);
+    f32 planeLength = std::tan(fovRad / 2.0f);
+    f32 cameraX = std::tan(relAngle) / planeLength;
     result.screenX = (cameraX + 1.0f) * screenWidth / 2.0f;
     
-    // Scale is based on perpDistance. Prevent division by zero.
-    result.scale = static_cast<f32>(screenHeight) / (std::abs(perpDist) > 0.01f ? std::abs(perpDist) : 0.01f);
+    // Scale uses aspect-ratio-corrected formula matching TileMapRenderer
+    // This ensures sprites scale consistently with walls at the same distance
+    f32 safePerpDist = (std::abs(perpDist) > 0.01f) ? std::abs(perpDist) : 0.01f;
+    result.scale = static_cast<f32>(screenWidth) / (safePerpDist * planeLength * 2.0f);
 
     // Screen Y accounts for height difference (objects above camera appear higher on screen)
     // Plus the dynamic horizon (pitch)
+    // Use the same height offset formula as TileMapRenderer for consistency
     f32 projectedHeight = dz * result.scale;
     f32 pitchOffset = (Camera::main) ? Camera::main->pitch : 0.0f;
     result.screenY = (static_cast<f32>(screenHeight) / 2.0f) + pitchOffset - projectedHeight;
