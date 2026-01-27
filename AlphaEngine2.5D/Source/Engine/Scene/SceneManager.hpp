@@ -43,6 +43,9 @@ public:
     /** Load first registered scene (call on startup) */
     static void LoadFirstScene();
 
+    /** Unload active scene and cleanup all GameObjects (call before shutdown) */
+    static void UnloadActiveScene();
+
 private:
     static Scene* activeScene;
     static std::unordered_map<std::string, Scene*> sceneRegistry;

@@ -77,6 +77,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         AESysFrameEnd();
     }
 
+    // Unload active scene first (ensures components clean up before managers)
+    SceneManager::UnloadActiveScene();
+
     // Cleanup UI System
     UI::UIManager::Shutdown();
 

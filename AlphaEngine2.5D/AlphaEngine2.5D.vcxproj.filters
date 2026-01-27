@@ -42,6 +42,10 @@
     <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
+    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
+    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
+    <ClCompile Include="Source\Engine\UI\Crosshair.cpp" />
+    <ClCompile Include="Source\Engine\UI\InteractionPrompt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -97,6 +101,11 @@
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
+    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
+    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
+    <ClInclude Include="Source\Engine\UI\Crosshair.hpp" />
+    <ClInclude Include="Source\Engine\UI\InteractionPrompt.hpp" />
+    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

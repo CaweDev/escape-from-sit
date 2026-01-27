@@ -47,6 +47,10 @@
 // Raycasting
 #include "Engine/Raycasting/ProjectionHelper.hpp"
 
+// Interaction
+#include "Engine/Interaction/Interactable.hpp"
+#include "Engine/Interaction/InteractionController.hpp"
+
 // Scene
 #include "Engine/Scene/Scene.hpp"
 #include "Engine/Scene/SceneManager.hpp"

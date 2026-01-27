@@ -51,8 +51,12 @@ namespace Engine {
 		// Set global transparency
 		AEGfxSetTransparency(color.a);
 
-		// Set color add (none)
-		AEGfxSetColorToAdd(0, 0, 0, 0);
+		// Set color add (highlight effect when targeted)
+		if (highlighted) {
+			AEGfxSetColorToAdd(highlightColor.r, highlightColor.g, highlightColor.b, highlightColor.a);
+		} else {
+			AEGfxSetColorToAdd(0, 0, 0, 0);
+		}
 
 		AEMtx33 result;
 
