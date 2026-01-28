@@ -65,6 +65,13 @@ void SceneManager::LoadFirstScene() {
     }
 }
 
+void SceneManager::UnloadActiveScene() {
+    if (activeScene) {
+        activeScene->UnloadInternal();
+        activeScene = nullptr;
+    }
+}
+
 void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     

@@ -4,6 +4,7 @@
  */
 #include "TileMapRenderer.hpp"
 #include "ZBuffer.hpp"
+#include "Engine/Core/Application.hpp"
 #include <cmath>
 #include <vector>
 
@@ -27,6 +28,9 @@ namespace Engine {
 			CreateColumnMesh();
 		}
 
+		// Reset AE camera to origin for screen-space rendering
+		AEGfxSetCamPosition(0.0f, 0.0f);
+
 		int screenWidth = AEGfxGetWindowWidth();
 		int screenHeight = AEGfxGetWindowHeight();
 
@@ -39,12 +43,14 @@ namespace Engine {
 		Vector2 pos = Vector2(camTransform->position.x, camTransform->position.y);
 		f32 camZ = camTransform->position.z;
 		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+		f32 verticalOffset = (Camera::main) ? Camera::main->pitch : 0.0f;
+		int horizon = screenHeight / 2 + (int)verticalOffset;
 
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
 		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
-		f32 planeX = -dirY * planeLength;
-		f32 planeY = dirX * planeLength;
+		f32 planeX = dirY * planeLength;
+		f32 planeY = -dirX * planeLength;
 
 		// Perform unified raycasting pass
 		std::vector<ColumnInfo> columns;
@@ -52,11 +58,15 @@ namespace Engine {
 
 		for (int x = 0; x < screenWidth; x += COLUMN_STEP) {
 			f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
+			f32 cameraX2 = 2.0f * (x + COLUMN_STEP) / (f32)screenWidth - 1.0f;
+			
 			ColumnInfo info;
 			info.rayDirX = dirX + planeX * cameraX;
 			info.rayDirY = dirY + planeY * cameraX;
+			info.rayDirX2 = dirX + planeX * cameraX2;
+			info.rayDirY2 = dirY + planeY * cameraX2;
 
-			info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, screenHeight, map);
+			info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, horizon, screenHeight, map);
 
 			f32 drawStart = info.ray.drawStart < 0 ? 0 : info.ray.drawStart;
 			f32 drawEnd = info.ray.drawEnd >= screenHeight ? (f32)screenHeight - 1 : info.ray.drawEnd;
@@ -83,22 +93,23 @@ namespace Engine {
 			}
 		}
 
-		// Pre-cache scanline distances (only recomputes if screenHeight or camZ changed)
-		CacheScanlineDistances(screenHeight, camZ);
+		// Pre-cache scanline distances (only recomputes if screenHeight or camZ or horizon changed)
+		CacheScanlineDistances(screenHeight, camZ, horizon);
 
 		// Render in order: ceiling, floor, walls (walls on top)
-		RenderCeiling(pos, camZ, screenWidth, screenHeight, columns, map);
-		RenderFloor(pos, camZ, screenWidth, screenHeight, columns, map);
-		RenderWalls(screenHeight, columns);
+		RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, columns, map);
+		RenderFloor(pos, camZ, horizon, screenWidth, screenHeight, columns, map);
+		RenderWalls(horizon, screenHeight, columns);
 	}
 
 	TileMapRenderer::RaycastResult TileMapRenderer::CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, 
-		f32 camZ, int screenHeight, TileMap* map) {
+		f32 camZ, int horizon, int screenHeight, TileMap* map) {
 		
 		RaycastResult result;
 		
-		int mapX = (int)pos.x;
-		int mapY = (int)pos.y;
+		// Convert world position to tile grid coordinates
+		int mapX = (int)floorf(pos.x);
+		int mapY = (int)floorf(pos.y);
 		f32 deltaDistX = (rayDirX == 0) ? 1e30f : fabsf(1.0f / rayDirX);
 		f32 deltaDistY = (rayDirY == 0) ? 1e30f : fabsf(1.0f / rayDirY);
 		f32 sideDistX, sideDistY;
@@ -129,15 +140,18 @@ namespace Engine {
 		}
 		// result.wallX is now the absolute world coordinate (for U mapping)
 
-		f32 wallHeight = (f32)screenHeight / result.perpWallDist;
-		f32 heightOffset = (camZ - 0.5f) * ((f32)screenHeight / result.perpWallDist);
-		result.drawStart = (screenHeight - wallHeight) / 2.0f + heightOffset;
-		result.drawEnd = (screenHeight + wallHeight) / 2.0f + heightOffset;
+		// Wall height with aspect ratio correction
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		int screenWidth = Application::GetWindowWidth();
+		f32 wallHeight = (f32)screenWidth / (result.perpWallDist * planeLength * 2.0f);
+		f32 heightOffset = (camZ - 0.5f) * ((f32)screenWidth / (result.perpWallDist * planeLength * 2.0f));
+		result.drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
+		result.drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
 		return result;
 	}
 
-	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
 		// Check if we have any ceiling sprites
@@ -149,7 +163,7 @@ namespace Engine {
 
 		// Ceiling height is 1.0 - camZ above the viewer
 		f32 posZ = 1.0f - camZ;
-		int horizon = screenHeight / 2;
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 
 		int triCount = 0;
 		bool meshIsOpen = false;
@@ -171,26 +185,26 @@ namespace Engine {
 				: rowDist;
 			if (rowDistNext < 0) rowDistNext = rowDist;
 
-			f32 aeY1 = (f32)horizon - (f32)yNext;
-			f32 aeY2 = (f32)horizon - (f32)y;
+			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
+			f32 aeY2 = screenHeight / 2.0f - (f32)y;
 
 			// Now iterate columns for this scanline
 			for (const auto& col : columns) {
-				// Calculate clamped Y coordinates for this column
-				// This prevents gaps at wall-ceiling boundary
+				// Clamp ceiling quad to wall boundary for this column
 				f32 clampedAeY1 = aeY1;
 				f32 clampedRowDistNext = rowDistNext;
 				
-				// If this scanline band's bottom is below wall start, clamp to wall start
-				if (yNext > (int)col.ray.drawStart) {
-					// Skip entirely if even the top of this band is below wall start
-					if (y >= (int)col.ray.drawStart) continue;
+				// Check if scanline band overlaps with wall
+				int wallStartInt = (int)floorf(col.ray.drawStart);
+				if (yNext > wallStartInt) {
+					// Skip if entire band is behind wall
+					if (y >= wallStartInt) continue;
 					
-					// Clamp bottom of quad to wall boundary
-					clampedAeY1 = (f32)horizon - col.ray.drawStart;
+					// Clamp to wall top position
+					clampedAeY1 = col.screenY2;
 					f32 clampedP = (f32)horizon - col.ray.drawStart;
 					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDistNext = posZ * (f32)screenHeight / clampedP;
+						clampedRowDistNext = posZ * (f32)screenWidth / (clampedP * planeLength * 2.0f);
 					}
 				}
 
@@ -200,18 +214,23 @@ namespace Engine {
 					triCount = 0;
 				}
 
-				// UV computed using shared rowDist (or clamped version for bottom)
-				f32 u1 = pos.x + rowDist * col.rayDirX;
-				f32 v1 = pos.y + rowDist * col.rayDirY;
-				f32 u2 = pos.x + clampedRowDistNext * col.rayDirX;
-				f32 v2 = pos.y + clampedRowDistNext * col.rayDirY;
+				// UV computed using shared rowDist (interpolated across both sides)
+				f32 u1_l = pos.x + rowDist * col.rayDirX;
+				f32 v1_l = pos.y + rowDist * col.rayDirY;
+				f32 u1_r = pos.x + rowDist * col.rayDirX2;
+				f32 v1_r = pos.y + rowDist * col.rayDirY2;
 
-				AEGfxTriAdd(col.screenX, aeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX2, aeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX, clampedAeY1, 0xFFFFFFFF, u2, v2);
-				AEGfxTriAdd(col.screenX, clampedAeY1, 0xFFFFFFFF, u2, v2, 
-				            col.screenX2, aeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX2, clampedAeY1, 0xFFFFFFFF, u2, v2);
+				f32 u2_l = pos.x + clampedRowDistNext * col.rayDirX;
+				f32 v2_l = pos.y + clampedRowDistNext * col.rayDirY;
+				f32 u2_r = pos.x + clampedRowDistNext * col.rayDirX2;
+				f32 v2_r = pos.y + clampedRowDistNext * col.rayDirY2;
+
+				AEGfxTriAdd(col.screenX, aeY2, 0xFFFFFFFF, u1_l, v1_l, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l);
+				AEGfxTriAdd(col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX2, clampedAeY1, 0xFFFFFFFF, u2_r, v2_r);
 				triCount += 2;
 
 				if (triCount >= MAX_TRIANGLES_PER_MESH) {
@@ -248,7 +267,7 @@ namespace Engine {
 		}
 	}
 
-	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int screenWidth, int screenHeight, 
+	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
 		// Check if we have any floor sprites
@@ -260,7 +279,7 @@ namespace Engine {
 
 		// Pre-calculate row distances (done once, outside scanline loop)
 		f32 posZ = camZ;
-		int horizon = screenHeight / 2;
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 
 		int triCount = 0;
 		bool meshIsOpen = false;
@@ -274,34 +293,42 @@ namespace Engine {
 			if (rowDist < 0) continue; // Invalid scanline
 
 			int yNext = y + ROW_STEP;
-			if (yNext > screenHeight) yNext = screenHeight;
+			bool yNextClamped = (yNext > screenHeight);
+			if (yNextClamped) yNext = screenHeight;
 			
-			int scanIdxNext = (yNext - horizon) / ROW_STEP;
-			f32 rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
-				? floorScanlines[scanIdxNext].rowDist 
-				: rowDist;
-			if (rowDistNext < 0) rowDistNext = rowDist;
+			f32 rowDistNext;
+			if (yNextClamped) {
+				// Compute directly for screen bottom edge to avoid cache misalignment
+				f32 p = (f32)yNext - (f32)horizon;
+				rowDistNext = (fabsf(p) > 0.1f) ? (posZ * (f32)screenWidth / (p * planeLength * 2.0f)) : rowDist;
+			} else {
+				int scanIdxNext = (yNext - horizon) / ROW_STEP;
+				rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
+					? floorScanlines[scanIdxNext].rowDist 
+					: rowDist;
+				if (rowDistNext < 0) rowDistNext = rowDist;
+			}
 
-			f32 aeY1 = (f32)horizon - (f32)yNext;
-			f32 aeY2 = (f32)horizon - (f32)y;
+			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
+			f32 aeY2 = screenHeight / 2.0f - (f32)y;
 
 		// Now iterate columns for this scanline
 			for (const auto& col : columns) {
-				// Calculate clamped Y coordinates for this column
-				// This prevents gaps at wall-floor boundary
+				// Clamp floor quad to wall boundary for this column
 				f32 clampedAeY2 = aeY2;
 				f32 clampedRowDist = rowDist;
 				
-				// If this scanline row starts above the wall end, clamp to wall end
-				if (y < (int)col.ray.drawEnd) {
-					// Skip entirely if even the bottom of this band is above wall end
-					if (yNext <= (int)col.ray.drawEnd) continue;
+				// Check if scanline band overlaps with wall
+				int wallEndInt = (int)ceilf(col.ray.drawEnd);
+				if (y < wallEndInt) {
+					// Skip if entire band is behind wall
+					if (yNext <= wallEndInt) continue;
 					
-					// Clamp top of quad to wall boundary
-					clampedAeY2 = (f32)horizon - col.ray.drawEnd;
+					// Clamp to wall bottom position
+					clampedAeY2 = col.screenY;
 					f32 clampedP = col.ray.drawEnd - (f32)horizon;
 					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDist = posZ * (f32)screenHeight / clampedP;
+						clampedRowDist = posZ * (f32)screenWidth / (clampedP * planeLength * 2.0f);
 					}
 				}
 
@@ -311,18 +338,23 @@ namespace Engine {
 					triCount = 0;
 				}
 
-				// UV computed using shared rowDist (or clamped version)
-				f32 u1 = pos.x + clampedRowDist * col.rayDirX;
-				f32 v1 = pos.y + clampedRowDist * col.rayDirY;
-				f32 u2 = pos.x + rowDistNext * col.rayDirX;
-				f32 v2 = pos.y + rowDistNext * col.rayDirY;
+				// UV computed using shared rowDist (interpolated across both sides)
+				f32 u1_l = pos.x + clampedRowDist * col.rayDirX;
+				f32 v1_l = pos.y + clampedRowDist * col.rayDirY;
+				f32 u1_r = pos.x + clampedRowDist * col.rayDirX2;
+				f32 v1_r = pos.y + clampedRowDist * col.rayDirY2;
 
-				AEGfxTriAdd(col.screenX, clampedAeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX, aeY1, 0xFFFFFFFF, u2, v2);
-				AEGfxTriAdd(col.screenX, aeY1, 0xFFFFFFFF, u2, v2, 
-				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1, v1, 
-				            col.screenX2, aeY1, 0xFFFFFFFF, u2, v2);
+				f32 u2_l = pos.x + rowDistNext * col.rayDirX;
+				f32 v2_l = pos.y + rowDistNext * col.rayDirY;
+				f32 u2_r = pos.x + rowDistNext * col.rayDirX2;
+				f32 v2_r = pos.y + rowDistNext * col.rayDirY2;
+
+				AEGfxTriAdd(col.screenX, clampedAeY2, 0xFFFFFFFF, u1_l, v1_l, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l);
+				AEGfxTriAdd(col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX2, aeY1, 0xFFFFFFFF, u2_r, v2_r);
 				triCount += 2;
 
 				if (triCount >= MAX_TRIANGLES_PER_MESH) {
@@ -359,7 +391,7 @@ namespace Engine {
 		}
 	}
 
-	void TileMapRenderer::RenderWalls(int screenHeight, const std::vector<ColumnInfo>& columns) {
+	void TileMapRenderer::RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		
 		bool hasCeilingSprites = !ceilingSprites.empty();
 		bool hasFloorSprites = !floorSprites.empty();
@@ -371,10 +403,10 @@ namespace Engine {
 			int triCount = 0;
 			bool meshIsOpen = false;
 			
+			f32 screenTopY = (f32)screenHeight / 2.0f;
 			for (const auto& col : columns) {
-				f32 topY = screenHeight / 2.0f;
 				f32 wallStart = col.screenY2;
-				for (f32 y = topY; y > wallStart; y -= ROW_STEP) {
+				for (f32 y = screenTopY; y > wallStart; y -= ROW_STEP) {
 					if (!meshIsOpen) {
 						AEGfxMeshStart();
 						meshIsOpen = true;
@@ -423,10 +455,10 @@ namespace Engine {
 			int triCount = 0;
 			bool meshIsOpen = false;
 			
+			f32 screenBottomY = -(f32)screenHeight / 2.0f;
 			for (const auto& col : columns) {
 				f32 wallEnd = col.screenY;
-				f32 bottomY = -screenHeight / 2.0f;
-				for (f32 y = wallEnd; y > bottomY; y -= ROW_STEP) {
+				for (f32 y = wallEnd; y > screenBottomY; y -= ROW_STEP) {
 					if (!meshIsOpen) {
 						AEGfxMeshStart();
 						meshIsOpen = true;
@@ -434,7 +466,7 @@ namespace Engine {
 					}
 
 					f32 yNext = y - ROW_STEP;
-					if (yNext < bottomY) yNext = bottomY;
+					if (yNext < screenBottomY) yNext = screenBottomY;
 					AEGfxTriAdd(col.screenX, y, floorColorU32, 0, 0, col.screenX2, y, floorColorU32, 0, 0, col.screenX, yNext, floorColorU32, 0, 0);
 					AEGfxTriAdd(col.screenX, yNext, floorColorU32, 0, 0, col.screenX2, y, floorColorU32, 0, 0, col.screenX2, yNext, floorColorU32, 0, 0);
 					triCount += 2;
@@ -606,15 +638,19 @@ namespace Engine {
 	}
 
 
-	void TileMapRenderer::CacheScanlineDistances(int screenHeight, f32 camZ) {
-		// Only recompute if screen size or camera height changed
-		if (screenHeight == cachedScreenHeight && fabsf(camZ - cachedCamZ) < 0.0001f) {
+	void TileMapRenderer::CacheScanlineDistances(int screenHeight, f32 camZ, int horizon) {
+		int screenWidth = Application::GetWindowWidth();
+		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		
+		// Only recompute if screen size or camera height or horizon changed
+		if (screenHeight == cachedScreenHeight && fabsf(camZ - cachedCamZ) < 0.0001f && horizon == cachedHorizon) {
 			return;
 		}
 
 		cachedScreenHeight = screenHeight;
 		cachedCamZ = camZ;
-		int horizon = screenHeight / 2;
+		cachedHorizon = horizon;
+		f32 screenCenterY = screenHeight / 2.0f;
 
 		// Cache ceiling scanlines (from top toward horizon)
 		// Ceiling is at height 1.0, so posZ = 1.0 - camZ
@@ -623,14 +659,15 @@ namespace Engine {
 		ceilingScanlines.resize(ceilingRows);
 		
 		int idx = 0;
-		for (int y = 0; y < horizon; y += ROW_STEP) {
+		for (int y = 0; y <= horizon; y += ROW_STEP) {
 			f32 p = (f32)horizon - (f32)y;
 			if (fabsf(p) < 0.1f) {
 				ceilingScanlines[idx].rowDist = -1.0f; // Invalid, skip
 			} else {
-				ceilingScanlines[idx].rowDist = ceilingPosZ * (f32)screenHeight / p;
+				// Aspect-ratio-corrected formula: posZ * screenWidth / (2 * p * planeLength)
+				ceilingScanlines[idx].rowDist = ceilingPosZ * (f32)screenWidth / (p * planeLength * 2.0f);
 			}
-			ceilingScanlines[idx].aeY = (f32)horizon - (f32)y; // aeY2 (top of band)
+			ceilingScanlines[idx].aeY = screenCenterY - (f32)y; // aeY2 (top of band)
 			idx++;
 		}
 
@@ -646,9 +683,10 @@ namespace Engine {
 			if (fabsf(p) < 0.1f) {
 				floorScanlines[idx].rowDist = -1.0f; // Invalid, skip
 			} else {
-				floorScanlines[idx].rowDist = floorPosZ * (f32)screenHeight / p;
+				// Aspect-ratio-corrected formula: posZ * screenWidth / (2 * p * planeLength)
+				floorScanlines[idx].rowDist = floorPosZ * (f32)screenWidth / (p * planeLength * 2.0f);
 			}
-			floorScanlines[idx].aeY = (f32)horizon - (f32)y; // aeY2 (top of band)
+			floorScanlines[idx].aeY = screenCenterY - (f32)y; // aeY2 (top of band)
 			idx++;
 			if (idx >= floorRows) break; // Safety bounds check
 		}

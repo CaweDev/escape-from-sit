@@ -10,11 +10,7 @@
 #include "AEEngine.h"
 
 // Engine Core
-#include "Engine/Core/Application.hpp"
-#include "Engine/Core/Time.hpp"
-
-// Engine Scene
-#include "Engine/Scene/SceneManager.hpp"
+#include "Engine.hpp"
 
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
@@ -32,8 +28,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // Initialize Alpha Engine
-    AESysInit(hInstance, nCmdShow, 1280, 720, 1, 60, false, NULL);
+    AESysInit(hInstance, nCmdShow, 1920, 720, 1, 60, false, NULL);
     AESysSetWindowTitle("Totally not Unity Engine. It's Alpha Engine!!!");
+
+    // Initialize UI System
+    UI::UIManager::Initialize();
+
+    // Set default background color (Solid Black)
+    AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
 
     // Register all scenes and load the first one
     Game::RegisterAllScenes();
@@ -48,6 +50,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // Update time
         Time::Update();
         
+        // Update input (processes cursor centering when locked)
+        Input::Update();
+        
         // Check for exit conditions
         if (AEInputCheckTriggered(AEVK_ESCAPE) || !AESysDoesWindowExist()) {
             Application::Quit();
@@ -56,11 +61,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // Update scene (handles input, physics, rendering)
         SceneManager::UpdateActiveScene();
 
+        // Update UI System
+        if (UI::UIManager::GetInstance()) {
+            UI::UIManager::GetInstance()->Update(Time::unscaledDeltaTime);
+        }
+
         SceneManager::RenderActiveScene();
+
+        // Render UI System on top
+        if (UI::UIManager::GetInstance()) {
+            UI::UIManager::GetInstance()->Render();
+        }
 
         // Frame end
         AESysFrameEnd();
     }
+
+    // Unload active scene first (ensures components clean up before managers)
+    SceneManager::UnloadActiveScene();
+
+    // Cleanup UI System
+    UI::UIManager::Shutdown();
+
+    // Cleanup Asset Manager
+	AssetManager::UnloadAll();
 
     // Cleanup
     AESysExit();

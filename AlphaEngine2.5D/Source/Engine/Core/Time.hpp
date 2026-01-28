@@ -14,9 +14,17 @@ namespace Engine {
  */
 class Time {
 public:
-    /** Time in seconds since last frame */
+    /* Gets Game Speed */
+    static f32 GetGameSpeed();
+    /* Sets Game Speed */
+    static void SetGameSpeed(f32 newGameSpeed);
+
+    /** Time in seconds since last frame, dependent on game speed */
     static f32 deltaTime;
     
+    /* Time in seconds since last frame, independent from game speed */
+    static f32 unscaledDeltaTime;
+
     /** Fixed timestep for physics (default 0.02 = 50Hz) */
     static f32 fixedDeltaTime;
     
@@ -33,6 +41,7 @@ public:
     static void Reset();
 
 private:
+    static f32 gameSpeed;
     Time() = delete; // Static class
 };
 

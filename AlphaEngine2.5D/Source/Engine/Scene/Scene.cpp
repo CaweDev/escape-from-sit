@@ -5,6 +5,7 @@
 #include "Scene.hpp"
 #include "Engine/Graphics/Camera.hpp"
 #include "Engine/Physics/Physics2D.hpp"
+#include "Engine/Graphics/IRenderer.hpp"
 #include <algorithm>
 
 namespace Engine {
@@ -85,15 +86,40 @@ void Scene::UpdateInternal() {
 
 void Scene::RenderInternal() {
     if (!isLoaded) return;
+	OnPreRender();
     
     // Apply camera settings if a main camera exists
     if (Camera::main) {
         Camera::main->Apply();
     }
     
+    // Collect all renderers from active objects
+    std::vector<IRenderer*> renderers;
+    // Simple heuristic reservation
+    renderers.reserve(gameObjects.size()); 
+
     for (auto& obj : gameObjects) {
-        obj->InternalRender();
+        if (!obj->active) continue;
+        
+        for (auto& comp : obj->GetComponents<IRenderer>()) {
+            if (comp->enabled) {
+                renderers.push_back(comp);
+  
+            }
+        }
     }
+    
+    // Sort renderers by sorting key (Descending order: farthest first/Painter's Algorithm)
+    std::sort(renderers.begin(), renderers.end(), [](IRenderer* a, IRenderer* b) {
+        return a->GetSortingKey() > b->GetSortingKey();
+    });
+    
+    // Render sorted list
+    for (auto* renderer : renderers) {
+        renderer->Render();
+    }
+
+	OnAfterRender();
 }
 
 bool Scene::IsLoaded() const {

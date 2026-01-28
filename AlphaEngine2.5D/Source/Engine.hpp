@@ -15,6 +15,7 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
 #include "Engine/Core/Transform.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 // Graphics
 #include "Engine/Graphics/Camera.hpp"
@@ -46,10 +47,17 @@
 // Raycasting
 #include "Engine/Raycasting/ProjectionHelper.hpp"
 
+// Interaction
+#include "Engine/Interaction/Interactable.hpp"
+#include "Engine/Interaction/InteractionController.hpp"
+
 // Scene
 #include "Engine/Scene/Scene.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 
 // TileMap
 #include "Engine/TileMap/TileMap.hpp"
+
+// UI
+#include "Engine/UI/UI.hpp"
 #endif

@@ -6,6 +6,15 @@
 
 namespace Engine {
 
+// Static member definitions
+std::set<std::string> Input::cursorLockRegistrations;
+HWND Input::hwnd = nullptr;
+int Input::centerX = 0;
+int Input::centerY = 0;
+f32 Input::mouseDeltaX = 0.0f;
+f32 Input::mouseDeltaY = 0.0f;
+bool Input::firstFrame = true;
+
 bool Input::GetKey(KeyCode key) {
     return AEInputCheckCurr(static_cast<u8>(key)) != 0;
 }
@@ -58,6 +67,11 @@ Vector2 Input::GetMousePosition() {
 }
 
 Vector2 Input::GetMouseDelta() {
+    if (IsCursorLocked()) {
+        // Return the delta calculated from centered cursor
+        return Vector2(mouseDeltaX, mouseDeltaY);
+    }
+    // Fallback to Alpha Engine method when not locked
     s32 dx, dy;
     AEInputGetCursorPositionDelta(&dx, &dy);
     return Vector2(static_cast<f32>(dx), static_cast<f32>(dy));
@@ -97,6 +111,75 @@ f32 Input::GetAxisRaw(const std::string& axisName) {
 
 void Input::SetCursorVisible(bool visible) {
     AEInputShowCursor(visible ? 1 : 0);
+}
+
+void Input::RegisterCursorLock(const std::string& id) {
+    bool wasEmpty = cursorLockRegistrations.empty();
+    cursorLockRegistrations.insert(id);
+    
+    if (wasEmpty && !cursorLockRegistrations.empty()) {
+        // First registration - initialize and lock cursor
+        ShowCursor(FALSE);
+        hwnd = GetActiveWindow();
+        UpdateWindowCenter();
+        CenterCursor();
+        firstFrame = true;
+    }
+}
+
+void Input::UnregisterCursorLock(const std::string& id) {
+    cursorLockRegistrations.erase(id);
+    
+    if (cursorLockRegistrations.empty()) {
+        // All unregistered - show cursor
+        ShowCursor(TRUE);
+    }
+}
+
+bool Input::IsCursorLocked() {
+    return !cursorLockRegistrations.empty();
+}
+
+void Input::Update() {
+    // Reset delta each frame
+    mouseDeltaX = 0.0f;
+    mouseDeltaY = 0.0f;
+    
+    if (!IsCursorLocked()) {
+        return;
+    }
+    
+    // Skip first frame to avoid spinning on initial lock
+    if (firstFrame) {
+        firstFrame = false;
+        CenterCursor();
+        return;
+    }
+    
+    // Get current cursor position
+    POINT cursorPos;
+    GetCursorPos(&cursorPos);
+    
+    // Calculate delta from center
+    mouseDeltaX = static_cast<f32>(cursorPos.x - centerX);
+    mouseDeltaY = static_cast<f32>(cursorPos.y - centerY);
+    
+    // Re-center cursor
+    CenterCursor();
+}
+
+void Input::UpdateWindowCenter() {
+    if (!hwnd) hwnd = GetActiveWindow();
+    if (hwnd) {
+        RECT rect;
+        GetWindowRect(hwnd, &rect);
+        centerX = (rect.left + rect.right) / 2;
+        centerY = (rect.top + rect.bottom) / 2;
+    }
+}
+
+void Input::CenterCursor() {
+    SetCursorPos(centerX, centerY);
 }
 
 } // namespace Engine

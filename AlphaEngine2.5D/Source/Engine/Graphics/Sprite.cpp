@@ -3,10 +3,11 @@
  * @brief Implementation of Sprite class
  */
 #include "Sprite.hpp"
+#include "../Core/AssetManager.hpp"
 
 namespace Engine {
 
-Sprite::Sprite() : width(0), height(0), pixelsPerUnit(100.0f), texture(nullptr), mesh(nullptr) {}
+Sprite::Sprite() : texture(nullptr), mesh(nullptr) {}
 
 Sprite::~Sprite() {
     Unload();
@@ -15,9 +16,6 @@ Sprite::~Sprite() {
 Sprite::Sprite(Sprite&& other) noexcept {
     texture = other.texture;
     mesh = other.mesh;
-    width = other.width;
-    height = other.height;
-    pixelsPerUnit = other.pixelsPerUnit;
     other.texture = nullptr;
     other.mesh = nullptr;
 }
@@ -27,9 +25,6 @@ Sprite& Sprite::operator=(Sprite&& other) noexcept {
         Unload();
         texture = other.texture;
         mesh = other.mesh;
-        width = other.width;
-        height = other.height;
-        pixelsPerUnit = other.pixelsPerUnit;
         other.texture = nullptr;
         other.mesh = nullptr;
     }
@@ -42,27 +37,23 @@ bool Sprite::Load(const std::string& filepath) {
     // Create quad mesh (1x1 unit, centered) regardless of texture success
     CreateQuadMesh();
     
-    texture = AEGfxTextureLoad(filepath.c_str());
-    if (!texture) {
+    // Use AssetManager to get cached texture (non-owning pointer)
+    texture = AssetManager::GetTexture(filepath);
+    if (!texture || !texture->IsLoaded()) {
         printf("[Error] Sprite: Failed to load texture from %s. Rendering as fallback quad.\n", filepath.c_str());
-        // Return true because we have a mesh and can render as color quad
+        // We still have the mesh, so we can render a color quad if needed
         return true; 
     }
     
     return true;
 }
 
-bool Sprite::Load(const std::string& filepath, int w, int h) {
-    width = w;
-    height = h;
-    return Load(filepath);
-}
+
 
 void Sprite::Unload() {
-    if (texture) {
-        AEGfxTextureUnload(texture);
-        texture = nullptr;
-    }
+    // Texture is now managed by AssetManager, don't delete it
+    texture = nullptr;
+    
     if (mesh) {
         AEGfxMeshFree(mesh);
         mesh = nullptr;
@@ -70,12 +61,13 @@ void Sprite::Unload() {
 }
 
 bool Sprite::IsLoaded() const {
-    return texture != nullptr && mesh != nullptr;
+    return texture != nullptr && texture->IsLoaded() && mesh != nullptr;
 }
 
 AEGfxTexture* Sprite::GetTexture() const {
-    return texture;
+    return texture ? texture->GetNativeTexture() : nullptr;
 }
+
 
 AEGfxVertexList* Sprite::GetMesh() const {
     return mesh;
@@ -108,12 +100,7 @@ void Sprite::CreateQuadMesh() {
     mesh = AEGfxMeshEnd();
 }
 
-void Sprite::CreateMeshOnly(int w, int h) {
-    width = w;
-    height = h;
-    pixelsPerUnit = 1.0f;  // Direct pixel sizing for colored quads
-    CreateQuadMesh();
-}
+
 
 bool Sprite::IsReady() const {
     return mesh != nullptr;

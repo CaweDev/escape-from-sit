@@ -6,24 +6,27 @@
 
 #include "Engine/Scene/SceneManager.hpp"
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
-#include "Game/Scenes/Puzzle/PuzzleScene.hpp"
+#include "Game/Scenes/UITestScene/UITestScene.hpp"
+#include "Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp"
 
 namespace Game {
 
-    using namespace Engine;
+using namespace Engine;
 
-    // Scene instances
-    inline FPSScene fpsScene;
-    inline PuzzleScene puzzleScene;
+// Scene instances
+inline FPSScene fpsScene;
+inline UITestScene uiTestScene;
+inline InteractionDemoScene interactionDemoScene;
 
-    /**
-     * @brief Register all game scenes with the SceneManager
-     * Call this once after engine initialization
-     */
-    inline void RegisterAllScenes() {
-        SceneManager::RegisterScene("PUZZLE", &puzzleScene);
-        SceneManager::RegisterScene("FPS", &fpsScene);
+/**
+ * @brief Register all game scenes with the SceneManager
+ * Call this once after engine initialization
+ */
+inline void RegisterAllScenes() {
+    SceneManager::RegisterScene("FPS", &fpsScene);
+    SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
+    SceneManager::RegisterScene("UI", &uiTestScene);
+}
 
+} // namespace Game
 
-    }
-}// namespace Game

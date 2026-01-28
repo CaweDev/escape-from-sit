@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- Shared user macros (if you want custom vars) -->
+	<PropertyGroup Label="UserMacros" />
+
+	<!-- Common paths -->
+	<PropertyGroup>
+		<IncludePath>$(IncludePath);$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)src</IncludePath>
+		<LibraryPath>$(LibraryPath);$(SolutionDir)Extern\AlphaEngine\lib\x64</LibraryPath>
+		<OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
+		<IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
+	</PropertyGroup>
+
+	<!-- Debug settings -->
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<ClCompile>
+			<PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<WarningLevel>Level3</WarningLevel>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Windows</SubSystem>
+			<AdditionalDependencies>Alpha_EngineD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+		</Link>
+		<PostBuildEvent>
+			<Command>
+				xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\freetype.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_EngineD.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q
+			</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+
+	<!-- Release settings -->
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<ClCompile>
+			<PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<WarningLevel>Level3</WarningLevel>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Windows</SubSystem>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<OptimizeReferences>true</OptimizeReferences>
+			<AdditionalDependencies>Alpha_Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+		</Link>
+		<PostBuildEvent>
+			<Command>
+				xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\freetype.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\Alpha_Engine.dll" "$(OutDir)" /s /r /y /q
+xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmod.dll" "$(OutDir)" /s /r /y /q
+			</Command>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+
+</Project>

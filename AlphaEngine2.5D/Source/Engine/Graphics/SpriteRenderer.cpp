@@ -51,8 +51,12 @@ namespace Engine {
 		// Set global transparency
 		AEGfxSetTransparency(color.a);
 
-		// Set color add (none)
-		AEGfxSetColorToAdd(0, 0, 0, 0);
+		// Set color add (highlight effect when targeted)
+		if (highlighted) {
+			AEGfxSetColorToAdd(highlightColor.r, highlightColor.g, highlightColor.b, highlightColor.a);
+		} else {
+			AEGfxSetColorToAdd(0, 0, 0, 0);
+		}
 
 		AEMtx33 result;
 
@@ -73,21 +77,20 @@ namespace Engine {
 			if (!proj.isVisible) return;
 
 			// Calculate sprite screen size
-			// spriteHeight = proj.scale (like a wall) * localScale.y
-			// spriteWidth = spriteHeight * aspect ratio * localScale.x
-			f32 aspectRatio = static_cast<f32>(sprite->width) / static_cast<f32>(sprite->height);
+			// spriteHeight = proj.scale (pixels per unit) * localScale.y
+			// spriteWidth = proj.scale (pixels per unit) * localScale.x
 			f32 spriteHeight = proj.scale * transform->localScale.y;
-			f32 spriteWidth = spriteHeight * aspectRatio * transform->localScale.x / transform->localScale.y;
+			f32 spriteWidth = proj.scale * transform->localScale.x;
 
 			// Calculate world width for per-column depth
-			f32 worldWidth = transform->localScale.x * aspectRatio;
+			f32 worldWidth = transform->localScale.x;
 			
 			// Camera vectors for per-column depth calculation
 			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
 			f32 camForwardX = cosf(camRotRad);
 			f32 camForwardY = sinf(camRotRad);
-			f32 camRightX = -sinf(camRotRad);
-			f32 camRightY = cosf(camRotRad);
+			f32 camRightX = sinf(camRotRad);
+			f32 camRightY = -cosf(camRotRad);
 
 			// Center the sprite horizontally around proj.screenX
 			f32 startX = proj.screenX - spriteWidth / 2.0f;
@@ -113,8 +116,10 @@ namespace Engine {
 			int stripStart = 0;
 
 			// Position sprite so its bottom (feet) is at proj.screenY, extending upward
-			// This matches how characters/objects stand on the ground
-			f32 yBottom = sh / 2.0f - proj.screenY;
+			// proj.screenY is in screen coordinates (0 at top, increases downward)
+			// Convert to AE coordinates (0 at center, positive up)
+			// When camera is higher, proj.screenY increases (lower on screen), yBottom decreases
+			f32 yBottom = (sh / 2.0f) - proj.screenY;
 			f32 yTop = yBottom + spriteHeight;
 
 			for (int x = screenStart; x <= screenEnd; ++x) {
@@ -160,8 +165,8 @@ namespace Engine {
 		}
 		else {
 			// Standard 2D rendering logic (existing)
-			f32 scaleX = transform->localScale.x * (sprite->width / sprite->pixelsPerUnit);
-			f32 scaleY = transform->localScale.y * (sprite->height / sprite->pixelsPerUnit);
+			f32 scaleX = transform->localScale.x;
+			f32 scaleY = transform->localScale.y;
 
 			if (flipX) scaleX = -scaleX;
 			if (flipY) scaleY = -scaleY;
@@ -235,7 +240,24 @@ namespace Engine {
 
 	f32 SpriteRenderer::GetSortingKey() const {
 		if (!transform) return static_cast<f32>(sortingOrder);
-		// Use z position as primary sort, sortingOrder as secondary
+
+		if (Camera::main && Camera::main->transform) {
+			// Calculate planar distance (dot product along camera forward vector)
+			// This prevents popping when rotating the camera
+			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+			f32 camForwardX = cosf(camRotRad);
+			f32 camForwardY = sinf(camRotRad);
+
+			f32 dx = transform->position.x - Camera::main->transform->position.x;
+			f32 dy = transform->position.y - Camera::main->transform->position.y;
+
+			// Distance along the camera's view direction
+			f32 dist = dx * camForwardX + dy * camForwardY;
+
+			return dist;
+		}
+
+		// Fallback if no camera
 		return transform->position.z * 10000.0f + static_cast<f32>(sortingOrder);
 	}
 

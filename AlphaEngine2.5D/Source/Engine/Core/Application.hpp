@@ -5,6 +5,8 @@
 #pragma once
 
 #include "AEEngine.h"
+#include <string>
+#include <unordered_set>
 
 namespace Engine {
 
@@ -32,8 +34,25 @@ public:
     /** Check if window exists */
     static bool WindowExists();
 
+    // Pause Registration System
+    
+    /** Register a pause request (game pauses while any request is active) */
+    static void RegisterPause(const std::string& key);
+    
+    /** Unregister a pause request */
+    static void UnregisterPause(const std::string& key);
+    
+    /** Check if game is currently paused */
+    static bool IsPaused();
+    
+    /** Get count of active pause requests (for debugging) */
+    static size_t GetPauseCount();
+
 private:
     Application() = delete; // Static class
+    
+    /** Registry of active pause requests */
+    static std::unordered_set<std::string> pauseRegistry;
 };
 
 } // namespace Engine

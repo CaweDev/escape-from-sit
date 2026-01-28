@@ -60,13 +60,13 @@ public:
         if (x < 0 || x >= width || y < 0 || y >= height) {
             return TileType::Wall;  // Out of bounds = wall
         }
-        return tiles[y * width + x];
+        return tiles[(height - 1 - y) * width + x];
     }
 
     /** Set tile at position */
     void SetTile(int x, int y, TileType type) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            tiles[y * width + x] = type;
+            tiles[(height - 1 - y) * width + x] = type;
         }
     }
 
