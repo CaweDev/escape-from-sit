@@ -9,11 +9,11 @@
 namespace UI
 {
     Minimap::Minimap()
-        : wallColor(0.4f, 0.4f, 0.5f, 1.0f)
-        , floorColor(0.2f, 0.2f, 0.25f, 1.0f)
-        , playerColor(0.0f, 0.8f, 0.2f, 1.0f)
-        , backgroundColor(0.1f, 0.1f, 0.12f, 0.85f)
-        , borderColor(0.3f, 0.3f, 0.35f, 1.0f)
+        : m_wallColor(0.4f, 0.4f, 0.5f, 1.0f)
+        , m_floorColor(0.2f, 0.2f, 0.25f, 1.0f)
+        , m_playerColor(0.0f, 0.8f, 0.2f, 1.0f)
+        , m_backgroundColor(0.1f, 0.1f, 0.12f, 0.85f)
+        , m_borderColor(0.3f, 0.3f, 0.35f, 1.0f)
     {
         InitMesh();
     }
@@ -54,77 +54,158 @@ namespace UI
         m_playerTransform = transform;
     }
 
-    void Minimap::DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color)
+    /**
+     * @brief Generates a clipped vertex list for a quad using the Sutherland-Hodgman algorithm.
+     * 
+     * THE ALGORITHM CRASH COURSE:
+     * Sutherland-Hodgman is a pipeline-based clipping algorithm used to clip a subject 
+     * polygon (our tile) against a convex clipping polygon (our UI bounding box).
+     * 
+     * HOW IT WORKS:
+     * 1. The algorithm processes the subject polygon against each edge of the clipping region sequentially.
+     * 2. For each edge, it iterates through the current vertices as "pairs" (v1 to v2).
+     * 3. It applies a state-machine logic based on whether the start/end points of an edge 
+     *    are "inside" or "outside" the clipping boundary.
+     * 4. This results in a new polygon that is perfectly trimmed to the visible area.
+     * 
+     * WHY WE USE IT HERE:
+     * Since tiles are rotated to match player heading, simple AABB (Axis-Aligned Bounding Box) 
+     * checks aren't enough. Sutherland-Hodgman allows us to render perfectly trimmed, 
+     * rotated tiles at the edge of the minimap without using expensive GPU masking or 
+     * stencil buffers.
+     */
+    std::vector<MinimapVertex> Minimap::GetClippedVertices(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color)
     {
-        if (!m_quadMesh) return;
+        // Define the clipping boundaries derived from the UI's world-space Rect.
+        Rect worldRect = GetWorldRect();
+        f32 clipL = worldRect.x;
+        f32 clipR = worldRect.x + worldRect.width;
+        f32 clipB = worldRect.y;
+        f32 clipT = worldRect.y + worldRect.height;
 
-        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
-        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-        AEGfxSetColorToMultiply(color.r, color.g, color.b, color.a);
-        AEGfxSetTransparency(color.a);
+        u32 uColor = color.ToU32(); // Pack color once for efficiency
 
-        AEMtx33 transform;
-        AEMtx33Scale(&transform, width, height);
-        
-        AEMtx33 translate;
-        AEMtx33Trans(&translate, x, y);
-        
-        AEMtx33 finalMtx;
-        AEMtx33Concat(&finalMtx, &translate, &transform);
-        
-        AEGfxSetTransform(finalMtx.m);
-        AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
+        // --- PHASE 1: VERTEX GENERATION ---
+        // We start by calculating the 4 corners of the quad in its "rotated" position.
+        f32 cosR = Engine::Mathf::Cos(rotationRad);
+        f32 sinR = Engine::Mathf::Sin(rotationRad);
+        f32 hw = width * 0.5f;
+        f32 hh = height * 0.5f;
+
+        // Lambda to transform local tile coordinates to the UI's coordinate system.
+        auto GetWorldPos = [&](f32 lx, f32 ly) -> AEVec2 {
+            AEVec2 p;
+            p.x = x + (lx * cosR - ly * sinR);
+            p.y = y + (lx * sinR + ly * cosR);
+            return p;
+        };
+
+        // Initial vertex list (CCW order: Bottom-Left, Bottom-Right, Top-Right, Top-Left)
+        std::vector<MinimapVertex> vertices = {
+            { GetWorldPos(-hw, -hh), uColor, {0.0f, 1.0f} },
+            { GetWorldPos( hw, -hh), uColor, {1.0f, 1.0f} },
+            { GetWorldPos( hw,  hh), uColor, {1.0f, 0.0f} },
+            { GetWorldPos(-hw,  hh), uColor, {0.0f, 0.0f} }
+        };
+
+        // --- PHASE 2: SEQUENTIAL CLIPPING ---
+        // The 'Clip' lambda handles one boundary at a time (Left, Right, Bottom, Top).
+        auto Clip = [&](const std::vector<MinimapVertex>& verts, int edge) -> std::vector<MinimapVertex> {
+            std::vector<MinimapVertex> output;
+            if (verts.empty()) return output;
+
+            for (size_t i = 0; i < verts.size(); ++i) {
+                const MinimapVertex& v1 = verts[i];                  // Current vertex
+                const MinimapVertex& v2 = verts[(i + 1) % verts.size()]; // Next vertex in cycle
+
+                // INSIDE/OUTSIDE TEST:
+                // Determines if a point lies on the "valid" side of the clipping line.
+                auto IsInside = [&](const MinimapVertex& v) -> bool {
+                    switch (edge) {
+                        case 0: return v.pos.x >= clipL; // Inside if to the right of left edge
+                        case 1: return v.pos.x <= clipR; // Inside if to the left of right edge
+                        case 2: return v.pos.y >= clipB; // Inside if above bottom edge
+                        case 3: return v.pos.y <= clipT; // Inside if below top edge
+                    }
+                    return true;
+                };
+
+                // INTERSECTION CALCULATION:
+                // Finds the exact point where the polygon edge crosses the clipping boundary.
+                auto Intersect = [&](const MinimapVertex& a, const MinimapVertex& b) -> MinimapVertex {
+                    f32 t = 0.0f; // Interpolation factor [0, 1]
+                    switch (edge) {
+                        case 0: t = (clipL - a.pos.x) / (b.pos.x - a.pos.x); break;
+                        case 1: t = (clipR - a.pos.x) / (b.pos.x - a.pos.x); break;
+                        case 2: t = (clipB - a.pos.y) / (b.pos.y - a.pos.y); break;
+                        case 3: t = (clipT - a.pos.y) / (b.pos.y - a.pos.y); break;
+                    }
+                    
+                    MinimapVertex res;
+                    // Linear interpolation (Lerp) of position and UVs
+                    res.pos.x = a.pos.x + t * (b.pos.x - a.pos.x);
+                    res.pos.y = a.pos.y + t * (b.pos.y - a.pos.y);
+                    res.uv.x = a.uv.x + t * (b.uv.x - a.uv.x);
+                    res.uv.y = a.uv.y + t * (b.uv.y - a.uv.y);
+                    // Also interpolate color to prevent harsh color snaps at edges
+                    res.color = AEGfxColInterp(a.color, b.color, t);
+                    return res;
+                };
+
+                bool in1 = IsInside(v1);
+                bool in2 = IsInside(v2);
+
+                // --- SUTHERLAND-HODGMAN 4-CASE LOGIC ---
+                if (in1 && in2) {
+                    // CASE 1: Both points inside. Keep the endpoint.
+                    output.push_back(v2);
+                } else if (in1 && !in2) {
+                    // CASE 2: Exiting. Store the intersection point where it crossed out.
+                    output.push_back(Intersect(v1, v2));
+                } else if (!in1 && in2) {
+                    // CASE 3: Entering. Store the intersection point AND the endpoint.
+                    output.push_back(Intersect(v1, v2));
+                    output.push_back(v2);
+                }
+                // CASE 4: Both outside. Discard both (nothing added to output).
+            }
+            return output;
+        };
+
+        // Process the vertices through the pipeline for each of the 4 clipping planes.
+        for (int i = 0; i < 4; ++i) {
+            vertices = Clip(vertices, i);
+        }
+
+        return vertices; // Flattened/Clipped vertex list ready for triangulation
     }
 
-    void Minimap::DrawQuadTextured(f32 x, f32 y, f32 width, f32 height, Engine::Sprite* sprite, const Engine::Color& tint)
+    void Minimap::DrawQuadClipped(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color, Engine::Sprite* sprite)
     {
-        if (!m_quadMesh || !sprite || !sprite->GetTexture()) return;
+        std::vector<MinimapVertex> vertices = GetClippedVertices(x, y, width, height, rotationRad, color);
+        if (vertices.size() < 3) return;
 
-        AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+        AEGfxSetRenderMode(sprite ? AE_GFX_RM_TEXTURE : AE_GFX_RM_COLOR);
         AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-        AEGfxTextureSet(sprite->GetTexture(), 0.0f, 0.0f);
-        AEGfxSetColorToMultiply(tint.r, tint.g, tint.b, tint.a);
-        AEGfxSetTransparency(tint.a);
-
-        AEMtx33 transform;
-        AEMtx33Scale(&transform, width, height);
-        
-        AEMtx33 translate;
-        AEMtx33Trans(&translate, x, y);
-        
-        AEMtx33 finalMtx;
-        AEMtx33Concat(&finalMtx, &translate, &transform);
-        
-        AEGfxSetTransform(finalMtx.m);
-        AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
-    }
-
-    void Minimap::DrawQuadRotated(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color)
-    {
-        if (!m_quadMesh) return;
-
-        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
-        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-        AEGfxSetColorToMultiply(color.r, color.g, color.b, color.a);
+        if (sprite) AEGfxTextureSet(sprite->GetTexture(), 0.0f, 0.0f);
+        AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
         AEGfxSetTransparency(color.a);
+        
+        AEMtx33 identity;
+        AEMtx33Identity(&identity);
+        AEGfxSetTransform(identity.m);
 
-        AEMtx33 scale;
-        AEMtx33Scale(&scale, width, height);
-        
-        AEMtx33 rotate;
-        AEMtx33Rot(&rotate, rotationRad);
-        
-        AEMtx33 translate;
-        AEMtx33Trans(&translate, x, y);
-        
-        AEMtx33 temp;
-        AEMtx33Concat(&temp, &rotate, &scale);
-        
-        AEMtx33 finalMtx;
-        AEMtx33Concat(&finalMtx, &translate, &temp);
-        
-        AEGfxSetTransform(finalMtx.m);
-        AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
+        AEGfxMeshStart();
+        for (size_t i = 1; i < vertices.size() - 1; ++i) {
+            AEGfxTriAdd(
+                vertices[0].pos.x, vertices[0].pos.y, vertices[0].color, vertices[0].uv.x, vertices[0].uv.y,
+                vertices[i].pos.x, vertices[i].pos.y, vertices[i].color, vertices[i].uv.x, vertices[i].uv.y,
+                vertices[i+1].pos.x, vertices[i+1].pos.y, vertices[i+1].color, vertices[i+1].uv.x, vertices[i+1].uv.y
+            );
+        }
+        AEGfxVertexList* mesh = AEGfxMeshEnd();
+        AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+        AEGfxMeshFree(mesh);
     }
 
     void Minimap::DrawBorderFrame(const Rect& mapRect)
@@ -133,62 +214,36 @@ namespace UI
         f32 right = mapRect.x + mapRect.width;
         f32 bottom = mapRect.y;
         f32 top = mapRect.y + mapRect.height;
-        f32 t = borderThickness;
+        f32 t = m_borderThickness;
 
-        if (m_borderSprite)
-        {
-            // Draw textured border frame (4 sides)
-            // Left
-            DrawQuadTextured(left - t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderSprite.get(), borderColor);
-            // Right
-            DrawQuadTextured(right + t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderSprite.get(), borderColor);
-            // Top
-            DrawQuadTextured((left + right) * 0.5f, top + t * 0.5f, mapRect.width, t, m_borderSprite.get(), borderColor);
-            // Bottom
-            DrawQuadTextured((left + right) * 0.5f, bottom - t * 0.5f, mapRect.width, t, m_borderSprite.get(), borderColor);
-        }
-        else
-        {
-            // Draw colored border frame (4 sides)
-            // Left
-            DrawQuad(left - t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, borderColor);
-            // Right
-            DrawQuad(right + t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, borderColor);
-            // Top
-            DrawQuad((left + right) * 0.5f, top + t * 0.5f, mapRect.width, t, borderColor);
-            // Bottom
-            DrawQuad((left + right) * 0.5f, bottom - t * 0.5f, mapRect.width, t, borderColor);
-        }
-    }
+        // Use a dummy world rect that is large enough to not clip the border
+        // Actually, let's just use DrawQuadClipped with a very large rect? 
+        // No, let's just implement a simple non-clipped DrawQuadInternal for decorative elements.
+        auto DrawQuadInternal = [&](f32 x, f32 y, f32 width, f32 height, const Engine::Color& color, Engine::Sprite* sprite = nullptr) {
+            AEGfxSetRenderMode(sprite ? AE_GFX_RM_TEXTURE : AE_GFX_RM_COLOR);
+            AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+            if (sprite) AEGfxTextureSet(sprite->GetTexture(), 0.0f, 0.0f);
+            AEGfxSetColorToMultiply(color.r, color.g, color.b, color.a);
+            AEGfxSetTransparency(color.a);
 
-    void Minimap::DrawMaskBorders(const Rect& mapRect, const Engine::Color& bgColor)
-    {
-        // Draw 4 border quads around the minimap to cover any tile overflow
-        // Border starts just outside the visible frame area
-        f32 maskThickness = 50.0f;
-        f32 frameOffset = borderThickness;
-        
-        f32 left = mapRect.x;
-        f32 right = mapRect.x + mapRect.width;
-        f32 bottom = mapRect.y;
-        f32 top = mapRect.y + mapRect.height;
+            AEMtx33 scale, translate, finalMtx;
+            AEMtx33Scale(&scale, width, height);
+            AEMtx33Trans(&translate, x, y);
+            AEMtx33Concat(&finalMtx, &translate, &scale);
+            AEGfxSetTransform(finalMtx.m);
+            AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
+        };
 
-        // Mask extends from frame edge outward
-        // Left mask
-        DrawQuad(left - frameOffset - maskThickness * 0.5f, (top + bottom) * 0.5f, 
-                 maskThickness, mapRect.height + frameOffset * 2.0f + maskThickness * 2.0f, bgColor);
-        
-        // Right mask
-        DrawQuad(right + frameOffset + maskThickness * 0.5f, (top + bottom) * 0.5f, 
-                 maskThickness, mapRect.height + frameOffset * 2.0f + maskThickness * 2.0f, bgColor);
-        
-        // Top mask
-        DrawQuad((left + right) * 0.5f, top + frameOffset + maskThickness * 0.5f, 
-                 mapRect.width + frameOffset * 2.0f, maskThickness, bgColor);
-        
-        // Bottom mask
-        DrawQuad((left + right) * 0.5f, bottom - frameOffset - maskThickness * 0.5f, 
-                 mapRect.width + frameOffset * 2.0f, maskThickness, bgColor);
+        // Draw border frame (4 sides)
+        Engine::Sprite* bSprite = m_borderSprite ? m_borderSprite.get() : nullptr;
+        // Left
+        DrawQuadInternal(left - t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderColor, bSprite);
+        // Right
+        DrawQuadInternal(right + t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderColor, bSprite);
+        // Top
+        DrawQuadInternal((left + right) * 0.5f, top + t * 0.5f, mapRect.width, t, m_borderColor, bSprite);
+        // Bottom
+        DrawQuadInternal((left + right) * 0.5f, bottom - t * 0.5f, mapRect.width, t, m_borderColor, bSprite);
     }
 
     void Minimap::Render()
@@ -196,16 +251,17 @@ namespace UI
         if (!visible) return;
         if (!m_tileMap) return;
 
+        // Get the pixel dimensions and center of the minimap UI element
         Rect worldRect = GetWorldRect();
         f32 mapCenterX = worldRect.x + worldRect.width * 0.5f;
         f32 mapCenterY = worldRect.y + worldRect.height * 0.5f;
         f32 mapWidth = worldRect.width;
         f32 mapHeight = worldRect.height;
 
-        // Draw background first
-        DrawQuad(mapCenterX, mapCenterY, mapWidth, mapHeight, backgroundColor);
+        // --- Step 1: Draw background panel ---
+        DrawQuadClipped(mapCenterX, mapCenterY, mapWidth, mapHeight, 0.0f, m_backgroundColor);
 
-        // Get player position and rotation
+        // Get current player state
         f32 playerTileX = 0.0f;
         f32 playerTileY = 0.0f;
         f32 playerRotation = 0.0f;
@@ -217,73 +273,103 @@ namespace UI
             playerRotation = m_playerTransform->rotation;
         }
 
-        // Convert player rotation to radians
-        f32 rotRad = -(playerRotation + 90.0f) * Engine::Mathf::Deg2Rad;
-        f32 cosR = Engine::Mathf::Cos(rotRad);
-        f32 sinR = Engine::Mathf::Sin(rotRad);
+        // --- Step 2: Set up coordinate space for tile rotation ---
+        // To keep the minimap oriented "Forward-Up", we must transform World X/Y 
+        // to HUD local space. Since our Forward is World +X (0 deg), we rotate
+        // everything by (90 - playerRotation) to map our heading to the HUD's +Y (90 deg).
+        // Using a standard rotation matrix (det=1) avoids horizontal "mirror" flips.
+        f32 renderRot = (90.0f - playerRotation) * Engine::Mathf::Deg2Rad;
+        f32 c = Engine::Mathf::Cos(renderRot);
+        f32 s = Engine::Mathf::Sin(renderRot);
 
-        // Calculate tile size based on view radius
-        int tilesVisible = viewRadius * 2 + 1;
-        f32 tileSize = Engine::Mathf::Min(mapWidth, mapHeight) / static_cast<f32>(tilesVisible);
+        // Calculate how large each tile should be to fit the requested view radius
+        f32 tileSize = m_tilePixelSize;
+        if (m_centerOnPlayer)
+        {
+            int tilesVisible = m_viewRadius * 2 + 1;
+            tileSize = Engine::Mathf::Min(mapWidth, mapHeight) / static_cast<f32>(tilesVisible);
+        }
 
-        // Draw tiles centered on player position with rotation
-        int searchRadius = viewRadius + 3;
+        // --- Step 3: Batch render nearby tiles ---
+        // We search slightly further than the radius to account for rotation corners
+        int searchRadius = static_cast<int>(m_viewRadius * 1.5f); 
         
+        // Prepare global Alpha Engine state for the batch
+        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+        AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+        AEGfxSetTransparency(1.0f);
+        
+        AEMtx33 identity;
+        AEMtx33Identity(&identity);
+        AEGfxSetTransform(identity.m);
+
+        // We build a single mesh per frame containing all visible clipped tiles
+        AEGfxMeshStart();
+        bool hasGeometry = false;
+
         for (int dy = -searchRadius; dy <= searchRadius; ++dy)
         {
             for (int dx = -searchRadius; dx <= searchRadius; ++dx)
             {
-                // World tile coordinates (integer)
+                // Find tile coordinates in the TileMap
                 int tileX = Engine::Mathf::FloorToInt(playerTileX) + dx;
                 int tileY = Engine::Mathf::FloorToInt(playerTileY) + dy;
 
-                // Determine tile color - treat out-of-bounds as walls
-                Engine::Color tileColor = wallColor;
-                
-                if (tileX >= 0 && tileX < m_tileMap->width && 
-                    tileY >= 0 && tileY < m_tileMap->height)
+                // Bound check and determine color
+                Engine::Color tileColor = m_wallColor;
+                if (tileX >= 0 && tileX < m_tileMap->width && tileY >= 0 && tileY < m_tileMap->height)
                 {
-                    Engine::TileType tile = m_tileMap->GetTile(tileX, tileY);
-                    if (static_cast<int>(tile) == 0)
-                    {
-                        tileColor = floorColor;
-                    }
+                    if (static_cast<int>(m_tileMap->GetTile(tileX, tileY)) == 0)
+                        tileColor = m_floorColor;
                 }
 
-                // Calculate offset from player (sub-tile precision for smooth scrolling)
+                // Sub-tile smoothing (keeps the scrolling fluid)
                 f32 fracX = playerTileX - Engine::Mathf::Floor(playerTileX);
                 f32 fracY = playerTileY - Engine::Mathf::Floor(playerTileY);
                 
-                f32 offsetX = (dx - fracX) * tileSize;
-                f32 offsetY = -(dy - fracY) * tileSize;
+                // Relative world offset from player to tile center
+                f32 offX = (dx - fracX + 0.5f) * tileSize;
+                f32 offY = (dy - fracY + 0.5f) * tileSize;
 
-                // Rotate the offset around the center
-                f32 rotatedX = offsetX * cosR - offsetY * sinR;
-                f32 rotatedY = offsetX * sinR + offsetY * cosR;
+                // Standard 2D Rotation Matrix Mapping:
+                // HUD X = worldX * cos(theta) - worldY * sin(theta)
+                // HUD Y = worldX * sin(theta) + worldY * cos(theta)
+                f32 rotatedX = offX * c - offY * s;
+                f32 rotatedY = offX * s + offY * c;
 
-                f32 screenX = mapCenterX + rotatedX;
-                f32 screenY = mapCenterY + rotatedY;
-
-                // Draw tile with rotation
-                DrawQuadRotated(screenX, screenY, tileSize, tileSize, rotRad, tileColor);
+                // Run clipping for this specific tile. We pass renderRot to rotate 
+                // the individual quad vertices into alignment with the grid.
+                std::vector<MinimapVertex> verts = GetClippedVertices(mapCenterX + rotatedX, mapCenterY + rotatedY, tileSize, tileSize, renderRot, tileColor);
+                if (verts.size() >= 3) {
+                    hasGeometry = true;
+                    // Add vertices to the frame mesh as a triangle fan
+                    for (size_t i = 1; i < verts.size() - 1; ++i) {
+                        AEGfxTriAdd(
+                            verts[0].pos.x, verts[0].pos.y, verts[0].color, verts[0].uv.x, verts[0].uv.y,
+                            verts[i].pos.x, verts[i].pos.y, verts[i].color, verts[i].uv.x, verts[i].uv.y,
+                            verts[i+1].pos.x, verts[i+1].pos.y, verts[i+1].color, verts[i+1].uv.x, verts[i+1].uv.y
+                        );
+                    }
+                }
             }
         }
 
-        // Draw player icon at center
-        f32 playerSize = tileSize * 0.8f;
-        if (m_playerSprite)
-        {
-            DrawQuadTextured(mapCenterX, mapCenterY, playerSize, playerSize, m_playerSprite.get(), playerColor);
+        // Finalize and draw the batched tiles
+        if (hasGeometry) {
+            AEGfxVertexList* mesh = AEGfxMeshEnd();
+            AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+            AEGfxMeshFree(mesh);
+        } else {
+            AEGfxMeshEnd(); 
         }
-        else
-        {
-            DrawQuad(mapCenterX, mapCenterY, playerSize, playerSize, playerColor);
-        }
-        // Draw mask to cover tile overflow first
-        Engine::Color maskColor(0.0f, 0.0f, 0.0f, 1.0f);
-        DrawMaskBorders(worldRect, maskColor);
 
-        // Draw border frame on top
+        // --- Step 4: Overlay the player icon ---
+        // The player is always at the center of the minimap when m_centerOnPlayer is true
+        f32 playerSize = tileSize * 0.8f;
+        DrawQuadClipped(mapCenterX, mapCenterY, playerSize, playerSize, 0.0f, m_playerColor, m_playerSprite.get());
+
+        // --- Step 5: Draw the decorative frame ---
         DrawBorderFrame(worldRect);
     }
 

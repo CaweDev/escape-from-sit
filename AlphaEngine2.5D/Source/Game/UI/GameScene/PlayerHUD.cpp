@@ -6,6 +6,7 @@
 #include "PlayerHUD.hpp"
 #include "Engine/UI/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 namespace Game
 {
@@ -27,8 +28,8 @@ namespace Game
         m_minimap->rectTransform.anchorMin = { 0.0f, 0.0f };
         m_minimap->rectTransform.anchorMax = { 0.0f, 0.0f };
         m_minimap->rectTransform.pivot = { 0.0f, 0.0f };
-        m_minimap->rectTransform.anchoredPosition = { minimapMargin, minimapMargin };
-        m_minimap->rectTransform.sizeDelta = { minimapWidth, minimapHeight };
+        m_minimap->rectTransform.anchoredPosition = { m_minimapMargin, m_minimapMargin };
+        m_minimap->rectTransform.sizeDelta = { m_minimapWidth, m_minimapHeight };
 
         // Create full map centered on screen (hidden by default)
         m_map = m_canvas->CreateChild<UI::Map>();
@@ -37,8 +38,11 @@ namespace Game
         m_map->rectTransform.anchorMax = { 0.5f, 0.5f };
         m_map->rectTransform.pivot = { 0.5f, 0.5f };
         m_map->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_map->rectTransform.sizeDelta = { mapWidth, mapHeight };
+        m_map->rectTransform.sizeDelta = { m_mapWidth, m_mapHeight };
         m_map->visible = false;
+		//m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
+		m_map->SetBorderColor(Engine::Color(0.f, 0.f, 0.f, 1.f)); // Set alpha to 0 if using texture
+		//m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));
 
         // If we have a transform, use it as player transform by default
         if (transform)

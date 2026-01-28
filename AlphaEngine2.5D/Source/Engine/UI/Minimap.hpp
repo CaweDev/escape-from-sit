@@ -15,48 +15,63 @@
 namespace UI
 {
     /**
+     * @struct MinimapVertex
+     * @brief Vertex structure for dynamic minimap geometry
+     * 
+     * Used for building custom meshes on the fly, specifically for the
+     * Sutherland-Hodgman clipping implementation that keeps the minimap
+     * within its circular or rectangular bounds.
+     */
+    struct MinimapVertex
+    {
+        AEVec2 pos;     // Screen-space position
+        u32 color;      // Packed 32-bit color (RGBA)
+        AEVec2 uv;      // Texture coordinates for sprites
+    };
+
+    /**
      * @class Minimap
      * @brief Renders a small top-down view of the tile map with player position
      * 
-     * Displays walls and floors as colored rectangles and shows
-     * the player's current position as a contrasting dot.
+     * This element tracks the player's position and renders a local neighborhood
+     * of tiles. It supports arbitrary rotation (tracking player heading) and
+     * uses a custom clipping algorithm to ensure tiles don't overflow the UI bounds.
      */
     class Minimap : public UIElement
     {
-    public:
-        // Colors for rendering
-        Engine::Color wallColor;
-        Engine::Color floorColor;
-        Engine::Color playerColor;
-        Engine::Color backgroundColor;
-        Engine::Color borderColor;
-
-        // Scale: how many pixels per tile
-        f32 tilePixelSize = 8.0f;
-
-        // Whether to center the map on the player (scrolling minimap)
-        bool centerOnPlayer = true;
-
-        // Visible tile radius when centered on player
-        int viewRadius = 10;
-
-        // Border thickness for masking
-        f32 borderThickness = 8.0f;
-
     private:
-        Engine::TileMap* m_tileMap = nullptr;
-        Engine::Transform* m_playerTransform = nullptr;
-        
-        // Cached mesh for rendering
-        AEGfxVertexList* m_quadMesh = nullptr;
+        // --- Rendering Colors ---
+        Engine::Color m_wallColor;       // Color used for wall tiles
+        Engine::Color m_floorColor;      // Color used for walkable floor tiles
+        Engine::Color m_playerColor;     // Color for the player icon/dot
+        Engine::Color m_backgroundColor; // Background panel color (visible behind tiles)
+        Engine::Color m_borderColor;     // Color for the decorative border frame
 
-        // Optional textures
-        std::shared_ptr<Engine::Sprite> m_playerSprite = nullptr;
-        std::shared_ptr<Engine::Sprite> m_borderSprite = nullptr;
+        // --- View Configuration ---
+        int m_viewRadius = 5;            // How many tiles to show in each direction
+        f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
+        bool m_centerOnPlayer = true;    // If true, the map scrolls as the player moves
+        f32 m_borderThickness = 8.0f;     // Thickness of the border used for clipping/masking
+
+        // --- Component References ---
+        Engine::TileMap* m_tileMap = nullptr;             // Pointer to the level data
+        Engine::Transform* m_playerTransform = nullptr;   // Pointer to player transform for tracking
+
+        // --- Graphics Resources ---
+        AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh for simple draws
+
+        // --- Optional Sprites ---
+        std::shared_ptr<Engine::Sprite> m_playerSprite = nullptr; // Optional icon for the player
+        std::shared_ptr<Engine::Sprite> m_borderSprite = nullptr; // Optional texture for the border frame
 
     public:
         Minimap();
         virtual ~Minimap();
+
+        /**
+         * @brief Render the minimap
+         */
+        void Render() override;
 
         /**
          * @brief Set the tile map to display
@@ -84,10 +99,34 @@ namespace UI
          */
         void SetBorderSprite(std::shared_ptr<Engine::Sprite> sprite) { m_borderSprite = sprite; }
 
-        /**
-         * @brief Render the minimap
-         */
-        void Render() override;
+        // Getters and Setters for Colors
+        void SetWallColor(const Engine::Color& color) { m_wallColor = color; }
+        const Engine::Color& GetWallColor() const { return m_wallColor; }
+
+        void SetFloorColor(const Engine::Color& color) { m_floorColor = color; }
+        const Engine::Color& GetFloorColor() const { return m_floorColor; }
+
+        void SetPlayerColor(const Engine::Color& color) { m_playerColor = color; }
+        const Engine::Color& GetPlayerColor() const { return m_playerColor; }
+
+        void SetBackgroundColor(const Engine::Color& color) { m_backgroundColor = color; }
+        const Engine::Color& GetBackgroundColor() const { return m_backgroundColor; }
+
+        void SetBorderColor(const Engine::Color& color) { m_borderColor = color; }
+        const Engine::Color& GetBorderColor() const { return m_borderColor; }
+
+        // Getters and Setters for Configuration
+        void SetViewRadius(int radius) { m_viewRadius = radius; }
+        int GetViewRadius() const { return m_viewRadius; }
+
+        void SetTilePixelSize(f32 size) { m_tilePixelSize = size; }
+        f32 GetTilePixelSize() const { return m_tilePixelSize; }
+
+        void SetCenterOnPlayer(bool center) { m_centerOnPlayer = center; }
+        bool GetCenterOnPlayer() const { return m_centerOnPlayer; }
+
+        void SetBorderThickness(f32 thickness) { m_borderThickness = thickness; }
+        f32 GetBorderThickness() const { return m_borderThickness; }
 
     private:
         /**
@@ -96,29 +135,19 @@ namespace UI
         void InitMesh();
 
         /**
-         * @brief Draw a single colored quad
+         * @brief Get vertices for a quad clipped to the minimap bounds
          */
-        void DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color);
+        std::vector<MinimapVertex> GetClippedVertices(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color);
 
         /**
-         * @brief Draw a textured quad
+         * @brief Draw a quad clipped to the minimap bounds (standalone, for icon)
          */
-        void DrawQuadTextured(f32 x, f32 y, f32 width, f32 height, Engine::Sprite* sprite, const Engine::Color& tint);
-
-        /**
-         * @brief Draw a rotated colored quad
-         */
-        void DrawQuadRotated(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color);
+        void DrawQuadClipped(f32 x, f32 y, f32 width, f32 height, f32 rotationRad, const Engine::Color& color, Engine::Sprite* sprite = nullptr);
 
         /**
          * @brief Draw border frame around the minimap
          */
         void DrawBorderFrame(const Rect& mapRect);
-
-        /**
-         * @brief Draw mask borders to cover overflow
-         */
-        void DrawMaskBorders(const Rect& mapRect, const Engine::Color& bgColor);
     };
 
 } // namespace UI

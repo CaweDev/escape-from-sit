@@ -22,21 +22,20 @@ namespace Game
      */
     class PlayerHUD : public Engine::Component
     {
-    public:
+    private:
         // Minimap settings
-        f32 minimapWidth = 180.0f;
-        f32 minimapHeight = 180.0f;
-        f32 minimapMargin = 20.0f;
+        f32 m_minimapWidth = 180.0f;
+        f32 m_minimapHeight = 180.0f;
+        f32 m_minimapMargin = 20.0f;
 
         // Full map settings
-        f32 mapWidth = 500.0f;
-        f32 mapHeight = 500.0f;
+        f32 m_mapWidth = 500.0f;
+        f32 m_mapHeight = 500.0f;
 
-    private:
         UI::Canvas* m_canvas = nullptr;
         UI::Minimap* m_minimap = nullptr;
         UI::Map* m_map = nullptr;
-        
+
         Engine::TileMap* m_tileMap = nullptr;
         Engine::Transform* m_playerTransform = nullptr;
 
@@ -104,6 +103,25 @@ namespace Game
          * @brief Get the map element
          */
         UI::Map* GetMap() const { return m_map; }
+
+        // Getters and Setters for Minimap settings
+        void SetMinimapWidth(f32 width) { m_minimapWidth = width; }
+        f32 GetMinimapWidth() const { return m_minimapWidth; }
+
+        void SetMinimapHeight(f32 height) { m_minimapHeight = height; }
+        f32 GetMinimapHeight() const { return m_minimapHeight; }
+
+        void SetMinimapMargin(f32 margin) { m_minimapMargin = margin; }
+        f32 GetMinimapMargin() const { return m_minimapMargin; }
+
+        // Getters and Setters for Map settings
+        void SetMapWidth(f32 width) { m_mapWidth = width; }
+        f32 GetMapWidth() const { return m_mapWidth; }
+
+        void SetMapHeight(f32 height) { m_mapHeight = height; }
+        f32 GetMapHeight() const { return m_mapHeight; }
+
+
     };
 
 } // namespace Game
