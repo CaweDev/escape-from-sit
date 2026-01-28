@@ -23,8 +23,8 @@ inline InteractionDemoScene interactionDemoScene;
  * Call this once after engine initialization
  */
 inline void RegisterAllScenes() {
-    SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
+    SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
     SceneManager::RegisterScene("UI", &uiTestScene);
 }
 

@@ -32,3 +32,5 @@
 // Gameplay UI
 #include "Crosshair.hpp"
 #include "InteractionPrompt.hpp"
+#include "Minimap.hpp"
+#include "Map.hpp"

@@ -45,6 +45,8 @@
     <ClCompile Include="Source\Engine\UI\Image.cpp" />
     <ClCompile Include="Source\Engine\UI\InteractionPrompt.cpp" />
     <ClCompile Include="Source\Engine\UI\LayoutGroup.cpp" />
+    <ClCompile Include="Source\Engine\UI\Map.cpp" />
+    <ClCompile Include="Source\Engine\UI\Minimap.cpp" />
     <ClCompile Include="Source\Engine\UI\Panel.cpp" />
     <ClCompile Include="Source\Engine\UI\Text.cpp" />
     <ClCompile Include="Source\Engine\UI\UIElement.cpp" />
@@ -55,6 +57,7 @@
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Game\UI\GameScene\PlayerHUD.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +111,8 @@
     <ClInclude Include="Source\Engine\UI\Image.hpp" />
     <ClInclude Include="Source\Engine\UI\InteractionPrompt.hpp" />
     <ClInclude Include="Source\Engine\UI\LayoutGroup.hpp" />
+    <ClInclude Include="Source\Engine\UI\Map.hpp" />
+    <ClInclude Include="Source\Engine\UI\Minimap.hpp" />
     <ClInclude Include="Source\Engine\UI\Panel.hpp" />
     <ClInclude Include="Source\Engine\UI\RectTransform.hpp" />
     <ClInclude Include="Source\Engine\UI\Text.hpp" />
@@ -125,6 +130,7 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard.hpp" />
+    <ClInclude Include="Source\Game\UI\GameScene\PlayerHUD.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

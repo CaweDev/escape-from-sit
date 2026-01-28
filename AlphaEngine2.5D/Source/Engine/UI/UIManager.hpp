@@ -105,13 +105,6 @@ namespace UI
          */
         s8 GetDefaultFont() const { return m_defaultFont; }
 
-        /**
-         * @brief Load the default font
-         * @param fontPath Path to TTF font file
-         * @param fontSize Font size in pixels
-         * @return True if loading succeeded
-         */
-        bool LoadDefaultFont(const char* fontPath, s32 fontSize);
 
         /**
          * @brief Get the currently hovered UI element
@@ -134,6 +127,15 @@ namespace UI
         void OnElementDestroyed(UIElement* element);
 
     private:
+        /**
+         * @brief Load the default font
+         * @param fontPath Path to TTF font file
+         * @param fontSize Font size in pixels
+         * @return True if loading succeeded
+         */
+        bool LoadDefaultFont(const char* fontPath, s32 fontSize);
+
+
         /**
          * @brief Create the shared quad mesh
          */

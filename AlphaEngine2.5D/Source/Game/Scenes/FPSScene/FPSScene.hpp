@@ -13,6 +13,7 @@
 #include "Game/Player.hpp"
 #include "Game/SecurityGuard.hpp"
 #include "Game/CCTVCamera.hpp"
+#include "Game/UI/GameScene/PlayerHUD.hpp"
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
@@ -183,6 +184,11 @@ namespace Game {
             playerController = player->AddComponent<FPSController>();
             playerData = player->AddComponent<Player>();
             playerTf = player->transform;
+
+            // Add PlayerHUD to display minimap and full map
+            auto playerHUD = player->AddComponent<PlayerHUD>();
+            playerHUD->SetTileMap(map);
+            playerHUD->SetPlayerTransform(playerTf);
 
             playerTf->position = Vector3(1.5f, 1.5f, 0.0f);
             playerTf->rotation = 0.0f;
