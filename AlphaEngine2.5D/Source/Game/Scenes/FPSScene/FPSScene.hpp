@@ -190,7 +190,7 @@ namespace Game {
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
 
-            playerTf->position = Vector3(1.5f, 1.5f, 0.0f);
+            playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
 
             playerViewPos = playerTf->position;
@@ -316,6 +316,7 @@ namespace Game {
 
         void OnUpdate() override {
          
+            std::cout << '\n' << Camera::main->transform->position.x << "," << Camera::main->transform->position.y << "  \n";
             powerUpTime += Engine::Time::deltaTime;
             const float floatAmplitude = 0.15f;
             const float floatSpeed = 2.0f;

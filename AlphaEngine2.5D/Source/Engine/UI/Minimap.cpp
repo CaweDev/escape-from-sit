@@ -274,13 +274,19 @@ namespace UI
         }
 
         // --- Step 2: Set up coordinate space for tile rotation ---
-        // To keep the minimap oriented "Forward-Up", we must transform World X/Y 
-        // to HUD local space. Since our Forward is World +X (0 deg), we rotate
-        // everything by (90 - playerRotation) to map our heading to the HUD's +Y (90 deg).
-        // Using a standard rotation matrix (det=1) avoids horizontal "mirror" flips.
-        f32 renderRot = (90.0f - playerRotation) * Engine::Mathf::Deg2Rad;
-        f32 c = Engine::Mathf::Cos(renderRot);
-        f32 s = Engine::Mathf::Sin(renderRot);
+        // Project convention: +X is East, +Y is South. Turning Right increases playerRotation (Clockwise).
+        // To keep the HUD "Forward-Up" without horizontal flipping:
+        // 1. World East (+X) must map to HUD Up (+Y) when playerRotation is 0.
+        // 2. World South (+Y) must map to HUD Right (+X) when playerRotation is 0.
+        // 3. We then apply the player's rotation to the world sampling.
+        f32 rad = playerRotation * Engine::Mathf::Deg2Rad;
+        f32 c = Engine::Mathf::Cos(rad);
+        f32 s = Engine::Mathf::Sin(rad);
+
+        // Rotation for the individual tile quads to stay aligned with the mapping.
+        // We MUST convert to radians as Mathf::Cos/Sin expect radians.
+        // The 90 degree offset accounts for the fact that we map World +X to HUD +Y.
+        f32 renderRotRad = (90.0f - playerRotation) * Engine::Mathf::Deg2Rad;
 
         // Calculate how large each tile should be to fit the requested view radius
         f32 tileSize = m_tilePixelSize;
@@ -291,10 +297,8 @@ namespace UI
         }
 
         // --- Step 3: Batch render nearby tiles ---
-        // We search slightly further than the radius to account for rotation corners
         int searchRadius = static_cast<int>(m_viewRadius * 1.5f); 
         
-        // Prepare global Alpha Engine state for the batch
         AEGfxSetRenderMode(AE_GFX_RM_COLOR);
         AEGfxSetBlendMode(AE_GFX_BM_BLEND);
         AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
@@ -304,7 +308,6 @@ namespace UI
         AEMtx33Identity(&identity);
         AEGfxSetTransform(identity.m);
 
-        // We build a single mesh per frame containing all visible clipped tiles
         AEGfxMeshStart();
         bool hasGeometry = false;
 
@@ -312,11 +315,9 @@ namespace UI
         {
             for (int dx = -searchRadius; dx <= searchRadius; ++dx)
             {
-                // Find tile coordinates in the TileMap
                 int tileX = Engine::Mathf::FloorToInt(playerTileX) + dx;
                 int tileY = Engine::Mathf::FloorToInt(playerTileY) + dy;
 
-                // Bound check and determine color
                 Engine::Color tileColor = m_wallColor;
                 if (tileX >= 0 && tileX < m_tileMap->width && tileY >= 0 && tileY < m_tileMap->height)
                 {
@@ -324,23 +325,20 @@ namespace UI
                         tileColor = m_floorColor;
                 }
 
-                // Sub-tile smoothing (keeps the scrolling fluid)
                 f32 fracX = playerTileX - Engine::Mathf::Floor(playerTileX);
                 f32 fracY = playerTileY - Engine::Mathf::Floor(playerTileY);
                 
-                // Relative world offset from player to tile center
                 f32 offX = (dx - fracX + 0.5f) * tileSize;
                 f32 offY = (dy - fracY + 0.5f) * tileSize;
 
-                // Standard 2D Rotation Matrix Mapping:
-                // HUD X = worldX * cos(theta) - worldY * sin(theta)
-                // HUD Y = worldX * sin(theta) + worldY * cos(theta)
-                f32 rotatedX = offX * c - offY * s;
-                f32 rotatedY = offX * s + offY * c;
+                // CORRECTED MAPPING:
+                // HUD Y (Forward) = World X * cos(A) + World Y * sin(A)
+                // HUD X (Right) = World Y * cos(A) - World X * sin(A)
+                f32 rotatedX = offX * s - offY * c;
+                f32 rotatedY = offX * c + offY * s;
 
-                // Run clipping for this specific tile. We pass renderRot to rotate 
-                // the individual quad vertices into alignment with the grid.
-                std::vector<MinimapVertex> verts = GetClippedVertices(mapCenterX + rotatedX, mapCenterY + rotatedY, tileSize, tileSize, renderRot, tileColor);
+                // Run clipping for this specific tile.
+                std::vector<MinimapVertex> verts = GetClippedVertices(mapCenterX + rotatedX, mapCenterY + rotatedY, tileSize, tileSize, renderRotRad, tileColor);
                 if (verts.size() >= 3) {
                     hasGeometry = true;
                     // Add vertices to the frame mesh as a triangle fan

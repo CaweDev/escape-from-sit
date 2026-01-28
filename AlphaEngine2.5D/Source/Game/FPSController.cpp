@@ -40,7 +40,7 @@ void FPSController::Update() {
     Vector2 mouseDelta = Input::GetMouseDelta();
     
     // Apply mouse rotation
-    transform->rotation += mouseDelta.x * mouseSensitivity;
+    transform->rotation -= mouseDelta.x * mouseSensitivity;
 
     // Apply vertical look (pitch)
     if (Camera::main) {
@@ -101,9 +101,9 @@ void FPSController::Update() {
     // Forward/back movement in look direction
     Vector2 worldVelocity = Vector2::zero();
     worldVelocity.x = (cosA * inputMovement.y * speed) // forward 
-                    + (-sinA * inputMovement.x * speed); // strafe
+                    + (sinA * inputMovement.x * speed); // strafe
     worldVelocity.y = (sinA * inputMovement.y * speed) // forward
-                    + (cosA * inputMovement.x * speed); // strafe
+                    + (-cosA * inputMovement.x * speed); // strafe
    
     // Set velocity on rigidbody (physics will handle collision)
     rigidbody->velocity = worldVelocity;

@@ -89,8 +89,8 @@ namespace Engine {
 			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
 			f32 camForwardX = cosf(camRotRad);
 			f32 camForwardY = sinf(camRotRad);
-			f32 camRightX = -sinf(camRotRad);
-			f32 camRightY = cosf(camRotRad);
+			f32 camRightX = sinf(camRotRad);
+			f32 camRightY = -cosf(camRotRad);
 
 			// Center the sprite horizontally around proj.screenX
 			f32 startX = proj.screenX - spriteWidth / 2.0f;

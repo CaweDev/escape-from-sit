@@ -36,8 +36,8 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     f32 angleToObj = std::atan2(dy, dx);
     f32 camAngleRad = camRotationDeg * 3.14159f / 180.0f;
     
-    // Relative angle in radians
-    f32 relAngle = angleToObj - camAngleRad;
+    // Relative angle in radians (Inverted to match screen-X increasing right)
+    f32 relAngle = camAngleRad - angleToObj;
     
     // Keep in [-PI, PI]
     while (relAngle < -3.14159f) relAngle += 6.28318f;

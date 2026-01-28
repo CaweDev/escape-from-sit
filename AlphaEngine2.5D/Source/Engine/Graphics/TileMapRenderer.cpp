@@ -49,8 +49,8 @@ namespace Engine {
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
 		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
-		f32 planeX = -dirY * planeLength;
-		f32 planeY = dirX * planeLength;
+		f32 planeX = dirY * planeLength;
+		f32 planeY = -dirX * planeLength;
 
 		// Perform unified raycasting pass
 		std::vector<ColumnInfo> columns;
