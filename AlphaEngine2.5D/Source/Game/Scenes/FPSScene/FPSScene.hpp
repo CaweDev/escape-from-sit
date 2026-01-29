@@ -212,7 +212,9 @@ namespace Game {
             playerViewPos = playerTf->position;
             playerViewRot = playerTf->rotation;
 
-            
+            auto interactionCtrl = player->AddComponent<InteractionController>();
+            interactionCtrl->interactKey = KeyCode::E;
+
             auto exit = CreateGameObject("Exit");
             exit->transform->position = exitPos;
 
@@ -225,7 +227,7 @@ namespace Game {
 
             
             auto enemy = CreateGameObject("SecurityGuard");
-            enemy->transform->position = Vector2(3.5f, 1.5f);
+            enemy->transform->position = Vector2(5.5f, 5.5f);
 
             auto guard = enemy->AddComponent<SecurityGuard>();
             guard->tileMap = map;
@@ -237,10 +239,12 @@ namespace Game {
 
 
             auto enemyRb = enemy->AddComponent<Rigidbody2D>();
-            enemyRb->bodyType = RigidbodyType2D::Kinematic;
+            enemyRb->bodyType = RigidbodyType2D::Dynamic;
+            enemyRb->gravityScale = 0.0f;  // No gravity for AI movement
+            enemyRb->drag = 0.0f;          // SecurityGuard controls velocity directly
 
             auto enemyCol = enemy->AddComponent<CircleCollider2D>();
-            enemyCol->radius = 0.5f;
+            enemyCol->radius = 0.3f;
             enemyCol->minHeight = 0.0f;
             enemyCol->maxHeight = 2.0f;
 

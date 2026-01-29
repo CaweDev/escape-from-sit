@@ -13,7 +13,11 @@
 #include "Engine/UI/UIManager.hpp"
 #include "Engine/UI/Crosshair.hpp"
 #include "Engine/UI/InteractionPrompt.hpp"
+#include "Engine/Graphics/DoorRenderer.hpp"
+#include "Engine/TileMap/Door.hpp"
+#include "Engine/Math/Mathf.hpp"
 #include <cfloat>
+#include <cmath>
 
 namespace Engine {
 
@@ -49,6 +53,11 @@ void InteractionController::Update() {
     // Update if target changed
     if (target != m_currentTarget) {
         SetTarget(target);
+    }
+    
+    // Always refresh the prompt text in case it changed (e.g., door Open/Close)
+    if (m_currentTarget && m_prompt) {
+        m_prompt->Show(m_currentTarget->actionText);
     }
     
     // Handle interaction input
@@ -96,57 +105,97 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
         Interactable* interactable = obj->GetComponent<Interactable>();
         if (!interactable || !interactable->enabled) continue;
         
-        // Check if it has a billboard SpriteRenderer
-        SpriteRenderer* renderer = obj->GetComponent<SpriteRenderer>();
-        if (!renderer || !renderer->billboard || !renderer->sprite) continue;
-        
-        // Project to screen
-        ProjectionResult proj = ProjectionHelper::ProjectToScreen(
-            obj->transform->position,
-            Camera::main->transform->position,
-            Camera::main->transform->rotation,
-            Camera::main->fov,
-            sw, sh
-        );
-        
-        if (!proj.isVisible) continue;
-        if (proj.perpDistance > interactable->maxDistance) continue;
-        
-        // Calculate screen bounds of the sprite
-        f32 spriteHeight = proj.scale * obj->transform->localScale.y;
-        f32 spriteWidth = proj.scale * obj->transform->localScale.x;
-        
-        // Screen bounds (screenY is at the sprite's bottom)
-        f32 left = proj.screenX - spriteWidth / 2.0f;
-        f32 right = proj.screenX + spriteWidth / 2.0f;
-        f32 bottom = proj.screenY;
-        f32 top = proj.screenY - spriteHeight;
-        
-        // Calculate center of sprite on screen
-        f32 spriteCenterX = proj.screenX;
-        f32 spriteCenterY = proj.screenY - spriteHeight / 2.0f;
-        
         bool isHit = false;
-        
-        if (interactable->hitShape == InteractableHitShape::Ellipse) {
-            // Ellipse check: (x-cx)^2/a^2 + (y-cy)^2/b^2 <= 1
-            f32 a = spriteWidth / 2.0f;   // Semi-major axis (horizontal)
-            f32 b = spriteHeight / 2.0f;  // Semi-minor axis (vertical)
-            f32 dx = screenCenterX - spriteCenterX;
-            f32 dy = screenCenterY - spriteCenterY;
+        f32 perpDistance = FLT_MAX;
+
+        // Try SpriteRenderer (billboard)
+        SpriteRenderer* spriteRenderer = obj->GetComponent<SpriteRenderer>();
+        if (spriteRenderer && spriteRenderer->billboard && spriteRenderer->sprite) {
+            // Project to screen
+            ProjectionResult proj = ProjectionHelper::ProjectToScreen(
+                obj->transform->position,
+                Camera::main->transform->position,
+                Camera::main->transform->rotation,
+                Camera::main->fov,
+                sw, sh
+            );
             
-            f32 ellipseTest = (dx * dx) / (a * a) + (dy * dy) / (b * b);
-            isHit = (ellipseTest <= 1.0f);
-        } else {
-            // Rectangle check (default)
-            isHit = (screenCenterX >= left && screenCenterX <= right &&
-                     screenCenterY >= top && screenCenterY <= bottom);
+            if (proj.isVisible && proj.perpDistance <= interactable->maxDistance) {
+                // Calculate screen bounds of the sprite
+                f32 spriteHeight = proj.scale * obj->transform->localScale.y;
+                f32 spriteWidth = proj.scale * obj->transform->localScale.x;
+                
+                // Screen bounds (screenY is at the sprite's bottom)
+                f32 left = proj.screenX - spriteWidth / 2.0f;
+                f32 right = proj.screenX + spriteWidth / 2.0f;
+                f32 bottom = proj.screenY;
+                f32 top = proj.screenY - spriteHeight;
+                
+                // Calculate center of sprite on screen
+                f32 spriteCenterX = proj.screenX;
+                f32 spriteCenterY = proj.screenY - spriteHeight / 2.0f;
+                
+                if (interactable->hitShape == InteractableHitShape::Ellipse) {
+                    f32 a = spriteWidth / 2.0f;
+                    f32 b = spriteHeight / 2.0f;
+                    f32 dx = screenCenterX - spriteCenterX;
+                    f32 dy = screenCenterY - spriteCenterY;
+                    if ((dx * dx) / (a * a) + (dy * dy) / (b * b) <= 1.0f) {
+                        isHit = true;
+                        perpDistance = proj.perpDistance;
+                    }
+                } else {
+                    if (screenCenterX >= left && screenCenterX <= right &&
+                        screenCenterY >= top && screenCenterY <= bottom) {
+                        isHit = true;
+                        perpDistance = proj.perpDistance;
+                    }
+                }
+            }
+        }
+
+        // Try DoorRenderer (axis-aligned segment)
+        if (!isHit) {
+            DoorRenderer* doorRenderer = obj->GetComponent<DoorRenderer>();
+            if (doorRenderer) {
+                Door* door = obj->GetComponent<Door>();
+                if (door) {
+                    Vector3 camPos = Camera::main->transform->position;
+                    f32 camAngle = Camera::main->transform->rotation * Mathf::Deg2Rad;
+                    f32 dirX = cosf(camAngle);
+                    f32 dirY = sinf(camAngle);
+
+                    // Use the door's base tile position for interaction detection
+                    // This allows interaction even when the door is slid open
+                    f32 doorCenterX = static_cast<f32>(door->tileX) + 0.5f;
+                    f32 doorCenterY = static_cast<f32>(door->tileY) + 0.5f;
+                    
+                    // Calculate distance to door center
+                    f32 dx = doorCenterX - camPos.x;
+                    f32 dy = doorCenterY - camPos.y;
+                    f32 distToDoor = sqrtf(dx * dx + dy * dy);
+                    
+                    // Check if we're close enough
+                    if (distToDoor <= interactable->maxDistance) {
+                        // Check if we're looking towards the door (within ~45 degrees)
+                        f32 dotTowardsDoor = (dx * dirX + dy * dirY);
+                        if (dotTowardsDoor > 0) { // Door is in front of us
+                            // Normalize and check angle
+                            f32 normDot = dotTowardsDoor / distToDoor;
+                            if (normDot > 0.7f) { // roughly looking at it
+                                isHit = true;
+                                perpDistance = distToDoor;
+                            }
+                        }
+                    }
+                }
+            }
         }
         
         if (isHit) {
             // Pick the closest one
-            if (proj.perpDistance < closestDist) {
-                closestDist = proj.perpDistance;
+            if (perpDistance < closestDist) {
+                closestDist = perpDistance;
                 closestTarget = interactable;
             }
         }
@@ -164,8 +213,8 @@ void InteractionController::SetTarget(Interactable* target) {
     m_currentTarget = target;
     
     if (target) {
-        // Set new target renderer
-        m_currentTargetRenderer = target->gameObject->GetComponent<SpriteRenderer>();
+        // Set new target renderer - try both SpriteRenderer and DoorRenderer via IRenderer
+        m_currentTargetRenderer = target->gameObject->GetComponent<IRenderer>();
         if (m_currentTargetRenderer) {
             m_currentTargetRenderer->highlighted = true;
         }

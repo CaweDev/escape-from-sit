@@ -64,8 +64,8 @@ void DoorRenderer::Render() {
     CacheReferences();
     if (!door) return;
     
-    // Don't render if fully open
-    if (door->openAmount >= 1.0f) return;
+    // NOTE: Don't early-return for fully open doors anymore.
+    // Horizontally sliding doors may still be visible from certain angles.
     
     if (!Camera::main || !Camera::main->transform) return;
     
@@ -85,18 +85,22 @@ void DoorRenderer::Render() {
     f32 planeX = dirY * planeLength;
     f32 planeY = -dirX * planeLength;
     
-    // Door segment in world space
+    // Door segment in world space - apply horizontal slide based on openAmount
     f32 x1, y1, x2, y2;
+    f32 slideOffset = door->openAmount; // 0 = closed, 1 = fully open (slid 1 unit)
+    
     if (door->facing == DoorFacing::NorthSouth) {
         // Runs East-West (constant Y), blocks North-South movement
-        x1 = static_cast<f32>(door->tileX);
+        // Slides in +X direction when opening
+        x1 = static_cast<f32>(door->tileX) + slideOffset;
         y1 = static_cast<f32>(door->tileY) + 0.5f;
         x2 = x1 + 1.0f;
         y2 = y1;
     } else {
         // Runs North-South (constant X), blocks East-West movement
+        // Slides in +Y direction when opening
         x1 = static_cast<f32>(door->tileX) + 0.5f;
-        y1 = static_cast<f32>(door->tileY);
+        y1 = static_cast<f32>(door->tileY) + slideOffset;
         x2 = x1;
         y2 = y1 + 1.0f;
     }
@@ -166,16 +170,11 @@ void DoorRenderer::Render() {
             f32 drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
             f32 drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
-            // Apply door animation (slides up)
-            f32 visibleHeight = wallHeight * (1.0f - door->openAmount);
-            f32 actualStart = drawEnd - visibleHeight;
-            f32 actualEnd = drawEnd;
+            // Clamp Y (no vertical slide - door slides horizontally now)
+            if (drawStart < 0) drawStart = 0;
+            if (drawEnd >= screenHeight) drawEnd = (f32)screenHeight - 1;
 
-            // Clamp Y
-            if (actualStart < 0) actualStart = 0;
-            if (actualEnd >= screenHeight) actualEnd = (f32)screenHeight - 1;
-
-            if (actualStart >= actualEnd) continue;
+            if (drawStart >= drawEnd) continue;
 
             // Render this column
             if (!meshStarted) {
@@ -186,20 +185,28 @@ void DoorRenderer::Render() {
 
             f32 aeX = (f32)x - screenWidth / 2.0f;
             f32 aeX2 = (f32)(x + 1) - screenWidth / 2.0f;
-            f32 aeY_top = screenHeight / 2.0f - actualStart;
-            f32 aeY_bot = screenHeight / 2.0f - actualEnd;
+            f32 aeY_top = screenHeight / 2.0f - drawStart;
+            f32 aeY_bot = screenHeight / 2.0f - drawEnd;
 
             f32 fog = 1.0f - (perpDist / 20.0f);
             if (fog < 0.2f) fog = 0.2f;
 
             Color c = (door->facing == DoorFacing::NorthSouth) ? colorNS : colorEW;
-            u32 color = ((u32)(c.r * fog * 255) << 24) | ((u32)(c.g * fog * 255) << 16) | ((u32)(c.b * fog * 255) << 8) | 0xFF;
+            if (highlighted) {
+                c.r += highlightColor.r;
+                c.g += highlightColor.g;
+                c.b += highlightColor.b;
+            }
+            u32 color = ((u32)(Mathf::Clamp01(c.r * fog) * 255) << 24) | 
+                        ((u32)(Mathf::Clamp01(c.g * fog) * 255) << 16) | 
+                        ((u32)(Mathf::Clamp01(c.b * fog) * 255) << 8) | 0xFF;
 
-            AEGfxTriAdd(aeX, aeY_top, color, wallU, door->openAmount,
-                        aeX2, aeY_top, color, wallU, door->openAmount,
+            // UV: wallU is horizontal texture coordinate, V is 0-1 for vertical
+            AEGfxTriAdd(aeX, aeY_top, color, wallU, 0.0f,
+                        aeX2, aeY_top, color, wallU, 0.0f,
                         aeX, aeY_bot, color, wallU, 1.0f);
             AEGfxTriAdd(aeX, aeY_bot, color, wallU, 1.0f,
-                        aeX2, aeY_top, color, wallU, door->openAmount,
+                        aeX2, aeY_top, color, wallU, 0.0f,
                         aeX2, aeY_bot, color, wallU, 1.0f);
             triCount += 2;
 
