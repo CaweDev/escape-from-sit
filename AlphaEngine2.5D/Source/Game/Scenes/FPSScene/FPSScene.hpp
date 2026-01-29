@@ -250,7 +250,7 @@ namespace Game {
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
             auto enemySprite = std::make_shared<Sprite>();
-            enemySprite->Load("Assets/PlanetTexture.png");
+            enemySprite->Load("Assets/Brocsama.png");
             enemySR->SetSprite(enemySprite);
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
