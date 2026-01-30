@@ -90,9 +90,52 @@ void Physics2D::FixedUpdate() {
                         collider->OnTriggerStay2D(other);
                         other->OnTriggerStay2D(collider);
                     } else {
+                        // Debug: log collision detection
+                        // std::cout << "[Physics2D] Collision: " << rb->gameObject->name << " <-> " << other->gameObject->name << std::endl;
+                        
                         // Collision response
                         ResolveCollision(rb, other);
                     }
+                }
+            }
+            
+            // Re-validate position against tilemap after collider-to-collider resolution
+            // This prevents being pushed into walls by other entities
+            Vector2 pushedPos(rb->transform->position.x, rb->transform->position.y);
+            bool needsTileMapCheck = (pushedPos.x != newPos.x || pushedPos.y != newPos.y);
+            
+            if (needsTileMapCheck) {
+                bool validPosition = true;
+                
+                // Check if pushed position is inside a wall
+                for (Collider2D* tmCollider : colliders) {
+                    TileMapCollider2D* tileMapCollider = dynamic_cast<TileMapCollider2D*>(tmCollider);
+                    if (tileMapCollider && tileMapCollider->enabled && tileMapCollider->tileMap) {
+                        // Check all four corners of the collision radius
+                        if (!tileMapCollider->IsWalkable(pushedPos.x - radius, pushedPos.y - radius) ||
+                            !tileMapCollider->IsWalkable(pushedPos.x + radius, pushedPos.y - radius) ||
+                            !tileMapCollider->IsWalkable(pushedPos.x - radius, pushedPos.y + radius) ||
+                            !tileMapCollider->IsWalkable(pushedPos.x + radius, pushedPos.y + radius)) {
+                            validPosition = false;
+                        }
+                        break;
+                    }
+                }
+                
+                // Fallback to static tileMap if no TileMapCollider2D
+                if (validPosition && !foundTileMapCollider && tileMap) {
+                    if (!tileMap->IsWalkable(pushedPos.x - radius, pushedPos.y - radius) ||
+                        !tileMap->IsWalkable(pushedPos.x + radius, pushedPos.y - radius) ||
+                        !tileMap->IsWalkable(pushedPos.x - radius, pushedPos.y + radius) ||
+                        !tileMap->IsWalkable(pushedPos.x + radius, pushedPos.y + radius)) {
+                        validPosition = false;
+                    }
+                }
+                
+                // If pushed into a wall, revert to the tilemap-resolved position
+                if (!validPosition) {
+                    rb->transform->position.x = newPos.x;
+                    rb->transform->position.y = newPos.y;
                 }
             }
         } else {
@@ -176,18 +219,28 @@ void Physics2D::ResolveCollision(Rigidbody2D* rb, Collider2D* other) {
     }
     pushDir.Normalize();
     
-    // Calculate penetration depth (simplified)
+    // Calculate penetration depth
     Bounds2D rbBounds = rbCollider->GetBounds();
     Bounds2D otherBounds = other->GetBounds();
     
     f32 overlapX = Mathf::Min(rbBounds.max.x, otherBounds.max.x) - Mathf::Max(rbBounds.min.x, otherBounds.min.x);
     f32 overlapY = Mathf::Min(rbBounds.max.y, otherBounds.max.y) - Mathf::Max(rbBounds.min.y, otherBounds.min.y);
     
-    // Push out along smallest overlap axis
+    // Push out along smallest overlap axis (hard resolution)
     if (overlapX < overlapY && overlapX > 0) {
-        rb->transform->position.x += pushDir.x * overlapX;
+        if (rbCenter.x < otherCenter.x) {
+            rb->transform->position.x -= overlapX;
+        } else {
+            rb->transform->position.x += overlapX;
+        }
+        rb->velocity.x = 0;
     } else if (overlapY > 0) {
-        rb->transform->position.y += pushDir.y * overlapY;
+        if (rbCenter.y < otherCenter.y) {
+            rb->transform->position.y -= overlapY;
+        } else {
+            rb->transform->position.y += overlapY;
+        }
+        rb->velocity.y = 0;
     }
     
     // Create collision info

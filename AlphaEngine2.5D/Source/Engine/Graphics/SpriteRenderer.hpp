@@ -41,12 +41,6 @@ namespace Engine {
         /** If true, renders as a 2.5D billboard in raycast space */
         bool billboard = false;
 
-        /** If true, renders with highlight effect (used by InteractionController) */
-        bool highlighted = false;
-
-        /** Color added when highlighted (additive glow effect) */
-        Color highlightColor = Color(0.2f, 0.2f, 0.0f, 0.0f);
-
         SpriteRenderer();
 
         /** Set sprite from shared pointer */

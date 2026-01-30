@@ -6,6 +6,8 @@
 
 #include "../Core/Component.hpp"
 #include "../Core/Transform.hpp"
+#include "Color.hpp"
+#include "AEEngine.h"
 
 namespace Engine {
 
@@ -22,6 +24,12 @@ public:
     
     /** Get sorting key for depth sorting */
     virtual f32 GetSortingKey() const;
+
+    /** If true, renders with highlight effect (used by InteractionController) */
+    bool highlighted = false;
+
+    /** Color added when highlighted (additive glow effect) */
+    Color highlightColor = Color(0.2f, 0.2f, 0.0f, 0.0f);
 };
 
 } // namespace Engine

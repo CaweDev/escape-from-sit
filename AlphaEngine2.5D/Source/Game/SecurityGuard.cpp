@@ -1,6 +1,5 @@
 #include "SecurityGuard.hpp"
-#include "Engine/Core/GameObject.hpp"
-#include "Engine/Core/Time.hpp"
+#include "Engine.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -131,7 +130,13 @@ namespace Game {
     }
 
     void SecurityGuard::FollowPath(float speed) {
-        if (pathIndex >= (int)path.size()) return;
+        auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
+        
+        if (pathIndex >= (int)path.size()) {
+            // No more path, stop moving
+            if (rb) rb->velocity = Engine::Vector2(0.0f, 0.0f);
+            return;
+        }
 
         auto& pos = gameObject->transform->position;
         auto target = path[pathIndex];
@@ -141,15 +146,29 @@ namespace Game {
 
         if (d2 <= arriveDistance * arriveDistance) {
             pathIndex++;
+            // Check if we've reached end of path
+            if (pathIndex >= (int)path.size() && rb) {
+                rb->velocity = Engine::Vector2(0.0f, 0.0f);
+            }
             return;
         }
 
         float d = std::sqrt(d2);
-        if (d <= 0.00001f) return;
+        if (d <= 0.00001f) {
+            if (rb) rb->velocity = Engine::Vector2(0.0f, 0.0f);
+            return;
+        }
 
         Engine::Vector2 dir(delta.x / d, delta.y / d);
-        pos.x += dir.x * speed * Engine::Time::deltaTime;
-        pos.y += dir.y * speed * Engine::Time::deltaTime;
+
+        // Set velocity on rigidbody - Physics2D will handle movement and collision
+        if (rb) {
+            rb->velocity = Engine::Vector2(dir.x * speed, dir.y * speed);
+        } else {
+            // Fallback: direct movement (won't collide with doors)
+            pos.x += dir.x * speed * Engine::Time::deltaTime;
+            pos.y += dir.y * speed * Engine::Time::deltaTime;
+        }
     }
 
     void SecurityGuard::BuildPathBFS_Random() {
