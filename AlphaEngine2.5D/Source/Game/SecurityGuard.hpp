@@ -3,6 +3,7 @@
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/TileMap/TileMap.hpp"
+#include "Engine/TileMap/Door.hpp"
 #include "Player.hpp"
 #include <vector>
 #include <queue>
@@ -44,6 +45,9 @@ namespace Game {
         float maxLostSightTime = 2.5f;
         float repathTimer = 0.0f;
 
+        Engine::Door* heldDoor = nullptr;
+        float doorHoldReleaseDist = 1.3f;
+
     private:
         void PatrolUpdate();
         void ChaseUpdate();
@@ -55,6 +59,9 @@ namespace Game {
 
         void BuildPathBFS_Random();
         void BuildPathBFS_ToGoal(int gx, int gy);
+
+        void UpdateDoorAuto();
+        Engine::Door* FindDoorAtTile(int tileX, int tileY) const;
 
         int iD(int x, int y) const { return y * tileMap->width + x; }
 

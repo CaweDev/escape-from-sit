@@ -28,6 +28,7 @@ void Door::Awake() {
             collider->offset = Vector2(0, 0);
         }
     }
+
     
     UpdateCollider();
 }
@@ -58,11 +59,14 @@ void Door::Update() {
             
         case DoorState::Open:
             // Handle auto-close
-            if (autoCloseDelay > 0.0f) {
+            if (!IsHeldOpen() && autoCloseDelay > 0.0f) {
                 autoCloseTimer += dt;
                 if (autoCloseTimer >= autoCloseDelay) {
                     Close();
                 }
+            }
+            else {
+                autoCloseTimer = 0.0f;
             }
             break;
             
@@ -85,6 +89,7 @@ void Door::Open() {
     if (state == DoorState::Closed || state == DoorState::Closing) {
         state = DoorState::Opening;
     }
+    autoCloseTimer = 0.0f;
 }
 
 void Door::Close() {
@@ -139,6 +144,27 @@ void Door::SetupInteractable(Interactable* interactable, const char* openText, c
     interactable->onInteract = [this]() {
         this->Toggle();
     };
+}
+
+void Door::RequestOpen(const void* requester)
+{
+    if (!requester) {
+        return;
+   }
+    m_holders.insert(requester);
+    autoCloseTimer = 0.0f;
+    Open();
+}
+
+void Door::ReleaseOpen(const void* requester)
+{
+    if (!requester) {
+        return;
+    }
+    m_holders.erase(requester);
+    if (!IsHeldOpen()) {
+        autoCloseTimer = 0.0f;
+    }
 }
 
 } // namespace Engine

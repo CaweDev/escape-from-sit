@@ -7,6 +7,10 @@
 #include "../Core/Component.hpp"
 #include "../Math/Vector2.hpp"
 #include "AEEngine.h"
+#include <unordered_set>
+#include <unordered_map>
+#include <cstdint>
+
 
 namespace Engine {
 
@@ -65,6 +69,8 @@ public:
     /** Auto-close delay in seconds (0 = never auto-close) */
     f32 autoCloseDelay = 0.0f;
     
+  
+
     Door() = default;
     virtual ~Door() = default;
     
@@ -115,6 +121,14 @@ public:
     /** Cached reference to collider (for enabling/disabling) */
     BoxCollider2D* collider = nullptr;
 
+
+    void RequestOpen(const void* requester);
+    void ReleaseOpen(const void* requester);
+    bool IsHeldOpen() const {
+        return !m_holders.empty();
+    }
+    static Door* FindAtTile(int tileX, int tileY);
+
 private:
     
     /** Auto-close timer */
@@ -127,6 +141,10 @@ private:
     const char* m_openText = "Open";
     const char* m_closeText = "Close";
     Interactable* m_interactable = nullptr;
+
+    std::unordered_set<const void*>m_holders;
+
+
 };
 
 } // namespace Engine

@@ -1,5 +1,9 @@
 #include "SecurityGuard.hpp"
 #include "Engine.hpp"
+#include "Engine/Core/Time.hpp"
+#include "Engine/Core/GameObject.hpp"
+#include "Engine/Scene/SceneManager.hpp"
+#include "Engine/Scene/Scene.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -129,6 +133,56 @@ namespace Game {
         return (dx * dx + dy * dy) <= catchRadius * catchRadius;
     }
 
+    Engine::Door* SecurityGuard::FindDoorAtTile(int tx, int ty) const {
+        auto* scene = Engine::SceneManager::GetActiveScene();
+        if (!scene) return nullptr;
+
+        for (auto& obj : scene->GetGameObjects()) {
+            if (!obj || !obj->active) continue;
+
+            auto* door = obj->GetComponent<Engine::Door>();
+            if (!door) continue;
+
+            if (door->tileX == tx && door->tileY == ty) {
+                return door;
+            }
+        }
+        return nullptr;
+    }
+
+    void SecurityGuard::UpdateDoorAuto() {
+      
+        if (heldDoor) {
+            int doorTx = heldDoor->tileX;
+            int doorTy = heldDoor->tileY;
+            if (pathIndex < (int)path.size()) {
+                int nextTx = (int)path[pathIndex].x;
+                int nextTy = (int)path[pathIndex].y;
+
+                if (!(nextTx == doorTx && nextTy == doorTy)) {
+                    heldDoor->ReleaseOpen(this);
+                    heldDoor = nullptr;
+                }
+            }
+            else {
+                heldDoor->ReleaseOpen(this);
+                heldDoor = nullptr;
+            }
+        }
+        if (pathIndex >= (int)path.size()) return;
+
+        int nextTx = (int)path[pathIndex].x;
+        int nextTy = (int)path[pathIndex].y;
+
+        Engine::Door* door = FindDoorAtTile(nextTx, nextTy);
+        if (!door) return;
+        if (heldDoor != door) {
+            heldDoor = door;
+            heldDoor->RequestOpen(this);
+        }
+
+    }
+
     void SecurityGuard::FollowPath(float speed) {
         auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
         
@@ -137,6 +191,8 @@ namespace Game {
             if (rb) rb->velocity = Engine::Vector2(0.0f, 0.0f);
             return;
         }
+
+        UpdateDoorAuto();
 
         auto& pos = gameObject->transform->position;
         auto target = path[pathIndex];
