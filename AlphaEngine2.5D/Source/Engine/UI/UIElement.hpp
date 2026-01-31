@@ -57,11 +57,16 @@ namespace UI
         virtual ~UIElement();
 
         /**
-         * @brief Set the render order for this element relative to its siblings
+         * @brief Get the render order for this element relative to its siblings
          * @param order Higher values are rendered later (on top)
          */
         void SetRenderOrder(s32 order);
         s32 GetRenderOrder() const { return m_renderOrder; }
+
+        /**
+         * @brief Get the global render order (cumulative from parents)
+         */
+        virtual s32 GetGlobalRenderOrder() const;
 
         /**
          * @brief Sort the children of this element by renderOrder

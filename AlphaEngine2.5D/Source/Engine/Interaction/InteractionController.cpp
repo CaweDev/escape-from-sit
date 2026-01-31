@@ -25,6 +25,7 @@ namespace Engine {
 void InteractionController::Initialize() {
     // Create UI canvas for interaction elements
     m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
+    m_canvas->SetSortOrder(50);
     
     // Set default textures
 	defaultCrosshairTexture = AssetManager::GetTexture("Assets/UI/crosshair_default.png");

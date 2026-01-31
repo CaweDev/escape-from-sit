@@ -21,6 +21,7 @@ namespace Game
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
         m_canvas->SetReferenceResolution(1280.0f, 720.0f);
         m_canvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
+        m_canvas->SetSortOrder(100);
 
         // Create minimap in bottom-left corner
         m_minimap = m_canvas->CreateChild<UI::Minimap>();

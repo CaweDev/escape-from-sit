@@ -70,6 +70,12 @@ namespace UI
         CanvasScaleMode GetScaleMode() const { return m_scaleMode; }
 
         /**
+         * @brief Set the canvas sort order (relative to other canvases)
+         */
+        void SetSortOrder(s32 order);
+        s32 GetSortOrder() const { return m_sortOrder; }
+
+        /**
          * @brief Get the current scale factor based on screen size
          */
         f32 GetScaleFactor() const;
@@ -152,6 +158,7 @@ namespace UI
          */
         UIElement* RaycastElement(UIElement* element, f32 worldX, f32 worldY) const;
 
+        s32 m_sortOrder = 0;
         mutable bool m_sortDirty = true;
     };
 

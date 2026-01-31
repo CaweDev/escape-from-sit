@@ -6,6 +6,7 @@
 #include "Canvas.hpp"
 #include "../Core/Application.hpp"
 #include "../Math/Mathf.hpp"
+#include "UIManager.hpp"
 #include <algorithm>
 
 namespace UI
@@ -37,6 +38,18 @@ namespace UI
     {
         m_scaleMode = mode;
         m_scaleFactorDirty = true;
+    }
+
+    void Canvas::SetSortOrder(s32 order)
+    {
+        if (m_sortOrder != order)
+        {
+            m_sortOrder = order;
+            if (UIManager::GetInstance())
+            {
+                UIManager::GetInstance()->SetCanvasesSortDirty();
+            }
+        }
     }
 
     f32 Canvas::GetScaleFactor() const
@@ -111,9 +124,6 @@ namespace UI
         element->SetCanvas(this);
         m_rootElements.push_back(element);
         
-        // Default renderOrder for root elements
-        element->SetRenderOrder(static_cast<s32>(m_rootElements.size() - 1));
-        
         element->SetDirty();
         m_sortDirty = true;
     }
@@ -186,7 +196,7 @@ namespace UI
         {
             std::stable_sort(m_rootElements.begin(), m_rootElements.end(),
                 [](const UIElement* a, const UIElement* b) {
-                    return a->GetRenderOrder() < b->GetRenderOrder();
+                    return a->GetGlobalRenderOrder() < b->GetGlobalRenderOrder();
                 });
             m_sortDirty = false;
         }

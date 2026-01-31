@@ -369,6 +369,9 @@ namespace UI
 
         // --- Step 5: Draw the decorative frame ---
         DrawBorderFrame(worldRect);
+
+        // Render children
+        UIElement::Render();
     }
 
 } // namespace UI
