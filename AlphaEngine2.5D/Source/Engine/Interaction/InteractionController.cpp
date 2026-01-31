@@ -16,6 +16,7 @@
 #include "Engine/Graphics/DoorRenderer.hpp"
 #include "Engine/TileMap/Door.hpp"
 #include "Engine/Math/Mathf.hpp"
+#include "Engine/Core/AssetManager.hpp"
 #include <cfloat>
 #include <cmath>
 
@@ -25,6 +26,10 @@ void InteractionController::Initialize() {
     // Create UI canvas for interaction elements
     m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
     
+    // Set default textures
+	defaultCrosshairTexture = AssetManager::GetTexture("Assets/UI/crosshair_default.png");
+	highlightCrosshairTexture = AssetManager::GetTexture("Assets/UI/crosshair_highlight.png");
+
     // Create crosshair (centered on screen)
     m_crosshair = m_canvas->CreateChild<UI::Crosshair>();
     m_crosshair->SetDefaultTexture(defaultCrosshairTexture);
@@ -89,8 +94,8 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
     Scene* scene = SceneManager::GetActiveScene();
     if (!scene || !Camera::main) return nullptr;
     
-    int sw = Application::GetWindowWidth();
-    int sh = Application::GetWindowHeight();
+    s64 sw = Application::GetWindowWidth();
+    s64 sh = Application::GetWindowHeight();
     f32 screenCenterX = static_cast<f32>(sw) / 2.0f;
     f32 screenCenterY = static_cast<f32>(sh) / 2.0f;
     

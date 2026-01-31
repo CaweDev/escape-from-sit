@@ -16,6 +16,8 @@ Crosshair::Crosshair() {
     
     // Crosshair shouldn't block raycasts
     raycastTarget = false;
+
+    m_renderOrder = 100000;
     
     name = "Crosshair";
 }
