@@ -9,7 +9,7 @@
 #include "Engine/UI/Minimap.hpp"
 #include "Engine/UI/Map.hpp"
 #include "Engine/TileMap/TileMap.hpp"
-
+#include <vector>
 namespace Game
 {
     /**
@@ -40,7 +40,7 @@ namespace Game
         Engine::Transform* m_playerTransform = nullptr;
 
         bool m_mapVisible = false;
-
+        std::vector<Engine::Transform*> m_enemyTransforms;
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
@@ -73,6 +73,9 @@ namespace Game
          */
         void SetPlayerTransform(Engine::Transform* transform);
         Engine::Transform* GetPlayerTransform() const { return m_playerTransform; }
+       
+        UI::Minimap* GetMinimap() const { return m_minimap; }
+        void AddEnemyTransform(Engine::Transform* enemyTransform);
 
         /**
          * @brief Toggle the full map visibility
@@ -97,7 +100,7 @@ namespace Game
         /**
          * @brief Get the minimap element
          */
-        UI::Minimap* GetMinimap() const { return m_minimap; }
+      
 
         /**
          * @brief Get the map element

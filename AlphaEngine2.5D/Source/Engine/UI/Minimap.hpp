@@ -11,6 +11,7 @@
 #include "../Graphics/Sprite.hpp"
 #include "../Math/Mathf.hpp"
 #include <memory>
+#include <vector>
 
 namespace UI
 {
@@ -46,7 +47,8 @@ namespace UI
         Engine::Color m_playerColor;     // Color for the player icon/dot
         Engine::Color m_backgroundColor; // Background panel color (visible behind tiles)
         Engine::Color m_borderColor;     // Color for the decorative border frame
-
+                      
+        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);;
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
@@ -56,7 +58,7 @@ namespace UI
         // --- Component References ---
         Engine::TileMap* m_tileMap = nullptr;             // Pointer to the level data
         Engine::Transform* m_playerTransform = nullptr;   // Pointer to player transform for tracking
-
+        std::vector<Engine::Transform*> m_enemyTransforms;
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh for simple draws
 
@@ -98,6 +100,12 @@ namespace UI
          * @param sprite Shared pointer to the sprite
          */
         void SetBorderSprite(std::shared_ptr<Engine::Sprite> sprite) { m_borderSprite = sprite; }
+
+        void AddEnemyTransform(Engine::Transform* transform);
+        void ClearEnemies() { m_enemyTransforms.clear(); }
+
+        void SetEnemyColor(const Engine::Color& color) { m_enemyColor = color; }
+        const Engine::Color& GetEnemyColor() const { return m_enemyColor; }
 
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }

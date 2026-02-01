@@ -187,6 +187,7 @@ namespace Game {
             auto playerHUD = player->AddComponent<PlayerHUD>();
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
+           
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -236,7 +237,7 @@ namespace Game {
             enemySR->SetSprite(enemySprite);
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
-
+            playerHUD->AddEnemyTransform(enemy->transform);
             
             auto powerup1 = std::make_shared<Sprite>(); powerup1->Load("Assets/powerup1.png");
             auto powerup2 = std::make_shared<Sprite>(); powerup2->Load("Assets/powerup2.png");
