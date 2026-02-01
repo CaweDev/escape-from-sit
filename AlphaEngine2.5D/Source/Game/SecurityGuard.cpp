@@ -1,7 +1,5 @@
 #include "SecurityGuard.hpp"
 #include "Engine.hpp"
-#include "Engine/Core/Time.hpp"
-#include "Engine/Core/GameObject.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Scene/Scene.hpp"
 #include <cmath>
@@ -9,11 +7,55 @@
 #include <ctime>
 #include <iostream>
 #include <algorithm>
+#include <string>
 
 namespace Game {
 
     bool SecurityGuard::seeded = false;
 
+    
+    const char* SecurityGuard::StateToString(GuardState s) const {
+        switch (s) {
+        case GuardState::Patrol: return "Patrol";
+        case GuardState::Chase:  return "Chase";
+        case GuardState::Search: return "Search";
+        case GuardState::Catch:  return "Catch";
+        default: return "Unknown";
+        }
+    }
+
+    void SecurityGuard::SetState(GuardState newState) {
+        if (state != newState) {
+            std::cout << "[Guard FSM] " << StateToString(state)
+                << " -> " << StateToString(newState) << "\n";
+            state = newState;
+        }
+    }
+
+   
+    Engine::Color SecurityGuard::GetColorForState() const {
+        switch (state) {
+        case GuardState::Patrol:
+            return Engine::Color(0.2f, 0.4f, 1.0f, 1.0f); // Blue
+        case GuardState::Search:
+            return Engine::Color(1.0f, 0.9f, 0.2f, 1.0f); // Yellow
+        case GuardState::Chase:
+            return Engine::Color(1.0f, 0.2f, 0.2f, 1.0f); // Red
+        default:
+            return Engine::Color(1.0f, 1.0f, 1.0f, 1.0f); // White
+        }
+    }
+
+    void SecurityGuard::ApplyStateColor() {
+        auto* sr = gameObject->GetComponent<Engine::SpriteRenderer>();
+        if (!sr) return;
+
+      
+        sr->color = GetColorForState();
+
+    }
+
+  
     void SecurityGuard::Initialize() {
         if (!seeded) {
             std::srand((unsigned)std::time(nullptr));
@@ -23,12 +65,17 @@ namespace Game {
     }
 
     void SecurityGuard::OnCCTVSpotted(const Engine::Vector2& worldPos) {
-        // force chase to CCTV last seen
-        hasLastSeen = true;
-        lastSeenPos = worldPos;
-        lostSightTimer = 0.0f;
+
+        memory.hasLastSeen = true;
+        memory.lastSeenPos = worldPos;
+        memory.timeSinceSeen = 0.0f;
+
         repathTimer = 0.0f;
-        state = GuardState::Chase;
+        searchTimer = 0.0f;
+        searchRepathTimer = 0.0f;
+
+        SetState(GuardState::Search);
+        BuildPathBFS_ToGoal((int)memory.lastSeenPos.x, (int)memory.lastSeenPos.y);
     }
 
     void SecurityGuard::Update() {
@@ -37,13 +84,12 @@ namespace Game {
         switch (state) {
         case GuardState::Patrol:
             PatrolUpdate();
-
             if (CanSeePlayer()) {
-                state = GuardState::Chase;
-                hasLastSeen = true;
-                lastSeenPos = { playerTf->position.x, playerTf->position.y };
-                lostSightTimer = 0.0f;
+                memory.hasLastSeen = true;
+                memory.lastSeenPos = { playerTf->position.x, playerTf->position.y };
+                memory.timeSinceSeen = 0.0f;
                 repathTimer = 0.0f;
+                SetState(GuardState::Chase);
             }
             break;
 
@@ -51,25 +97,30 @@ namespace Game {
             ChaseUpdate();
             break;
 
+        case GuardState::Search:
+            SearchUpdate();
+            break;
+
         case GuardState::Catch:
             std::cout << "YOU GOT CAUGHT. GAME OVER\n";
             break;
         }
 
-        // Debug line (optional)
-        std::cout << "\r[Guard FSM] "
-            << "State=" << (int)state
+        ApplyStateColor();
+
+        std::cout << "\r[Guard] "
+            << "State=" << StateToString(state)
             << " Guard=(" << gameObject->transform->position.x << ", " << gameObject->transform->position.y << ") "
-            << "Player=(" << playerTf->position.x << ", " << playerTf->position.y << ") "
-            << "LastSeen="
-            << (hasLastSeen
-                ? "(" + std::to_string(lastSeenPos.x) + ", " + std::to_string(lastSeenPos.y) + ")"
+            << " LastSeen=" << (memory.hasLastSeen
+                ? "(" + std::to_string(memory.lastSeenPos.x) + "," + std::to_string(memory.lastSeenPos.y) + ")"
                 : "(none)")
-            << " LostSight=" << lostSightTimer
-            << "        "
+            << " SinceSeen=" << memory.timeSinceSeen
+            << " SearchT=" << searchTimer
+            << "      "
             << std::flush;
     }
 
+  
     void SecurityGuard::PatrolUpdate() {
         if (path.empty() || pathIndex >= (int)path.size()) {
             BuildPathBFS_Random();
@@ -80,24 +131,24 @@ namespace Game {
 
     void SecurityGuard::ChaseUpdate() {
         if (IsCaught()) {
-            state = GuardState::Catch;
+            SetState(GuardState::Catch);
             return;
         }
 
-        bool seesPlayer = CanSeePlayer();
+        const bool seesPlayer = CanSeePlayer();
 
         if (seesPlayer) {
-            lastSeenPos = { playerTf->position.x, playerTf->position.y };
-            hasLastSeen = true;
-            lostSightTimer = 0.0f;
+            memory.lastSeenPos = { playerTf->position.x, playerTf->position.y };
+            memory.hasLastSeen = true;
+            memory.timeSinceSeen = 0.0f;
         }
         else {
-            lostSightTimer += Engine::Time::deltaTime;
+            memory.timeSinceSeen += Engine::Time::deltaTime;
         }
 
         repathTimer -= Engine::Time::deltaTime;
-        if (repathTimer <= 0.0f && hasLastSeen) {
-            BuildPathBFS_ToGoal((int)lastSeenPos.x, (int)lastSeenPos.y);
+        if (repathTimer <= 0.0f && memory.hasLastSeen) {
+            BuildPathBFS_ToGoal((int)memory.lastSeenPos.x, (int)memory.lastSeenPos.y);
             repathTimer = 0.35f;
         }
 
@@ -106,21 +157,86 @@ namespace Game {
         }
 
      
-        if (!seesPlayer && lostSightTimer >= maxLostSightTime) {
-            hasLastSeen = false;
-            state = GuardState::Patrol;
-            BuildPathBFS_Random();
+        if (!seesPlayer && memory.timeSinceSeen >= maxLostSightTime) {
+            memory.timeSinceSeen = 0.0f;
+            searchTimer = 0.0f;
+            searchRepathTimer = 0.0f;
+
+            SetState(GuardState::Search);
+
+            if (memory.hasLastSeen) BuildPathBFS_ToGoal((int)memory.lastSeenPos.x, (int)memory.lastSeenPos.y);
+            else BuildPathBFS_Random();
             return;
         }
 
-           if (!seesPlayer && (path.empty() || pathIndex >= (int)path.size())) {
-            hasLastSeen = false;
-            state = GuardState::Patrol;
+      
+        if (!seesPlayer && (path.empty() || pathIndex >= (int)path.size())) {
+            searchTimer = 0.0f;
+            searchRepathTimer = 0.0f;
+
+            SetState(GuardState::Search);
+
+            if (memory.hasLastSeen) BuildPathBFS_ToGoal((int)memory.lastSeenPos.x, (int)memory.lastSeenPos.y);
+            else BuildPathBFS_Random();
+            return;
+        }
+    }
+
+    void SecurityGuard::SearchUpdate() {
+       
+        if (CanSeePlayer()) {
+            memory.hasLastSeen = true;
+            memory.lastSeenPos = { playerTf->position.x, playerTf->position.y };
+            memory.timeSinceSeen = 0.0f;
+            repathTimer = 0.0f;
+            SetState(GuardState::Chase);
+            return;
+        }
+
+        searchTimer += Engine::Time::deltaTime;
+
+      
+        if (!path.empty() && pathIndex < (int)path.size()) {
+            FollowPath(searchSpeed);
+        }
+
+        
+        const bool needWander = (path.empty() || pathIndex >= (int)path.size());
+        searchRepathTimer -= Engine::Time::deltaTime;
+
+        if (needWander && searchRepathTimer <= 0.0f) {
+            Engine::Vector2 anchor = memory.hasLastSeen
+                ? memory.lastSeenPos
+                : Engine::Vector2(gameObject->transform->position.x, gameObject->transform->position.y);
+
+            int ax = (int)anchor.x;
+            int ay = (int)anchor.y;
+
+            int gx = std::clamp(ax + ((std::rand() % 7) - 3), 0, tileMap->width - 1);
+            int gy = std::clamp(ay + ((std::rand() % 7) - 3), 0, tileMap->height - 1);
+
+            for (int tries = 0; tries < 6; ++tries) {
+                if (tileMap->IsWalkable(gx + 0.5f, gy + 0.5f)) break;
+                gx = std::clamp(ax + ((std::rand() % 7) - 3), 0, tileMap->width - 1);
+                gy = std::clamp(ay + ((std::rand() % 7) - 3), 0, tileMap->height - 1);
+            }
+
+            BuildPathBFS_ToGoal(gx, gy);
+            searchRepathTimer = 0.6f;
+        }
+
+       
+        if (searchTimer >= searchDuration) {
+            searchTimer = 0.0f;
+            memory.hasLastSeen = false;
+
+            SetState(GuardState::Patrol);
             BuildPathBFS_Random();
             return;
         }
     }
 
+    
     bool SecurityGuard::CanSeePlayer() const {
         float dx = playerTf->position.x - gameObject->transform->position.x;
         float dy = playerTf->position.y - gameObject->transform->position.y;
@@ -139,36 +255,27 @@ namespace Game {
 
         for (auto& obj : scene->GetGameObjects()) {
             if (!obj || !obj->active) continue;
-
             auto* door = obj->GetComponent<Engine::Door>();
             if (!door) continue;
-
-            if (door->tileX == tx && door->tileY == ty) {
-                return door;
-            }
+            if (door->tileX == tx && door->tileY == ty) return door;
         }
         return nullptr;
     }
 
     void SecurityGuard::UpdateDoorAuto() {
-      
+       
         if (heldDoor) {
-            int doorTx = heldDoor->tileX;
-            int doorTy = heldDoor->tileY;
-            if (pathIndex < (int)path.size()) {
-                int nextTx = (int)path[pathIndex].x;
-                int nextTy = (int)path[pathIndex].y;
+            Engine::Vector2 doorPos = heldDoor->GetWorldPosition();
+            float dx = doorPos.x - gameObject->transform->position.x;
+            float dy = doorPos.y - gameObject->transform->position.y;
+            float d2 = dx * dx + dy * dy;
 
-                if (!(nextTx == doorTx && nextTy == doorTy)) {
-                    heldDoor->ReleaseOpen(this);
-                    heldDoor = nullptr;
-                }
-            }
-            else {
+            if (d2 > doorHoldReleaseDist * doorHoldReleaseDist) {
                 heldDoor->ReleaseOpen(this);
                 heldDoor = nullptr;
             }
         }
+
         if (pathIndex >= (int)path.size()) return;
 
         int nextTx = (int)path[pathIndex].x;
@@ -176,18 +283,17 @@ namespace Game {
 
         Engine::Door* door = FindDoorAtTile(nextTx, nextTy);
         if (!door) return;
+
         if (heldDoor != door) {
             heldDoor = door;
             heldDoor->RequestOpen(this);
         }
-
     }
 
     void SecurityGuard::FollowPath(float speed) {
         auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
-        
+
         if (pathIndex >= (int)path.size()) {
-            // No more path, stop moving
             if (rb) rb->velocity = Engine::Vector2(0.0f, 0.0f);
             return;
         }
@@ -202,7 +308,6 @@ namespace Game {
 
         if (d2 <= arriveDistance * arriveDistance) {
             pathIndex++;
-            // Check if we've reached end of path
             if (pathIndex >= (int)path.size() && rb) {
                 rb->velocity = Engine::Vector2(0.0f, 0.0f);
             }
@@ -217,16 +322,16 @@ namespace Game {
 
         Engine::Vector2 dir(delta.x / d, delta.y / d);
 
-        // Set velocity on rigidbody - Physics2D will handle movement and collision
         if (rb) {
             rb->velocity = Engine::Vector2(dir.x * speed, dir.y * speed);
-        } else {
-            // Fallback: direct movement (won't collide with doors)
+        }
+        else {
             pos.x += dir.x * speed * Engine::Time::deltaTime;
             pos.y += dir.y * speed * Engine::Time::deltaTime;
         }
     }
 
+ 
     void SecurityGuard::BuildPathBFS_Random() {
         int gx, gy;
         do {
