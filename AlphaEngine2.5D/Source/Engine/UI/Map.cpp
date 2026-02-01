@@ -224,13 +224,16 @@ namespace UI
             playerTileX = Engine::Mathf::Clamp(playerTileX, 0.0f, static_cast<f32>(mapTileWidth));
             playerTileY = Engine::Mathf::Clamp(playerTileY, 0.0f, static_cast<f32>(mapTileHeight));
 
-            f32 playerScreenX = offsetX + playerTileX * tileSize + tileSize * 0.5f;
-            f32 playerScreenY = offsetY + playerTileY * tileSize + tileSize * 0.5f;
+            f32 playerScreenX = offsetX + playerTileX * tileSize;
+            f32 playerScreenY = offsetY + playerTileY * tileSize;
 
             // Draw the player as a slightly larger contrasting dot
             f32 playerSize = tileSize * 1.5f;
             DrawQuad(playerScreenX, playerScreenY, playerSize, playerSize, m_playerColor);
         }
+
+        // Render children
+        UIElement::Render();
     }
 
 } // namespace UI

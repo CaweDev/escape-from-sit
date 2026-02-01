@@ -8,6 +8,7 @@
 #include "UIEventSystem.hpp"
 #include "UIElement.hpp"
 #include "../Core/Application.hpp"
+#include <algorithm>
 
 namespace UI
 {
@@ -101,13 +102,28 @@ namespace UI
 
     void UIManager::Render()
     {
-        // Reset camera position to origin for UI rendering (Standard Center-Origin World)
+        // Sort canvases if needed
+        SortCanvases();
+
+        // Standard Center-Origin World for UI
         AEGfxSetCamPosition(0.0f, 0.0f);
 
         // Render all canvases in order
         for (auto* canvas : m_canvases)
         {
             canvas->Render();
+        }
+    }
+
+    void UIManager::SortCanvases()
+    {
+        if (m_canvasesSortDirty && !m_canvases.empty())
+        {
+            std::stable_sort(m_canvases.begin(), m_canvases.end(),
+                [](const Canvas* a, const Canvas* b) {
+                    return a->GetSortOrder() < b->GetSortOrder();
+                });
+            m_canvasesSortDirty = false;
         }
     }
 
