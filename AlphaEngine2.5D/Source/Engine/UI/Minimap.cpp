@@ -53,6 +53,11 @@ namespace UI
     {
         m_playerTransform = transform;
     }
+    void Minimap::AddEnemyTransform(Engine::Transform* transform)
+    {
+        if (!transform) return;
+        m_enemyTransforms.push_back(transform);
+    }
 
     /**
      * @brief Generates a clipped vertex list for a quad using the Sutherland-Hodgman algorithm.
@@ -366,6 +371,28 @@ namespace UI
         // The player is always at the center of the minimap when m_centerOnPlayer is true
         f32 playerSize = tileSize * 0.8f;
         DrawQuadClipped(mapCenterX, mapCenterY, playerSize, playerSize, 0.0f, m_playerColor, m_playerSprite.get());
+
+        f32 enemySize = tileSize * 0.6f;
+        for (auto* enemyTf : m_enemyTransforms)
+        {
+            if (!enemyTf) continue;
+
+            f32 dxW = enemyTf->position.x - playerTileX;
+            f32 dyW = enemyTf->position.y - playerTileY;
+
+            f32 offX = dxW * tileSize;
+            f32 offY = dyW * tileSize;
+
+            f32 rotatedX = offX * s - offY * c;
+            f32 rotatedY = offX * c + offY * s;
+
+            DrawQuadClipped(mapCenterX + rotatedX,
+                mapCenterY + rotatedY,
+                enemySize,
+                enemySize,
+                0.0f,
+                m_enemyColor);
+        }
 
         // --- Step 5: Draw the decorative frame ---
         DrawBorderFrame(worldRect);

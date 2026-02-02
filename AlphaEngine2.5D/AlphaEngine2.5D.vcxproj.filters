@@ -49,6 +49,9 @@
     <ClCompile Include="Source\Engine\UI\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Minimap.cpp" />
     <ClCompile Include="Source\Game\UI\GameScene\PlayerHUD.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
+    <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
+    <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -112,11 +115,10 @@
     <ClInclude Include="Source\Engine\UI\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Minimap.hpp" />
     <ClInclude Include="Source\Game\UI\GameScene\PlayerHUD.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
+    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Source\map.txt" />
   </ItemGroup>
 </Project>

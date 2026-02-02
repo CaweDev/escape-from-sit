@@ -10,7 +10,8 @@
 #include "../Graphics/Color.hpp"
 #include "../Graphics/Texture2D.hpp"
 #include "../Math/Mathf.hpp"
-
+#include "AEEngine.h"
+#include <vector>
 namespace UI
 {
     using Engine::Texture2D;
@@ -33,7 +34,7 @@ namespace UI
         Engine::Color m_playerColor;     // Color for the player marker
         Engine::Color m_backgroundColor; // Background panel color
         Engine::Color m_borderColor;     // Color for the decorative border frame
-
+        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
         // --- Configuration ---
         f32 m_borderThickness = 0.0f;    // Thickness of the border frame in pixels
 
@@ -41,7 +42,7 @@ namespace UI
         Engine::TileMap* m_tileMap = nullptr;             // Level data source
         Engine::Transform* m_playerTransform = nullptr;   // Player tracking
         Texture2D* m_texture = nullptr;                  // Optional background texture
-
+        std::vector<Engine::Transform*> m_enemyTransforms;
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh
 
@@ -74,6 +75,11 @@ namespace UI
          * @param pTexture Pointer to the texture (not owned)
          */
         void SetTexture(Texture2D* pTexture) { m_texture = pTexture; }
+        void AddEnemyTransform(Engine::Transform* transform);
+        void ClearEnemies() { m_enemyTransforms.clear(); }
+
+        void SetEnemyColor(const Engine::Color& color) { m_enemyColor = color; }
+        const Engine::Color& GetEnemyColor() const { return m_enemyColor; }
 
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }

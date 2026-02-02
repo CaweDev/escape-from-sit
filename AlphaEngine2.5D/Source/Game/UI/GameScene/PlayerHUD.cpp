@@ -6,7 +6,6 @@
 #include "PlayerHUD.hpp"
 #include "Engine/UI/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
-#include "Engine/Core/AssetManager.hpp"
 
 namespace Game
 {
@@ -41,13 +40,22 @@ namespace Game
         m_map->rectTransform.anchoredPosition = { 0.0f, 0.0f };
         m_map->rectTransform.sizeDelta = { m_mapWidth, m_mapHeight };
         m_map->visible = false;
+
+     
+        if (m_tileMap) SetTileMap(m_tileMap);
+        if (m_playerTransform) SetPlayerTransform(m_playerTransform);
+
+        for (auto* tf : m_enemyTransforms)
+        {
+            if (m_minimap) m_minimap->AddEnemyTransform(tf);
+        }
 		m_map->SetRenderOrder(1000000); 
 		//m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
 		m_map->SetBorderColor(Engine::Color(0.f, 0.f, 0.f, 1.f)); // Set alpha to 0 if using texture
 		//m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));
 
         // If we have a transform, use it as player transform by default
-        if (transform)
+        if (transform && !m_playerTransform)
         {
             SetPlayerTransform(transform);
         }
@@ -64,8 +72,6 @@ namespace Game
 
     void PlayerHUD::OnDestroy()
     {
-        // The canvas and its children will be cleaned up by UIManager
-        // when the canvas is destroyed
         if (m_canvas)
         {
             UI::UIManager::GetInstance()->DestroyCanvas(m_canvas);
@@ -78,12 +84,12 @@ namespace Game
     void PlayerHUD::SetTileMap(Engine::TileMap* tileMap)
     {
         m_tileMap = tileMap;
-        
+
         if (m_minimap)
         {
             m_minimap->SetTileMap(tileMap);
         }
-        
+
         if (m_map)
         {
             m_map->SetTileMap(tileMap);
@@ -93,22 +99,39 @@ namespace Game
     void PlayerHUD::SetPlayerTransform(Engine::Transform* playerTransform)
     {
         m_playerTransform = playerTransform;
-        
+
         if (m_minimap)
         {
             m_minimap->SetPlayerTransform(playerTransform);
         }
-        
+
         if (m_map)
         {
             m_map->SetPlayerTransform(playerTransform);
         }
     }
 
+    void PlayerHUD::AddEnemyTransform(Engine::Transform* enemyTransform)
+    {
+        if (!enemyTransform) return;
+
+     
+        m_enemyTransforms.push_back(enemyTransform);
+
+     
+        if (m_minimap)
+        {
+            m_minimap->AddEnemyTransform(enemyTransform);
+        }
+        if (m_map) {
+            m_map->AddEnemyTransform(enemyTransform);
+        }
+    }
+
     void PlayerHUD::ToggleMap()
     {
         m_mapVisible = !m_mapVisible;
-        
+
         if (m_map)
         {
             m_map->visible = m_mapVisible;
@@ -118,7 +141,7 @@ namespace Game
     void PlayerHUD::ShowMap()
     {
         m_mapVisible = true;
-        
+
         if (m_map)
         {
             m_map->visible = true;
@@ -128,7 +151,7 @@ namespace Game
     void PlayerHUD::HideMap()
     {
         m_mapVisible = false;
-        
+
         if (m_map)
         {
             m_map->visible = false;

@@ -56,7 +56,11 @@ namespace UI
     {
         m_playerTransform = transform;
     }
-
+    void Map::AddEnemyTransform(Engine::Transform* transform)
+    {
+        if (!transform) return;
+        m_enemyTransforms.push_back(transform);
+    }
     void Map::DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color)
     {
         if (!m_quadMesh) return;
@@ -188,6 +192,25 @@ namespace UI
 
                 // Render the tile as a simple solid quad (seamlessly touching neighbors)
                 DrawQuad(screenX, screenY, tileSize, tileSize, tileColor);
+            }
+        }
+        {
+            f32 enemySize = tileSize * 1.2f;
+
+            for (auto* enemyTf : m_enemyTransforms)
+            {
+                if (!enemyTf) continue;
+
+                f32 ex = enemyTf->position.x;
+                f32 ey = enemyTf->position.y;
+
+                ex = Engine::Mathf::Clamp(ex, 0.0f, static_cast<f32>(mapTileWidth));
+                ey = Engine::Mathf::Clamp(ey, 0.0f, static_cast<f32>(mapTileHeight));
+
+                f32 enemyScreenX = offsetX + ex * tileSize + tileSize * 0.5f;
+                f32 enemyScreenY = offsetY + ey * tileSize + tileSize * 0.5f;
+
+                DrawQuad(enemyScreenX, enemyScreenY, enemySize, enemySize, m_enemyColor);
             }
         }
 
