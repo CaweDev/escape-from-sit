@@ -24,7 +24,7 @@ namespace Engine {
     class SpriteRenderer : public IRenderer {
     public:
         /** The sprite to render */
-        std::shared_ptr<Sprite> sprite;
+        Sprite* sprite;
 
         /** Color tint multiplier */
         Color color = Color::white();
@@ -45,6 +45,9 @@ namespace Engine {
 
         /** Set sprite from shared pointer */
         void SetSprite(std::shared_ptr<Sprite> newSprite);
+
+        /** Set sprite from shared pointer */
+        void SetSprite(Sprite* newSprite);
 
         /** Render the sprite (called by renderer system) */
         void Render() override;
