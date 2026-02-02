@@ -9,8 +9,6 @@ struct Book {
 	int BookId;
 	Engine::Vector3 BookPosition;
 	bool BookCollected;
-	AEGfxVertexList* BookMesh;
-	AEGfxTexture* BookTexture;
 	std::string BookText;
 };
 
