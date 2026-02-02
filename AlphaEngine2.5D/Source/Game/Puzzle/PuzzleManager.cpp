@@ -28,9 +28,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
     // Enemy sprite
     auto bookSR = bookObj->AddComponent<SpriteRenderer>();
-    std::shared_ptr<Sprite> bookSprite = std::make_shared<Sprite>();
-    bookSprite->Load("Assets/TempBook.png");
-    bookSR->SetSprite(bookSprite);
+    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook.png"));
     bookSR->billboard = true;
     bookSR->enabled = true;
     bookSR->sortingOrder = 100;
@@ -39,7 +37,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookInteract->actionText = "Pick up book";
     bookInteract->maxDistance = 2.5f;
     bookInteract->onInteract = [bookPuzzleObj, bookObj]() {
-        if (bookPuzzleObj->isReading) {
+        if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
             bookObj->active = false;
             std::cout << "Book Collected";
@@ -58,6 +56,8 @@ void PuzzleManager::BookDataInit()
     BookTextures[0] = AEGfxTextureLoad("Assets/TempBook.png");
     BookTextures[1] = AEGfxTextureLoad("Assets/TempBook.png");
     BookTextures[2] = AEGfxTextureLoad("Assets/TempBook.png");
+
+    AssetManager::GetTexture("Assets/UI/crosshair_default.png");
 
     std::string BookText[3] = { {"Book1"},{"Book2"},{"Book3"} };
 
