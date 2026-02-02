@@ -21,6 +21,7 @@ namespace Game
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
         m_canvas->SetReferenceResolution(1280.0f, 720.0f);
         m_canvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
+        m_canvas->SetSortOrder(100);
 
         // Create minimap in bottom-left corner
         m_minimap = m_canvas->CreateChild<UI::Minimap>();
@@ -40,6 +41,7 @@ namespace Game
         m_map->rectTransform.anchoredPosition = { 0.0f, 0.0f };
         m_map->rectTransform.sizeDelta = { m_mapWidth, m_mapHeight };
         m_map->visible = false;
+		m_map->SetRenderOrder(1000000); 
 		//m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
 		m_map->SetBorderColor(Engine::Color(0.f, 0.f, 0.f, 1.f)); // Set alpha to 0 if using texture
 		//m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));

@@ -6,6 +6,7 @@
 
 #include "Engine/Core/Component.hpp"
 #include "Engine/Input/KeyCode.hpp"
+#include "Engine/Graphics/IRenderer.hpp"
 #include "Interactable.hpp"
 
 // Forward declarations
@@ -57,7 +58,7 @@ public:
     
 private:
     Interactable* m_currentTarget = nullptr;
-    SpriteRenderer* m_currentTargetRenderer = nullptr;
+    IRenderer* m_currentTargetRenderer = nullptr;
     
     // UI elements (created and owned by this controller)
     UI::Canvas* m_canvas = nullptr;

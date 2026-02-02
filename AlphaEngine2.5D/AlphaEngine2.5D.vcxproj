@@ -20,6 +20,7 @@
     <ClCompile Include="Source\Engine\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
@@ -38,6 +39,8 @@
     <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
+    <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
     <ClCompile Include="Source\Engine\UI\Button.cpp" />
     <ClCompile Include="Source\Engine\UI\Canvas.cpp" />
     <ClCompile Include="Source\Engine\UI\Crosshair.cpp" />
@@ -66,6 +69,7 @@
     <!-- Engine Math -->
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
@@ -104,6 +108,7 @@
     <!-- Engine Scene -->
     <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
     <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
+    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
     <ClInclude Include="Source\Engine\UI\Button.hpp" />

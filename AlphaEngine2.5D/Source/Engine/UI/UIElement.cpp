@@ -118,9 +118,6 @@ namespace UI
         child->m_canvas = m_canvas;
         m_children.push_back(child);
         m_childrenSortDirty = true;
-
-        // Default renderOrder to parent's renderOrder + sibling index (creation order)
-        child->m_renderOrder = m_renderOrder + static_cast<s32>(m_children.size() - 1);
         
         child->SetDirty();
     }
@@ -207,10 +204,15 @@ namespace UI
         {
             std::stable_sort(m_children.begin(), m_children.end(),
                 [](const UIElement* a, const UIElement* b) {
-                    return a->GetRenderOrder() < b->GetRenderOrder();
+                    return a->GetGlobalRenderOrder() < b->GetGlobalRenderOrder();
                 });
             m_childrenSortDirty = false;
         }
+    }
+
+    s32 UIElement::GetGlobalRenderOrder() const
+    {
+        return m_renderOrder + (m_parent ? m_parent->GetGlobalRenderOrder() : 0);
     }
 
     void UIElement::SetAnchoredPosition(const AEVec2& pos)

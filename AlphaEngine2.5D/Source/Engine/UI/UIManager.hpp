@@ -83,6 +83,11 @@ namespace UI
         void Render();
 
         /**
+         * @brief Notify UIManager that canvases need to be sorted
+         */
+        void SetCanvasesSortDirty() { m_canvasesSortDirty = true; }
+
+        /**
          * @brief Create a new canvas
          * @return Pointer to the created canvas
          */
@@ -150,6 +155,9 @@ namespace UI
          * @brief Raycast across all canvases to find hit element
          */
         UIElement* RaycastAll(f32 worldX, f32 worldY) const;
+
+        bool m_canvasesSortDirty = true;
+        void SortCanvases();
     };
 
 } // namespace UI
