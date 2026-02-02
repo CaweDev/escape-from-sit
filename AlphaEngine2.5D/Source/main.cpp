@@ -28,7 +28,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // Initialize Alpha Engine
-    AESysInit(hInstance, nCmdShow, 1920, 720, 1, 60, false, NULL);
+    AESysInit(hInstance, nCmdShow, 1280, 720, 1, 60, false, NULL);
     AESysSetWindowTitle("Totally not Unity Engine. It's Alpha Engine!!!");
 
     // Initialize UI System
