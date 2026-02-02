@@ -11,7 +11,7 @@ public:
 	static void BookDataInit();
 	static std::vector<Book>Books;
 	static void Init();
-	static void CheckBookCollection(Engine::Vector3 playerPos);
+
 
 
 };

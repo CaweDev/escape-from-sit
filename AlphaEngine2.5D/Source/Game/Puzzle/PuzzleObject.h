@@ -14,15 +14,14 @@ struct Book {
 	std::string BookText;
 };
 
-class PuzzleObject : Engine::Component
+class PuzzleObject :public Engine::Component
 {
+public:
 	REQUIRE_COMPONENT(Engine::SpriteRenderer);
 	bool PuzzleCompleted;
 	Book Reference;
 	void Update() override;
 	bool isReading;
- 
-
 
 };
 
