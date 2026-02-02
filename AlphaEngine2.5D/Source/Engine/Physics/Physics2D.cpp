@@ -59,7 +59,7 @@ void Physics2D::FixedUpdate() {
         bool foundTileMapCollider = false;
         for (Collider2D* tmCollider : colliders) {
             TileMapCollider2D* tileMapCollider = dynamic_cast<TileMapCollider2D*>(tmCollider);
-            if (tileMapCollider && tileMapCollider->enabled && tileMapCollider->tileMap) {
+            if (tileMapCollider && tileMapCollider->enabled && tileMapCollider->tileMap && tileMapCollider->gameObject->active) {
                 newPos = tileMapCollider->ResolveMovement(currentPos, movement, radius);
                 foundTileMapCollider = true;
                 break;
@@ -78,7 +78,7 @@ void Physics2D::FixedUpdate() {
             rb->transform->position.y = newPos.y;
             
             for (Collider2D* other : colliders) {
-                if (!other || other == collider || !other->enabled) continue;
+                if (!other || other == collider || !other->enabled || !other->gameObject->active) continue;
                 if (other->gameObject == rb->gameObject) continue;
                 
                 // Layer-based collision filtering
