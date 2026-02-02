@@ -26,7 +26,7 @@ namespace Engine {
 	class TileMapRenderer : public IRenderer {
 	private:
 		// Rendering resolution constants
-		static constexpr int COLUMN_STEP = 1;
+		static constexpr int COLUMN_STEP = 8;
 		static constexpr int ROW_STEP = 16;
 		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
 
@@ -108,6 +108,7 @@ namespace Engine {
 			f32 screenY, screenY2;
 			f32 vTop, vBottom;
 			f32 fogFactor;
+			int fogKey; // Added for sorting-based batching
 		};
 
 		// Cached scanline data to avoid per-frame recalculation
@@ -122,11 +123,15 @@ namespace Engine {
 		int cachedScreenHeight = 0;
 		f32 cachedCamZ = -999.0f;
 		int cachedHorizon = -999;
+		f32 cachedFogDistance = -1.0f; // Track LUT validity
+		std::vector<f32> fogLUT;
+		std::vector<ColumnInfo> managedColumns; // Pre-allocated column buffer
 
 		void CreateColumnMesh();
 		
 		// Precompute scanline distances for floor/ceiling
 		void CacheScanlineDistances(int screenHeight, f32 camZ, int horizon);
+		void UpdateFogLUT(f32 fogDistance);
 
 		// Raycast helper
 		RaycastResult CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, f32 camZ, 

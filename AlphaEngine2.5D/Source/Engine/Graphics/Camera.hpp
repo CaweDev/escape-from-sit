@@ -28,6 +28,14 @@ public:
     /** Vertical rotation (pitch) for 2.5D dynamic horizon */
     f32 pitch = 0.0f;
 
+    /** Fog settings for distance-based darkening (global, affects all renderers) */
+    Color fogColor = Color(0.0f, 0.0f, 0.0f, 1.0f);  // Black by default
+    f32 fogDistance = 20.0f;   // Distance at which fog reaches maximum
+    f32 fogMinVisibility = 0.2f;  // Minimum visibility (prevents total blackout at distance)
+    f32 fogMaxVisibility = 1.0f;  // Maximum visibility (caps brightness at close range)
+    f32 fogPrecision = 200.0f;    // Precision for fog quantization (increments = 1.0 / fogPrecision)
+    bool fogEnabled = false;  // Disabled by default
+
     /** Static reference to main camera */
     static Camera* main;
 
