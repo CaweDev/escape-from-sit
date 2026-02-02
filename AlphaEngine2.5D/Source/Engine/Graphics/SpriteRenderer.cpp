@@ -15,7 +15,8 @@ namespace Engine {
 	}
 
 	void SpriteRenderer::SetSprite(std::shared_ptr<Sprite> newSprite) {
-		sprite = newSprite.get();
+
+		//sprite = newSprite.get();
 	}
 
 	void SpriteRenderer::SetSprite(Sprite* newSprite)
