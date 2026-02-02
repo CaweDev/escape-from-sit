@@ -25,6 +25,8 @@
 #include <string>
 #include <fstream>
 
+#include "Game/Puzzle/PuzzleManager.h"
+
 namespace Game {
 
     using namespace Engine;
@@ -302,6 +304,8 @@ namespace Game {
             }
 
             SwitchToPlayerCam();
+            PuzzleManager::BookDataInit();
+            PuzzleManager::Init();
         }
 
         void OnUpdate() override {

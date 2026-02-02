@@ -3,7 +3,6 @@
  * @brief Central registration of all game scenes
  */
 #pragma once
-
 #include "Engine/Scene/SceneManager.hpp"
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
 #include "Game/Scenes/UITestScene/UITestScene.hpp"
@@ -17,6 +16,7 @@ using namespace Engine;
 inline FPSScene fpsScene;
 inline UITestScene uiTestScene;
 inline InteractionDemoScene interactionDemoScene;
+
 
 /**
  * @brief Register all game scenes with the SceneManager

@@ -1,0 +1,16 @@
+#include"PuzzleObject.h"
+#include <vector>
+
+class PuzzleManager
+{
+public:
+	static std::vector<Book> allBooks;
+	static void CreatePuzzleObject(Book book);
+	static void BookDataInit();
+	static std::vector<Book>Books;
+	static void Init();
+	static void FreeManager();
+
+
+};
+
