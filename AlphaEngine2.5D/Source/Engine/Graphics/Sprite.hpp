@@ -20,8 +20,9 @@ public:
     ~Sprite();
 
     // Prevent copying (owns resources)
-    Sprite(const Sprite&) = delete;
-    Sprite& operator=(const Sprite&) = delete;
+    // Allow copying (creates new mesh, shares texture)
+    Sprite(const Sprite& other);
+    Sprite& operator=(const Sprite& other);
     
     // Allow moving
     Sprite(Sprite&& other) noexcept;

@@ -15,8 +15,13 @@ namespace Engine {
 	}
 
 	void SpriteRenderer::SetSprite(std::shared_ptr<Sprite> newSprite) {
-
-		//sprite = newSprite.get();
+		printf("Warning: SpriteRenderer::SetSprite(std::shared_ptr<Sprite>) is deprecated. Use raw pointer version instead.\n");
+		if (newSprite) {
+			sprite = new Sprite(*newSprite);
+		}
+		else {
+			sprite = nullptr;
+		}
 	}
 
 	void SpriteRenderer::SetSprite(Sprite* newSprite)

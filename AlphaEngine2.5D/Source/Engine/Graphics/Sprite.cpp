@@ -31,6 +31,23 @@ Sprite& Sprite::operator=(Sprite&& other) noexcept {
     return *this;
 }
 
+Sprite::Sprite(const Sprite& other) : texture(other.texture), mesh(nullptr) {
+    if (other.mesh) {
+        CreateQuadMesh();
+    }
+}
+
+Sprite& Sprite::operator=(const Sprite& other) {
+    if (this != &other) {
+        Unload();
+        texture = other.texture;
+        if (other.mesh) {
+            CreateQuadMesh();
+        }
+    }
+    return *this;
+}
+
 bool Sprite::Load(const std::string& filepath) {
     Unload();
     
