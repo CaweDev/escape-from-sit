@@ -64,6 +64,7 @@ namespace Game {
 
         case GuardState::Catch:
             std::cout << "\nYOU GOT CAUGHT. GAME OVER\n";
+			Engine::Application::Quit();
             break;
         }
 
