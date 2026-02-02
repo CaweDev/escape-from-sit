@@ -290,8 +290,7 @@ namespace Engine {
 			if (scanIdx >= (int)floorScanlines.size()) continue;
 			
 			f32 rowDist = floorScanlines[scanIdx].rowDist;
-			if (rowDist < 0) continue; // Invalid scanline
-
+			
 			int yNext = y + ROW_STEP;
 			bool yNextClamped = (yNext > screenHeight);
 			if (yNextClamped) yNext = screenHeight;
@@ -306,8 +305,18 @@ namespace Engine {
 				rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
 					? floorScanlines[scanIdxNext].rowDist 
 					: rowDist;
-				if (rowDistNext < 0) rowDistNext = rowDist;
 			}
+
+			// Fix for black gap at horizon:
+			// If current rowDist is invalid (at horizon where p=0), use rowDistNext as fallback.
+			// This mirrors the RenderCeiling logic which uses the close distance for the far invalid edge.
+			if (rowDist < 0) {
+				if (rowDistNext > 0) rowDist = rowDistNext;
+				else continue; // Both invalid, skip
+			}
+			
+			// Ensure rowDistNext is valid (if it fell back to an originally invalid rowDist)
+			if (rowDistNext < 0) rowDistNext = rowDist;
 
 			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
 			f32 aeY2 = screenHeight / 2.0f - (f32)y;
