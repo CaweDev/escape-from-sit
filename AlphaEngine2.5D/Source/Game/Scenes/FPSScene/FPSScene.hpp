@@ -149,18 +149,10 @@ namespace Game {
             renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
             renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
             renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+            renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
+            renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
+            renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
 
-            {
-                auto skySprite = std::make_shared<Sprite>();
-                skySprite->Load("Assets/Tilemap/modern_school_ceiling.png");
-                auto groundSprite = std::make_shared<Sprite>();
-                groundSprite->Load("Assets/Tilemap/modern_school_floor.png");
-                auto wallSprite = std::make_shared<Sprite>();
-                wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
-                renderer->SetCeilingSprite(skySprite);
-                renderer->SetFloorSprite(groundSprite);
-                renderer->SetWallSprite(wallSprite);
-            }
 
             auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
             tileMapCollider->minHeight = 0.0f;
@@ -202,11 +194,9 @@ namespace Game {
             exit->transform->position = exitPos;
 
             auto exitSR = exit->AddComponent<SpriteRenderer>();
-            auto exitSprite = std::make_shared<Sprite>();
-            exitSprite->Load("Assets/PlanetTexture.png");
-            exitSR->SetSprite(exitSprite);
+            exitSR->SetSprite(AssetManager::GetSprite("Assets/PlanetTexture.png"));
             exitSR->billboard = true;
-            exitSR->sortingOrder = 95;
+            //exitSR->sortingOrder = 95;
 
             
             auto enemy = CreateGameObject("SecurityGuard");
@@ -232,23 +222,21 @@ namespace Game {
             enemyCol->maxHeight = 2.0f;
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
-            auto enemySprite = std::make_shared<Sprite>();
-            enemySprite->Load("Assets/Brocsama.png");
-            enemySR->SetSprite(enemySprite);
+            enemySR->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
             playerHUD->AddEnemyTransform(enemy->transform);
             
-            auto powerup1 = std::make_shared<Sprite>(); powerup1->Load("Assets/powerup1.png");
-            auto powerup2 = std::make_shared<Sprite>(); powerup2->Load("Assets/powerup2.png");
-            auto powerup3 = std::make_shared<Sprite>(); powerup3->Load("Assets/powerup3.png");
-            auto powerup4 = std::make_shared<Sprite>(); powerup4->Load("Assets/powerup4.png");
-            auto powerup5 = std::make_shared<Sprite>(); powerup5->Load("Assets/powerup5.png");
+            auto powerup1 = AssetManager::GetSprite("Assets/powerup1.png");
+            auto powerup2 = AssetManager::GetSprite("Assets/powerup2.png");
+            auto powerup3 = AssetManager::GetSprite("Assets/powerup3.png");
+            auto powerup4 = AssetManager::GetSprite("Assets/powerup4.png");
+            auto powerup5 = AssetManager::GetSprite("Assets/powerup5.png");
 
             const float PU_Z = 0.20f;
             const int PU_ORDER = 300;
 
-            auto SpawnPU = [&](char const* name, float x, float y, std::shared_ptr<Sprite> spr) {
+            auto SpawnPU = [&](char const* name, float x, float y, Sprite* spr) {
                 auto pu = CreateGameObject(name);
                 pu->transform->position = Vector3(x, y, PU_Z);
                 pu->transform->localScale = Vector2(0.25f, 0.25f);
@@ -270,8 +258,7 @@ namespace Game {
             SpawnPU("PU6", 1.5f, 3.5f, powerup5);
 
             
-            auto cctvSprite = std::make_shared<Sprite>();
-            cctvSprite->Load("Assets/cctv.png");
+			auto cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
 
             const float CCTV_Z = 0.85f;
             const float EPS = 0.02f;
@@ -377,6 +364,7 @@ namespace Game {
                 gameEnded = true;
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
+				Application::Quit();
             }
         }
     };

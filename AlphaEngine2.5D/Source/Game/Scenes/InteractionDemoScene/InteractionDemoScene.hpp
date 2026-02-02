@@ -82,16 +82,9 @@ public:
         renderer->floorColor = Color(0.3f, 0.3f, 0.35f, 1.0f);
 
         // Load sprites (using existing assets or fallback to colored sprites)
-        wallSprite = std::make_shared<Sprite>();
-        wallSprite->Load("Assets/Tilemap/modern_school_wall.png");
-        floorSprite = std::make_shared<Sprite>();
-        floorSprite->Load("Assets/Tilemap/modern_school_floor.png");
-        ceilingSprite = std::make_shared<Sprite>();
-        ceilingSprite->Load("Assets/Tilemap/modern_school_ceiling.png");
-
-        renderer->SetWallSprite(wallSprite);
-        renderer->SetFloorSprite(floorSprite);
-        renderer->SetCeilingSprite(ceilingSprite);
+        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
+        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
+        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
 
         auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
         tileMapCollider->minHeight = 0.0f;

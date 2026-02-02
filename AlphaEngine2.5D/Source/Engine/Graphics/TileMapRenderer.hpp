@@ -53,41 +53,41 @@ namespace Engine {
 		f32 GetSortingKey() const override { return FLT_MAX; }
 
 		// Type-indexed sprite setters (use int for tile type ID)
-		void SetWallSprite(int tileType, std::shared_ptr<Sprite> sprite) { wallSprites[tileType] = sprite; }
-		void SetCeilingSprite(int tileType, std::shared_ptr<Sprite> sprite) { ceilingSprites[tileType] = sprite; }
-		void SetFloorSprite(int tileType, std::shared_ptr<Sprite> sprite) { floorSprites[tileType] = sprite; }
+		void SetWallSprite(int tileType, Sprite* sprite) { wallSprites[tileType] = sprite; }
+		void SetCeilingSprite(int tileType, Sprite* sprite) { ceilingSprites[tileType] = sprite; }
+		void SetFloorSprite(int tileType, Sprite* sprite) { floorSprites[tileType] = sprite; }
 
 		// Convenience setters for default sprite (type 1)
-		void SetWallSprite(std::shared_ptr<Sprite> sprite) { wallSprites[1] = sprite; }
-		void SetCeilingSprite(std::shared_ptr<Sprite> sprite) { ceilingSprites[1] = sprite; }
-		void SetFloorSprite(std::shared_ptr<Sprite> sprite) { floorSprites[1] = sprite; }
+		void SetWallSprite(Sprite* sprite) { wallSprites[1] = sprite; }
+		void SetCeilingSprite(Sprite* sprite) { ceilingSprites[1] = sprite; }
+		void SetFloorSprite(Sprite* sprite) { floorSprites[1] = sprite; }
 
 		// Type-indexed sprite getters
-		std::shared_ptr<Sprite> GetWallSprite(int tileType) const {
+		Sprite* GetWallSprite(int tileType) const {
 			auto it = wallSprites.find(tileType);
 			return (it != wallSprites.end()) ? it->second : nullptr;
 		}
-		std::shared_ptr<Sprite> GetCeilingSprite(int tileType) const {
+		Sprite* GetCeilingSprite(int tileType) const {
 			auto it = ceilingSprites.find(tileType);
 			return (it != ceilingSprites.end()) ? it->second : nullptr;
 		}
-		std::shared_ptr<Sprite> GetFloorSprite(int tileType) const {
+		Sprite* GetFloorSprite(int tileType) const {
 			auto it = floorSprites.find(tileType);
 			return (it != floorSprites.end()) ? it->second : nullptr;
 		}
 
 		// Convenience getters for default sprite (type 1)
-		std::shared_ptr<Sprite> GetWallSprite() const { return GetWallSprite(1); }
-		std::shared_ptr<Sprite> GetCeilingSprite() const { return GetCeilingSprite(1); }
-		std::shared_ptr<Sprite> GetFloorSprite() const { return GetFloorSprite(1); }
+		Sprite* GetWallSprite() const { return GetWallSprite(1); }
+		Sprite* GetCeilingSprite() const { return GetCeilingSprite(1); }
+		Sprite* GetFloorSprite() const { return GetFloorSprite(1); }
 
 	private:
 		AEGfxVertexList* columnMesh = nullptr;
 
 		// Maps from tile type ID to sprite
-		std::unordered_map<int, std::shared_ptr<Sprite>> wallSprites;
-		std::unordered_map<int, std::shared_ptr<Sprite>> ceilingSprites;
-		std::unordered_map<int, std::shared_ptr<Sprite>> floorSprites;
+		std::unordered_map<int, Sprite*> wallSprites;
+		std::unordered_map<int, Sprite*> ceilingSprites;
+		std::unordered_map<int, Sprite*> floorSprites;
 
 		// Helper struct for raycast result
 		struct RaycastResult {
