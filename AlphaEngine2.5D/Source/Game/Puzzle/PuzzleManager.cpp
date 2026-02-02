@@ -14,7 +14,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     auto enemy = SceneManager::GetActiveScene()->CreateGameObject("Book");
     enemy->transform->position = book.BookPosition;
     enemy->transform->rotation = 0.0f;
-    enemy->transform->localScale = Vector2(0.2f, 0.2f);
+    enemy->transform->localScale = Vector2(0.8f, 0.8f);
 
     // Enemy collider (static body)
     auto enemyRb = enemy->AddComponent<Rigidbody2D>();
@@ -28,7 +28,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     // Enemy sprite
     auto enemySR = enemy->AddComponent<SpriteRenderer>();
     std::shared_ptr<Sprite> enemySprite = std::make_shared<Sprite>();
-    enemySprite->Load("Assets/TempBook.png", 500, 500);
+    enemySprite->Load("Assets/TempBook.png");
     enemySR->SetSprite(enemySprite);
     enemySR->billboard = true;
     enemySR->enabled = true;
@@ -46,7 +46,7 @@ void PuzzleManager::BookDataInit()
 
     std::string BookText[3] = { {"Book1"},{"Book2"},{"Book3"} };
 
-    Engine::Vector3 BookCoord[3] = { {1.5f, 1.5f, 0.4F} ,{10.0f, 0.0f, 5.0f},{10.0f, 0.0f, 5.0f} };
+    Engine::Vector3 BookCoord[3] = { {3.5f, 3.5f, 0.0f} ,{9.5f, 37.5f, 0.1f},{105.5f, 38.5f, 0.2f} };
 
 
     for (int i{}; i < 3; ++i) {
@@ -72,3 +72,37 @@ void PuzzleManager::Init()
 
 }
    
+
+void PuzzleManager::CheckBookCollection(Engine::Vector3 playerPos) {
+    // 1. Check if the player pressed the "Interact" key (e.g., 'E')
+    // Replace 'AE_VK_E' with your specific engine's key code if different
+    if (AEInputCheckTriggered(AEVK_E)) {
+
+        // 2. Loop through all books to see if we are close to one
+        for (int i = 0; i < allBooks.size(); ++i) {
+            Book& book = allBooks[i];
+
+            // Skip if already collected
+            if (book.BookCollected) continue;
+
+            // 3. Calculate distance
+            float dist = GetDistance(playerPos, book.BookPosition);
+
+            // 4. Check if close enough (e.g., within 2.5 units)
+            if (dist < 2.5f) {
+                // --- COLLECT THE BOOK ---
+                book.BookCollected = true;
+
+                // Triggers your UI Popup (assuming you have these variables)
+                isReading = true;
+                currentPopupText = book.BookText;
+
+                // Optional: Print to console for debugging
+                printf("Collected Book ID: %d\n", book.BookId);
+
+                // Stop checking (prevents picking up 2 books at once)
+                break;
+            }
+        }
+    }
+}
