@@ -52,7 +52,7 @@ namespace Game {
 
         std::vector<CCTVCamera*> cctvSensors;
 
-        Vector2 exitPos = Vector2(14.5f, 1.5f);
+        Vector2 exitPos = Vector2(122.5f, 38.5f);
         float winRadius = 0.6f;
         bool printedWin = false;
 
@@ -104,6 +104,7 @@ namespace Game {
             std::cout << "[Panel] creating" << std::endl;
 
             modalCanvas = UI::UIManager::GetInstance()->CreateCanvas();
+            modalCanvas->SetSortOrder(1000);
             modalCanvas->SetReferenceResolution(1280.f, 720.f);
             modalCanvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
 
