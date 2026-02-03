@@ -58,7 +58,13 @@ namespace UI
         if (!transform) return;
         m_enemyTransforms.push_back(transform);
     }
-
+    void Minimap::AddCCTVTransform(Engine::Transform* transform)
+    {
+        if (!transform) return;
+        m_cctvTransforms.push_back(transform);
+    }
+    void Minimap::ClearCCTVs() { m_cctvTransforms.clear(); }
+    void Minimap::SetCCTVSprites(Engine::Sprite* sprite) { m_cctvSprite = sprite; }
     /**
      * @brief Generates a clipped vertex list for a quad using the Sutherland-Hodgman algorithm.
      * 

@@ -36,7 +36,7 @@ namespace Game {
         FPSScene() : Scene("FPSScene") {}
 
         bool gameEnded = false;
-
+        
         FPSController* playerController = nullptr;
         Player* playerData = nullptr;
         Transform* playerTf = nullptr;
@@ -259,9 +259,7 @@ namespace Game {
 
             Sprite* cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
 
-            const int DESIRED_CCTVS = 10;
-
-            auto cams = GenerateCCTVs(map, mapWidth, mapHeight, 10, 7, 10.0f, 0.85f, 0.45f);
+            auto cams = GenerateCCTVs(map, mapWidth, mapHeight, 20, 5, 10.0f, 0.85f, 0.45f);
 
 
             for (int i = 0; i < (int)cams.size(); ++i)
@@ -276,7 +274,7 @@ namespace Game {
                 camObj->transform->position = cams[i].pos;
                 camObj->transform->rotation = cams[i].rot;
                 camObj->transform->localScale = Vector2(0.25f, 0.25f);
-
+                playerHUD->AddCCTVTransform(camObj->transform);
                 auto sr = camObj->AddComponent<SpriteRenderer>();
                 sr->SetSprite(cctvSprite);
                 sr->billboard = true;
@@ -290,8 +288,9 @@ namespace Game {
                 sensor->maxRange = 6.0f;
                 sensor->coneWidth = 70.0f;
                 sensor->needLOS = true;
-
+                
                 cctvSensors.push_back(sensor);
+                
             }
 
 
@@ -312,21 +311,43 @@ namespace Game {
                 pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-            if (Input::GetKeyDown(KeyCode::Alpha1)) ToggleCCTV(0);
-            if (Input::GetKeyDown(KeyCode::Alpha2)) ToggleCCTV(1);
-            if (Input::GetKeyDown(KeyCode::Alpha3)) ToggleCCTV(2);
-            if (Input::GetKeyDown(KeyCode::Alpha4)) ToggleCCTV(3);
-            if (Input::GetKeyDown(KeyCode::Alpha5)) ToggleCCTV(4);
-            if (Input::GetKeyDown(KeyCode::Alpha6)) ToggleCCTV(5);
-            if (Input::GetKeyDown(KeyCode::Alpha7)) ToggleCCTV(9);
-            if (Input::GetKeyDown(KeyCode::Alpha8)) ToggleCCTV(10);
-            if (Input::GetKeyDown(KeyCode::Alpha9)) ToggleCCTV(11);
+            int camCount = (int)cctvViewPos.size();
+            if (camCount > 0)
+            {
+                
+                if (Input::GetKeyDown(KeyCode::DownArrow))
+                {
+                    if (activeCCTV < 0)
+                        activeCCTV = 0;
+                    else
+                        activeCCTV = (activeCCTV + 1) % camCount;
 
-            if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
+                    SwitchToCCTV(activeCCTV);
+                }
+
+       
+                if (Input::GetKeyDown(KeyCode::UpArrow))
+                {
+                    if (activeCCTV < 0)
+                        activeCCTV = camCount - 1;
+                    else
+                        activeCCTV = (activeCCTV - 1 + camCount) % camCount;
+
+                    SwitchToCCTV(activeCCTV);
+                }
+            }
+
+  
+            if (Input::GetKeyDown(KeyCode::Alpha0))
+            {
+                SwitchToPlayerCam();
+            }
+
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
+           
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;

@@ -6,6 +6,7 @@
 #include "PlayerHUD.hpp"
 #include "Engine/UI/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 namespace Game
 {
@@ -48,6 +49,16 @@ namespace Game
         for (auto* tf : m_enemyTransforms)
         {
             if (m_minimap) m_minimap->AddEnemyTransform(tf);
+        }
+
+        Engine::Sprite* cctvSpr = Engine::AssetManager::GetSprite("Assets/cctv.png");
+        if (m_minimap) m_minimap->SetCCTVSprites(cctvSpr);
+        if (m_map)     m_map->SetCCTVSprites(cctvSpr);
+
+        for (auto* tf : m_cctvTransforms)
+        {
+            if (m_minimap) m_minimap->AddCCTVTransform(tf);
+            if (m_map)     m_map->AddCCTVTransform(tf);
         }
 		m_map->SetRenderOrder(1000000); 
 		//m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
@@ -128,6 +139,21 @@ namespace Game
         }
     }
 
+    void PlayerHUD::AddCCTVTransform(Engine::Transform* cctvTransform)
+    {
+        if (!cctvTransform) return;
+        m_cctvTransforms.push_back(cctvTransform);
+        if (m_minimap) m_minimap->AddCCTVTransform(cctvTransform);
+        if (m_map)     m_map->AddCCTVTransform(cctvTransform);
+    }
+
+    void PlayerHUD::ClearCCTVs()
+    {
+        m_cctvTransforms.clear();
+        if (m_minimap) m_minimap->ClearCCTVs();
+        if (m_map)     m_map->ClearCCTVs();
+    }
+
     void PlayerHUD::ToggleMap()
     {
         m_mapVisible = !m_mapVisible;
@@ -147,7 +173,7 @@ namespace Game
             m_map->visible = true;
         }
     }
-
+    
     void PlayerHUD::HideMap()
     {
         m_mapVisible = false;

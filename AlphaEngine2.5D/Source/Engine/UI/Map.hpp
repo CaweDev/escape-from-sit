@@ -10,6 +10,7 @@
 #include "../Graphics/Color.hpp"
 #include "../Graphics/Texture2D.hpp"
 #include "../Math/Mathf.hpp"
+#include "Engine/Graphics/Sprite.hpp"
 #include "AEEngine.h"
 #include <vector>
 namespace UI
@@ -35,6 +36,7 @@ namespace UI
         Engine::Color m_backgroundColor; // Background panel color
         Engine::Color m_borderColor;     // Color for the decorative border frame
         Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
         // --- Configuration ---
         f32 m_borderThickness = 0.0f;    // Thickness of the border frame in pixels
 
@@ -43,6 +45,9 @@ namespace UI
         Engine::Transform* m_playerTransform = nullptr;   // Player tracking
         Texture2D* m_texture = nullptr;                  // Optional background texture
         std::vector<Engine::Transform*> m_enemyTransforms;
+        std::vector<Engine::Transform*> m_cctvTransforms;
+        Engine::Sprite* m_cctvSprite = nullptr;
+
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh
 
@@ -96,7 +101,11 @@ namespace UI
 
         void SetBorderColor(const Engine::Color& color) { m_borderColor = color; }
         const Engine::Color& GetBorderColor() const { return m_borderColor; }
+        void AddCCTVTransform(Engine::Transform* transform);
+        void ClearCCTVs();
+        void SetCCTVSprites(Engine::Sprite* sprite);
 
+       
         // Getter and Setter for Border Thickness
         void SetBorderThickness(f32 thickness) { m_borderThickness = thickness; }
         f32 GetBorderThickness() const { return m_borderThickness; }
@@ -111,7 +120,7 @@ namespace UI
          * @brief Draw a single colored quad
          */
         void DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color);
-
+        void DrawQuadSprite(f32 x, f32 y, f32 width, f32 height,Engine::Sprite* sprite,const Engine::Color& color);
         /**
          * @brief Draw a single textured quad
          */

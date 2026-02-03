@@ -41,6 +41,7 @@ namespace Game
 
         bool m_mapVisible = false;
         std::vector<Engine::Transform*> m_enemyTransforms;
+        std::vector<Engine::Transform*> m_cctvTransforms;
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
@@ -76,6 +77,11 @@ namespace Game
        
         UI::Minimap* GetMinimap() const { return m_minimap; }
         void AddEnemyTransform(Engine::Transform* enemyTransform);
+
+
+        void AddCCTVTransform(Engine::Transform* cctvTransform);
+        void ClearCCTVs();
+
 
         /**
          * @brief Toggle the full map visibility

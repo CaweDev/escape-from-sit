@@ -48,7 +48,7 @@ namespace UI
         Engine::Color m_backgroundColor; // Background panel color (visible behind tiles)
         Engine::Color m_borderColor;     // Color for the decorative border frame
                       
-        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);;
+        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); ;
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
@@ -59,6 +59,8 @@ namespace UI
         Engine::TileMap* m_tileMap = nullptr;             // Pointer to the level data
         Engine::Transform* m_playerTransform = nullptr;   // Pointer to player transform for tracking
         std::vector<Engine::Transform*> m_enemyTransforms;
+        std::vector<Engine::Transform*> m_cctvTransforms;
+        Engine::Sprite* m_cctvSprite = nullptr;
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh for simple draws
 
@@ -106,7 +108,9 @@ namespace UI
 
         void SetEnemyColor(const Engine::Color& color) { m_enemyColor = color; }
         const Engine::Color& GetEnemyColor() const { return m_enemyColor; }
-
+        void AddCCTVTransform(Engine::Transform* transform);
+        void ClearCCTVs();
+        void SetCCTVSprites(Engine::Sprite* sprite);
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }
         const Engine::Color& GetWallColor() const { return m_wallColor; }
