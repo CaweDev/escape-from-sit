@@ -64,7 +64,6 @@ namespace Game {
 
         case GuardState::Catch:
             std::cout << "\nYOU GOT CAUGHT. GAME OVER\n";
-			Engine::Application::Quit();
             break;
         }
 
@@ -113,6 +112,9 @@ namespace Game {
     void SecurityGuard::ChaseUpdate() {
         if (IsCaught()) {
             SetState(GuardState::Catch);
+            if (playerData) { // update player state forgame over ui check
+                playerData->Catch();
+            }
             return;
         }
 
