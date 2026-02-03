@@ -56,6 +56,7 @@
     <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
     <ClCompile Include="Source\Engine\UI\VerticalLayoutGroup.cpp" />
     <ClCompile Include="Source\Game\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Source\Engine\UI\UIManager.hpp" />
     <ClInclude Include="Source\Engine\UI\VerticalLayoutGroup.hpp" />
     <ClInclude Include="Source\Game\CCTVCamera.hpp" />
+    <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />

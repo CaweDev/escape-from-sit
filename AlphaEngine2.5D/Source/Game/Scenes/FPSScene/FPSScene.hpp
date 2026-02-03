@@ -8,24 +8,24 @@
 #include "Engine/Physics/CircleCollider2D.hpp"
 #include "Engine/Physics/TileMapCollider2D.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 #include "Game/FPSController.hpp"
 #include "Game/Player.hpp"
 #include "Game/SecurityGuard.hpp"
 #include "Game/CCTVCamera.hpp"
 #include "Game/UI/GameScene/PlayerHUD.hpp"
+#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/CCTVPlacement.hpp"
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
 
 #include <iostream>
 #include <vector>
-#include <memory>
 #include <cmath>
 #include <string>
 #include <fstream>
-
-#include "Game/Puzzle/PuzzleManager.h"
 
 namespace Game {
 
@@ -42,6 +42,7 @@ namespace Game {
         Transform* playerTf = nullptr;
         Camera* playerCam = nullptr;
         SecurityGuard* guardComp = nullptr;
+
         Vector3 playerViewPos{};
         float playerViewRot = 0.0f;
 
@@ -58,7 +59,12 @@ namespace Game {
         std::vector<GameObject*> powerUps;
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
+        struct CCTVInfo { Vector3 pos; float rotDeg; };
 
+  
+
+        
+      
         void SwitchToPlayerCam() {
             activeCCTV = -1;
             if (!playerTf) return;
@@ -81,14 +87,12 @@ namespace Game {
             std::cout << "\n[VIEW] CCTV " << (idx + 1) << "\n";
         }
 
-        
         void ToggleCCTV(int idx) {
             if (activeCCTV == idx) SwitchToPlayerCam();
             else SwitchToCCTV(idx);
         }
 
         void OnLoad() override {
-         
 
             std::vector<std::string> mapRows;
             {
@@ -100,7 +104,6 @@ namespace Game {
 
                 std::string line;
                 while (std::getline(file, line)) {
-                
                     if (!line.empty() && line.back() == '\r') line.pop_back();
                     if (!line.empty()) mapRows.push_back(line);
                 }
@@ -123,12 +126,13 @@ namespace Game {
             }
 
             std::cout << "Loaded map.txt: " << mapWidth << " x " << mapHeight << "\n";
+
             std::vector<int> worldMap(mapWidth * mapHeight, 0);
             for (int y = 0; y < mapHeight; ++y) {
                 for (int x = 0; x < mapWidth; ++x) {
                     char c = mapRows[y][x];
                     int tileValue = 0;
-                    
+
                     if (c == '0') tileValue = 0;       // Empty
                     else if (c == '1') tileValue = 1;  // Wall
                     else if (c == 'D') tileValue = 10; // Door1
@@ -136,31 +140,29 @@ namespace Game {
                     else if (c == 'F') tileValue = 12; // Door3
                     else if (c == 'G') tileValue = 13; // Door4
                     else tileValue = c - '0';          // Fallback for other digits
-                    
+
                     worldMap[y * mapWidth + x] = tileValue;
                 }
             }
 
-
             auto world = CreateGameObject("World");
             auto map = world->AddComponent<TileMap>();
-            map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);  // <-- 124, 43
+            map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);
 
             auto renderer = world->AddComponent<TileMapRenderer>();
             renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
             renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
             renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
             renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+
             renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
             renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
             renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
-
 
             auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
             tileMapCollider->minHeight = 0.0f;
             tileMapCollider->maxHeight = 3.0f;
 
-            
             auto player = CreateGameObject("Player");
             playerCam = player->AddComponent<Camera>();
 
@@ -177,11 +179,9 @@ namespace Game {
             playerData = player->AddComponent<Player>();
             playerTf = player->transform;
 
-            // Add PlayerHUD to display minimap and full map
             auto playerHUD = player->AddComponent<PlayerHUD>();
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
-           
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -198,9 +198,7 @@ namespace Game {
             auto exitSR = exit->AddComponent<SpriteRenderer>();
             exitSR->SetSprite(AssetManager::GetSprite("Assets/PlanetTexture.png"));
             exitSR->billboard = true;
-            //exitSR->sortingOrder = 95;
 
-            
             auto enemy = CreateGameObject("SecurityGuard");
             enemy->transform->position = Vector2(5.5f, 5.5f);
 
@@ -212,11 +210,10 @@ namespace Game {
             guard->chaseSpeed = 2.4f;
             guardComp = guard;
 
-
             auto enemyRb = enemy->AddComponent<Rigidbody2D>();
             enemyRb->bodyType = RigidbodyType2D::Dynamic;
-            enemyRb->gravityScale = 0.0f;  // No gravity for AI movement
-            enemyRb->drag = 0.0f;          // SecurityGuard controls velocity directly
+            enemyRb->gravityScale = 0.0f;
+            enemyRb->drag = 0.0f;
 
             auto enemyCol = enemy->AddComponent<CircleCollider2D>();
             enemyCol->radius = 0.3f;
@@ -227,13 +224,14 @@ namespace Game {
             enemySR->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
+
             playerHUD->AddEnemyTransform(enemy->transform);
-            
-            auto powerup1 = AssetManager::GetSprite("Assets/powerup1.png");
-            auto powerup2 = AssetManager::GetSprite("Assets/powerup2.png");
-            auto powerup3 = AssetManager::GetSprite("Assets/powerup3.png");
-            auto powerup4 = AssetManager::GetSprite("Assets/powerup4.png");
-            auto powerup5 = AssetManager::GetSprite("Assets/powerup5.png");
+
+            Sprite* powerup1 = AssetManager::GetSprite("Assets/powerup1.png");
+            Sprite* powerup2 = AssetManager::GetSprite("Assets/powerup2.png");
+            Sprite* powerup3 = AssetManager::GetSprite("Assets/powerup3.png");
+            Sprite* powerup4 = AssetManager::GetSprite("Assets/powerup4.png");
+            Sprite* powerup5 = AssetManager::GetSprite("Assets/powerup5.png");
 
             const float PU_Z = 0.20f;
             const int PU_ORDER = 300;
@@ -259,26 +257,18 @@ namespace Game {
             SpawnPU("PU5", 14.5f, 1.5f, powerup5);
             SpawnPU("PU6", 1.5f, 3.5f, powerup5);
 
-            
-			auto cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
+            Sprite* cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
 
-            const float CCTV_Z = 0.85f;
-            const float EPS = 0.02f;
+            const int DESIRED_CCTVS = 10;
 
-            struct CCTVInfo { Vector3 pos; float rot; };
-            CCTVInfo cams[6] = {
-                { Vector3(1.0f + EPS,  2.4f, CCTV_Z),   0.0f   },
-                { Vector3(1.0f + EPS,  9.4f, CCTV_Z),   0.0f   },
-                { Vector3(15.0f - EPS, 2.4f, CCTV_Z), 180.0f   },
-                { Vector3(15.0f - EPS, 9.4f, CCTV_Z), 180.0f   },
-                { Vector3(5.5f,  1.0f + EPS, CCTV_Z), 270.0f   },
-                { Vector3(10.5f, 1.0f + EPS, CCTV_Z), 270.0f   }
-            };
+            auto cams = GenerateCCTVs(map, mapWidth, mapHeight, 10, 7, 10.0f, 0.85f, 0.45f);
 
-            for (int i = 0; i < 6; ++i) {
-                
+
+            for (int i = 0; i < (int)cams.size(); ++i)
+            {
                 Vector3 view = cams[i].pos;
-                view.z = 1.6f; 
+                view.z = 1.6f;
+
                 cctvViewPos.push_back(view);
                 cctvViewRot.push_back(cams[i].rot);
 
@@ -300,17 +290,18 @@ namespace Game {
                 sensor->maxRange = 6.0f;
                 sensor->coneWidth = 70.0f;
                 sensor->needLOS = true;
+
                 cctvSensors.push_back(sensor);
             }
 
+
             SwitchToPlayerCam();
+
             PuzzleManager::BookDataInit();
             PuzzleManager::Init();
         }
 
         void OnUpdate() override {
-         
-            std::cout << '\n' << Camera::main->transform->position.x << "," << Camera::main->transform->position.y << "  \n";
 
             powerUpTime += Engine::Time::deltaTime;
             const float floatAmplitude = 0.15f;
@@ -321,42 +312,29 @@ namespace Game {
                 pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-      
             if (Input::GetKeyDown(KeyCode::Alpha1)) ToggleCCTV(0);
             if (Input::GetKeyDown(KeyCode::Alpha2)) ToggleCCTV(1);
             if (Input::GetKeyDown(KeyCode::Alpha3)) ToggleCCTV(2);
             if (Input::GetKeyDown(KeyCode::Alpha4)) ToggleCCTV(3);
             if (Input::GetKeyDown(KeyCode::Alpha5)) ToggleCCTV(4);
             if (Input::GetKeyDown(KeyCode::Alpha6)) ToggleCCTV(5);
+            if (Input::GetKeyDown(KeyCode::Alpha7)) ToggleCCTV(9);
+            if (Input::GetKeyDown(KeyCode::Alpha8)) ToggleCCTV(10);
+            if (Input::GetKeyDown(KeyCode::Alpha9)) ToggleCCTV(11);
+
             if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
-
-         
-
-            for (auto* s : cctvSensors) {
-                if (s && s->hasLastSeen) {
-                    std::cout << "\r[CCTV " << s->id << "] LastSeenTile=("
-                        << (int)s->lastSeenTile.x << "," << (int)s->lastSeenTile.y << ")   "
-                        << std::flush;
-                    break;
-                }
-            }
-
-
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
-      
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
 
-            if(guardComp) {
+            if (guardComp) {
                 for (auto* s : cctvSensors) {
                     if (s && s->hasLastSeen) {
                         guardComp->OnCCTVSpotted(s->lastSeenWorld);
-
-                        // consume so it triggers once per detection
                         s->hasLastSeen = false;
                         break;
                     }
@@ -368,7 +346,7 @@ namespace Game {
                 gameEnded = true;
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
-				Application::Quit();
+                Application::Quit();
             }
         }
     };
