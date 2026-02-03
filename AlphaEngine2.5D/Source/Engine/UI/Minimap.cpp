@@ -378,6 +378,30 @@ namespace UI
         f32 playerSize = tileSize * 0.8f;
         DrawQuadClipped(mapCenterX, mapCenterY, playerSize, playerSize, 0.0f, m_playerColor, m_playerSprite.get());
 
+        f32 cctvSize = tileSize * 0.55f;
+
+        for (auto* cctvTf : m_cctvTransforms)
+        {
+            if (!cctvTf) continue;
+
+            f32 dxW = cctvTf->position.x - playerTileX;
+            f32 dyW = cctvTf->position.y - playerTileY;
+
+            f32 offX = dxW * tileSize;
+            f32 offY = dyW * tileSize;
+
+            f32 rotatedX = offX * s - offY * c;
+            f32 rotatedY = offX * c + offY * s;
+
+            DrawQuadClipped(mapCenterX + rotatedX,
+                mapCenterY + rotatedY,
+                cctvSize,
+                cctvSize,
+                0.0f,
+                m_cctvColor,
+                m_cctvSprite);
+        }
+
         f32 enemySize = tileSize * 0.6f;
         for (auto* enemyTf : m_enemyTransforms)
         {

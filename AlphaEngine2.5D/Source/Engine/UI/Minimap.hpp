@@ -48,7 +48,8 @@ namespace UI
         Engine::Color m_backgroundColor; // Background panel color (visible behind tiles)
         Engine::Color m_borderColor;     // Color for the decorative border frame
                       
-        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); ;
+        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); 
+        Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); ;
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
