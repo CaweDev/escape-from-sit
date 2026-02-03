@@ -9,21 +9,29 @@ namespace Game {
 		return d * 3.1415926f / 180.0f;
 	}
 
-	bool CCTVCamera::InFov(float dx, float dy)const {
+	bool CCTVCamera::InFov(float dx, float dy) const
+	{
 		float camRad = DegToRad(transform->rotation);
 		float fx = std::cos(camRad);
 		float fy = std::sin(camRad);
 
 		float len = std::sqrt(dx * dx + dy * dy);
-		if (len <= 0.00001f) {
-			return true;
-		}
+		if (len <= 0.00001f) return true;
+
+		
 		float tx = dx / len;
 		float ty = dy / len;
 
+	
 		float dot = fx * tx + fy * ty;
 		float halfFovRad = DegToRad(coneWidth * 0.5f);
 		float cosHalfFov = std::cos(halfFovRad);
+
+		float side = std::fabs(-fy * dx + fx * dy); 
+		const float walkwayHalfWidth = 0.8f;       
+
+		if (side <= walkwayHalfWidth) return true;
+
 		return dot >= cosHalfFov;
 	}
 

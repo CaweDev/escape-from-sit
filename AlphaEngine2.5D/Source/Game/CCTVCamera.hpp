@@ -18,8 +18,8 @@ namespace Game {
 		int id = 0;
 		void Update() override;
 		float detectRadius = 3.0f;
-		float coneWidth = 70.0f;
-		float maxRange = 6.0f;
+		float coneWidth = 170.0f;
+		float maxRange = 10.0f;
 		bool needLOS = true;
 
 	private:
