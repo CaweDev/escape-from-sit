@@ -36,74 +36,91 @@ void FPSController::Update() {
         jumpCooldown = 0.0f;
     }
 
-    // Get mouse delta from Input system
-    Vector2 mouseDelta = Input::GetMouseDelta();
-    
-    // Apply mouse rotation
-    transform->rotation -= mouseDelta.x * mouseSensitivity;
+    if (Input::IsCursorLocked()) { // if cursor is locked, allow mouse look
+        // Get mouse delta from Input system
+        Vector2 mouseDelta = Input::GetMouseDelta();
 
-    // Apply vertical look (pitch)
-    if (Camera::main) {
-        Camera::main->pitch -= mouseDelta.y * mouseSensitivity * 5.f;
-        // Clamp pitch to avoid extreme distortion (equivalent to screen height offset)
-        // Adjusting horizon by +/- 0.8 * screenHeight is usually a safe limit
-        Camera::main->pitch = Mathf::Clamp(Camera::main->pitch, -400.f, 400.f);
+        // Apply mouse rotation
+        transform->rotation -= mouseDelta.x * mouseSensitivity;
+
+        // Apply vertical look (pitch)
+        if (Camera::main) {
+            Camera::main->pitch -= mouseDelta.y * mouseSensitivity * 5.f;
+            // Clamp pitch to avoid extreme distortion (equivalent to screen height offset)
+            // Adjusting horizon by +/- 0.8 * screenHeight is usually a safe limit
+            Camera::main->pitch = Mathf::Clamp(Camera::main->pitch, -400.f, 400.f);
+        }
+
+        // Keyboard rotation
+        if (Input::GetKey(KeyCode::LeftArrow)) transform->rotation -= rotateSpeed * dt;
+        if (Input::GetKey(KeyCode::RightArrow)) transform->rotation += rotateSpeed * dt;
     }
-    
-    // Keyboard rotation
-    if (Input::GetKey(KeyCode::LeftArrow)) transform->rotation -= rotateSpeed * dt;
-    if (Input::GetKey(KeyCode::RightArrow)) transform->rotation += rotateSpeed * dt;
-    
     // Keep angle in 0-360 range
     while (transform->rotation < 0) transform->rotation += 360.0f;
     while (transform->rotation >= 360) transform->rotation -= 360.0f;
-    
-    // Get local movement input
-    Vector2 inputMovement = Vector2::zero();
-    
-    if (Input::GetKey(KeyCode::W) || Input::GetKey(KeyCode::UpArrow)) inputMovement.y += 1.0f;
-    if (Input::GetKey(KeyCode::S) || Input::GetKey(KeyCode::DownArrow)) inputMovement.y -= 1.0f;
-    if (Input::GetKey(KeyCode::A)) inputMovement.x -= 1.0f;
-    if (Input::GetKey(KeyCode::D)) inputMovement.x += 1.0f;
-    
-    Player* playerComp = gameObject->GetComponent<Player>();
-    
-    bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
-    bool wantsSprint = Input::GetKey(KeyCode::LeftShift);
-    bool canSprint = playerComp && playerComp->CanSprint() && !rigidbody->isCrouching;
 
-    f32 speed = moveSpeed;
+    Vector2 worldVelocity = Vector2::zero();
 
-    if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
-        if (playerComp->CanSprint()) {
-            speed = sprintSpeed;
-            playerComp->isSprinting = true;
-            playerComp->DrainSprint(dt);
+    if (Input::IsCursorLocked()) {
+        // Get local movement input
+        Vector2 inputMovement = Vector2::zero();
+        if (Input::GetKey(KeyCode::W) || Input::GetKey(KeyCode::UpArrow)) inputMovement.y += 1.0f;
+        if (Input::GetKey(KeyCode::S) || Input::GetKey(KeyCode::DownArrow)) inputMovement.y -= 1.0f;
+        if (Input::GetKey(KeyCode::A)) inputMovement.x -= 1.0f;
+        if (Input::GetKey(KeyCode::D)) inputMovement.x += 1.0f;
+
+        Player* playerComp = gameObject->GetComponent<Player>();
+
+        bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
+        bool wantsSprint = Input::GetKey(KeyCode::LeftShift);
+        bool canSprint = playerComp && playerComp->CanSprint() && !rigidbody->isCrouching;
+
+        f32 speed = moveSpeed;
+
+        if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
+            if (playerComp->CanSprint()) {
+                speed = sprintSpeed;
+                playerComp->isSprinting = true;
+                playerComp->DrainSprint(dt);
+            }
+            else {
+                playerComp->isSprinting = false;
+            }
         }
         else {
-            playerComp->isSprinting = false;
+            if (playerComp) {
+                playerComp->isSprinting = false;
+                playerComp->Regen(dt);
+            }
+        }
+
+        // Calculate movement direction based on current angle
+        f32 angleRad = transform->rotation * 3.14159f / 180.0f;
+        f32 cosA = cosf(angleRad);
+        f32 sinA = sinf(angleRad);
+
+        // Forward/back movement in look direction
+
+        worldVelocity.x = (cosA * inputMovement.y * speed) // forward 
+            + (sinA * inputMovement.x * speed); // strafe
+        worldVelocity.y = (sinA * inputMovement.y * speed) // forward
+            + (-cosA * inputMovement.x * speed); // strafe
+
+        // Jumping (only when locked)
+        bool spaceNow = Input::GetKey(KeyCode::Space);
+        bool spaceDown = spaceNow && !prevSpace;
+
+        if (spaceDown && jumpCooldown <= 0.0f) {
+            rigidbody->Jump(jumpForce);
+            jumpCooldown = 0.25f;
+        }
+        prevSpace = spaceNow;
+
+        // Crouching (Ctrl or C) (only when locked)
+        if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {
+            rigidbody->ToggleCrouch();
         }
     }
-    else {
-        if (playerComp) {
-            playerComp->isSprinting = false;
-            playerComp->Regen(dt);
-        }
-    }
-
-
-
-    // Calculate movement direction based on current angle
-    f32 angleRad = transform->rotation * 3.14159f / 180.0f;
-    f32 cosA = cosf(angleRad);
-    f32 sinA = sinf(angleRad);
-    
-    // Forward/back movement in look direction
-    Vector2 worldVelocity = Vector2::zero();
-    worldVelocity.x = (cosA * inputMovement.y * speed) // forward 
-                    + (sinA * inputMovement.x * speed); // strafe
-    worldVelocity.y = (sinA * inputMovement.y * speed) // forward
-                    + (-cosA * inputMovement.x * speed); // strafe
    
     // Set velocity on rigidbody (physics will handle collision)
     rigidbody->velocity = worldVelocity;
