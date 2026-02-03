@@ -255,11 +255,11 @@ namespace Game {
         
         // Only show when mouse is near center (within ~40% of screen)
         float threshold = 0.6f;
-        float targetAlpha = 0.0f;
+        float targetAlpha = 0.3f;
         
         if (centerProximity > threshold) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
-            targetAlpha = t * 0.7f;  // Max 70% opacity
+            targetAlpha += t * 0.6f;  // Max 70% opacity
         }
 
         // Smooth alpha transition
