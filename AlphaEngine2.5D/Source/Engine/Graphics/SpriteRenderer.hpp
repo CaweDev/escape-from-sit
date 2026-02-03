@@ -49,6 +49,12 @@ namespace Engine {
         /** Set sprite from shared pointer */
         void SetSprite(Sprite* newSprite);
 
+        /** Set the color tint */
+        void SetColor(const Color& newColor) { color = newColor; }
+
+        /** Get the color tint */
+        const Color& GetColor() const { return color; }
+
         /** Render the sprite (called by renderer system) */
         void Render() override;
 
