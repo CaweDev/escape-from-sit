@@ -21,6 +21,7 @@ f32 Time::GetGameSpeed()
 void Time::SetGameSpeed(f32 newGameSpeed)
 {
     gameSpeed = newGameSpeed;
+    fixedDeltaTime = 0.02f * newGameSpeed;
 }
 
 void Time::Update() {

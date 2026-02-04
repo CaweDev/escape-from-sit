@@ -52,7 +52,7 @@ namespace Game {
 
         std::vector<CCTVCamera*> cctvSensors;
 
-        Vector2 exitPos = Vector2(14.5f, 1.5f);
+        Vector2 exitPos = Vector2(122.5f, 38.5f);
         float winRadius = 0.6f;
         bool printedWin = false;
 
@@ -61,10 +61,13 @@ namespace Game {
         float powerUpTime = 0.0f;
         struct CCTVInfo { Vector3 pos; float rotDeg; };
 
-  
 
-        
-      
+        UI::Canvas* modalCanvas = nullptr;
+        UI::Panel* modalPanel = nullptr;
+        UI::Text* modalTitle = nullptr;
+        UI::Button* modalButton = nullptr;
+        bool endPanelShown = false;
+
         void SwitchToPlayerCam() {
             activeCCTV = -1;
             if (!playerTf) return;
@@ -90,6 +93,90 @@ namespace Game {
         void ToggleCCTV(int idx) {
             if (activeCCTV == idx) SwitchToPlayerCam();
             else SwitchToCCTV(idx);
+        }
+
+        // Create a hidden modal used for win/lose. Registers pause when shown.
+        void CreateEndPanel() {
+            if (!UI::UIManager::GetInstance()) {
+                std::cout << "[Panel] Unable to create" << std::endl;
+                return;
+            }
+            std::cout << "[Panel] creating" << std::endl;
+
+            modalCanvas = UI::UIManager::GetInstance()->CreateCanvas();
+            modalCanvas->SetSortOrder(1000);
+            modalCanvas->SetReferenceResolution(1280.f, 720.f);
+            modalCanvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
+
+            modalPanel = modalCanvas->CreateChild<UI::Panel>();
+            modalPanel->name = "EndPanel";
+            modalPanel->rectTransform.SetCentered(1000.0f, 560.0f);
+            modalPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 1.0f));
+            modalPanel->visible = false;
+
+            modalTitle = modalPanel->CreateChild<UI::Text>();
+            modalTitle->name = "EndTitle";
+            modalTitle->rectTransform.anchorMin = { 0.0f, 1.0f };
+            modalTitle->rectTransform.anchorMax = { 1.0f, 1.0f };
+            modalTitle->rectTransform.pivot = { 0.5f, 1.0f };
+            modalTitle->rectTransform.anchoredPosition = { 0.0f, -24.0f };
+            modalTitle->rectTransform.sizeDelta = { 0.0f, 64.0f };
+            modalTitle->SetText("");
+            modalTitle->SetFontSize(3.0f);
+            modalTitle->SetColor(Engine::Color::white());
+            modalTitle->SetAnchor(UI::TextAnchor::MiddleCenter);
+
+            modalButton = modalPanel->CreateChild<UI::Button>();
+            modalButton->name = "EndButton";
+            modalButton->rectTransform.anchorMin = { 0.5f, 0.0f };
+            modalButton->rectTransform.anchorMax = { 0.5f, 0.0f };
+            modalButton->rectTransform.pivot = { 0.5f, 0.0f };
+            modalButton->rectTransform.anchoredPosition = { 0.0f, 20.0f };
+            modalButton->rectTransform.sizeDelta = { 240.0f, 56.0f };
+            modalButton->SetText("Restart");
+            modalButton->SetBackgroundColor(Engine::Color(0.25f, 0.5f, 0.25f, 1.0f));
+
+            // default behavior (will be overridden when showing with specific callback)
+            modalButton->onClick = [this]() {
+                // ensure pause is cleared before restarting
+                Application::UnregisterPause("Endpanel");
+                SceneManager::LoadScene("FPSScene");
+                };
+        }
+
+        void ShowEndPanel(const std::string& titleText, const std::string& buttonText, std::function<void()> onButton) {
+            if (!modalPanel || !modalTitle || !modalButton) return;
+
+            modalTitle->SetText(titleText.c_str());
+            modalButton->SetText(buttonText.c_str());
+            modalPanel->visible = true;
+            endPanelShown = true;
+
+            std::cout << "[Panel] shown" << std::endl;
+
+            // unlock cursor so user can interact with UI
+            if (Input::IsCursorLocked()) {
+                std::cout << "[Panel] releasing FPSController cursor lock\n";
+                Input::UnregisterCursorLock("FPSController");
+            }
+
+            // register pause so Time.deltaTime == 0 and gameplay effectively pauses
+            Application::RegisterPause("Endpanel");
+
+            // replace onClick handler: first unregister pause, then invoke provided callback
+            modalButton->onClick = [onButton, this]() {
+                // re-acquire FPS cursor lock (only if the FPSController still exists)
+                std::cout << "[Panel] re-registering FPSController cursor lock\n";
+                Input::RegisterCursorLock("FPSController");
+
+                Application::UnregisterPause("Endpanel");
+                if (onButton) onButton();
+                modalPanel->visible = false;
+                endPanelShown = false;
+                Application::Quit();
+                };
+
+            gameEnded = true;
         }
 
         void OnLoad() override {
@@ -221,7 +308,7 @@ namespace Game {
             enemyCol->maxHeight = 2.0f;
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
-            enemySR->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));
+            enemySR->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
 
@@ -293,6 +380,7 @@ namespace Game {
                 
             }
 
+            CreateEndPanel();
 
             SwitchToPlayerCam();
 
@@ -343,6 +431,16 @@ namespace Game {
                 SwitchToPlayerCam();
             }
 
+            if (!endPanelShown && playerData) {
+                if (playerData->IsCaught()) {
+                    std::cout << "[Panel] showing" << std::endl;
+                    ShowEndPanel("YOU GOT CAUGHT. GAME OVER", "Quit", []() {
+                        SceneManager::LoadScene("FPSScene");
+                        });
+                }
+            }
+
+
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
@@ -367,7 +465,9 @@ namespace Game {
                 gameEnded = true;
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
-                Application::Quit();
+                ShowEndPanel("YOU ESCAPED. WIN!", "Quit", []() {
+                    SceneManager::LoadScene("FPSScene");
+                    });
             }
         }
     };
