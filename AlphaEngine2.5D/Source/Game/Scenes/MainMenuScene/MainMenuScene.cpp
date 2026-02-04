@@ -266,7 +266,7 @@ namespace Game {
         enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * 5.0f);
 
         // Apply dark silhouette effect (darkened sprite with alpha)
-        float darkness = 0.1f;  // Very dark silhouette
+        float darkness = 0.4f;  // Very dark silhouette
         shadowSprite->SetColor(Color(darkness, darkness, darkness, enemyAlpha));
     }
 
