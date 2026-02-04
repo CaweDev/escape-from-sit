@@ -308,7 +308,7 @@ namespace Game {
             enemyCol->maxHeight = 2.0f;
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
-            enemySR->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));
+            enemySR->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
 
