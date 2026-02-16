@@ -111,38 +111,24 @@ namespace Engine {
 			int fogKey; // Added for sorting-based batching
 		};
 
-		// Cached scanline data to avoid per-frame recalculation
-		struct ScanlineInfo {
-			f32 rowDist;      // Distance from camera to this scanline's floor/ceiling
-			f32 aeY;          // Screen Y coordinate in AE space
-		};
+		// Per-frame cached values (computed once in Render())
+		f32 cachedPlaneLength = 0.0f; // tanf(fov_half_rad), avoids redundant tanf calls
 
-		// Pre-computed quad for parallel floor/ceiling rendering
-		struct FloorCeilQuad {
-			f32 x1, y1, x2, y2, x3, y3; // Triangle 1 positions
-			f32 u1, v1, u2, v2, u3, v3; // Triangle 1 UVs
-			f32 x4, y4, x5, y5, x6, y6; // Triangle 2 positions
-			f32 u4, v4, u5, v5, u6, v6; // Triangle 2 UVs
-			int fogKey;
-			f32 quantizedFog;
-		};
+		// Cached fog settings from Camera::main (refreshed per frame)
+		struct FogSettings {
+			bool enabled = false;
+			f32 distance = 20.0f;
+			f32 minVisibility = 0.2f;
+			f32 maxVisibility = 1.0f;
+			f32 precision = 200.0f;
+		} fog;
 
-		// Cached scanline tables (indexed by screen Y)
-		std::vector<ScanlineInfo> ceilingScanlines;  // For rows 0 to horizon
-		std::vector<ScanlineInfo> floorScanlines;    // For rows horizon to screenHeight
-		int cachedScreenHeight = 0;
-		f32 cachedCamZ = -999.0f;
-		int cachedHorizon = -999;
 		f32 cachedFogDistance = -1.0f; // Track LUT validity
 		std::vector<f32> fogLUT;
 		std::vector<ColumnInfo> managedColumns; // Pre-allocated column buffer
-		std::vector<FloorCeilQuad> ceilingQuads; // Pre-allocated ceiling quad buffer
-		std::vector<FloorCeilQuad> floorQuads;   // Pre-allocated floor quad buffer
+		AEMtx33 identityMtx; // Pre-computed identity matrix for transforms
 
 		void CreateColumnMesh();
-		
-		// Precompute scanline distances for floor/ceiling
-		void CacheScanlineDistances(int screenHeight, f32 camZ, int horizon);
 		void UpdateFogLUT(f32 fogDistance);
 
 		// Raycast helper

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file TileMapRenderer.cpp
  * @brief Implementation of TileMapRenderer class
  */
@@ -51,11 +51,22 @@ namespace Engine {
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
 		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		cachedPlaneLength = planeLength;
 		f32 planeX = dirY * planeLength;
 		f32 planeY = -dirX * planeLength;
 
+		// Cache fog settings from Camera::main once per frame (#3)
+		fog.enabled = (Camera::main && Camera::main->fogEnabled);
+		fog.distance = (Camera::main) ? Camera::main->fogDistance : 20.0f;
+		fog.minVisibility = (Camera::main) ? Camera::main->fogMinVisibility : 0.2f;
+		fog.maxVisibility = (Camera::main) ? Camera::main->fogMaxVisibility : 1.0f;
+		fog.precision = (Camera::main) ? Camera::main->fogPrecision : 200.0f;
+
+		// Pre-compute identity matrix once per frame (#6)
+		AEMtx33Identity(&identityMtx);
+
 		// Update Fog LUT if distance changed
-		f32 currentFogDist = (Camera::main) ? Camera::main->fogDistance : 20.0f;
+		f32 currentFogDist = fog.distance;
 		if (fabsf(currentFogDist - cachedFogDistance) > 0.001f) {
 			UpdateFogLUT(currentFogDist);
 		}
@@ -92,12 +103,11 @@ namespace Engine {
 				if (lutIdx < 0) lutIdx = 0;
 				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
 
-				info.fogFactor = (Camera::main && Camera::main->fogEnabled) ? fogLUT[lutIdx] : 1.0f;
-				if (Camera::main && info.fogFactor < Camera::main->fogMinVisibility) info.fogFactor = Camera::main->fogMinVisibility;
-				if (Camera::main && info.fogFactor > Camera::main->fogMaxVisibility) info.fogFactor = Camera::main->fogMaxVisibility;
+				info.fogFactor = fog.enabled ? fogLUT[lutIdx] : 1.0f;
+				if (info.fogFactor < fog.minVisibility) info.fogFactor = fog.minVisibility;
+				if (info.fogFactor > fog.maxVisibility) info.fogFactor = fog.maxVisibility;
 
-				f32 fogPrecision = (Camera::main) ? Camera::main->fogPrecision : 200.0f;
-				info.fogKey = (int)(info.fogFactor * fogPrecision);
+				info.fogKey = (int)(info.fogFactor * fog.precision);
 
 				info.screenX = (f32)x - screenWidth / 2.0f;
 				info.screenX2 = (f32)(x + COLUMN_STEP) - screenWidth / 2.0f;
@@ -141,10 +151,7 @@ namespace Engine {
 			f.wait();
 		}
 
-		// Pre-cache scanline distances (only recomputes if screenHeight or camZ or horizon changed)
-		CacheScanlineDistances(screenHeight, camZ, horizon);
-
-		// Ensure linear filtering is on for potential floor/ceiling aliasing issues
+		// Ensure linear filtering for floor/ceiling
 		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
 
 		// Render in order: ceiling, floor, walls (walls on top)
@@ -199,10 +206,9 @@ namespace Engine {
 		// result.wallX is now the absolute world coordinate (for U mapping)
 
 		// Wall height with aspect ratio correction
-		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
 		int screenWidth = Application::GetWindowWidth();
-		f32 wallHeight = (f32)screenWidth / (result.perpWallDist * planeLength * 2.0f);
-		f32 heightOffset = (camZ - 0.5f) * ((f32)screenWidth / (result.perpWallDist * planeLength * 2.0f));
+		f32 wallHeight = (f32)screenWidth / (result.perpWallDist * cachedPlaneLength * 2.0f);
+		f32 heightOffset = (camZ - 0.5f) * ((f32)screenWidth / (result.perpWallDist * cachedPlaneLength * 2.0f));
 		result.drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
 		result.drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
@@ -218,151 +224,57 @@ namespace Engine {
 		if (!sprite || !sprite->IsLoaded()) return;
 
 		f32 posZ = 1.0f - camZ;
-		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		// Pre-compute row distance factor: rowDist = rowDistFactor / p (#4)
+		f32 rowDistFactor = posZ * (f32)screenWidth / (cachedPlaneLength * 2.0f);
 
-		// Get fog settings from camera
-		bool hasCam = (Camera::main != nullptr);
-		bool camFog = hasCam && Camera::main->fogEnabled;
-		f32 camMin = hasCam ? Camera::main->fogMinVisibility : 0.2f;
-		f32 camMax = hasCam ? Camera::main->fogMaxVisibility : 1.0f;
-		f32 fogPrecision = hasCam ? Camera::main->fogPrecision : 200.0f;
+		f32 currentBatchFog = -1.0f;
+		bool meshIsOpen = false;
+		int triCount = 0;
 
 		// Clamp horizon to screen bounds for culling
 		int clampedHorizon = horizon;
 		if (clampedHorizon < 0) clampedHorizon = 0;
 		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
 
-		// Build row list
-		std::vector<int> rows;
-		rows.reserve(clampedHorizon / ROW_STEP + 1);
-		for (int y = 0; y < clampedHorizon; y += ROW_STEP) rows.push_back(y);
-		int numRows = (int)rows.size();
-		int numCols = (int)columns.size();
-		if (numRows == 0) return;
+		for (int y = 0; y < clampedHorizon; y += ROW_STEP) {
+			f32 p = (f32)horizon - (f32)y;
+			if (fabsf(p) < 0.1f) continue;
+			f32 rowDist = rowDistFactor / p;
+			if (rowDist < 0) continue;
 
-		// --- Parallel compute phase ---
-		int totalSlots = numRows * numCols;
-		ceilingQuads.resize(totalSlots);
-		// Atomic counter for valid quads compacted later
-		std::vector<int> validCounts(numRows, 0);
+			int yNext = y + ROW_STEP;
+			if (yNext > horizon) yNext = horizon;
+			if (yNext > clampedHorizon) yNext = clampedHorizon;
 
-		auto ComputeRowRange = [&](int startRow, int endRow) {
-			for (int ri = startRow; ri < endRow; ++ri) {
-				int y = rows[ri];
-				f32 p = (f32)horizon - (f32)y;
-				if (fabsf(p) < 0.1f) continue;
-				f32 rowDist = posZ * (f32)screenWidth / (p * planeLength * 2.0f);
-				if (rowDist < 0) continue;
+			f32 pNext = (f32)horizon - (f32)yNext;
+			f32 rowDistNext;
+			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
+			else rowDistNext = rowDistFactor / pNext;
+			if (rowDistNext < 0) rowDistNext = rowDist;
 
-				int yNext = y + ROW_STEP;
-				if (yNext > horizon) yNext = horizon;
-				if (yNext > clampedHorizon) yNext = clampedHorizon;
+			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
+			f32 aeY2 = screenHeight / 2.0f - (f32)y;
 
-				f32 pNext = (f32)horizon - (f32)yNext;
-				f32 rowDistNext;
-				if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
-				else rowDistNext = posZ * (f32)screenWidth / (pNext * planeLength * 2.0f);
-				if (rowDistNext < 0) rowDistNext = rowDist;
-
-				f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
-				f32 aeY2 = screenHeight / 2.0f - (f32)y;
-
-				f32 avgDist = (rowDist + rowDistNext) * 0.5f;
-
-				f32 fogFactor = 1.0f;
-				if (camFog) {
-					int lutIdx = (int)(avgDist * 100.0f);
-					if (lutIdx < 0) lutIdx = 0;
-					if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
-					fogFactor = fogLUT[lutIdx];
-					if (fogFactor < camMin) fogFactor = camMin;
-					if (fogFactor > camMax) fogFactor = camMax;
-				}
-				if (fogFactor < 0.01f) continue;
-
-				int fogKey = (int)(fogFactor * fogPrecision);
-				f32 quantizedFog = (f32)fogKey / fogPrecision;
-
-				int baseIdx = ri * numCols;
-				int count = 0;
-
-				for (int ci = 0; ci < numCols; ++ci) {
-					const auto& col = columns[ci];
-
-					f32 clampedAeY1 = aeY1;
-					f32 clampedRowDistNext = rowDistNext;
-
-					int wallStartInt = (int)floorf(col.ray.drawStart);
-					if (yNext > wallStartInt) {
-						if (y >= wallStartInt) continue;
-						clampedAeY1 = col.screenY2;
-						f32 clampedP = (f32)horizon - col.ray.drawStart;
-						if (fabsf(clampedP) > 0.1f) {
-							clampedRowDistNext = posZ * (f32)screenWidth / (clampedP * planeLength * 2.0f);
-						}
-					}
-
-					FloorCeilQuad& q = ceilingQuads[baseIdx + count];
-					q.fogKey = fogKey;
-					q.quantizedFog = quantizedFog;
-
-					f32 u1_l = pos.x + rowDist * col.rayDirX;
-					f32 v1_l = pos.y + rowDist * col.rayDirY;
-					f32 u1_r = pos.x + rowDist * col.rayDirX2;
-					f32 v1_r = pos.y + rowDist * col.rayDirY2;
-					f32 u2_l = pos.x + clampedRowDistNext * col.rayDirX;
-					f32 v2_l = pos.y + clampedRowDistNext * col.rayDirY;
-					f32 u2_r = pos.x + clampedRowDistNext * col.rayDirX2;
-					f32 v2_r = pos.y + clampedRowDistNext * col.rayDirY2;
-
-					q.x1 = col.screenX;  q.y1 = aeY2;         q.u1 = u1_l; q.v1 = v1_l;
-					q.x2 = col.screenX2; q.y2 = aeY2;         q.u2 = u1_r; q.v2 = v1_r;
-					q.x3 = col.screenX;  q.y3 = clampedAeY1;  q.u3 = u2_l; q.v3 = v2_l;
-					q.x4 = col.screenX;  q.y4 = clampedAeY1;  q.u4 = u2_l; q.v4 = v2_l;
-					q.x5 = col.screenX2; q.y5 = aeY2;         q.u5 = u1_r; q.v5 = v1_r;
-					q.x6 = col.screenX2; q.y6 = clampedAeY1;  q.u6 = u2_r; q.v6 = v2_r;
-					++count;
-				}
-				validCounts[ri] = count;
+			f32 avgDist = (rowDist + rowDistNext) * 0.5f;
+			
+			// Fog LUT lookup
+			f32 fogFactor = 1.0f;
+			if (fog.enabled) {
+				int lutIdx = (int)(avgDist * 100.0f);
+				if (lutIdx < 0) lutIdx = 0;
+				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
+				fogFactor = fogLUT[lutIdx];
+				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
+				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
 			}
-		};
 
-		int numThreads = std::thread::hardware_concurrency();
-		if (numThreads == 0) numThreads = 2;
-		int rowsPerThread = (numRows + numThreads - 1) / numThreads;
-		std::vector<std::future<void>> futures;
+			if (fogFactor < 0.01f) break;
 
-		for (int t = 0; t < numThreads; ++t) {
-			int s = t * rowsPerThread;
-			int e = s + rowsPerThread;
-			if (e > numRows) e = numRows;
-			if (s < e) futures.push_back(std::async(std::launch::async, ComputeRowRange, s, e));
-		}
-		for (auto& f : futures) f.wait();
+			int fogKey = (int)(fogFactor * fog.precision);
+			f32 quantizedFog = (f32)fogKey / fog.precision;
 
-		// --- Compact valid quads ---
-		std::vector<FloorCeilQuad> compacted;
-		compacted.reserve(totalSlots);
-		for (int ri = 0; ri < numRows; ++ri) {
-			int baseIdx = ri * numCols;
-			for (int ci = 0; ci < validCounts[ri]; ++ci) {
-				compacted.push_back(ceilingQuads[baseIdx + ci]);
-			}
-		}
-
-		// Sort by fog key for batching
-		std::sort(compacted.begin(), compacted.end(), [](const FloorCeilQuad& a, const FloorCeilQuad& b) {
-			return a.fogKey < b.fogKey;
-		});
-
-		// --- Sequential submit phase ---
-		f32 currentBatchFog = -1.0f;
-		bool meshIsOpen = false;
-		int triCount = 0;
-
-		for (const auto& q : compacted) {
-			f32 qFog = q.quantizedFog;
-			if (meshIsOpen && qFog != currentBatchFog) {
+			// If fog changed, flush the current mesh
+			if (meshIsOpen && quantizedFog != currentBatchFog) {
 				AEGfxVertexList* mesh = AEGfxMeshEnd();
 				if (mesh) {
 					if (triCount > 0) {
@@ -372,7 +284,7 @@ namespace Engine {
 						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 						AEGfxSetTransparency(1.0f);
-						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+						AEGfxSetTransform(identityMtx.m);
 						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 					}
 					AEGfxMeshFree(mesh);
@@ -384,33 +296,59 @@ namespace Engine {
 				AEGfxMeshStart();
 				meshIsOpen = true;
 				triCount = 0;
-				currentBatchFog = qFog;
+				currentBatchFog = quantizedFog;
 			}
 
-			if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
-				AEGfxVertexList* mesh = AEGfxMeshEnd();
-				if (mesh) {
-					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-					AEGfxSetColorToAdd(0, 0, 0, 0);
-					AEGfxSetTransparency(1.0f);
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
-					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-					AEGfxMeshFree(mesh);
+			for (const auto& col : columns) {
+				// Flush mesh if triangle limit reached
+				if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
+					AEGfxVertexList* mesh = AEGfxMeshEnd();
+					if (mesh) {
+						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+						AEGfxSetTransparency(1.0f);
+						AEGfxSetTransform(identityMtx.m);
+						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						AEGfxMeshFree(mesh);
+					}
+					AEGfxMeshStart();
+					triCount = 0;
 				}
-				AEGfxMeshStart();
-				triCount = 0;
-			}
 
-			AEGfxTriAdd(q.x1, q.y1, 0xFFFFFFFF, q.u1, q.v1,
-			            q.x2, q.y2, 0xFFFFFFFF, q.u2, q.v2,
-			            q.x3, q.y3, 0xFFFFFFFF, q.u3, q.v3);
-			AEGfxTriAdd(q.x4, q.y4, 0xFFFFFFFF, q.u4, q.v4,
-			            q.x5, q.y5, 0xFFFFFFFF, q.u5, q.v5,
-			            q.x6, q.y6, 0xFFFFFFFF, q.u6, q.v6);
-			triCount += 2;
+				f32 clampedAeY1 = aeY1;
+				f32 clampedRowDistNext = rowDistNext;
+				
+				int wallStartInt = (int)floorf(col.ray.drawStart);
+				if (yNext > wallStartInt) {
+					if (y >= wallStartInt) continue;
+					clampedAeY1 = col.screenY2;
+					f32 clampedP = (f32)horizon - col.ray.drawStart;
+					if (fabsf(clampedP) > 0.1f) {
+						clampedRowDistNext = rowDistFactor / clampedP;
+					}
+				}
+
+				f32 u1_l = pos.x + rowDist * col.rayDirX;
+				f32 v1_l = pos.y + rowDist * col.rayDirY;
+				f32 u1_r = pos.x + rowDist * col.rayDirX2;
+				f32 v1_r = pos.y + rowDist * col.rayDirY2;
+
+				f32 u2_l = pos.x + clampedRowDistNext * col.rayDirX;
+				f32 v2_l = pos.y + clampedRowDistNext * col.rayDirY;
+				f32 u2_r = pos.x + clampedRowDistNext * col.rayDirX2;
+				f32 v2_r = pos.y + clampedRowDistNext * col.rayDirY2;
+
+				AEGfxTriAdd(col.screenX, aeY2, 0xFFFFFFFF, u1_l, v1_l, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l);
+				AEGfxTriAdd(col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l, 
+				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX2, clampedAeY1, 0xFFFFFFFF, u2_r, v2_r);
+				triCount += 2;
+			}
 		}
 
 		if (meshIsOpen) {
@@ -423,14 +361,13 @@ namespace Engine {
 					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
 					AEGfxSetColorToAdd(0, 0, 0, 0);
 					AEGfxSetTransparency(1.0f);
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxSetTransform(identityMtx.m);
 					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 				}
 				AEGfxMeshFree(mesh);
 			}
 		}
 	}
-
 	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
@@ -440,150 +377,67 @@ namespace Engine {
 		if (!sprite || !sprite->IsLoaded()) return;
 
 		f32 posZ = camZ;
-		f32 planeWidth = (f32)screenWidth;
-		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
+		// Pre-compute row distance factor: rowDist = rowDistFactor / p (#4)
+		f32 rowDistFactor = posZ * (f32)screenWidth / (cachedPlaneLength * 2.0f);
 
-		// Get fog settings from camera
-		bool hasCam = (Camera::main != nullptr);
-		bool camFog = hasCam && Camera::main->fogEnabled;
-		f32 camMin = hasCam ? Camera::main->fogMinVisibility : 0.2f;
-		f32 camMax = hasCam ? Camera::main->fogMaxVisibility : 1.0f;
-		f32 fogPrecision = hasCam ? Camera::main->fogPrecision : 200.0f;
+		f32 currentBatchFog = -1.0f;
+		bool meshIsOpen = false;
+		int triCount = 0;
 
 		// Clamp horizon to screen bounds for culling
 		int clampedHorizon = horizon;
 		if (clampedHorizon < 0) clampedHorizon = 0;
 		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
 
-		// Build row list
-		std::vector<int> rows;
-		rows.reserve((screenHeight - clampedHorizon) / ROW_STEP + 1);
-		for (int y = clampedHorizon; y < screenHeight; y += ROW_STEP) rows.push_back(y);
-		int numRows = (int)rows.size();
-		int numCols = (int)columns.size();
-		if (numRows == 0) return;
-
-		// --- Parallel compute phase ---
-		int totalSlots = numRows * numCols;
-		floorQuads.resize(totalSlots);
-		std::vector<int> validCounts(numRows, 0);
-
-		auto ComputeRowRange = [&](int startRow, int endRow) {
-			for (int ri = startRow; ri < endRow; ++ri) {
-				int y = rows[ri];
-				f32 p = (f32)y - (f32)horizon;
-				if (fabsf(p) < 0.1f) continue;
-				f32 rowDist = posZ * planeWidth / (p * planeLength * 2.0f);
-				if (rowDist < 0) continue;
-
-				int yNext = y + ROW_STEP;
-				if (yNext > screenHeight) yNext = screenHeight;
-
-				f32 pNext = (f32)yNext - (f32)horizon;
-				f32 rowDistNext;
-				if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
-				else rowDistNext = posZ * planeWidth / (pNext * planeLength * 2.0f);
-				if (rowDistNext < 0) rowDistNext = rowDist;
-
-				f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
-				f32 aeY2 = screenHeight / 2.0f - (f32)y;
-
-				f32 avgDist = (rowDist + rowDistNext) * 0.5f;
-
-				f32 fogFactor = 1.0f;
-				if (camFog) {
-					int lutIdx = (int)(avgDist * 100.0f);
-					if (lutIdx < 0) lutIdx = 0;
-					if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
-					fogFactor = fogLUT[lutIdx];
-					if (fogFactor < camMin) fogFactor = camMin;
-					if (fogFactor > camMax) fogFactor = camMax;
-				}
-				if (fogFactor < 0.01f) continue;
-
-				int fogKey = (int)(fogFactor * fogPrecision);
-				f32 quantizedFog = (f32)fogKey / fogPrecision;
-
-				int baseIdx = ri * numCols;
-				int count = 0;
-
-				for (int ci = 0; ci < numCols; ++ci) {
-					const auto& col = columns[ci];
-
-					f32 clampedAeY2 = aeY2;
-					f32 clampedRowDist = rowDist;
-
-					int wallEndInt = (int)ceilf(col.ray.drawEnd);
-					if (y < wallEndInt) {
-						if (yNext <= wallEndInt) continue;
-						clampedAeY2 = col.screenY;
-						f32 clampedP = col.ray.drawEnd - (f32)horizon;
-						if (fabsf(clampedP) > 0.1f) {
-							clampedRowDist = posZ * planeWidth / (clampedP * planeLength * 2.0f);
-						}
-					}
-
-					FloorCeilQuad& q = floorQuads[baseIdx + count];
-					q.fogKey = fogKey;
-					q.quantizedFog = quantizedFog;
-
-					f32 u1_l = pos.x + clampedRowDist * col.rayDirX;
-					f32 v1_l = pos.y + clampedRowDist * col.rayDirY;
-					f32 u1_r = pos.x + clampedRowDist * col.rayDirX2;
-					f32 v1_r = pos.y + clampedRowDist * col.rayDirY2;
-					f32 u2_l = pos.x + rowDistNext * col.rayDirX;
-					f32 v2_l = pos.y + rowDistNext * col.rayDirY;
-					f32 u2_r = pos.x + rowDistNext * col.rayDirX2;
-					f32 v2_r = pos.y + rowDistNext * col.rayDirY2;
-
-					q.x1 = col.screenX;  q.y1 = clampedAeY2;  q.u1 = u1_l; q.v1 = v1_l;
-					q.x2 = col.screenX2; q.y2 = clampedAeY2;  q.u2 = u1_r; q.v2 = v1_r;
-					q.x3 = col.screenX;  q.y3 = aeY1;          q.u3 = u2_l; q.v3 = v2_l;
-					q.x4 = col.screenX;  q.y4 = aeY1;          q.u4 = u2_l; q.v4 = v2_l;
-					q.x5 = col.screenX2; q.y5 = clampedAeY2;  q.u5 = u1_r; q.v5 = v1_r;
-					q.x6 = col.screenX2; q.y6 = aeY1;          q.u6 = u2_r; q.v6 = v2_r;
-					++count;
-				}
-				validCounts[ri] = count;
-			}
-		};
-
-		int numThreads = std::thread::hardware_concurrency();
-		if (numThreads == 0) numThreads = 2;
-		int rowsPerThread = (numRows + numThreads - 1) / numThreads;
-		std::vector<std::future<void>> futures;
-
-		for (int t = 0; t < numThreads; ++t) {
-			int s = t * rowsPerThread;
-			int e = s + rowsPerThread;
-			if (e > numRows) e = numRows;
-			if (s < e) futures.push_back(std::async(std::launch::async, ComputeRowRange, s, e));
-		}
-		for (auto& f : futures) f.wait();
-
-		// --- Compact valid quads ---
-		std::vector<FloorCeilQuad> compacted;
-		compacted.reserve(totalSlots);
-		for (int ri = 0; ri < numRows; ++ri) {
-			int baseIdx = ri * numCols;
-			for (int ci = 0; ci < validCounts[ri]; ++ci) {
-				compacted.push_back(floorQuads[baseIdx + ci]);
+		// Skip invisible far rows near horizon (#3 optimization)
+		int startY = clampedHorizon;
+		if (fog.enabled && posZ > 0.001f) {
+			f32 maxVisibleDist = fog.distance * 4.6f;
+			f32 minP = rowDistFactor / maxVisibleDist;
+			int computedStart = horizon + (int)ceilf(minP);
+			if (computedStart > clampedHorizon) {
+				startY = ((computedStart - clampedHorizon) / ROW_STEP) * ROW_STEP + clampedHorizon;
 			}
 		}
 
-		// Sort by fog key for batching
-		std::sort(compacted.begin(), compacted.end(), [](const FloorCeilQuad& a, const FloorCeilQuad& b) {
-			return a.fogKey < b.fogKey;
-		});
+		for (int y = startY; y < screenHeight; y += ROW_STEP) {
+			f32 p = (f32)y - (f32)horizon;
+			if (fabsf(p) < 0.1f) continue;
+			f32 rowDist = rowDistFactor / p;
+			if (rowDist < 0) continue;
 
-		// --- Sequential submit phase ---
-		f32 currentBatchFog = -1.0f;
-		bool meshIsOpen = false;
-		int triCount = 0;
+			int yNext = y + ROW_STEP;
+			if (yNext > screenHeight) yNext = screenHeight;
 
-		for (const auto& q : compacted) {
-			f32 qFog = q.quantizedFog;
-			if (meshIsOpen && qFog != currentBatchFog) {
+			f32 pNext = (f32)yNext - (f32)horizon;
+			f32 rowDistNext;
+			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
+			else rowDistNext = rowDistFactor / pNext;
+			if (rowDistNext < 0) rowDistNext = rowDist;
+
+			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
+			f32 aeY2 = screenHeight / 2.0f - (f32)y;
+
+			f32 avgDist = (rowDist + rowDistNext) * 0.5f;
+
+			// Fog LUT lookup
+			f32 fogFactor = 1.0f;
+			if (fog.enabled) {
+				int lutIdx = (int)(avgDist * 100.0f);
+				if (lutIdx < 0) lutIdx = 0;
+				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
+				fogFactor = fogLUT[lutIdx];
+				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
+				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
+			}
+
+			if (fogFactor < 0.01f) continue;
+
+			int fogKey = (int)(fogFactor * fog.precision);
+			f32 quantizedFog = (f32)fogKey / fog.precision;
+
+			// If fog changed, flush the current mesh
+			if (meshIsOpen && quantizedFog != currentBatchFog) {
 				AEGfxVertexList* mesh = AEGfxMeshEnd();
 				if (mesh) {
 					if (triCount > 0) {
@@ -593,7 +447,7 @@ namespace Engine {
 						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 						AEGfxSetTransparency(1.0f);
-						AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+						AEGfxSetTransform(identityMtx.m);
 						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 					}
 					AEGfxMeshFree(mesh);
@@ -605,33 +459,59 @@ namespace Engine {
 				AEGfxMeshStart();
 				meshIsOpen = true;
 				triCount = 0;
-				currentBatchFog = qFog;
+				currentBatchFog = quantizedFog;
 			}
 
-			if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
-				AEGfxVertexList* mesh = AEGfxMeshEnd();
-				if (mesh) {
-					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-					AEGfxSetColorToAdd(0, 0, 0, 0);
-					AEGfxSetTransparency(1.0f);
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
-					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-					AEGfxMeshFree(mesh);
+			for (const auto& col : columns) {
+				// Flush mesh if triangle limit reached
+				if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
+					AEGfxVertexList* mesh = AEGfxMeshEnd();
+					if (mesh) {
+						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
+						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
+						AEGfxSetColorToAdd(0, 0, 0, 0);
+						AEGfxSetTransparency(1.0f);
+						AEGfxSetTransform(identityMtx.m);
+						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+						AEGfxMeshFree(mesh);
+					}
+					AEGfxMeshStart();
+					triCount = 0;
 				}
-				AEGfxMeshStart();
-				triCount = 0;
-			}
 
-			AEGfxTriAdd(q.x1, q.y1, 0xFFFFFFFF, q.u1, q.v1,
-			            q.x2, q.y2, 0xFFFFFFFF, q.u2, q.v2,
-			            q.x3, q.y3, 0xFFFFFFFF, q.u3, q.v3);
-			AEGfxTriAdd(q.x4, q.y4, 0xFFFFFFFF, q.u4, q.v4,
-			            q.x5, q.y5, 0xFFFFFFFF, q.u5, q.v5,
-			            q.x6, q.y6, 0xFFFFFFFF, q.u6, q.v6);
-			triCount += 2;
+				f32 clampedAeY2 = aeY2;
+				f32 clampedRowDist = rowDist;
+				
+				int wallEndInt = (int)ceilf(col.ray.drawEnd);
+				if (y < wallEndInt) {
+					if (yNext <= wallEndInt) continue;
+					clampedAeY2 = col.screenY;
+					f32 clampedP = col.ray.drawEnd - (f32)horizon;
+					if (fabsf(clampedP) > 0.1f) {
+						clampedRowDist = rowDistFactor / clampedP;
+					}
+				}
+
+				f32 u1_l = pos.x + clampedRowDist * col.rayDirX;
+				f32 v1_l = pos.y + clampedRowDist * col.rayDirY;
+				f32 u1_r = pos.x + clampedRowDist * col.rayDirX2;
+				f32 v1_r = pos.y + clampedRowDist * col.rayDirY2;
+
+				f32 u2_l = pos.x + rowDistNext * col.rayDirX;
+				f32 v2_l = pos.y + rowDistNext * col.rayDirY;
+				f32 u2_r = pos.x + rowDistNext * col.rayDirX2;
+				f32 v2_r = pos.y + rowDistNext * col.rayDirY2;
+
+				AEGfxTriAdd(col.screenX, clampedAeY2, 0xFFFFFFFF, u1_l, v1_l, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l);
+				AEGfxTriAdd(col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l, 
+				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
+				            col.screenX2, aeY1, 0xFFFFFFFF, u2_r, v2_r);
+				triCount += 2;
+			}
 		}
 
 		if (meshIsOpen) {
@@ -644,7 +524,7 @@ namespace Engine {
 					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
 					AEGfxSetColorToAdd(0, 0, 0, 0);
 					AEGfxSetTransparency(1.0f);
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxSetTransform(identityMtx.m);
 					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 				}
 				AEGfxMeshFree(mesh);
@@ -652,12 +532,9 @@ namespace Engine {
 		}
 	}
 
-
-
 	void TileMapRenderer::RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return;
 
-		f32 fogPrecision = (Camera::main) ? Camera::main->fogPrecision : 200.0f;
 		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
 
 		// Since columns are already sorted by tileType and fogKey, we can batch linearly
@@ -685,7 +562,7 @@ namespace Engine {
 						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 						AEGfxTextureSet(currentSprite->GetTexture(), 0, 0);
 						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						float drawFog = (float)currentFogKey / fogPrecision;
+						float drawFog = (float)currentFogKey / fog.precision;
 						AEGfxSetColorToMultiply(drawFog, drawFog, drawFog, 1.0f);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 						AEGfxSetTransparency(1.0f);
@@ -695,7 +572,7 @@ namespace Engine {
 						AEGfxSetColorToMultiply(1, 1, 1, 1);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 					}
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxSetTransform(identityMtx.m);
 					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 					AEGfxMeshFree(mesh);
 				}
@@ -720,7 +597,7 @@ namespace Engine {
 							col.screenX2, col.screenY, 0xFFFFFFFF, col.ray.wallX, col.vBottom);
 			} else {
 				Color c = (col.ray.side == 0) ? cNS : cEW;
-				float f = (float)currentFogKey / fogPrecision;
+				float f = (float)currentFogKey / fog.precision;
 				u32 wallColorU32 = (((u32)(c.r * f * 255)) << 24) | (((u32)(c.g * f * 255)) << 16) | (((u32)(c.b * f * 255)) << 8) | 0xFF;
 				AEGfxTriAdd(col.screenX, col.screenY2, wallColorU32, 0, 0, col.screenX2, col.screenY2, wallColorU32, 0, 0, col.screenX, col.screenY, wallColorU32, 0, 0);
 				AEGfxTriAdd(col.screenX, col.screenY, wallColorU32, 0, 0, col.screenX2, col.screenY2, wallColorU32, 0, 0, col.screenX2, col.screenY, wallColorU32, 0, 0);
@@ -734,7 +611,7 @@ namespace Engine {
 						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 						AEGfxTextureSet(currentSprite->GetTexture(), 0, 0);
 						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						float drawFog = (float)currentFogKey / fogPrecision;
+						float drawFog = (float)currentFogKey / fog.precision;
 						AEGfxSetColorToMultiply(drawFog, drawFog, drawFog, 1.0f);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 						AEGfxSetTransparency(1.0f);
@@ -744,7 +621,7 @@ namespace Engine {
 						AEGfxSetColorToMultiply(1, 1, 1, 1);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 					}
-					AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+					AEGfxSetTransform(identityMtx.m);
 					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 					AEGfxMeshFree(mesh);
 				}
@@ -760,7 +637,7 @@ namespace Engine {
 					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
 					AEGfxTextureSet(currentSprite->GetTexture(), 0, 0);
 					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-					float drawFog = (float)currentFogKey / fogPrecision;
+					float drawFog = (float)currentFogKey / fog.precision;
 					AEGfxSetColorToMultiply(drawFog, drawFog, drawFog, 1.0f);
 					AEGfxSetColorToAdd(0, 0, 0, 0);
 					AEGfxSetTransparency(1.0f);
@@ -770,7 +647,7 @@ namespace Engine {
 					AEGfxSetColorToMultiply(1, 1, 1, 1);
 					AEGfxSetColorToAdd(0, 0, 0, 0);
 				}
-				AEMtx33 identity; AEMtx33Identity(&identity); AEGfxSetTransform(identity.m);
+				AEGfxSetTransform(identityMtx.m);
 				AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
 				AEGfxMeshFree(mesh);
 			}
@@ -810,55 +687,5 @@ namespace Engine {
 		cachedFogDistance = fogDistance;
 	}
 
-	void TileMapRenderer::CacheScanlineDistances(int screenHeight, f32 camZ, int horizon) {
-		int screenWidth = Application::GetWindowWidth();
-		f32 planeLength = tanf((fov * 3.14159f / 180.0f) / 2.0f);
-		f32 planeWidth = (f32)screenWidth;
-
-		if (screenHeight != cachedScreenHeight || fabsf(camZ - cachedCamZ) > 0.001f || horizon != cachedHorizon) {
-			
-			// Cache ceiling scanlines (from top toward horizon)
-			f32 ceilingPosZ = 1.0f - camZ;
-			int clampedHorizon = horizon;
-			if (clampedHorizon < 0) clampedHorizon = 0;
-			if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
-
-			int ceilingRows = (clampedHorizon + ROW_STEP - 1) / ROW_STEP + 1;
-			ceilingScanlines.resize(ceilingRows);
-			
-			int idx = 0;
-			for (int y = 0; y <= clampedHorizon; y += ROW_STEP) {
-				f32 p = (f32)horizon - (f32)y;
-				if (fabsf(p) < 0.1f) {
-					ceilingScanlines[idx].rowDist = -1.0f; // Invalid
-				} else {
-					ceilingScanlines[idx].rowDist = ceilingPosZ * planeWidth / (p * planeLength * 2.0f);
-				}
-				ceilingScanlines[idx].aeY = screenHeight / 2.0f - (f32)y;
-				idx++;
-			}
-
-			// Cache floor scanlines (from horizon toward bottom)
-			f32 floorPosZ = camZ;
-			int floorRows = ((screenHeight - clampedHorizon) + ROW_STEP - 1) / ROW_STEP + 2;
-			floorScanlines.resize(floorRows);
-			
-			idx = 0;
-			for (int y = clampedHorizon; y <= screenHeight; y += ROW_STEP) {
-				f32 p = (f32)y - (f32)horizon;
-				if (fabsf(p) < 0.1f) {
-					floorScanlines[idx].rowDist = -1.0f; // Invalid
-				} else {
-					floorScanlines[idx].rowDist = floorPosZ * planeWidth / (p * planeLength * 2.0f);
-				}
-				floorScanlines[idx].aeY = screenHeight / 2.0f - (f32)y;
-				idx++;
-			}
-
-			cachedScreenHeight = screenHeight;
-			cachedCamZ = camZ;
-			cachedHorizon = horizon;
-		}
-	}
-
 } // namespace Engine
+
