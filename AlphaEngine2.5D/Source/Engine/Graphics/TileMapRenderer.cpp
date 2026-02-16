@@ -7,6 +7,8 @@
 #include "Engine/Core/Application.hpp"
 #include <cmath>
 #include <vector>
+#include <future>
+#include <algorithm>
 
 namespace Engine {
 
@@ -60,57 +62,90 @@ namespace Engine {
 
 		// Perform unified raycasting pass
 		managedColumns.clear();
-		managedColumns.reserve(screenWidth);
+		int numCols = (screenWidth + COLUMN_STEP - 1) / COLUMN_STEP;
+		managedColumns.resize(numCols);
 
-		for (int x = 0; x < screenWidth; x += COLUMN_STEP) {
-			f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
-			f32 cameraX2 = 2.0f * (x + COLUMN_STEP) / (f32)screenWidth - 1.0f;
-			
-			ColumnInfo info;
-			info.rayDirX = dirX + planeX * cameraX;
-			info.rayDirY = dirY + planeY * cameraX;
-			info.rayDirX2 = dirX + planeX * cameraX2;
-			info.rayDirY2 = dirY + planeY * cameraX2;
+		// Lambda for processing a range of columns
+		auto ProcessColumnRange = [&](int startIndex, int endIndex) {
+			for (int i = startIndex; i < endIndex; ++i) {
+				int x = i * COLUMN_STEP;
+				// Safety check for last column if screenWidth isn't multiple of COLUMN_STEP
+				if (x >= screenWidth) break;
 
-			info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, horizon, screenHeight, map);
+				f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
+				f32 cameraX2 = 2.0f * (x + COLUMN_STEP) / (f32)screenWidth - 1.0f;
 
-			f32 drawStart = info.ray.drawStart < 0 ? 0 : info.ray.drawStart;
-			f32 drawEnd = info.ray.drawEnd >= screenHeight ? (f32)screenHeight - 1 : info.ray.drawEnd;
+				ColumnInfo info;
+				info.rayDirX = dirX + planeX * cameraX;
+				info.rayDirY = dirY + planeY * cameraX;
+				info.rayDirX2 = dirX + planeX * cameraX2;
+				info.rayDirY2 = dirY + planeY * cameraX2;
 
-			// Fog LUT lookup (0.01 unit precision)
-			f32 dist = info.ray.perpWallDist;
-			int lutIdx = (int)(dist * 100.0f); 
-			if (lutIdx < 0) lutIdx = 0;
-			if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
-			
-			info.fogFactor = (Camera::main && Camera::main->fogEnabled) ? fogLUT[lutIdx] : 1.0f;
-			if (Camera::main && info.fogFactor < Camera::main->fogMinVisibility) info.fogFactor = Camera::main->fogMinVisibility;
-			if (Camera::main && info.fogFactor > Camera::main->fogMaxVisibility) info.fogFactor = Camera::main->fogMaxVisibility;
+				info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, horizon, screenHeight, map);
 
-			f32 fogPrecision = (Camera::main) ? Camera::main->fogPrecision : 200.0f;
-			info.fogKey = (int)(info.fogFactor * fogPrecision);
+				f32 drawStart = info.ray.drawStart < 0 ? 0 : info.ray.drawStart;
+				f32 drawEnd = info.ray.drawEnd >= screenHeight ? (f32)screenHeight - 1 : info.ray.drawEnd;
 
-			info.screenX = (f32)x - screenWidth / 2.0f;
-			info.screenX2 = (f32)(x + COLUMN_STEP) - screenWidth / 2.0f;
-			if (info.screenX2 > screenWidth / 2.0f) info.screenX2 = screenWidth / 2.0f;
+				// Fog LUT lookup (0.01 unit precision)
+				f32 dist = info.ray.perpWallDist;
+				int lutIdx = (int)(dist * 100.0f);
+				if (lutIdx < 0) lutIdx = 0;
+				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
 
-			info.screenY = screenHeight / 2.0f - drawEnd;
-			info.screenY2 = screenHeight / 2.0f - drawStart;
+				info.fogFactor = (Camera::main && Camera::main->fogEnabled) ? fogLUT[lutIdx] : 1.0f;
+				if (Camera::main && info.fogFactor < Camera::main->fogMinVisibility) info.fogFactor = Camera::main->fogMinVisibility;
+				if (Camera::main && info.fogFactor > Camera::main->fogMaxVisibility) info.fogFactor = Camera::main->fogMaxVisibility;
 
-			f32 unclippedHeight = info.ray.drawEnd - info.ray.drawStart;
-			info.vTop = (drawStart - info.ray.drawStart) / unclippedHeight;
-			info.vBottom = (drawEnd - info.ray.drawStart) / unclippedHeight;
+				f32 fogPrecision = (Camera::main) ? Camera::main->fogPrecision : 200.0f;
+				info.fogKey = (int)(info.fogFactor * fogPrecision);
 
-			managedColumns.push_back(info);
+				info.screenX = (f32)x - screenWidth / 2.0f;
+				info.screenX2 = (f32)(x + COLUMN_STEP) - screenWidth / 2.0f;
+				if (info.screenX2 > screenWidth / 2.0f) info.screenX2 = screenWidth / 2.0f;
 
-			// Fill Z-buffer
-			for (int i = 0; i < COLUMN_STEP && (x + i) < screenWidth; ++i) {
-				ZBuffer::SetDepth(x + i, info.ray.perpWallDist);
+				info.screenY = screenHeight / 2.0f - drawEnd;
+				info.screenY2 = screenHeight / 2.0f - drawStart;
+
+				f32 unclippedHeight = info.ray.drawEnd - info.ray.drawStart;
+				info.vTop = (drawStart - info.ray.drawStart) / unclippedHeight;
+				info.vBottom = (drawEnd - info.ray.drawStart) / unclippedHeight;
+
+				managedColumns[i] = info;
+
+				// Fill Z-buffer (thread-safe as indices are distinct per column block)
+				for (int k = 0; k < COLUMN_STEP && (x + k) < screenWidth; ++k) {
+					ZBuffer::SetDepth(x + k, info.ray.perpWallDist);
+				}
 			}
+		};
+
+		// Async launch
+		int numThreads = std::thread::hardware_concurrency();
+		if (numThreads == 0) numThreads = 2; // Fallback
+		
+		int colsPerThread = (numCols + numThreads - 1) / numThreads;
+		std::vector<std::future<void>> futures;
+
+		for (int t = 0; t < numThreads; ++t) {
+			int startIdx = t * colsPerThread;
+			int endIdx = startIdx + colsPerThread;
+			if (endIdx > numCols) endIdx = numCols;
+			
+			if (startIdx < endIdx) {
+				futures.push_back(std::async(std::launch::async, ProcessColumnRange, startIdx, endIdx));
+			}
+		}
+
+		// Wait for all
+		for (auto& f : futures) {
+			f.wait();
 		}
 
 		// Pre-cache scanline distances (only recomputes if screenHeight or camZ or horizon changed)
 		CacheScanlineDistances(screenHeight, camZ, horizon);
+
+		// Ensure linear filtering is on for potential floor/ceiling aliasing issues
+		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
 
 		// Render in order: ceiling, floor, walls (walls on top)
 		RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, managedColumns, map);
@@ -203,19 +238,21 @@ namespace Engine {
 		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
 
 		for (int y = 0; y < clampedHorizon; y += ROW_STEP) {
-			int scanIdx = y / ROW_STEP;
-			if (scanIdx >= (int)ceilingScanlines.size()) continue;
-			
-			f32 rowDist = ceilingScanlines[scanIdx].rowDist;
+			// Calculate rowDist directly (bypass cache for consistency)
+			f32 p = (f32)horizon - (f32)y;
+			f32 rowDist;
+			if (fabsf(p) < 0.1f) continue;
+			rowDist = posZ * (f32)screenWidth / (p * planeLength * 2.0f);
 			if (rowDist < 0) continue;
 
 			int yNext = y + ROW_STEP;
 			if (yNext > horizon) yNext = horizon;
-			
-			int scanIdxNext = yNext / ROW_STEP;
-			f32 rowDistNext = (scanIdxNext < (int)ceilingScanlines.size()) 
-				? ceilingScanlines[scanIdxNext].rowDist 
-				: rowDist;
+			if (yNext > clampedHorizon) yNext = clampedHorizon;
+
+			f32 pNext = (f32)horizon - (f32)yNext;
+			f32 rowDistNext;
+			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
+			else rowDistNext = posZ * (f32)screenWidth / (pNext * planeLength * 2.0f);
 			if (rowDistNext < 0) rowDistNext = rowDist;
 
 			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
@@ -234,7 +271,7 @@ namespace Engine {
 				if (fogFactor > camMax) fogFactor = camMax;
 			}
 
-			// if (fogFactor < 0.001f) continue;
+			if (fogFactor < 0.01f) continue;
 
 			int fogKey = (int)(fogFactor * fogPrecision);
 			f32 quantizedFog = (f32)fogKey / fogPrecision;
@@ -365,31 +402,20 @@ namespace Engine {
 		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
 
 		for (int y = clampedHorizon; y < screenHeight; y += ROW_STEP) {
-			int scanIdx = (y - horizon) / ROW_STEP;
-			if (scanIdx < 0) scanIdx = 0; // Safety clamp
-			if (scanIdx >= (int)floorScanlines.size()) continue;
-			
-			f32 rowDist = floorScanlines[scanIdx].rowDist;
-			
-			int yNext = y + ROW_STEP;
-			bool yNextClamped = (yNext > screenHeight);
-			if (yNextClamped) yNext = screenHeight;
-			
-			f32 rowDistNext;
-			if (yNextClamped) {
-				f32 p = (f32)yNext - (f32)horizon;
-				rowDistNext = (fabsf(p) > 0.1f) ? (posZ * planeWidth / (p * planeLength * 2.0f)) : rowDist;
-			} else {
-				int scanIdxNext = (yNext - horizon) / ROW_STEP;
-				rowDistNext = (scanIdxNext < (int)floorScanlines.size()) 
-					? floorScanlines[scanIdxNext].rowDist 
-					: rowDist;
-			}
+			// Calculate rowDist directly (bypass cache to avoid index mismatch when looking down)
+			f32 p = (f32)y - (f32)horizon;
+			f32 rowDist;
+			if (fabsf(p) < 0.1f) continue; // Too close to horizon, skip
+			rowDist = posZ * planeWidth / (p * planeLength * 2.0f);
+			if (rowDist < 0) continue;
 
-			if (rowDist < 0) {
-				if (rowDistNext > 0) rowDist = rowDistNext;
-				else continue;
-			}
+			int yNext = y + ROW_STEP;
+			if (yNext > screenHeight) yNext = screenHeight;
+
+			f32 pNext = (f32)yNext - (f32)horizon;
+			f32 rowDistNext;
+			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
+			else rowDistNext = posZ * planeWidth / (pNext * planeLength * 2.0f);
 			if (rowDistNext < 0) rowDistNext = rowDist;
 
 			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
@@ -408,7 +434,7 @@ namespace Engine {
 				if (fogFactor > camMax) fogFactor = camMax;
 			}
 
-			// if (fogFactor < 0.001f) continue;
+			if (fogFactor < 0.01f) continue;
 
 			int fogKey = (int)(fogFactor * fogPrecision);
 			f32 quantizedFog = (f32)fogKey / fogPrecision;
@@ -528,6 +554,9 @@ namespace Engine {
 		for (const auto& col : columns) {
 			// Vertical Culling: skip if entirely above/below or zero height
 			if (col.ray.drawEnd < 0 || col.ray.drawStart > screenHeight || col.screenY == col.screenY2) continue;
+
+			// Fog Culling
+			if (col.fogFactor < 0.01f) continue;
 
 			// If type or fog changed, flush
 			if (meshIsOpen && (col.ray.tileType != currentTileType || col.fogKey != currentFogKey)) {

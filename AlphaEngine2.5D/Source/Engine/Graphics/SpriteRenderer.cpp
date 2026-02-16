@@ -167,6 +167,16 @@ namespace Engine {
 
 			AEGfxVertexList* dynamicMesh = AEGfxMeshEnd();
 			if (dynamicMesh) {
+				// Camera-based exponential fog (consistent with TileMapRenderer)
+				f32 fog = 1.0f;
+				if (Camera::main && Camera::main->fogEnabled) {
+					fog = expf(-proj.perpDistance / Camera::main->fogDistance);
+					if (fog < Camera::main->fogMinVisibility) fog = Camera::main->fogMinVisibility;
+					if (fog > Camera::main->fogMaxVisibility) fog = Camera::main->fogMaxVisibility;
+				}
+
+				AEGfxSetColorToMultiply(color.r * fog, color.g * fog, color.b * fog, color.a);
+
 				AEMtx33 identity;
 				AEMtx33Identity(&identity);
 				AEGfxSetTransform(identity.m); // We use screen space coords directly
