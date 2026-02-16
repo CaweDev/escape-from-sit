@@ -252,7 +252,13 @@ namespace Game {
 
             auto player = CreateGameObject("Player");
             playerCam = player->AddComponent<Camera>();
-
+            
+            // Enable fog for atmospheric effect
+            playerCam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
+            playerCam->fogEnabled = true;
+            playerCam->fogDistance = 2.f;  // Fade over 8 units
+            playerCam->fogMinVisibility = -0.1f;  // Slight visibility at max distance
+            playerCam->fogMaxVisibility = 0.6f;  // Full brightness close up
             auto rb = player->AddComponent<Rigidbody2D>();
             rb->gravityScale = 1.0f;
             rb->drag = 5.0f;

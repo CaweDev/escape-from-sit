@@ -7,6 +7,7 @@
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
 #include "Game/Scenes/UITestScene/UITestScene.hpp"
 #include "Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp"
+#include "Game/Scenes/MainMenuScene/MainMenuScene.hpp"
 
 namespace Game {
 
@@ -16,6 +17,7 @@ using namespace Engine;
 inline FPSScene fpsScene;
 inline UITestScene uiTestScene;
 inline InteractionDemoScene interactionDemoScene;
+inline MainMenuScene mainMenuScene;
 
 
 /**
@@ -24,6 +26,7 @@ inline InteractionDemoScene interactionDemoScene;
  */
 inline void RegisterAllScenes() {
     SceneManager::RegisterScene("FPS", &fpsScene);
+    SceneManager::RegisterScene("MainMenu", &mainMenuScene);
     SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
     SceneManager::RegisterScene("UI", &uiTestScene);
 }

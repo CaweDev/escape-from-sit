@@ -26,8 +26,8 @@ namespace Engine {
 	class TileMapRenderer : public IRenderer {
 	private:
 		// Rendering resolution constants
-		static constexpr int COLUMN_STEP = 1;
-		static constexpr int ROW_STEP = 16;
+		static constexpr int COLUMN_STEP = 8;
+		static constexpr int ROW_STEP = 8;
 		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
 
 	public:
@@ -108,25 +108,28 @@ namespace Engine {
 			f32 screenY, screenY2;
 			f32 vTop, vBottom;
 			f32 fogFactor;
+			int fogKey; // Added for sorting-based batching
 		};
 
-		// Cached scanline data to avoid per-frame recalculation
-		struct ScanlineInfo {
-			f32 rowDist;      // Distance from camera to this scanline's floor/ceiling
-			f32 aeY;          // Screen Y coordinate in AE space
-		};
+		// Per-frame cached values (computed once in Render())
+		f32 cachedPlaneLength = 0.0f; // tanf(fov_half_rad), avoids redundant tanf calls
 
-		// Cached scanline tables (indexed by screen Y)
-		std::vector<ScanlineInfo> ceilingScanlines;  // For rows 0 to horizon
-		std::vector<ScanlineInfo> floorScanlines;    // For rows horizon to screenHeight
-		int cachedScreenHeight = 0;
-		f32 cachedCamZ = -999.0f;
-		int cachedHorizon = -999;
+		// Cached fog settings from Camera::main (refreshed per frame)
+		struct FogSettings {
+			bool enabled = false;
+			f32 distance = 20.0f;
+			f32 minVisibility = 0.2f;
+			f32 maxVisibility = 1.0f;
+			f32 precision = 200.0f;
+		} fog;
+
+		f32 cachedFogDistance = -1.0f; // Track LUT validity
+		std::vector<f32> fogLUT;
+		std::vector<ColumnInfo> managedColumns; // Pre-allocated column buffer
+		AEMtx33 identityMtx; // Pre-computed identity matrix for transforms
 
 		void CreateColumnMesh();
-		
-		// Precompute scanline distances for floor/ceiling
-		void CacheScanlineDistances(int screenHeight, f32 camZ, int horizon);
+		void UpdateFogLUT(f32 fogDistance);
 
 		// Raycast helper
 		RaycastResult CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, f32 camZ, 

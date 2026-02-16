@@ -61,6 +61,7 @@
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Game\UI\GameScene\PlayerHUD.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->

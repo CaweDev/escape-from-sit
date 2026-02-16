@@ -188,8 +188,13 @@ void DoorRenderer::Render() {
             f32 aeY_top = screenHeight / 2.0f - drawStart;
             f32 aeY_bot = screenHeight / 2.0f - drawEnd;
 
-            f32 fog = 1.0f - (perpDist / 20.0f);
-            if (fog < 0.2f) fog = 0.2f;
+            // Camera-based exponential fog (consistent with TileMapRenderer)
+            f32 fog = 1.0f;
+            if (Camera::main && Camera::main->fogEnabled) {
+                fog = expf(-perpDist / Camera::main->fogDistance);
+                if (fog < Camera::main->fogMinVisibility) fog = Camera::main->fogMinVisibility;
+                if (fog > Camera::main->fogMaxVisibility) fog = Camera::main->fogMaxVisibility;
+            }
 
             Color c = (door->facing == DoorFacing::NorthSouth) ? colorNS : colorEW;
             if (highlighted) {
