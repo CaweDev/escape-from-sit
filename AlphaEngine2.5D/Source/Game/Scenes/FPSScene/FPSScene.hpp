@@ -165,7 +165,7 @@ namespace Game {
             playerCam = player->AddComponent<Camera>();
             
             // Enable fog for atmospheric effect
-            playerCam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
+            playerCam->backgroundColor = Color(0.0f, 1.0f, 0.0f, 1.0f);
             playerCam->fogEnabled = true;
             playerCam->fogDistance = 2.f;  // Fade over 8 units
             playerCam->fogMinVisibility = -0.1f;  // Slight visibility at max distance

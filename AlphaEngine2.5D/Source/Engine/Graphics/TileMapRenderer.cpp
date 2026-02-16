@@ -60,6 +60,7 @@ namespace Engine {
 
 		// Perform unified raycasting pass
 		managedColumns.clear();
+		managedColumns.reserve(screenWidth);
 
 		for (int x = 0; x < screenWidth; x += COLUMN_STEP) {
 			f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
@@ -233,7 +234,7 @@ namespace Engine {
 				if (fogFactor > camMax) fogFactor = camMax;
 			}
 
-			if (fogFactor < 0.001f) continue;
+			// if (fogFactor < 0.001f) continue;
 
 			int fogKey = (int)(fogFactor * fogPrecision);
 			f32 quantizedFog = (f32)fogKey / fogPrecision;
@@ -407,7 +408,7 @@ namespace Engine {
 				if (fogFactor > camMax) fogFactor = camMax;
 			}
 
-			if (fogFactor < 0.001f) continue;
+			// if (fogFactor < 0.001f) continue;
 
 			int fogKey = (int)(fogFactor * fogPrecision);
 			f32 quantizedFog = (f32)fogKey / fogPrecision;

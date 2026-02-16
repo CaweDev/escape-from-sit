@@ -25,8 +25,8 @@ inline MainMenuScene mainMenuScene;
  * Call this once after engine initialization
  */
 inline void RegisterAllScenes() {
-    SceneManager::RegisterScene("MainMenu", &mainMenuScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
+    SceneManager::RegisterScene("MainMenu", &mainMenuScene);
     SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
     SceneManager::RegisterScene("UI", &uiTestScene);
 }
