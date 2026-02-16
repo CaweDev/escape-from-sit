@@ -117,6 +117,16 @@ namespace Engine {
 			f32 aeY;          // Screen Y coordinate in AE space
 		};
 
+		// Pre-computed quad for parallel floor/ceiling rendering
+		struct FloorCeilQuad {
+			f32 x1, y1, x2, y2, x3, y3; // Triangle 1 positions
+			f32 u1, v1, u2, v2, u3, v3; // Triangle 1 UVs
+			f32 x4, y4, x5, y5, x6, y6; // Triangle 2 positions
+			f32 u4, v4, u5, v5, u6, v6; // Triangle 2 UVs
+			int fogKey;
+			f32 quantizedFog;
+		};
+
 		// Cached scanline tables (indexed by screen Y)
 		std::vector<ScanlineInfo> ceilingScanlines;  // For rows 0 to horizon
 		std::vector<ScanlineInfo> floorScanlines;    // For rows horizon to screenHeight
@@ -126,6 +136,8 @@ namespace Engine {
 		f32 cachedFogDistance = -1.0f; // Track LUT validity
 		std::vector<f32> fogLUT;
 		std::vector<ColumnInfo> managedColumns; // Pre-allocated column buffer
+		std::vector<FloorCeilQuad> ceilingQuads; // Pre-allocated ceiling quad buffer
+		std::vector<FloorCeilQuad> floorQuads;   // Pre-allocated floor quad buffer
 
 		void CreateColumnMesh();
 		
