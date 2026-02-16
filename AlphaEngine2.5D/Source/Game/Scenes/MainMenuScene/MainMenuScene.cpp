@@ -387,7 +387,7 @@ namespace Game {
 
     void MainMenuScene::OnPlayClicked() {
         std::cout << "Play clicked - Loading game scene..." << std::endl;
-        SceneManager::LoadScene("FPSScene");
+        SceneManager::LoadWithScreen("FPS");
     }
 
     void MainMenuScene::OnOptionsClicked() {
