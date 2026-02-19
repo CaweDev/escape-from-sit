@@ -35,11 +35,10 @@ void UITestScene::OnLoad() {
     // 2. Add a title text at the top of the panel
     Text* title = panel->CreateChild<Text>();
     title->name = "TitleText";
-    title->rectTransform.anchorMin = { 0.0f, 1.0f };
-    title->rectTransform.anchorMax = { 1.0f, 1.0f };
-    title->rectTransform.pivot = { 0.5f, 1.0f };
-    title->rectTransform.anchoredPosition = { 0.0f, -20.0f };
-    title->rectTransform.sizeDelta = { 0.0f, 60.0f };
+    title->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
+    title->SetPivot({ 0.5f, 1.0f });
+    title->SetAnchoredPosition({ 0.0f, -20.0f });
+    title->SetSizeDelta({ 0.0f, 60.0f });
     title->SetText("UI Test Scene");
     title->SetFontSize(2.5f);
     title->SetColor(Engine::Color::white());
@@ -48,10 +47,9 @@ void UITestScene::OnLoad() {
     // 3. Create a vertical layout group for the main menu buttons
     VerticalLayoutGroup* vlg = panel->CreateChild<VerticalLayoutGroup>();
     vlg->name = "MenuLayout";
-    vlg->rectTransform.anchorMin = { 0.0f, 0.3f };
-    vlg->rectTransform.anchorMax = { 1.0f, 0.8f };
-    vlg->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-    vlg->rectTransform.sizeDelta = { -40.0f, 0.0f }; // Horizontal padding
+    vlg->SetAnchors({ 0.0f, 0.3f }, { 1.0f, 0.8f });
+    vlg->SetAnchoredPosition({ 0.0f, 0.0f });
+    vlg->SetSizeDelta({ -40.0f, 0.0f }); // Horizontal padding
     vlg->SetSpacing(15.0f);
     vlg->SetChildAlignment(ChildAlignment::UpperCenter);
     vlg->SetChildForceExpandWidth(true);
@@ -61,7 +59,7 @@ void UITestScene::OnLoad() {
     for (int i = 0; i < 3; ++i) {
         Button* btn = vlg->CreateChild<Button>();
         btn->name = buttonNames[i];
-        btn->rectTransform.sizeDelta = { 0.0f, 60.0f };
+        btn->SetSizeDelta({ 0.0f, 60.0f });
         btn->SetText(buttonNames[i]);
         btn->SetBackgroundColor(Engine::Color(0.3f, 0.3f, 0.5f, 1.0f));
         
@@ -73,10 +71,9 @@ void UITestScene::OnLoad() {
     // 4. Add a horizontal layout group at the bottom for some "badges"
     HorizontalLayoutGroup* hlg = panel->CreateChild<HorizontalLayoutGroup>();
     hlg->name = "BadgeLayout";
-    hlg->rectTransform.anchorMin = { 0.0f, 0.0f };
-    hlg->rectTransform.anchorMax = { 1.0f, 0.2f };
-    hlg->rectTransform.anchoredPosition = { 0.0f, 20.0f };
-    hlg->rectTransform.sizeDelta = { -40.0f, 0.0f };
+    hlg->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.2f });
+    hlg->SetAnchoredPosition({ 0.0f, 20.0f });
+    hlg->SetSizeDelta({ -40.0f, 0.0f });
     hlg->SetSpacing(20.0f);
     hlg->SetChildAlignment(ChildAlignment::MiddleCenter);
 
@@ -85,7 +82,7 @@ void UITestScene::OnLoad() {
     for (int i = 0; i < 3; ++i) {
         Image* badge = hlg->CreateChild<Image>();
         badge->name = "Badge";
-        badge->rectTransform.sizeDelta = { 40.0f, 40.0f };
+        badge->SetSizeDelta({ 40.0f, 40.0f });
         badge->SetColor(badgeColors[i]);
     }
     

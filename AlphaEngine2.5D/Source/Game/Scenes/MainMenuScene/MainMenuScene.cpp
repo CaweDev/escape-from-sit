@@ -41,7 +41,7 @@ namespace Game {
         cam->fogPrecision = 10000.f;
         cam->fogDistance = 0.7f;
         cam->fogMinVisibility = 0.f;
-        cam->fogMaxVisibility = 0.7f;
+        cam->fogMaxVisibility = 0.5f;
 
         cameraTf->position = Vector3(50.0f, 1.5f, baseHeight);  // X=forward, Y=lateral (0.5=center), Z=height
         cameraTf->rotation = baseRotation;
@@ -50,13 +50,20 @@ namespace Game {
         wrapEnd = 90.0f;
 
         // ========== Enemy Shadow Setup ==========
+		
         enemyShadow = CreateGameObject("EnemyShadow");
-        auto shadowSprite = enemyShadow->AddComponent<SpriteRenderer>();
-        shadowSprite->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));  // Same as SecurityGuard
+        auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
+        {
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png", 5, 4);  // sprite sheet
+			shadowSheet->AddAnimation("Rolling", 2, 15, 15.f);  // Roll
+            shadowSprite->SetSpriteSheet(shadowSheet);
+            shadowSprite->SetIgnoreFog(true);
+			shadowSprite->Play("Rolling");
+        }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
         enemyShadow->transform->position = Vector3(54.0f, 1.5f, 0.f);  // X=ahead, Y=center of corridor, Z=ground
-        enemyShadow->transform->localScale = Vector2(0.5f, 1.0f);
+        enemyShadow->transform->localScale = Vector2(1.0f, 1.0f);
 
         // Initialize enemy timing
         enemyTimer = 0.0f;
@@ -72,32 +79,30 @@ namespace Game {
         // === Title (centered at top) - starts empty for typewriter effect ===
         titleText = menuCanvas->CreateChild<Text>();
         titleText->name = "MainTitle";
-        titleText->rectTransform.anchorMin = { 0.0f, 0.82f };
-        titleText->rectTransform.anchorMax = { 1.0f, 0.95f };
-        titleText->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        titleText->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        titleText->SetAnchors({ 0.0f, 0.82f }, { 1.0f, 0.95f });
+        titleText->SetAnchoredPosition({ 0.0f, 0.0f });
+        titleText->SetSizeDelta({ 0.0f, 0.0f });
         titleText->SetText("");  // Start empty for typewriter
         titleText->SetFontSize(5.0f);
         titleText->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
         titleText->SetAnchor(TextAnchor::MiddleCenter);
+        titleText->SetRenderOrder(100);
 
         // === Thin white line below title ===
         Image* titleUnderline = menuCanvas->CreateChild<Image>();
         titleUnderline->name = "TitleUnderline";
-        titleUnderline->rectTransform.anchorMin = { 0.3f, 0.80f };
-        titleUnderline->rectTransform.anchorMax = { 0.7f, 0.80f };
-        titleUnderline->rectTransform.pivot = { 0.5f, 0.5f };
-        titleUnderline->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        titleUnderline->rectTransform.sizeDelta = { 0.0f, 2.0f };
+        titleUnderline->SetAnchors({ 0.3f, 0.80f }, { 0.7f, 0.80f });
+        titleUnderline->SetPivot({ 0.5f, 0.5f });
+        titleUnderline->SetAnchoredPosition({ 0.0f, 0.0f });
+        titleUnderline->SetSizeDelta({ 0.0f, 2.0f });
         titleUnderline->SetColor(Color(1.0f, 1.0f, 1.0f, 0.7f));
 
         // === Menu container (right side, below title) ===
         Panel* menuPanel = menuCanvas->CreateChild<Panel>();
         menuPanel->name = "MenuPanel";
-        menuPanel->rectTransform.anchorMin = { 0.55f, 0.15f };
-        menuPanel->rectTransform.anchorMax = { 0.98f, 0.75f };
-        menuPanel->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        menuPanel->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        menuPanel->SetAnchors({ 0.55f, 0.15f }, { 0.98f, 0.75f });
+        menuPanel->SetAnchoredPosition({ 0.0f, 0.0f });
+        menuPanel->SetSizeDelta({ 0.0f, 0.0f });
         // No background - transparent
 
         // Menu items configuration
@@ -123,10 +128,9 @@ namespace Game {
 
             item.label = menuPanel->CreateChild<Text>();
             item.label->name = configs[i].text;
-            item.label->rectTransform.anchorMin = { 0.4f, yPositions[i] - 0.06f };
-            item.label->rectTransform.anchorMax = { 1.0f, yPositions[i] + 0.06f };
-            item.label->rectTransform.anchoredPosition = { 0.0f, 0.0f };  // Start at final position
-            item.label->rectTransform.sizeDelta = { 0.0f, 0.0f };
+            item.label->SetAnchors({ 0.4f, yPositions[i] - 0.06f }, { 1.0f, yPositions[i] + 0.06f });
+            item.label->SetAnchoredPosition({ 0.0f, 0.0f });  // Start at final position
+            item.label->SetSizeDelta({ 0.0f, 0.0f });
             item.label->SetText(configs[i].text);
             item.label->SetFontSize(configs[i].fontSize);
             item.label->SetColor(Color(0.6f, 0.6f, 0.6f, 1.0f));  // Start visible
@@ -155,10 +159,9 @@ namespace Game {
         // === Footer ===
         Text* versionText = menuCanvas->CreateChild<Text>();
         versionText->name = "VersionText";
-        versionText->rectTransform.anchorMin = { 0.02f, 0.02f };
-        versionText->rectTransform.anchorMax = { 0.3f, 0.08f };
-        versionText->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        versionText->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        versionText->SetAnchors({ 0.02f, 0.02f }, { 0.3f, 0.08f });
+        versionText->SetAnchoredPosition({ 0.0f, 0.0f });
+        versionText->SetSizeDelta({ 0.0f, 0.0f });
         versionText->SetText("v0.1.0");
         versionText->SetFontSize(1.4f);
         versionText->SetColor(Color(0.5f, 0.5f, 0.5f, 0.8f));
@@ -166,14 +169,23 @@ namespace Game {
 
         Text* copyrightText = menuCanvas->CreateChild<Text>();
         copyrightText->name = "CopyrightText";
-        copyrightText->rectTransform.anchorMin = { 0.7f, 0.02f };
-        copyrightText->rectTransform.anchorMax = { 0.98f, 0.08f };
-        copyrightText->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        copyrightText->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        copyrightText->SetAnchors({ 0.7f, 0.02f }, { 0.98f, 0.08f });
+        copyrightText->SetAnchoredPosition({ 0.0f, 0.0f });
+        copyrightText->SetSizeDelta({ 0.0f, 0.0f });
         copyrightText->SetText("DigiPen Institute of Technology");
         copyrightText->SetFontSize(1.4f);
         copyrightText->SetColor(Color(0.5f, 0.5f, 0.5f, 0.8f));
         copyrightText->SetAnchor(TextAnchor::LowerRight);
+
+        // === Crosshair (follows mouse) ===
+        crosshairImage = menuCanvas->CreateChild<Image>();
+        crosshairImage->name = "Crosshair";
+        crosshairImage->SetSprite(AssetManager::GetTexture("Assets/UI/crosshair_highlight.png"));
+        crosshairImage->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+        crosshairImage->SetPivot({ 0.5f, 0.5f });
+        crosshairImage->SetSizeDelta({ 300.f, 300.f });
+		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.4f));  // Start invisible
+        crosshairImage->SetRenderOrder(1); // Always on top
 
         // Reset animation states
         typewriterTime = 0.0f;
@@ -223,11 +235,11 @@ namespace Game {
     void MainMenuScene::UpdateEnemySighting(float dt) {
         if (!enemyShadow) return;
 
-        auto shadowSprite = enemyShadow->GetComponent<SpriteRenderer>();
+        auto shadowSprite = enemyShadow->GetComponent<SpriteSheetRenderer>();
         if (!shadowSprite) return;
 
         // Camera faces backwards (rotation ~180), so enemy should be at LOWER X to be in front
-        float enemyX = cameraTf->position.x - 4.0f;
+        float enemyX = cameraTf->position.x - 2.0f;
         
         // Clamp to valid corridor range
         if (enemyX < 0.0f) enemyX = 0.0f;
@@ -259,14 +271,14 @@ namespace Game {
         
         if (centerProximity > threshold) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
-            targetAlpha += t * 0.6f;  // Max 70% opacity
+            targetAlpha += t * 0.7f;  // Max 100% opacity
         }
 
         // Smooth alpha transition
         enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * 5.0f);
 
         // Apply dark silhouette effect (darkened sprite with alpha)
-        float darkness = 0.4f;  // Very dark silhouette
+        float darkness = 0.1f;  // Very dark silhouette
         shadowSprite->SetColor(Color(darkness, darkness, darkness, enemyAlpha));
     }
 
@@ -284,7 +296,9 @@ namespace Game {
             menuCanvas = nullptr;
         }
         titleText = nullptr;
+        crosshairImage = nullptr;
         enemyShadow = nullptr;
+
         menuItems.clear();
         menuItemTexts.clear();
         menuItemFontSizes.clear();
@@ -311,6 +325,13 @@ namespace Game {
         float normalizedMouseX = (mouseX / screenWidth - 0.5f) * 2.0f;
 
         cameraTf->rotation = baseRotation - normalizedMouseX * 3.0f;
+
+        // Update crosshair position to follow mouse
+        if (crosshairImage) {
+            f32 canvasX, canvasY;
+            menuCanvas->ScreenToCanvasPosition(mouseX, mouseY, canvasX, canvasY);
+            crosshairImage->SetAnchoredPosition({ canvasX, canvasY });
+        }
 
         // Update enemy sighting
         UpdateEnemySighting(dt);

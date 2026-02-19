@@ -5,6 +5,7 @@
  */
 
 #include "../Graphics/Sprite.hpp"
+#include "../Graphics/SpriteSheet.hpp"
 #include "../Graphics/Texture2D.hpp"
 #include <string>
 #include <unordered_map>
@@ -22,6 +23,7 @@ namespace Engine
     {
     private:
         static std::unordered_map<std::string, Sprite*> s_spriteCache;
+        static std::unordered_map<std::string, SpriteSheet*> s_spritesheetCache;
         static std::unordered_map<std::string, Texture2D*> s_textureCache;
 
         // Prevent instantiation
@@ -72,9 +74,28 @@ namespace Engine
         static size_t GetTextureCacheSize() { return s_textureCache.size(); }
 
         /**
+         * @brief Get or load a SpriteSheet from file
+         * @param filepath Path to the spritesheet image (PNG)
+         * @param rows Number of rows in the spritesheet grid
+         * @param cols Number of columns in the spritesheet grid
+         * @return Pointer to cached SpriteSheet (owned by AssetManager)
+         */
+        static SpriteSheet* GetSpriteSheet(const std::string& filepath, int rows, int cols);
+
+        /**
+         * @brief Unload a specific SpriteSheet from cache
+         */
+        static void UnloadSpriteSheet(const std::string& filepath);
+
+        /**
          * @brief Check if a sprite is cached
          */
         static bool HasSprite(const std::string& filepath);
+
+        /**
+         * @brief Check if a spritesheet is cached
+         */
+        static bool HasSpriteSheet(const std::string& filepath);
 
         /**
          * @brief Check if a texture is cached

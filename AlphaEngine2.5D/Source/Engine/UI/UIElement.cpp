@@ -240,4 +240,16 @@ namespace UI
         SetDirty();
     }
 
+    void UIElement::SetAnchorMin(const AEVec2& min)
+    {
+        rectTransform.anchorMin = min;
+        SetDirty();
+    }
+
+    void UIElement::SetAnchorMax(const AEVec2& max)
+    {
+        rectTransform.anchorMax = max;
+        SetDirty();
+    }
+
 } // namespace UI

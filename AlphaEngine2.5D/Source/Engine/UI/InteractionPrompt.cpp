@@ -8,11 +8,10 @@ namespace UI {
 
 InteractionPrompt::InteractionPrompt() {
     // Position below screen center (where crosshair is)
-    rectTransform.anchorMin = { 0.5f, 0.5f };
-    rectTransform.anchorMax = { 0.5f, 0.5f };
-    rectTransform.pivot = { 0.5f, 1.0f };  // Pivot at top center
-    rectTransform.anchoredPosition = { 0.0f, -40.0f };  // Below crosshair
-    rectTransform.sizeDelta = { 200.0f, 30.0f };
+    SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+    SetPivot({ 0.5f, 1.0f });  // Pivot at top center
+    SetAnchoredPosition({ 0.0f, -40.0f });  // Below crosshair
+    SetSizeDelta({ 200.0f, 30.0f });
     
     // Not a raycast target
     raycastTarget = false;
@@ -24,9 +23,8 @@ InteractionPrompt::InteractionPrompt() {
     m_text->SetFontSize(1.0f);
     
     // Fill parent
-    m_text->rectTransform.anchorMin = { 0.0f, 0.0f };
-    m_text->rectTransform.anchorMax = { 1.0f, 1.0f };
-    m_text->rectTransform.sizeDelta = { 0.0f, 0.0f };
+    m_text->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+    m_text->SetSizeDelta({ 0.0f, 0.0f });
     
     // Start hidden
     visible = false;

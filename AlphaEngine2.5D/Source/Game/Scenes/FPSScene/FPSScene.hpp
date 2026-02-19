@@ -14,7 +14,7 @@
 #include "Game/Player.hpp"
 #include "Game/SecurityGuard.hpp"
 #include "Game/CCTVCamera.hpp"
-#include "Game/UI/GameScene/PlayerHUD.hpp"
+#include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/CCTVPlacement.hpp"
 
@@ -116,11 +116,10 @@ namespace Game {
 
             modalTitle = modalPanel->CreateChild<UI::Text>();
             modalTitle->name = "EndTitle";
-            modalTitle->rectTransform.anchorMin = { 0.0f, 1.0f };
-            modalTitle->rectTransform.anchorMax = { 1.0f, 1.0f };
-            modalTitle->rectTransform.pivot = { 0.5f, 1.0f };
-            modalTitle->rectTransform.anchoredPosition = { 0.0f, -24.0f };
-            modalTitle->rectTransform.sizeDelta = { 0.0f, 64.0f };
+            modalTitle->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
+            modalTitle->SetPivot({ 0.5f, 1.0f });
+            modalTitle->SetAnchoredPosition({ 0.0f, -24.0f });
+            modalTitle->SetSizeDelta({ 0.0f, 64.0f });
             modalTitle->SetText("");
             modalTitle->SetFontSize(3.0f);
             modalTitle->SetColor(Engine::Color::white());
@@ -128,11 +127,10 @@ namespace Game {
 
             modalButton = modalPanel->CreateChild<UI::Button>();
             modalButton->name = "EndButton";
-            modalButton->rectTransform.anchorMin = { 0.5f, 0.0f };
-            modalButton->rectTransform.anchorMax = { 0.5f, 0.0f };
-            modalButton->rectTransform.pivot = { 0.5f, 0.0f };
-            modalButton->rectTransform.anchoredPosition = { 0.0f, 20.0f };
-            modalButton->rectTransform.sizeDelta = { 240.0f, 56.0f };
+            modalButton->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+            modalButton->SetPivot({ 0.5f, 0.0f });
+            modalButton->SetAnchoredPosition({ 0.0f, 20.0f });
+            modalButton->SetSizeDelta({ 240.0f, 56.0f });
             modalButton->SetText("Restart");
             modalButton->SetBackgroundColor(Engine::Color(0.25f, 0.5f, 0.25f, 1.0f));
 

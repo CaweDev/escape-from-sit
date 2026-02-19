@@ -30,6 +30,7 @@ namespace Game {
         // UI
         Canvas* menuCanvas = nullptr;
         Text* titleText = nullptr;
+        Image* crosshairImage = nullptr;
         float titlePulseTime = 0.0f;
 
         // Menu items

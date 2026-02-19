@@ -26,20 +26,18 @@ namespace Game
         // Create minimap in bottom-left corner
         m_minimap = m_canvas->CreateChild<UI::Minimap>();
         m_minimap->name = "Minimap";
-        m_minimap->rectTransform.anchorMin = { 0.0f, 0.0f };
-        m_minimap->rectTransform.anchorMax = { 0.0f, 0.0f };
-        m_minimap->rectTransform.pivot = { 0.0f, 0.0f };
-        m_minimap->rectTransform.anchoredPosition = { m_minimapMargin, m_minimapMargin };
-        m_minimap->rectTransform.sizeDelta = { m_minimapWidth, m_minimapHeight };
+        m_minimap->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+        m_minimap->SetPivot({ 0.0f, 0.0f });
+        m_minimap->SetAnchoredPosition({ m_minimapMargin, m_minimapMargin });
+        m_minimap->SetSizeDelta({ m_minimapWidth, m_minimapHeight });
 
         // Create full map centered on screen (hidden by default)
         m_map = m_canvas->CreateChild<UI::Map>();
         m_map->name = "FullMap";
-        m_map->rectTransform.anchorMin = { 0.5f, 0.5f };
-        m_map->rectTransform.anchorMax = { 0.5f, 0.5f };
-        m_map->rectTransform.pivot = { 0.5f, 0.5f };
-        m_map->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_map->rectTransform.sizeDelta = { m_mapWidth, m_mapHeight };
+        m_map->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+        m_map->SetPivot({ 0.5f, 0.5f });
+        m_map->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_map->SetSizeDelta({ m_mapWidth, m_mapHeight });
         m_map->visible = false;
 
      

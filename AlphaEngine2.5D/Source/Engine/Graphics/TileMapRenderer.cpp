@@ -56,7 +56,7 @@ namespace Engine {
 		f32 planeY = -dirX * planeLength;
 
 		// Cache fog settings from Camera::main once per frame (#3)
-		fog.enabled = (Camera::main && Camera::main->fogEnabled);
+		fog.enabled = (Camera::main && Camera::main->fogEnabled && !ignoreFog);
 		fog.distance = (Camera::main) ? Camera::main->fogDistance : 20.0f;
 		fog.minVisibility = (Camera::main) ? Camera::main->fogMinVisibility : 0.2f;
 		fog.maxVisibility = (Camera::main) ? Camera::main->fogMaxVisibility : 1.0f;

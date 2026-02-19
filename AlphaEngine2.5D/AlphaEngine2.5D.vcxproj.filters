@@ -48,10 +48,17 @@
     <ClCompile Include="Source\Engine\UI\InteractionPrompt.cpp" />
     <ClCompile Include="Source\Engine\UI\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Minimap.cpp" />
-    <ClCompile Include="Source\Game\UI\GameScene\PlayerHUD.cpp" />
     <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
     <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
     <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
+    <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
+    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
+    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
+    <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -114,9 +121,17 @@
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Engine\UI\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Minimap.hpp" />
-    <ClInclude Include="Source\Game\UI\GameScene\PlayerHUD.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
+    <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
+    <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

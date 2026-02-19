@@ -304,10 +304,9 @@ namespace UI
 
         m_fadeImage = m_fadeCanvas->CreateChild<Image>();
         m_fadeImage->name = "FadeOverlay";
-        m_fadeImage->rectTransform.anchorMin = { 0.0f, 0.0f };
-        m_fadeImage->rectTransform.anchorMax = { 1.0f, 1.0f };
-        m_fadeImage->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_fadeImage->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        m_fadeImage->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+        m_fadeImage->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_fadeImage->SetSizeDelta({ 0.0f, 0.0f });
         m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.0f));
         m_fadeImage->raycastTarget = false;
         m_fadeImage->visible = false;

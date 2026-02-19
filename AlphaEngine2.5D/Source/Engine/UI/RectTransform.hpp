@@ -8,6 +8,8 @@
 
 namespace UI
 {
+	class UIElement; // Forward declaration for friend class access
+
     /**
      * @struct Rect
      * @brief Represents a rectangle in world coordinates
@@ -47,7 +49,6 @@ namespace UI
      */
     class RectTransform
     {
-    public:
         // Anchor points relative to parent (0-1 normalized)
         AEVec2 anchorMin;       // Bottom-left anchor point
         AEVec2 anchorMax;       // Top-right anchor point
@@ -71,6 +72,8 @@ namespace UI
         {
         }
 
+		friend class UIElement; // Allow UIElement to access private members for simplicity
+    public:
         /**
          * @brief Calculate the world-space rectangle given a parent rect
          * @param parentRect The parent element's world rect (or canvas rect for root elements)

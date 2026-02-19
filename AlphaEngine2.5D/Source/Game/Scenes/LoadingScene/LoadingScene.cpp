@@ -31,19 +31,17 @@ namespace Game {
         // ========== Background ==========
         m_background = m_canvas->CreateChild<Panel>();
         m_background->name = "LoadingBg";
-        m_background->rectTransform.anchorMin = { 0.0f, 0.0f };
-        m_background->rectTransform.anchorMax = { 1.0f, 1.0f };
-        m_background->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_background->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        m_background->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+        m_background->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_background->SetSizeDelta({ 0.0f, 0.0f });
         m_background->SetBackgroundColor(Color(0.0f, 0.0f, 0.0f, 1.0f));
 
         // ========== Loading Text ==========
         m_loadingText = m_canvas->CreateChild<Text>();
         m_loadingText->name = "LoadingText";
-        m_loadingText->rectTransform.anchorMin = { 0.3f, 0.50f };
-        m_loadingText->rectTransform.anchorMax = { 0.7f, 0.65f };
-        m_loadingText->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_loadingText->rectTransform.sizeDelta = { 0.0f, 0.0f };
+        m_loadingText->SetAnchors({ 0.3f, 0.50f }, { 0.7f, 0.65f });
+        m_loadingText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_loadingText->SetSizeDelta({ 0.0f, 0.0f });
         m_loadingText->SetText("LOADING");
         m_loadingText->SetFontSize(3.0f);
         m_loadingText->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
@@ -52,21 +50,19 @@ namespace Game {
         // ========== Progress Bar Background ==========
         m_progressBarBg = m_canvas->CreateChild<Image>();
         m_progressBarBg->name = "ProgressBarBg";
-        m_progressBarBg->rectTransform.anchorMin = { 0.3f, 0.40f };
-        m_progressBarBg->rectTransform.anchorMax = { 0.7f, 0.40f };
-        m_progressBarBg->rectTransform.pivot = { 0.5f, 0.5f };
-        m_progressBarBg->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_progressBarBg->rectTransform.sizeDelta = { 0.0f, 8.0f };
+        m_progressBarBg->SetAnchors({ 0.3f, 0.40f }, { 0.7f, 0.40f });
+        m_progressBarBg->SetPivot({ 0.5f, 0.5f });
+        m_progressBarBg->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_progressBarBg->SetSizeDelta({ 0.0f, 8.0f });
         m_progressBarBg->SetColor(Color(0.2f, 0.2f, 0.2f, 1.0f));
 
         // ========== Progress Bar Fill ==========
         m_progressBarFill = m_canvas->CreateChild<Image>();
         m_progressBarFill->name = "ProgressBarFill";
-        m_progressBarFill->rectTransform.anchorMin = { 0.3f, 0.40f };
-        m_progressBarFill->rectTransform.anchorMax = { 0.7f, 0.40f };
-        m_progressBarFill->rectTransform.pivot = { 0.5f, 0.5f };
-        m_progressBarFill->rectTransform.anchoredPosition = { 0.0f, 0.0f };
-        m_progressBarFill->rectTransform.sizeDelta = { 0.0f, 8.0f };
+        m_progressBarFill->SetAnchors({ 0.3f, 0.40f }, { 0.7f, 0.40f });
+        m_progressBarFill->SetPivot({ 0.5f, 0.5f });
+        m_progressBarFill->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_progressBarFill->SetSizeDelta({ 0.0f, 8.0f });
         m_progressBarFill->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
         m_progressBarFill->SetFillAmount(0.0f);
         m_progressBarFill->SetRenderOrder(1);

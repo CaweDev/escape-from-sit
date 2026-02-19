@@ -8,11 +8,10 @@ namespace UI {
 
 Crosshair::Crosshair() {
     // Center the crosshair on screen by default
-    rectTransform.anchorMin = { 0.5f, 0.5f };
-    rectTransform.anchorMax = { 0.5f, 0.5f };
-    rectTransform.pivot = { 0.5f, 0.5f };
-    rectTransform.anchoredPosition = { 0.0f, 0.0f };
-    rectTransform.sizeDelta = { 32.0f, 32.0f }; // Default size
+    SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+    SetPivot({ 0.5f, 0.5f });
+    SetAnchoredPosition({ 0.0f, 0.0f });
+    SetSizeDelta({ 32.0f, 32.0f }); // Default size
     
     // Crosshair shouldn't block raycasts
     raycastTarget = false;

@@ -169,7 +169,7 @@ namespace Engine {
 			if (dynamicMesh) {
 				// Camera-based exponential fog (consistent with TileMapRenderer)
 				f32 fog = 1.0f;
-				if (Camera::main && Camera::main->fogEnabled) {
+				if (Camera::main && Camera::main->fogEnabled && !ignoreFog) {
 					fog = expf(-proj.perpDistance / Camera::main->fogDistance);
 					if (fog < Camera::main->fogMinVisibility) fog = Camera::main->fogMinVisibility;
 					if (fog > Camera::main->fogMaxVisibility) fog = Camera::main->fogMaxVisibility;

@@ -28,8 +28,18 @@ public:
     /** If true, renders with highlight effect (used by InteractionController) */
     bool highlighted = false;
 
+    /** Set whether this renderer ignores camera fog */
+    void SetIgnoreFog(bool value) { ignoreFog = value; }
+
+    /** Get whether this renderer ignores camera fog */
+    bool GetIgnoreFog() const { return ignoreFog; }
+
     /** Color added when highlighted (additive glow effect) */
     Color highlightColor = Color(0.2f, 0.2f, 0.0f, 0.0f);
+
+protected:
+    /** If true, this renderer ignores camera fog (renders at full brightness) */
+    bool ignoreFog = false;
 };
 
 } // namespace Engine

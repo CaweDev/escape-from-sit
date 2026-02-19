@@ -136,6 +136,10 @@ namespace UI
          * @brief Set the anchor points (0-1 normalized relative to parent)
          */
         void SetAnchors(const AEVec2& min, const AEVec2& max);
+        void SetAnchorMin(const AEVec2& min);
+        void SetAnchorMax(const AEVec2& max);
+        AEVec2 GetAnchorMin() const { return rectTransform.anchorMin; }
+        AEVec2 GetAnchorMax() const { return rectTransform.anchorMax; }
 
         /**
          * @brief Mark this element's world rect as needing recalculation

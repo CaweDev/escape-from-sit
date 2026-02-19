@@ -38,7 +38,7 @@ namespace UI
         for (auto* child : children)
         {
             if (!child->enabled) continue;
-            totalWidth += child->rectTransform.sizeDelta.x;
+            totalWidth += child->GetSizeDelta().x;
         }
         totalWidth += m_spacing * (childCount - 1);
 
@@ -71,8 +71,8 @@ namespace UI
         {
             if (!child->enabled) continue;
 
-            f32 childWidth = child->rectTransform.sizeDelta.x;
-            f32 childHeight = m_childForceExpandHeight ? contentRect.height : child->rectTransform.sizeDelta.y;
+            f32 childWidth = child->GetSizeDelta().x;
+            f32 childHeight = m_childForceExpandHeight ? contentRect.height : child->GetSizeDelta().y;
 
             // Calculate Y position based on alignment
             f32 childY = contentRect.GetCenterY();
@@ -97,11 +97,10 @@ namespace UI
 
             // Set child position (left of child at currentX)
             currentX += childWidth * 0.5f;
-            child->rectTransform.anchorMin = { 0.5f, 0.5f };
-            child->rectTransform.anchorMax = { 0.5f, 0.5f };
-            child->rectTransform.pivot = { 0.5f, 0.5f };
-            child->rectTransform.anchoredPosition = { currentX - contentRect.GetCenterX(), childY - contentRect.GetCenterY() };
-            child->rectTransform.sizeDelta = { childWidth, childHeight };
+            child->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+            child->SetPivot({ 0.5f, 0.5f });
+            child->SetAnchoredPosition({ currentX - contentRect.GetCenterX(), childY - contentRect.GetCenterY() });
+            child->SetSizeDelta({ childWidth, childHeight });
             
             currentX += childWidth * 0.5f + m_spacing;
             child->SetDirty();

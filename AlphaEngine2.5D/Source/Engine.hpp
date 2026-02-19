@@ -23,6 +23,8 @@
 #include "Engine/Graphics/IRenderer.hpp"
 #include "Engine/Graphics/Sprite.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/SpriteSheet.hpp"
+#include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Graphics/TileMapRenderer.hpp"
 #include "Engine/Graphics/ZBuffer.hpp"
 
