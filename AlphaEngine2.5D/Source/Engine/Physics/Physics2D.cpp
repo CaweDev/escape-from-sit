@@ -19,14 +19,14 @@ namespace Engine {
 
 // Static member initialization
 f32 Physics2D::gravity = 9.81f;
-f32 Physics2D::fixedDeltaTime = 0.02f;
+
 TileMap* Physics2D::tileMap = nullptr;
 std::vector<Collider2D*> Physics2D::colliders;
 std::vector<Rigidbody2D*> Physics2D::rigidbodies;
 
 void Physics2D::FixedUpdate() {
     f32 dt = Time::fixedDeltaTime;
-    if (dt <= 0) dt = fixedDeltaTime;
+	if (dt <= EPSILON) return; // Avoid division by zero and unnecessary calculations
     
     // Update all rigidbodies
     for (Rigidbody2D* rb : rigidbodies) {

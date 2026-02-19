@@ -47,9 +47,6 @@ public:
     /** Global gravity (units per second squared) */
     static f32 gravity;
     
-    /** Fixed timestep for physics (default 0.02 = 50Hz) */
-    static f32 fixedDeltaTime;
-    
     /** Reference to the active tilemap for wall collision */
     static TileMap* tileMap;
 
