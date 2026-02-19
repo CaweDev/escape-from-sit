@@ -108,22 +108,22 @@ public:
     // Collision callbacks (override in derived components)
     
     /** Called when collision starts */
-    virtual void OnCollisionEnter2D(const Collision2D& collision) {}
+    virtual void OnCollisionEnter2D(const Collision2D&) {}
     
     /** Called every frame while colliding */
-    virtual void OnCollisionStay2D(const Collision2D& collision) {}
+    virtual void OnCollisionStay2D(const Collision2D&) {}
     
     /** Called when collision ends */
-    virtual void OnCollisionExit2D(const Collision2D& collision) {}
+    virtual void OnCollisionExit2D(const Collision2D&) {}
     
     /** Called when trigger overlap starts */
-    virtual void OnTriggerEnter2D(Collider2D* other) {}
+    virtual void OnTriggerEnter2D(Collider2D*) {}
     
     /** Called every frame while overlapping trigger */
-    virtual void OnTriggerStay2D(Collider2D* other) {}
+    virtual void OnTriggerStay2D(Collider2D*) {}
     
     /** Called when trigger overlap ends */
-    virtual void OnTriggerExit2D(Collider2D* other) {}
+    virtual void OnTriggerExit2D(Collider2D*) {}
 };
 
 } // namespace Engine
