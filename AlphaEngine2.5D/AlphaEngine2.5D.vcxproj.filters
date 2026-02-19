@@ -134,8 +134,15 @@
     <ClInclude Include="Source\Engine\UI\Specialized\InteractionPrompt.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Minimap.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AlphaEngine2.5D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\Brocsama.ico" />
   </ItemGroup>
 </Project>

@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
@@ -156,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AlphaEngine2.5D.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\Brocsama.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

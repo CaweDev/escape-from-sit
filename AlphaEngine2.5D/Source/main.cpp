@@ -29,7 +29,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1280, 720, 1, 60, false, NULL);
-    AESysSetWindowTitle("Totally not Unity Engine. It's Alpha Engine!!!");
+    AESysSetWindowTitle("Escape From SIT");
+	AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
 
     // Initialize UI System
     UI::UIManager::Initialize();
