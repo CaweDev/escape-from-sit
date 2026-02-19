@@ -6,10 +6,10 @@
  */
 
 #include "Engine/Scene/Scene.hpp"
-#include "Engine/UI/Canvas.hpp"
-#include "Engine/UI/Text.hpp"
-#include "Engine/UI/Image.hpp"
-#include "Engine/UI/Panel.hpp"
+#include "Engine/UI/Core/Canvas.hpp"
+#include "Engine/UI/Components/Text.hpp"
+#include "Engine/UI/Components/Image.hpp"
+#include "Engine/UI/Components/Panel.hpp"
 #include <string>
 
 namespace Game {

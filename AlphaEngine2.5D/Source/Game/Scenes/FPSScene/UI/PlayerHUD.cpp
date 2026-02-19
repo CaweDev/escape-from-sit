@@ -4,7 +4,7 @@
  */
 
 #include "PlayerHUD.hpp"
-#include "Engine/UI/UIManager.hpp"
+#include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/AssetManager.hpp"
 

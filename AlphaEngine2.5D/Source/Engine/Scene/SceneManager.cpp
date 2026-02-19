@@ -3,7 +3,7 @@
  * @brief Implementation of SceneManager class
  */
 #include "SceneManager.hpp"
-#include "Engine/UI/UIManager.hpp"
+#include "Engine/UI/Core/UIManager.hpp"
 
 namespace Engine {
 

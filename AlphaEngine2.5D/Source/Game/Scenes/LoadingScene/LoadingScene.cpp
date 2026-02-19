@@ -4,7 +4,7 @@
  */
 #include "LoadingScene.hpp"
 #include "Engine/Scene/SceneManager.hpp"
-#include "Engine/UI/UIManager.hpp"
+#include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/Core/Time.hpp"
 #include "Engine/Graphics/Color.hpp"
 

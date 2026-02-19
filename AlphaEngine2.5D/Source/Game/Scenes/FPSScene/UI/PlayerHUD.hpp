@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Engine/Core/Component.hpp"
-#include "Engine/UI/Canvas.hpp"
-#include "Engine/UI/Minimap.hpp"
-#include "Engine/UI/Map.hpp"
+#include "Engine/UI/Core/Canvas.hpp"
+#include "Engine/UI/Specialized/Minimap.hpp"
+#include "Engine/UI/Specialized/Map.hpp"
 #include "Engine/TileMap/TileMap.hpp"
 #include <vector>
 namespace Game
