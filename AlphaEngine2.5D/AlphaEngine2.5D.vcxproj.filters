@@ -59,6 +59,7 @@
     <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
+    <ClCompile Include="Source\Engine\UI\SpriteSheetImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
+    <ClInclude Include="Source\Engine\UI\SpriteSheetImage.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

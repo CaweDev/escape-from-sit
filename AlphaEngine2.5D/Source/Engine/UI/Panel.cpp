@@ -32,14 +32,14 @@ namespace UI
     void Panel::SetBackgroundColor(const Engine::Color& color)
     {
         EnsureBackground();
-        m_background->SetSprite(nullptr);
+        m_background->SetTexture(nullptr);
         m_background->SetColor(color);
     }
 
     void Panel::SetBackgroundSprite(Engine::Texture2D* texture)
     {
         EnsureBackground();
-        m_background->SetSprite(texture);
+        m_background->SetTexture(texture);
         m_background->SetColor(Engine::Color::white());
     }
 

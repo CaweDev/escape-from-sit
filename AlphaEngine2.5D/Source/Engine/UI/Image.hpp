@@ -18,7 +18,6 @@ namespace UI
     {
         Simple,     // Stretch to fill rect
         Sliced,     // 9-slice scaling (future enhancement)
-        Tiled       // Tile texture (future enhancement)
     };
 
     /**
@@ -32,7 +31,7 @@ namespace UI
     class Image : public UIElement
     {
     private:
-        Engine::Texture2D* m_sprite = nullptr;      // Texture to render (not owned)
+        Engine::Texture2D* m_texture = nullptr;      // Texture to render (not owned)
         Engine::Color m_color;               // Color tint/solid color
         ImageType m_imageType = ImageType::Simple;
         f32 m_fillAmount = 1.0f;            // For progress bars (0-1)
@@ -47,11 +46,11 @@ namespace UI
         void Render() override;
 
         /**
-         * @brief Set the sprite texture
+         * @brief Set the texture
          * @param texture Texture to display (nullptr for solid color)
          */
-        void SetSprite(Engine::Texture2D* texture) { m_sprite = texture; }
-        Engine::Texture2D* GetSprite() const { return m_sprite; }
+        void SetTexture(Engine::Texture2D* texture) { m_texture = texture; }
+        Engine::Texture2D* GetTexture() const { return m_texture; }
 
         /**
          * @brief Set the color (tint if texture, solid if no texture)

@@ -96,6 +96,7 @@ namespace Game {
         titleUnderline->SetAnchoredPosition({ 0.0f, 0.0f });
         titleUnderline->SetSizeDelta({ 0.0f, 2.0f });
         titleUnderline->SetColor(Color(1.0f, 1.0f, 1.0f, 0.7f));
+		titleUnderline->SetRenderOrder(100);
 
         // === Menu container (right side, below title) ===
         Panel* menuPanel = menuCanvas->CreateChild<Panel>();
@@ -103,6 +104,7 @@ namespace Game {
         menuPanel->SetAnchors({ 0.55f, 0.15f }, { 0.98f, 0.75f });
         menuPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         menuPanel->SetSizeDelta({ 0.0f, 0.0f });
+		menuPanel->SetRenderOrder(100);
         // No background - transparent
 
         // Menu items configuration
@@ -178,13 +180,22 @@ namespace Game {
         copyrightText->SetAnchor(TextAnchor::LowerRight);
 
         // === Crosshair (follows mouse) ===
-        crosshairImage = menuCanvas->CreateChild<Image>();
-        crosshairImage->name = "Crosshair";
-        crosshairImage->SetSprite(AssetManager::GetTexture("Assets/UI/crosshair_highlight.png"));
+        crosshairImage = menuCanvas->CreateChild<SpriteSheetImage>();
+        crosshairImage->name = "Flashlight";
+        {
+            SpriteSheet* crosshairSheet = AssetManager::GetSpriteSheet("Assets/UI/flashlight_spritesheet.png", 1, 20);
+			crosshairSheet->AddAnimation("Flash", 0, 20, 30.f, true);  // Flash animation
+            
+            //SpriteSheet* crosshairSheet = AssetManager::GetSpriteSheet("Assets/UI/flashlight.png", 1, 2);
+			//crosshairSheet->AddAnimation("Flash", 0, 2, 10.f, true);  // Flash animation
+            
+            crosshairImage->SetSpriteSheet(crosshairSheet);
+			crosshairImage->Play("Flash");
+        }
         crosshairImage->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         crosshairImage->SetPivot({ 0.5f, 0.5f });
         crosshairImage->SetSizeDelta({ 300.f, 300.f });
-		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.4f));  // Start invisible
+		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.8f));  // Yellow
         crosshairImage->SetRenderOrder(1); // Always on top
 
         // Reset animation states
@@ -269,7 +280,8 @@ namespace Game {
         float threshold = 0.6f;
         float targetAlpha = 0.3f;
         
-        if (centerProximity > threshold) {
+		// If mouse is within proximity, and flashlight is on, increase silhouette visibility
+        if (centerProximity > threshold && crosshairImage->visible) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
             targetAlpha += t * 0.7f;  // Max 100% opacity
         }
@@ -331,6 +343,11 @@ namespace Game {
             f32 canvasX, canvasY;
             menuCanvas->ScreenToCanvasPosition(mouseX, mouseY, canvasX, canvasY);
             crosshairImage->SetAnchoredPosition({ canvasX, canvasY });
+
+            // If right click pressed
+            if (Input::GetMouseButtonDown(1)) {
+				crosshairImage->visible = !crosshairImage->visible;  // Toggle visibility on right-click
+            }
         }
 
         // Update enemy sighting

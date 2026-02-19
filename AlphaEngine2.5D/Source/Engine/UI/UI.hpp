@@ -17,6 +17,7 @@
 
 // Components (Phase 2)
 #include "Image.hpp"
+#include "SpriteSheetImage.hpp"
 #include "Text.hpp"
 #include "Panel.hpp"
 

@@ -40,9 +40,9 @@ void Crosshair::SetHighlighted(bool highlighted) {
 
 void Crosshair::UpdateTexture() {
     if (m_highlighted && m_highlightTexture) {
-        SetSprite(m_highlightTexture);
+        SetTexture(m_highlightTexture);
     } else {
-        SetSprite(m_defaultTexture);
+        SetTexture(m_defaultTexture);
     }
 }
 

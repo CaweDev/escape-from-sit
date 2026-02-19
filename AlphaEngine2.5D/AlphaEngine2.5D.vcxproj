@@ -43,6 +43,7 @@
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
     <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
+    <ClCompile Include="Source\Engine\UI\SpriteSheetImage.cpp" />
     <ClCompile Include="Source\Engine\UI\Button.cpp" />
     <ClCompile Include="Source\Engine\UI\Canvas.cpp" />
     <ClCompile Include="Source\Engine\UI\Crosshair.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
+    <ClInclude Include="Source\Engine\UI\SpriteSheetImage.hpp" />
     <ClInclude Include="Source\Engine\UI\Button.hpp" />
     <ClInclude Include="Source\Engine\UI\Canvas.hpp" />
     <ClInclude Include="Source\Engine\UI\Crosshair.hpp" />

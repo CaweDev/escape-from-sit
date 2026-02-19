@@ -30,10 +30,10 @@ namespace UI
         AEMtx33Concat(&transform, &translate, &scale);
 
         // Set render state
-        if (m_sprite && m_sprite->IsLoaded())
+        if (m_texture && m_texture->IsLoaded())
         {
             AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-            AEGfxTextureSet(m_sprite->GetNativeTexture(), 0, 0);
+            AEGfxTextureSet(m_texture->GetNativeTexture(), 0, 0);
         }
         else
         {
