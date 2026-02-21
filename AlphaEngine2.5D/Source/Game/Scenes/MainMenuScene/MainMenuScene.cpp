@@ -197,6 +197,12 @@ namespace Game {
         crosshairImage->SetSizeDelta({ 300.f, 300.f });
 		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.8f));  // Yellow
         crosshairImage->SetRenderOrder(1); // Always on top
+        {
+            Vector2 mousePos = Input::GetMousePosition();
+            auto canvasPos = menuCanvas->ScreenToCanvasPosition(static_cast<s32>(mousePos.x), static_cast<s32>(mousePos.y));
+            crosshairImage->SetAnchoredPosition({ canvasPos.x, canvasPos.y });
+        }
+      
 
         // Reset animation states
         typewriterTime = 0.0f;
@@ -340,9 +346,8 @@ namespace Game {
 
         // Update crosshair position to follow mouse
         if (crosshairImage) {
-            f32 canvasX, canvasY;
-            menuCanvas->ScreenToCanvasPosition(mouseX, mouseY, canvasX, canvasY);
-            crosshairImage->SetAnchoredPosition({ canvasX, canvasY });
+            auto canvasPos = menuCanvas->ScreenToCanvasPosition(mouseX, mouseY);
+            crosshairImage->SetAnchoredPosition({ canvasPos.x, canvasPos.y });
 
             // If right click pressed
             if (Input::GetMouseButtonDown(1)) {
@@ -369,8 +374,8 @@ namespace Game {
             }
 
             // Mouse hover detection
-            f32 worldX, worldY;
-            menuCanvas->ScreenToCanvasPosition(mouseX, mouseY, worldX, worldY);
+            auto canvasPos = menuCanvas->ScreenToCanvasPosition(mouseX, mouseY);
+            f32 worldX = canvasPos.x, worldY = canvasPos.y;
 
             int newHovered = -1;
             for (int i = 0; i < static_cast<int>(menuItems.size()); ++i) {
@@ -425,7 +430,7 @@ namespace Game {
 
     void MainMenuScene::OnPlayClicked() {
         std::cout << "Play clicked - Loading game scene..." << std::endl;
-        SceneManager::LoadWithScreen("FPS");
+        SceneManager::LoadWithLoadingScreen("FPS");
     }
 
     void MainMenuScene::OnOptionsClicked() {

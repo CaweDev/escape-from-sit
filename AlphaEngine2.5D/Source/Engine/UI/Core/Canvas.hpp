@@ -7,6 +7,7 @@
 #include "AEEngine.h"
 #include "Engine/UI/Core/RectTransform.hpp"
 #include "Engine/UI/Core/UIElement.hpp"
+#include "Engine/Math/Vector2.hpp"
 #include <vector>
 
 namespace UI
@@ -129,10 +130,9 @@ namespace UI
          * @brief Convert screen coordinates to canvas world coordinates
          * @param screenX Screen X (from AEInputGetCursorPosition)
          * @param screenY Screen Y (from AEInputGetCursorPosition)
-         * @param outWorldX Output world X
-         * @param outWorldY Output world Y
+         * @return canvas world coordinates
          */
-        void ScreenToCanvasPosition(s32 screenX, s32 screenY, f32& outWorldX, f32& outWorldY) const;
+        Engine::Vector2 ScreenToCanvasPosition(s32 screenX, s32 screenY) const;
 
         /**
          * @brief Raycast to find the topmost element at a world position

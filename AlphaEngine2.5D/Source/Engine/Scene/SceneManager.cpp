@@ -7,21 +7,25 @@
 
 namespace Engine {
 
-Scene* SceneManager::activeScene = nullptr;
-std::unordered_map<std::string, Scene*> SceneManager::sceneRegistry;
+f32 SceneManager::s_defaultLoadScreenFadeInDuration = 1.f;
+f32 SceneManager::s_defaultLoadScreenFadeOutDuration = 1.f;
+Scene* SceneManager::s_activeScene = nullptr;
+std::unordered_map<std::string, Scene*> SceneManager::s_sceneRegistry;
 std::string SceneManager::s_pendingScene;
 bool SceneManager::s_hasPendingScene = false;
 std::string SceneManager::s_loadWithScreenTarget;
+f32 SceneManager::s_loadWithScreenFadeInDuration = 1.f;
+f32 SceneManager::s_loadWithScreenFadeOutDuration = 1.f;
 
 void SceneManager::LoadScene(const std::string& sceneName) {
-    auto it = sceneRegistry.find(sceneName);
-    if (it != sceneRegistry.end()) {
+    auto it = s_sceneRegistry.find(sceneName);
+    if (it != s_sceneRegistry.end()) {
         LoadSceneInternal(it->second);
     }
 }
 
 void SceneManager::LoadScene(int buildIndex) {
-    for (auto& pair : sceneRegistry) {
+    for (auto& pair : s_sceneRegistry) {
         if (pair.second->buildIndex == buildIndex) {
             LoadSceneInternal(pair.second);
             return;
@@ -30,22 +34,22 @@ void SceneManager::LoadScene(int buildIndex) {
 }
 
 Scene* SceneManager::GetActiveScene() {
-    return activeScene;
+    return s_activeScene;
 }
 
 void SceneManager::RegisterScene(const std::string& name, Scene* scene) {
     scene->name = name;
-    scene->buildIndex = static_cast<int>(sceneRegistry.size());
-    sceneRegistry[name] = scene;
+    scene->buildIndex = static_cast<int>(s_sceneRegistry.size());
+    s_sceneRegistry[name] = scene;
 }
 
 int SceneManager::GetSceneCount() {
-    return static_cast<int>(sceneRegistry.size());
+    return static_cast<int>(s_sceneRegistry.size());
 }
 
 void SceneManager::UpdateActiveScene() {
-    if (activeScene && activeScene->IsLoaded()) {
-        activeScene->UpdateInternal();
+    if (s_activeScene && s_activeScene->IsLoaded()) {
+        s_activeScene->UpdateInternal();
     }
 
     // Process deferred scene load at end of update cycle
@@ -62,12 +66,18 @@ void SceneManager::LoadSceneDeferred(const std::string& sceneName) {
     s_hasPendingScene = true;
 }
 
-void SceneManager::LoadWithScreen(const std::string& sceneName) {
+void SceneManager::LoadWithLoadingScreen(const std::string& sceneName) {
+    LoadWithLoadingScreen(sceneName, s_defaultLoadScreenFadeInDuration, s_defaultLoadScreenFadeOutDuration);
+}
+
+void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
     s_loadWithScreenTarget = sceneName;
+    s_loadWithScreenFadeInDuration = fadeInDuration;
+    s_loadWithScreenFadeOutDuration = fadeOutDuration;
 
     auto* ui = UI::UIManager::GetInstance();
     if (ui) {
-        ui->FadeIn(0.4f, []() {
+        ui->FadeIn(fadeInDuration, []() {
             LoadScene("Loading");
         });
     }
@@ -77,16 +87,36 @@ void SceneManager::LoadWithScreen(const std::string& sceneName) {
     }
 }
 
+void SceneManager::LoadWithFade(const std::string& sceneName) {
+    LoadWithFade(sceneName, s_defaultLoadScreenFadeInDuration, s_defaultLoadScreenFadeOutDuration);
+}
+
+void SceneManager::LoadWithFade(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
+    auto* ui = UI::UIManager::GetInstance();
+    if (ui) {
+        ui->FadeIn(fadeInDuration, [sceneName, fadeOutDuration]() {
+            LoadScene(sceneName);
+            auto* ui = UI::UIManager::GetInstance();
+            if (ui) {
+                ui->FadeOut(fadeOutDuration);
+            }
+        });
+    }
+    else {
+        LoadScene(sceneName);
+    }
+}
+
 void SceneManager::RenderActiveScene() {
-    if (activeScene && activeScene->IsLoaded()) {
-        activeScene->RenderInternal();
+    if (s_activeScene && s_activeScene->IsLoaded()) {
+        s_activeScene->RenderInternal();
     }
 }
 
 void SceneManager::LoadFirstScene() {
-    if (!sceneRegistry.empty()) {
+    if (!s_sceneRegistry.empty()) {
         Scene* first = nullptr;
-        for (auto& pair : sceneRegistry) {
+        for (auto& pair : s_sceneRegistry) {
             if (!first || pair.second->buildIndex < first->buildIndex) {
                 first = pair.second;
             }
@@ -98,21 +128,21 @@ void SceneManager::LoadFirstScene() {
 }
 
 void SceneManager::UnloadActiveScene() {
-    if (activeScene) {
-        activeScene->UnloadInternal();
-        activeScene = nullptr;
+    if (s_activeScene) {
+        s_activeScene->UnloadInternal();
+        s_activeScene = nullptr;
     }
 }
 
 void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     
-    if (activeScene) {
-        activeScene->UnloadInternal();
+    if (s_activeScene) {
+        s_activeScene->UnloadInternal();
     }
     
-    activeScene = newScene;
-    activeScene->LoadInternal();
+    s_activeScene = newScene;
+    s_activeScene->LoadInternal();
 }
 
 } // namespace Engine

@@ -140,15 +140,14 @@ namespace UI
         }
     }
 
-    void Canvas::ScreenToCanvasPosition(s32 screenX, s32 screenY, f32& outWorldX, f32& outWorldY) const
+    Engine::Vector2 Canvas::ScreenToCanvasPosition(s32 screenX, s32 screenY) const
     {
         f32 screenWidth = static_cast<f32>(Engine::Application::GetWindowWidth());
         f32 screenHeight = static_cast<f32>(Engine::Application::GetWindowHeight());
  
         // Screen coordinates: (0,0) at top-left, Y increases downward
         // World coordinates: (0,0) at center, Y increases upward
-        outWorldX = static_cast<f32>(screenX) - screenWidth * 0.5f;
-        outWorldY = screenHeight * 0.5f - static_cast<f32>(screenY);
+        return Engine::Vector2(static_cast<f32>(screenX) - screenWidth * 0.5f, screenHeight * 0.5f - static_cast<f32>(screenY));
     }
 
     UIElement* Canvas::Raycast(f32 worldX, f32 worldY) const

@@ -9,6 +9,7 @@
 #include "Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp"
 #include "Game/Scenes/MainMenuScene/MainMenuScene.hpp"
 #include "Game/Scenes/LoadingScene/LoadingScene.hpp"
+#include "Game/Scenes/SplashScene/SplashScene.hpp"
 
 namespace Game {
 
@@ -20,13 +21,14 @@ inline UITestScene uiTestScene;
 inline InteractionDemoScene interactionDemoScene;
 inline MainMenuScene mainMenuScene;
 inline LoadingScene loadingScene;
-
+inline SplashScene splashScene;
 
 /**
  * @brief Register all game scenes with the SceneManager
  * Call this once after engine initialization
  */
 inline void RegisterAllScenes() {
+	SceneManager::RegisterScene("SplashScene", &splashScene);
     SceneManager::RegisterScene("MainMenu", &mainMenuScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
     SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);
