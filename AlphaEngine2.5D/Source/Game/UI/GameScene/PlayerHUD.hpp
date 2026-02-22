@@ -77,11 +77,8 @@ namespace Game
        
         UI::Minimap* GetMinimap() const { return m_minimap; }
         void AddEnemyTransform(Engine::Transform* enemyTransform);
-
-
         void AddCCTVTransform(Engine::Transform* cctvTransform);
-        void ClearCCTVs();
-
+        void ClearCCTVs() { m_cctvTransforms.clear(); }
 
         /**
          * @brief Toggle the full map visibility

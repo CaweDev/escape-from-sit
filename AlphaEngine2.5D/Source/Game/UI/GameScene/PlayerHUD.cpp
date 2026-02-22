@@ -7,7 +7,8 @@
 #include "Engine/UI/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/AssetManager.hpp"
-
+#include "Engine/Core/Time.hpp"
+#include "AEGraphics.h"
 namespace Game
 {
     PlayerHUD::~PlayerHUD()
@@ -71,6 +72,11 @@ namespace Game
             SetPlayerTransform(transform);
         }
     }
+    void PlayerHUD::ShowCCTVAlert(float duration)
+    {
+        m_showCCTVAlert = true;
+        m_cctvAlertTimer = duration;
+    }
 
     void PlayerHUD::Update()
     {
@@ -78,6 +84,26 @@ namespace Game
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
         {
             ToggleMap();
+        }
+        if (m_showCCTVAlert)
+        {
+            m_cctvAlertTimer -= Engine::Time::deltaTime;
+            if (m_cctvAlertTimer <= 0.0f)
+            {
+                m_showCCTVAlert = false;
+                AEGfxPrint(
+                    1,
+                    "CCTV SPOTTED YOU",
+                    -0.25f,
+                    0.75f,
+                    1.3f,
+                    1.0f,
+                    0.2f,
+                    0.2f,
+                    1.0f
+                );
+
+            }
         }
     }
 

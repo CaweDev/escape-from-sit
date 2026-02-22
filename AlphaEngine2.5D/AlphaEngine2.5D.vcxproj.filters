@@ -41,17 +41,7 @@
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
-    <ClCompile Include="Source\Engine\UI\Crosshair.cpp" />
-    <ClCompile Include="Source\Engine\UI\InteractionPrompt.cpp" />
-    <ClCompile Include="Source\Engine\UI\Map.cpp" />
-    <ClCompile Include="Source\Engine\UI\Minimap.cpp" />
-    <ClCompile Include="Source\Game\UI\GameScene\PlayerHUD.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
-    <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
-    <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
+    <ClCompile Include="Source\Game\MiniMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -106,17 +96,7 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard.hpp" />
-    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
-    <ClInclude Include="Source\Engine\UI\Crosshair.hpp" />
-    <ClInclude Include="Source\Engine\UI\InteractionPrompt.hpp" />
-    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
-    <ClInclude Include="Source\Engine\UI\Map.hpp" />
-    <ClInclude Include="Source\Engine\UI\Minimap.hpp" />
-    <ClInclude Include="Source\Game\UI\GameScene\PlayerHUD.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
+    <ClInclude Include="Source\Game\MiniMap.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
