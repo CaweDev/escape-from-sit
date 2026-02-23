@@ -1,11 +1,12 @@
 #include "NPC.hpp"
 #include <cmath>
 #include <algorithm>
-
+#include "Engine/Core/GameObject.hpp"
 namespace Game
 {
     void NPC::Initialize()
     {
+        m_rb = gameObject->GetComponent<Engine::Rigidbody2D>();
         activeTimer = 0.0f;
         repathTimer = 0.0f;
         path.clear();
@@ -29,12 +30,29 @@ namespace Game
 
     void NPC::UpdateAnnoying(float dt)
     {
-        if (PlayerInRange())
+        if (PlayerInRange() && playerTf)
         {
             activeTimer = blockTime;
 
-            if (path.empty() || pathIndex >= (int)path.size())
-                RequestGoalInZone_BiasedNearPlayer();
+          
+            repathTimer -= dt;
+            if (path.empty() || pathIndex >= (int)path.size() || repathTimer <= 0.0f)
+            {
+                int nx, ny; GetCurrentTile(nx, ny);
+                int px = (int)playerTf->position.x;
+                int py = (int)playerTf->position.y;
+
+                int gx = nx + (px > nx ? 1 : (px < nx ? -1 : 0));
+                int gy = ny + (py > ny ? 1 : (py < ny ? -1 : 0));
+
+             
+                if (tileMap->IsWalkable((float)gx + 0.5f, (float)gy + 0.5f))
+                    BuildPathBFS_ToGoal(gx, gy);
+                else
+                    RequestGoalInZone_BiasedNearPlayer();
+
+                repathTimer = 0.25f; 
+            }
         }
 
         if (activeTimer > 0.0f)
@@ -118,7 +136,11 @@ namespace Game
 
     void NPC::FollowPath(float dt)
     {
-        if (path.empty() || pathIndex >= (int)path.size()) return;
+        if (path.empty() || pathIndex >= (int)path.size())
+        {
+            if (m_rb) m_rb->velocity = Engine::Vector2(0, 0);
+            return;
+        }
 
         Engine::Vector2 tgt = path[pathIndex];
 
@@ -139,8 +161,17 @@ namespace Game
             dy /= len;
         }
 
-        transform->position.x += dx * speed * dt;
-        transform->position.y += dy * speed * dt;
+        Engine::Vector2 vel(dx * speed, dy * speed);
+
+        if (m_rb)
+        {
+            m_rb->velocity = vel;  // move with physics
+        }
+        else
+        {
+            transform->position.x += vel.x * dt;
+            transform->position.y += vel.y * dt;
+        }
     }
 
     void NPC::BuildPathBFS_ToGoal(int gx, int gy)

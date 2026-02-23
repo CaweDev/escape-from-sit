@@ -382,14 +382,21 @@ namespace Game {
 
             playerHUD->AddEnemyTransform(enemy->transform);
 
+          
             auto* npcGO1 = CreateGameObject("NPC_Annoying_Z1");
 
-            npcGO1->transform->position = Vector2(6.5f, 6.5f);
+ 
+            {
+                int sx = 0, sy = 0;
+                const Zone* z = GetZone(1);
+                if (z) PickRandomWalkableInZone(*z, map, sx, sy);
+                npcGO1->transform->position = Vector2((float)sx + 0.5f, (float)sy + 0.5f);
+            }
 
             auto* npc1 = npcGO1->AddComponent<Game::NPC>();
             npc1->tileMap = map;
             npc1->playerTf = playerTf;
-            npc1->zoneId = 1; // your zones are 1..4
+            npc1->zoneId = 1;
             npc1->type = Game::NPCType::Annoying;
 
             npc1->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
@@ -399,14 +406,31 @@ namespace Game {
                 });
 
             auto* npcSR1 = npcGO1->AddComponent<SpriteRenderer>();
-            npcSR1->SetSprite(AssetManager::GetSprite("Assets/xav.jpg")); 
+            npcSR1->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
             npcSR1->billboard = true;
             npcSR1->sortingOrder = 95;
 
+            auto* rb1 = npcGO1->AddComponent<Rigidbody2D>();
+            rb1->bodyType = RigidbodyType2D::Dynamic;
+            rb1->gravityScale = 0.0f;
+            rb1->drag = 8.0f;
 
+            auto* col1 = npcGO1->AddComponent<CircleCollider2D>();
+            col1->radius = 0.25f;
+            col1->isTrigger = false;
+            col1->minHeight = 0.0f;
+            col1->maxHeight = 2.0f;
+
+
+           
             auto* npcGO2 = CreateGameObject("NPC_Cleaner_Z3");
 
-            npcGO2->transform->position = Vector2(10.5f, 10.5f);
+            {
+                int sx = 0, sy = 0;
+                const Zone* z = GetZone(3);
+                if (z) PickRandomWalkableInZone(*z, map, sx, sy);
+                npcGO2->transform->position = Vector2((float)sx + 0.5f, (float)sy + 0.5f);
+            }
 
             auto* npc2 = npcGO2->AddComponent<Game::NPC>();
             npc2->tileMap = map;
@@ -425,6 +449,20 @@ namespace Game {
             npcSR2->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
             npcSR2->billboard = true;
             npcSR2->sortingOrder = 95;
+
+            auto* rb2 = npcGO2->AddComponent<Rigidbody2D>();
+            rb2->bodyType = RigidbodyType2D::Dynamic;
+            rb2->gravityScale = 0.0f;
+            rb2->drag = 8.0f;
+
+            auto* col2 = npcGO2->AddComponent<CircleCollider2D>();
+            col2->radius = 0.25f;
+            col2->isTrigger = false;
+            col2->minHeight = 0.0f;
+            col2->maxHeight = 2.0f;
+
+
+        
 
             playerHUD->AddEnemyTransform(npcGO1->transform);
             playerHUD->AddEnemyTransform(npcGO2->transform);

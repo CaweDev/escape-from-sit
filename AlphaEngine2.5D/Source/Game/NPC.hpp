@@ -4,7 +4,7 @@
 #include "Engine/Core/Transform.hpp"
 #include "Engine/TileMap/TileMap.hpp"
 #include "Engine/Math/Vector2.hpp"
-
+#include "Engine/Physics/Rigidbody2D.hpp"
 #include <vector>
 #include <queue>
 #include <unordered_map>
@@ -19,7 +19,7 @@ namespace Game
     public:
         Engine::TileMap* tileMap = nullptr;
         Engine::Transform* playerTf = nullptr;
-
+        Engine::Rigidbody2D* m_rb = nullptr; 
         NPCType type = NPCType::Annoying;
 
         // NOTE: your FPSScene zones are 1..4
