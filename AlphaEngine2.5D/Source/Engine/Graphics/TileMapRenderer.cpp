@@ -370,11 +370,13 @@ namespace Engine {
 		if (scaledW < 1) scaledW = 1; // Safety clamp.
 		if (scaledH < 1) scaledH = 1;
 
-		// Re-allocate the framebuffer if the dimensions have changed (e.g. window resize or fbScale change).
+		// Re-allocate BOTH framebuffers if the dimensions have changed (e.g. window resize or fbScale change).
+		// Both buffers share fbWidth/fbHeight, so whichever function runs first must resize both.
 		if (fbWidth != scaledW || fbHeight != scaledH) {
 			fbWidth = scaledW;
 			fbHeight = scaledH;
-			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0); // 4 bytes per pixel (RGBA).
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);  // 4 bytes per pixel (RGBA).
+			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
 		}
 
 		// Zero out the entire buffer — unwritten pixels will be transparent black (alpha = 0),
@@ -520,11 +522,13 @@ namespace Engine {
 		if (scaledW < 1) scaledW = 1;
 		if (scaledH < 1) scaledH = 1;
 
-		// Re-allocate if dimensions changed.
+		// Re-allocate BOTH framebuffers if the dimensions have changed.
+		// Both buffers share fbWidth/fbHeight, so whichever function runs first must resize both.
 		if (fbWidth != scaledW || fbHeight != scaledH) {
 			fbWidth = scaledW;
 			fbHeight = scaledH;
 			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
 		}
 
 		// Clear to transparent black so unwritten pixels don't affect the scene.
