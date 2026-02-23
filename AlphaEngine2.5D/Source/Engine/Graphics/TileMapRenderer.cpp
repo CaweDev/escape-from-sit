@@ -1,6 +1,15 @@
 ﻿/**
  * @file TileMapRenderer.cpp
- * @brief Implementation of TileMapRenderer class
+ * @brief Implementation of the TileMapRenderer raycasting renderer.
+ *
+ * Rendering pipeline per frame:
+ *   1. Column pass  — DDA-casts one ray per COLUMN_STEP pixels, fills managedColumns
+ *                     and writes perpendicular distances to ZBuffer.
+ *   2. Ceiling pass — CPU-rasterises ceiling into a scaled framebuffer, uploads as
+ *                     a single GPU texture, draws one full-screen quad.
+ *   3. Floor pass   — Same as ceiling but below the horizon.
+ *   4. Wall pass    — Draws textured/coloured wall strips via AEGfxTriAdd, batched
+ *                     by tile type and fog key to minimise GPU draw calls.
  */
 #include "TileMapRenderer.hpp"
 #include "ZBuffer.hpp"
@@ -28,37 +37,44 @@ namespace Engine {
 		}
 	}
 
-	// -------------------------------------------------------------------
-	// WIC-based pixel loader: loads a PNG into an RGBA u8 buffer on the CPU
-	// -------------------------------------------------------------------
+	// -----------------------------------------------------------------------
+	// WIC pixel loader
+	// Loads a PNG from disk into a RGBA8 CPU buffer using Windows Imaging
+	// Component (WIC). Called once when SetFloor/CeilingSprite is called,
+	// not every frame. COM is initialised on the calling thread if needed.
+	// -----------------------------------------------------------------------
 	bool TileMapRenderer::LoadCpuPixels(const std::string& path, CpuTexture& out) {
 		out.pixels.clear();
 		out.width = out.height = 0;
 
+		// Ensure COM is initialised for this thread (safe to call multiple times).
 		CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
+		// Create the WIC factory — our entry point for all WIC operations.
 		IWICImagingFactory* factory = nullptr;
 		HRESULT hr = CoCreateInstance(
 			CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER,
 			IID_PPV_ARGS(&factory));
 		if (FAILED(hr) || !factory) return false;
 
-		// Convert path to wide string
+		// Convert the UTF-8 file path to a wide string for the WIC API.
 		int wideLen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, nullptr, 0);
 		std::wstring widePath(wideLen, 0);
 		MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, &widePath[0], wideLen);
 
+		// Decode the image file into a WIC bitmap.
 		IWICBitmapDecoder* decoder = nullptr;
 		hr = factory->CreateDecoderFromFilename(
 			widePath.c_str(), nullptr, GENERIC_READ,
 			WICDecodeMetadataCacheOnDemand, &decoder);
 		if (FAILED(hr) || !decoder) { factory->Release(); return false; }
 
+		// Grab frame 0 (PNG files have exactly one frame).
 		IWICBitmapFrameDecode* frame = nullptr;
 		hr = decoder->GetFrame(0, &frame);
 		if (FAILED(hr) || !frame) { decoder->Release(); factory->Release(); return false; }
 
-		// Convert to 32bpp RGBA
+		// Convert whatever pixel format the file uses into 32bpp RGBA.
 		IWICFormatConverter* converter = nullptr;
 		hr = factory->CreateFormatConverter(&converter);
 		if (FAILED(hr) || !converter) { frame->Release(); decoder->Release(); factory->Release(); return false; }
@@ -69,6 +85,7 @@ namespace Engine {
 			WICBitmapPaletteTypeCustom);
 		if (FAILED(hr)) { converter->Release(); frame->Release(); decoder->Release(); factory->Release(); return false; }
 
+		// Copy the converted pixel data into our CPU buffer.
 		UINT w = 0, h = 0;
 		converter->GetSize(&w, &h);
 		out.width = (int)w;
@@ -77,6 +94,7 @@ namespace Engine {
 
 		hr = converter->CopyPixels(nullptr, w * 4, (UINT)out.pixels.size(), out.pixels.data());
 
+		// Release all WIC COM objects (order: converter → frame → decoder → factory).
 		converter->Release();
 		frame->Release();
 		decoder->Release();
@@ -88,6 +106,9 @@ namespace Engine {
 		return true;
 	}
 
+	// Stores the sprite pointer and immediately loads a CPU-side pixel copy.
+	// The CPU copy is required by the framebuffer rasteriser since we cannot
+	// read pixels back from an AEGfxTexture (GPU-only handle).
 	void TileMapRenderer::SetFloorSprite(int tileType, Sprite* sprite) {
 		floorSprites[tileType] = sprite;
 		if (sprite && sprite->GetTexture2D()) {
@@ -102,16 +123,18 @@ namespace Engine {
 		}
 	}
 
+	// Full-screen unit quad centred at origin (vertex positions in [-0.5, 0.5]).
+	// UV (0,0) maps to top-left of the framebuffer texture; (1,1) to bottom-right.
 	void TileMapRenderer::CreateFullscreenMesh() {
 		AEGfxMeshStart();
 		AEGfxTriAdd(
-			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-			-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f,
-			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f);
+			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,   // bottom-left
+			-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f,   // top-left
+			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f);  // top-right
 		AEGfxTriAdd(
-			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
-			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
-			 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f);
+			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,   // bottom-left
+			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,   // top-right
+			 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f);  // bottom-right
 		fullscreenMesh = AEGfxMeshEnd();
 	}
 
@@ -305,8 +328,8 @@ namespace Engine {
 	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
-		if (ceilingSprites.empty() || columns.empty()) return;
-		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return;
+		if (ceilingSprites.empty() || columns.empty()) return; // if no sprite provided, return
+		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return; // if CPU texture failed to load, return
 
 		// Compute scaled framebuffer dimensions
 		int scaledW = (int)(screenWidth * fbScale);
@@ -314,12 +337,12 @@ namespace Engine {
 		if (scaledW < 1) scaledW = 1;
 		if (scaledH < 1) scaledH = 1;
 
-		// Resize framebuffers if needed
+		// Resize ceiling framebuffer to match the new scaled dimensions.
+		// (Floor buffer is lazily resized inside RenderFloor.)
 		if (fbWidth != scaledW || fbHeight != scaledH) {
 			fbWidth = scaledW;
 			fbHeight = scaledH;
 			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
-			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
 		}
 
 		// Clear ceiling buffer to transparent black
@@ -431,12 +454,12 @@ namespace Engine {
 		if (scaledW < 1) scaledW = 1;
 		if (scaledH < 1) scaledH = 1;
 
-		// Resize framebuffers if needed
+		// Resize floor framebuffer to match the new scaled dimensions.
+		// (Ceiling buffer is lazily resized inside RenderCeiling.)
 		if (fbWidth != scaledW || fbHeight != scaledH) {
 			fbWidth = scaledW;
 			fbHeight = scaledH;
 			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
-			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
 		}
 
 		// Clear floor buffer to transparent black
@@ -669,6 +692,7 @@ namespace Engine {
 		}
 	}
 
+	// 1×1 unit quad used by DrawColumn for solid-colour fallback walls.
 	void TileMapRenderer::CreateColumnMesh() {
 		AEGfxMeshStart();
 		AEGfxTriAdd(0.0f, 0.0f, 0xFFFFFFFF, 0.0f, 1.0f, 0.0f, 1.0f, 0xFFFFFFFF, 0.0f, 0.0f, 1.0f, 1.0f, 0xFFFFFFFF, 1.0f, 0.0f);
@@ -693,8 +717,11 @@ namespace Engine {
 	}
 
 
+	// Pre-computes fogLUT[i] = exp(-i * 0.01 / fogDistance) for i in [0, 9999].
+	// This avoids calling expf() per-pixel during rendering.
+	// fogLUT covers world distances 0–100 at 0.01-unit precision (10 000 entries).
 	void TileMapRenderer::UpdateFogLUT(f32 fogDistance) {
-		fogLUT.resize(10000); // Up to distance 100 with 0.01 precision
+		fogLUT.resize(10000);
 		for (size_t i = 0; i < fogLUT.size(); ++i) {
 			f32 dist = (f32)i * 0.01f;
 			fogLUT[i] = expf(-dist / fogDistance);
