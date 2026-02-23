@@ -54,13 +54,13 @@ namespace Engine {
 
 		// Type-indexed sprite setters (use int for tile type ID)
 		void SetWallSprite(int tileType, Sprite* sprite) { wallSprites[tileType] = sprite; }
-		void SetCeilingSprite(int tileType, Sprite* sprite) { ceilingSprites[tileType] = sprite; }
-		void SetFloorSprite(int tileType, Sprite* sprite) { floorSprites[tileType] = sprite; }
+		void SetCeilingSprite(int tileType, Sprite* sprite);
+		void SetFloorSprite(int tileType, Sprite* sprite);
 
 		// Convenience setters for default sprite (type 1)
 		void SetWallSprite(Sprite* sprite) { wallSprites[1] = sprite; }
-		void SetCeilingSprite(Sprite* sprite) { ceilingSprites[1] = sprite; }
-		void SetFloorSprite(Sprite* sprite) { floorSprites[1] = sprite; }
+		void SetCeilingSprite(Sprite* sprite) { SetCeilingSprite(1, sprite); }
+		void SetFloorSprite(Sprite* sprite) { SetFloorSprite(1, sprite); }
 
 		// Type-indexed sprite getters
 		Sprite* GetWallSprite(int tileType) const {
@@ -128,8 +128,33 @@ namespace Engine {
 		std::vector<ColumnInfo> managedColumns; // Pre-allocated column buffer
 		AEMtx33 identityMtx; // Pre-computed identity matrix for transforms
 
+		// --- Framebuffer rendering members ---
+		struct CpuTexture {
+			std::vector<u8> pixels;   // RGBA, 4 bytes per pixel
+			int width = 0, height = 0;
+		};
+		CpuTexture floorCpuTex, ceilCpuTex;
+
+	public:
+		/** Framebuffer resolution scale (0.0-1.0). Lower = faster but blurrier.
+		 *  0.25 = quarter-res (400x225 at 1600x900), 0.5 = half-res, 1.0 = full-res */
+		f32 fbScale = 0.25f;
+
+	private:
+		// Per-frame RGBA framebuffers (resized to screen * fbScale)
+		std::vector<u8> floorFramebuffer;
+		std::vector<u8> ceilFramebuffer;
+		int fbWidth = 0, fbHeight = 0;
+
+		// Fullscreen quad mesh for drawing framebuffers
+		AEGfxVertexList* fullscreenMesh = nullptr;
+
 		void CreateColumnMesh();
+		void CreateFullscreenMesh();
 		void UpdateFogLUT(f32 fogDistance);
+
+		// WIC-based CPU pixel loader (Windows Imaging Component)
+		static bool LoadCpuPixels(const std::string& path, CpuTexture& out);
 
 		// Raycast helper
 		RaycastResult CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, f32 camZ, 
@@ -147,3 +172,4 @@ namespace Engine {
 	};
 
 } // namespace Engine
+

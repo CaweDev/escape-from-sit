@@ -7,17 +7,112 @@
 #include "Engine/Core/Application.hpp"
 #include <cmath>
 #include <vector>
-
 #include <algorithm>
+#include <string>
+
+// Windows Imaging Component for CPU-side pixel loading
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <wincodec.h>
 
 namespace Engine {
 
-	TileMapRenderer::TileMapRenderer() : columnMesh(nullptr) {}
+	TileMapRenderer::TileMapRenderer() : columnMesh(nullptr), fullscreenMesh(nullptr) {}
 
 	TileMapRenderer::~TileMapRenderer() {
 		if (columnMesh) {
 			AEGfxMeshFree(columnMesh);
 		}
+		if (fullscreenMesh) {
+			AEGfxMeshFree(fullscreenMesh);
+		}
+	}
+
+	// -------------------------------------------------------------------
+	// WIC-based pixel loader: loads a PNG into an RGBA u8 buffer on the CPU
+	// -------------------------------------------------------------------
+	bool TileMapRenderer::LoadCpuPixels(const std::string& path, CpuTexture& out) {
+		out.pixels.clear();
+		out.width = out.height = 0;
+
+		CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+
+		IWICImagingFactory* factory = nullptr;
+		HRESULT hr = CoCreateInstance(
+			CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER,
+			IID_PPV_ARGS(&factory));
+		if (FAILED(hr) || !factory) return false;
+
+		// Convert path to wide string
+		int wideLen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, nullptr, 0);
+		std::wstring widePath(wideLen, 0);
+		MultiByteToWideChar(CP_UTF8, 0, path.c_str(), -1, &widePath[0], wideLen);
+
+		IWICBitmapDecoder* decoder = nullptr;
+		hr = factory->CreateDecoderFromFilename(
+			widePath.c_str(), nullptr, GENERIC_READ,
+			WICDecodeMetadataCacheOnDemand, &decoder);
+		if (FAILED(hr) || !decoder) { factory->Release(); return false; }
+
+		IWICBitmapFrameDecode* frame = nullptr;
+		hr = decoder->GetFrame(0, &frame);
+		if (FAILED(hr) || !frame) { decoder->Release(); factory->Release(); return false; }
+
+		// Convert to 32bpp RGBA
+		IWICFormatConverter* converter = nullptr;
+		hr = factory->CreateFormatConverter(&converter);
+		if (FAILED(hr) || !converter) { frame->Release(); decoder->Release(); factory->Release(); return false; }
+
+		hr = converter->Initialize(
+			frame, GUID_WICPixelFormat32bppRGBA,
+			WICBitmapDitherTypeNone, nullptr, 0.0,
+			WICBitmapPaletteTypeCustom);
+		if (FAILED(hr)) { converter->Release(); frame->Release(); decoder->Release(); factory->Release(); return false; }
+
+		UINT w = 0, h = 0;
+		converter->GetSize(&w, &h);
+		out.width = (int)w;
+		out.height = (int)h;
+		out.pixels.resize(w * h * 4);
+
+		hr = converter->CopyPixels(nullptr, w * 4, (UINT)out.pixels.size(), out.pixels.data());
+
+		converter->Release();
+		frame->Release();
+		decoder->Release();
+		factory->Release();
+
+		if (FAILED(hr)) { out.pixels.clear(); out.width = out.height = 0; return false; }
+
+		printf("[TileMapRenderer] Loaded CPU texture: %s (%dx%d)\n", path.c_str(), out.width, out.height);
+		return true;
+	}
+
+	void TileMapRenderer::SetFloorSprite(int tileType, Sprite* sprite) {
+		floorSprites[tileType] = sprite;
+		if (sprite && sprite->GetTexture2D()) {
+			LoadCpuPixels(sprite->GetTexture2D()->GetFilePath(), floorCpuTex);
+		}
+	}
+
+	void TileMapRenderer::SetCeilingSprite(int tileType, Sprite* sprite) {
+		ceilingSprites[tileType] = sprite;
+		if (sprite && sprite->GetTexture2D()) {
+			LoadCpuPixels(sprite->GetTexture2D()->GetFilePath(), ceilCpuTex);
+		}
+	}
+
+	void TileMapRenderer::CreateFullscreenMesh() {
+		AEGfxMeshStart();
+		AEGfxTriAdd(
+			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
+			-0.5f,  0.5f, 0xFFFFFFFF, 0.0f, 0.0f,
+			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f);
+		AEGfxTriAdd(
+			-0.5f, -0.5f, 0xFFFFFFFF, 0.0f, 1.0f,
+			 0.5f,  0.5f, 0xFFFFFFFF, 1.0f, 0.0f,
+			 0.5f, -0.5f, 0xFFFFFFFF, 1.0f, 1.0f);
+		fullscreenMesh = AEGfxMeshEnd();
 	}
 
 	void TileMapRenderer::Render() {
@@ -28,6 +123,9 @@ namespace Engine {
 
 		if (!columnMesh) {
 			CreateColumnMesh();
+		}
+		if (!fullscreenMesh) {
+			CreateFullscreenMesh();
 		}
 
 		// Reset AE camera to origin for screen-space rendering
@@ -199,324 +297,253 @@ namespace Engine {
 		return result;
 	}
 
+	// ===================================================================
+	// Framebuffer-based ceiling rendering
+	// Writes pixels to a CPU buffer, uploads via AEGfxTextureLoadFromMemory,
+	// and draws as a single fullscreen quad.
+	// ===================================================================
 	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
 		if (ceilingSprites.empty() || columns.empty()) return;
+		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return;
 
-		auto sprite = GetCeilingSprite(1);
-		if (!sprite || !sprite->IsLoaded()) return;
+		// Compute scaled framebuffer dimensions
+		int scaledW = (int)(screenWidth * fbScale);
+		int scaledH = (int)(screenHeight * fbScale);
+		if (scaledW < 1) scaledW = 1;
+		if (scaledH < 1) scaledH = 1;
+
+		// Resize framebuffers if needed
+		if (fbWidth != scaledW || fbHeight != scaledH) {
+			fbWidth = scaledW;
+			fbHeight = scaledH;
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+		}
+
+		// Clear ceiling buffer to transparent black
+		memset(ceilFramebuffer.data(), 0, ceilFramebuffer.size());
 
 		f32 posZ = 1.0f - camZ;
-		// Pre-compute row distance factor: rowDist = rowDistFactor / p (#4)
 		f32 rowDistFactor = posZ * (f32)screenWidth / (cachedPlaneLength * 2.0f);
 
-		f32 currentBatchFog = -1.0f;
-		bool meshIsOpen = false;
-		int triCount = 0;
-
-		// Clamp horizon to screen bounds for culling
-		int clampedHorizon = horizon;
-		if (clampedHorizon < 0) clampedHorizon = 0;
-		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
+		// Scale horizon to framebuffer space
+		f32 fbHorizon = (f32)horizon * fbScale;
+		int clampedFbHorizon = (int)fbHorizon;
+		if (clampedFbHorizon < 0) clampedFbHorizon = 0;
+		if (clampedFbHorizon > fbHeight) clampedFbHorizon = fbHeight;
 
 		const int fogLUTMax = (int)fogLUT.size() - 1;
+		const int texW = ceilCpuTex.width;
+		const int texH = ceilCpuTex.height;
+		const u8* texPixels = ceilCpuTex.pixels.data();
+		const int numCols = (int)columns.size();
+		const f32 invScale = 1.0f / fbScale;
 
-		for (int y = 0; y < clampedHorizon; y += ROW_STEP) {
-			f32 p = (f32)horizon - (f32)y;
+		for (int fy = 0; fy < clampedFbHorizon; ++fy) {
+			// Map framebuffer Y back to screen Y
+			f32 screenY = (f32)fy * invScale;
+			f32 p = (f32)horizon - screenY;
 			if (fabsf(p) < 0.1f) continue;
 			f32 rowDist = rowDistFactor / p;
 			if (rowDist < 0) continue;
 
-			int yNext = y + ROW_STEP;
-			if (yNext > horizon) yNext = horizon;
-			if (yNext > clampedHorizon) yNext = clampedHorizon;
-
-			f32 pNext = (f32)horizon - (f32)yNext;
-			f32 rowDistNext;
-			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
-			else rowDistNext = rowDistFactor / pNext;
-			if (rowDistNext < 0) rowDistNext = rowDist;
-
-			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
-			f32 aeY2 = screenHeight / 2.0f - (f32)y;
-
-			f32 avgDist = (rowDist + rowDistNext) * 0.5f;
-			
-			// Fog LUT lookup
+			// Fog for this row
 			f32 fogFactor = 1.0f;
 			if (fog.enabled) {
-				int lutIdx = (int)(avgDist * 100.0f);
+				int lutIdx = (int)(rowDist * 100.0f);
 				if (lutIdx < 0) lutIdx = 0;
 				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 				fogFactor = fogLUT[lutIdx];
 				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
 				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
 			}
-
 			if (fogFactor < 0.01f) break;
 
-			int fogKey = (int)(fogFactor * fog.precision);
-			f32 quantizedFog = (f32)fogKey / fog.precision;
+			int rowOffset = fy * fbWidth * 4;
 
-			// If fog changed, flush the current mesh
-			if (meshIsOpen && quantizedFog != currentBatchFog) {
-				AEGfxVertexList* mesh = AEGfxMeshEnd();
-				if (mesh) {
-					if (triCount > 0) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-						AEGfxSetColorToAdd(0, 0, 0, 0);
-						AEGfxSetTransparency(1.0f);
-						AEGfxSetTransform(identityMtx.m);
-						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-					}
-					AEGfxMeshFree(mesh);
-				}
-				meshIsOpen = false;
-			}
+			for (int fx = 0; fx < fbWidth; ++fx) {
+				// Map framebuffer X back to screen X
+				f32 screenX = (f32)fx * invScale;
+				int colIdx = (int)(screenX) / COLUMN_STEP;
+				if (colIdx >= numCols) colIdx = numCols - 1;
 
-			if (!meshIsOpen) {
-				AEGfxMeshStart();
-				meshIsOpen = true;
-				triCount = 0;
-				currentBatchFog = quantizedFog;
-			}
+				const auto& col = columns[colIdx];
 
-			for (const auto& col : columns) {
-				// Flush mesh if triangle limit reached
-				if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
-					AEGfxVertexList* mesh = AEGfxMeshEnd();
-					if (mesh) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-						AEGfxSetColorToAdd(0, 0, 0, 0);
-						AEGfxSetTransparency(1.0f);
-						AEGfxSetTransform(identityMtx.m);
-						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-						AEGfxMeshFree(mesh);
-					}
-					AEGfxMeshStart();
-					triCount = 0;
-				}
+				// Check if this pixel is behind the wall for this column
+				if (screenY >= col.ray.drawStart) continue;
 
-				f32 clampedAeY1 = aeY1;
-				f32 clampedRowDistNext = rowDistNext;
-				
-				int wallStartInt = (int)floorf(col.ray.drawStart);
-				if (yNext > wallStartInt) {
-					if (y >= wallStartInt) continue;
-					clampedAeY1 = col.screenY2;
-					f32 clampedP = (f32)horizon - col.ray.drawStart;
-					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDistNext = rowDistFactor / clampedP;
-					}
-				}
+				// Interpolate ray direction within the column block
+				f32 t = (screenX - (f32)(colIdx * COLUMN_STEP)) / (f32)COLUMN_STEP;
+				f32 rayDirX = col.rayDirX + t * (col.rayDirX2 - col.rayDirX);
+				f32 rayDirY = col.rayDirY + t * (col.rayDirY2 - col.rayDirY);
 
-				f32 u1_l = pos.x + rowDist * col.rayDirX;
-				f32 v1_l = pos.y + rowDist * col.rayDirY;
-				f32 u1_r = pos.x + rowDist * col.rayDirX2;
-				f32 v1_r = pos.y + rowDist * col.rayDirY2;
+				// World UV
+				f32 worldU = pos.x + rowDist * rayDirX;
+				f32 worldV = pos.y + rowDist * rayDirY;
 
-				f32 u2_l = pos.x + clampedRowDistNext * col.rayDirX;
-				f32 v2_l = pos.y + clampedRowDistNext * col.rayDirY;
-				f32 u2_r = pos.x + clampedRowDistNext * col.rayDirX2;
-				f32 v2_r = pos.y + clampedRowDistNext * col.rayDirY2;
+				// Texture sampling (wrap via modulo)
+				int texX = ((int)floorf(worldU * texW) % texW + texW) % texW;
+				int texY = ((int)floorf(worldV * texH) % texH + texH) % texH;
 
-				AEGfxTriAdd(col.screenX, aeY2, 0xFFFFFFFF, u1_l, v1_l, 
-				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
-				            col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l);
-				AEGfxTriAdd(col.screenX, clampedAeY1, 0xFFFFFFFF, u2_l, v2_l, 
-				            col.screenX2, aeY2, 0xFFFFFFFF, u1_r, v1_r, 
-				            col.screenX2, clampedAeY1, 0xFFFFFFFF, u2_r, v2_r);
-				triCount += 2;
+				int texIdx = (texY * texW + texX) * 4;
+				int fbIdx = rowOffset + fx * 4;
+
+				ceilFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor);
+				ceilFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor);
+				ceilFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor);
+				ceilFramebuffer[fbIdx + 3] = 255;
 			}
 		}
 
-		if (meshIsOpen) {
-			AEGfxVertexList* mesh = AEGfxMeshEnd();
-			if (mesh) {
-				if (triCount > 0) {
-					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-					AEGfxSetColorToAdd(0, 0, 0, 0);
-					AEGfxSetTransparency(1.0f);
-					AEGfxSetTransform(identityMtx.m);
-					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-				}
-				AEGfxMeshFree(mesh);
-			}
+		// Upload scaled framebuffer as texture and draw stretched to full screen
+		AEGfxTexture* tex = AEGfxTextureLoadFromMemory(ceilFramebuffer.data(), (u32)fbWidth, (u32)fbHeight);
+		if (tex && fullscreenMesh) {
+			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+			AEGfxTextureSet(tex, 0, 0);
+			AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+			AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+			AEGfxSetColorToAdd(0, 0, 0, 0);
+			AEGfxSetTransparency(1.0f);
+
+			AEMtx33 scale, transform;
+			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight);
+			AEMtx33Identity(&transform);
+			AEMtx33Concat(&transform, &transform, &scale);
+			AEGfxSetTransform(transform.m);
+			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);
+			AEGfxTextureUnload(tex);
 		}
 	}
+	// ===================================================================
+	// Framebuffer-based floor rendering
+	// ===================================================================
 	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns, TileMap* map) {
 		
 		if (floorSprites.empty() || columns.empty()) return;
+		if (floorCpuTex.pixels.empty() || floorCpuTex.width == 0) return;
 
-		auto sprite = GetFloorSprite(1);
-		if (!sprite || !sprite->IsLoaded()) return;
+		// Compute scaled framebuffer dimensions
+		int scaledW = (int)(screenWidth * fbScale);
+		int scaledH = (int)(screenHeight * fbScale);
+		if (scaledW < 1) scaledW = 1;
+		if (scaledH < 1) scaledH = 1;
+
+		// Resize framebuffers if needed
+		if (fbWidth != scaledW || fbHeight != scaledH) {
+			fbWidth = scaledW;
+			fbHeight = scaledH;
+			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+		}
+
+		// Clear floor buffer to transparent black
+		memset(floorFramebuffer.data(), 0, floorFramebuffer.size());
 
 		f32 posZ = camZ;
-		// Pre-compute row distance factor: rowDist = rowDistFactor / p (#4)
 		f32 rowDistFactor = posZ * (f32)screenWidth / (cachedPlaneLength * 2.0f);
 
-		f32 currentBatchFog = -1.0f;
-		bool meshIsOpen = false;
-		int triCount = 0;
+		// Scale horizon to framebuffer space
+		f32 fbHorizon = (f32)horizon * fbScale;
+		int clampedFbHorizon = (int)fbHorizon;
+		if (clampedFbHorizon < 0) clampedFbHorizon = 0;
+		if (clampedFbHorizon > fbHeight) clampedFbHorizon = fbHeight;
 
-		// Clamp horizon to screen bounds for culling
-		int clampedHorizon = horizon;
-		if (clampedHorizon < 0) clampedHorizon = 0;
-		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
+		const f32 invScale = 1.0f / fbScale;
 
-		// Skip invisible far rows near horizon (#3 optimization)
-		int startY = clampedHorizon;
+		// Skip invisible far rows near horizon
+		int startFy = clampedFbHorizon;
 		if (fog.enabled && posZ > 0.001f) {
 			f32 maxVisibleDist = fog.distance * 4.6f;
 			f32 minP = rowDistFactor / maxVisibleDist;
-			int computedStart = horizon + (int)ceilf(minP);
-			if (computedStart > clampedHorizon) {
-				startY = ((computedStart - clampedHorizon) / ROW_STEP) * ROW_STEP + clampedHorizon;
+			int computedScreenStart = horizon + (int)ceilf(minP);
+			int computedFbStart = (int)(computedScreenStart * fbScale);
+			if (computedFbStart > clampedFbHorizon) {
+				startFy = computedFbStart;
 			}
 		}
 
 		const int fogLUTMax = (int)fogLUT.size() - 1;
+		const int texW = floorCpuTex.width;
+		const int texH = floorCpuTex.height;
+		const u8* texPixels = floorCpuTex.pixels.data();
+		const int numCols = (int)columns.size();
 
-		for (int y = startY; y < screenHeight; y += ROW_STEP) {
-			f32 p = (f32)y - (f32)horizon;
+		for (int fy = startFy; fy < fbHeight; ++fy) {
+			// Map framebuffer Y back to screen Y
+			f32 screenY = (f32)fy * invScale;
+			f32 p = screenY - (f32)horizon;
 			if (fabsf(p) < 0.1f) continue;
 			f32 rowDist = rowDistFactor / p;
 			if (rowDist < 0) continue;
 
-			int yNext = y + ROW_STEP;
-			if (yNext > screenHeight) yNext = screenHeight;
-
-			f32 pNext = (f32)yNext - (f32)horizon;
-			f32 rowDistNext;
-			if (fabsf(pNext) < 0.1f) rowDistNext = rowDist;
-			else rowDistNext = rowDistFactor / pNext;
-			if (rowDistNext < 0) rowDistNext = rowDist;
-
-			f32 aeY1 = screenHeight / 2.0f - (f32)yNext;
-			f32 aeY2 = screenHeight / 2.0f - (f32)y;
-
-			f32 avgDist = (rowDist + rowDistNext) * 0.5f;
-
-			// Fog LUT lookup
+			// Fog for this row
 			f32 fogFactor = 1.0f;
 			if (fog.enabled) {
-				int lutIdx = (int)(avgDist * 100.0f);
+				int lutIdx = (int)(rowDist * 100.0f);
 				if (lutIdx < 0) lutIdx = 0;
 				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 				fogFactor = fogLUT[lutIdx];
 				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
 				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
 			}
-
 			if (fogFactor < 0.01f) continue;
 
-			int fogKey = (int)(fogFactor * fog.precision);
-			f32 quantizedFog = (f32)fogKey / fog.precision;
+			int rowOffset = fy * fbWidth * 4;
 
-			// If fog changed, flush the current mesh
-			if (meshIsOpen && quantizedFog != currentBatchFog) {
-				AEGfxVertexList* mesh = AEGfxMeshEnd();
-				if (mesh) {
-					if (triCount > 0) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-						AEGfxSetColorToAdd(0, 0, 0, 0);
-						AEGfxSetTransparency(1.0f);
-						AEGfxSetTransform(identityMtx.m);
-						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-					}
-					AEGfxMeshFree(mesh);
-				}
-				meshIsOpen = false;
-			}
+			for (int fx = 0; fx < fbWidth; ++fx) {
+				// Map framebuffer X back to screen X
+				f32 screenX = (f32)fx * invScale;
+				int colIdx = (int)(screenX) / COLUMN_STEP;
+				if (colIdx >= numCols) colIdx = numCols - 1;
 
-			if (!meshIsOpen) {
-				AEGfxMeshStart();
-				meshIsOpen = true;
-				triCount = 0;
-				currentBatchFog = quantizedFog;
-			}
+				const auto& col = columns[colIdx];
 
-			for (const auto& col : columns) {
-				// Flush mesh if triangle limit reached
-				if (triCount + 2 > MAX_TRIANGLES_PER_MESH) {
-					AEGfxVertexList* mesh = AEGfxMeshEnd();
-					if (mesh) {
-						AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-						AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-						AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-						AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-						AEGfxSetColorToAdd(0, 0, 0, 0);
-						AEGfxSetTransparency(1.0f);
-						AEGfxSetTransform(identityMtx.m);
-						AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-						AEGfxMeshFree(mesh);
-					}
-					AEGfxMeshStart();
-					triCount = 0;
-				}
+				// Check if this pixel is behind the wall for this column
+				if (screenY < col.ray.drawEnd) continue;
 
-				f32 clampedAeY2 = aeY2;
-				f32 clampedRowDist = rowDist;
-				
-				int wallEndInt = (int)ceilf(col.ray.drawEnd);
-				if (y < wallEndInt) {
-					if (yNext <= wallEndInt) continue;
-					clampedAeY2 = col.screenY;
-					f32 clampedP = col.ray.drawEnd - (f32)horizon;
-					if (fabsf(clampedP) > 0.1f) {
-						clampedRowDist = rowDistFactor / clampedP;
-					}
-				}
+				// Interpolate ray direction within the column block
+				f32 t = (screenX - (f32)(colIdx * COLUMN_STEP)) / (f32)COLUMN_STEP;
+				f32 rayDirX = col.rayDirX + t * (col.rayDirX2 - col.rayDirX);
+				f32 rayDirY = col.rayDirY + t * (col.rayDirY2 - col.rayDirY);
 
-				f32 u1_l = pos.x + clampedRowDist * col.rayDirX;
-				f32 v1_l = pos.y + clampedRowDist * col.rayDirY;
-				f32 u1_r = pos.x + clampedRowDist * col.rayDirX2;
-				f32 v1_r = pos.y + clampedRowDist * col.rayDirY2;
+				// World UV
+				f32 worldU = pos.x + rowDist * rayDirX;
+				f32 worldV = pos.y + rowDist * rayDirY;
 
-				f32 u2_l = pos.x + rowDistNext * col.rayDirX;
-				f32 v2_l = pos.y + rowDistNext * col.rayDirY;
-				f32 u2_r = pos.x + rowDistNext * col.rayDirX2;
-				f32 v2_r = pos.y + rowDistNext * col.rayDirY2;
+				// Texture sampling (wrap via modulo)
+				int texX = ((int)floorf(worldU * texW) % texW + texW) % texW;
+				int texY = ((int)floorf(worldV * texH) % texH + texH) % texH;
 
-				AEGfxTriAdd(col.screenX, clampedAeY2, 0xFFFFFFFF, u1_l, v1_l, 
-				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
-				            col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l);
-				AEGfxTriAdd(col.screenX, aeY1, 0xFFFFFFFF, u2_l, v2_l, 
-				            col.screenX2, clampedAeY2, 0xFFFFFFFF, u1_r, v1_r, 
-				            col.screenX2, aeY1, 0xFFFFFFFF, u2_r, v2_r);
-				triCount += 2;
+				int texIdx = (texY * texW + texX) * 4;
+				int fbIdx = rowOffset + fx * 4;
+
+				floorFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor);
+				floorFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor);
+				floorFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor);
+				floorFramebuffer[fbIdx + 3] = 255;
 			}
 		}
 
-		if (meshIsOpen) {
-			AEGfxVertexList* mesh = AEGfxMeshEnd();
-			if (mesh) {
-				if (triCount > 0) {
-					AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-					AEGfxTextureSet(sprite->GetTexture(), 0, 0);
-					AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-					AEGfxSetColorToMultiply(currentBatchFog, currentBatchFog, currentBatchFog, 1.0f);
-					AEGfxSetColorToAdd(0, 0, 0, 0);
-					AEGfxSetTransparency(1.0f);
-					AEGfxSetTransform(identityMtx.m);
-					AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
-				}
-				AEGfxMeshFree(mesh);
-			}
+		// Upload scaled framebuffer as texture and draw stretched to full screen
+		AEGfxTexture* tex = AEGfxTextureLoadFromMemory(floorFramebuffer.data(), (u32)fbWidth, (u32)fbHeight);
+		if (tex && fullscreenMesh) {
+			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+			AEGfxTextureSet(tex, 0, 0);
+			AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+			AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+			AEGfxSetColorToAdd(0, 0, 0, 0);
+			AEGfxSetTransparency(1.0f);
+
+			AEMtx33 scale, transform;
+			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight);
+			AEMtx33Identity(&transform);
+			AEMtx33Concat(&transform, &transform, &scale);
+			AEGfxSetTransform(transform.m);
+			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);
+			AEGfxTextureUnload(tex);
 		}
 	}
 
