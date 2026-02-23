@@ -10,6 +10,20 @@
 namespace Engine
 {
     /**
+     * @struct NineSliceBorder
+     * @brief Border widths in source-texture pixels for 9-slice rendering
+     *
+     * Defines how far inward from each edge the "fixed" corner/edge regions
+     * extend. The center region stretches to fill the remaining area.
+     */
+    struct NineSliceBorder
+    {
+        f32 left   = 0;  ///< Pixels from the left edge
+        f32 right  = 0;  ///< Pixels from the right edge
+        f32 top    = 0;  ///< Pixels from the top edge
+        f32 bottom = 0;  ///< Pixels from the bottom edge
+    };
+    /**
      * @class Texture2D
      * @brief RAII wrapper for AEGfxTexture (PNG file loading)
      * 
@@ -20,6 +34,9 @@ namespace Engine
     private:
         AEGfxTexture* m_texture = nullptr;
         std::string m_filePath;
+        int m_pixelWidth  = 0;
+        int m_pixelHeight = 0;
+        NineSliceBorder m_sliceBorder;  ///< 9-slice border widths (intrinsic to the asset)
 
         // Singleton white texture
         static Texture2D* s_whiteTexture;
@@ -76,6 +93,30 @@ namespace Engine
          * @brief Get the file path this texture was loaded from
          */
         const std::string& GetFilePath() const { return m_filePath; }
+
+        /**
+         * @brief Get the pixel width of the loaded texture
+         * @return Width in pixels, or 0 if not loaded
+         */
+        int GetPixelWidth() const { return m_pixelWidth; }
+
+        /**
+         * @brief Get the pixel height of the loaded texture
+         * @return Height in pixels, or 0 if not loaded
+         */
+        int GetPixelHeight() const { return m_pixelHeight; }
+
+        /**
+         * @brief Set the 9-slice border widths (in source-texture pixels)
+         * @param border Border widths for each edge
+         */
+        void SetSliceBorder(const NineSliceBorder& border) { m_sliceBorder = border; }
+
+        /**
+         * @brief Get the 9-slice border widths
+         * @return Current border widths
+         */
+        const NineSliceBorder& GetSliceBorder() const { return m_sliceBorder; }
 
         /**
          * @brief Get a 1x1 white texture for solid color rendering

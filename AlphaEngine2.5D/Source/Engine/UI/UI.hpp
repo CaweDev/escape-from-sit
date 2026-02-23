@@ -30,8 +30,16 @@
 #include "Engine/UI/Layout/VerticalLayoutGroup.hpp"
 #include "Engine/UI/Layout/HorizontalLayoutGroup.hpp"
 
+// Helpers
+#include "Engine/UI/Helpers/NineSliceRenderer.hpp"
+#include "Engine/UI/Helpers/DialogService.hpp"
+
+// UI GameObjects
+#include "Engine/UI/GameObject/ConfirmationDialog.hpp"
+
 // Gameplay UI
 #include "Engine/UI/Specialized/Crosshair.hpp"
 #include "Engine/UI/Specialized/InteractionPrompt.hpp"
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/UI/Specialized/Map.hpp"
+

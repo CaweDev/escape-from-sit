@@ -20,6 +20,17 @@ namespace UI
 
         Rect worldRect = GetWorldRect();
 
+        // 9-slice rendering path
+        if (m_imageType == ImageType::Sliced && m_texture && m_texture->IsLoaded())
+        {
+            NineSliceRenderer::Draw(worldRect, m_texture, m_color);
+            // Render children
+            UIElement::Render();
+            return;
+        }
+
+        // --- Simple rendering path ---
+
         // Calculate transform matrix
         AEMtx33 scale, translate, transform;
         AEMtx33Scale(&scale, worldRect.width * m_fillAmount, worldRect.height);

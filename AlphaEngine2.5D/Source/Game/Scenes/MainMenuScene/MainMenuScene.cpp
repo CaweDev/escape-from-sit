@@ -209,6 +209,14 @@ namespace Game {
         titleComplete = false;
         menuAnimTime = 0.0f;
         menuAnimComplete = false;
+
+        // === Configure confirmation dialog with 9-slice background ===
+        Engine::Texture2D* dialogBg = AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png");
+        if (dialogBg)
+        {
+            dialogBg->SetSliceBorder({ 20.0f, 20.0f, 20.0f, 20.0f });
+            DialogService::SetConfirmationBackground(dialogBg);
+        }
     }
 
     void MainMenuScene::UpdateMenuVisuals() {
@@ -446,8 +454,14 @@ namespace Game {
     }
 
     void MainMenuScene::OnQuitClicked() {
-        std::cout << "Quit clicked - Exiting game..." << std::endl;
-        Application::Quit();
+        DialogService::ShowConfirmation(
+            "Are you sure you want to quit?",
+            "Quit", "Cancel",
+            []() {
+                std::cout << "Quit confirmed - Exiting game..." << std::endl;
+                Application::Quit();
+            }
+        );
     }
 
 } // namespace Game

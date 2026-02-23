@@ -5,6 +5,7 @@
  */
 
 #include "Engine/UI/Core/UIElement.hpp"
+#include "Engine/UI/Helpers/NineSliceRenderer.hpp"
 #include "Engine/Graphics/Texture2D.hpp"
 #include "Engine/Graphics/Color.hpp"
 

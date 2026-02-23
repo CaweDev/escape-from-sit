@@ -4,6 +4,7 @@
  */
 
 #include "Texture2D.hpp"
+#include "TextureUtils.hpp"
 
 namespace Engine
 {
@@ -23,8 +24,12 @@ namespace Engine
     Texture2D::Texture2D(Texture2D&& other) noexcept
         : m_texture(other.m_texture)
         , m_filePath(std::move(other.m_filePath))
+        , m_pixelWidth(other.m_pixelWidth)
+        , m_pixelHeight(other.m_pixelHeight)
     {
         other.m_texture = nullptr;
+        other.m_pixelWidth = 0;
+        other.m_pixelHeight = 0;
     }
 
     Texture2D& Texture2D::operator=(Texture2D&& other) noexcept
@@ -34,8 +39,12 @@ namespace Engine
             Unload();
             m_texture = other.m_texture;
             m_filePath = std::move(other.m_filePath);
-            
+            m_pixelWidth = other.m_pixelWidth;
+            m_pixelHeight = other.m_pixelHeight;
+
             other.m_texture = nullptr;
+            other.m_pixelWidth = 0;
+            other.m_pixelHeight = 0;
         }
         return *this;
     }
@@ -50,6 +59,13 @@ namespace Engine
 
         if (m_texture)
         {
+            // Query pixel dimensions via WIC
+            CpuTexture temp;
+            if (TextureUtils::LoadCpuPixels(filePath, temp))
+            {
+                m_pixelWidth = temp.width;
+                m_pixelHeight = temp.height;
+            }
             return true;
         }
 
@@ -63,6 +79,8 @@ namespace Engine
             AEGfxTextureUnload(m_texture);
             m_texture = nullptr;
             m_filePath.clear();
+            m_pixelWidth = 0;
+            m_pixelHeight = 0;
         }
     }
 

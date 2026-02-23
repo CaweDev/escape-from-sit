@@ -61,6 +61,10 @@
     <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\Minimap.cpp" />
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\TextureUtils.cpp" />
+    <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -137,6 +141,10 @@
     <ClInclude Include="Source\Engine\UI\Specialized\Minimap.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
+    <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

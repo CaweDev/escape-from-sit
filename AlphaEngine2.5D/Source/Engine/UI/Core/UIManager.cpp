@@ -10,6 +10,7 @@
 #include "Engine/UI/Core/UIEventSystem.hpp"
 #include "Engine/UI/Core/UIElement.hpp"
 #include "Engine/Core/Application.hpp"
+#include "Engine/UI/Helpers/DialogService.hpp"
 #include <algorithm>
 
 namespace UI
@@ -32,6 +33,9 @@ namespace UI
         CreateQuadMesh();
         Engine::Texture2D::InitializeStatics();
 
+        // Initialize Dialog Service first (it may create canvases)
+        UI::DialogService::Initialize();
+
         // Initialize fade overlay
         s_instance->InitFadeOverlay();
 
@@ -41,6 +45,9 @@ namespace UI
     void UIManager::Shutdown()
     {
         if (!s_instance) return;
+
+        // Cleanup Dialog Service (must happen before UIManager destroys canvases)
+        UI::DialogService::Shutdown();
 
         // Clear fade state
         s_instance->m_fadeCanvas = nullptr;
@@ -380,3 +387,5 @@ namespace UI
     }
 
 } // namespace UI
+
+

@@ -163,6 +163,18 @@ namespace UI
         UpdateTargetColor();
     }
 
+    void Button::SetBackgroundSprite(Engine::Texture2D* texture, bool sliced)
+    {
+        if (!m_targetGraphic || !texture) return;
+
+        m_targetGraphic->SetTexture(texture);
+
+        if (sliced)
+        {
+            m_targetGraphic->SetImageType(ImageType::Sliced);
+        }
+    }
+
     void Button::UpdateTargetColor()
     {
         switch (m_state)

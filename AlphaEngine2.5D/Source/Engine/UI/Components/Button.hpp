@@ -9,6 +9,7 @@
 #include "Engine/UI/Components/Image.hpp"
 #include "Engine/UI/Components/Text.hpp"
 #include "Engine/Graphics/Color.hpp"
+#include "Engine/Graphics/Texture2D.hpp"
 #include <functional>
 
 namespace UI
@@ -125,6 +126,13 @@ namespace UI
          * @brief Set the background color (normal state)
          */
         void SetBackgroundColor(const Engine::Color& color);
+
+        /**
+         * @brief Set a background sprite/texture (enables 9-slice if texture has a border set)
+         * @param texture Texture to use as background
+         * @param sliced  If true, sets ImageType::Sliced for 9-slice rendering
+         */
+        void SetBackgroundSprite(Engine::Texture2D* texture, bool sliced = true);
 
         /**
          * @brief Get the background image

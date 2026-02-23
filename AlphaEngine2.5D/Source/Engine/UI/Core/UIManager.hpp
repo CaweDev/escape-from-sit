@@ -14,7 +14,7 @@ namespace UI
 {
     /**
      * @class UIManager
-     * @brief Singleton that manages all UI rendering and input
+     * @brief Singleton that manages all UI managers, services, rendering and input
      * 
      * Responsibilities:
      * - Owns the shared quad mesh for all UI rendering

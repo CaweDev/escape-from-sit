@@ -29,6 +29,7 @@
 #include "Engine/Graphics/IRenderer.hpp"
 #include "Engine/Graphics/Color.hpp"
 #include "Engine/Graphics/Sprite.hpp"
+#include "Engine/Graphics/TextureUtils.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Graphics/Camera.hpp"
@@ -286,19 +287,8 @@ namespace Engine {
 
 		// ---------------------------------------------------------------
 		// Framebuffer rendering state (floor/ceiling CPU rasteriser)
+		// Uses Engine::CpuTexture from TextureUtils.hpp
 		// ---------------------------------------------------------------
-
-		/**
-		 * @brief CPU-side copy of a texture's pixel data, loaded via WIC at sprite assignment time.
-		 *
-		 * Stored as tightly-packed RGBA (4 bytes per pixel), row-major from top-left.
-		 * This avoids GPU readback during the framebuffer fill loop.
-		 */
-		struct CpuTexture {
-			std::vector<u8> pixels;  ///< RGBA pixel data, width × height × 4 bytes.
-			int width  = 0;          ///< Texture width in pixels.
-			int height = 0;          ///< Texture height in pixels.
-		};
 
 		CpuTexture floorCpuTex;  ///< CPU pixel data for the default floor sprite (type 1).
 		CpuTexture ceilCpuTex;   ///< CPU pixel data for the default ceiling sprite (type 1).
@@ -335,18 +325,6 @@ namespace Engine {
 		 * @param fogDistance  New characteristic distance. Must be > 0.
 		 */
 		void UpdateFogLUT(f32 fogDistance);
-
-		/**
-		 * @brief Loads a PNG from disk into a CpuTexture using Windows Imaging Component (WIC).
-		 *
-		 * The result is a tightly-packed RGBA8 buffer. Called once per sprite assignment,
-		 * not every frame. Initialises COM for the calling thread if needed.
-		 *
-		 * @param path  File path to the PNG image (UTF-8).
-		 * @param out   Output CpuTexture to populate.
-		 * @return      True if loading succeeded; false on any WIC failure.
-		 */
-		static bool LoadCpuPixels(const std::string& path, CpuTexture& out);
 
 		/**
 		 * @brief Performs DDA raycasting for a single ray direction against the tile map.
