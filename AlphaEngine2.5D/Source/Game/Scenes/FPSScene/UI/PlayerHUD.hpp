@@ -10,6 +10,7 @@
 #include "Engine/UI/Specialized/Map.hpp"
 #include "Engine/TileMap/TileMap.hpp"
 #include <vector>
+#include <functional>
 namespace Game
 {
     /**
@@ -42,6 +43,7 @@ namespace Game
         bool m_mapVisible = false;
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
+        std::function<int(int, int)> m_zoneGetter;
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
@@ -67,7 +69,7 @@ namespace Game
          */
         void SetTileMap(Engine::TileMap* tileMap);
         Engine::TileMap* GetTileMap() const { return m_tileMap; }
-
+        void SetZoneGetter(std::function<int(int, int)> fn);
         /**
          * @brief Set the player transform for position tracking
          * @param transform Pointer to player transform (not owned)

@@ -5,7 +5,8 @@
 
 #include "Engine/UI/Specialized/Map.hpp"
 #include "AEEngine.h"
-
+#include <functional>
+#include <iostream>
 namespace UI
 {
     Map::Map()
@@ -220,6 +221,28 @@ namespace UI
 
                 // Render the tile as a simple solid quad (seamlessly touching neighbors)
                 DrawQuad(screenX, screenY, tileSize, tileSize, tileColor);
+               
+                if (m_getZoneId)
+                {
+                    int zid = m_getZoneId(tx, ty);
+                   
+                    if (zid >= 0)
+                    {
+                        // Pick a simple color per zone (keep alpha low)
+                        Engine::Color zc(1, 1, 1, 0.0f);
+
+                        switch (zid)
+                        {
+                        case 0: zc = Engine::Color(1.0f, 0.0f, 0.0f, 0.7f); break; // red
+                        case 1: zc = Engine::Color(0.0f, 1.0f, 0.0f, 0.7f); break; // green
+                        case 2: zc = Engine::Color(0.0f, 0.5f, 1.0f, 0.7f); break; // blue
+                        case 3: zc = Engine::Color(1.0f, 1.0f, 0.0f, 0.7f); break; // yellow
+                        default: zc = Engine::Color(1.0f, 0.0f, 1.0f, 0.7f); break; // magenta
+                        }
+
+                        DrawQuad(screenX, screenY, tileSize, tileSize, zc);
+                    }
+                }
             }
         }
         {

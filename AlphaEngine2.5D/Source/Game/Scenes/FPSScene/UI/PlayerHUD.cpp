@@ -68,6 +68,9 @@ namespace Game
         {
             SetPlayerTransform(transform);
         }
+        if (m_map && m_zoneGetter) {
+            m_map->SetZoneGetter(m_zoneGetter);
+        }
     }
 
     void PlayerHUD::Update()
@@ -180,6 +183,14 @@ namespace Game
         {
             m_map->visible = false;
         }
+    }
+    void PlayerHUD::SetZoneGetter(std::function<int(int, int)> fn)
+    {
+        m_zoneGetter = fn;
+
+        // if map already created, apply immediately
+        if (m_map)
+            m_map->SetZoneGetter(m_zoneGetter);
     }
 
 } // namespace Game

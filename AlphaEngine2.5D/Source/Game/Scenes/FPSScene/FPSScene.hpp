@@ -68,6 +68,48 @@ namespace Game {
         UI::Button* modalButton = nullptr;
         bool endPanelShown = false;
 
+        struct Zone {
+            int id;
+            int minX, maxX; 
+            int minY, maxY;
+        };
+
+        std::vector<Zone> zones;
+
+        int GetZoneId(int tx, int ty) const {
+            for (auto const& z : zones) {
+                if (tx >= z.minX && tx <= z.maxX &&
+                    ty >= z.minY && ty <= z.maxY) {
+                    return z.id;
+                }
+            }
+            return -1;
+        }
+
+        const Zone* GetZone(int zoneId) const {
+            for (auto const& z : zones) {
+                if (z.id == zoneId) return &z;
+            }
+            return nullptr;
+        }
+
+        
+        bool PickRandomWalkableInZone(const Zone& z, Engine::TileMap* map, int& outX, int& outY) const {
+            if (!map) return false;
+
+            for (int tries = 0; tries < 400; ++tries) {
+                int x = z.minX + (std::rand() % (z.maxX - z.minX + 1));
+                int y = z.minY + (std::rand() % (z.maxY - z.minY + 1));
+
+                if (map->IsWalkable(x + 0.5f, y + 0.5f)) {
+                    outX = x;
+                    outY = y;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void SwitchToPlayerCam() {
             activeCCTV = -1;
             if (!playerTf) return;
@@ -203,6 +245,25 @@ namespace Game {
             const int mapHeight = (int)mapRows.size();
             const int mapWidth = (int)mapRows[0].size();
 
+            zones.clear();
+
+            int midX = mapWidth / 2;
+            int midY = mapHeight / 2;
+
+            // 0: Top-left
+            zones.push_back({ 1, 0, midX - 1, 0, midY - 1});
+
+            // 1: Top-right
+            zones.push_back({ 2, midX, mapWidth - 1, 0, midY - 1});
+
+            // 2: Bottom-left
+            zones.push_back({ 3, 0, midX - 1, midY, mapHeight - 1});
+
+            // 3: Bottom-right
+            zones.push_back({ 4, midX, mapWidth - 1, midY, mapHeight - 1});
+
+            std::cout << "[ZONE] Created " << zones.size() << " zones\n";
+
             for (int y = 0; y < mapHeight; ++y) {
                 if ((int)mapRows[y].size() != mapWidth) {
                     std::cout << "ERROR: map.txt row " << y << " has different width.\n";
@@ -273,7 +334,9 @@ namespace Game {
             auto playerHUD = player->AddComponent<PlayerHUD>();
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
-
+            playerHUD->SetZoneGetter([this](int tx, int ty) {
+                return this->GetZoneId(tx, ty);
+                });
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
 
@@ -448,15 +511,20 @@ namespace Game {
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
-
-           
+            if (Engine::Input::GetKeyDown(Engine::KeyCode::Z)) {
+                int tx = (int)playerTf->position.x;
+                int ty = (int)playerTf->position.y;
+                int zid = GetZoneId(tx, ty);
+                std::cout << "[ZONE] Player tile=(" << tx << "," << ty << ") zone=" << zid << "\n";
+            }
+            std::cout << "[ZONE] Total zones: " << zones.size() << "\n";
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
 
             if (guardComp) {
                 for (auto* s : cctvSensors) {
-                    if (s && s->hasLastSeen) {
+                    if (s && s->hasLastSeen) { 
                         guardComp->OnCCTVSpotted(s->lastSeenWorld);
                         s->hasLastSeen = false;
                         break;
