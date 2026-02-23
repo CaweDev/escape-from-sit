@@ -311,14 +311,8 @@ namespace Game {
             tileMapCollider->maxHeight = 3.0f;
 
             auto player = CreateGameObject("Player");
-            playerTf = player->transform;
-
-            auto cameraGO = CreateGameObject("PlayerCamera");
-            playerCam = cameraGO->AddComponent<Camera>();
-            auto* camShake = cameraGO->AddComponent<Game::CameraShake>();
-
-            // Make camera follow player
-            cameraGO->transform->position = playerTf->position;
+            playerCam = player->AddComponent<Camera>();
+            auto* camShake = player->AddComponent<Game::CameraShake>();
             // Enable fog for atmospheric effect
             playerCam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
             playerCam->fogEnabled = true;
@@ -596,12 +590,7 @@ namespace Game {
                         });
                 }
             }
-            if (playerTf && playerCam)
-            {
-                auto camTf = playerCam->gameObject->transform;
-                camTf->position.x = playerTf->position.x;
-                camTf->position.y = playerTf->position.y;
-            }
+
 
 
             if (!playerData || !playerTf) return;
