@@ -7,7 +7,7 @@
 #include "Engine/Core/Application.hpp"
 #include <cmath>
 #include <vector>
-#include <future>
+
 #include <algorithm>
 
 namespace Engine {
@@ -92,7 +92,7 @@ namespace Engine {
 				info.rayDirX2 = dirX + planeX * cameraX2;
 				info.rayDirY2 = dirY + planeY * cameraX2;
 
-				info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, horizon, screenHeight, map);
+				info.ray = CastRay(pos, info.rayDirX, info.rayDirY, camZ, horizon, screenWidth, screenHeight, map);
 
 				f32 drawStart = info.ray.drawStart < 0 ? 0 : info.ray.drawStart;
 				f32 drawEnd = info.ray.drawEnd >= screenHeight ? (f32)screenHeight - 1 : info.ray.drawEnd;
@@ -129,27 +129,10 @@ namespace Engine {
 			}
 		};
 
-		// Async launch
-		int numThreads = std::thread::hardware_concurrency();
-		if (numThreads == 0) numThreads = 2; // Fallback
-		
-		int colsPerThread = (numCols + numThreads - 1) / numThreads;
-		std::vector<std::future<void>> futures;
-
-		for (int t = 0; t < numThreads; ++t) {
-			int startIdx = t * colsPerThread;
-			int endIdx = startIdx + colsPerThread;
-			if (endIdx > numCols) endIdx = numCols;
-			
-			if (startIdx < endIdx) {
-				futures.push_back(std::async(std::launch::async, ProcessColumnRange, startIdx, endIdx));
-			}
-		}
-
-		// Wait for all
-		for (auto& f : futures) {
-			f.wait();
-		}
+		// Single-threaded column pass — the column count (~240 at COLUMN_STEP=8) is too
+		// small for async overhead to pay off; spawning OS threads per-frame hurts more
+		// than it helps, especially on machines with many logical cores.
+		ProcessColumnRange(0, numCols);
 
 		// Ensure linear filtering for floor/ceiling
 		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
@@ -168,7 +151,7 @@ namespace Engine {
 	}
 
 	TileMapRenderer::RaycastResult TileMapRenderer::CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, 
-		f32 camZ, int horizon, int screenHeight, TileMap* map) {
+		f32 camZ, int horizon, int screenWidth, int screenHeight, TileMap* map) {
 		
 		RaycastResult result;
 		
@@ -205,10 +188,11 @@ namespace Engine {
 		}
 		// result.wallX is now the absolute world coordinate (for U mapping)
 
-		// Wall height with aspect ratio correction
-		int screenWidth = Application::GetWindowWidth();
-		f32 wallHeight = (f32)screenWidth / (result.perpWallDist * cachedPlaneLength * 2.0f);
-		f32 heightOffset = (camZ - 0.5f) * ((f32)screenWidth / (result.perpWallDist * cachedPlaneLength * 2.0f));
+		// Wall height with aspect ratio correction.
+		// Hoist the shared denominator to avoid computing it twice.
+		f32 wallDistDenom = result.perpWallDist * cachedPlaneLength * 2.0f;
+		f32 wallHeight = (f32)screenWidth / wallDistDenom;
+		f32 heightOffset = (camZ - 0.5f) * wallHeight;
 		result.drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
 		result.drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
@@ -236,6 +220,8 @@ namespace Engine {
 		if (clampedHorizon < 0) clampedHorizon = 0;
 		if (clampedHorizon > screenHeight) clampedHorizon = screenHeight;
 
+		const int fogLUTMax = (int)fogLUT.size() - 1;
+
 		for (int y = 0; y < clampedHorizon; y += ROW_STEP) {
 			f32 p = (f32)horizon - (f32)y;
 			if (fabsf(p) < 0.1f) continue;
@@ -262,7 +248,7 @@ namespace Engine {
 			if (fog.enabled) {
 				int lutIdx = (int)(avgDist * 100.0f);
 				if (lutIdx < 0) lutIdx = 0;
-				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
+				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 				fogFactor = fogLUT[lutIdx];
 				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
 				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
@@ -400,6 +386,8 @@ namespace Engine {
 			}
 		}
 
+		const int fogLUTMax = (int)fogLUT.size() - 1;
+
 		for (int y = startY; y < screenHeight; y += ROW_STEP) {
 			f32 p = (f32)y - (f32)horizon;
 			if (fabsf(p) < 0.1f) continue;
@@ -425,7 +413,7 @@ namespace Engine {
 			if (fog.enabled) {
 				int lutIdx = (int)(avgDist * 100.0f);
 				if (lutIdx < 0) lutIdx = 0;
-				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
+				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 				fogFactor = fogLUT[lutIdx];
 				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
 				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;

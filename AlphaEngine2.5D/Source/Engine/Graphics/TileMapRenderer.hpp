@@ -133,7 +133,7 @@ namespace Engine {
 
 		// Raycast helper
 		RaycastResult CastRay(const Vector2& pos, f32 rayDirX, f32 rayDirY, f32 camZ, 
-			int horizon, int screenHeight, TileMap* map);
+			int horizon, int screenWidth, int screenHeight, TileMap* map);
 
 		// Separate render functions
 		void RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
