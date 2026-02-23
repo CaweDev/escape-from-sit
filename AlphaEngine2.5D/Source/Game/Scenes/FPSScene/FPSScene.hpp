@@ -17,6 +17,7 @@
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/CCTVPlacement.hpp"
+#include "Game/NPC.hpp"
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
@@ -381,6 +382,54 @@ namespace Game {
 
             playerHUD->AddEnemyTransform(enemy->transform);
 
+            auto* npcGO1 = CreateGameObject("NPC_Annoying_Z1");
+
+            npcGO1->transform->position = Vector2(6.5f, 6.5f);
+
+            auto* npc1 = npcGO1->AddComponent<Game::NPC>();
+            npc1->tileMap = map;
+            npc1->playerTf = playerTf;
+            npc1->zoneId = 1; // your zones are 1..4
+            npc1->type = Game::NPCType::Annoying;
+
+            npc1->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
+                const Zone* z = this->GetZone(zid);
+                if (!z) return false;
+                return this->PickRandomWalkableInZone(*z, map, gx, gy);
+                });
+
+            auto* npcSR1 = npcGO1->AddComponent<SpriteRenderer>();
+            npcSR1->SetSprite(AssetManager::GetSprite("Assets/xav.jpg")); 
+            npcSR1->billboard = true;
+            npcSR1->sortingOrder = 95;
+
+
+            auto* npcGO2 = CreateGameObject("NPC_Cleaner_Z3");
+
+            npcGO2->transform->position = Vector2(10.5f, 10.5f);
+
+            auto* npc2 = npcGO2->AddComponent<Game::NPC>();
+            npc2->tileMap = map;
+            npc2->playerTf = playerTf;
+            npc2->zoneId = 3;
+            npc2->type = Game::NPCType::Cleaner;
+            npc2->speed = 0.8f;
+
+            npc2->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
+                const Zone* z = this->GetZone(zid);
+                if (!z) return false;
+                return this->PickRandomWalkableInZone(*z, map, gx, gy);
+                });
+
+            auto* npcSR2 = npcGO2->AddComponent<SpriteRenderer>();
+            npcSR2->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
+            npcSR2->billboard = true;
+            npcSR2->sortingOrder = 95;
+
+            playerHUD->AddEnemyTransform(npcGO1->transform);
+            playerHUD->AddEnemyTransform(npcGO2->transform);
+            playerHUD->GetMap()->AddEnemyTransform(npcGO1->transform);
+            playerHUD->GetMap()->AddEnemyTransform(npcGO2->transform);
             Sprite* powerup1 = AssetManager::GetSprite("Assets/powerup1.png");
             Sprite* powerup2 = AssetManager::GetSprite("Assets/powerup2.png");
             Sprite* powerup3 = AssetManager::GetSprite("Assets/powerup3.png");
@@ -496,6 +545,7 @@ namespace Game {
             if (Input::GetKeyDown(KeyCode::Alpha0))
             {
                 SwitchToPlayerCam();
+          
             }
 
             if (!endPanelShown && playerData) {

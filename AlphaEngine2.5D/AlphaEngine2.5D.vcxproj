@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
     <ClInclude Include="Source\Game\CCTVCamera.hpp" />
     <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
+    <ClInclude Include="Source\Game\NPC.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
