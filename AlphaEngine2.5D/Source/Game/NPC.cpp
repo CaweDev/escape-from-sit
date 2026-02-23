@@ -7,6 +7,8 @@ namespace Game
     void NPC::Initialize()
     {
         m_rb = gameObject->GetComponent<Engine::Rigidbody2D>();
+        if (playerTf && playerTf->gameObject)
+            playerRb = playerTf->gameObject->GetComponent<Engine::Rigidbody2D>();
         activeTimer = 0.0f;
         repathTimer = 0.0f;
         path.clear();
@@ -80,11 +82,77 @@ namespace Game
         FollowPath(dt);
     }
 
-    void NPC::UpdateBully(float /*dt*/)
+    void NPC::UpdateBully(float dt)
     {
-        // TODO later:
-        // - short chase player for 1-2s (BFS to player tile)
-        // - then stop
+        if (!playerTf) return;
+
+        // cooldown tick
+        bullyCooldown -= dt;
+
+        // start chase when player walks past (enters range) and bully is not cooling down
+        if (PlayerInRange() && bullyCooldown <= 0.0f && activeTimer <= 0.0f)
+        {
+            activeTimer = bullyChaseTime;   // chasing window
+            repathTimer = 0.0f;             // force immediate repath
+        }
+
+        // chase phase
+        if (activeTimer > 0.0f)
+        {
+            activeTimer -= dt;
+
+            // repath toward player every interval
+            repathTimer -= dt;
+            if (repathTimer <= 0.0f)
+            {
+                int px = (int)playerTf->position.x;
+                int py = (int)playerTf->position.y;
+                BuildPathBFS_ToGoal(px, py);
+                repathTimer = bullyRepathInterval;
+            }
+
+  
+            float dx = playerTf->position.x - transform->position.x;
+            float dy = playerTf->position.y - transform->position.y;
+            float d2 = dx * dx + dy * dy;
+
+            if (d2 <= bullyPushRadius * bullyPushRadius)
+            {
+                float len = std::sqrt(d2);
+                if (len < 0.0001f) len = 0.0001f;
+
+              
+                float nx = dx / len;
+                float ny = dy / len;
+
+              
+                Engine::Vector2 impulse(nx * bullyPushStrength, ny * bullyPushStrength);
+
+                if (playerRb)
+                {
+                    
+                    playerRb->velocity.x = nx * bullyPushStrength;
+                    playerRb->velocity.y = ny * bullyPushStrength;
+                }
+                else
+                {
+                   
+                    playerTf->position.x += nx * bullyPushDistance;
+                    playerTf->position.y += ny * bullyPushDistance;
+                }
+                if (camShake)
+                    camShake->Shake(0.18f, 0.25f);
+                activeTimer = 0.0f;
+                bullyCooldown = bullyCooldownTime;
+                path.clear();
+                pathIndex = 0;
+                if (m_rb) m_rb->velocity = Engine::Vector2(0, 0);
+                return;
+            }
+
+            FollowPath(dt);
+            return;
+        }
     }
 
     bool NPC::PlayerInRange() const

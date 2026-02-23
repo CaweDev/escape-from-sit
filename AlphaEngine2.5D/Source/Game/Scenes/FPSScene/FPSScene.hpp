@@ -18,7 +18,7 @@
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/CCTVPlacement.hpp"
 #include "Game/NPC.hpp"
-
+#include "Game/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
 
@@ -311,8 +311,14 @@ namespace Game {
             tileMapCollider->maxHeight = 3.0f;
 
             auto player = CreateGameObject("Player");
-            playerCam = player->AddComponent<Camera>();
-            
+            playerTf = player->transform;
+
+            auto cameraGO = CreateGameObject("PlayerCamera");
+            playerCam = cameraGO->AddComponent<Camera>();
+            auto* camShake = cameraGO->AddComponent<Game::CameraShake>();
+
+            // Make camera follow player
+            cameraGO->transform->position = playerTf->position;
             // Enable fog for atmospheric effect
             playerCam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
             playerCam->fogEnabled = true;
@@ -383,9 +389,7 @@ namespace Game {
             playerHUD->AddEnemyTransform(enemy->transform);
 
           
-            auto* npcGO1 = CreateGameObject("NPC_Annoying_Z1");
-
- 
+            auto* npcGO1 = CreateGameObject("NPC_Bully_Z1");
             {
                 int sx = 0, sy = 0;
                 const Zone* z = GetZone(1);
@@ -397,8 +401,8 @@ namespace Game {
             npc1->tileMap = map;
             npc1->playerTf = playerTf;
             npc1->zoneId = 1;
-            npc1->type = Game::NPCType::Annoying;
-
+            npc1->type = Game::NPCType::Bully;
+            npc1->camShake = camShake;
             npc1->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
                 const Zone* z = this->GetZone(zid);
                 if (!z) return false;
@@ -421,8 +425,6 @@ namespace Game {
             col1->minHeight = 0.0f;
             col1->maxHeight = 2.0f;
 
-
-           
             auto* npcGO2 = CreateGameObject("NPC_Cleaner_Z3");
 
             {
@@ -594,7 +596,12 @@ namespace Game {
                         });
                 }
             }
-
+            if (playerTf && playerCam)
+            {
+                auto camTf = playerCam->gameObject->transform;
+                camTf->position.x = playerTf->position.x;
+                camTf->position.y = playerTf->position.y;
+            }
 
 
             if (!playerData || !playerTf) return;

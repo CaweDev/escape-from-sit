@@ -62,6 +62,7 @@
     <ClCompile Include="Source\Engine\UI\Specialized\Minimap.cpp" />
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\NPC.cpp" />
+    <ClCompile Include="Source\Game\CameraShake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\NPC.hpp" />
+    <ClInclude Include="Source\Game\CameraShake.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

@@ -5,11 +5,12 @@
 #include "Engine/TileMap/TileMap.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
+#include "Game/CameraShake.hpp"
 #include <vector>
 #include <queue>
 #include <unordered_map>
 #include <functional>
-
+#include "Game/Player.hpp"
 namespace Game
 {
     enum class NPCType { Annoying, Cleaner, Bully };
@@ -20,9 +21,12 @@ namespace Game
         Engine::TileMap* tileMap = nullptr;
         Engine::Transform* playerTf = nullptr;
         Engine::Rigidbody2D* m_rb = nullptr; 
+        Engine::Rigidbody2D* playerRb = nullptr; 
+        Game::Player* playerData = nullptr;
+        Game::CameraShake* camShake = nullptr;
         NPCType type = NPCType::Annoying;
 
-        // NOTE: your FPSScene zones are 1..4
+      
         int zoneId = 1;
 
         float speed = 1.0f;
@@ -49,7 +53,14 @@ namespace Game
         // Timers
         float activeTimer = 0.0f; // Annoying
         float repathTimer = 0.0f; // Cleaner
+        float bullyChaseTime = 1.5f;
+        float bullyRepathInterval = 0.25f;
+        float bullyCooldownTime = 2.0f;
 
+        float bullyPushRadius = 1.0f;
+        float bullyPushStrength = 18.0f;   
+        float bullyPushDistance = 1.2f;
+        float bullyCooldown = 0.0f;
         std::function<bool(int, int&, int&)> m_pickGoalInZone;
 
     private:

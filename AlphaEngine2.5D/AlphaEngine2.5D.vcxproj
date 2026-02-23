@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Minimap.hpp" />
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
+    <ClInclude Include="Source\Game\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTVCamera.hpp" />
     <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
     <ClInclude Include="Source\Game\NPC.hpp" />
