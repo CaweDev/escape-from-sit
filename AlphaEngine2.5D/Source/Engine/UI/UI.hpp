@@ -33,6 +33,7 @@
 // Helpers
 #include "Engine/UI/Helpers/NineSliceRenderer.hpp"
 #include "Engine/UI/Helpers/DialogService.hpp"
+#include "Engine/UI/Helpers/FadeService.hpp"
 
 // UI GameObjects
 #include "Engine/UI/GameObject/ConfirmationDialog.hpp"

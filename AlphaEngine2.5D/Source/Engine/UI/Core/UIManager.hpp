@@ -6,7 +6,6 @@
 
 #include "AEEngine.h"
 #include "Engine/UI/Core/Canvas.hpp"
-#include "Engine/UI/Components/Image.hpp"
 #include <vector>
 #include <functional>
 
@@ -118,27 +117,6 @@ namespace UI
          */
         UIElement* GetHoveredElement() const { return m_hoveredElement; }
 
-        // ===== Screen Fade API =====
-
-        /**
-         * @brief Fade screen to black (transparent -> opaque)
-         * @param duration Fade duration in seconds
-         * @param onComplete Optional callback when fade completes
-         */
-        void FadeIn(f32 duration, std::function<void()> onComplete = nullptr);
-
-        /**
-         * @brief Fade screen from black (opaque -> transparent)
-         * @param duration Fade duration in seconds
-         * @param onComplete Optional callback when fade completes
-         */
-        void FadeOut(f32 duration, std::function<void()> onComplete = nullptr);
-
-        /**
-         * @brief Check if a fade is currently in progress
-         */
-        bool IsFading() const { return m_fading; }
-
         /**
          * @brief Convert screen coordinates to world coordinates
          * @param screenX Screen X (from AEInputGetCursorPosition)
@@ -147,7 +125,7 @@ namespace UI
          * @param outWorldY Output world Y
          */
         static void ScreenToWorld(s32 screenX, s32 screenY, f32& outWorldX, f32& outWorldY);
-        
+
         /**
          * @brief Notify UIManager that an element is being destroyed
          * @param element Pointer to the element being destroyed
@@ -181,21 +159,6 @@ namespace UI
 
         bool m_canvasesSortDirty = true;
         void SortCanvases();
-
-        // ===== Screen Fade internals =====
-        Canvas* m_fadeCanvas = nullptr;
-        Image*  m_fadeImage  = nullptr;
-
-        bool  m_fading = false;
-        f32   m_fadeAlpha = 0.0f;
-        f32   m_fadeFrom = 0.0f;
-        f32   m_fadeTo = 0.0f;
-        f32   m_fadeDuration = 0.0f;
-        f32   m_fadeElapsed = 0.0f;
-        std::function<void()> m_fadeCallback;
-
-        void InitFadeOverlay();
-        void UpdateFade(f32 dt);
     };
 
 } // namespace UI

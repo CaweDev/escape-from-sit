@@ -11,6 +11,7 @@
 #include "Engine/UI/Core/UIElement.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/UI/Helpers/DialogService.hpp"
+#include "Engine/UI/Helpers/FadeService.hpp"
 #include <algorithm>
 
 namespace UI
@@ -33,11 +34,11 @@ namespace UI
         CreateQuadMesh();
         Engine::Texture2D::InitializeStatics();
 
-        // Initialize Dialog Service first (it may create canvases)
+        // Initialize Dialog Service (it may create canvases)
         UI::DialogService::Initialize();
 
-        // Initialize fade overlay
-        s_instance->InitFadeOverlay();
+        // Initialize Fade Service
+        FadeService::Initialize();
 
         return true;
     }
@@ -49,10 +50,8 @@ namespace UI
         // Cleanup Dialog Service (must happen before UIManager destroys canvases)
         UI::DialogService::Shutdown();
 
-        // Clear fade state
-        s_instance->m_fadeCanvas = nullptr;
-        s_instance->m_fadeImage = nullptr;
-        s_instance->m_fading = false;
+        // Cleanup Fade Service
+        FadeService::Shutdown();
 
         // Destroy all canvases (including fade canvas)
         for (auto* canvas : s_instance->m_canvases)
@@ -108,7 +107,7 @@ namespace UI
     void UIManager::Update(f32 dt)
     {
         // Update fade overlay animation
-        UpdateFade(dt);
+        FadeService::Update(dt);
 
         // Process input first
         ProcessInput();
@@ -300,92 +299,4 @@ namespace UI
         return nullptr;
     }
 
-    // ===== Screen Fade Implementation =====
-
-    void UIManager::InitFadeOverlay()
-    {
-        m_fadeCanvas = CreateCanvas();
-        m_fadeCanvas->SetSortOrder(9999);
-        m_fadeCanvas->SetReferenceResolution(1280.f, 720.f);
-        m_fadeCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
-
-        m_fadeImage = m_fadeCanvas->CreateChild<Image>();
-        m_fadeImage->name = "FadeOverlay";
-        m_fadeImage->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
-        m_fadeImage->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_fadeImage->SetSizeDelta({ 0.0f, 0.0f });
-        m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.0f));
-        m_fadeImage->raycastTarget = false;
-        m_fadeImage->visible = false;
-    }
-
-    void UIManager::UpdateFade(f32 dt)
-    {
-        if (!m_fading || !m_fadeImage) return;
-
-        m_fadeElapsed += dt;
-        f32 t = (m_fadeDuration > 0.0f) ? (m_fadeElapsed / m_fadeDuration) : 1.0f;
-
-        if (t >= 1.0f)
-        {
-            t = 1.0f;
-            m_fading = false;
-            m_fadeAlpha = m_fadeTo;
-            m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, m_fadeAlpha));
-
-            // Hide overlay when fully transparent
-            if (m_fadeAlpha <= 0.0f)
-            {
-                m_fadeImage->visible = false;
-            }
-
-            // Fire callback
-            if (m_fadeCallback)
-            {
-                auto cb = m_fadeCallback;
-                m_fadeCallback = nullptr;
-                cb();
-            }
-            return;
-        }
-
-        // Smooth interpolation
-        m_fadeAlpha = m_fadeFrom + (m_fadeTo - m_fadeFrom) * (t * t * (3.0f - 2.0f * t));
-        m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, m_fadeAlpha));
-    }
-
-    void UIManager::FadeIn(f32 duration, std::function<void()> onComplete)
-    {
-        if (!m_fadeImage) return;
-
-        m_fadeImage->visible = true;
-        m_fadeFrom = 0.0f;
-        m_fadeTo = 1.0f;
-        m_fadeDuration = duration;
-        m_fadeElapsed = 0.0f;
-        m_fadeAlpha = 0.0f;
-        m_fadeCallback = onComplete;
-        m_fading = true;
-
-        m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.0f));
-    }
-
-    void UIManager::FadeOut(f32 duration, std::function<void()> onComplete)
-    {
-        if (!m_fadeImage) return;
-
-        m_fadeImage->visible = true;
-        m_fadeFrom = 1.0f;
-        m_fadeTo = 0.0f;
-        m_fadeDuration = duration;
-        m_fadeElapsed = 0.0f;
-        m_fadeAlpha = 1.0f;
-        m_fadeCallback = onComplete;
-        m_fading = true;
-
-        m_fadeImage->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, 1.0f));
-    }
-
 } // namespace UI
-
-

@@ -88,7 +88,7 @@ void SplashScene::OnLoad() {
 
     // Start with screen fully black (fade overlay at alpha = 1)
     // Then fade it out to reveal our scene
-    UIManager::GetInstance()->FadeOut(FADE_IN_DURATION);
+    FadeService::FadeOut(FADE_IN_DURATION);
 }
 
 void SplashScene::OnUpdate() {

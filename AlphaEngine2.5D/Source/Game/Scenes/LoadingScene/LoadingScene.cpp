@@ -3,10 +3,6 @@
  * @brief Implementation of LoadingScene
  */
 #include "LoadingScene.hpp"
-#include "Engine/Scene/SceneManager.hpp"
-#include "Engine/UI/Core/UIManager.hpp"
-#include "Engine/Core/Time.hpp"
-#include "Engine/Graphics/Color.hpp"
 
 namespace Game {
 
@@ -69,7 +65,7 @@ namespace Game {
 
         // Fade OUT the overlay to reveal the loading UI
         // (The overlay is at alpha=1 from the previous FadeIn)
-        uiMgr->FadeOut(SceneManager::GetLoadWithScreenFadeInDuration());
+        UI::FadeService::FadeOut(SceneManager::GetLoadWithScreenFadeInDuration());
     }
 
     void LoadingScene::OnUpdate() {
@@ -98,18 +94,12 @@ namespace Game {
             std::string target = SceneManager::GetLoadWithScreenTarget();
             f32 fadeOutDuration = SceneManager::GetLoadWithScreenFadeOutDuration();
 
-            // Fade IN to black, then deferred-load the target scene
-            auto* uiMgr = UIManager::GetInstance();
-            if (uiMgr) {
-                uiMgr->FadeIn(fadeOutDuration, [target, fadeOutDuration]() {
-                    // Screen is now fully black — load target and start reveal
-                    SceneManager::LoadSceneDeferred(target);
-                    auto* ui = UIManager::GetInstance();
-                    if (ui) {
-                        ui->FadeOut(fadeOutDuration);
-                    }
-                });
-            }
+
+            FadeService::FadeIn(fadeOutDuration, [target, fadeOutDuration]() {
+                // Screen is now fully black — load target and start reveal
+                SceneManager::LoadSceneDeferred(target);
+                FadeService::FadeOut(fadeOutDuration);
+            });
         }
     }
 

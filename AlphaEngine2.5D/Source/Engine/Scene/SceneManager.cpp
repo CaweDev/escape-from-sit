@@ -4,6 +4,7 @@
  */
 #include "SceneManager.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
+#include "Engine/UI/Helpers/FadeService.hpp"
 
 namespace Engine {
 
@@ -75,16 +76,9 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
     s_loadWithScreenFadeInDuration = fadeInDuration;
     s_loadWithScreenFadeOutDuration = fadeOutDuration;
 
-    auto* ui = UI::UIManager::GetInstance();
-    if (ui) {
-        ui->FadeIn(fadeInDuration, []() {
-            LoadScene("Loading");
-        });
-    }
-    else {
-        // Fallback: load directly if UI not available
-        LoadScene(sceneName);
-    }
+    UI::FadeService::FadeIn(fadeInDuration, []() {
+        LoadScene("Loading");
+    });
 }
 
 void SceneManager::LoadWithFade(const std::string& sceneName) {
@@ -92,19 +86,10 @@ void SceneManager::LoadWithFade(const std::string& sceneName) {
 }
 
 void SceneManager::LoadWithFade(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
-    auto* ui = UI::UIManager::GetInstance();
-    if (ui) {
-        ui->FadeIn(fadeInDuration, [sceneName, fadeOutDuration]() {
-            LoadScene(sceneName);
-            auto* ui = UI::UIManager::GetInstance();
-            if (ui) {
-                ui->FadeOut(fadeOutDuration);
-            }
-        });
-    }
-    else {
+    UI::FadeService::FadeIn(fadeInDuration, [sceneName, fadeOutDuration]() {
         LoadScene(sceneName);
-    }
+        UI::FadeService::FadeOut(fadeOutDuration);
+    });
 }
 
 void SceneManager::RenderActiveScene() {

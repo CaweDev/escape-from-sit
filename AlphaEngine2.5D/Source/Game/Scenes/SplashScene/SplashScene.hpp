@@ -4,11 +4,7 @@
  * @brief Horror-themed DigiPen splash screen displayed on launch
  */
 
-#include "Engine/Scene/Scene.hpp"
-#include "Engine/UI/Core/Canvas.hpp"
-#include "Engine/UI/Components/Image.hpp"
-#include "Engine/UI/Components/Panel.hpp"
-#include "Engine/Graphics/Texture2D.hpp"
+#include "Engine.hpp"
 
 namespace Game {
 

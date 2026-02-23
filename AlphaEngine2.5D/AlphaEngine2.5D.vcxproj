@@ -54,6 +54,7 @@
     <ClCompile Include="Source\Engine\UI\Core\UIManager.cpp" />
     <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp" />
     <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp" />
     <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
     <ClCompile Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.cpp" />
     <ClCompile Include="Source\Engine\UI\Layout\LayoutGroup.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Source\Engine\UI\Core\UIManager.hpp" />
     <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp" />
     <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp" />
     <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\LayoutGroup.hpp" />

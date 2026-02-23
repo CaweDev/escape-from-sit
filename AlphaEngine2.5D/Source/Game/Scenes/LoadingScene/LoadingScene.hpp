@@ -5,11 +5,7 @@
  * @brief Loading screen scene displayed during scene transitions
  */
 
-#include "Engine/Scene/Scene.hpp"
-#include "Engine/UI/Core/Canvas.hpp"
-#include "Engine/UI/Components/Text.hpp"
-#include "Engine/UI/Components/Image.hpp"
-#include "Engine/UI/Components/Panel.hpp"
+#include "Engine.hpp"
 #include <string>
 
 namespace Game {
