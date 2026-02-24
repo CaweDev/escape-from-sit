@@ -11,16 +11,17 @@
 #include "Engine/Core/AssetManager.hpp"
 
 #include "Game/FPSController.hpp"
-#include "Game/Player.hpp"
-#include "Game/SecurityGuard.hpp"
-#include "Game/CCTVCamera.hpp"
+#include "Game/Player/Player.hpp"
+#include "Game/SecurityGuard/SecurityGuard.hpp"
+#include "Game/CCTV/CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
-#include "Game/CCTVPlacement.hpp"
-#include "Game/NPC.hpp"
-#include "Game/CameraShake.hpp"
+#include "Game/CCTV/CCTVPlacement.hpp"
+#include "Game/NPC/NPC.hpp"
+#include "Game/NPC/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
+#include "Game/CCTV/CCTVConeRenderer.hpp"
 
 #include <iostream>
 #include <vector>
@@ -527,9 +528,10 @@ namespace Game {
                 sensor->needLOS = true;
                 
                 cctvSensors.push_back(sensor);
-                
+              
+            
             }
-
+       
             CreateEndPanel();
 
             SwitchToPlayerCam();
@@ -599,9 +601,9 @@ namespace Game {
                 int tx = (int)playerTf->position.x;
                 int ty = (int)playerTf->position.y;
                 int zid = GetZoneId(tx, ty);
-                std::cout << "[ZONE] Player tile=(" << tx << "," << ty << ") zone=" << zid << "\n";
+               
             }
-            std::cout << "[ZONE] Total zones: " << zones.size() << "\n";
+          
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;

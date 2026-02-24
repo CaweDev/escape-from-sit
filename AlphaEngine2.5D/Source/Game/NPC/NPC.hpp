@@ -5,12 +5,12 @@
 #include "Engine/TileMap/TileMap.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
-#include "Game/CameraShake.hpp"
+#include "Game/NPC/CameraShake.hpp"
 #include <vector>
 #include <queue>
 #include <unordered_map>
 #include <functional>
-#include "Game/Player.hpp"
+#include "Game/Player/Player.hpp"
 namespace Game
 {
     enum class NPCType { Annoying, Cleaner, Bully };

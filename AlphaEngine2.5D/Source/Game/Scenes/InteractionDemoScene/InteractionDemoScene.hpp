@@ -13,7 +13,7 @@
 #include "Engine/Core/Time.hpp"
 
 #include "Game/FPSController.hpp"
-#include "Game/Player.hpp"
+#include "Game/Player/Player.hpp"
 
 #include <iostream>
 #include <memory>
