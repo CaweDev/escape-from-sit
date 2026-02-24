@@ -410,7 +410,7 @@ namespace Game {
             npcSR1->sortingOrder = 95;
 
             auto* rb1 = npcGO1->AddComponent<Rigidbody2D>();
-            rb1->bodyType = RigidbodyType2D::Dynamic;
+            rb1->bodyType = RigidbodyType2D::Kinematic;
             rb1->gravityScale = 0.0f;
             rb1->drag = 8.0f;
 
@@ -448,7 +448,7 @@ namespace Game {
             npcSR2->sortingOrder = 95;
 
             auto* rb2 = npcGO2->AddComponent<Rigidbody2D>();
-            rb2->bodyType = RigidbodyType2D::Dynamic;
+            rb2->bodyType = RigidbodyType2D::Kinematic;
             rb2->gravityScale = 0.0f;
             rb2->drag = 8.0f;
 

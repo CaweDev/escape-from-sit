@@ -141,7 +141,7 @@ namespace Game
                     playerTf->position.y += ny * bullyPushDistance;
                 }
                 if (camShake)
-                    camShake->Shake(0.18f, 0.25f);
+                    camShake->Shake(0.8f, 0.75f);
                 activeTimer = 0.0f;
                 bullyCooldown = bullyCooldownTime;
                 path.clear();
