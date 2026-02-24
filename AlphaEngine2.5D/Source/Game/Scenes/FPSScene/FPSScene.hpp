@@ -21,7 +21,7 @@
 #include "Game/NPC/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
-#include "Game/CCTV/CCTVConeRenderer.hpp"
+
 
 #include <iostream>
 #include <vector>

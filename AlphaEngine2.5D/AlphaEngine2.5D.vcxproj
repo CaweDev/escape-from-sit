@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVConeRenderer.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
@@ -144,7 +143,6 @@
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVConeRenderer.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\Player\Player.hpp" />

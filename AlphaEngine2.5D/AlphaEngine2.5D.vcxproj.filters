@@ -63,7 +63,6 @@
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVConeRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -142,7 +141,6 @@
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVConeRenderer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
