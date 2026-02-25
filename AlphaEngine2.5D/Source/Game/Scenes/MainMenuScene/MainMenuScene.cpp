@@ -75,6 +75,7 @@ namespace Game {
         menuCanvas = UIManager::GetInstance()->CreateCanvas();
         menuCanvas->SetReferenceResolution(1280.f, 720.f);
         menuCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
+        menuCanvas->SetSortOrder(100);
 
         // === Title (centered at top) - starts empty for typewriter effect ===
         titleText = menuCanvas->CreateChild<Text>();
@@ -196,7 +197,7 @@ namespace Game {
         crosshairImage->SetPivot({ 0.5f, 0.5f });
         crosshairImage->SetSizeDelta({ 300.f, 300.f });
 		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.8f));  // Yellow
-        crosshairImage->SetRenderOrder(1); // Always on top
+        crosshairImage->SetRenderOrder(1); // Lowest Priority
         {
             Vector2 mousePos = Input::GetMousePosition();
             auto canvasPos = menuCanvas->ScreenToCanvasPosition(static_cast<s32>(mousePos.x), static_cast<s32>(mousePos.y));

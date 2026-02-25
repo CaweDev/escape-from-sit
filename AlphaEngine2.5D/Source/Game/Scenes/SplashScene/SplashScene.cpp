@@ -53,9 +53,7 @@ void SplashScene::OnLoad() {
     m_phaseTimer = 0.0f;
     m_transitioning = false;
 
-    // Load logo textures
-    m_whiteLogo = AssetManager::GetTexture(LOGO_WHITE_PATH);
-    m_logo2 = AssetManager::GetTexture(LOGO2_PATH);
+ 
 
     // Canvas
     m_canvas = UIManager::GetInstance()->CreateCanvas();
@@ -80,11 +78,29 @@ void SplashScene::OnLoad() {
     m_logo->SetPivot({ 0.5f, 0.5f });
     m_logo->SetAnchoredPosition({ 0.0f, 0.0f });
     m_logo->SetSizeDelta({ LOGO_WIDTH, LOGO_HEIGHT });
-
-    // Start with white logo, invisible
-    m_logo->SetTexture(m_whiteLogo);
+    {
+        // Load logo textures
+        Texture2D* tex = AssetManager::GetTexture(LOGO_WHITE_PATH);
+        m_logo->SetTexture(tex);
+    }
     m_logo->SetColor(Color(1.0f, 1.0f, 1.0f, 0.0f));
     m_logo->SetRenderOrder(LOGO_RENDER_ORDER);
+    m_logo->SetActive(true);
+
+    // Second Logo
+    m_logo2 = m_canvas->CreateChild<Image>();
+    m_logo2->name = "DigiPenLogo2";
+    m_logo2->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
+    m_logo2->SetPivot({ 0.5f, 0.5f });
+    m_logo2->SetAnchoredPosition({ 0.0f, 0.0f });
+    m_logo2->SetSizeDelta({ LOGO_WIDTH, LOGO_HEIGHT });
+    {
+        Texture2D* tex = AssetManager::GetTexture(LOGO2_PATH);
+        m_logo2->SetTexture(tex);
+    }
+    m_logo2->SetColor(Color(LOGO2_COLOR.r, LOGO2_COLOR.g, LOGO2_COLOR.b, 0.0f));
+    m_logo2->SetRenderOrder(LOGO_RENDER_ORDER);
+    m_logo2->SetActive(false);
 
     // Start with screen fully black (fade overlay at alpha = 1)
     // Then fade it out to reveal our scene
@@ -108,6 +124,7 @@ void SplashScene::OnUpdate() {
         if (t > 1.0f) t = 1.0f;
 
         const_cast<Color&>(m_logo->GetColor()).a = t;
+        const_cast<Color&>(m_logo2->GetColor()).a = t;
 
         if (m_phaseTimer >= FADE_IN_DURATION) {
             AdvancePhase();
@@ -125,6 +142,7 @@ void SplashScene::OnUpdate() {
         float scale = 1.0f + (LOGO_EXPAND_SCALE - 1.0f) * smooth;
 
         m_logo->SetSizeDelta({ LOGO_WIDTH * scale, LOGO_HEIGHT * scale });
+        m_logo2->SetSizeDelta({ LOGO_WIDTH * scale, LOGO_HEIGHT * scale });
 
         if (m_phaseTimer >= HOLD_AND_EXPAND_DURATION) {
             AdvancePhase();
@@ -149,12 +167,13 @@ void SplashScene::OnUpdate() {
             // Swap at midpoint when logo is fully transparent
             if (!m_flickerSwapped && local >= 0.5f) {
                 m_flickerSwapped = true;
-                m_logo->SetTexture(m_logo2);
-                m_logo->SetColor(LOGO2_COLOR);
+                m_logo->SetActive(false);
+                m_logo2->SetActive(true);
             }
         }
 
         const_cast<Color&>(m_logo->GetColor()).a = flicker;
+        const_cast<Color&>(m_logo2->GetColor()).a = flicker;
 
         if (m_phaseTimer >= FLICKER_DURATION) {
             AdvancePhase();
@@ -179,12 +198,13 @@ void SplashScene::OnUpdate() {
             // Swap at midpoint when logo is fully transparent
             if (!m_flickerSwapped && local >= 0.5f) {
                 m_flickerSwapped = true;
-                m_logo->SetTexture(m_whiteLogo);
-                m_logo->SetColor(LOGO_WHITE_COLOR);
+                m_logo->SetActive(true);
+                m_logo2->SetActive(false);
             }
         }
 
         const_cast<Color&>(m_logo->GetColor()).a = flicker;
+        const_cast<Color&>(m_logo2->GetColor()).a = flicker;
 
         if (m_phaseTimer >= FINAL_FLICKER_DURATION) {
             AdvancePhase();
@@ -263,7 +283,6 @@ void SplashScene::OnUnload() {
     }
     m_background = nullptr;
     m_logo = nullptr;
-    m_whiteLogo = nullptr;
     m_logo2 = nullptr;
 }
 
