@@ -22,7 +22,10 @@
 
 namespace Engine {
 
-	TileMapRenderer::TileMapRenderer() : columnMesh(nullptr), fullscreenMesh(nullptr) {}
+	TileMapRenderer::TileMapRenderer() : columnMesh(nullptr), fullscreenMesh(nullptr) 
+	{
+		AEMtx33Identity(&identityMtx);
+	}
 
 	TileMapRenderer::~TileMapRenderer() {
 		if (columnMesh) {
@@ -177,17 +180,15 @@ namespace Engine {
 			}
 		};
 
-		// Single-threaded column pass — the column count (~240 at COLUMN_STEP=8) is too
-		// small for async overhead to pay off; spawning OS threads per-frame hurts more
-		// than it helps, especially on machines with many logical cores.
+		// Single-threaded column pass
 		ProcessColumnRange(0, numCols);
 
 		// Ensure linear filtering for floor/ceiling
-		AEGfxTextureMode(AE_GFX_TM_AVERAGE);
+		AEGfxSetTextureMode(AE_GFX_TM_AVERAGE);
 
 		// Render in order: ceiling, floor, walls (walls on top)
-		RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, managedColumns, map);
-		RenderFloor(pos, camZ, horizon, screenWidth, screenHeight, managedColumns, map);
+		RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
+		RenderFloor(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
 
 		// Sort walls for efficient batching: TileType first, then FogKey
 		std::sort(managedColumns.begin(), managedColumns.end(), [](const ColumnInfo& a, const ColumnInfo& b) {
@@ -286,7 +287,7 @@ namespace Engine {
 	// as a transient GPU texture and draw it with one fullscreen quad.
 	// ===================================================================
 	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
-		const std::vector<ColumnInfo>& columns, TileMap* map) {
+		const std::vector<ColumnInfo>& columns) {
 		
 		if (ceilingSprites.empty() || columns.empty()) return; // No ceiling sprite assigned — nothing to draw.
 		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return; // WIC pixel load failed — skip.
@@ -421,11 +422,11 @@ namespace Engine {
 			AEGfxSetTransparency(1.0f);                                // Full opacity for the quad itself.
 
 			// Scale the unit quad (-0.5..0.5) to cover the entire screen.
-			AEMtx33 scale, transform;
+			AEMtx33 scale, transformMtx;
 			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight); // Stretch to screen dimensions.
-			AEMtx33Identity(&transform);
-			AEMtx33Concat(&transform, &transform, &scale);            // Combined transform = identity × scale.
-			AEGfxSetTransform(transform.m);                            // Apply the transform.
+			AEMtx33Identity(&transformMtx);
+			AEMtx33Concat(&transformMtx, &transformMtx, &scale);            // Combined transform = identity × scale.
+			AEGfxSetTransform(transformMtx.m);                            // Apply the transform.
 			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);      // Draw the two-triangle fullscreen quad.
 			AEGfxTextureUnload(tex);                                   // Free the transient texture immediately.
 		}
@@ -438,7 +439,7 @@ namespace Engine {
 	// beyond the maximum visible fog distance are skipped entirely.
 	// ===================================================================
 	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
-		const std::vector<ColumnInfo>& columns, TileMap* map) {
+		const std::vector<ColumnInfo>& columns) {
 		
 		if (floorSprites.empty() || columns.empty()) return; // No floor sprite — nothing to draw.
 		if (floorCpuTex.pixels.empty() || floorCpuTex.width == 0) return; // CPU texture not loaded.
@@ -563,11 +564,11 @@ namespace Engine {
 			AEGfxSetColorToAdd(0, 0, 0, 0);
 			AEGfxSetTransparency(1.0f);
 
-			AEMtx33 scale, transform;
+			AEMtx33 scale, transformMtx;
 			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight);
-			AEMtx33Identity(&transform);
-			AEMtx33Concat(&transform, &transform, &scale);
-			AEGfxSetTransform(transform.m);
+			AEMtx33Identity(&transformMtx);
+			AEMtx33Concat(&transformMtx, &transformMtx, &scale);
+			AEGfxSetTransform(transformMtx.m);
 			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);
 			AEGfxTextureUnload(tex);
 		}
@@ -586,7 +587,7 @@ namespace Engine {
 	void TileMapRenderer::RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return; // Nothing to draw.
 
-		AEGfxTextureMode(AE_GFX_TM_AVERAGE); // Bilinear filtering for wall textures.
+		AEGfxSetTextureMode(AE_GFX_TM_AVERAGE); // Bilinear filtering for wall textures.
 
 		// Batch state: tracks the currently-open mesh's tile type and fog level.
 		int currentTileType = -1;      // -1 means "no batch started yet".

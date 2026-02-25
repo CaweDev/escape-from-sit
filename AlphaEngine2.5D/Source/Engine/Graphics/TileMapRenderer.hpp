@@ -364,7 +364,7 @@ namespace Engine {
 		 * @param map          TileMap (unused in this path, kept for API symmetry).
 		 */
 		void RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight,
-			const std::vector<ColumnInfo>& columns, TileMap* map);
+			const std::vector<ColumnInfo>& columns);
 
 		/**
 		 * @brief Rasterises the floor into floorFramebuffer and draws it as a single fullscreen quad.
@@ -381,7 +381,7 @@ namespace Engine {
 		 * @param map          TileMap (unused in this path, kept for API symmetry).
 		 */
 		void RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight,
-			const std::vector<ColumnInfo>& columns, TileMap* map);
+			const std::vector<ColumnInfo>& columns);
 
 		/**
 		 * @brief Draws the wall columns using AEGfxTriAdd batched by tile type and fog key.
