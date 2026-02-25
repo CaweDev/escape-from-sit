@@ -10,12 +10,13 @@
 #include "Engine/UI/Specialized/Map.hpp"
 #include "Engine/TileMap/TileMap.hpp"
 #include <vector>
+#include <functional>
 namespace Game
 {
     /**
      * @class PlayerHUD
      * @brief Component that creates and manages Minimap and Map UI elements
-     * 
+     *
      * Attach this to a GameObject (typically the Player) to get:
      * - A corner minimap showing nearby tiles
      * - A toggleable full map (M key)
@@ -42,6 +43,7 @@ namespace Game
         bool m_mapVisible = false;
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
+        std::function<int(int, int)> m_zoneGetter;
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
@@ -67,18 +69,21 @@ namespace Game
          */
         void SetTileMap(Engine::TileMap* tileMap);
         Engine::TileMap* GetTileMap() const { return m_tileMap; }
-
+        void SetZoneGetter(std::function<int(int, int)> fn);
         /**
          * @brief Set the player transform for position tracking
          * @param transform Pointer to player transform (not owned)
          */
         void SetPlayerTransform(Engine::Transform* transform);
         Engine::Transform* GetPlayerTransform() const { return m_playerTransform; }
-       
+
         UI::Minimap* GetMinimap() const { return m_minimap; }
         void AddEnemyTransform(Engine::Transform* enemyTransform);
+
+
         void AddCCTVTransform(Engine::Transform* cctvTransform);
-        void ClearCCTVs() { m_cctvTransforms.clear(); }
+        void ClearCCTVs();
+
 
         /**
          * @brief Toggle the full map visibility
@@ -103,11 +108,11 @@ namespace Game
         /**
          * @brief Get the minimap element
          */
-      
 
-        /**
-         * @brief Get the map element
-         */
+
+         /**
+          * @brief Get the map element
+          */
         UI::Map* GetMap() const { return m_map; }
 
         // Getters and Setters for Minimap settings

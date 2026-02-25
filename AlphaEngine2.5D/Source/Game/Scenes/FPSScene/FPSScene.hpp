@@ -58,6 +58,12 @@ namespace Game {
         std::vector<GameObject*> powerUps;
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
+        struct CCTVInfo { Vector3 pos; float rotDeg; };
+        UI::Canvas* modalCanvas = nullptr;
+        UI::Panel* modalPanel = nullptr;
+        UI::Text* modalTitle = nullptr;
+        UI::Button* modalButton = nullptr;
+        bool endPanelShown = false;
 
         void SwitchToPlayerCam() {
             activeCCTV = -1;

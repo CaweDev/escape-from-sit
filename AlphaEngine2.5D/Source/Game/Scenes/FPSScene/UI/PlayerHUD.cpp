@@ -7,8 +7,7 @@
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/AssetManager.hpp"
-#include "Engine/Core/Time.hpp"
-#include "AEGraphics.h"
+
 namespace Game
 {
     PlayerHUD::~PlayerHUD()
@@ -41,7 +40,7 @@ namespace Game
         m_map->SetSizeDelta({ m_mapWidth, m_mapHeight });
         m_map->visible = false;
 
-     
+
         if (m_tileMap) SetTileMap(m_tileMap);
         if (m_playerTransform) SetPlayerTransform(m_playerTransform);
 
@@ -59,21 +58,19 @@ namespace Game
             if (m_minimap) m_minimap->AddCCTVTransform(tf);
             if (m_map)     m_map->AddCCTVTransform(tf);
         }
-		m_map->SetRenderOrder(1000000); 
-		//m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
-		m_map->SetBorderColor(Engine::Color(0.f, 0.f, 0.f, 1.f)); // Set alpha to 0 if using texture
-		//m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));
+        m_map->SetRenderOrder(1000000);
+        //m_map->wallColor = Engine::Color(0.f, 0.f, 0.f, 1.f); 
+        m_map->SetBorderColor(Engine::Color(0.f, 0.f, 0.f, 1.f)); // Set alpha to 0 if using texture
+        //m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));
 
         // If we have a transform, use it as player transform by default
         if (transform && !m_playerTransform)
         {
             SetPlayerTransform(transform);
         }
-    }
-    void PlayerHUD::ShowCCTVAlert(float duration)
-    {
-        m_showCCTVAlert = true;
-        m_cctvAlertTimer = duration;
+        if (m_map && m_zoneGetter) {
+            m_map->SetZoneGetter(m_zoneGetter);
+        }
     }
 
     void PlayerHUD::Update()
@@ -82,26 +79,6 @@ namespace Game
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
         {
             ToggleMap();
-        }
-        if (m_showCCTVAlert)
-        {
-            m_cctvAlertTimer -= Engine::Time::deltaTime;
-            if (m_cctvAlertTimer <= 0.0f)
-            {
-                m_showCCTVAlert = false;
-                AEGfxPrint(
-                    1,
-                    "CCTV SPOTTED YOU",
-                    -0.25f,
-                    0.75f,
-                    1.3f,
-                    1.0f,
-                    0.2f,
-                    0.2f,
-                    1.0f
-                );
-
-            }
         }
     }
 
@@ -150,10 +127,10 @@ namespace Game
     {
         if (!enemyTransform) return;
 
-     
+
         m_enemyTransforms.push_back(enemyTransform);
 
-     
+
         if (m_minimap)
         {
             m_minimap->AddEnemyTransform(enemyTransform);
@@ -197,7 +174,7 @@ namespace Game
             m_map->visible = true;
         }
     }
-    
+
     void PlayerHUD::HideMap()
     {
         m_mapVisible = false;
@@ -206,6 +183,14 @@ namespace Game
         {
             m_map->visible = false;
         }
+    }
+    void PlayerHUD::SetZoneGetter(std::function<int(int, int)> fn)
+    {
+        m_zoneGetter = fn;
+
+        // if map already created, apply immediately
+        if (m_map)
+            m_map->SetZoneGetter(m_zoneGetter);
     }
 
 } // namespace Game
