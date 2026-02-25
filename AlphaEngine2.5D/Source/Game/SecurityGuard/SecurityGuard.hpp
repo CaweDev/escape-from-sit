@@ -7,9 +7,9 @@
 #include "Engine/Physics/Rigidbody2D.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Scene/Scene.hpp"
-#include "Engine/TileMap/Door.hpp"
-#include "Player.hpp"
+#include "Engine/TileMap/Door.hpp"      
 
+#include "Game/Player/Player.hpp"
 #include <vector>
 #include <queue>
 #include <unordered_map>

@@ -1,5 +1,5 @@
 #include "Player.hpp"
-
+#include "Engine/Math/Vector2.hpp"
 namespace Game {
 	void Player::Catch()
 	{
@@ -61,5 +61,16 @@ namespace Game {
 	{
 		stamina = staminaMax;
 	}
+	void Player::AddKnockback(const Engine::Vector2& v)
+	{
+		knockback.x += v.x;
+		knockback.y += v.y;
+	}
 
+	Engine::Vector2 Player::ConsumeKnockback()
+	{
+		Engine::Vector2 out = knockback;
+		knockback = Engine::Vector2(0.0f, 0.0f);
+		return out;
+	}
 }

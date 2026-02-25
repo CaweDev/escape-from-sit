@@ -13,6 +13,7 @@
 #include "Engine/Graphics/Sprite.hpp"
 #include "AEEngine.h"
 #include <vector>
+#include <functional>
 namespace UI
 {
     using Engine::Texture2D;
@@ -50,7 +51,7 @@ namespace UI
 
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh
-
+        std::function<int(int, int)> m_getZoneId;
 
     public:
         Map();
@@ -60,7 +61,10 @@ namespace UI
          * @brief Render the map
          */
         void Render() override;
+       
+        
 
+        void SetZoneGetter(std::function<int(int, int)> fn) { m_getZoneId = fn; }
         /**
          * @brief Set the tile map to display
          * @param tileMap Pointer to the tile map (not owned)
