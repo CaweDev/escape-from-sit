@@ -16,7 +16,6 @@
 #include "Game/CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
-#include "Game/CCTVPlacement.hpp"
 
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
@@ -36,7 +35,7 @@ namespace Game {
         FPSScene() : Scene("FPSScene") {}
 
         bool gameEnded = false;
-        
+
         FPSController* playerController = nullptr;
         Player* playerData = nullptr;
         Transform* playerTf = nullptr;
@@ -52,21 +51,13 @@ namespace Game {
 
         std::vector<CCTVCamera*> cctvSensors;
 
-        Vector2 exitPos = Vector2(122.5f, 38.5f);
+        Vector2 exitPos = Vector2(14.5f, 1.5f);
         float winRadius = 0.6f;
         bool printedWin = false;
 
         std::vector<GameObject*> powerUps;
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
-        struct CCTVInfo { Vector3 pos; float rotDeg; };
-
-
-        UI::Canvas* modalCanvas = nullptr;
-        UI::Panel* modalPanel = nullptr;
-        UI::Text* modalTitle = nullptr;
-        UI::Button* modalButton = nullptr;
-        bool endPanelShown = false;
 
         void SwitchToPlayerCam() {
             activeCCTV = -1;
@@ -312,7 +303,7 @@ namespace Game {
             enemyCol->maxHeight = 2.0f;
 
             auto enemySR = enemy->AddComponent<SpriteRenderer>();
-            enemySR->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
+            enemySR->SetSprite(AssetManager::GetSprite("Assets/Brocsama.png"));
             enemySR->billboard = true;
             enemySR->sortingOrder = 100;
 
@@ -350,10 +341,34 @@ namespace Game {
 
             Sprite* cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
 
-            auto cams = GenerateCCTVs(map, mapWidth, mapHeight, 20, 5, 10.0f, 0.85f, 0.45f);
+            const float CCTV_Z = 0.85f;
+            const float EPS = 0.02f;
+            struct CCTVInfo { Vector3 pos; float rot; };
+            CCTVInfo cams[] =
+            {
+                // LEFT side (face east)
+                { Vector3(1.0f + EPS,  3.5f, CCTV_Z),   0.0f },
+                { Vector3(1.0f + EPS, 13.5f, CCTV_Z),   0.0f },
+                { Vector3(1.0f + EPS, 23.5f, CCTV_Z),   0.0f },
+                { Vector3(1.0f + EPS, 35.5f, CCTV_Z),   0.0f },
 
+                // RIGHT side (face west)  (max floor x in map.txt is 122)
+                { Vector3(122.0f - EPS,  8.5f, CCTV_Z), 180.0f },
+                { Vector3(122.0f - EPS, 18.5f, CCTV_Z), 180.0f },
+                { Vector3(122.0f - EPS, 28.5f, CCTV_Z), 180.0f },
+                { Vector3(122.0f - EPS, 36.5f, CCTV_Z), 180.0f },
 
-            for (int i = 0; i < (int)cams.size(); ++i)
+                // TOP side (face south / down)
+                { Vector3(10.5f,  1.0f + EPS, CCTV_Z),  90.0f },
+                { Vector3(59.5f,  1.0f + EPS, CCTV_Z),  90.0f },
+                { Vector3(110.5f,  1.0f + EPS, CCTV_Z),  90.0f },
+
+                // BOTTOM side (face north / up)  (bottom corridor exists mainly on left)
+                { Vector3(7.5f, 40.0f - EPS, CCTV_Z), 270.0f },
+            };
+            const int CCTV_COUNT = (int)(sizeof(cams) / sizeof(cams[0]));
+
+            for (int i = 0; i < CCTV_COUNT; ++i)
             {
                 Vector3 view = cams[i].pos;
                 view.z = 1.6f;
@@ -365,12 +380,12 @@ namespace Game {
                 camObj->transform->position = cams[i].pos;
                 camObj->transform->rotation = cams[i].rot;
                 camObj->transform->localScale = Vector2(0.25f, 0.25f);
-                playerHUD->AddCCTVTransform(camObj->transform);
+             
                 auto sr = camObj->AddComponent<SpriteRenderer>();
                 sr->SetSprite(cctvSprite);
                 sr->billboard = true;
                 sr->sortingOrder = 300;
-
+                playerHUD->AddCCTVTransform(camObj->transform);
                 auto sensor = camObj->AddComponent<CCTVCamera>();
                 sensor->id = i + 1;
                 sensor->tile = map;
@@ -379,13 +394,11 @@ namespace Game {
                 sensor->maxRange = 6.0f;
                 sensor->coneWidth = 70.0f;
                 sensor->needLOS = true;
-                
+
                 cctvSensors.push_back(sensor);
-                
             }
 
-            CreateEndPanel();
-
+       
             SwitchToPlayerCam();
 
             PuzzleManager::BookDataInit();
@@ -403,53 +416,17 @@ namespace Game {
                 pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-            int camCount = (int)cctvViewPos.size();
-            if (camCount > 0)
-            {
-                
-                if (Input::GetKeyDown(KeyCode::DownArrow))
-                {
-                    if (activeCCTV < 0)
-                        activeCCTV = 0;
-                    else
-                        activeCCTV = (activeCCTV + 1) % camCount;
-
-                    SwitchToCCTV(activeCCTV);
-                }
-
-       
-                if (Input::GetKeyDown(KeyCode::UpArrow))
-                {
-                    if (activeCCTV < 0)
-                        activeCCTV = camCount - 1;
-                    else
-                        activeCCTV = (activeCCTV - 1 + camCount) % camCount;
-
-                    SwitchToCCTV(activeCCTV);
-                }
-            }
-
-  
-            if (Input::GetKeyDown(KeyCode::Alpha0))
-            {
-                SwitchToPlayerCam();
-            }
-
-            if (!endPanelShown && playerData) {
-                if (playerData->IsCaught()) {
-                    std::cout << "[Panel] showing" << std::endl;
-                    ShowEndPanel("YOU GOT CAUGHT. GAME OVER", "Quit", []() {
-                        SceneManager::LoadScene("FPSScene");
-                        });
-                }
-            }
-
-
+            if (Input::GetKeyDown(KeyCode::Alpha1)) ToggleCCTV(0);
+            if (Input::GetKeyDown(KeyCode::Alpha2)) ToggleCCTV(1);
+            if (Input::GetKeyDown(KeyCode::Alpha3)) ToggleCCTV(2);
+            if (Input::GetKeyDown(KeyCode::Alpha4)) ToggleCCTV(3);
+            if (Input::GetKeyDown(KeyCode::Alpha5)) ToggleCCTV(4);
+            if (Input::GetKeyDown(KeyCode::Alpha6)) ToggleCCTV(5);
+            if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
 
-           
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
@@ -469,9 +446,7 @@ namespace Game {
                 gameEnded = true;
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
-                ShowEndPanel("YOU ESCAPED. WIN!", "Quit", []() {
-                    SceneManager::LoadScene("FPSScene");
-                    });
+                Application::Quit();
             }
         }
     };

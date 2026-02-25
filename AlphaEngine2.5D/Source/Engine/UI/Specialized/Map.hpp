@@ -35,8 +35,8 @@ namespace UI
         Engine::Color m_playerColor;     // Color for the player marker
         Engine::Color m_backgroundColor; // Background panel color
         Engine::Color m_borderColor;     // Color for the decorative border frame
-        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
-        Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); //color for enemy markers
+        Engine::Color m_cctvColor = Engine::Color(1.0f, 0.2f, 0.2f, 1.0f);//color for cctv markers
         // --- Configuration ---
         f32 m_borderThickness = 0.0f;    // Thickness of the border frame in pixels
 
@@ -46,8 +46,6 @@ namespace UI
         Texture2D* m_texture = nullptr;                  // Optional background texture
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
-        Engine::Sprite* m_cctvSprite = nullptr;
-
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh
 
@@ -86,6 +84,12 @@ namespace UI
         void SetEnemyColor(const Engine::Color& color) { m_enemyColor = color; }
         const Engine::Color& GetEnemyColor() const { return m_enemyColor; }
 
+        void AddCCTVTransform(Engine::Transform* transform);
+        void ClearCCTVs() { m_cctvTransforms.clear(); }
+        void SetCCTVColor(const Engine::Color& color) { m_cctvColor = color; }
+        const Engine::Color& GetCCTVColor() const { return m_cctvColor; }
+
+
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }
         const Engine::Color& GetWallColor() const { return m_wallColor; }
@@ -101,11 +105,7 @@ namespace UI
 
         void SetBorderColor(const Engine::Color& color) { m_borderColor = color; }
         const Engine::Color& GetBorderColor() const { return m_borderColor; }
-        void AddCCTVTransform(Engine::Transform* transform);
-        void ClearCCTVs();
-        void SetCCTVSprites(Engine::Sprite* sprite);
 
-       
         // Getter and Setter for Border Thickness
         void SetBorderThickness(f32 thickness) { m_borderThickness = thickness; }
         f32 GetBorderThickness() const { return m_borderThickness; }
@@ -120,7 +120,7 @@ namespace UI
          * @brief Draw a single colored quad
          */
         void DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color);
-        void DrawQuadSprite(f32 x, f32 y, f32 width, f32 height,Engine::Sprite* sprite,const Engine::Color& color);
+
         /**
          * @brief Draw a single textured quad
          */

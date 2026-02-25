@@ -14,13 +14,11 @@
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
-    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
     <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
     <ClCompile Include="Source\Engine\Core\Time.cpp" />
     <ClCompile Include="Source\Engine\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
@@ -31,8 +29,6 @@
     <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
     <ClCompile Include="Source\Engine\Input\Input.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
     <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp" />
     <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Engine\Physics\Collider2D.cpp" />
@@ -64,8 +60,8 @@
     <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\Minimap.cpp" />
     <ClCompile Include="Source\Game\CCTVCamera.cpp" />
-    <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
+    <ClCompile Include="Source\Game\MiniMap.cpp" />
     <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
@@ -81,8 +77,6 @@
     <!-- Engine Math -->
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Engine.hpp" />
-    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
@@ -90,8 +84,6 @@
     <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector3.hpp" />
     <ClInclude Include="Source\Engine\Math\Mathf.hpp" />
@@ -124,7 +116,6 @@
     <!-- Engine Scene -->
     <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
     <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
     <!-- Engine Raycast -->
     <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Button.hpp" />
@@ -150,7 +141,7 @@
     <ClInclude Include="Source\Engine\UI\Specialized\Minimap.hpp" />
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
     <ClInclude Include="Source\Game\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
+    <ClInclude Include="Source\Game\MiniMap.hpp" />
     <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />

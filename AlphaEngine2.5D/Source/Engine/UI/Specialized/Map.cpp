@@ -61,14 +61,6 @@ namespace UI
         if (!transform) return;
         m_enemyTransforms.push_back(transform);
     }
-    void Map::AddCCTVTransform(Engine::Transform* transform)
-    {
-        if (!transform) return;
-        m_cctvTransforms.push_back(transform);
-    }
-
-    void Map::ClearCCTVs() { m_cctvTransforms.clear(); }
-    void Map::SetCCTVSprites(Engine::Sprite* sprite) { m_cctvSprite = sprite; }
     void Map::DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color)
     {
         if (!m_quadMesh) return;
@@ -108,26 +100,6 @@ namespace UI
         AEMtx33Concat(&final, &translate, &scale);
         
         AEGfxSetTransform(final.m);
-        AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
-    }
-    void UI::Map::DrawQuadSprite(f32 x, f32 y, f32 width, f32 height,
-        Engine::Sprite* sprite,
-        const Engine::Color& color)
-    {
-        if (!m_quadMesh || !sprite) return;
-
-        AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-        AEGfxTextureSet(sprite->GetTexture(), 0.0f, 0.0f);
-        AEGfxSetColorToMultiply(color.r, color.g, color.b, color.a);
-        AEGfxSetTransparency(color.a);
-
-        AEMtx33 scale, translate, finalMtx;
-        AEMtx33Scale(&scale, width, height);
-        AEMtx33Trans(&translate, x, y);
-        AEMtx33Concat(&finalMtx, &translate, &scale);
-
-        AEGfxSetTransform(finalMtx.m);
         AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
     }
 
@@ -223,24 +195,6 @@ namespace UI
             }
         }
         {
-            f32 sz = tileSize * 1.05f;
-
-            for (auto* tf : m_cctvTransforms)
-            {
-                if (!tf) continue;
-
-                f32 x = Engine::Mathf::Clamp(tf->position.x, 0.0f, (f32)mapTileWidth);
-                f32 y = Engine::Mathf::Clamp(tf->position.y, 0.0f, (f32)mapTileHeight);
-
-                f32 sx = offsetX + x * tileSize;
-                f32 sy = offsetY + y * tileSize;
-
-                if (m_cctvSprite) DrawQuadSprite(sx, sy, sz, sz, m_cctvSprite, Engine::Color(1, 1, 1, 0.90f));
-                else              DrawQuad(sx, sy, sz, sz, m_cctvColor);
-            }
-        }
-
-        {
             f32 enemySize = tileSize * 1.2f;
 
             for (auto* enemyTf : m_enemyTransforms)
@@ -259,7 +213,21 @@ namespace UI
                 DrawQuad(enemyScreenX, enemyScreenY, enemySize, enemySize, m_enemyColor);
             }
         }
+        {
+            f32 size = tileSize * 1.1f;
+            for (auto* tf : m_cctvTransforms)
+            {
+                if (!tf) continue;
 
+                f32 x = Engine::Mathf::Clamp(tf->position.x, 0.0f, (f32)mapTileWidth);
+                f32 y = Engine::Mathf::Clamp(tf->position.y, 0.0f, (f32)mapTileHeight);
+
+                f32 sx = offsetX + x * tileSize + tileSize * 0.5f;
+                f32 sy = offsetY + y * tileSize + tileSize * 0.5f;
+
+                DrawQuad(sx, sy, size, size, m_cctvColor);
+            }
+        }
         // --- Step 5: Draw Player Position Marker ---
         if (m_playerTransform)
         {
