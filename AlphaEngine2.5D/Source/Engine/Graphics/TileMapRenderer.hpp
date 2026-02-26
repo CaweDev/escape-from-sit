@@ -79,6 +79,24 @@ namespace Engine {
 		/** Maximum triangles per AEGfx mesh batch before forcing a flush. */
 		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
 
+		// ---------------------------------------------------------------
+		// Framebuffer quality setting (public, adjustable at runtime)
+		// ---------------------------------------------------------------
+
+		/**
+		 * @brief Floor/ceiling framebuffer resolution relative to screen size.
+		 *
+		 * The framebuffer is rendered at (screenWidth × fbScale, screenHeight × fbScale)
+		 * and stretched to fill the screen by the GPU. Lower values reduce CPU pixel-fill
+		 * work and GPU texture upload bandwidth at the cost of visual quality.
+		 *
+		 * Recommended values:
+		 *   - 0.25 → quarter-res (400×225 @ 1600×900) — fastest, noticeably pixelated
+		 *   - 0.5  → half-res   (800×450 @ 1600×900) — good balance
+		 *   - 1.0  → full-res   (1600×900)           — matches wall quality, slowest
+		 */
+		f32 fbScale = 0.2f;
+
 	public:
 		REQUIRE_COMPONENT(TileMap);
 
@@ -176,23 +194,7 @@ namespace Engine {
 		/** @brief Convenience: returns the default (type 1) floor sprite, or nullptr. */
 		Sprite* GetFloorSprite() const { return GetFloorSprite(1); }
 
-		// ---------------------------------------------------------------
-		// Framebuffer quality setting (public, adjustable at runtime)
-		// ---------------------------------------------------------------
-
-		/**
-		 * @brief Floor/ceiling framebuffer resolution relative to screen size.
-		 *
-		 * The framebuffer is rendered at (screenWidth × fbScale, screenHeight × fbScale)
-		 * and stretched to fill the screen by the GPU. Lower values reduce CPU pixel-fill
-		 * work and GPU texture upload bandwidth at the cost of visual quality.
-		 *
-		 * Recommended values:
-		 *   - 0.25 → quarter-res (400×225 @ 1600×900) — fastest, noticeably pixelated
-		 *   - 0.5  → half-res   (800×450 @ 1600×900) — good balance
-		 *   - 1.0  → full-res   (1600×900)           — matches wall quality, slowest
-		 */
-		f32 fbScale = 0.25f;
+		
 
 	private:
 		// ---------------------------------------------------------------
@@ -294,16 +296,10 @@ namespace Engine {
 		CpuTexture ceilCpuTex;   ///< CPU pixel data for the default ceiling sprite (type 1).
 
 		/**
-		 * @brief Per-frame RGBA pixel buffer for the floor surface.
+		 * @brief Combined per-frame RGBA pixel buffer for both floor and ceiling surfaces.
 		 * Dimensions: fbWidth × fbHeight × 4 bytes.
 		 */
-		std::vector<u8> floorFramebuffer;
-
-		/**
-		 * @brief Per-frame RGBA pixel buffer for the ceiling surface.
-		 * Dimensions: fbWidth × fbHeight × 4 bytes.
-		 */
-		std::vector<u8> ceilFramebuffer;
+		std::vector<u8> combinedFramebuffer;
 
 		/** Current framebuffer width in pixels (= screenWidth × fbScale). */
 		int fbWidth  = 0;
