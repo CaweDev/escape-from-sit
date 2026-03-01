@@ -192,10 +192,6 @@ namespace Game
         if (m_map)
             m_map->SetZoneGetter(m_zoneGetter);
     }
-
-        // if map already created, apply immediately
-        if (m_map)
-            m_map->SetZoneGetter(m_zoneGetter);
-    }
+   
 
 } // namespace Game

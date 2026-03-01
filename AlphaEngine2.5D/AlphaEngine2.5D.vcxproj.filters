@@ -25,7 +25,6 @@
     <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player\Player.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
@@ -33,7 +32,6 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
     <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
@@ -69,6 +67,9 @@
     <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
+    <ClCompile Include="Source\Game\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -150,7 +151,6 @@
     <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
     <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
     <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp" />
-    <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />

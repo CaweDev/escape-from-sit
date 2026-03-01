@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
@@ -65,8 +67,6 @@
     <ClCompile Include="Source\Engine\UI\Specialized\InteractionPrompt.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\MiniMap.cpp" />
-    <ClCompile Include="Source\Game\CCTVCamera.cpp" />
-    <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\Player\Player.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
