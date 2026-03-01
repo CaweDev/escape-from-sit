@@ -158,12 +158,6 @@ namespace UI
         }
     }
 
-    void UIElement::SetActive(bool active)
-    {
-        enabled = active;
-        visible = active;
-    }
-
     Rect UIElement::GetParentRect() const
     {
         if (m_parent)

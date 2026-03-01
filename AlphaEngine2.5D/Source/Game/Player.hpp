@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Engine/Core/Component.hpp"
-#include "Engine/Math/Vector2.hpp"
+
 namespace Game {
 
 	enum class PlayerState {
@@ -26,15 +26,11 @@ namespace Game {
 		void Regen(float dt);
 		void ResetStamina();
 
-		// Knockback (set by NPC/Bully)
-		void AddKnockback(const Engine::Vector2& v);
-		Engine::Vector2 ConsumeKnockback();
-
 		bool isSprinting = false;
 
 	private:
 		PlayerState state = PlayerState::Normal;
-		Engine::Vector2 knockback{ 0.0f, 0.0f };
+		
 		float stamina = 100.0f;
 		float staminaMax = 100.0f;
 		float sprintResumeThreshold = 20.0f;

@@ -57,8 +57,6 @@ public:
     
     /** Get viewport height in world units */
     f32 GetViewportHeight() const;
-
-
 };
 
 } // namespace Engine

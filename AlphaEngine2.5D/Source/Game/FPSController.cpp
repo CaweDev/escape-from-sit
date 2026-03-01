@@ -8,7 +8,7 @@
 #include "Engine/Math/Mathf.hpp"
 #include "Engine/Graphics/Camera.hpp"
 #include <iostream>
-#include "Game/Player/Player.hpp"
+#include "Game/Player.hpp"
 #include "AEInput.h"
 
 namespace Game {

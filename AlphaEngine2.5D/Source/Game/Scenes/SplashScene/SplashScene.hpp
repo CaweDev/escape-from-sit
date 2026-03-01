@@ -41,7 +41,10 @@ private:
     Canvas* m_canvas = nullptr;
     Panel*  m_background = nullptr;
     Image*  m_logo = nullptr;
-    Image*  m_logo2 = nullptr;
+
+    // Logo textures
+    Texture2D* m_whiteLogo = nullptr;
+    Texture2D* m_logo2 = nullptr;
 
     // State
     Phase m_phase = Phase::FadeIn;

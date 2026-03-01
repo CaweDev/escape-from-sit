@@ -19,8 +19,6 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-#include <future>
-#include <thread>
 
 namespace Engine {
 
@@ -188,49 +186,9 @@ namespace Engine {
 		// Ensure linear filtering for floor/ceiling
 		AEGfxSetTextureMode(AE_GFX_TM_AVERAGE);
 
-		// Framebuffer management for ceiling and floor
-		int scaledW = (int)(screenWidth * fbScale);
-		int scaledH = (int)(screenHeight * fbScale);
-		if (scaledW < 1) scaledW = 1;
-		if (scaledH < 1) scaledH = 1;
-
-		if (fbWidth != scaledW || fbHeight != scaledH) {
-			fbWidth = scaledW;
-			fbHeight = scaledH;
-			combinedFramebuffer.resize(fbWidth * fbHeight * 4, 0);
-		}
-
-		bool wantsCeiling = !ceilingSprites.empty() && !managedColumns.empty() && !ceilCpuTex.pixels.empty() && ceilCpuTex.width > 0;
-		bool wantsFloor = !floorSprites.empty() && !managedColumns.empty() && !floorCpuTex.pixels.empty() && floorCpuTex.width > 0;
-
-		if (wantsCeiling || wantsFloor) {
-			memset(combinedFramebuffer.data(), 0, combinedFramebuffer.size());
-
-			if (wantsCeiling) {
-				RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
-			}
-			if (wantsFloor) {
-				RenderFloor(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
-			}
-
-			AEGfxTexture* tex = AEGfxTextureLoadFromMemory(combinedFramebuffer.data(), (u32)fbWidth, (u32)fbHeight);
-			if (tex && fullscreenMesh) {
-				AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
-				AEGfxTextureSet(tex, 0, 0);
-				AEGfxSetBlendMode(AE_GFX_BM_BLEND);
-				AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
-				AEGfxSetColorToAdd(0, 0, 0, 0);
-				AEGfxSetTransparency(1.0f);
-
-				AEMtx33 scale, transformMtx;
-				AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight);
-				AEMtx33Identity(&transformMtx);
-				AEMtx33Concat(&transformMtx, &transformMtx, &scale);
-				AEGfxSetTransform(transformMtx.m);
-				AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);
-				AEGfxTextureUnload(tex);
-			}
-		}
+		// Render in order: ceiling, floor, walls (walls on top)
+		RenderCeiling(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
+		RenderFloor(pos, camZ, horizon, screenWidth, screenHeight, managedColumns);
 
 		// Sort walls for efficient batching: TileType first, then FogKey
 		std::sort(managedColumns.begin(), managedColumns.end(), [](const ColumnInfo& a, const ColumnInfo& b) {
@@ -334,6 +292,25 @@ namespace Engine {
 		if (ceilingSprites.empty() || columns.empty()) return; // No ceiling sprite assigned — nothing to draw.
 		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return; // WIC pixel load failed — skip.
 
+		// Compute the internal framebuffer resolution (smaller → faster, blurrier).
+		int scaledW = (int)(screenWidth * fbScale);  // Framebuffer width in pixels.
+		int scaledH = (int)(screenHeight * fbScale);  // Framebuffer height in pixels.
+		if (scaledW < 1) scaledW = 1; // Safety clamp.
+		if (scaledH < 1) scaledH = 1;
+
+		// Re-allocate BOTH framebuffers if the dimensions have changed (e.g. window resize or fbScale change).
+		// Both buffers share fbWidth/fbHeight, so whichever function runs first must resize both.
+		if (fbWidth != scaledW || fbHeight != scaledH) {
+			fbWidth = scaledW;
+			fbHeight = scaledH;
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);  // 4 bytes per pixel (RGBA).
+			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+		}
+
+		// Zero out the entire buffer — unwritten pixels will be transparent black (alpha = 0),
+		// so walls and other geometry can show through when the quad is drawn with blending.
+		memset(ceilFramebuffer.data(), 0, ceilFramebuffer.size());
+
 		// posZ is the vertical distance from the camera to the ceiling plane.
 		// camZ ∈ [0, 1]: at camZ = 0 (ground), posZ = 1 (full ceiling height above).
 		f32 posZ = 1.0f - camZ;
@@ -351,20 +328,6 @@ namespace Engine {
 		if (clampedFbHorizon < 0) clampedFbHorizon = 0;           // Horizon above screen → no ceiling visible.
 		if (clampedFbHorizon > fbHeight) clampedFbHorizon = fbHeight; // Horizon below screen → entire screen is ceiling.
 
-		int startFy = 0; // Top of the framebuffer
-		if (fog.enabled && posZ > 0.001f) {
-			f32 maxVisibleDist = fog.distance * 6.9f;     // Beyond this, fog < 0.001
-			f32 minP = rowDistFactor / maxVisibleDist; 
-			int computedScreenStart = horizon - (int)ceilf(minP);
-			int computedFbStart = (int)(computedScreenStart * fbScale);
-			
-			// For the ceiling, distance increases as we go DOWN towards the horizon.
-			// So `computedFbStart` is the LOWEST Y (near the horizon) that is still visible.
-			if (computedFbStart < clampedFbHorizon) {
-				clampedFbHorizon = computedFbStart; // Stop iterating before we hit the horizon
-			}
-		}
-
 		// Cache frequently-accessed values outside the loop to avoid repeated lookups.
 		const int fogLUTMax = (int)fogLUT.size() - 1; // Max valid index into the fog LUT.
 		const int texW = ceilCpuTex.width;             // Ceiling texture width in texels.
@@ -373,119 +336,99 @@ namespace Engine {
 		const int numCols = (int)columns.size();        // Number of raycast column blocks.
 		const f32 invScale = 1.0f / fbScale;            // Multiplier to map fb coords → screen coords.
 
-		// Recompute raycast view vectors for fast linear interpolation
-		Transform* camTransform = (Camera::main) ? Camera::main->transform : transform;
-		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
-		f32 dirX = cosf(angleRad);
-		f32 dirY = sinf(angleRad);
-		f32 planeX = dirY * cachedPlaneLength;
-		f32 planeY = -dirX * cachedPlaneLength;
+		// --- Row loop: iterate each row of the framebuffer above the horizon ---
+		for (int fy = 0; fy < clampedFbHorizon; ++fy) {
+			// Convert this framebuffer row back to the corresponding screen-space Y pixel.
+			f32 screenY = (f32)fy * invScale;
 
-		f32 rayDirX0 = dirX - planeX;
-		f32 rayDirY0 = dirY - planeY;
-		f32 deltaCameraX = 2.0f * invScale / (f32)screenWidth;
-		f32 step_rayDirX = planeX * deltaCameraX;
-		f32 step_rayDirY = planeY * deltaCameraX;
+			// "p" is how many screen pixels this row is above the horizon.
+			// Near the horizon p → 0, which means distance → infinity (ceiling stretches to the horizon).
+			f32 p = (f32)horizon - screenY;
+			if (fabsf(p) < 0.1f) continue; // Skip rows too close to the horizon (would produce huge distances).
 
-		// --- Parallel Row loop ---
-		unsigned int numThreads = std::thread::hardware_concurrency();
-		if (numThreads == 0) numThreads = 4;
-		int totalRows = clampedFbHorizon - startFy;
-		if (totalRows <= 0) return;
+			// The world-space distance from the camera to the ceiling point projected at this row.
+			f32 rowDist = rowDistFactor / p;
+			if (rowDist < 0) continue; // Negative distance shouldn't happen, but guard against it.
 
-		int rowsPerThread = totalRows / numThreads;
-		int extraRows = totalRows % numThreads;
+			// Look up the fog attenuation for this row's distance.
+			f32 fogFactor = 1.0f; // 1.0 = fully visible (no fog).
+			if (fog.enabled) {
+				int lutIdx = (int)(rowDist * 100.0f); // LUT index at 0.01-unit precision.
+				if (lutIdx < 0) lutIdx = 0;
+				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
+				fogFactor = fogLUT[lutIdx];            // Exponential decay value from pre-computed table.
+				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility; // Don't go fully black.
+				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility; // Don't exceed max brightness.
+			}
+			// If this row is so far away that it's essentially invisible, stop — all rows above are farther.
+			if (fogFactor < 0.01f) break;
 
-		std::vector<std::future<void>> futures;
-		
-		int currentStart = startFy;
-		for (unsigned int i = 0; i < numThreads; ++i) {
-			int chunkRows = rowsPerThread + (i < (unsigned int)extraRows ? 1 : 0);
-			if (chunkRows == 0) continue;
-			
-			int threadStartFy = currentStart;
-			int threadEndFy = currentStart + chunkRows;
-			currentStart = threadEndFy;
+			// Byte offset to the start of this row in the framebuffer (each pixel = 4 bytes RGBA).
+			int rowOffset = fy * fbWidth * 4;
 
-			futures.push_back(std::async(std::launch::async, [=, &columns]() {
-				for (int fy = threadStartFy; fy < threadEndFy; ++fy) {
-					// Convert this framebuffer row back to the corresponding screen-space Y pixel.
-					f32 screenY = (f32)fy * invScale;
+			// --- Column loop: iterate each pixel in this row ---
+			for (int fx = 0; fx < fbWidth; ++fx) {
+				// Convert this framebuffer column back to the corresponding screen-space X pixel.
+				f32 screenX = (f32)fx * invScale;
 
-					// "p" is how many screen pixels this row is above the horizon.
-					// Near the horizon p → 0, which means distance → infinity (ceiling stretches to the horizon).
-					f32 p = (f32)horizon - screenY;
-					if (fabsf(p) < 0.1f) continue; // Skip rows too close to the horizon (would produce huge distances).
+				// Determine which raycast column block this screen pixel belongs to.
+				int colIdx = (int)(screenX) / COLUMN_STEP;
+				if (colIdx >= numCols) colIdx = numCols - 1; // Clamp to last column.
 
-					// The world-space distance from the camera to the ceiling point projected at this row.
-					f32 rowDist = rowDistFactor / p;
-					if (rowDist < 0) continue; // Negative distance shouldn't happen, but guard against it.
+				const auto& col = columns[colIdx]; // Column data from the raycast pass.
 
-					// Look up the fog attenuation for this row's distance.
-					f32 fogFactor = 1.0f; // 1.0 = fully visible (no fog).
-					if (fog.enabled) {
-						int lutIdx = (int)(rowDist * 100.0f); // LUT index at 0.01-unit precision.
-						if (lutIdx < 0) lutIdx = 0;
-						if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
-						fogFactor = fogLUT[lutIdx];            // Exponential decay value from pre-computed table.
-						if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility; // Don't go fully black.
-						if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility; // Don't exceed max brightness.
-					}
-					// If this row is so far away that it's essentially invisible, stop — all rows above are farther.
-					if (fogFactor < 0.001f && fog.minVisibility < 0.001f) continue;
+				// Wall occlusion: if this screen row is at or below the wall's top edge,
+				// the wall covers this pixel — skip (the wall will be drawn on top later).
+				if (screenY >= col.ray.drawStart) continue;
 
-					// Byte offset to the start of this row in the framebuffer (each pixel = 4 bytes RGBA).
-					int rowOffset = fy * fbWidth * 4;
+				// Interpolate the ray direction between the column block's left and right edges.
+				// t ∈ [0, 1] represents where within the COLUMN_STEP-wide block this pixel falls.
+				f32 t = (screenX - (f32)(colIdx * COLUMN_STEP)) / (f32)COLUMN_STEP;
+				f32 rayDirX = col.rayDirX + t * (col.rayDirX2 - col.rayDirX); // Lerp X component.
+				f32 rayDirY = col.rayDirY + t * (col.rayDirY2 - col.rayDirY); // Lerp Y component.
 
-					f32 stepU = rowDist * step_rayDirX;
-					f32 stepV = rowDist * step_rayDirY;
-					f32 worldU0 = pos.x + rowDist * rayDirX0;
-					f32 worldV0 = pos.y + rowDist * rayDirY0;
+				// Project this pixel onto the ceiling plane at the computed row distance.
+				// (pos + rowDist * rayDir) gives the world-space XY coordinate on the ceiling.
+				f32 worldU = pos.x + rowDist * rayDirX; // World X → used as texture U.
+				f32 worldV = pos.y + rowDist * rayDirY; // World Y → used as texture V.
 
-					// --- Column block loop: efficiently skip occluded walls ---
-					for (int c = 0; c < numCols; ++c) {
-						const auto& col = columns[c]; // Column data from the raycast pass.
+				// Convert world UV to texel coordinates with wrapping (handles negative values too).
+				// The double-modulo (%texW + texW) % texW ensures the result is always in [0, texW-1].
+				int texX = ((int)floorf(worldU * texW) % texW + texW) % texW;
+				int texY = ((int)floorf(worldV * texH) % texH + texH) % texH;
 
-						// Wall occlusion: if this screen row is at or below the wall's top edge,
-						// the wall covers this entire column block — skip raycasting for these pixels.
-						if (screenY >= col.ray.drawStart) continue;
+					// Compute the byte index into the source texture and destination framebuffer.
+				int texIdx = (texY * texW + texX) * 4; // Source texel: row * width + column, × 4 bytes.
+				int fbIdx = rowOffset + fx * 4;         // Destination pixel in the framebuffer.
 
-						// Map the column block to framebuffer X pixel range
-						int startFx = (int)(c * COLUMN_STEP * fbScale);
-						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * COLUMN_STEP * fbScale);
-						
-						if (startFx < 0) startFx = 0;
-						if (endFx > fbWidth) endFx = fbWidth;
-						if (startFx >= endFx) continue;
-
-						f32 currentU = worldU0 + stepU * startFx;
-						f32 currentV = worldV0 + stepV * startFx;
-
-						for (int fx = startFx; fx < endFx; ++fx) {
-							// Convert world UV to texel coordinates with wrapping (handles negative values too).
-							int texX = ((int)floorf(currentU * texW) % texW + texW) % texW;
-							int texY = ((int)floorf(currentV * texH) % texH + texH) % texH;
-
-							// Compute the byte index into the source texture and destination framebuffer.
-							int texIdx = (texY * texW + texX) * 4; // Source texel: row * width + column, × 4 bytes.
-							int fbIdx = rowOffset + fx * 4;         // Destination pixel in the framebuffer.
-
-							// Write RGBA: multiply each colour channel by fogFactor to darken distant pixels.
-							combinedFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor); // R
-							combinedFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor); // G
-							combinedFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor); // B
-							combinedFramebuffer[fbIdx + 3] = 255; // A = fully opaque (ceiling is always solid).
-
-							currentU += stepU;
-							currentV += stepV;
-						}
-					}
-				}
-			}));
+				// Write RGBA: multiply each colour channel by fogFactor to darken distant pixels.
+				ceilFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor); // R
+				ceilFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor); // G
+				ceilFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor); // B
+				ceilFramebuffer[fbIdx + 3] = 255; // A = fully opaque (ceiling is always solid).
+			}
 		}
 
-		for (auto& f : futures) {
-			f.wait();
+		// --- GPU upload and draw ---
+		// Create a transient GPU texture from our CPU pixel buffer.
+		// AEGfxTextureLoadFromMemory expects raw RGBA data with the given width and height.
+		AEGfxTexture* tex = AEGfxTextureLoadFromMemory(ceilFramebuffer.data(), (u32)fbWidth, (u32)fbHeight);
+		if (tex && fullscreenMesh) {
+			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);                    // Draw with a texture (not solid colour).
+			AEGfxTextureSet(tex, 0, 0);                                // Bind our framebuffer texture, UV offset (0,0).
+			AEGfxSetBlendMode(AE_GFX_BM_BLEND);                       // Enable alpha blending (transparent pixels show through).
+			AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);         // No tint — full colour passthrough.
+			AEGfxSetColorToAdd(0, 0, 0, 0);                           // No additive colour.
+			AEGfxSetTransparency(1.0f);                                // Full opacity for the quad itself.
+
+			// Scale the unit quad (-0.5..0.5) to cover the entire screen.
+			AEMtx33 scale, transformMtx;
+			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight); // Stretch to screen dimensions.
+			AEMtx33Identity(&transformMtx);
+			AEMtx33Concat(&transformMtx, &transformMtx, &scale);            // Combined transform = identity × scale.
+			AEGfxSetTransform(transformMtx.m);                            // Apply the transform.
+			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);      // Draw the two-triangle fullscreen quad.
+			AEGfxTextureUnload(tex);                                   // Free the transient texture immediately.
 		}
 	}
 	// ===================================================================
@@ -501,6 +444,24 @@ namespace Engine {
 		if (floorSprites.empty() || columns.empty()) return; // No floor sprite — nothing to draw.
 		if (floorCpuTex.pixels.empty() || floorCpuTex.width == 0) return; // CPU texture not loaded.
 
+		// Compute the internal framebuffer resolution.
+		int scaledW = (int)(screenWidth * fbScale);
+		int scaledH = (int)(screenHeight * fbScale);
+		if (scaledW < 1) scaledW = 1;
+		if (scaledH < 1) scaledH = 1;
+
+		// Re-allocate BOTH framebuffers if the dimensions have changed.
+		// Both buffers share fbWidth/fbHeight, so whichever function runs first must resize both.
+		if (fbWidth != scaledW || fbHeight != scaledH) {
+			fbWidth = scaledW;
+			fbHeight = scaledH;
+			floorFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+			ceilFramebuffer.resize(fbWidth * fbHeight * 4, 0);
+		}
+
+		// Clear to transparent black so unwritten pixels don't affect the scene.
+		memset(floorFramebuffer.data(), 0, floorFramebuffer.size());
+
 		// posZ = camera height above ground. For the floor, we project downward.
 		f32 posZ = camZ;
 		// rowDistFactor / p gives the world distance for rows below the horizon.
@@ -515,10 +476,12 @@ namespace Engine {
 		const f32 invScale = 1.0f / fbScale; // fb pixel → screen pixel multiplier.
 
 		// --- Early-out: skip rows near the horizon that would be fully fogged ---
-		// exp(-d / fogDist) = 0.001 when d ≈ 6.9 × fogDist.
+		// exp(-d / fogDist) ≈ 0.01 when d ≈ 4.6 × fogDist, so beyond that distance
+		// the floor is essentially invisible. We can start iterating from the first
+		// row that maps to a visible distance instead of the horizon itself.
 		int startFy = clampedFbHorizon; // Default: start right at the horizon.
 		if (fog.enabled && posZ > 0.001f) {
-			f32 maxVisibleDist = fog.distance * 6.9f;     // Beyond this, fog < 0.001
+			f32 maxVisibleDist = fog.distance * 4.6f;     // Beyond this, fog ≈ 0.
 			f32 minP = rowDistFactor / maxVisibleDist;    // Minimum "p" that gives a visible distance.
 			int computedScreenStart = horizon + (int)ceilf(minP); // Screen row corresponding to minP.
 			int computedFbStart = (int)(computedScreenStart * fbScale); // Map to framebuffer space.
@@ -534,127 +497,99 @@ namespace Engine {
 		const u8* texPixels = floorCpuTex.pixels.data();
 		const int numCols = (int)columns.size();
 
-		// Recompute raycast view vectors for fast linear interpolation
-		Transform* camTransform = (Camera::main) ? Camera::main->transform : transform;
-		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
-		f32 dirX = cosf(angleRad);
-		f32 dirY = sinf(angleRad);
-		f32 planeX = dirY * cachedPlaneLength;
-		f32 planeY = -dirX * cachedPlaneLength;
+		// --- Row loop: iterate each framebuffer row below the horizon ---
+		for (int fy = startFy; fy < fbHeight; ++fy) {
+			f32 screenY = (f32)fy * invScale;        // Map fb row → screen row.
+			f32 p = screenY - (f32)horizon;          // Pixels below the horizon (positive = below).
+			if (fabsf(p) < 0.1f) continue;           // Too close to horizon → skip.
+			f32 rowDist = rowDistFactor / p;          // World distance to this floor row.
+			if (rowDist < 0) continue;                // Safety guard.
 
-		f32 rayDirX0 = dirX - planeX;
-		f32 rayDirY0 = dirY - planeY;
-		f32 deltaCameraX = 2.0f * invScale / (f32)screenWidth;
-		f32 step_rayDirX = planeX * deltaCameraX;
-		f32 step_rayDirY = planeY * deltaCameraX;
+			// Fog attenuation for this distance.
+			f32 fogFactor = 1.0f;
+			if (fog.enabled) {
+				int lutIdx = (int)(rowDist * 100.0f);
+				if (lutIdx < 0) lutIdx = 0;
+				if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
+				fogFactor = fogLUT[lutIdx];
+				if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
+				if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
+			}
+			if (fogFactor < 0.01f) continue; // Row fully fogged — skip (but don't break; closer rows may be visible).
 
-		// --- Parallel Row loop ---
-		unsigned int numThreads = std::thread::hardware_concurrency();
-		if (numThreads == 0) numThreads = 4;
-		int totalRows = fbHeight - startFy;
-		if (totalRows <= 0) return;
+			int rowOffset = fy * fbWidth * 4; // Byte offset to this row in the framebuffer.
 
-		int rowsPerThread = totalRows / numThreads;
-		int extraRows = totalRows % numThreads;
+			// --- Column loop ---
+			for (int fx = 0; fx < fbWidth; ++fx) {
+				f32 screenX = (f32)fx * invScale;              // Map fb col → screen col.
+				int colIdx = (int)(screenX) / COLUMN_STEP;     // Which column block.
+				if (colIdx >= numCols) colIdx = numCols - 1;
 
-		std::vector<std::future<void>> futures;
-		
-		int currentStart = startFy;
-		for (unsigned int i = 0; i < numThreads; ++i) {
-			int chunkRows = rowsPerThread + (i < (unsigned int)extraRows ? 1 : 0);
-			if (chunkRows == 0) continue;
-			
-			int threadStartFy = currentStart;
-			int threadEndFy = currentStart + chunkRows;
-			currentStart = threadEndFy;
+				const auto& col = columns[colIdx];
 
-			futures.push_back(std::async(std::launch::async, [=, &columns]() {
-				for (int fy = threadStartFy; fy < threadEndFy; ++fy) {
-					f32 screenY = (f32)fy * invScale;        // Map fb row → screen row.
-					f32 p = screenY - (f32)horizon;          // Pixels below the horizon (positive = below).
-					if (fabsf(p) < 0.1f) continue;           // Too close to horizon → skip.
-					f32 rowDist = rowDistFactor / p;          // World distance to this floor row.
-					if (rowDist < 0) continue;                // Safety guard.
+				// Wall occlusion: if this row is above the wall's bottom edge, the wall covers it.
+				if (screenY < col.ray.drawEnd) continue;
 
-					// Fog attenuation for this distance.
-					f32 fogFactor = 1.0f;
-					if (fog.enabled) {
-						int lutIdx = (int)(rowDist * 100.0f);
-						if (lutIdx < 0) lutIdx = 0;
-						if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
-						fogFactor = fogLUT[lutIdx];
-						if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
-						if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
-					}
-					if (fogFactor < 0.001f && fog.minVisibility < 0.001f) continue; // Row fully fogged — skip (but don't break; closer rows may be visible).
+				// Interpolate ray direction within the column block (same as ceiling).
+				f32 t = (screenX - (f32)(colIdx * COLUMN_STEP)) / (f32)COLUMN_STEP;
+				f32 rayDirX = col.rayDirX + t * (col.rayDirX2 - col.rayDirX);
+				f32 rayDirY = col.rayDirY + t * (col.rayDirY2 - col.rayDirY);
 
-					int rowOffset = fy * fbWidth * 4; // Byte offset to this row in the framebuffer.
+				// Project onto the floor plane.
+				f32 worldU = pos.x + rowDist * rayDirX;
+				f32 worldV = pos.y + rowDist * rayDirY;
 
-					f32 stepU = rowDist * step_rayDirX;
-					f32 stepV = rowDist * step_rayDirY;
-					f32 worldU0 = pos.x + rowDist * rayDirX0;
-					f32 worldV0 = pos.y + rowDist * rayDirY0;
+				// Texture sampling with wrapping.
+				int texX = ((int)floorf(worldU * texW) % texW + texW) % texW;
+				int texY = ((int)floorf(worldV * texH) % texH + texH) % texH;
 
-					// --- Column block loop: efficiently skip occluded walls ---
-					for (int c = 0; c < numCols; ++c) {
-						const auto& col = columns[c];
+				int texIdx = (texY * texW + texX) * 4; // Source texel byte offset.
+				int fbIdx = rowOffset + fx * 4;         // Destination byte offset.
 
-						// Wall occlusion: if this row is above the wall's bottom edge, the wall covers it.
-						if (screenY < col.ray.drawEnd) continue;
-
-						// Map the column block to framebuffer X pixel range
-						int startFx = (int)(c * COLUMN_STEP * fbScale);
-						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * COLUMN_STEP * fbScale);
-						
-						if (startFx < 0) startFx = 0;
-						if (endFx > fbWidth) endFx = fbWidth;
-						if (startFx >= endFx) continue;
-
-						f32 currentU = worldU0 + stepU * startFx;
-						f32 currentV = worldV0 + stepV * startFx;
-
-						for (int fx = startFx; fx < endFx; ++fx) {
-							// Texture sampling with wrapping.
-							int texX = ((int)floorf(currentU * texW) % texW + texW) % texW;
-							int texY = ((int)floorf(currentV * texH) % texH + texH) % texH;
-
-							int texIdx = (texY * texW + texX) * 4; // Source texel byte offset.
-							int fbIdx = rowOffset + fx * 4;         // Destination byte offset.
-
-							// Write fogged RGBA.
-							combinedFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor); // R
-							combinedFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor); // G
-							combinedFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor); // B
-							combinedFramebuffer[fbIdx + 3] = 255; // A = opaque.
-
-							currentU += stepU;
-							currentV += stepV;
-						}
-					}
-				}
-			}));
+				// Write fogged RGBA.
+				floorFramebuffer[fbIdx + 0] = (u8)(texPixels[texIdx + 0] * fogFactor); // R
+				floorFramebuffer[fbIdx + 1] = (u8)(texPixels[texIdx + 1] * fogFactor); // G
+				floorFramebuffer[fbIdx + 2] = (u8)(texPixels[texIdx + 2] * fogFactor); // B
+				floorFramebuffer[fbIdx + 3] = 255; // A = opaque.
+			}
 		}
 
-		for (auto& f : futures) {
-			f.wait();
+		// --- GPU upload and draw (same pattern as ceiling) ---
+		AEGfxTexture* tex = AEGfxTextureLoadFromMemory(floorFramebuffer.data(), (u32)fbWidth, (u32)fbHeight);
+		if (tex && fullscreenMesh) {
+			AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
+			AEGfxTextureSet(tex, 0, 0);
+			AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+			AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+			AEGfxSetColorToAdd(0, 0, 0, 0);
+			AEGfxSetTransparency(1.0f);
+
+			AEMtx33 scale, transformMtx;
+			AEMtx33Scale(&scale, (f32)screenWidth, (f32)screenHeight);
+			AEMtx33Identity(&transformMtx);
+			AEMtx33Concat(&transformMtx, &transformMtx, &scale);
+			AEGfxSetTransform(transformMtx.m);
+			AEGfxMeshDraw(fullscreenMesh, AE_GFX_MDM_TRIANGLES);
+			AEGfxTextureUnload(tex);
 		}
 	}
 
 	// ===================================================================
 	// Wall rendering (GPU-accelerated via AEGfxTriAdd batching)
 	//
-	// By this point, `columns` has been sorted by tileType.
+	// By this point, `columns` has been sorted by (tileType, fogKey).
 	// We iterate linearly and accumulate triangles into an open AEGfx mesh.
-	// Whenever the tile type changes, we flush (finalise + draw)
+	// Whenever the tile type or fog key changes, we flush (finalise + draw)
 	// the current mesh and start a new one with the new GPU state.
-	// This keeps GPU state changes to a minimum (~1 draw call per unique tileType).
+	// This keeps GPU state changes to a minimum (~1 draw call per unique
+	// tileType+fogKey combination).
 	// ===================================================================
 	void TileMapRenderer::RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return; // Nothing to draw.
 
 		AEGfxSetTextureMode(AE_GFX_TM_AVERAGE); // Bilinear filtering for wall textures.
 
-	// Batch state: tracks the currently-open mesh's tile type and fog level.
+		// Batch state: tracks the currently-open mesh's tile type and fog level.
 		int currentTileType = -1;      // -1 means "no batch started yet".
 		int currentFogKey = -1;
 		bool meshIsOpen = false;       // True while we're between MeshStart and MeshEnd.
@@ -672,7 +607,7 @@ namespace Engine {
 			// Skip zero-height columns (wall exactly at the horizon or degenerate).
 			if (col.screenY == col.screenY2) continue;
 			// Skip columns that are too deeply fogged to be visible.
-			if (col.fogFactor < 0.001f && fog.minVisibility < 0.001f) continue;
+			if (col.fogFactor < 0.01f) continue;
 
 			// --- Batch boundary check ---
 			// If the tile type or fog key differs from the current batch, we need to
@@ -693,7 +628,7 @@ namespace Engine {
 						// Solid-colour fallback (no sprite assigned for this tile type).
 						AEGfxSetRenderMode(AE_GFX_RM_COLOR);
 						AEGfxSetBlendMode(AE_GFX_BM_NONE);
-						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+						AEGfxSetColorToMultiply(1, 1, 1, 1);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 					}
 					AEGfxSetTransform(identityMtx.m);              // Screen-space (no model transform needed).
@@ -753,7 +688,7 @@ namespace Engine {
 					} else {
 						AEGfxSetRenderMode(AE_GFX_RM_COLOR);
 						AEGfxSetBlendMode(AE_GFX_BM_NONE);
-						AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+						AEGfxSetColorToMultiply(1, 1, 1, 1);
 						AEGfxSetColorToAdd(0, 0, 0, 0);
 					}
 					AEGfxSetTransform(identityMtx.m);
@@ -780,7 +715,7 @@ namespace Engine {
 				} else {
 					AEGfxSetRenderMode(AE_GFX_RM_COLOR);
 					AEGfxSetBlendMode(AE_GFX_BM_NONE);
-					AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+					AEGfxSetColorToMultiply(1, 1, 1, 1);
 					AEGfxSetColorToAdd(0, 0, 0, 0);
 				}
 				AEGfxSetTransform(identityMtx.m);

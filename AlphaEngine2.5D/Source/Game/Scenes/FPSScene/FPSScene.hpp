@@ -11,17 +11,14 @@
 #include "Engine/Core/AssetManager.hpp"
 
 #include "Game/FPSController.hpp"
-#include "Game/Player/Player.hpp"
-#include "Game/SecurityGuard/SecurityGuard.hpp"
-#include "Game/CCTV/CCTVCamera.hpp"
+#include "Game/Player.hpp"
+#include "Game/SecurityGuard.hpp"
+#include "Game/CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
-#include "Game/CCTV/CCTVPlacement.hpp"
-#include "Game/NPC/NPC.hpp"
-#include "Game/NPC/CameraShake.hpp"
+
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Engine/Input/KeyCode.hpp"
-
 
 #include <iostream>
 #include <vector>
@@ -67,48 +64,6 @@ namespace Game {
         UI::Text* modalTitle = nullptr;
         UI::Button* modalButton = nullptr;
         bool endPanelShown = false;
-
-        struct Zone {
-            int id;
-            int minX, maxX; 
-            int minY, maxY;
-        };
-
-        std::vector<Zone> zones;
-
-        int GetZoneId(int tx, int ty) const {
-            for (auto const& z : zones) {
-                if (tx >= z.minX && tx <= z.maxX &&
-                    ty >= z.minY && ty <= z.maxY) {
-                    return z.id;
-                }
-            }
-            return -1;
-        }
-
-        const Zone* GetZone(int zoneId) const {
-            for (auto const& z : zones) {
-                if (z.id == zoneId) return &z;
-            }
-            return nullptr;
-        }
-
-        
-        bool PickRandomWalkableInZone(const Zone& z, Engine::TileMap* map, int& outX, int& outY) const {
-            if (!map) return false;
-
-            for (int tries = 0; tries < 400; ++tries) {
-                int x = z.minX + (std::rand() % (z.maxX - z.minX + 1));
-                int y = z.minY + (std::rand() % (z.maxY - z.minY + 1));
-
-                if (map->IsWalkable(x + 0.5f, y + 0.5f)) {
-                    outX = x;
-                    outY = y;
-                    return true;
-                }
-            }
-            return false;
-        }
 
         void SwitchToPlayerCam() {
             activeCCTV = -1;
@@ -245,25 +200,6 @@ namespace Game {
             const int mapHeight = (int)mapRows.size();
             const int mapWidth = (int)mapRows[0].size();
 
-            zones.clear();
-
-            int midX = mapWidth / 2;
-            int midY = mapHeight / 2;
-
-            // 0: Top-left
-            zones.push_back({ 1, 0, midX - 1, 0, midY - 1});
-
-            // 1: Top-right
-            zones.push_back({ 2, midX, mapWidth - 1, 0, midY - 1});
-
-            // 2: Bottom-left
-            zones.push_back({ 3, 0, midX - 1, midY, mapHeight - 1});
-
-            // 3: Bottom-right
-            zones.push_back({ 4, midX, mapWidth - 1, midY, mapHeight - 1});
-
-            std::cout << "[ZONE] Created " << zones.size() << " zones\n";
-
             for (int y = 0; y < mapHeight; ++y) {
                 if ((int)mapRows[y].size() != mapWidth) {
                     std::cout << "ERROR: map.txt row " << y << " has different width.\n";
@@ -311,7 +247,7 @@ namespace Game {
 
             auto player = CreateGameObject("Player");
             playerCam = player->AddComponent<Camera>();
-            auto* camShake = player->AddComponent<Game::CameraShake>();
+            
             // Enable fog for atmospheric effect
             playerCam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
             playerCam->fogEnabled = true;
@@ -334,9 +270,7 @@ namespace Game {
             auto playerHUD = player->AddComponent<PlayerHUD>();
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
-            playerHUD->SetZoneGetter([this](int tx, int ty) {
-                return this->GetZoneId(tx, ty);
-                });
+
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
 
@@ -381,88 +315,6 @@ namespace Game {
 
             playerHUD->AddEnemyTransform(enemy->transform);
 
-          
-            auto* npcGO1 = CreateGameObject("NPC_Bully_Z1");
-            {
-                int sx = 0, sy = 0;
-                const Zone* z = GetZone(1);
-                if (z) PickRandomWalkableInZone(*z, map, sx, sy);
-                npcGO1->transform->position = Vector2((float)sx + 0.5f, (float)sy + 0.5f);
-            }
-
-            auto* npc1 = npcGO1->AddComponent<Game::NPC>();
-            npc1->tileMap = map;
-            npc1->playerTf = playerTf;
-            npc1->zoneId = 1;
-            npc1->type = Game::NPCType::Bully;
-            npc1->camShake = camShake;
-            npc1->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
-                const Zone* z = this->GetZone(zid);
-                if (!z) return false;
-                return this->PickRandomWalkableInZone(*z, map, gx, gy);
-                });
-
-            auto* npcSR1 = npcGO1->AddComponent<SpriteRenderer>();
-            npcSR1->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
-            npcSR1->billboard = true;
-            npcSR1->sortingOrder = 95;
-
-            auto* rb1 = npcGO1->AddComponent<Rigidbody2D>();
-            rb1->bodyType = RigidbodyType2D::Kinematic;
-            rb1->gravityScale = 0.0f;
-            rb1->drag = 8.0f;
-
-            auto* col1 = npcGO1->AddComponent<CircleCollider2D>();
-            col1->radius = 0.25f;
-            col1->isTrigger = false;
-            col1->minHeight = 0.0f;
-            col1->maxHeight = 2.0f;
-
-            auto* npcGO2 = CreateGameObject("NPC_Cleaner_Z3");
-
-            {
-                int sx = 0, sy = 0;
-                const Zone* z = GetZone(3);
-                if (z) PickRandomWalkableInZone(*z, map, sx, sy);
-                npcGO2->transform->position = Vector2((float)sx + 0.5f, (float)sy + 0.5f);
-            }
-
-            auto* npc2 = npcGO2->AddComponent<Game::NPC>();
-            npc2->tileMap = map;
-            npc2->playerTf = playerTf;
-            npc2->zoneId = 3;
-            npc2->type = Game::NPCType::Cleaner;
-            npc2->speed = 0.8f;
-
-            npc2->SetPickGoalInZone([this, map](int zid, int& gx, int& gy) -> bool {
-                const Zone* z = this->GetZone(zid);
-                if (!z) return false;
-                return this->PickRandomWalkableInZone(*z, map, gx, gy);
-                });
-
-            auto* npcSR2 = npcGO2->AddComponent<SpriteRenderer>();
-            npcSR2->SetSprite(AssetManager::GetSprite("Assets/xav.jpg"));
-            npcSR2->billboard = true;
-            npcSR2->sortingOrder = 95;
-
-            auto* rb2 = npcGO2->AddComponent<Rigidbody2D>();
-            rb2->bodyType = RigidbodyType2D::Kinematic;
-            rb2->gravityScale = 0.0f;
-            rb2->drag = 8.0f;
-
-            auto* col2 = npcGO2->AddComponent<CircleCollider2D>();
-            col2->radius = 0.25f;
-            col2->isTrigger = false;
-            col2->minHeight = 0.0f;
-            col2->maxHeight = 2.0f;
-
-
-        
-
-            playerHUD->AddEnemyTransform(npcGO1->transform);
-            playerHUD->AddEnemyTransform(npcGO2->transform);
-            playerHUD->GetMap()->AddEnemyTransform(npcGO1->transform);
-            playerHUD->GetMap()->AddEnemyTransform(npcGO2->transform);
             Sprite* powerup1 = AssetManager::GetSprite("Assets/powerup1.png");
             Sprite* powerup2 = AssetManager::GetSprite("Assets/powerup2.png");
             Sprite* powerup3 = AssetManager::GetSprite("Assets/powerup3.png");
@@ -550,12 +402,9 @@ namespace Game {
                 sensor->needLOS = true;
 
                 cctvSensors.push_back(sensor);
-              
-            
             }
-       
-            CreateEndPanel();
 
+       
             SwitchToPlayerCam();
 
             PuzzleManager::BookDataInit();
@@ -573,66 +422,24 @@ namespace Game {
                 pos.z = powerUpBaseZ[i] + std::sin(powerUpTime * floatSpeed + (float)i) * floatAmplitude;
             }
 
-            int camCount = (int)cctvViewPos.size();
-            if (camCount > 0)
-            {
-                
-                if (Input::GetKeyDown(KeyCode::DownArrow))
-                {
-                    if (activeCCTV < 0)
-                        activeCCTV = 0;
-                    else
-                        activeCCTV = (activeCCTV + 1) % camCount;
-
-                    SwitchToCCTV(activeCCTV);
-                }
-
-       
-                if (Input::GetKeyDown(KeyCode::UpArrow))
-                {
-                    if (activeCCTV < 0)
-                        activeCCTV = camCount - 1;
-                    else
-                        activeCCTV = (activeCCTV - 1 + camCount) % camCount;
-
-                    SwitchToCCTV(activeCCTV);
-                }
-            }
-
-  
-            if (Input::GetKeyDown(KeyCode::Alpha0))
-            {
-                SwitchToPlayerCam();
-          
-            }
-
-            if (!endPanelShown && playerData) {
-                if (playerData->IsCaught()) {
-                    std::cout << "[Panel] showing" << std::endl;
-                    ShowEndPanel("YOU GOT CAUGHT. GAME OVER", "Quit", []() {
-                        SceneManager::LoadScene("FPSScene");
-                        });
-                }
-            }
-
-
+            if (Input::GetKeyDown(KeyCode::Alpha1)) ToggleCCTV(0);
+            if (Input::GetKeyDown(KeyCode::Alpha2)) ToggleCCTV(1);
+            if (Input::GetKeyDown(KeyCode::Alpha3)) ToggleCCTV(2);
+            if (Input::GetKeyDown(KeyCode::Alpha4)) ToggleCCTV(3);
+            if (Input::GetKeyDown(KeyCode::Alpha5)) ToggleCCTV(4);
+            if (Input::GetKeyDown(KeyCode::Alpha6)) ToggleCCTV(5);
+            if (Input::GetKeyDown(KeyCode::Alpha0)) SwitchToPlayerCam();
 
             if (!playerData || !playerTf) return;
             if (playerData->GetState() != PlayerState::Normal) return;
-            if (Engine::Input::GetKeyDown(Engine::KeyCode::Z)) {
-                int tx = (int)playerTf->position.x;
-                int ty = (int)playerTf->position.y;
-                int zid = GetZoneId(tx, ty);
-               
-            }
-          
+
             Vector2 p(playerTf->position.x, playerTf->position.y);
             float dx = exitPos.x - p.x;
             float dy = exitPos.y - p.y;
 
             if (guardComp) {
                 for (auto* s : cctvSensors) {
-                    if (s && s->hasLastSeen) { 
+                    if (s && s->hasLastSeen) {
                         guardComp->OnCCTVSpotted(s->lastSeenWorld);
                         s->hasLastSeen = false;
                         break;

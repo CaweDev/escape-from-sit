@@ -147,12 +147,6 @@ namespace UI
         void SetDirty();
 
         /**
-         * @brief Set element active state (toggles both enabled and visible)
-         * @param active True to enable and show, false to disable and hide
-         */
-        void SetActive(bool active);
-
-        /**
          * @brief Create a child element of the specified type
          * @tparam T Type of element to create (must inherit from UIElement)
          * @return Pointer to the created element

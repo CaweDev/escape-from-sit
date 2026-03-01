@@ -11,8 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
@@ -68,7 +66,7 @@
     <ClCompile Include="Source\Game\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\FPSController.cpp" />
-    <ClCompile Include="Source\Game\Player\Player.cpp" />
+    <ClCompile Include="Source\Game\Player.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
@@ -76,7 +74,7 @@
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
-    <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Game\SecurityGuard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,11 +149,9 @@
     <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\MiniMap.hpp" />
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
-    <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
-    <ClInclude Include="Source\Game\NPC\NPC.hpp" />
-    <ClInclude Include="Source\Game\Player\Player.hpp" />
+    <ClInclude Include="Source\Game\CCTVCamera.hpp" />
+    <ClInclude Include="Source\Game\CCTVPlacement.hpp" />
+    <ClInclude Include="Source\Game\Player.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
@@ -169,7 +165,7 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
-    <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
+    <ClInclude Include="Source\Game\SecurityGuard.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
