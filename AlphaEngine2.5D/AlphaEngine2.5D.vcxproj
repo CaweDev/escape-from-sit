@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
