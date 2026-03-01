@@ -27,7 +27,7 @@ namespace UI
 
         // --- Create a dedicated canvas just below the fade overlay ---
         m_canvas = mgr->CreateCanvas();
-        m_canvas->SetSortOrder(9998);
+        m_canvas->SetSortOrder(100000);
         m_canvas->SetReferenceResolution(1280.f, 720.f);
         m_canvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
 
@@ -39,6 +39,7 @@ namespace UI
         m_overlay->SetSizeDelta({ 0.0f, 0.0f });
         m_overlay->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.6f));
         m_overlay->raycastTarget = true;  // Block clicks behind the dialog
+        m_overlay->SetRenderOrder(1);
 
         // --- Centered dialog panel ---
         m_dialogPanel = m_overlay->CreateChild<Panel>();

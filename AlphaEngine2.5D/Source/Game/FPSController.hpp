@@ -10,7 +10,7 @@
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
 #include <cmath>
-#include "Game/Player.hpp"
+#include "Game/Player/Player.hpp"
 namespace Game {
 
 using namespace Engine;

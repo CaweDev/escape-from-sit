@@ -31,7 +31,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
     AESysSetWindowTitle("Escape From SIT");
 	AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
-
+    
     // Initialize UI System
     UI::UIManager::Initialize();
 
@@ -73,6 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         if (UI::UIManager::GetInstance()) {
             UI::UIManager::GetInstance()->Render();
         }
+
+		std::cout << "Framerate: " << AEFrameRateControllerGetFrameRate() << " FPS" << std::endl;
 
         // Frame end
         AESysFrameEnd();
