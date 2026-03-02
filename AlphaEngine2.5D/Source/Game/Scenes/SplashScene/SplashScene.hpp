@@ -60,11 +60,13 @@ private:
     static int   CANVAS_SORT_ORDER;
 
     // Logo settings
-    static float LOGO_WIDTH;
-    static float LOGO_HEIGHT;
     static int   LOGO_RENDER_ORDER;
     static float LOGO_EXPAND_SCALE;
+    static float LOGO_WIDTH;
     static const char* LOGO_WHITE_PATH;
+    static float LOGO2_HEIGHT;
+    static float LOGO2_WIDTH;
+    static float LOGO_HEIGHT;
     static const char* LOGO2_PATH;
 
     // Logo colors
