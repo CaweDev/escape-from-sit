@@ -23,20 +23,15 @@ class GameObject;
  * Positive values 10-13 = door markers (spawns Door, then becomes Empty)
  */
 enum class TileType : int {
-    Floor4 = -4, // Walkable floor variant 4
-    Floor3 = -3, // Walkable floor variant 3
-    Floor2 = -2, // Walkable floor variant 2
-    Floor1 = -1, // Walkable floor variant 1
     Empty = 0,   // Default walkable
     Wall = 1,    // Wall type 1
     Wall2 = 2,   // Wall type 2
     Wall3 = 3,   // Wall type 3
     Wall4 = 4,   // Wall type 4
-    // Door markers (10-13): spawns Door GameObject, then tile becomes Empty
-    Door1 = 10,
-    Door2 = 11,
-    Door3 = 12,
-    Door4 = 13
+    NUM_WALL = 5,
+    // Door marker
+    Door = 10,
+    NUM_DOOR = 11,
 };
 
 /**
@@ -76,7 +71,7 @@ public:
     /** Check if position is a wall (tile values 1-9 are walls) */
     bool IsWall(int x, int y) const {
         int val = static_cast<int>(GetTile(x, y));
-        return val > 0 && val < 10; // 1-9 are walls, 10+ are door markers
+        return val >= static_cast<int>(TileType::Wall) && val < static_cast<int>(TileType::NUM_WALL); // 1-9 are walls, 10+ are door markers
     }
 
     /** Check if world position is walkable (zero or negative tile values) */
@@ -89,12 +84,12 @@ public:
     /** Check if a tile type is a door marker */
     static bool IsDoorType(TileType type) {
         int val = static_cast<int>(type);
-        return val >= 10 && val <= 13;
+        return IsDoorType(val);
     }
     
     /** Check if a tile type is a door marker (by int) */
     static bool IsDoorType(int type) {
-        return type >= 10 && type <= 13;
+        return type >= static_cast<int>(TileType::Door) && type < static_cast<int>(TileType::NUM_DOOR);
     }
     
     /** Get all spawned doors */
