@@ -10,6 +10,7 @@
 #include "Engine/UI/Core/UIEventSystem.hpp"
 #include "Engine/UI/Core/UIElement.hpp"
 #include "Engine/Core/Application.hpp"
+#include "Engine/Input/Input.hpp"
 #include "Engine/UI/Helpers/DialogService.hpp"
 #include "Engine/UI/Helpers/FadeService.hpp"
 #include <algorithm>
@@ -246,12 +247,13 @@ namespace UI
             m_hoveredElement = hitElement;
         }
 
-        // Handle mouse button
-        bool mousePressed = eventData.isPressed;
+        // Handle mouse button using Input class edge detection
+        bool mouseJustPressed  = Engine::Input::GetMouseButtonDown(0);
+        bool mouseJustReleased = Engine::Input::GetMouseButtonUp(0);
 
-        if (mousePressed && !m_mouseWasPressed)
+        if (mouseJustPressed)
         {
-            // Mouse just pressed
+            // Mouse just pressed — record which element was under the cursor
             m_pressedElement = m_hoveredElement;
             if (m_pressedElement)
             {
@@ -262,7 +264,8 @@ namespace UI
                 }
             }
         }
-        else if (!mousePressed && m_mouseWasPressed)
+
+        if (mouseJustReleased)
         {
             // Mouse just released
             if (m_pressedElement)
@@ -273,6 +276,7 @@ namespace UI
                     upHandler->OnPointerUp(eventData);
                 }
 
+                // Click only if released on the SAME element that received the press
                 if (m_pressedElement == m_hoveredElement)
                 {
                     auto* clickHandler = dynamic_cast<IPointerClickHandler*>(m_pressedElement);
@@ -284,8 +288,6 @@ namespace UI
             }
             m_pressedElement = nullptr;
         }
-
-        m_mouseWasPressed = mousePressed;
     }
 
     UIElement* UIManager::RaycastAll(f32 worldX, f32 worldY) const

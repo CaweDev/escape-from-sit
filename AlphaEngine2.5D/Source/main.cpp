@@ -66,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Input::Update();
         
         // Check for exit conditions
-        if (AEInputCheckTriggered(AEVK_ESCAPE) || !AESysDoesWindowExist()) {
+        if (!AESysDoesWindowExist()) {
             Application::Quit();
         }
 

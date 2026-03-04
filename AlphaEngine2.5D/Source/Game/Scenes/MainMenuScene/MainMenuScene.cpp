@@ -28,9 +28,9 @@ namespace Game {
         tileMap->LoadFromArray(corridorData.data(), CORRIDOR_LENGTH, CORRIDOR_HEIGHT);
 
         auto renderer = world->AddComponent<TileMapRenderer>();
-        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
-        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
-        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
+        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
+        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
+        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/Concrete_01_White_1.png"));
 
         auto cameraGO = CreateGameObject("Camera");
         auto cam = cameraGO->AddComponent<Camera>();

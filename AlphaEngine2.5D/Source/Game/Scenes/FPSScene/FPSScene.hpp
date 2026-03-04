@@ -15,6 +15,7 @@
 #include "Game/SecurityGuard/SecurityGuard.hpp"
 #include "Game/CCTV/CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Game/Scenes/FPSScene/UI/PauseMenu.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/NPC/NPC.hpp"
@@ -53,7 +54,7 @@ namespace Game {
         int activeCCTV = -1;
 
         std::vector<CCTVCamera*> cctvSensors;
-
+            
         Vector2 exitPos = Vector2(14.5f, 1.5f);
         float winRadius = 0.6f;
         bool printedWin = false;
@@ -62,6 +63,8 @@ namespace Game {
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
         struct CCTVInfo { Vector3 pos; float rotDeg; };
+        PauseMenu* pauseMenu = nullptr;
+
         UI::Canvas* modalCanvas = nullptr;
         UI::Panel* modalPanel = nullptr;
         UI::Text* modalTitle = nullptr;
@@ -301,9 +304,9 @@ namespace Game {
             renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
             renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
 
-            renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
-            renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
-            renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
+            renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
+            renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
+            renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/Concrete_01_White_1.png"));
 
             auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
             tileMapCollider->minHeight = 0.0f;
@@ -334,6 +337,8 @@ namespace Game {
             auto playerHUD = player->AddComponent<PlayerHUD>();
             playerHUD->SetTileMap(map);
             playerHUD->SetPlayerTransform(playerTf);
+            pauseMenu = player->AddComponent<PauseMenu>();
+
             playerHUD->SetZoneGetter([this](int tx, int ty) {
                 return this->GetZoneId(tx, ty);
                 });
