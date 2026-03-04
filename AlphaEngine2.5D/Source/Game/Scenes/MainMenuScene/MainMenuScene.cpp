@@ -117,16 +117,15 @@ namespace Game {
 
         MenuConfig configs[] = {
             { "Play",     3.2f, [this]() { OnPlayClicked(); } },
-            { "Options",  1.8f, [this]() { OnOptionsClicked(); } },
             { "Controls", 1.8f, [this]() { OnControlsClicked(); } },
             { "Credits",  1.8f, [this]() { OnCreditsClicked(); } },
             { "Quit",     1.8f, [this]() { OnQuitClicked(); } }
         };
 
         // Create menu items
-        float yPositions[] = { 0.85f, 0.68f, 0.53f, 0.38f, 0.23f };
+        float yPositions[] = { 0.85f, 0.65f, 0.45f, 0.25f };
 
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 4; ++i) {
             MenuItem item;
 
             item.label = menuPanel->CreateChild<Text>();
@@ -153,7 +152,7 @@ namespace Game {
         }
 
         // Store original text for each item
-        menuItemTexts = { "Play", "Options", "Controls", "Credits", "Quit" };
+        menuItemTexts = { "Play", "Controls", "Credits", "Quit" };
 
         // Select first item (Play)
         selectedIndex = 0;
@@ -440,10 +439,6 @@ namespace Game {
     void MainMenuScene::OnPlayClicked() {
         std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
-    }
-
-    void MainMenuScene::OnOptionsClicked() {
-        std::cout << "Options clicked" << std::endl;
     }
 
     void MainMenuScene::OnControlsClicked() {

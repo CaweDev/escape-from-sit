@@ -85,7 +85,6 @@ namespace Game {
         float RandomFloat(float min, float max);
 
         void OnPlayClicked();
-        void OnOptionsClicked();
         void OnControlsClicked();
         void OnCreditsClicked();
         void OnQuitClicked();
