@@ -65,7 +65,7 @@ private:
     f32 CalculatePerpDistance() const;
 
     /** Helper to render a batched mesh */
-    void RenderMesh(AEGfxVertexList* mesh);
+    void RenderMesh(AEGfxVertexList* mesh, f32 fogFactor);
 };
 
 } // namespace Engine

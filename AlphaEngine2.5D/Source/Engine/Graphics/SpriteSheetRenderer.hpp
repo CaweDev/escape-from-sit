@@ -57,6 +57,9 @@ public:
      */
     void SetSpriteSheet(SpriteSheet* sheet);
 
+    /** @brief Get the currently assigned Spritesheet */
+    const SpriteSheet* GetSpriteSheet() const { return spriteSheet; }
+
     /**
      * @brief Play a named animation from the start
      * @param animationName Name of the animation clip defined on the SpriteSheet

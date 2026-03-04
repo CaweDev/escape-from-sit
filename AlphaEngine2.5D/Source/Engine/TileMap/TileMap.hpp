@@ -50,7 +50,9 @@ public:
         tiles.resize(w * h, TileType::Empty);
     }
 
-    /** Create map from 2D array (also spawns Door GameObjects for door tiles) */
+    void Initialize() override;
+
+    /** Create map from 2D array */
     void LoadFromArray(const int* data, int w, int h);
 
     /** Get tile at position */
@@ -96,11 +98,15 @@ public:
     const std::vector<Door*>& GetDoors() const { return spawnedDoors; }
 
 private:
+    bool initialized = false;
     std::vector<TileType> tiles;
     
     /** Doors spawned from door tiles during LoadFromArray */
     std::vector<Door*> spawnedDoors;
     
+    /** Spawn all doors present in the tile map array */
+    void SpawnDoors();
+
     /** Spawn a door at the given tile position */
     void SpawnDoor(int x, int y, int doorType);
 };

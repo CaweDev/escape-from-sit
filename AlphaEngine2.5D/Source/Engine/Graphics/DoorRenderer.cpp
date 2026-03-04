@@ -111,6 +111,15 @@ void DoorRenderer::Render() {
 
     AEGfxSetCamPosition(0.0f, 0.0f);
 
+    // Pre-calculate average fog factor for the entire door mesh
+    f32 centerDist = CalculatePerpDistance();
+    f32 meshFog = 1.0f;
+    if (Camera::main && Camera::main->fogEnabled && !ignoreFog) {
+        meshFog = expf(-centerDist / Camera::main->fogDistance);
+        if (meshFog < Camera::main->fogMinVisibility) meshFog = Camera::main->fogMinVisibility;
+        if (meshFog > Camera::main->fogMaxVisibility) meshFog = Camera::main->fogMaxVisibility;
+    }
+
     // Render column by column like the TileMapRenderer
     for (int x = 0; x < screenWidth; ++x) {
         f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
@@ -170,10 +179,8 @@ void DoorRenderer::Render() {
             f32 drawStart = (f32)horizon - (wallHeight / 2.0f) + heightOffset;
             f32 drawEnd = (f32)horizon + (wallHeight / 2.0f) + heightOffset;
 
-            // Clamp Y (no vertical slide - door slides horizontally now)
-            if (drawStart < 0) drawStart = 0;
-            if (drawEnd >= screenHeight) drawEnd = (f32)screenHeight - 1;
-
+            // Allow the GPU to natively clip off-screen coordinates rather than manually clamping,
+            // otherwise the texture UV map squashes into the visible area.
             if (drawStart >= drawEnd) continue;
 
             // Render this column
@@ -218,7 +225,7 @@ void DoorRenderer::Render() {
             if (triCount >= MAX_TRIS) {
                 AEGfxVertexList* mesh = AEGfxMeshEnd();
                 if (mesh) {
-                    RenderMesh(mesh);
+                    RenderMesh(mesh, meshFog);
                     AEGfxMeshFree(mesh);
                 }
                 meshStarted = false;
@@ -229,13 +236,13 @@ void DoorRenderer::Render() {
     if (meshStarted) {
         AEGfxVertexList* mesh = AEGfxMeshEnd();
         if (mesh) {
-            RenderMesh(mesh);
+            RenderMesh(mesh, meshFog);
             AEGfxMeshFree(mesh);
         }
     }
 }
 
-void DoorRenderer::RenderMesh(AEGfxVertexList* mesh) {
+void DoorRenderer::RenderMesh(AEGfxVertexList* mesh, f32 fogFactor) {
     if (sprite && sprite->IsLoaded()) {
         AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);
         AEGfxTextureSet(sprite->GetTexture(), 0, 0);
@@ -244,9 +251,14 @@ void DoorRenderer::RenderMesh(AEGfxVertexList* mesh) {
         AEGfxSetRenderMode(AE_GFX_RM_COLOR);
         AEGfxSetBlendMode(AE_GFX_BM_NONE);
     }
+    // Apply fog darkening uniformly to the mesh via texture multiply color
+    AEGfxSetColorToMultiply(fogFactor, fogFactor, fogFactor, 1.0f);
     
-    AEGfxSetColorToMultiply(1, 1, 1, 1);
-    AEGfxSetColorToAdd(0, 0, 0, 0);
+    if (highlighted) {
+        AEGfxSetColorToAdd(highlightColor.r, highlightColor.g, highlightColor.b, highlightColor.a);
+    } else {
+        AEGfxSetColorToAdd(0, 0, 0, 0);
+    }
     
     AEMtx33 identity;
     AEMtx33Identity(&identity);

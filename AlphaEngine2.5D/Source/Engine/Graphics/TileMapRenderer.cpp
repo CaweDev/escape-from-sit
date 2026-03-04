@@ -38,18 +38,31 @@ namespace Engine {
 		}
 	}
 
+	void TileMapRenderer::SetTileSprites(int tileType, Sprite* wall, Sprite* ceiling, Sprite* floor, Sprite* door) {
+		tileSprites[tileType] = { wall, ceiling, floor, door };
+		
+		if (tileType == 1) {
+			if (ceiling && ceiling->GetTexture2D()) {
+				TextureUtils::LoadCpuPixels(ceiling->GetTexture2D()->GetFilePath(), ceilCpuTex);
+			}
+			if (floor && floor->GetTexture2D()) {
+				TextureUtils::LoadCpuPixels(floor->GetTexture2D()->GetFilePath(), floorCpuTex);
+			}
+		}
+	}
+
 	// Stores the sprite pointer and immediately loads a CPU-side pixel copy.
 	// The CPU copy is required by the framebuffer rasteriser since we cannot
 	// read pixels back from an AEGfxTexture (GPU-only handle).
-	void TileMapRenderer::SetFloorSprite(int tileType, Sprite* sprite) {
-		floorSprites[tileType] = sprite;
+	void TileMapRenderer::SetFloorSprite(Sprite* sprite) {
+		tileSprites[1].floor = sprite;
 		if (sprite && sprite->GetTexture2D()) {
 			TextureUtils::LoadCpuPixels(sprite->GetTexture2D()->GetFilePath(), floorCpuTex);
 		}
 	}
 
-	void TileMapRenderer::SetCeilingSprite(int tileType, Sprite* sprite) {
-		ceilingSprites[tileType] = sprite;
+	void TileMapRenderer::SetCeilingSprite(Sprite* sprite) {
+		tileSprites[1].ceiling = sprite;
 		if (sprite && sprite->GetTexture2D()) {
 			TextureUtils::LoadCpuPixels(sprite->GetTexture2D()->GetFilePath(), ceilCpuTex);
 		}
@@ -200,8 +213,8 @@ namespace Engine {
 			combinedFramebuffer.resize(fbWidth * fbHeight * 4, 0);
 		}
 
-		bool wantsCeiling = !ceilingSprites.empty() && !managedColumns.empty() && !ceilCpuTex.pixels.empty() && ceilCpuTex.width > 0;
-		bool wantsFloor = !floorSprites.empty() && !managedColumns.empty() && !floorCpuTex.pixels.empty() && floorCpuTex.width > 0;
+		bool wantsCeiling = !tileSprites.empty() && !managedColumns.empty() && !ceilCpuTex.pixels.empty() && ceilCpuTex.width > 0;
+		bool wantsFloor = !tileSprites.empty() && !managedColumns.empty() && !floorCpuTex.pixels.empty() && floorCpuTex.width > 0;
 
 		if (wantsCeiling || wantsFloor) {
 			memset(combinedFramebuffer.data(), 0, combinedFramebuffer.size());
@@ -331,7 +344,7 @@ namespace Engine {
 	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns) {
 		
-		if (ceilingSprites.empty() || columns.empty()) return; // No ceiling sprite assigned — nothing to draw.
+		if (tileSprites.empty() || columns.empty()) return; // No sprites assigned — nothing to draw.
 		if (ceilCpuTex.pixels.empty() || ceilCpuTex.width == 0) return; // WIC pixel load failed — skip.
 
 		// posZ is the vertical distance from the camera to the ceiling plane.
@@ -498,7 +511,7 @@ namespace Engine {
 	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
 		const std::vector<ColumnInfo>& columns) {
 		
-		if (floorSprites.empty() || columns.empty()) return; // No floor sprite — nothing to draw.
+		if (tileSprites.empty() || columns.empty()) return; // No sprites assigned — nothing to draw.
 		if (floorCpuTex.pixels.empty() || floorCpuTex.width == 0) return; // CPU texture not loaded.
 
 		// posZ = camera height above ground. For the floor, we project downward.
