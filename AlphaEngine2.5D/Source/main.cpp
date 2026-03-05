@@ -85,8 +85,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             UI::UIManager::GetInstance()->Render();
         }
 
-		std::cout << "Framerate: " << AEFrameRateControllerGetFrameRate() << " FPS" << std::endl;
-
+		/*std::cout << "Framerate: " << AEFrameRateControllerGetFrameRate() << " FPS" << std::endl;*/
+        std::cout << "FPS" << AEFrameRateControllerGetFrameRate() << std::endl;
         // Frame end
         AESysFrameEnd();
     }

@@ -57,13 +57,17 @@ public:
     void OnDestroy() override;
     
 private:
-    Interactable* m_currentTarget = nullptr;
-    IRenderer* m_currentTargetRenderer = nullptr;
+Interactable* m_currentTarget = nullptr;
+IRenderer* m_currentTargetRenderer = nullptr;
     
-    // UI elements (created and owned by this controller)
-    UI::Canvas* m_canvas = nullptr;
-    UI::Crosshair* m_crosshair = nullptr;
-    UI::InteractionPrompt* m_prompt = nullptr;
+// Hold interaction state
+float m_holdTimer = 0.0f;
+bool m_isHolding = false;
+    
+// UI elements (created and owned by this controller)
+UI::Canvas* m_canvas = nullptr;
+UI::Crosshair* m_crosshair = nullptr;
+UI::InteractionPrompt* m_prompt = nullptr;
     
     /**
      * @brief Find the interactable at screen center

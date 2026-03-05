@@ -61,16 +61,20 @@
     <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
     <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
     <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp" />
-    <ClCompile Include="Source\Game\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
     <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
     <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
     <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
+    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
+    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
+    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
+    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
+    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -160,6 +164,12 @@
     <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
+    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
+    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
+    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
+    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
+    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
+    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

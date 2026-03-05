@@ -11,8 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
+    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
+    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
@@ -78,6 +82,8 @@
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
+    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,10 +154,14 @@
     <ClInclude Include="Source\Engine\UI\Layout\LayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\VerticalLayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Crosshair.hpp" />
+    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\InteractionPrompt.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\MiniMap.hpp" />
     <ClInclude Include="Source\Engine\UI\UI.hpp" />
+    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
+    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
+    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
@@ -172,6 +182,8 @@
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
+    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
+    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

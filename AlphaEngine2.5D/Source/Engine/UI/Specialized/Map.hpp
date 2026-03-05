@@ -114,7 +114,7 @@ namespace UI
         void SetBorderThickness(f32 thickness) { m_borderThickness = thickness; }
         f32 GetBorderThickness() const { return m_borderThickness; }
 
-    private:
+    protected:
         /**
          * @brief Initialize the quad mesh for rendering
          */

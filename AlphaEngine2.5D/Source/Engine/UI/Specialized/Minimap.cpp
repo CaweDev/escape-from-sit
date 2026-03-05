@@ -11,6 +11,7 @@ namespace UI
     Minimap::Minimap()
         : m_wallColor(0.4f, 0.4f, 0.5f, 1.0f)
         , m_floorColor(0.2f, 0.2f, 0.25f, 1.0f)
+        , m_doorColor(0.9f, 0.7f, 0.2f, 1.0f)  // Orange/yellow for doors
         , m_playerColor(0.0f, 0.8f, 0.2f, 1.0f)
         , m_backgroundColor(0.1f, 0.1f, 0.12f, 0.85f)
         , m_borderColor(0.3f, 0.3f, 0.35f, 1.0f)
@@ -63,8 +64,36 @@ namespace UI
         if (!transform) return;
         m_cctvTransforms.push_back(transform);
     }
-    void Minimap::ClearCCTVs() { m_cctvTransforms.clear(); }
+    void Minimap::ClearCCTVs() { 
+        m_cctvTransforms.clear();
+        m_cctvCones.clear();
+    }
     void Minimap::SetCCTVSprites(Engine::Sprite* sprite) { m_cctvSprite = sprite; }
+    
+    void Minimap::AddTerminalIcon(const Engine::Vector2& worldPos, Engine::Sprite* sprite)
+    {
+        m_terminalIcons.push_back({ worldPos, sprite });
+    }
+    
+    void Minimap::UpdateCCTVCone(Engine::Transform* transform, float coneWidth, float maxRange, bool isDetecting)
+    {
+        if (!transform) return;
+        
+        // Find existing entry or add new one
+        for (auto& cone : m_cctvCones)
+        {
+            if (cone.transform == transform)
+            {
+                cone.coneWidth = coneWidth;
+                cone.maxRange = maxRange;
+                cone.isDetecting = isDetecting;
+                return;
+            }
+        }
+        
+        // Not found, add new
+        m_cctvCones.push_back({ transform, coneWidth, maxRange, isDetecting });
+    }
     /**
      * @brief Generates a clipped vertex list for a quad using the Sutherland-Hodgman algorithm.
      * 
@@ -257,6 +286,104 @@ namespace UI
         DrawQuadInternal((left + right) * 0.5f, bottom - t * 0.5f, mapRect.width, t, m_borderColor, bSprite);
     }
 
+    void Minimap::RenderCCTVCones(float mapCenterX, float mapCenterY, float tileSize,
+                                   float playerTileX, float playerTileY, float playerRotation)
+    {
+        if (m_cctvCones.empty()) return;
+        
+        float rad = playerRotation * Engine::Mathf::Deg2Rad;
+        float c = Engine::Mathf::Cos(rad);
+        float s = Engine::Mathf::Sin(rad);
+        
+        // Get minimap bounds for culling
+        Rect worldRect = GetWorldRect();
+        float minimapLeft = worldRect.x;
+        float minimapRight = worldRect.x + worldRect.width;
+        float minimapBottom = worldRect.y;
+        float minimapTop = worldRect.y + worldRect.height;
+        
+        // Batch all circles into one mesh
+        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+        
+        AEMtx33 identity;
+        AEMtx33Identity(&identity);
+        AEGfxSetTransform(identity.m);
+        
+        AEGfxMeshStart();
+        
+        bool hasGeometry = false;
+        
+        for (const auto& cone : m_cctvCones)
+        {
+            if (!cone.transform) continue;
+            
+            // World space position
+            float cctvX = cone.transform->position.x;
+            float cctvY = cone.transform->position.y;
+            
+            // Convert to minimap space
+            float dxW = cctvX - playerTileX;
+            float dyW = cctvY - playerTileY;
+            float offX = dxW * tileSize;
+            float offY = dyW * tileSize;
+            float rotatedX = offX * s - offY * c;
+            float rotatedY = offX * c + offY * s;
+            
+            float screenX = mapCenterX + rotatedX;
+            float screenY = mapCenterY + rotatedY;
+            
+            // Draw circle representing detection range
+            float radius = cone.maxRange * tileSize;
+            
+            // CULLING: Skip circles that are completely outside minimap bounds
+            // Check if circle bounding box intersects with minimap
+            if (screenX + radius < minimapLeft ||   // Circle completely to the left
+                screenX - radius > minimapRight ||  // Circle completely to the right
+                screenY + radius < minimapBottom || // Circle completely below
+                screenY - radius > minimapTop)      // Circle completely above
+            {
+                continue; // Skip this CCTV, it's not visible
+            }
+            
+            // Draw filled circle as triangle fan
+            int segments = 20; // More segments = smoother circle
+            Engine::Color color = cone.isDetecting ? m_cctvAlertColor : m_cctvNormalColor;
+            u32 colorU32 = color.ToU32();
+            
+            for (int i = 0; i < segments; ++i)
+            {
+                float angle1 = (float)i / segments * 2.0f * 3.14159265f;
+                float angle2 = (float)(i + 1) / segments * 2.0f * 3.14159265f;
+                
+                float x1 = screenX + Engine::Mathf::Cos(angle1) * radius;
+                float y1 = screenY + Engine::Mathf::Sin(angle1) * radius;
+                float x2 = screenX + Engine::Mathf::Cos(angle2) * radius;
+                float y2 = screenY + Engine::Mathf::Sin(angle2) * radius;
+                
+                // Triangle: center -> edge1 -> edge2
+                AEGfxTriAdd(
+                    screenX, screenY, colorU32, 0, 0,      // Center
+                    x1, y1, colorU32, 0, 0,                // Edge 1
+                    x2, y2, colorU32, 0, 0                 // Edge 2
+                );
+            }
+            
+            hasGeometry = true;
+        }
+        
+        // Draw all circles in one call (only if we added any geometry)
+        AEGfxVertexList* mesh = AEGfxMeshEnd();
+        if (mesh && hasGeometry) {
+            AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+            AEGfxMeshFree(mesh);
+        }
+        else if (mesh) {
+            // Free empty mesh
+            AEGfxMeshFree(mesh);
+        }
+    }
+
     void Minimap::Render()
     {
         if (!visible) return;
@@ -332,8 +459,13 @@ namespace UI
                 Engine::Color tileColor = m_wallColor;
                 if (tileX >= 0 && tileX < m_tileMap->width && tileY >= 0 && tileY < m_tileMap->height)
                 {
-                    if (static_cast<int>(m_tileMap->GetTile(tileX, tileY)) == 0)
+                    int tileValue = static_cast<int>(m_tileMap->GetTile(tileX, tileY));
+                    if (tileValue == 0) {
                         tileColor = m_floorColor;
+                    } else if (tileValue >= 10 && tileValue <= 13) {
+                        // Doors (10-13) show as orange/yellow
+                        tileColor = m_doorColor;
+                    }
                 }
 
                 f32 fracX = playerTileX - Engine::Mathf::Floor(playerTileX);
@@ -377,6 +509,10 @@ namespace UI
         // The player is always at the center of the minimap when m_centerOnPlayer is true
         f32 playerSize = tileSize * 0.8f;
         DrawQuadClipped(mapCenterX, mapCenterY, playerSize, playerSize, 0.0f, m_playerColor, m_playerSprite.get());
+
+        // --- Step 4.5: Render CCTV vision circles (DISABLED - needs proper clipping) ---
+        // TODO: Implement proper circle clipping to minimap bounds
+        // RenderCCTVCones(mapCenterX, mapCenterY, tileSize, playerTileX, playerTileY, playerRotation);
 
         f32 cctvSize = tileSize * 0.55f;
 
@@ -424,7 +560,29 @@ namespace UI
                 m_enemyColor);
         }
 
-        // --- Step 5: Draw the decorative frame ---
+        // --- Step 6: Render Terminal Icons ---
+        f32 terminalSize = tileSize * 0.7f;
+        for (const auto& terminal : m_terminalIcons)
+        {
+            f32 dxW = terminal.worldPos.x - playerTileX;
+            f32 dyW = terminal.worldPos.y - playerTileY;
+
+            f32 offX = dxW * tileSize;
+            f32 offY = dyW * tileSize;
+
+            f32 rotatedX = offX * s - offY * c;
+            f32 rotatedY = offX * c + offY * s;
+
+            DrawQuadClipped(mapCenterX + rotatedX,
+                mapCenterY + rotatedY,
+                terminalSize,
+                terminalSize,
+                0.0f,
+                Engine::Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow tint for terminals
+                terminal.sprite);
+        }
+
+        // --- Step 7: Draw the decorative frame ---
         DrawBorderFrame(worldRect);
 
         // Render children

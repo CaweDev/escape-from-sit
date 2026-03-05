@@ -27,6 +27,52 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
 	for (int i = 0; i < w * h; ++i) {
 		tiles[i] = static_cast<TileType>(data[i]);
 	}
+     width = w;
+    height = h;
+    tiles.resize(w * h);
+    
+    // Clear any previously spawned doors and markers
+    spawnedDoors.clear();
+    terminalPositions.clear();
+    exitPositions.clear();
+    
+    // First pass: load all tiles (direct copy - no inversion)
+    for (int i = 0; i < w * h; ++i) {
+        tiles[i] = static_cast<TileType>(data[i]);
+    }
+    
+    // Second pass: spawn doors and collect special markers
+    for (int y = 0; y < h; ++y) {
+        for (int x = 0; x < w; ++x) {
+            int index = y * w + x;  // Direct indexing - no Y inversion
+            int tileValue = static_cast<int>(tiles[index]);
+            
+            if (IsDoorType(tileValue)) {
+                if (initialized)
+                    SpawnDoor(x, y, tileValue);
+                // Replace door tile with empty (door handles itself now)
+                tiles[index] = TileType::Empty;
+            }
+            else if (IsTerminalMarker(tileValue)) {
+                // Store terminal position (center of tile)
+                terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace terminal marker with floor
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
+            }
+            else if (IsExitMarker(tileValue)) {
+                // Store exit position (center of tile)
+                exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace exit marker with floor
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
+            }
+        }
+    }
+    
+    printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits\n", 
+           w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());
+
 	if (initialized) {
 		SpawnDoors();
 	}
@@ -53,6 +99,7 @@ void TileMap::SpawnDoors() {
 			}
 		}
 	}
+   
 }
 
 void TileMap::SpawnDoor(int x, int y, int doorType) {

@@ -1,158 +1,246 @@
 #include "CCTVCamera.hpp"
-#include "Engine/Core/GameObject.hpp"
+#include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Engine/UI/Specialized/Minimap.hpp"
+#include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Core/Time.hpp"
 #include <cmath>
-#include <iostream>
+#include  "Engine/Core/GameObject.hpp"
+
+using namespace Engine;
 
 namespace Game {
 
-	static float DegToRad(float d) { return d * 3.1415926f / 180.0f; }
+    static float DegToRad(float deg) { return deg * 3.14159265f / 180.0f; }
 
-	bool CCTVCamera::InFov(float dx, float dy) const {
-		float camRad = DegToRad(transform->rotation);
-		float fx = std::cos(camRad);
-		float fy = std::sin(camRad);
+    bool CCTVCamera::InFov(float dx, float dy) const
+    {
+        // camera forward from rotation (assuming degrees, like your scene)
+        float rotRad = DegToRad((float)gameObject->transform->rotation);
+        Vector2 fwd(std::cos(rotRad), std::sin(rotRad));
 
-		float len = std::sqrt(dx * dx + dy * dy);
-		if (len <= 0.00001f) return true;
+        Vector2 to(dx, dy);
+        float len = std::sqrt(to.x * to.x + to.y * to.y);
+        if (len <= 0.0001f) return true;
+        to.x /= len; to.y /= len;
 
-		float tx = dx / len;
-		float ty = dy / len;
+        float dot = fwd.x * to.x + fwd.y * to.y;
+        float half = DegToRad(coneWidth * 0.5f);
+        float cosHalf = std::cos(half);
 
-		float dot = fx * tx + fy * ty;
-		float halfFovRad = DegToRad(coneWidth * 0.5f);
-		float cosHalfFov = std::cos(halfFovRad);
-		return dot >= cosHalfFov;
-	}
+        return dot >= cosHalf;
+    }
 
-	bool CCTVCamera::RaycastTileLOS(Engine::Vector2 from, Engine::Vector2 to) const {
-		float dx = to.x - from.x;
-		float dy = to.y - from.y;
-		float dist = std::sqrt(dx * dx + dy * dy);
-		if (dist <= 0.00001f) return true;
+    bool CCTVCamera::RaycastTileLOS(Vector2 from, Vector2 to) const
+    {
+        if (!tile) return false;
 
-		int steps = (int)(dist * rayStepPerUnit);
-		if (steps < 1) steps = 1;
+        Vector2 dir = Vector2(to.x - from.x, to.y - from.y);
+        float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+        if (dist <= 0.0001f) return true;
 
-		float stepX = dx / (float)steps;
-		float stepY = dy / (float)steps;
+        dir.x /= dist;
+        dir.y /= dist;
 
-		float x = from.x;
-		float y = from.y;
+        // step along ray; stop if hits non-walkable tile
+        float step = 1.0f / rayStepPerUnit;
+        float t = 0.0f;
 
-		for (int i = 0; i < steps; ++i) {
-			if (!tile->IsWalkable(x, y)) return false;
-			x += stepX;
-			y += stepY;
-		}
-		return true;
-	}
+        while (t <= dist)
+        {
+            float px = from.x + dir.x * t;
+            float py = from.y + dir.y * t;
 
-	bool CCTVCamera::HasLineOfSighttoPlayer() const {
-		Engine::Vector2 camPos(transform->position.x, transform->position.y);
-		Engine::Vector2 playerPos(tf->position.x, tf->position.y);
-		return RaycastTileLOS(camPos, playerPos);
-	}
+            // If your TileMap has a better "IsWall" method, swap this out.
+            // Using IsWalkable as "not a wall".
+            if (!tile->IsWalkable(px, py))
+                return false;
 
+            t += step;
+        }
 
-	Engine::Vector2 CCTVCamera::RaycastToWall(Engine::Vector2 from, Engine::Vector2 dir, float maxDist) const {
-		float dist = maxDist;
-		int steps = (int)(dist * rayStepPerUnit);
-		if (steps < 1) steps = 1;
+        return true;
+    }
 
-		float stepX = (dir.x * dist) / (float)steps;
-		float stepY = (dir.y * dist) / (float)steps;
+    bool CCTVCamera::HasLineOfSighttoPlayer() const
+    {
+        if (!tile || !tf) return false;
+        Vector2 from(gameObject->transform->position.x, gameObject->transform->position.y);
+        Vector2 to(tf->position.x, tf->position.y);
 
-		float x = from.x;
-		float y = from.y;
+        if (!needLOS) return true;
+        return RaycastTileLOS(from, to);
+    }
 
-		Engine::Vector2 lastGood = from;
+    void CCTVCamera::RecordLastSeen()
+    {
+        if (!tf) return;
 
-		for (int i = 0; i < steps; ++i) {
-			if (!tile->IsWalkable(x, y)) {
-				return lastGood; 
-			}
-			lastGood = Engine::Vector2(x, y);
-			x += stepX;
-			y += stepY;
-		}
-		return Engine::Vector2(x, y);
-	}
+        lastSeenWorld = Vector2(tf->position.x, tf->position.y);
+        lastSeenTile = Vector2((float)(int)tf->position.x, (float)(int)tf->position.y);
+        hasLastSeen = true;
+    }
 
-	
-	void CCTVCamera::BuildVisionPolygon() {
-		m_visionPoly.clear();
-		if (!tile || !transform) return;
-		if (!showVision) return;
+    bool CCTVCamera::IsTileVisible(int tx, int ty) const
+    {
+        // basic check: treat tile center as point
+        Vector2 camPos(gameObject->transform->position.x, gameObject->transform->position.y);
+        Vector2 p((float)tx + 0.5f, (float)ty + 0.5f);
 
-		Engine::Vector2 camPos(transform->position.x, transform->position.y);
+        float dx = p.x - camPos.x;
+        float dy = p.y - camPos.y;
 
-		float range = (maxRange > 0.0f) ? maxRange : detectRadius;
-		float center = DegToRad(transform->rotation);
-		float half = DegToRad(coneWidth * 0.5f);
+        float dist = std::sqrt(dx * dx + dy * dy);
+        if (dist > maxRange) return false;
+        if (dist > detectRadius) return false;
 
-		int rays = rayCount;
-		if (rays < 6) rays = 6;
+        if (!InFov(dx, dy)) return false;
+        if (needLOS && !RaycastTileLOS(camPos, p)) return false;
 
-		for (int i = 0; i <= rays; ++i) {
-			float t = (float)i / (float)rays;     
-			float ang = (center - half) + (2.0f * half * t);
+        return true;
+    }
 
-			Engine::Vector2 dir(std::cos(ang), std::sin(ang));
-			Engine::Vector2 hit = RaycastToWall(camPos, dir, range);
-			m_visionPoly.push_back(hit);
-		}
-	}
+    Engine::Vector2 CCTVCamera::RaycastToWall(Vector2 from, Vector2 dir, float maxDist) const
+    {
+        if (!tile) return Vector2(from.x + dir.x * maxDist, from.y + dir.y * maxDist);
 
+        float step = 1.0f / rayStepPerUnit;
+        float t = 0.0f;
 
-	bool CCTVCamera::IsTileVisible(int tx, int ty) const {
-		if (!tile || !transform) return false;
+        while (t <= maxDist)
+        {
+            float px = from.x + dir.x * t;
+            float py = from.y + dir.y * t;
 
-		Engine::Vector2 camPos(transform->position.x, transform->position.y);
-		Engine::Vector2 p((float)tx + 0.5f, (float)ty + 0.5f);
+            if (!tile->IsWalkable(px, py))
+                return Vector2(px, py);
 
-		float dx = p.x - camPos.x;
-		float dy = p.y - camPos.y;
+            t += step;
+        }
 
-		float range = (maxRange > 0.0f) ? maxRange : detectRadius;
-		float d2 = dx * dx + dy * dy;
-		if (d2 > range * range) return false;
+        return Vector2(from.x + dir.x * maxDist, from.y + dir.y * maxDist);
+    }
 
-		if (!InFov(dx, dy)) return false;
+    void CCTVCamera::BuildVisionPolygon()
+    {
+        m_visionPoly.clear();
+        if (!showVision) return;
 
-		return RaycastTileLOS(camPos, p);
-	}
+        Vector2 camPos(gameObject->transform->position.x, gameObject->transform->position.y);
 
-	void CCTVCamera::Update() {
-		if (!tile || !tf || !transform) return;
+        float baseRot = DegToRad((float)gameObject->transform->rotation);
+        float half = DegToRad(coneWidth * 0.5f);
 
-		BuildVisionPolygon();
+        // fan out rays within cone
+        for (int i = 0; i <= rayCount; ++i)
+        {
+            float t = (rayCount == 0) ? 0.0f : (float)i / (float)rayCount;
+            float ang = (baseRot - half) + (2.0f * half) * t;
 
-		float distanceX = tf->position.x - transform->position.x;
-		float distanceY = tf->position.y - transform->position.y;
+            Vector2 dir(std::cos(ang), std::sin(ang));
+            Vector2 hit = RaycastToWall(camPos, dir, maxRange);
+            m_visionPoly.push_back(hit);
+        }
+    }
 
-		float distSq = distanceX * distanceX + distanceY * distanceY;
-		float range = (maxRange > 0.0f) ? maxRange : detectRadius;
-		if (distSq > range * range) return;
+    void CCTVCamera::Update()
+    {
+       
+        justSpotted = false;
 
-		if (!InFov(distanceX, distanceY)) return;
+        if (!tile || !tf)
+        {
+            isSeeingPlayer = false;
+            return;
+        }
+        
+        // Check if disabled by terminal
+        if (isDisabled)
+        {
+            isSeeingPlayer = false;
+            justSpotted = false;
+            
+            // Update disabled timer
+            if (disabledTimeRemaining > 0.0f)
+            {
+                disabledTimeRemaining -= Engine::Time::deltaTime;
+                
+                if (disabledTimeRemaining <= 0.0f)
+                {
+                    isDisabled = false;
+                    disabledTimeRemaining = 0.0f;
+                    printf("[CCTV %d] Auto-restored after timeout\n", id);
+                }
+            }
+            
+            // Update sprite color for visual feedback
+            if (spriteRenderer)
+            {
+                spriteRenderer->SetColor(Engine::Color(0.5f, 0.5f, 0.5f, 1.0f)); // Gray
+            }
+            else
+            {
+                printf("[CCTV %d] WARNING: spriteRenderer is NULL!\n", id);
+            }
+            
+            return; // Don't run detection logic when disabled
+        }
 
-		if (needLOS && !HasLineOfSighttoPlayer()) return;
+        BuildVisionPolygon();
+        
+        Vector2 camPos(gameObject->transform->position.x, gameObject->transform->position.y);
+        Vector2 playerPos(tf->position.x, tf->position.y);
 
-		RecordLastSeen();
-		std::cout << "\n[CCTV " << id << "] Player spotted at Tile("
-			<< (int)lastSeenTile.x << "," << (int)lastSeenTile.y
-			<< ") World("
-			<< lastSeenWorld.x << "," << lastSeenWorld.y
-			<< ")\n";
-	}
+        float dx = playerPos.x - camPos.x;
+        float dy = playerPos.y - camPos.y;
 
-	void CCTVCamera::RecordLastSeen() {
-		int tileX = (int)tf->position.x;
-		int tileY = (int)tf->position.y;
+        float dist = std::sqrt(dx * dx + dy * dy);
 
-		hasLastSeen = true;
-		lastSeenTile = Engine::Vector2((float)tileX, (float)tileY);
-		lastSeenWorld = Engine::Vector2((float)tileX + 0.5f, (float)tileY + 0.5f);
-	}
+        bool inRange = (dist <= maxRange);
+        bool inDetectRange = (dist <= detectRadius);
+        bool inFov = inRange && InFov(dx, dy);
+        bool los = inFov && HasLineOfSighttoPlayer();
 
-}
+        bool nowSeeing = (inDetectRange && inFov && los);
+
+        if (nowSeeing && !isSeeingPlayer)
+        {
+            justSpotted = true;   // edge trigger
+            // Debug output
+            printf("[CCTV %d] Player spotted at (%.1f, %.1f)!\n", id, playerPos.x, playerPos.y);
+            
+            // Trigger HUD warning
+            if (hud) {
+                hud->ShowCCTVWarning(true);
+            }
+        }
+
+        isSeeingPlayer = nowSeeing;
+
+        if (isSeeingPlayer)
+        {
+            RecordLastSeen();
+        }
+        
+        // Update minimap vision cone
+        if (minimap)
+        {
+            minimap->UpdateCCTVCone(gameObject->transform, coneWidth, maxRange, isSeeingPlayer);
+        }
+        
+        // Update sprite color for visual feedback in 3D world
+        if (spriteRenderer)
+        {
+            if (isSeeingPlayer)
+            {
+                // Red tint when detecting
+                spriteRenderer->SetColor(Engine::Color(1.0f, 0.3f, 0.3f, 1.0f));
+            }
+            else
+            {
+                // White (normal) when idle
+                spriteRenderer->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f));
+            }
+        }
+    }
+
+} // namespace Game

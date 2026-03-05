@@ -1,5 +1,8 @@
 #include "CameraShake.hpp"
 #include "Engine/Core/Transform.hpp"
+#include "Engine/Core/GameObject.hpp"
+#include "Engine/Graphics/Camera.hpp"
+#include "Engine/Core/Time.hpp"
 #include <cstdlib>
 #include <cmath>
 
@@ -12,19 +15,19 @@ namespace Game
 
     void CameraShake::Initialize()
     {
-        // start base at current
-        m_basePos2D.x = transform->position.x;
-        m_basePos2D.y = transform->position.y;
         m_timeLeft = 0.0f;
         m_duration = 0.0f;
         m_intensity = 0.0f;
+        m_basePitch = 0.0f;
     }
 
     void CameraShake::Shake(float duration, float intensity)
     {
-        // base should be "where the player is NOW"
-        m_basePos2D.x = transform->position.x;
-        m_basePos2D.y = transform->position.y;
+        // Get current camera pitch as baseline
+        auto cam = gameObject->GetComponent<Engine::Camera>();
+        if (cam) {
+            m_basePitch = cam->pitch;
+        }
 
         m_duration = duration;
         m_timeLeft = duration;
@@ -33,33 +36,37 @@ namespace Game
 
     void CameraShake::Update()
     {
-        float dt = 0.016f; // replace with Engine::Time::deltaTime if available
+        float dt = Engine::Time::deltaTime;
 
-        // IMPORTANT: when not shaking, DO NOT override movement
+        // Get camera component
+        auto cam = gameObject->GetComponent<Engine::Camera>();
+        if (!cam) return;
+
+        // IMPORTANT: when not shaking, reset to base
         if (m_timeLeft <= 0.0f)
         {
-            // keep base following the real position
-            m_basePos2D.x = transform->position.x;
-            m_basePos2D.y = transform->position.y;
+            // No shake - camera pitch stays at base
             return;
         }
 
         m_timeLeft -= dt;
 
+        // Calculate shake intensity (fades out)
         float t = (m_duration > 0.0f) ? (m_timeLeft / m_duration) : 0.0f;
-        float scale = (t < 0.0f) ? 0.0f : t; // fade out
+        float scale = (t < 0.0f) ? 0.0f : t;
 
-        float ox = RandNeg1To1() * m_intensity * scale;
-        float oy = RandNeg1To1() * m_intensity * scale;
+        // Apply shake to camera pitch ONLY (visual offset, doesn't affect movement)
+        float shakeOffset = RandNeg1To1() * m_intensity * scale * 100.0f; // Multiply by 100 for visible effect
+        cam->pitch = m_basePitch + shakeOffset;
 
-        transform->position.x = m_basePos2D.x + ox;
-        transform->position.y = m_basePos2D.y + oy;
+        // Optionally add small rotation shake
+        float rotShake = RandNeg1To1() * m_intensity * scale * 2.0f;
+        transform->rotation += rotShake;
 
-        // end: snap back once
+        // When shake ends, reset
         if (m_timeLeft <= 0.0f)
         {
-            transform->position.x = m_basePos2D.x;
-            transform->position.y = m_basePos2D.y;
+            cam->pitch = m_basePitch;
         }
     }
 }

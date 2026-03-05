@@ -44,12 +44,15 @@ namespace UI
         // --- Rendering Colors ---
         Engine::Color m_wallColor;       // Color used for wall tiles
         Engine::Color m_floorColor;      // Color used for walkable floor tiles
+        Engine::Color m_doorColor;       // Color used for door tiles (orange/yellow)
         Engine::Color m_playerColor;     // Color for the player icon/dot
         Engine::Color m_backgroundColor; // Background panel color (visible behind tiles)
         Engine::Color m_borderColor;     // Color for the decorative border frame
                       
         Engine::Color m_enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); 
-        Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f); ;
+        Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color m_cctvNormalColor = Engine::Color(0.0f, 1.0f, 0.0f, 0.15f);  // Green when safe (lower opacity for circles)
+        Engine::Color m_cctvAlertColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.25f);   // Red when detecting (lower opacity for circles)
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
@@ -62,6 +65,22 @@ namespace UI
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
         Engine::Sprite* m_cctvSprite = nullptr;
+        
+        // Terminal icons
+        struct TerminalIcon {
+            Engine::Vector2 worldPos;
+            Engine::Sprite* sprite;
+        };
+        std::vector<TerminalIcon> m_terminalIcons;
+        
+        // CCTV vision cone data
+        struct CCTVConeData {
+            Engine::Transform* transform;
+            float coneWidth;      // Not used for circles, kept for compatibility
+            float maxRange;       // Detection radius
+            bool isDetecting;
+        };
+        std::vector<CCTVConeData> m_cctvCones;
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh for simple draws
 
@@ -112,6 +131,17 @@ namespace UI
         void AddCCTVTransform(Engine::Transform* transform);
         void ClearCCTVs();
         void SetCCTVSprites(Engine::Sprite* sprite);
+        
+        // Terminal icon management
+        void AddTerminalIcon(const Engine::Vector2& worldPos, Engine::Sprite* sprite);
+        void ClearTerminalIcons() { m_terminalIcons.clear(); }
+        
+        // CCTV vision cone management
+        void UpdateCCTVCone(Engine::Transform* transform, float coneWidth, float maxRange, bool isDetecting);
+        void SetCCTVConeColor(const Engine::Color& normalColor, const Engine::Color& alertColor) {
+            m_cctvNormalColor = normalColor;
+            m_cctvAlertColor = alertColor;
+        }
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }
         const Engine::Color& GetWallColor() const { return m_wallColor; }
@@ -161,6 +191,12 @@ namespace UI
          * @brief Draw border frame around the minimap
          */
         void DrawBorderFrame(const Rect& mapRect);
+        
+        /**
+         * @brief Render CCTV detection circles on the minimap
+         */
+        void RenderCCTVCones(float mapCenterX, float mapCenterY, float tileSize, 
+                            float playerTileX, float playerTileY, float playerRotation);
     };
 
 } // namespace UI
