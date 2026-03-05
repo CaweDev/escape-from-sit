@@ -582,6 +582,8 @@ namespace Game {
             playerHUD->SetZoneGetter([this](int tx, int ty) { return this->GetZoneId(tx, ty); });
             playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
 
+            pauseMenu = player->AddComponent<PauseMenu>();
+
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
             playerViewPos = playerTf->position;
@@ -985,6 +987,12 @@ namespace Game {
                 Application::Quit();
             }
         }
+        void OnUnload() override
+        {
+
+        }
     };
+
+  
 
 } // namespace Game
