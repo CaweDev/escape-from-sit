@@ -446,7 +446,8 @@ namespace Game {
     }
 
     void MainMenuScene::OnCreditsClicked() {
-        std::cout << "Credits clicked" << std::endl;
+        std::cout << "Credits clicked - Loading credit scene..." << std::endl;
+        SceneManager::LoadWithFade("Credits");
     }
 
     void MainMenuScene::OnQuitClicked() {

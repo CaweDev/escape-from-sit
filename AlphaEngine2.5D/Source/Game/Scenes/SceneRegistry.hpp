@@ -10,6 +10,7 @@
 #include "Game/Scenes/MainMenuScene/MainMenuScene.hpp"
 #include "Game/Scenes/LoadingScene/LoadingScene.hpp"
 #include "Game/Scenes/SplashScene/SplashScene.hpp"
+#include "Game/Scenes/CreditScene/CreditScene.hpp"
 
 namespace Game {
 
@@ -22,6 +23,7 @@ inline InteractionDemoScene interactionDemoScene;
 inline MainMenuScene mainMenuScene;
 inline LoadingScene loadingScene;
 inline SplashScene splashScene;
+inline CreditScene creditScene;
 
 /**
  * @brief Register all game scenes with the SceneManager
@@ -29,6 +31,7 @@ inline SplashScene splashScene;
  */
 inline void RegisterAllScenes() {
 	SceneManager::RegisterScene("SplashScene", &splashScene);
+	SceneManager::RegisterScene("Credits", &creditScene);
     SceneManager::RegisterScene("MainMenu", &mainMenuScene);
     SceneManager::RegisterScene("FPS", &fpsScene);
     SceneManager::RegisterScene("InteractionDemo", &interactionDemoScene);

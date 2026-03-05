@@ -79,6 +79,7 @@
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
@@ -179,6 +180,7 @@
     <!-- Game -->
     <ClInclude Include="Source\Game\FPSController.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
