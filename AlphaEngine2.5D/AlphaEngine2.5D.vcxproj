@@ -87,6 +87,7 @@
     <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
     <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
@@ -234,7 +235,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -242,7 +243,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>

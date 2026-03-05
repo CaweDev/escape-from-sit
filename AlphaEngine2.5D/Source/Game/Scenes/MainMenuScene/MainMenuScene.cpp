@@ -54,11 +54,11 @@ namespace Game {
         enemyShadow = CreateGameObject("EnemyShadow");
         auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
         {
-            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png", 5, 4);  // sprite sheet
-			shadowSheet->AddAnimation("Rolling", 2, 15, 15.f);  // Roll
+            // The rows, cols, and "Rolling" animation are now loaded from Assets/ame.png.meta
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png");
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
-			shadowSprite->Play("Rolling");
+            shadowSprite->Play("Rolling");
         }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
@@ -215,10 +215,10 @@ namespace Game {
         menuAnimComplete = false;
 
         // === Configure confirmation dialog with 9-slice background ===
+        // The slice border { 20.0f, 20.0f, 20.0f, 20.0f } is now loaded from Assets/UI/Sample9SliceBorder.png.meta
         Engine::Texture2D* dialogBg = AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png");
         if (dialogBg)
         {
-            dialogBg->SetSliceBorder({ 20.0f, 20.0f, 20.0f, 20.0f });
             DialogService::SetConfirmationBackground(dialogBg);
         }
     }

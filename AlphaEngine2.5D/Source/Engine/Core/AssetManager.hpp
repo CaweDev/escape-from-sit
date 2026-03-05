@@ -74,6 +74,13 @@ namespace Engine
         static size_t GetTextureCacheSize() { return s_textureCache.size(); }
 
         /**
+         * @brief Get or load a SpriteSheet from file using rows/cols from an optional .meta file
+         * @param filepath Path to the spritesheet image (PNG)
+         * @return Pointer to cached SpriteSheet (owned by AssetManager)
+         */
+        static SpriteSheet* GetSpriteSheet(const std::string& filepath);
+
+        /**
          * @brief Get or load a SpriteSheet from file
          * @param filepath Path to the spritesheet image (PNG)
          * @param rows Number of rows in the spritesheet grid
