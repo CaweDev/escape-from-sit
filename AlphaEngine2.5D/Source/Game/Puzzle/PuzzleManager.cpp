@@ -44,7 +44,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             std::cout << "Book Collected";
             PuzzleManager::booksCollected++;
 
-            PuzzleManager::activeBookText = book.BookText; // Grab the text for this specific book
+            PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
         }
 
@@ -54,7 +54,14 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
 void PuzzleManager::BookDataInit()
 {
-    std::array<std::string,6>BookText = { "Book1","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string,6>BookName = { "Book1","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string, 6> BookLore = {
+        "Day 1: I don't know how I got into this maze.",
+        "Day 3: I hear footsteps echoing in the halls.",
+        "Day 7: The walls seem to be shifting.",
+        "Day 12: I found a strange key.",
+        "Day 20: I think something is hunting me.",
+        "Day ???: Do not look behind you." };
     Engine::Vector3 BookCoord[6] = { {3.5f, 3.5f, 0.0f} ,{9.5f, 37.5f, 0.1f},{105.5f, 38.5f, 0.2f},{9.5f, 30.5f, 0.1f},{9.5f, 40.5f, 0.1f},{9.5f, 45.5f, 0.1f} };
 
     for (int i{}; i < 6; ++i) {
@@ -62,7 +69,8 @@ void PuzzleManager::BookDataInit()
         i,                  // ID
         BookCoord[i],// Position (x, y, z)
         false,              // isCollected  
-        BookText[i] // Lore Text
+        BookName[i],
+        BookLore[i]
             });
     }
 }
