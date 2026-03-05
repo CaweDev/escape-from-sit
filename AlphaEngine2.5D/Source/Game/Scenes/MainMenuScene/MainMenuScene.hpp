@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "UI/ControlsMenu.hpp"
+
 namespace Game {
 
     using namespace Engine;
@@ -32,6 +34,8 @@ namespace Game {
         Text* titleText = nullptr;
         SpriteSheetImage* crosshairImage = nullptr;
         float titlePulseTime = 0.0f;
+
+        ControlsMenu* controlsMenu = nullptr; // <--- The ControlsMenu component
 
         // Menu items
         struct MenuItem {

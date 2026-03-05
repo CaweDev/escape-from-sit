@@ -79,6 +79,7 @@
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
     <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
     <!-- Game -->

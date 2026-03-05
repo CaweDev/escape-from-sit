@@ -77,6 +77,10 @@ namespace Game {
         menuCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
         menuCanvas->SetSortOrder(100);
 
+        // Add ControlsMenu component
+        auto controlsGO = CreateGameObject("ControlsMenu");
+        controlsMenu = controlsGO->AddComponent<ControlsMenu>();
+
         // === Title (centered at top) - starts empty for typewriter effect ===
         titleText = menuCanvas->CreateChild<Text>();
         titleText->name = "MainTitle";
@@ -442,7 +446,10 @@ namespace Game {
     }
 
     void MainMenuScene::OnControlsClicked() {
-        std::cout << "Controls clicked" << std::endl;
+        if (controlsMenu)
+        {
+            controlsMenu->Show();
+        }
     }
 
     void MainMenuScene::OnCreditsClicked() {
