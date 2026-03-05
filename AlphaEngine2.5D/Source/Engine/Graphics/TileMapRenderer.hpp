@@ -66,6 +66,14 @@ namespace Engine {
 	 * into a single mesh, keeping GPU draw calls low.
 	 */
 	class TileMapRenderer : public IRenderer {
+	public:
+		struct TileSprites {
+			Sprite* wall = nullptr;
+			Sprite* ceiling = nullptr;
+			Sprite* floor = nullptr;
+			Sprite* door = nullptr;
+		};
+
 	private:
 		// ---------------------------------------------------------------
 		// Rendering resolution constants for WALLS only.
@@ -128,63 +136,53 @@ namespace Engine {
 		f32 GetSortingKey() const override { return FLT_MAX; }
 
 		// ---------------------------------------------------------------
-		// Sprite assignment — type-indexed (tile type ID → sprite)
+		// Sprite assignment
 		// ---------------------------------------------------------------
 
 		/**
-		 * @brief Assign a wall sprite for a specific tile type ID.
+		 * @brief Assign all sprites for a specific tile type ID.
 		 * @param tileType  Integer tile type returned by TileMap::GetTile().
-		 * @param sprite    Non-owning pointer to a Sprite managed by AssetManager.
 		 */
-		void SetWallSprite(int tileType, Sprite* sprite) { wallSprites[tileType] = sprite; }
-
-		/**
-		 * @brief Assign a ceiling sprite for a specific tile type ID.
-		 *
-		 * Also triggers a CPU-side pixel load via WIC so the framebuffer renderer
-		 * can sample the texture without GPU readback.
-		 *
-		 * @param tileType  Integer tile type (currently only type 1 is rendered).
-		 * @param sprite    Non-owning pointer to a Sprite managed by AssetManager.
-		 */
-		void SetCeilingSprite(int tileType, Sprite* sprite);
-
-		/**
-		 * @brief Assign a floor sprite for a specific tile type ID.
-		 *
-		 * Also triggers a CPU-side pixel load via WIC so the framebuffer renderer
-		 * can sample the texture without GPU readback.
-		 *
-		 * @param tileType  Integer tile type (currently only type 1 is rendered).
-		 * @param sprite    Non-owning pointer to a Sprite managed by AssetManager.
-		 */
-		void SetFloorSprite(int tileType, Sprite* sprite);
+		void SetTileSprites(int tileType, Sprite* wall, Sprite* ceiling, Sprite* floor, Sprite* door = nullptr);
 
 		/** @brief Convenience: sets the default (type 1) wall sprite. */
-		void SetWallSprite(Sprite* sprite) { wallSprites[1] = sprite; }
+		void SetWallSprite(Sprite* sprite) { tileSprites[1].wall = sprite; }
 		/** @brief Convenience: sets the default (type 1) ceiling sprite. */
-		void SetCeilingSprite(Sprite* sprite) { SetCeilingSprite(1, sprite); }
+		void SetCeilingSprite(Sprite* sprite);
 		/** @brief Convenience: sets the default (type 1) floor sprite. */
-		void SetFloorSprite(Sprite* sprite) { SetFloorSprite(1, sprite); }
+		void SetFloorSprite(Sprite* sprite);
+		/** @brief Convenience: sets the default (type 1) door sprite. */
+		void SetDoorSprite(Sprite* sprite) { tileSprites[1].door = sprite; }
 
 		// ---------------------------------------------------------------
-		// Sprite retrieval — type-indexed
+		// Sprite retrieval
 		// ---------------------------------------------------------------
+
+		/** @brief Returns all sprites assigned to @p tileType. */
+		TileSprites GetTileSprites(int tileType) const {
+			auto it = tileSprites.find(tileType);
+			return (it != tileSprites.end()) ? it->second : TileSprites{};
+		}
 
 		/** @brief Returns the wall sprite assigned to @p tileType, or nullptr. */
 		Sprite* GetWallSprite(int tileType) const {
-			auto it = wallSprites.find(tileType);
-			return (it != wallSprites.end()) ? it->second : nullptr;
+			auto it = tileSprites.find(tileType);
+			return (it != tileSprites.end()) ? it->second.wall : nullptr;
 		}
 		/** @brief Returns the ceiling sprite assigned to @p tileType, or nullptr. */
 		Sprite* GetCeilingSprite(int tileType) const {
-			auto it = ceilingSprites.find(tileType);
-			return (it != ceilingSprites.end()) ? it->second : nullptr;
+			auto it = tileSprites.find(tileType);
+			return (it != tileSprites.end()) ? it->second.ceiling : nullptr;
 		}
 		/** @brief Returns the floor sprite assigned to @p tileType, or nullptr. */
 		Sprite* GetFloorSprite(int tileType) const {
-			auto it = floorSprites.find(tileType);
-			return (it != floorSprites.end()) ? it->second : nullptr;
+			auto it = tileSprites.find(tileType);
+			return (it != tileSprites.end()) ? it->second.floor : nullptr;
+		}
+		/** @brief Returns the door sprite assigned to @p tileType, or nullptr. */
+		Sprite* GetDoorSprite(int tileType) const {
+			auto it = tileSprites.find(tileType);
+			return (it != tileSprites.end()) ? it->second.door : nullptr;
 		}
 
 		/** @brief Convenience: returns the default (type 1) wall sprite, or nullptr. */
@@ -193,6 +191,8 @@ namespace Engine {
 		Sprite* GetCeilingSprite() const { return GetCeilingSprite(1); }
 		/** @brief Convenience: returns the default (type 1) floor sprite, or nullptr. */
 		Sprite* GetFloorSprite() const { return GetFloorSprite(1); }
+		/** @brief Convenience: returns the default (type 1) door sprite, or nullptr. */
+		Sprite* GetDoorSprite() const { return GetDoorSprite(1); }
 
 		
 
@@ -206,11 +206,9 @@ namespace Engine {
 		AEGfxVertexList* fullscreenMesh = nullptr;
 
 		// ---------------------------------------------------------------
-		// Sprite maps: tile type ID → Sprite pointer (non-owning)
+		// Sprite map: tile type ID → TileSprites
 		// ---------------------------------------------------------------
-		std::unordered_map<int, Sprite*> wallSprites;
-		std::unordered_map<int, Sprite*> ceilingSprites;
-		std::unordered_map<int, Sprite*> floorSprites;
+		std::unordered_map<int, TileSprites> tileSprites;
 
 		// ---------------------------------------------------------------
 		// DDA raycasting data structures

@@ -1,2 +1,10 @@
-Compilation of sources for art downloaded:
-flashlight_spritesheet.png - https://pixelfranek.itch.io/free-textures-of-light
+---Compilation of sources for art downloaded:---
+
+
+flashlight_spritesheet.png -> https://pixelfranek.itch.io/free-textures-of-light (CC0)
+
+Tilemap Textures:
+s2 Concrete Squares 2 Grey.png (modified)
+Wallpaper_02_White_1.png (modified)
+Concrete_01_White_1.png (modified)
+-> https://flakdeau19.itch.io/pixel-art-texture-pack-256x256 (CC0)

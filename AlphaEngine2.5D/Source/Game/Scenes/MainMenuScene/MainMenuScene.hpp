@@ -62,7 +62,7 @@ namespace Game {
 
         // Parallax
         float baseRotation = 180.0f;
-        float baseHeight = 0.5f;
+        float baseHeight = 0.6f;
 
         // Enemy sighting
         GameObject* enemyShadow = nullptr;
@@ -85,7 +85,6 @@ namespace Game {
         float RandomFloat(float min, float max);
 
         void OnPlayClicked();
-        void OnOptionsClicked();
         void OnControlsClicked();
         void OnCreditsClicked();
         void OnQuitClicked();

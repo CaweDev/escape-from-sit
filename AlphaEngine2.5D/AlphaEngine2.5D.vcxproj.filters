@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Button.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Image.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Panel.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Button.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Image.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Panel.hpp" />

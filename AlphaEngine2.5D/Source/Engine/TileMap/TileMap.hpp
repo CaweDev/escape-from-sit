@@ -26,17 +26,15 @@ class GameObject;
  * Positive value 12 = exit marker (marked as floor, special gameplay handling)
  */
 enum class TileType : int {
-    Floor4 = -4, // Walkable floor variant 4
-    Floor3 = -3, // Walkable floor variant 3
-    Floor2 = -2, // Walkable floor variant 2
-    Floor1 = -1, // Walkable floor variant 1
     Empty = 0,   // Default walkable
     Wall = 1,    // Wall type 1
     Wall2 = 2,   // Wall type 2
     Wall3 = 3,   // Wall type 3
     Wall4 = 4,   // Wall type 4
-    // Special markers (10-12): spawn GameObjects, then tile becomes Empty
-    Door1 = 10   // Door marker (ONLY value 10 spawns Doors)
+    NUM_WALL = 5,
+    // Door marker
+    Door = 10,
+    NUM_DOOR = 11,
 };
 
 /**
@@ -55,7 +53,9 @@ public:
         tiles.resize(w * h, TileType::Empty);
     }
 
-    /** Create map from 2D array (also spawns Door GameObjects for door tiles) */
+    void Initialize() override;
+
+    /** Create map from 2D array */
     void LoadFromArray(const int* data, int w, int h);
 
     /** Get tile at position */
@@ -76,7 +76,7 @@ public:
     /** Check if position is a wall (tile values 1-9 are walls) */
     bool IsWall(int x, int y) const {
         int val = static_cast<int>(GetTile(x, y));
-        return val > 0 && val < 10; // 1-9 are walls, 10+ are door markers
+        return val >= static_cast<int>(TileType::Wall) && val < static_cast<int>(TileType::NUM_WALL); // 1-9 are walls, 10+ are door markers
     }
 
     /** Check if world position is walkable (zero or negative tile values) */
@@ -89,19 +89,19 @@ public:
     /** Check if a tile type is a door marker (ONLY tile value 10 = 'D') */
     static bool IsDoorType(TileType type) {
         int val = static_cast<int>(type);
-        return val == 10; // ONLY doors, not terminals/exits
+        return IsDoorType(val);
     }
     
     /** Check if a tile type is a door marker (by int) (ONLY tile value 10 = 'D') */
     static bool IsDoorType(int type) {
-        return type == 10; // ONLY doors, not terminals/exits
+        return type >= static_cast<int>(TileType::Door) && type < static_cast<int>(TileType::NUM_DOOR);
     }
     
     /** Check if a tile type is a terminal marker */
     static bool IsTerminalMarker(int type) {
         return type == 11; // 'T' in map.txt
     }
-    
+
     /** Check if a tile type is an exit marker */
     static bool IsExitMarker(int type) {
         return type == 12; // 'E' in map.txt
@@ -117,19 +117,24 @@ public:
     const std::vector<Vector2>& GetExitPositions() const { return exitPositions; }
 
 private:
-std::vector<TileType> tiles;
+    bool initialized = false;
+    std::vector<TileType> tiles;
     
-/** Doors spawned from door tiles during LoadFromArray */
-std::vector<Door*> spawnedDoors;
+    /** Doors spawned from door tiles during LoadFromArray */
+    std::vector<Door*> spawnedDoors;
+
+    /** Terminal positions found in map (tile 11) */
+    std::vector<Vector2> terminalPositions;
+        
+    /** Exit positions found in map (tile 12) */
+    std::vector<Vector2> exitPositions;
+
     
-/** Terminal positions found in map (tile 11) */
-std::vector<Vector2> terminalPositions;
-    
-/** Exit positions found in map (tile 12) */
-std::vector<Vector2> exitPositions;
-    
-/** Spawn a door at the given tile position */
-void SpawnDoor(int x, int y, int doorType);
+    /** Spawn all doors present in the tile map array */
+    void SpawnDoors();
+
+    /** Spawn a door at the given tile position */
+    void SpawnDoor(int x, int y, int doorType);
 };
 
 } // namespace Engine

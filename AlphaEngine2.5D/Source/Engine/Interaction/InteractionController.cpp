@@ -5,6 +5,7 @@
 #include "InteractionController.hpp"
 #include "Engine/Graphics/Camera.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
@@ -204,6 +205,54 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
             }
         }
 
+        // Try SpriteSheetRenderer (billboard)
+        if (!isHit) {
+            SpriteSheetRenderer* spriteSheetRenderer = obj->GetComponent<SpriteSheetRenderer>();
+            if (spriteSheetRenderer && spriteSheetRenderer->billboard && spriteSheetRenderer->GetSpriteSheet()) {
+                // Project to screen
+                ProjectionResult proj = ProjectionHelper::ProjectToScreen(
+                    obj->transform->position,
+                    Camera::main->transform->position,
+                    Camera::main->transform->rotation,
+                    Camera::main->fov,
+                    sw, sh
+                );
+                
+                if (proj.isVisible && proj.perpDistance <= interactable->maxDistance) {
+                    // Calculate screen bounds of the sprite
+                    f32 spriteHeight = proj.scale * obj->transform->localScale.y;
+                    f32 spriteWidth = proj.scale * obj->transform->localScale.x;
+                    
+                    // Screen bounds (screenY is at the sprite's bottom)
+                    f32 left = proj.screenX - spriteWidth / 2.0f;
+                    f32 right = proj.screenX + spriteWidth / 2.0f;
+                    f32 bottom = proj.screenY;
+                    f32 top = proj.screenY - spriteHeight;
+                    
+                    // Calculate center of sprite on screen
+                    f32 spriteCenterX = proj.screenX;
+                    f32 spriteCenterY = proj.screenY - spriteHeight / 2.0f;
+                    
+                    if (interactable->hitShape == InteractableHitShape::Ellipse) {
+                        f32 a = spriteWidth / 2.0f;
+                        f32 b = spriteHeight / 2.0f;
+                        f32 dx = screenCenterX - spriteCenterX;
+                        f32 dy = screenCenterY - spriteCenterY;
+                        if ((dx * dx) / (a * a) + (dy * dy) / (b * b) <= 1.0f) {
+                            isHit = true;
+                            perpDistance = proj.perpDistance;
+                        }
+                    } else {
+                        if (screenCenterX >= left && screenCenterX <= right &&
+                            screenCenterY >= top && screenCenterY <= bottom) {
+                            isHit = true;
+                            perpDistance = proj.perpDistance;
+                        }
+                    }
+                }
+            }
+        }
+
         // Try DoorRenderer (axis-aligned segment)
         if (!isHit) {
             DoorRenderer* doorRenderer = obj->GetComponent<DoorRenderer>();
@@ -215,28 +264,46 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
                     f32 dirX = cosf(camAngle);
                     f32 dirY = sinf(camAngle);
 
-                    // Use the door's base tile position for interaction detection
-                    // This allows interaction even when the door is slid open
-                    f32 doorCenterX = static_cast<f32>(door->tileX) + 0.5f;
-                    f32 doorCenterY = static_cast<f32>(door->tileY) + 0.5f;
-                    
-                    // Calculate distance to door center
-                    f32 dx = doorCenterX - camPos.x;
-                    f32 dy = doorCenterY - camPos.y;
-                    f32 distToDoor = sqrtf(dx * dx + dy * dy);
-                    
-                    // Check if we're close enough
-                    if (distToDoor <= interactable->maxDistance) {
-                        // Check if we're looking towards the door (within ~45 degrees)
-                        f32 dotTowardsDoor = (dx * dirX + dy * dirY);
-                        if (dotTowardsDoor > 0) { // Door is in front of us
-                            // Normalize and check angle
-                            f32 normDot = dotTowardsDoor / distToDoor;
-                            if (normDot > 0.7f) { // roughly looking at it
-                                isHit = true;
-                                perpDistance = distToDoor;
+                    // Use exact ray-intersection against the door's closed position.
+                    // This limits interaction strictly within the door's tile horizontally,
+                    // without needing a loose 45 degree angle check.
+                    f32 x1, y1, x2, y2;
+                    if (door->facing == DoorFacing::NorthSouth) {
+                        // Line along X
+                        x1 = static_cast<f32>(door->tileX);
+                        y1 = static_cast<f32>(door->tileY) + 0.5f;
+                        x2 = x1 + 1.0f;
+                        y2 = y1;
+                    } else {
+                        // Line along Y
+                        x1 = static_cast<f32>(door->tileX) + 0.5f;
+                        y1 = static_cast<f32>(door->tileY);
+                        x2 = x1;
+                        y2 = y1 + 1.0f;
+                    }
+
+                    f32 tHit = -1.0f;
+                    if (door->facing == DoorFacing::NorthSouth) {
+                        if (fabsf(dirY) > 0.0001f) {
+                            tHit = (y1 - camPos.y) / dirY;
+                            if (tHit > 0) {
+                                f32 hitX = camPos.x + tHit * dirX;
+                                if (hitX < x1 || hitX > x2) tHit = -1.0f;
                             }
                         }
+                    } else {
+                        if (fabsf(dirX) > 0.0001f) {
+                            tHit = (x1 - camPos.x) / dirX;
+                            if (tHit > 0) {
+                                f32 hitY = camPos.y + tHit * dirY;
+                                if (hitY < y1 || hitY > y2) tHit = -1.0f;
+                            }
+                        }
+                    }
+                    
+                    if (tHit > 0 && tHit <= interactable->maxDistance) {
+                        isHit = true;
+                        perpDistance = tHit; // tHit is exact Euclidean distance as dir is normalized
                     }
                 }
             }

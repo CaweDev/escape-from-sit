@@ -22,6 +22,7 @@
 #include "Game/CCTV/CCTVCamera.hpp"
 #include "Game/CCTV/CCTVTerminal.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Game/Scenes/FPSScene/UI/PauseMenu.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
@@ -79,7 +80,12 @@ namespace Game {
         float   winRadius = 0.6f;
         bool    printedWin = false;
 
-        // End panel
+        std::vector<GameObject*> powerUps;
+        std::vector<float> powerUpBaseZ;
+        float powerUpTime = 0.0f;
+        struct CCTVInfo { Vector3 pos; float rotDeg; };
+        PauseMenu* pauseMenu = nullptr;
+
         UI::Canvas* modalCanvas = nullptr;
         UI::Panel* modalPanel = nullptr;
         UI::Text* modalTitle = nullptr;
@@ -535,9 +541,11 @@ namespace Game {
             renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
             renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
             renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
-            renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
-            renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
-            renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
+
+            renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
+            renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
+            renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/Concrete_01_White_1.png"));
+            renderer->SetDoorSprite(AssetManager::GetSprite("Assets/Tilemap/school_sliding_door.png"));
 
             auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
             tileMapCollider->minHeight = 0.0f;
@@ -573,6 +581,8 @@ namespace Game {
             playerHUD->SetPlayerTransform(playerTf);
             playerHUD->SetZoneGetter([this](int tx, int ty) { return this->GetZoneId(tx, ty); });
             playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
+
+            pauseMenu = player->AddComponent<PauseMenu>();
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -977,6 +987,12 @@ namespace Game {
                 Application::Quit();
             }
         }
+        void OnUnload() override
+        {
+
+        }
     };
+
+  
 
 } // namespace Game

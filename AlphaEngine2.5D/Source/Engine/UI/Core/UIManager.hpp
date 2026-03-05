@@ -36,7 +36,6 @@ namespace UI
         // Input state tracking
         UIElement* m_hoveredElement = nullptr;
         UIElement* m_pressedElement = nullptr;
-        bool m_mouseWasPressed = false;
 
         // Default font
         s8 m_defaultFont = -1;

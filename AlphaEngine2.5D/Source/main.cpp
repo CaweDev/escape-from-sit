@@ -3,6 +3,17 @@
  * @brief Main entry point for the 2.5D Engine
  */
 
+
+#ifdef _WIN32
+extern "C" {
+    // Tell NVIDIA Optimus to use the high-performance GPU
+    __declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+
+    // Tell AMD Switchable Graphics to use the high-performance GPU
+    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+#endif
+
 // Windows includes
 #include <crtdbg.h>
 
@@ -55,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Input::Update();
         
         // Check for exit conditions
-        if (AEInputCheckTriggered(AEVK_ESCAPE) || !AESysDoesWindowExist()) {
+        if (!AESysDoesWindowExist()) {
             Application::Quit();
         }
 

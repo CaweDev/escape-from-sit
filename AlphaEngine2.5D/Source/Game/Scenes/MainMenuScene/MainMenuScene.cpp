@@ -28,9 +28,9 @@ namespace Game {
         tileMap->LoadFromArray(corridorData.data(), CORRIDOR_LENGTH, CORRIDOR_HEIGHT);
 
         auto renderer = world->AddComponent<TileMapRenderer>();
-        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_ceiling.png"));
-        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_floor.png"));
-        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/modern_school_wall.png"));
+        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
+        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
+        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/Concrete_01_White_1.png"));
 
         auto cameraGO = CreateGameObject("Camera");
         auto cam = cameraGO->AddComponent<Camera>();
@@ -117,16 +117,15 @@ namespace Game {
 
         MenuConfig configs[] = {
             { "Play",     3.2f, [this]() { OnPlayClicked(); } },
-            { "Options",  1.8f, [this]() { OnOptionsClicked(); } },
             { "Controls", 1.8f, [this]() { OnControlsClicked(); } },
             { "Credits",  1.8f, [this]() { OnCreditsClicked(); } },
             { "Quit",     1.8f, [this]() { OnQuitClicked(); } }
         };
 
         // Create menu items
-        float yPositions[] = { 0.85f, 0.68f, 0.53f, 0.38f, 0.23f };
+        float yPositions[] = { 0.85f, 0.65f, 0.45f, 0.25f };
 
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 4; ++i) {
             MenuItem item;
 
             item.label = menuPanel->CreateChild<Text>();
@@ -153,7 +152,7 @@ namespace Game {
         }
 
         // Store original text for each item
-        menuItemTexts = { "Play", "Options", "Controls", "Credits", "Quit" };
+        menuItemTexts = { "Play", "Controls", "Credits", "Quit" };
 
         // Select first item (Play)
         selectedIndex = 0;
@@ -440,10 +439,6 @@ namespace Game {
     void MainMenuScene::OnPlayClicked() {
         std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
-    }
-
-    void MainMenuScene::OnOptionsClicked() {
-        std::cout << "Options clicked" << std::endl;
     }
 
     void MainMenuScene::OnControlsClicked() {

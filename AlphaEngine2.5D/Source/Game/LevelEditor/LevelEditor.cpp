@@ -280,7 +280,7 @@ void LevelEditor::HandleMapClick() {
     
     switch (currentMode) {
         case EditorMode::Door:
-            newTile = Engine::TileType::Door1; // Value 10
+            newTile = Engine::TileType::Door; // Value 10
             std::cout << "[LevelEditor] Placed door at (" << hoveredTileX << ", " << hoveredTileY << ") (SPAWNING NOW)\n";
             // SPAWN DOOR IMMEDIATELY
             SpawnDoorAt(hoveredTileX, hoveredTileY);

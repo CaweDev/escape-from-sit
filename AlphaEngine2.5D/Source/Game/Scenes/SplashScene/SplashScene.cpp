@@ -25,16 +25,19 @@ float SplashScene::CANVAS_REF_HEIGHT = 900.f;
 int   SplashScene::CANVAS_SORT_ORDER = 100;
 
 // Logo settings
-float SplashScene::LOGO_WIDTH        = 600.0f;
-float SplashScene::LOGO_HEIGHT       = 200.0f;
 int   SplashScene::LOGO_RENDER_ORDER = 1;
 float SplashScene::LOGO_EXPAND_SCALE = 1.05f;
+
+float SplashScene::LOGO_WIDTH        = 600.0f;
+float SplashScene::LOGO_HEIGHT       = 200.0f;
 const char* SplashScene::LOGO_WHITE_PATH = "Assets/UI/DigiPen_BLACK.png";
-const char* SplashScene::LOGO2_PATH      = "Assets/brocsama.png";
+float SplashScene::LOGO2_WIDTH        = 600.0f;
+float SplashScene::LOGO2_HEIGHT       = 600.0f;
+const char* SplashScene::LOGO2_PATH      = "Assets/xav.jpg";
 
 // Logo colors
 Color SplashScene::LOGO_WHITE_COLOR = Color(1.0f, 1.0f, 1.0f, 1.0f);
-Color SplashScene::LOGO2_COLOR      = Color(1.0f, 0.0f, 0.0f, 1.0f);
+Color SplashScene::LOGO2_COLOR      = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 // Flicker settings
 float SplashScene::FLICKER_DIP_DURATION   = 0.2f;
@@ -93,7 +96,7 @@ void SplashScene::OnLoad() {
     m_logo2->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
     m_logo2->SetPivot({ 0.5f, 0.5f });
     m_logo2->SetAnchoredPosition({ 0.0f, 0.0f });
-    m_logo2->SetSizeDelta({ LOGO_WIDTH, LOGO_HEIGHT });
+    m_logo2->SetSizeDelta({ 600, 600 });
     {
         Texture2D* tex = AssetManager::GetTexture(LOGO2_PATH);
         m_logo2->SetTexture(tex);
@@ -142,7 +145,7 @@ void SplashScene::OnUpdate() {
         float scale = 1.0f + (LOGO_EXPAND_SCALE - 1.0f) * smooth;
 
         m_logo->SetSizeDelta({ LOGO_WIDTH * scale, LOGO_HEIGHT * scale });
-        m_logo2->SetSizeDelta({ LOGO_WIDTH * scale, LOGO_HEIGHT * scale });
+        m_logo2->SetSizeDelta({ LOGO2_WIDTH * scale, LOGO2_HEIGHT * scale });
 
         if (m_phaseTimer >= HOLD_AND_EXPAND_DURATION) {
             AdvancePhase();
