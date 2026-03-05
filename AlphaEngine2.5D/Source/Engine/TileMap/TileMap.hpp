@@ -6,6 +6,7 @@
 #include <vector>
 #include "AEEngine.h"
 #include "../Core/Component.hpp"
+#include "../Math/Vector2.hpp"
 
 namespace Engine {
 
@@ -20,7 +21,9 @@ class GameObject;
  * Negative values = walkable floors with different textures
  * Zero = empty/walkable
  * Positive values 1-9 = walls (not walkable)
- * Positive values 10-13 = door markers (spawns Door, then becomes Empty)
+ * Positive value 10 = door marker (spawns Door, then becomes Empty)
+ * Positive value 11 = terminal marker (spawns CCTVTerminal, then becomes Empty)
+ * Positive value 12 = exit marker (marked as floor, special gameplay handling)
  */
 enum class TileType : int {
     Floor4 = -4, // Walkable floor variant 4
@@ -32,11 +35,8 @@ enum class TileType : int {
     Wall2 = 2,   // Wall type 2
     Wall3 = 3,   // Wall type 3
     Wall4 = 4,   // Wall type 4
-    // Door markers (10-13): spawns Door GameObject, then tile becomes Empty
-    Door1 = 10,
-    Door2 = 11,
-    Door3 = 12,
-    Door4 = 13
+    // Special markers (10-12): spawn GameObjects, then tile becomes Empty
+    Door1 = 10   // Door marker (ONLY value 10 spawns Doors)
 };
 
 /**
@@ -63,13 +63,13 @@ public:
         if (x < 0 || x >= width || y < 0 || y >= height) {
             return TileType::Wall;  // Out of bounds = wall
         }
-        return tiles[(height - 1 - y) * width + x];
+        return tiles[y * width + x];  // Direct indexing - no Y inversion
     }
 
     /** Set tile at position */
     void SetTile(int x, int y, TileType type) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
-            tiles[(height - 1 - y) * width + x] = type;
+            tiles[y * width + x] = type;  // Direct indexing - no Y inversion
         }
     }
 
@@ -86,28 +86,50 @@ public:
         return !IsWall(tileX, tileY);
     }
     
-    /** Check if a tile type is a door marker */
+    /** Check if a tile type is a door marker (ONLY tile value 10 = 'D') */
     static bool IsDoorType(TileType type) {
         int val = static_cast<int>(type);
-        return val >= 10 && val <= 13;
+        return val == 10; // ONLY doors, not terminals/exits
     }
     
-    /** Check if a tile type is a door marker (by int) */
+    /** Check if a tile type is a door marker (by int) (ONLY tile value 10 = 'D') */
     static bool IsDoorType(int type) {
-        return type >= 10 && type <= 13;
+        return type == 10; // ONLY doors, not terminals/exits
+    }
+    
+    /** Check if a tile type is a terminal marker */
+    static bool IsTerminalMarker(int type) {
+        return type == 11; // 'T' in map.txt
+    }
+    
+    /** Check if a tile type is an exit marker */
+    static bool IsExitMarker(int type) {
+        return type == 12; // 'E' in map.txt
     }
     
     /** Get all spawned doors */
     const std::vector<Door*>& GetDoors() const { return spawnedDoors; }
+    
+    /** Get all terminal positions from map */
+    const std::vector<Vector2>& GetTerminalPositions() const { return terminalPositions; }
+    
+    /** Get all exit positions from map */
+    const std::vector<Vector2>& GetExitPositions() const { return exitPositions; }
 
 private:
-    std::vector<TileType> tiles;
+std::vector<TileType> tiles;
     
-    /** Doors spawned from door tiles during LoadFromArray */
-    std::vector<Door*> spawnedDoors;
+/** Doors spawned from door tiles during LoadFromArray */
+std::vector<Door*> spawnedDoors;
     
-    /** Spawn a door at the given tile position */
-    void SpawnDoor(int x, int y, int doorType);
+/** Terminal positions found in map (tile 11) */
+std::vector<Vector2> terminalPositions;
+    
+/** Exit positions found in map (tile 12) */
+std::vector<Vector2> exitPositions;
+    
+/** Spawn a door at the given tile position */
+void SpawnDoor(int x, int y, int doorType);
 };
 
 } // namespace Engine

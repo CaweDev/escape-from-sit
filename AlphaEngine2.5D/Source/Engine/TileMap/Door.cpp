@@ -112,8 +112,8 @@ void Door::Toggle() {
 }
 
 bool Door::IsPassable() const {
-    // Semi-open doors are still collidable for simplicity, or we can use a threshold
-    return openAmount > 0.8f; 
+    // Door is passable when significantly open (>50%)
+    return openAmount > 0.5f;
 }
 
 void Door::UpdateCollider() {
@@ -122,7 +122,19 @@ void Door::UpdateCollider() {
     }
     
     if (collider) {
-        collider->enabled = !this->IsPassable();
+        bool shouldBlock = !this->IsPassable();
+        collider->enabled = shouldBlock;
+        
+        // Debug output only when door state changes (not every frame)
+        static float lastOpenAmount = -1.0f;
+        if (std::abs(openAmount - lastOpenAmount) > 0.1f) {
+            lastOpenAmount = openAmount;
+            // Only log significant changes
+            // printf("[Door] openAmount=%.2f, passable=%s, collider=%s\n", 
+            //        openAmount, 
+            //        IsPassable() ? "YES" : "NO",
+            //        collider->enabled ? "BLOCKING" : "OPEN");
+        }
     }
 }
 

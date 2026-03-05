@@ -8,6 +8,9 @@
 #include "Engine/UI/Core/Canvas.hpp"
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/UI/Specialized/Map.hpp"
+#include "Engine/UI/Specialized/HeatmapOverlay.hpp"
+#include "Engine/UI/Components/Panel.hpp"
+#include "Engine/UI/Components/Text.hpp"
 #include "Engine/TileMap/TileMap.hpp"
 #include <vector>
 #include <functional>
@@ -36,11 +39,50 @@ namespace Game
         UI::Canvas* m_canvas = nullptr;
         UI::Minimap* m_minimap = nullptr;
         UI::Map* m_map = nullptr;
+        UI::HeatmapOverlay* m_heatmapOverlay = nullptr; // Heatmap visualization
+
+        // Recommendation 2: Alert Level UI
+        UI::Panel* m_alertPanel = nullptr;
+        UI::Text* m_alertText = nullptr;
+        UI::Panel* m_alertBar = nullptr;
+        UI::Text* m_zoneInfoText = nullptr;
+
+        // CCTV warning indicator
+        UI::Panel* m_cctvWarningPanel = nullptr;
+        UI::Text* m_cctvWarningText = nullptr;
+        float m_cctvWarningTimer = 0.0f;
+        float m_cctvWarningDuration = 2.0f; // Show warning for 2 seconds
+        
+        // Stamina bar
+        UI::Panel* m_staminaPanel = nullptr;
+        UI::Panel* m_staminaBar = nullptr;
+        UI::Text* m_staminaText = nullptr;
+        
+        // High Score display
+        UI::Panel* m_scorePanel = nullptr;
+        UI::Text* m_highScoreText = nullptr;
+        UI::Text* m_currentTimeText = nullptr;
+        
+        // Guard proximity warning
+        UI::Text* m_proximityText = nullptr;
+        float m_proximityIntensity = 0.0f;
+        
+        // Hack status
+        UI::Text* m_hackStatusText = nullptr;
+        float m_hackStatusTimer = 0.0f;
+        
+        // Zone entry notification
+        UI::Panel* m_zoneEntryPanel = nullptr;
+        UI::Text* m_zoneEntryText = nullptr;
+        float m_zoneEntryTimer = 0.0f;
+        float m_zoneEntryDuration = 3.0f;
+        int m_currentZone = -1; // Track current zone to detect changes
 
         Engine::TileMap* m_tileMap = nullptr;
         Engine::Transform* m_playerTransform = nullptr;
 
         bool m_mapVisible = false;
+        bool m_heatmapVisible = false; // Track heatmap overlay visibility
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
         std::function<int(int, int)> m_zoneGetter;
@@ -89,11 +131,21 @@ namespace Game
          * @brief Toggle the full map visibility
          */
         void ToggleMap();
+        
+        /**
+         * @brief Toggle the heatmap overlay visibility
+         */
+        void ToggleHeatmap();
 
         /**
          * @brief Check if the full map is visible
          */
         bool IsMapVisible() const { return m_mapVisible; }
+        
+        /**
+         * @brief Check if the heatmap overlay is visible
+         */
+        bool IsHeatmapVisible() const { return m_heatmapVisible; }
 
         /**
          * @brief Show the full map
@@ -104,6 +156,22 @@ namespace Game
          * @brief Hide the full map
          */
         void HideMap();
+        
+        /**
+         * @brief Show the heatmap overlay
+         */
+        void ShowHeatmap();
+
+        /**
+         * @brief Hide the heatmap overlay
+         */
+        void HideHeatmap();
+        
+        /**
+         * @brief Set the heatmap data source
+         * @param heatmap Pointer to heatmap (not owned)
+         */
+        void SetHeatmap(class Heatmap* heatmap);
 
         /**
          * @brief Get the minimap element
@@ -131,6 +199,29 @@ namespace Game
 
         void SetMapHeight(f32 height) { m_mapHeight = height; }
         f32 GetMapHeight() const { return m_mapHeight; }
+
+        // Recommendation 2: Alert Level UI Controls
+        void UpdateAlertLevel(int stage, int priorityZone, int guardCount);
+        void SetAlertUIVisible(bool visible);
+        void ShowCCTVWarning(bool show); // Flash warning when spotted by CCTV
+        void SetAlertDetailMode(bool detailed); // Toggle between simple/detailed view
+        
+        // Stamina bar controls
+        void UpdateStamina(float current, float max);
+        
+        // High score controls
+        void UpdateHighScore(float highScore);
+        void UpdateCurrentTime(float currentTime);
+        
+        // Guard proximity warning
+        void UpdateGuardProximity(float nearestDistance);
+        
+        // Hack status feedback
+        void ShowHackStatus(const std::string& message, float duration = 3.0f);
+        
+        // Zone entry notification
+        void CheckZoneChange(int zoneId); // Call this every frame with current zone
+        void ShowZoneEntry(int zoneId); // Show "Entering Zone X" message
 
 
     };
