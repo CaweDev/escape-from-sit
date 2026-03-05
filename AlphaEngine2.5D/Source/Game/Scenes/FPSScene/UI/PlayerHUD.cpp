@@ -129,13 +129,13 @@ namespace Game
         barBg->SetSizeDelta({ 380.0f, 24.0f });
         barBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 1.0f));
 
-        // Alert bar fill
+        // Alert bar fill — point-anchored at bottom-left of barBg, sized explicitly each frame
         m_alertBar = barBg->CreateChild<UI::Panel>();
         m_alertBar->name = "AlertBarFill";
-        m_alertBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 1.0f });
+        m_alertBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_alertBar->SetPivot({ 0.0f, 0.0f });
         m_alertBar->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_alertBar->SetSizeDelta({ 95.0f, 0.0f }); // 25% of 380 = 95
+        m_alertBar->SetSizeDelta({ 95.0f, 24.0f }); // 25% of 380 = 95, height matches barBg
         m_alertBar->SetBackgroundColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f)); // Green
 
         // CCTV Warning Panel (screen border flash)
@@ -534,7 +534,7 @@ namespace Game
         m_zoneInfoText->SetText(subText.c_str());
         
         m_alertBar->SetBackgroundColor(stageColor);
-        m_alertBar->SetSizeDelta({ 380.0f * barFill, 0.0f }); // Update width based on fill percentage
+        m_alertBar->SetSizeDelta({ 380.0f * barFill, 24.0f }); // width = fill%, height matches barBg
     }
 
     void PlayerHUD::SetAlertUIVisible(bool visible)
@@ -714,4 +714,4 @@ namespace Game
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
 
-} // namespace Game} // namespace Game
+} // namespace Game
