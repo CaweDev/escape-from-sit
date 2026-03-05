@@ -160,35 +160,26 @@ namespace Game
         m_cctvWarningText->SetColor(Engine::Color(1.0f, 0.0f, 0.0f, 1.0f));
         m_cctvWarningText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
-        // Stamina Bar (bottom-left corner, SAME approach as minimap)
+        // Stamina Bar (bottom-left corner, above minimap)
         m_staminaPanel = m_canvas->CreateChild<UI::Panel>();
         m_staminaPanel->name = "StaminaPanel";
         m_staminaPanel->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_staminaPanel->SetPivot({ 0.0f, 0.0f });
-        // Position above minimap: margin + minimap height + gap
         m_staminaPanel->SetAnchoredPosition({ m_minimapMargin, m_minimapMargin + m_minimapHeight + 10.0f });
-        m_staminaPanel->SetSizeDelta({ 200.0f, 30.0f });
-        m_staminaPanel->SetBackgroundColor(Engine::Color(0.1f, 0.1f, 0.1f, 0.8f));
-        
-        // Background bar
-        auto* staminaBg = m_staminaPanel->CreateChild<UI::Panel>();
-        staminaBg->name = "StaminaBarBg";
-        staminaBg->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
-        staminaBg->SetPivot({ 0.0f, 0.0f });
-        staminaBg->SetAnchoredPosition({ 3.0f, 3.0f });
-        staminaBg->SetSizeDelta({ -6.0f, -6.0f });
-        staminaBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
-        
-        // Stamina fill bar
-        m_staminaBar = staminaBg->CreateChild<UI::Panel>();
+        m_staminaPanel->SetSizeDelta({ 200.0f, 24.0f });
+        m_staminaPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
+
+        // Stamina fill bar — point-anchored at bottom-left of panel.
+        // Width and height are set explicitly via sizeDelta each frame.
+        m_staminaBar = m_staminaPanel->CreateChild<UI::Panel>();
         m_staminaBar->name = "StaminaBarFill";
-        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_staminaBar->SetPivot({ 0.0f, 0.0f });
         m_staminaBar->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_staminaBar->SetSizeDelta({ 0.0f, 0.0f });
+        m_staminaBar->SetSizeDelta({ 200.0f, 24.0f });
         m_staminaBar->SetBackgroundColor(Engine::Color(0.3f, 0.8f, 1.0f, 0.9f));
-        
-        // Stamina text
+
+        // Stamina text — overlaid on top of the bar, same bounds as panel
         m_staminaText = m_staminaPanel->CreateChild<UI::Text>();
         m_staminaText->name = "StaminaText";
         m_staminaText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
@@ -592,9 +583,10 @@ namespace Game
         if (ratio < 0.0f) ratio = 0.0f;
         if (ratio > 1.0f) ratio = 1.0f;
         
-        // Update bar width by changing the right anchor
-        // Left anchor stays at 0.0, right anchor moves from 0.0 to 1.0 based on ratio
-        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { ratio, 1.0f });
+        // Point anchor at {0,0}: sizeDelta directly sets the absolute width and height.
+        const float panelWidth  = 200.0f;
+        const float panelHeight = 24.0f;
+        m_staminaBar->SetSizeDelta({ panelWidth * ratio, panelHeight });
         
         // Update color based on stamina level
         Engine::Color barColor;
@@ -722,4 +714,4 @@ namespace Game
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
 
-} // namespace Game
+} // namespace Game} // namespace Game

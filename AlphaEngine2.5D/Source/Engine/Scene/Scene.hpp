@@ -68,7 +68,9 @@ public:
 
 protected:
     std::vector<std::unique_ptr<GameObject>> gameObjects;
+    std::vector<std::unique_ptr<GameObject>> pendingGameObjects;
     bool isLoaded = false;
+    bool isUpdating = false;
 };
 
 } // namespace Engine
