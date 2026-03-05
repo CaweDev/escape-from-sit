@@ -29,6 +29,14 @@ namespace Game {
 		// Knockback (set by NPC/Bully)
 		void AddKnockback(const Engine::Vector2& v);
 		Engine::Vector2 ConsumeKnockback();
+		
+		// Game timer and high score
+		float GetGameTime() const { return gameTime; }
+		void UpdateGameTime(float dt) { gameTime += dt; }
+		void ResetGameTime() { gameTime = 0.0f; }
+		
+		float GetHighScore() const { return highScore; }
+		void SetHighScore(float score) { highScore = score; }
 
 		bool isSprinting = false;
 
@@ -40,6 +48,9 @@ namespace Game {
 		float sprintResumeThreshold = 20.0f;
 		float staminaDrainPerSec = 10.0f;
 		float staminaRegenPerSec = 5.0f;
+		
+		float gameTime = 0.0f;
+		float highScore = 999999.0f; // Large number means no record yet
 	};
 
 }

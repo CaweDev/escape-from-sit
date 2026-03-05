@@ -38,6 +38,12 @@ public:
     /** Shape used for hit detection */
     InteractableHitShape hitShape = InteractableHitShape::Rectangle;
     
+    /** Whether interaction requires holding the button */
+    bool requireHold = false;
+    
+    /** Duration in seconds required to hold the button */
+    f32 holdDuration = 1.0f;
+    
     /** Callback when player interacts (optional, for C++ usage) */
     std::function<void()> onInteract;
     

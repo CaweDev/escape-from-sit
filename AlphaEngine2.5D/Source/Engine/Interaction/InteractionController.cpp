@@ -7,6 +7,7 @@
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Core/GameObject.hpp"
+#include "Engine/Core/Time.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Raycasting/ProjectionHelper.hpp"
 #include "Engine/Input/Input.hpp"
@@ -19,6 +20,7 @@
 #include "Engine/Core/AssetManager.hpp"
 #include <cfloat>
 #include <cmath>
+#include <string>
 
 namespace Engine {
 
@@ -63,12 +65,54 @@ void InteractionController::Update() {
     
     // Always refresh the prompt text in case it changed (e.g., door Open/Close)
     if (m_currentTarget && m_prompt) {
-        m_prompt->Show(m_currentTarget->actionText);
+        if (m_currentTarget->requireHold) {
+            // Show hold progress
+            if (m_isHolding) {
+                float progress = (m_currentTarget->holdDuration > 0) ? (m_holdTimer / m_currentTarget->holdDuration) : 0.0f;
+                int percent = static_cast<int>(progress * 100.0f);
+                std::string text = m_currentTarget->actionText + " [" + std::to_string(percent) + "%]";
+                m_prompt->Show(text);
+            } else {
+                m_prompt->Show(m_currentTarget->actionText);
+            }
+        } else {
+            m_prompt->Show(m_currentTarget->actionText);
+        }
     }
     
     // Handle interaction input
-    if (m_currentTarget && Input::GetKeyDown(interactKey)) {
-        m_currentTarget->Interact();
+    if (m_currentTarget) {
+        if (m_currentTarget->requireHold) {
+            // Hold-to-interact mechanic
+            if (Input::GetKey(interactKey)) {
+                if (!m_isHolding) {
+                    m_isHolding = true;
+                    m_holdTimer = 0.0f;
+                }
+                
+                m_holdTimer += Time::deltaTime;
+                
+                if (m_holdTimer >= m_currentTarget->holdDuration) {
+                    // Interaction complete
+                    m_currentTarget->Interact();
+                    m_isHolding = false;
+                    m_holdTimer = 0.0f;
+                }
+            } else {
+                // Key released, reset hold
+                m_isHolding = false;
+                m_holdTimer = 0.0f;
+            }
+        } else {
+            // Instant interaction on key down
+            if (Input::GetKeyDown(interactKey)) {
+                m_currentTarget->Interact();
+            }
+        }
+    } else {
+        // No target, reset hold state
+        m_isHolding = false;
+        m_holdTimer = 0.0f;
     }
 }
 
@@ -211,12 +255,16 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
 }
 
 void InteractionController::SetTarget(Interactable* target) {
-    // Clear highlight on previous target
-    if (m_currentTargetRenderer) {
-        m_currentTargetRenderer->highlighted = false;
-    }
+// Clear highlight on previous target
+if (m_currentTargetRenderer) {
+    m_currentTargetRenderer->highlighted = false;
+}
     
-    m_currentTarget = target;
+// Reset hold state when target changes
+m_isHolding = false;
+m_holdTimer = 0.0f;
+    
+m_currentTarget = target;
     
     if (target) {
         // Set new target renderer - try both SpriteRenderer and DoorRenderer via IRenderer

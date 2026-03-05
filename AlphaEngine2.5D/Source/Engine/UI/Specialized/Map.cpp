@@ -136,7 +136,7 @@ namespace UI
     {
         // Don't render if hidden (visible is a property of UIElement)
         if (!visible) return;
-        std::cout << "[FullMap] enemies=" << m_enemyTransforms.size() << "\n";
+       /* std::cout << "[FullMap] enemies=" << m_enemyTransforms.size() << "\n";*/
         // Get the pixel dimensions of the map UI component
         Rect worldRect = GetWorldRect();
         f32 mapX = worldRect.x;

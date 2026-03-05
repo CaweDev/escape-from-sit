@@ -13,7 +13,7 @@ namespace Game {
         void Shake(float duration, float intensity);
 
     private:
-        Engine::Vector2 m_basePos2D{};
+        float m_basePitch = 0.0f;
         float m_duration = 0.0f;
         float m_timeLeft = 0.0f;
         float m_intensity = 0.0f;
