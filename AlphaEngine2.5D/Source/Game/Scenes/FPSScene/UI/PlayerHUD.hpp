@@ -86,6 +86,15 @@ namespace Game
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
         std::function<int(int, int)> m_zoneGetter;
+
+        //BookCount
+        UI::Panel* m_bookCountPanel = nullptr;
+        UI::Text* m_bookCountText = nullptr;
+
+        //POP UP TEXT
+        UI::Panel* m_popupPanel = nullptr;
+        UI::Text* m_popupText = nullptr;
+
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();

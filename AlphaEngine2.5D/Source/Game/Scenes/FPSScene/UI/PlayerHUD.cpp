@@ -13,6 +13,8 @@
 #include "Engine/Core/Time.hpp"
 #include <iostream>
 #include <cmath>
+#include "Game/Puzzle/PuzzleManager.h"
+#include"Engine/Core/Time.hpp"
 
 namespace Game
 {
@@ -278,6 +280,53 @@ namespace Game
         m_zoneEntryText->SetColor(Engine::Color(0.3f, 1.0f, 1.0f, 1.0f)); // Cyan
         m_zoneEntryText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+
+        //BookCount text Panel
+        m_bookCountPanel = m_canvas->CreateChild<UI::Panel>();
+        m_bookCountPanel->name = "BookCountPanel";
+        m_bookCountPanel->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+        m_bookCountPanel->SetPivot({ 0.0f, 1.0f });
+        m_bookCountPanel->SetAnchoredPosition({ 20.0f, -20.0f });
+        m_bookCountPanel->SetSizeDelta({ 420.0f, 40.0f });
+        m_bookCountPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+
+        // BookCount Text
+        m_bookCountText = m_bookCountPanel->CreateChild<UI::Text>();
+        m_bookCountText->name = "BookCountText";
+        m_bookCountText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
+        m_bookCountText->SetPivot({ 0.5f, 1.0f });
+        m_bookCountText->SetAnchoredPosition({ 0.0f, -5.0f });
+        m_bookCountText->SetSizeDelta({ 0.0f, 25.0f });
+        m_bookCountText->SetText("Books Collected: 0/6");
+        m_bookCountText->SetFontSize(1.6f);
+        m_bookCountText->SetColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f));
+        m_bookCountText->SetAnchor(UI::TextAnchor::MiddleCenter);
+
+
+        //POP UP TEXT
+        // --- POPUP PANEL (Center of Screen) ---
+        m_popupPanel = m_canvas->CreateChild<UI::Panel>();
+        m_popupPanel->name = "PopupPanel";
+        m_popupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Anchor to Dead Center
+        m_popupPanel->SetPivot({ 0.5f, 0.5f });                   // Pivot in Dead Center
+        m_popupPanel->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_popupPanel->SetSizeDelta({ 600.0f, 150.0f });           // Make it wide enough for a sentence
+        m_popupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f)); // Dark background
+        m_popupPanel->visible = false;                            // Hide it by default!
+
+        // --- POPUP TEXT ---
+        m_popupText = m_popupPanel->CreateChild<UI::Text>();
+        m_popupText->name = "PopupText";
+        m_popupText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });  // Stretch text across the whole panel
+        m_popupText->SetPivot({ 0.5f, 0.5f });
+        m_popupText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_popupText->SetSizeDelta({ 0.0f, 0.0f });
+        m_popupText->SetText("");
+        m_popupText->SetFontSize(2.0f);                           // Make it nice and big
+        m_popupText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
+        m_popupText->SetAnchor(UI::TextAnchor::MiddleCenter);
+
+
         // If we have a transform, use it as player transform by default
         if (transform && !m_playerTransform)
         {
@@ -295,7 +344,7 @@ namespace Game
         {
             ToggleMap();
         }
-        
+
         // Toggle heatmap with F2 key
         if (Engine::Input::GetKeyDown(Engine::KeyCode::F2))
         {
@@ -305,7 +354,7 @@ namespace Game
         // Update CCTV warning timer
         if (m_cctvWarningTimer > 0.0f) {
             m_cctvWarningTimer -= Engine::Time::deltaTime;
-            
+
             if (m_cctvWarningTimer <= 0.0f && m_cctvWarningPanel) {
                 m_cctvWarningPanel->visible = false;
             }
@@ -316,28 +365,50 @@ namespace Game
                 m_cctvWarningPanel->SetBackgroundColor(Engine::Color(1.0f, 0.0f, 0.0f, alpha * 0.3f)); // Reduced from 0.8f to 0.3f
             }
         }
-        
+
         // Update hack status timer
         if (m_hackStatusTimer > 0.0f) {
             m_hackStatusTimer -= Engine::Time::deltaTime;
-            
+
             if (m_hackStatusTimer <= 0.0f && m_hackStatusText) {
                 m_hackStatusText->visible = false;
             }
         }
-        
+
         // Update zone entry timer
         if (m_zoneEntryTimer > 0.0f) {
             m_zoneEntryTimer -= Engine::Time::deltaTime;
-            
+
             if (m_zoneEntryTimer <= 0.0f && m_zoneEntryPanel) {
                 m_zoneEntryPanel->visible = false;
             }
         }
-        
+
         // Update proximity warning visibility
         if (m_proximityText) {
             m_proximityText->visible = (m_proximityIntensity > 0.01f);
+        }
+        //Book Collected
+        if (m_bookCountText != nullptr) {
+            std::string countString = "Books Collected: " + std::to_string(PuzzleManager::booksCollected) + " / 6";
+            m_bookCountText->SetText(countString);
+        }
+
+        if (PuzzleManager::popupTimer > 0.0f) {
+
+            // Ensure the panel is visible and the text is updated
+            if (!m_popupPanel->visible) {
+                m_popupPanel->visible = true;
+                m_popupText->SetText(PuzzleManager::activeBookText);
+            }
+
+            // Count down the timer
+            PuzzleManager::popupTimer -= Engine::Time::deltaTime;   
+
+            // If the timer just hit zero, hide the panel!
+            if (PuzzleManager::popupTimer <= 0.0f) {
+                m_popupPanel->visible = false;
+            }
         }
     }
 
