@@ -95,7 +95,7 @@ namespace Game {
         // Load tips from config if not already loaded
         if (m_tips.empty()) {
             TipsConfig config;
-            if (Engine::ConfigManager::ReadConfig("Assets/Config/tips.json", config)) {
+            if (Engine::ConfigManager::ReadConfig("Assets/Config/LoadingScene/tips.json", config)) {
                 m_tips = config.tips;
             }
         }
