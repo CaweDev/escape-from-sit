@@ -65,10 +65,12 @@ const std::vector<GameObject*>& GameObject::GetAllGameObjects() {
 }
 
 void GameObject::InternalUpdate() {
-    if (!active) return;
+    if (!active || isPendingDestruction) return;
     
-    for (auto& comp : components) {
-        if (!comp->enabled) continue;
+    // Use index-based iteration to avoid iterator invalidation
+    for (size_t i = 0; i < components.size(); ++i) {
+        auto& comp = components[i];
+        if (!comp || !comp->enabled) continue;
         
         // Call Start on first frame
         if (!comp->_started) {
@@ -77,40 +79,55 @@ void GameObject::InternalUpdate() {
         }
         
         comp->Update();
+        
+        // Check if destroyed during update
+        if (isPendingDestruction) return;
     }
 }
 
 void GameObject::InternalLateUpdate() {
-    if (!active) return;
+    if (!active || isPendingDestruction) return;
     
-    for (auto& comp : components) {
-        if (comp->enabled) {
+    // Use index-based iteration to avoid iterator invalidation
+    for (size_t i = 0; i < components.size(); ++i) {
+        auto& comp = components[i];
+        if (comp && comp->enabled) {
             comp->LateUpdate();
+            
+            // Check if destroyed during late update
+            if (isPendingDestruction) return;
         }
     }
 }
 
 void GameObject::InternalFixedUpdate() {
-    if (!active) return;
+    if (!active || isPendingDestruction) return;
     
-    for (auto& comp : components) {
-        if (comp->enabled) {
+    // Use index-based iteration to avoid iterator invalidation
+    for (size_t i = 0; i < components.size(); ++i) {
+        auto& comp = components[i];
+        if (comp && comp->enabled) {
             comp->FixedUpdate();
+            
+            // Check if destroyed during fixed update
+            if (isPendingDestruction) return;
         }
     }
 }
 
 void GameObject::InternalRender() {
-    if (!active) return;
+if (!active || isPendingDestruction) return;
     
-    // Find and sort all renderers
-    std::vector<IRenderer*> renderers;
-    for (auto& comp : components) {
-        if (comp->enabled) {
-            auto* renderer = dynamic_cast<IRenderer*>(comp.get());
-            if (renderer) renderers.push_back(renderer);
-        }
+// Find and sort all renderers
+std::vector<IRenderer*> renderers;
+// Use index-based iteration to avoid iterator invalidation
+for (size_t i = 0; i < components.size(); ++i) {
+    auto& comp = components[i];
+    if (comp && comp->enabled) {
+        auto* renderer = dynamic_cast<IRenderer*>(comp.get());
+        if (renderer) renderers.push_back(renderer);
     }
+}
     
     // Sort by sorting key
     std::sort(renderers.begin(), renderers.end(), [](auto* a, auto* b) {

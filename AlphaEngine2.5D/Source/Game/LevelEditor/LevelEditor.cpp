@@ -114,20 +114,50 @@ void LevelEditor::CreateUI() {
     doorButton->onClick = [this]() { SetMode(EditorMode::Door); };
 
     terminalButton = buttonLayout->CreateChild<UI::Button>();
-    terminalButton->SetSizeDelta({120.0f, 0.0f});
-    terminalButton->SetText("Terminal (3)");
-    terminalButton->SetBackgroundColor(Engine::Color(0.2f, 0.5f, 0.8f, 1.0f));
+    terminalButton->SetSizeDelta({100.0f, 0.0f});
+    terminalButton->SetText("Term (3)");
+    terminalButton->SetBackgroundColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f));
     terminalButton->onClick = [this]() { SetMode(EditorMode::Terminal); };
 
     exitButton = buttonLayout->CreateChild<UI::Button>();
-    exitButton->SetSizeDelta({120.0f, 0.0f});
+    exitButton->SetSizeDelta({80.0f, 0.0f});
     exitButton->SetText("Exit (4)");
-    exitButton->SetBackgroundColor(Engine::Color(0.2f, 0.5f, 0.8f, 1.0f));
+    exitButton->SetBackgroundColor(Engine::Color(0.2f, 0.8f, 0.2f, 1.0f));
     exitButton->onClick = [this]() { SetMode(EditorMode::Exit); };
 
+    controlRoomButton = buttonLayout->CreateChild<UI::Button>();
+    controlRoomButton->SetSizeDelta({80.0f, 0.0f});
+    controlRoomButton->SetText("Ctrl (5)");
+    controlRoomButton->SetBackgroundColor(Engine::Color(0.8f, 0.2f, 0.8f, 1.0f));
+    controlRoomButton->onClick = [this]() { SetMode(EditorMode::ControlRoom); };
+
+    greenCardButton = buttonLayout->CreateChild<UI::Button>();
+    greenCardButton->SetSizeDelta({80.0f, 0.0f});
+    greenCardButton->SetText("Grn (6)");
+    greenCardButton->SetBackgroundColor(Engine::Color(0.2f, 0.8f, 0.2f, 1.0f));
+    greenCardButton->onClick = [this]() { SetMode(EditorMode::GreenCard); };
+
+    purpleCardButton = buttonLayout->CreateChild<UI::Button>();
+    purpleCardButton->SetSizeDelta({80.0f, 0.0f});
+    purpleCardButton->SetText("Prp (7)");
+    purpleCardButton->SetBackgroundColor(Engine::Color(0.8f, 0.2f, 0.8f, 1.0f));
+    purpleCardButton->onClick = [this]() { SetMode(EditorMode::PurpleCard); };
+
+    redCardButton = buttonLayout->CreateChild<UI::Button>();
+    redCardButton->SetSizeDelta({80.0f, 0.0f});
+    redCardButton->SetText("Red (8)");
+    redCardButton->SetBackgroundColor(Engine::Color(0.8f, 0.2f, 0.2f, 1.0f));
+    redCardButton->onClick = [this]() { SetMode(EditorMode::RedCard); };
+
+    yellowCardButton = buttonLayout->CreateChild<UI::Button>();
+    yellowCardButton->SetSizeDelta({80.0f, 0.0f});
+    yellowCardButton->SetText("Ylw (9)");
+    yellowCardButton->SetBackgroundColor(Engine::Color(0.8f, 0.8f, 0.2f, 1.0f));
+    yellowCardButton->onClick = [this]() { SetMode(EditorMode::YellowCard); };
+
     eraseButton = buttonLayout->CreateChild<UI::Button>();
-    eraseButton->SetSizeDelta({120.0f, 0.0f});
-    eraseButton->SetText("Delete (5)");
+    eraseButton->SetSizeDelta({80.0f, 0.0f});
+    eraseButton->SetText("Del (0)");
     eraseButton->SetBackgroundColor(Engine::Color(0.8f, 0.3f, 0.3f, 1.0f));
     eraseButton->onClick = [this]() { SetMode(EditorMode::Erase); };
 
@@ -167,10 +197,11 @@ void LevelEditor::CreateUI() {
         "CONTROLS:\n"
         "LMB: Place/Delete\n"
         "RMB: Pan (drag)\n"
-        "Scroll: Zoom\n"
-        "1-5: Select mode\n"
-        "1: BUILD WALLS\n"
-        "5: DELETE any tile\n"
+        "1-9,0: Select mode\n"
+        "1: Wall 2: Door 3: Term\n"
+        "4: Exit 5: Ctrl Room\n"
+        "6: Grn 7: Prp 8: Red 9: Ylw\n"
+        "0: DELETE any tile\n"
         "S: Save map.txt\n"
         "F1: Close editor"
     );
@@ -193,7 +224,12 @@ if (Input::GetKeyDown(KeyCode::Alpha1)) SetMode(EditorMode::Wall);
 if (Input::GetKeyDown(KeyCode::Alpha2)) SetMode(EditorMode::Door);
 if (Input::GetKeyDown(KeyCode::Alpha3)) SetMode(EditorMode::Terminal);
 if (Input::GetKeyDown(KeyCode::Alpha4)) SetMode(EditorMode::Exit);
-if (Input::GetKeyDown(KeyCode::Alpha5)) SetMode(EditorMode::Erase);
+if (Input::GetKeyDown(KeyCode::Alpha5)) SetMode(EditorMode::ControlRoom);
+if (Input::GetKeyDown(KeyCode::Alpha6)) SetMode(EditorMode::GreenCard);
+if (Input::GetKeyDown(KeyCode::Alpha7)) SetMode(EditorMode::PurpleCard);
+if (Input::GetKeyDown(KeyCode::Alpha8)) SetMode(EditorMode::RedCard);
+if (Input::GetKeyDown(KeyCode::Alpha9)) SetMode(EditorMode::YellowCard);
+if (Input::GetKeyDown(KeyCode::Alpha0)) SetMode(EditorMode::Erase);
 
     // Save
     if (Input::GetKeyDown(KeyCode::S)) {
@@ -282,18 +318,36 @@ void LevelEditor::HandleMapClick() {
         case EditorMode::Door:
             newTile = Engine::TileType::Door; // Value 10
             std::cout << "[LevelEditor] Placed door at (" << hoveredTileX << ", " << hoveredTileY << ") (SPAWNING NOW)\n";
-            // SPAWN DOOR IMMEDIATELY
             SpawnDoorAt(hoveredTileX, hoveredTileY);
             break;
         case EditorMode::Terminal:
             newTile = static_cast<Engine::TileType>(11); // Terminal marker
             std::cout << "[LevelEditor] Placed terminal at (" << hoveredTileX << ", " << hoveredTileY << ") (SPAWNING NOW)\n";
-            // SPAWN TERMINAL IMMEDIATELY
             SpawnTerminalAt(hoveredTileX, hoveredTileY);
             break;
         case EditorMode::Exit:
             newTile = static_cast<Engine::TileType>(12); // Exit marker
             std::cout << "[LevelEditor] Placed exit at (" << hoveredTileX << ", " << hoveredTileY << ") (LIVE UPDATE)\n";
+            break;
+        case EditorMode::ControlRoom:
+            newTile = static_cast<Engine::TileType>(13); // Control room door marker
+            std::cout << "[LevelEditor] Placed control room door at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
+            break;
+        case EditorMode::GreenCard:
+            newTile = static_cast<Engine::TileType>(15); // Green card marker (F)
+            std::cout << "[LevelEditor] Placed GREEN access card at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
+            break;
+        case EditorMode::PurpleCard:
+            newTile = static_cast<Engine::TileType>(16); // Purple card marker (G)
+            std::cout << "[LevelEditor] Placed PURPLE access card at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
+            break;
+        case EditorMode::RedCard:
+            newTile = static_cast<Engine::TileType>(17); // Red card marker (H)
+            std::cout << "[LevelEditor] Placed RED access card at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
+            break;
+        case EditorMode::YellowCard:
+            newTile = static_cast<Engine::TileType>(18); // Yellow card marker (J)
+            std::cout << "[LevelEditor] Placed YELLOW access card at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
             break;
         case EditorMode::Wall:
         case EditorMode::Erase:
@@ -342,15 +396,15 @@ bool LevelEditor::IsFloorTile(int x, int y) {
 
 void LevelEditor::SetMode(EditorMode mode) {
     currentMode = mode;
-    const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "Delete"};
+    const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "ControlRoom", "GreenCard", "PurpleCard", "RedCard", "YellowCard", "Delete"};
     std::cout << "[LevelEditor] Mode: " << modeNames[(int)mode] << "\n";
 }
 
 void LevelEditor::UpdateUI() {
-    if (!statusText) return;
+if (!statusText) return;
 
-    const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "Delete"};
-    int zoomPercent = (int)(viewZoom * 100.0f);
+const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "ControlRoom", "GreenCard", "PurpleCard", "RedCard", "YellowCard", "Delete"};
+int zoomPercent = (int)(viewZoom * 100.0f);
     
     // Show actual tile value for debugging
     int currentTileValue = -999;
@@ -380,9 +434,19 @@ void LevelEditor::UpdateUI() {
     doorButton->SetBackgroundColor(currentMode == EditorMode::Door ? 
         Engine::Color(0.4f, 0.7f, 1.0f, 1.0f) : Engine::Color(0.2f, 0.5f, 0.8f, 1.0f));
     terminalButton->SetBackgroundColor(currentMode == EditorMode::Terminal ? 
-        Engine::Color(0.4f, 0.7f, 1.0f, 1.0f) : Engine::Color(0.2f, 0.5f, 0.8f, 1.0f));
+        Engine::Color(1.0f, 1.0f, 0.4f, 1.0f) : Engine::Color(1.0f, 0.8f, 0.2f, 1.0f));
     exitButton->SetBackgroundColor(currentMode == EditorMode::Exit ? 
-        Engine::Color(0.4f, 0.7f, 1.0f, 1.0f) : Engine::Color(0.2f, 0.5f, 0.8f, 1.0f));
+        Engine::Color(0.4f, 1.0f, 0.4f, 1.0f) : Engine::Color(0.2f, 0.8f, 0.2f, 1.0f));
+    controlRoomButton->SetBackgroundColor(currentMode == EditorMode::ControlRoom ? 
+        Engine::Color(1.0f, 0.4f, 1.0f, 1.0f) : Engine::Color(0.8f, 0.2f, 0.8f, 1.0f));
+    greenCardButton->SetBackgroundColor(currentMode == EditorMode::GreenCard ? 
+        Engine::Color(0.4f, 1.0f, 0.4f, 1.0f) : Engine::Color(0.2f, 0.8f, 0.2f, 1.0f));
+    purpleCardButton->SetBackgroundColor(currentMode == EditorMode::PurpleCard ? 
+        Engine::Color(1.0f, 0.4f, 1.0f, 1.0f) : Engine::Color(0.8f, 0.2f, 0.8f, 1.0f));
+    redCardButton->SetBackgroundColor(currentMode == EditorMode::RedCard ? 
+        Engine::Color(1.0f, 0.4f, 0.4f, 1.0f) : Engine::Color(0.8f, 0.2f, 0.2f, 1.0f));
+    yellowCardButton->SetBackgroundColor(currentMode == EditorMode::YellowCard ? 
+        Engine::Color(1.0f, 1.0f, 0.4f, 1.0f) : Engine::Color(0.8f, 0.8f, 0.2f, 1.0f));
     eraseButton->SetBackgroundColor(currentMode == EditorMode::Erase ? 
         Engine::Color(1.0f, 0.5f, 0.5f, 1.0f) : Engine::Color(0.8f, 0.3f, 0.3f, 1.0f));
 }
@@ -443,15 +507,25 @@ void LevelEditor::RenderMap() {
             // Determine color (BRIGHTER COLORS)
             Engine::Color tileColor;
             if (tile == 0) {
-                tileColor = Engine::Color(0.35f, 0.35f, 0.35f, 1.0f); // Floor - medium gray (brighter)
+                tileColor = Engine::Color(0.35f, 0.35f, 0.35f, 1.0f); // Floor - medium gray
             } else if (tile == 1) {
-                tileColor = Engine::Color(0.85f, 0.85f, 0.85f, 1.0f); // Wall - very light gray (brighter)
+                tileColor = Engine::Color(0.85f, 0.85f, 0.85f, 1.0f); // Wall - very light gray
             } else if (tile == 10) {
                 tileColor = Engine::Color(0.4f, 0.8f, 1.0f, 1.0f); // Door - bright blue
             } else if (tile == 11) {
                 tileColor = Engine::Color(1.0f, 0.8f, 0.4f, 1.0f); // Terminal - bright orange
             } else if (tile == 12) {
                 tileColor = Engine::Color(0.4f, 1.0f, 0.4f, 1.0f); // Exit - bright green
+            } else if (tile == 13) {
+                tileColor = Engine::Color(1.0f, 0.4f, 1.0f, 1.0f); // Control room door - magenta
+            } else if (tile == 15) {
+                tileColor = Engine::Color(0.2f, 1.0f, 0.2f, 1.0f); // Green card - bright green
+            } else if (tile == 16) {
+                tileColor = Engine::Color(0.8f, 0.2f, 1.0f, 1.0f); // Purple card - bright purple
+            } else if (tile == 17) {
+                tileColor = Engine::Color(1.0f, 0.2f, 0.2f, 1.0f); // Red card - bright red
+            } else if (tile == 18) {
+                tileColor = Engine::Color(1.0f, 1.0f, 0.2f, 1.0f); // Yellow card - bright yellow
             } else {
                 tileColor = Engine::Color(1.0f, 0.4f, 1.0f, 1.0f); // Other - bright purple
             }
@@ -515,8 +589,11 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
             else if (tile == 10) c = 'D'; // Door
             else if (tile == 11) c = 'T'; // Terminal
             else if (tile == 12) c = 'E'; // Exit
-            else if (tile == 13) c = 'I'; // Interactable
-            else if (tile == 14) c = 'C'; // Control Room
+            else if (tile == 13) c = 'C'; // Control Room Door
+            else if (tile == 15) c = 'F'; // Green Access Card
+            else if (tile == 16) c = 'G'; // Purple Access Card
+            else if (tile == 17) c = 'H'; // Red Access Card
+            else if (tile == 18) c = 'J'; // Yellow Access Card
             else c = '0'; // Fallback
             
             file << c;

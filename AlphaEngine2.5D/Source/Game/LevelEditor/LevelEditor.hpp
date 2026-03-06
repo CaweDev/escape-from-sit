@@ -21,11 +21,16 @@ using namespace Engine;
  * @brief What to place on tiles
  */
 enum class EditorMode {
-    Wall,        // Build walls
-    Door,        // Convert floor to door
-    Terminal,    // Mark terminal location
-    Exit,        // Mark exit location
-    Erase        // Convert back to floor
+    Wall,           // Build walls
+    Door,           // Convert floor to door
+    Terminal,       // Mark terminal location
+    Exit,           // Mark exit location
+    ControlRoom,    // Mark control room door
+    GreenCard,      // Mark green access card spawn
+    PurpleCard,     // Mark purple access card spawn
+    RedCard,        // Mark red access card spawn
+    YellowCard,     // Mark yellow access card spawn
+    Erase           // Convert back to floor
 };
 
 /**
@@ -94,6 +99,11 @@ private:
     UI::Button* doorButton = nullptr;
     UI::Button* terminalButton = nullptr;
     UI::Button* exitButton = nullptr;
+    UI::Button* controlRoomButton = nullptr;
+    UI::Button* greenCardButton = nullptr;
+    UI::Button* purpleCardButton = nullptr;
+    UI::Button* redCardButton = nullptr;
+    UI::Button* yellowCardButton = nullptr;
     UI::Button* eraseButton = nullptr;
     UI::Button* saveButton = nullptr;
     UI::Button* closeButton = nullptr;

@@ -75,6 +75,9 @@
     <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
     <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
+    <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
+    <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
+    <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -170,6 +173,9 @@
     <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
     <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
+    <ClInclude Include="Source\Game\AccessCard\AccessCard.hpp" />
+    <ClInclude Include="Source\Game\ControlRoomDoor\ControlRoomDoor.hpp" />
+    <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
