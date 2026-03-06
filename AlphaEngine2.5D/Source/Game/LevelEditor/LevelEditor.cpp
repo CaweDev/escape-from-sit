@@ -202,6 +202,7 @@ void LevelEditor::CreateUI() {
         "4: Exit 5: Ctrl Room\n"
         "6: Grn 7: Prp 8: Red 9: Ylw\n"
         "0: DELETE any tile\n"
+        "K: Control Room (quick!)\n"
         "S: Save map.txt\n"
         "F1: Close editor"
     );
@@ -230,6 +231,9 @@ if (Input::GetKeyDown(KeyCode::Alpha7)) SetMode(EditorMode::PurpleCard);
 if (Input::GetKeyDown(KeyCode::Alpha8)) SetMode(EditorMode::RedCard);
 if (Input::GetKeyDown(KeyCode::Alpha9)) SetMode(EditorMode::YellowCard);
 if (Input::GetKeyDown(KeyCode::Alpha0)) SetMode(EditorMode::Erase);
+
+// Alternative: Press K for Control Room Door (easier to remember!)
+if (Input::GetKeyDown(KeyCode::K)) SetMode(EditorMode::ControlRoom);
 
     // Save
     if (Input::GetKeyDown(KeyCode::S)) {
@@ -330,7 +334,7 @@ void LevelEditor::HandleMapClick() {
             std::cout << "[LevelEditor] Placed exit at (" << hoveredTileX << ", " << hoveredTileY << ") (LIVE UPDATE)\n";
             break;
         case EditorMode::ControlRoom:
-            newTile = static_cast<Engine::TileType>(13); // Control room door marker
+            newTile = static_cast<Engine::TileType>(20); // Control room door marker (NEW 'K' marker)
             std::cout << "[LevelEditor] Placed control room door at (" << hoveredTileX << ", " << hoveredTileY << ") (RESTART REQUIRED)\n";
             break;
         case EditorMode::GreenCard:
@@ -517,7 +521,9 @@ void LevelEditor::RenderMap() {
             } else if (tile == 12) {
                 tileColor = Engine::Color(0.4f, 1.0f, 0.4f, 1.0f); // Exit - bright green
             } else if (tile == 13) {
-                tileColor = Engine::Color(1.0f, 0.4f, 1.0f, 1.0f); // Control room door - magenta
+                tileColor = Engine::Color(1.0f, 0.4f, 1.0f, 1.0f); // Control room door (old) - magenta
+            } else if (tile == 20) {
+                tileColor = Engine::Color(1.0f, 0.2f, 1.0f, 1.0f); // Control room door (NEW) - bright magenta
             } else if (tile == 15) {
                 tileColor = Engine::Color(0.2f, 1.0f, 0.2f, 1.0f); // Green card - bright green
             } else if (tile == 16) {
@@ -589,7 +595,8 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
             else if (tile == 10) c = 'D'; // Door
             else if (tile == 11) c = 'T'; // Terminal
             else if (tile == 12) c = 'E'; // Exit
-            else if (tile == 13) c = 'C'; // Control Room Door
+            else if (tile == 13) c = 'C'; // Control Room Door (old)
+            else if (tile == 20) c = 'K'; // Control Room Door (NEW!)
             else if (tile == 15) c = 'F'; // Green Access Card
             else if (tile == 16) c = 'G'; // Purple Access Card
             else if (tile == 17) c = 'H'; // Red Access Card

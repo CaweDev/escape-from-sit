@@ -24,6 +24,9 @@ class GameObject;
  * Positive value 10 = door marker (spawns Door, then becomes Empty)
  * Positive value 11 = terminal marker (spawns CCTVTerminal, then becomes Empty)
  * Positive value 12 = exit marker (marked as floor, special gameplay handling)
+ * Positive value 13 = control room door marker (spawns ControlRoomDoor, then becomes Empty)
+ * Positive values 15-18 = access card markers (Green, Purple, Red, Yellow)
+ * Positive value 20 = dedicated control room door tile (easy to place in editor)
  */
 enum class TileType : int {
     Empty = 0,   // Default walkable
@@ -109,7 +112,7 @@ public:
     
     /** Check if a tile type is a control room door marker */
     static bool IsControlRoomDoorMarker(int type) {
-        return type == 13; // 'C' in map.txt (repurposed from 'Interactable')
+        return type == 13 || type == 20; // Both 'C' (old) and 'K' (new) markers
     }
     
     /** Check if a tile type is an access card marker (cards 0-3) */

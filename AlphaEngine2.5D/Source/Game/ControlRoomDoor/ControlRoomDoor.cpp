@@ -6,9 +6,13 @@
 #include "Engine/TileMap/Door.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Core/GameObject.hpp"
+#include "Engine/Input/Input.hpp"
+#include "Engine/Core/Time.hpp"
 #include "Game/Player/Player.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include <iostream>
+#include <algorithm>
+#include <cmath>
 
 namespace Game {
 
@@ -21,9 +25,13 @@ void ControlRoomDoor::Awake() {
     if (door) {
         door->state = Engine::DoorState::Closed;
         door->openAmount = 0.0f;
+        
+        // CRITICAL: Disable Door's own interaction callback!
+        // ControlRoomDoor will handle ALL interactions
+        door->DisableInteraction();
     }
     
-    // Setup interaction
+    // Setup interaction (ControlRoomDoor takes full control)
     SetupInteraction();
 }
 
@@ -31,14 +39,50 @@ void ControlRoomDoor::Update() {
     // Update interaction text based on card collection status
     if (!interactable) return;
     
-    if (HasAllCards()) {
-        // Player has all cards - door can be opened normally
-        if (door) {
-            if (door->state == Engine::DoorState::Closed || door->state == Engine::DoorState::Closing) {
-                interactable->actionText = "Open Control Room";
-            } else {
-                interactable->actionText = "Close";
+    // Handle hold-to-unlock mechanic
+    if (HasAllCards() && door && door->state == Engine::DoorState::Closed) {
+        // Check if player is nearby by finding player and checking distance
+        auto player = Engine::GameObject::Find("Player");
+        bool playerNearby = false;
+        
+        if (player && player->transform) {
+            float dx = player->transform->position.x - transform->position.x;
+            float dy = player->transform->position.y - transform->position.y;
+            float distance = std::sqrt(dx * dx + dy * dy);
+            playerNearby = (distance <= interactable->maxDistance);
+        }
+        
+        bool ePressed = Engine::Input::GetKey(Engine::KeyCode::E);
+        
+        if (playerNearby && ePressed) {
+            isHolding = true;
+            holdProgress += Engine::Time::deltaTime / holdTimeRequired;
+            
+            if (holdProgress >= 1.0f) {
+                // Unlock achieved!
+                door->Toggle();
+                std::cout << "[CONTROL ROOM] Door unlocked! Welcome to Zone " << char('A' + zoneId - 1) << " Control Room.\n";
+                holdProgress = 0.0f;
+                isHolding = false;
             }
+        } else {
+            // Reset progress if not holding
+            isHolding = false;
+            holdProgress = std::max(0.0f, holdProgress - Engine::Time::deltaTime * 2.0f); // Decay faster
+        }
+    }
+    
+    // Update interaction text
+    if (HasAllCards()) {
+        if (door && door->state != Engine::DoorState::Closed) {
+            interactable->actionText = "Close";
+        } else if (isHolding && holdProgress > 0.0f) {
+            int percent = (int)(holdProgress * 100.0f);
+            char buffer[128];
+            snprintf(buffer, sizeof(buffer), "Unlocking... %d%%", percent);
+            interactable->actionText = buffer;
+        } else {
+            interactable->actionText = "Hold E to Unlock Control Room";
         }
     } else {
         // Door is locked - show progress
@@ -72,12 +116,11 @@ void ControlRoomDoor::OnInteract() {
         return;
     }
     
-    // Player has all cards - allow door to function normally
-    door->Toggle();
-    
-    if (door->state == Engine::DoorState::Opening || door->state == Engine::DoorState::Open) {
-        std::cout << "[CONTROL ROOM] Door unlocked! Welcome to Zone " << char('A' + zoneId - 1) << " Control Room.\n";
+    // Allow toggle if door is already open (for closing)
+    if (door->state != Engine::DoorState::Closed) {
+        door->Toggle();
     }
+    // Door opening is handled by hold mechanic in Update()
 }
 
 bool ControlRoomDoor::HasAllCards() const {

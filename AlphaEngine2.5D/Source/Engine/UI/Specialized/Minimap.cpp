@@ -581,12 +581,121 @@ namespace UI
                 Engine::Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow tint for terminals
                 terminal.sprite);
         }
+        
+        // --- Step 6.5: Render Path Waypoints (GTA-style line) ---
+        RenderPathWaypoints(mapCenterX, mapCenterY, tileSize, playerTileX, playerTileY);
 
         // --- Step 7: Draw the decorative frame ---
         DrawBorderFrame(worldRect);
 
         // Render children
         UIElement::Render();
+    }
+    
+    void Minimap::RenderPathWaypoints(float mapCenterX, float mapCenterY, float tileSize,
+                                      float playerTileX, float playerTileY)
+    {
+        if (m_pathWaypoints.empty()) return;
+        
+        // Calculate player rotation for coordinate transformation
+        float playerRotation = m_playerTransform ? m_playerTransform->rotation : 0.0f;
+        float rad = playerRotation * Engine::Mathf::Deg2Rad;
+        float c = Engine::Mathf::Cos(rad);
+        float s = Engine::Mathf::Sin(rad);
+        
+        // Setup rendering
+        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+        
+        AEMtx33 identity;
+        AEMtx33Identity(&identity);
+        AEGfxSetTransform(identity.m);
+        
+        // Draw path as connected line segments
+        AEGfxMeshStart();
+        
+        Engine::Color pathColor(1.0f, 1.0f, 0.0f, 0.8f); // Bright yellow with slight transparency
+        u32 colorU32 = pathColor.ToU32();
+        float lineWidth = tileSize * 0.25f; // Thick line, easy to see
+        
+        for (size_t i = 0; i < m_pathWaypoints.size(); ++i)
+        {
+            // Current waypoint
+            const Engine::Vector2& wp = m_pathWaypoints[i];
+            
+            // Convert to minimap space
+            float dxW = wp.x - playerTileX;
+            float dyW = wp.y - playerTileY;
+            float offX = dxW * tileSize;
+            float offY = dyW * tileSize;
+            float rotatedX = offX * s - offY * c;
+            float rotatedY = offX * c + offY * s;
+            float screenX = mapCenterX + rotatedX;
+            float screenY = mapCenterY + rotatedY;
+            
+            // Draw waypoint marker (small square)
+            float markerSize = tileSize * 0.4f;
+            float halfMarker = markerSize * 0.5f;
+            
+            // Square waypoint marker
+            AEGfxTriAdd(
+                screenX - halfMarker, screenY - halfMarker, colorU32, 0, 0,
+                screenX + halfMarker, screenY - halfMarker, colorU32, 0, 0,
+                screenX - halfMarker, screenY + halfMarker, colorU32, 0, 0
+            );
+            AEGfxTriAdd(
+                screenX + halfMarker, screenY - halfMarker, colorU32, 0, 0,
+                screenX + halfMarker, screenY + halfMarker, colorU32, 0, 0,
+                screenX - halfMarker, screenY + halfMarker, colorU32, 0, 0
+            );
+            
+            // Draw line to next waypoint
+            if (i < m_pathWaypoints.size() - 1)
+            {
+                const Engine::Vector2& nextWp = m_pathWaypoints[i + 1];
+                
+                // Convert next waypoint to minimap space
+                float dxW2 = nextWp.x - playerTileX;
+                float dyW2 = nextWp.y - playerTileY;
+                float offX2 = dxW2 * tileSize;
+                float offY2 = dyW2 * tileSize;
+                float rotatedX2 = offX2 * s - offY2 * c;
+                float rotatedY2 = offX2 * c + offY2 * s;
+                float screenX2 = mapCenterX + rotatedX2;
+                float screenY2 = mapCenterY + rotatedY2;
+                
+                // Draw thick line as a rectangle
+                float dx = screenX2 - screenX;
+                float dy = screenY2 - screenY;
+                float length = Engine::Mathf::Sqrt(dx * dx + dy * dy);
+                if (length > 0.01f)
+                {
+                    float nx = -dy / length;  // Perpendicular (normal)
+                    float ny = dx / length;
+                    
+                    float halfWidth = lineWidth * 0.5f;
+                    
+                    // Line as quad (two triangles)
+                    float x1 = screenX + nx * halfWidth;
+                    float y1 = screenY + ny * halfWidth;
+                    float x2 = screenX - nx * halfWidth;
+                    float y2 = screenY - ny * halfWidth;
+                    float x3 = screenX2 + nx * halfWidth;
+                    float y3 = screenY2 + ny * halfWidth;
+                    float x4 = screenX2 - nx * halfWidth;
+                    float y4 = screenY2 - ny * halfWidth;
+                    
+                    AEGfxTriAdd(x1, y1, colorU32, 0, 0, x2, y2, colorU32, 0, 0, x3, y3, colorU32, 0, 0);
+                    AEGfxTriAdd(x2, y2, colorU32, 0, 0, x4, y4, colorU32, 0, 0, x3, y3, colorU32, 0, 0);
+                }
+            }
+        }
+        
+        AEGfxVertexList* mesh = AEGfxMeshEnd();
+        if (mesh) {
+            AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+            AEGfxMeshFree(mesh);
+        }
     }
 
 } // namespace UI

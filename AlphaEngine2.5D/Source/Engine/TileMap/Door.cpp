@@ -158,6 +158,15 @@ void Door::SetupInteractable(Interactable* interactable, const char* openText, c
     };
 }
 
+void Door::DisableInteraction() {
+    // Clear the interaction callback so Door doesn't respond to interactions
+    // This allows other components (like ControlRoomDoor) to take full control
+    if (m_interactable) {
+        m_interactable->onInteract = nullptr;
+        m_interactable = nullptr;
+    }
+}
+
 void Door::RequestOpen(const void* requester)
 {
     if (!requester) {

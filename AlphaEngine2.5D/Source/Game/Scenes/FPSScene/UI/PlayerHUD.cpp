@@ -921,6 +921,13 @@ namespace Game
         if (cardId < 0 || cardId >= 4) return;
         if (!m_cardsCollected[cardId]) return;
         
+        // Get path renderer reference early for clearing operations
+        auto player = Engine::GameObject::Find("Player");
+        Game::PathRenderer* pathRenderer = nullptr;
+        if (player) {
+            pathRenderer = player->GetComponent<Game::PathRenderer>();
+        }
+        
         // Toggle visibility
         if (m_activePathCardId == cardId && m_pathVisible) {
             // Same card, turn off
@@ -928,17 +935,18 @@ namespace Game
             m_activePathCardId = -1;
             
             // Clear path from renderer
-            auto player = Engine::GameObject::Find("Player");
-            if (player) {
-                auto pathRenderer = player->GetComponent<Game::PathRenderer>();
-                if (pathRenderer) {
-                    pathRenderer->ClearPath();
-                }
+            if (pathRenderer) {
+                pathRenderer->ClearPath();
             }
             
             ShowHackStatus("Path hidden", 2.0f);
         } else {
             // Different card or was off, turn on
+            // IMPORTANT: Clear old path before setting new one
+            if (pathRenderer) {
+                pathRenderer->ClearPath();
+            }
+            
             m_pathVisible = true;
             m_activePathCardId = cardId;
             
@@ -964,7 +972,14 @@ namespace Game
     
     void PlayerHUD::UpdateActivePath()
     {
-        if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) return;
+        if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) {
+            // Clear path from minimap
+            if (m_minimap) {
+                m_minimap->ClearPath();
+            }
+            return;
+        }
+        
         if (!m_playerTransform || !m_tileMap) return;
         
         // Get player's current position
@@ -983,7 +998,17 @@ namespace Game
         
         Engine::Vector2 terminalPos = GetTerminalPosition(targetZoneId);
         
-        // Get or create path renderer
+        // Check if terminal position is valid (not at origin)
+        if (terminalPos.x == 0.0f && terminalPos.y == 0.0f) {
+            std::cout << "[PlayerHUD] ERROR: No terminal position set for Zone " << Game::ZoneIdToLetter(targetZoneId) 
+                      << "! Please add 'T' marker in that zone using Level Editor.\n";
+            m_pathVisible = false;
+            m_activePathCardId = -1;
+            ShowHackStatus("ERROR: No terminal in that zone!", 3.0f);
+            return;
+        }
+        
+        // Get or create path renderer to compute the path
         auto player = Engine::GameObject::Find("Player");
         if (!player) return;
         
@@ -994,8 +1019,13 @@ namespace Game
             pathRenderer->playerTransform = m_playerTransform;
         }
         
-        // Update path from current position to terminal
+        // Compute path using PathRenderer's A* (but don't render in 3D)
         pathRenderer->SetPath(currentPos, terminalPos);
+        
+        // Get the waypoints and display them on the minimap instead!
+        if (m_minimap) {
+            m_minimap->SetPathWaypoints(pathRenderer->pathWaypoints);
+        }
     }
 
 } // namespace Game
