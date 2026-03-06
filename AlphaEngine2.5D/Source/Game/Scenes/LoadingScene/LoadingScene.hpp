@@ -7,6 +7,7 @@
 
 #include "Engine.hpp"
 #include <string>
+#include <vector>
 
 namespace Game {
 
@@ -35,6 +36,10 @@ namespace Game {
         Text*   m_loadingText = nullptr;
         Image*  m_progressBarBg = nullptr;
         Image*  m_progressBarFill = nullptr;
+        Text*   m_tipText = nullptr;
+
+        // Configuration
+        std::vector<std::string> m_tips;
 
         // Animation state
         float m_elapsed = 0.0f;

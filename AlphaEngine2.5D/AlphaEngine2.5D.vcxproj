@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
     <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
+    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp" />
     <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
     <ClCompile Include="Source\Engine\Core\Time.cpp" />
     <ClCompile Include="Source\Engine\Core\Transform.cpp" />
@@ -110,6 +111,7 @@
     <!-- Engine Core -->
     <ClInclude Include="Source\Engine\Core\Application.hpp" />
     <ClInclude Include="Source\Engine\Core\Time.hpp" />
+    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp" />
     <ClInclude Include="Source\Engine\Core\Component.hpp" />
     <ClInclude Include="Source\Engine\Core\Transform.hpp" />
     <ClInclude Include="Source\Engine\Core\GameObject.hpp" />
