@@ -194,6 +194,12 @@ namespace Engine {
 		/** @brief Convenience: returns the default (type 1) door sprite, or nullptr. */
 		Sprite* GetDoorSprite() const { return GetDoorSprite(1); }
 
+		// Path overlay support - highlights tiles on the floor
+		void SetPathTiles(const std::vector<Vector2>& waypoints) { pathWaypoints = waypoints; }
+		void ClearPathTiles() { pathWaypoints.clear(); }
+
+		
+
 		
 
 	private:
@@ -303,6 +309,9 @@ namespace Engine {
 		int fbWidth  = 0;
 		/** Current framebuffer height in pixels (= screenHeight × fbScale). */
 		int fbHeight = 0;
+		
+		// Path waypoints for floor overlay
+		std::vector<Vector2> pathWaypoints;
 
 		// ---------------------------------------------------------------
 		// Private methods

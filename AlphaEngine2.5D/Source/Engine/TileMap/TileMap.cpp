@@ -20,37 +20,70 @@ void TileMap::Initialize()
 }
 
 void TileMap::LoadFromArray(const int* data, int w, int h) {
-	width = w;
-	height = h;
-	tiles.resize(w * h);
-
-	// Clear any previously spawned doors and markers
-	terminalPositions.clear();
-	exitPositions.clear();
-
-	// First pass: load all tiles (direct copy - no inversion)
-	for (int i = 0; i < w * h; ++i) {
-		tiles[i] = static_cast<TileType>(data[i]);
-	}
-
-	// Second pass: collect special markers
-	for (int y = 0; y < h; ++y) {
-		for (int x = 0; x < w; ++x) {
-			int index = y * w + x;
-			int tileValue = static_cast<int>(tiles[index]);
-
-			if (IsTerminalMarker(tileValue)) {
-				terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
-				tiles[index] = TileType::Empty;
-				printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
-			}
-			else if (IsExitMarker(tileValue)) {
-				exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
-				tiles[index] = TileType::Empty;
-				printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
-			}
-		}
-	}
+    width = w;
+    height = h;
+    tiles.resize(w * h);
+    
+    // Clear any previously spawned doors and markers
+    spawnedDoors.clear();
+    terminalPositions.clear();
+    exitPositions.clear();
+    controlRoomDoorPositions.clear();
+    accessCardPositions.clear();
+    
+    // First pass: load all tiles (direct copy - no inversion)
+    for (int i = 0; i < w * h; ++i) {
+        tiles[i] = static_cast<TileType>(data[i]);
+    }
+    
+    // Second pass: spawn doors and collect special markers
+    for (int y = 0; y < h; ++y) {
+        for (int x = 0; x < w; ++x) {
+            int index = y * w + x;  // Direct indexing - no Y inversion
+            int tileValue = static_cast<int>(tiles[index]);
+            
+          	if (IsTerminalMarker(tileValue)) {
+                // Store terminal position (center of tile)
+                terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace terminal marker with floor
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
+            }
+            else if (IsExitMarker(tileValue)) {
+                // Store exit position (center of tile)
+                exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace exit marker with floor
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
+            }
+            else if (IsControlRoomDoorMarker(tileValue)) {
+                // Store control room door position (center of tile)
+                controlRoomDoorPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace marker with floor (door will be spawned by FPSScene)
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
+            }
+            else {
+                // Check for access card markers
+                int cardId = -1;
+                if (IsAccessCardMarker(tileValue, cardId)) {
+                    // Store access card spawn position with card ID
+                    accessCardPositions.push_back(std::make_pair(
+                        Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f),
+                        cardId
+                    ));
+                    // Replace marker with floor (card will be spawned by FPSScene)
+                    tiles[index] = TileType::Empty;
+                    const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+                    printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);
+                }
+            }
+        }
+    }
+    
+    printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits, %d control room doors, %d access cards\n", 
+           w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size(),
+           (int)controlRoomDoorPositions.size(), (int)accessCardPositions.size());
 
 	if (initialized) {
 		SpawnDoors();

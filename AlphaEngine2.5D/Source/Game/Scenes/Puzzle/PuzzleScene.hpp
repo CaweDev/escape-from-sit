@@ -15,6 +15,8 @@
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
+#include "Engine/UI/Components/Text.hpp"
+#include "Engine/UI/Core/UIManager.hpp"
 
 namespace Game {
 
@@ -29,6 +31,9 @@ public:
     PuzzleScene() : Scene("PuzzleScene") {}
 
     FPSController* playerController = nullptr;
+    UI::Text* bookCountText = nullptr;
+    UI::Canvas* hudCanvas = nullptr;
+    int lastBookCount = -1;
 
     void OnLoad() override {
         // Define a simple maze level
@@ -96,6 +101,25 @@ public:
         player->transform->position = Vector2(1.5f, 1.5f);
         player->transform->rotation = 0.0f;
         
+
+        // Book Count UI: create a Canvas and add the Text as a child so the UIManager renders it
+        hudCanvas = UI::UIManager::GetInstance()->CreateCanvas();
+        hudCanvas->SetReferenceResolution(1280.0f, 720.0f);
+        hudCanvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
+        hudCanvas->SetSortOrder(100);
+
+        bookCountText = hudCanvas->CreateChild<UI::Text>();
+        bookCountText->name = "BookCountText";
+        bookCountText->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f }); // top-left anchor
+        bookCountText->SetPivot({ 0.0f, 1.0f });                   // pivot at top-left
+        bookCountText->SetAnchoredPosition({ 10.0f, -10.0f });     // 10px from top-left
+        bookCountText->SetSizeDelta({ 0.0f, 0.0f });
+        bookCountText->SetText("Books Collected: 0 / 6");
+        bookCountText->SetFontSize(1.2f);
+        bookCountText->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+        bookCountText->SetAnchor(UI::TextAnchor::UpperLeft);
+        bookCountText->SetRenderOrder(1000);
+
         PuzzleManager::BookDataInit();
         PuzzleManager::Init();
         
@@ -103,6 +127,19 @@ public:
     
     void OnUpdate() override {
         // Physics and rendering handled by components
+        if (PuzzleManager::booksCollected != lastBookCount) {
+
+            if (bookCountText != nullptr) {
+                // Construct the string
+                std::string uiString = "Books Collected: " + std::to_string(PuzzleManager::booksCollected) + " / 6";
+
+                // Pass it to your setter
+                bookCountText->SetText(uiString);
+            }
+
+            // Save the current count so we don't run this code again until the next book
+            lastBookCount = PuzzleManager::booksCollected;
+        }
     }
 };
 

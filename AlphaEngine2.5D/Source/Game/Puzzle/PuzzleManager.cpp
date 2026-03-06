@@ -4,9 +4,10 @@
 
 using namespace Engine;
 std::vector<Book> PuzzleManager::allBooks = {};
+int PuzzleManager::booksCollected = 0;
 
-
-
+std::string PuzzleManager::activeBookText = "";
+float PuzzleManager::popupTimer = 0.0f;
 
 void PuzzleManager::CreatePuzzleObject(Book book)
 {
@@ -36,12 +37,15 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     auto bookInteract = bookObj->AddComponent<Interactable>();
     bookInteract->actionText = "Pick up book";
     bookInteract->maxDistance = 2.5f;
-    bookInteract->onInteract = [bookPuzzleObj, bookObj]() {
+    bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
             bookObj->active = false;
             std::cout << "Book Collected";
+            PuzzleManager::booksCollected++;
 
+            PuzzleManager::activeBookText = book.BookText; // Grab the text for this specific book
+            PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
         }
 
         };

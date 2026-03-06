@@ -20,7 +20,6 @@ public:
 	Book Reference;
 	void Update() override;
 	bool isReading;
-
 };
 
 

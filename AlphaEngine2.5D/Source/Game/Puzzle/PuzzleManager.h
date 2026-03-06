@@ -10,6 +10,9 @@ public:
 	static std::vector<Book>Books;
 	static void Init();
 	static void FreeManager();
+	static int booksCollected;
+	static std::string activeBookText;
+	static float popupTimer;
 
 
 };
