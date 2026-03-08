@@ -12,7 +12,6 @@
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include <iostream>
 #include <algorithm>
-#include <cmath>
 
 namespace Game {
 
@@ -68,7 +67,7 @@ void ControlRoomDoor::Update() {
         } else {
             // Reset progress if not holding
             isHolding = false;
-            holdProgress = std::max(0.0f, holdProgress - Engine::Time::deltaTime * 2.0f); // Decay faster
+            holdProgress = Engine::Mathf::Max(0.0f, holdProgress - Engine::Time::deltaTime * 2.0f); // Decay faster
         }
     }
     
