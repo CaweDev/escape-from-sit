@@ -23,7 +23,7 @@ namespace UI
         // 9-slice rendering path
         if (m_imageType == ImageType::Sliced && m_texture && m_texture->IsLoaded())
         {
-            NineSliceRenderer::Draw(worldRect, m_texture, m_color);
+            NineSliceRenderer::Draw(worldRect, m_texture, m_color, m_pixelsPerUnitMultiplier);
             // Render children
             UIElement::Render();
             return;

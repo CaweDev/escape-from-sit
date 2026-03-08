@@ -213,14 +213,6 @@ namespace Game {
         titleComplete = false;
         menuAnimTime = 0.0f;
         menuAnimComplete = false;
-
-        // === Configure confirmation dialog with 9-slice background ===
-        // The slice border { 20.0f, 20.0f, 20.0f, 20.0f } is now loaded from Assets/UI/Sample9SliceBorder.png.meta
-        Engine::Texture2D* dialogBg = AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png");
-        if (dialogBg)
-        {
-            DialogService::SetConfirmationBackground(dialogBg);
-        }
     }
 
     void MainMenuScene::UpdateMenuVisuals() {

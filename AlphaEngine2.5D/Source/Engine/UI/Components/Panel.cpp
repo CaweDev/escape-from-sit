@@ -32,7 +32,7 @@ namespace UI
     void Panel::SetBackgroundColor(const Engine::Color& color)
     {
         EnsureBackground();
-        m_background->SetTexture(nullptr);
+        //m_background->SetTexture(nullptr);
         m_background->SetColor(color);
     }
 
@@ -40,7 +40,6 @@ namespace UI
     {
         EnsureBackground();
         m_background->SetTexture(texture);
-        m_background->SetColor(Engine::Color::white());
     }
 
     void Panel::ClearBackground()

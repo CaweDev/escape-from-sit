@@ -8,11 +8,11 @@ namespace Game
         const Engine::Color kOverlayColor   { 0.0f,  0.0f,  0.0f,  0.85f };
         const Engine::Color kTitleColor     { 0.8f,  0.15f, 0.10f, 1.0f };
         
-        const Engine::Color kBtnNormal      { 0.12f, 0.05f, 0.05f, 0.9f };
-        const Engine::Color kBtnHighlighted { 0.22f, 0.08f, 0.08f, 1.0f };
+        const Engine::Color kBtnNormal      { 0.55f, 0.05f, 0.05f, 1.0f };
+        const Engine::Color kBtnHighlighted { 0.75f, 0.08f, 0.08f, 1.0f };
         const Engine::Color kBtnPressed     { 0.30f, 0.10f, 0.10f, 1.0f };
 
-        const Engine::Color kTextNormal     { 0.6f,  0.6f,  0.6f,  1.0f };
+        const Engine::Color kTextNormal     { 0.9f,  0.9f,  0.9f,  1.0f };
         const Engine::Color kTextSelected   { 1.0f,  1.0f,  1.0f,  1.0f };
     }
 
@@ -132,7 +132,9 @@ namespace Game
         m_panelImage->SetAnchoredPosition({ 0.0f, 0.0f });
         m_panelImage->SetSizeDelta({ 800.0f, 600.0f }); // Adjust size as needed
         m_panelImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
-		m_panelImage->SetColor({ 1.0f, 1.0f, 1.0f, 0.75f }); // Slightly transparent to show overlay tint
+		m_panelImage->SetImageType(UI::ImageType::Sliced);
+		m_panelImage->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
+		m_panelImage->SetColor({ 0.2f, 0.2f, 0.2f, 1.f }); // Slightly transparent to show overlay tint
 
         // Controls Image
         m_controlsImage = m_panelImage->CreateChild<UI::Image>();
@@ -146,10 +148,13 @@ namespace Game
         // Back Button
         m_backBtn = m_panelImage->CreateChild<UI::Button>();
         m_backBtn->name = "Back";
-        m_backBtn->SetAnchors({ 0.5f, 0.1f }, { 0.5f, 0.1f });
+        m_backBtn->SetAnchors({ 0.5f, 0.15f }, { 0.5f, 0.15f });
         m_backBtn->SetPivot({ 0.5f, 0.5f });
         m_backBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_backBtn->SetSizeDelta({ 240.0f, 50.0f });
+        m_backBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+        m_backBtn->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_backBtn->GetBackground()->SetPixelsPerUnitMultiplier(1.0f); // Make the 9-slice borders thicker
         
         UI::ColorBlock btnColors;
         btnColors.normalColor      = kBtnNormal;
