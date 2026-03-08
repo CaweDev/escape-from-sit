@@ -1,0 +1,13 @@
+{
+    "rows": 2,
+    "cols": 2,
+    "animations": [
+        {
+            "name": "Show",
+            "startFrame": 0,
+            "frameCount": 4,
+            "fps": 10.0,
+            "loop": true
+        }
+    ]
+}

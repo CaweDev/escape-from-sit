@@ -81,6 +81,7 @@
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />

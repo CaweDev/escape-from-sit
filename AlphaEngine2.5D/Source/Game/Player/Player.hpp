@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Engine/Core/Component.hpp"
-#include "Engine/Math/Vector2.hpp"
+#include "Engine.hpp"
 namespace Game {
 
 	enum class PlayerState {

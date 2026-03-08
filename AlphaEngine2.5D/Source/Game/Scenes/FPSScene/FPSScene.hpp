@@ -23,6 +23,7 @@
 #include "Game/CCTV/CCTVTerminal.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Scenes/FPSScene/UI/PauseMenu.hpp"
+#include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
@@ -588,6 +589,7 @@ namespace Game {
             playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
 
             pauseMenu = player->AddComponent<PauseMenu>();
+            player->AddComponent<Hands67>();
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;

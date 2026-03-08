@@ -1,9 +1,18 @@
 #include "Player.hpp"
-#include "Engine/Math/Vector2.hpp"
+#include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 namespace Game {
 	void Player::Catch()
 	{
-		state = PlayerState::Caught;
+		bool immune = false;
+		{
+			Hands67* hands = gameObject->GetComponent<Hands67>();
+			if (hands->IsVisible()) {
+				immune = true;
+			}
+		}
+		if (!immune) {
+			state = PlayerState::Caught;
+		}
 	}
 
 	void Player::Win()
@@ -13,6 +22,8 @@ namespace Game {
 
 	bool Player::IsCaught() const
 	{
+		
+	
 		return state == PlayerState::Caught;
 	}
 
