@@ -22,8 +22,6 @@ namespace Game {
 
 	bool Player::IsCaught() const
 	{
-		
-	
 		return state == PlayerState::Caught;
 	}
 
