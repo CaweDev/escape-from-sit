@@ -61,6 +61,11 @@ namespace UI
                    public IPointerClickHandler
     {
     private:
+        static constexpr float kHighlightMultiplier     = 1.5f;
+        static constexpr float kPressedMultiplier       = 0.8f;
+        static constexpr float kDisabledColorMultiplier = 0.5f;
+        static constexpr float kDisabledAlphaMultiplier = 0.5f;
+
         Image* m_targetGraphic = nullptr;  // Owned background image
         Text* m_label = nullptr;           // Owned label text
         
@@ -137,7 +142,7 @@ namespace UI
         /**
          * @brief Get the background image
          */
-        Image* GetTargetGraphic() const { return m_targetGraphic; }
+        Image* GetBackground() const { return m_targetGraphic; }
 
         /**
          * @brief Get the label text component

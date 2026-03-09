@@ -10,7 +10,8 @@ namespace UI
 {
     void NineSliceRenderer::Draw(const Rect& worldRect,
                                   Engine::Texture2D* texture,
-                                  const Engine::Color& color)
+                                  const Engine::Color& color,
+                                  f32 borderScale)
     {
         if (!texture || !texture->IsLoaded()) return;
 
@@ -27,11 +28,11 @@ namespace UI
         f32 vBottom = border.bottom / (f32)texH;
 
         // --- Convert pixel borders to world-space sizes ---
-        // Scale borders proportionally to how the texture maps onto the rect
-        f32 worldBorderLeft   = border.left   * (worldRect.width / (f32)texW);
-        f32 worldBorderRight  = border.right  * (worldRect.width / (f32)texW);
-        f32 worldBorderTop    = border.top    * (worldRect.height / (f32)texH);
-        f32 worldBorderBottom = border.bottom * (worldRect.height / (f32)texH);
+        // Use fixed pixel sizes from the asset meta, scaled by borderScale
+        f32 worldBorderLeft   = border.left   * borderScale;
+        f32 worldBorderRight  = border.right  * borderScale;
+        f32 worldBorderTop    = border.top    * borderScale;
+        f32 worldBorderBottom = border.bottom * borderScale;
 
         // Clamp borders if they exceed the rect size
         f32 totalHBorder = worldBorderLeft + worldBorderRight;

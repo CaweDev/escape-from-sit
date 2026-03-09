@@ -20,14 +20,7 @@ void TileMap::Initialize()
 }
 
 void TileMap::LoadFromArray(const int* data, int w, int h) {
-	width = w;
-	height = h;
-	tiles.resize(w * h);
-
-	for (int i = 0; i < w * h; ++i) {
-		tiles[i] = static_cast<TileType>(data[i]);
-	}
-     width = w;
+    width = w;
     height = h;
     tiles.resize(w * h);
     
@@ -35,6 +28,8 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
     spawnedDoors.clear();
     terminalPositions.clear();
     exitPositions.clear();
+    controlRoomDoorPositions.clear();
+    accessCardPositions.clear();
     
     // First pass: load all tiles (direct copy - no inversion)
     for (int i = 0; i < w * h; ++i) {
@@ -47,13 +42,7 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
             int index = y * w + x;  // Direct indexing - no Y inversion
             int tileValue = static_cast<int>(tiles[index]);
             
-            if (IsDoorType(tileValue)) {
-                if (initialized)
-                    SpawnDoor(x, y, tileValue);
-                // Replace door tile with empty (door handles itself now)
-                tiles[index] = TileType::Empty;
-            }
-            else if (IsTerminalMarker(tileValue)) {
+          	if (IsTerminalMarker(tileValue)) {
                 // Store terminal position (center of tile)
                 terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace terminal marker with floor
@@ -67,15 +56,41 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                 tiles[index] = TileType::Empty;
                 printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
             }
+            else if (IsControlRoomDoorMarker(tileValue)) {
+                // Store control room door position (center of tile)
+                controlRoomDoorPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
+                // Replace marker with floor (door will be spawned by FPSScene)
+                tiles[index] = TileType::Empty;
+                printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
+            }
+            else {
+                // Check for access card markers
+                int cardId = -1;
+                if (IsAccessCardMarker(tileValue, cardId)) {
+                    // Store access card spawn position with card ID
+                    accessCardPositions.push_back(std::make_pair(
+                        Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f),
+                        cardId
+                    ));
+                    // Replace marker with floor (card will be spawned by FPSScene)
+                    tiles[index] = TileType::Empty;
+                    const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+                    printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);
+                }
+            }
         }
     }
     
-    printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits\n", 
-           w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());
+    printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits, %d control room doors, %d access cards\n", 
+           w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size(),
+           (int)controlRoomDoorPositions.size(), (int)accessCardPositions.size());
 
 	if (initialized) {
 		SpawnDoors();
 	}
+
+	printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits\n",
+		w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());
 }
 
 void TileMap::SpawnDoors() {
@@ -89,7 +104,7 @@ void TileMap::SpawnDoors() {
 
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			int index = (height - 1 - y) * width + x;
+			int index = y * width + x;
 			int tileValue = static_cast<int>(tiles[index]);
 
 			if (IsDoorType(tileValue)) {
@@ -99,7 +114,7 @@ void TileMap::SpawnDoors() {
 			}
 		}
 	}
-   
+
 }
 
 void TileMap::SpawnDoor(int x, int y, int doorType) {

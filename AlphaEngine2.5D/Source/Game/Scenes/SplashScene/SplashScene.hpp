@@ -42,6 +42,7 @@ private:
     Panel*  m_background = nullptr;
     Image*  m_logo = nullptr;
     Image*  m_logo2 = nullptr;
+    Image*  m_ccText = nullptr;
 
     // State
     Phase m_phase = Phase::FadeIn;
@@ -68,6 +69,13 @@ private:
     static float LOGO2_WIDTH;
     static float LOGO_HEIGHT;
     static const char* LOGO2_PATH;
+
+    // CC text settings
+    static const char* CC_TEXT_PATH;
+    static float CC_TEXT_WIDTH;
+    static float CC_TEXT_HEIGHT;
+    static int   CC_TEXT_RENDER_ORDER;
+    static float CC_TEXT_BOTTOM_MARGIN;
 
     // Logo colors
     static Color LOGO_WHITE_COLOR;

@@ -23,6 +23,7 @@
 #include "Game/CCTV/CCTVTerminal.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Scenes/FPSScene/UI/PauseMenu.hpp"
+#include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
@@ -32,6 +33,9 @@
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
 #include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/LevelEditor/LevelEditor.hpp"
+#include "Game/AccessCard/AccessCard.hpp"
+#include "Game/ControlRoomDoor/ControlRoomDoor.hpp"
+#include "Game/PathRenderer/PathRenderer.hpp"
 
 #include "Engine/Interaction/InteractionController.hpp"
 
@@ -523,9 +527,11 @@ namespace Game {
                     else if (c == 'T') tileValue = 11; // Terminal
                     else if (c == 'E') tileValue = 12; // Exit
                     else if (c == 'I') tileValue = 13; // Interactable
-                    else if (c == 'C') tileValue = 14; // Control Room marker
-                    else if (c == 'F') tileValue = 15; // Future use
-                    else if (c == 'G') tileValue = 16; // Future use
+                    else if (c == 'C') tileValue = 13; // Control Room Door
+                    else if (c == 'F') tileValue = 15; // Green Access Card
+                    else if (c == 'G') tileValue = 16; // Purple Access Card
+                    else if (c == 'H') tileValue = 17; // Red Access Card
+                    else if (c == 'J') tileValue = 18; // Yellow Access Card
                     else tileValue = c - '0';          // Fallback numeric
 
                     worldMap[y * mapWidth + x] = tileValue;
@@ -583,6 +589,7 @@ namespace Game {
             playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
 
             pauseMenu = player->AddComponent<PauseMenu>();
+            player->AddComponent<Hands67>();
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -738,6 +745,124 @@ namespace Game {
                           << ") in Zone " << zoneId << " controlling " 
                           << terminal->controlledCameras.size() << " cameras\n";
             }
+            
+            // Register terminal positions with PlayerHUD for pathfinding
+            for (size_t i = 0; i < terminalPositions.size(); ++i) {
+                Vector2 pos = terminalPositions[i];
+                int tileX = (int)std::floor(pos.x);
+                int tileY = (int)std::floor(pos.y);
+                int zoneId = GetZoneId(tileX, tileY);
+                if (zoneId >= 1 && zoneId <= 4) {
+                    playerHUD->SetTerminalPosition(zoneId, pos);
+                }
+            }
+
+            // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
+            auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
+            
+            for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i) {
+                Vector2 pos = controlRoomDoorPositions[i];
+                
+                // Determine zone from position
+                int tileX = (int)std::floor(pos.x);
+                int tileY = (int)std::floor(pos.y);
+                int zoneId = GetZoneId(tileX, tileY);
+                if (zoneId < 1 || zoneId > 4) {
+                    std::cout << "[FPSScene] Warning: Control room door at (" << pos.x << ", " << pos.y 
+                              << ") is outside valid zones. Skipping.\n";
+                    continue;
+                }
+                
+                std::cout << "[FPSScene] Spawning control room door at (" << pos.x << ", " << pos.y 
+                          << ") for Zone " << Game::ZoneIdToLetter(zoneId) << "\n";
+                
+                // Create door GameObject
+                std::string doorName = "ControlRoomDoor_Zone" + std::to_string(zoneId);
+                auto doorGO = CreateGameObject(doorName);
+                doorGO->transform->position = Vector3(pos.x, pos.y, 0.0f);
+                
+                // Determine door facing based on surrounding walls
+                bool wallNorth = map->IsWall(tileX, tileY + 1);
+                bool wallSouth = map->IsWall(tileX, tileY - 1);
+                Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                
+                // Add BoxCollider2D
+                auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
+                doorCollider->minHeight = 0.0f;
+                doorCollider->maxHeight = 2.0f;
+                doorCollider->isTrigger = false;
+                
+                // Add Door component
+                auto door = doorGO->AddComponent<Engine::Door>();
+                door->tileX = tileX;
+                door->tileY = tileY;
+                door->doorType = 10;
+                door->facing = facing;
+                door->collider = doorCollider;
+                door->state = Engine::DoorState::Closed;
+                
+                // Add DoorRenderer
+                auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
+                doorRenderer->fov = renderer->fov;
+                doorRenderer->sprite = renderer->GetDoorSprite();
+                
+                // Add Interactable
+                auto interactable = doorGO->AddComponent<Engine::Interactable>();
+                interactable->actionText = "LOCKED - Access Cards Required (0/4)";
+                interactable->maxDistance = 2.5f;
+                
+                // Add ControlRoomDoor component
+                auto controlDoor = doorGO->AddComponent<Game::ControlRoomDoor>();
+                controlDoor->zoneId = zoneId;
+                controlDoor->door = door;
+                controlDoor->interactable = interactable;
+            }
+            
+            // ===== Spawn Access Cards from map markers (tiles 15-18) =====
+            auto accessCardPositions = map->GetAccessCardPositions();
+            
+            const char* cardSpritePaths[] = {
+                "Assets/color_green_empty.png",
+                "Assets/color_purple_empty.png",
+                "Assets/color_red_empty.png",
+                "Assets/color_yellow_empty.png"
+            };
+            
+            for (size_t i = 0; i < accessCardPositions.size(); ++i) {
+                Vector2 pos = accessCardPositions[i].first;
+                int cardId = accessCardPositions[i].second;
+                
+                if (cardId < 0 || cardId > 3) continue;
+                
+                const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+                
+                // Create card GameObject
+                std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
+                auto cardGO = CreateGameObject(cardName);
+                cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
+                cardGO->transform->localScale = Vector2(0.4f, 0.4f);
+                
+                // Add SpriteRenderer
+                auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
+                sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
+                sr->billboard = true;
+                sr->sortingOrder = 200;
+                
+                // Add Interactable
+                auto interactable = cardGO->AddComponent<Engine::Interactable>();
+                interactable->maxDistance = 2.5f;
+                
+                // Add AccessCard component
+                auto card = cardGO->AddComponent<Game::AccessCard>();
+                card->cardId = cardId;
+                card->cardColor = static_cast<Game::AccessCardColor>(cardId);
+                card->spriteRenderer = sr;
+                card->interactable = interactable;
+            }
+            
+            std::cout << "[FPSScene] Access card system initialized: " 
+                      << controlRoomDoorPositions.size() << " doors, " 
+                      << accessCardPositions.size() << " cards\n";
 
             // Connect terminals to guards
             for (auto* guard : guards) {

@@ -36,6 +36,7 @@ namespace UI
         Engine::Color m_color;               // Color tint/solid color
         ImageType m_imageType = ImageType::Simple;
         f32 m_fillAmount = 1.0f;            // For progress bars (0-1)
+        f32 m_pixelsPerUnitMultiplier = 1.0f; // Multiplier for 9-slice borders
 
     public:
         Image();
@@ -71,6 +72,13 @@ namespace UI
          */
         void SetFillAmount(f32 amount) { m_fillAmount = amount; }
         f32 GetFillAmount() const { return m_fillAmount; }
+
+        /**
+         * @brief Set the pixels-per-unit multiplier for 9-slice rendering
+         * @param multiplier Scale factor for the border thickness
+         */
+        void SetPixelsPerUnitMultiplier(f32 multiplier) { m_pixelsPerUnitMultiplier = multiplier; }
+        f32 GetPixelsPerUnitMultiplier() const { return m_pixelsPerUnitMultiplier; }
     };
 
 } // namespace UI

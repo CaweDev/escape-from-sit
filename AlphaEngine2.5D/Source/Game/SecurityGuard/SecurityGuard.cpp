@@ -182,8 +182,10 @@ namespace Game {
 
     void SecurityGuard::ChaseUpdate() {
         if (IsCaught()) {
-            SetState(GuardState::Catch);
-            if (playerData) playerData->Catch();
+            if (playerData) {
+                playerData->Catch();
+                if (playerData->IsCaught()) SetState(GuardState::Catch);
+            }
             return;
         }
 

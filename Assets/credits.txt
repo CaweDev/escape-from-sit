@@ -8,3 +8,9 @@ s2 Concrete Squares 2 Grey.png (modified)
 Wallpaper_02_White_1.png (modified)
 Concrete_01_White_1.png (modified)
 -> https://flakdeau19.itch.io/pixel-art-texture-pack-256x256 (CC0)
+
+UI Kit:
+-> https://www.kenney.nl/assets/fantasy-ui-borders (CC0)
+
+UI Input Prompts:
+-> https://www.kenney.nl/assets/input-prompts (CC0)

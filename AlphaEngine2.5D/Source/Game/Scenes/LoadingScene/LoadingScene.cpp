@@ -3,10 +3,29 @@
  * @brief Implementation of LoadingScene
  */
 #include "LoadingScene.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+#include <random>
 
 namespace Game {
 
     LoadingScene::LoadingScene() : Scene("LoadingScene") {}
+
+    /// <summary>
+	/// This struct is to read from Assets/Config/tips.json using ConfigManager
+    /// </summary>
+    struct TipsConfig : public Engine::IConfig {
+        std::vector<std::string> tips;
+
+        void FromJson(const Json::Value& j) override {
+            tips.clear();
+            const Json::Value& tipsArray = j["tips"];
+            if (tipsArray.isArray()) {
+                for (const auto& tip : tipsArray) {
+                    tips.push_back(tip.asString());
+                }
+            }
+        }
+    };
 
     void LoadingScene::OnLoad() {
         // Reset state
@@ -63,6 +82,34 @@ namespace Game {
         m_progressBarFill->SetFillAmount(0.0f);
         m_progressBarFill->SetRenderOrder(1);
 
+        // ========== Tip Text ==========
+        m_tipText = m_canvas->CreateChild<Text>();
+        m_tipText->name = "TipText";
+        m_tipText->SetAnchors({ 0.1f, 0.20f }, { 0.9f, 0.35f });
+        m_tipText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_tipText->SetSizeDelta({ 0.0f, 0.0f });
+        m_tipText->SetFontSize(1.5f);
+        m_tipText->SetColor(Color(0.8f, 0.8f, 0.8f, 1.0f));
+        m_tipText->SetAnchor(TextAnchor::MiddleCenter);
+
+        // Load tips from config if not already loaded
+        if (m_tips.empty()) {
+            TipsConfig config;
+            if (Engine::ConfigManager::ReadConfig("Assets/Config/LoadingScene/tips.json", config)) {
+                m_tips = config.tips;
+            }
+        }
+
+        // Pick a random tip
+        if (!m_tips.empty()) {
+            static std::random_device rd;
+            static std::mt19937 gen(rd());
+            std::uniform_int_distribution<> distrib(0, m_tips.size() - 1);
+            m_tipText->SetText(m_tips[distrib(gen)]);
+        } else {
+            m_tipText->SetText("");
+        }
+
         // Fade OUT the overlay to reveal the loading UI
         // (The overlay is at alpha=1 from the previous FadeIn)
         UI::FadeService::FadeOut(SceneManager::GetLoadWithScreenFadeInDuration());
@@ -115,6 +162,7 @@ namespace Game {
         m_loadingText = nullptr;
         m_progressBarBg = nullptr;
         m_progressBarFill = nullptr;
+        m_tipText = nullptr;
     }
 
 } // namespace Game

@@ -203,10 +203,10 @@ Vector2 Physics2D::TileMapCollision(const Vector2& position, const Vector2& move
 }
 
 void Physics2D::ResolveCollision(Rigidbody2D* rb, Collider2D* other) {
-    if (!rb || !other || !rb->transform) return;
+if (!rb || !other || !rb->transform) return;
     
-    Collider2D* rbCollider = rb->GetCollider();
-    if (!rbCollider) return;
+Collider2D* rbCollider = rb->GetCollider();
+if (!rbCollider) return;
     
     // Get centers
     Vector2 rbCenter = rbCollider->GetCenter();

@@ -39,6 +39,13 @@ const char* SplashScene::LOGO2_PATH      = "Assets/xav.jpg";
 Color SplashScene::LOGO_WHITE_COLOR = Color(1.0f, 1.0f, 1.0f, 1.0f);
 Color SplashScene::LOGO2_COLOR      = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
+// CC text settings
+const char* SplashScene::CC_TEXT_PATH          = "Assets/UI/DigiPen_CC_Text.png";
+float SplashScene::CC_TEXT_WIDTH               = 1050.f;
+float SplashScene::CC_TEXT_HEIGHT              = 50.0f;
+int   SplashScene::CC_TEXT_RENDER_ORDER        = 1;
+float SplashScene::CC_TEXT_BOTTOM_MARGIN       = 20.0f;
+
 // Flicker settings
 float SplashScene::FLICKER_DIP_DURATION   = 0.2f;
 float SplashScene::FLICKER_DEPTH          = 1.f;
@@ -105,6 +112,20 @@ void SplashScene::OnLoad() {
     m_logo2->SetRenderOrder(LOGO_RENDER_ORDER);
     m_logo2->SetActive(false);
 
+    // DigiPen CC text (bottom-center)
+    m_ccText = m_canvas->CreateChild<Image>();
+    m_ccText->name = "DigiPenCCText";
+    m_ccText->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });  // bottom-center anchor
+    m_ccText->SetPivot({ 0.5f, 0.0f });                     // pivot at bottom-center of element
+    m_ccText->SetAnchoredPosition({ 0.0f, CC_TEXT_BOTTOM_MARGIN });
+    m_ccText->SetSizeDelta({ CC_TEXT_WIDTH, CC_TEXT_HEIGHT });
+    {
+        Texture2D* tex = AssetManager::GetTexture(CC_TEXT_PATH);
+        m_ccText->SetTexture(tex);
+    }
+    m_ccText->SetColor(Color(1.0f, 1.0f, 1.0f, 0.0f));
+    m_ccText->SetRenderOrder(CC_TEXT_RENDER_ORDER);
+
     // Start with screen fully black (fade overlay at alpha = 1)
     // Then fade it out to reveal our scene
     FadeService::FadeOut(FADE_IN_DURATION);
@@ -128,6 +149,7 @@ void SplashScene::OnUpdate() {
 
         const_cast<Color&>(m_logo->GetColor()).a = t;
         const_cast<Color&>(m_logo2->GetColor()).a = t;
+        const_cast<Color&>(m_ccText->GetColor()).a = t;
 
         if (m_phaseTimer >= FADE_IN_DURATION) {
             AdvancePhase();
@@ -287,6 +309,7 @@ void SplashScene::OnUnload() {
     m_background = nullptr;
     m_logo = nullptr;
     m_logo2 = nullptr;
+    m_ccText = nullptr;
 }
 
 } // namespace Game

@@ -10,6 +10,7 @@
 #include "Engine/UI/Components/Text.hpp"
 #include "Engine/UI/Components/Button.hpp"
 #include "Engine/UI/Components/Image.hpp"
+#include "Engine/Core/AssetManager.hpp"
 
 namespace UI
 {
@@ -48,7 +49,17 @@ namespace UI
         m_dialogPanel->SetPivot({ 0.5f, 0.5f });
         m_dialogPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         m_dialogPanel->SetSizeDelta({ 420.0f, 220.0f });
-        m_dialogPanel->SetBackgroundColor(Engine::Color(0.15f, 0.15f, 0.2f, 0.95f));
+        
+        // Apply panel-001.png as background with 9-slice
+        m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-001.png"));
+        //m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png"));
+        m_dialogPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
+        if (auto* bg = m_dialogPanel->GetBackground())
+        {
+            bg->SetImageType(ImageType::Sliced);
+            bg->SetPixelsPerUnitMultiplier(2.0f); // Make the border thicker
+        }
+
         m_dialogPanel->raycastTarget = true;
 
         // --- Message text (upper portion of dialog) ---
@@ -70,7 +81,15 @@ namespace UI
         m_confirmBtn->SetPivot({ 0.5f, 0.5f });
         m_confirmBtn->SetAnchoredPosition({ 0.0f, 50.0f });
         m_confirmBtn->SetSizeDelta({ 140.0f, 45.0f });
-        m_confirmBtn->SetBackgroundColor(Engine::Color(0.2f, 0.6f, 0.3f, 1.0f));
+        
+        // Apply panel-022.png to buttons (9-slice enabled by default in SetBackgroundSprite)
+        m_confirmBtn->SetBackgroundColor(Engine::Color(0.2f, 0.6f, 0.2f, 1.0f)); // Pleasant Green
+        m_confirmBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        if (auto* bg = m_confirmBtn->GetBackground())
+        {
+            bg->SetPixelsPerUnitMultiplier(1.0f);
+        }
+        
         m_confirmBtn->SetText("Confirm");
         m_confirmBtn->onClick = [this]() { OnConfirmClicked(); };
 
@@ -81,7 +100,15 @@ namespace UI
         m_cancelBtn->SetPivot({ 0.5f, 0.5f });
         m_cancelBtn->SetAnchoredPosition({ 0.0f, 50.0f });
         m_cancelBtn->SetSizeDelta({ 140.0f, 45.0f });
-        m_cancelBtn->SetBackgroundColor(Engine::Color(0.6f, 0.2f, 0.2f, 1.0f));
+        
+        // Apply panel-022.png to buttons
+        m_cancelBtn->SetBackgroundColor(Engine::Color(0.6f, 0.2f, 0.2f, 1.0f)); // Pleasant Red
+        m_cancelBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        if (auto* bg = m_cancelBtn->GetBackground())
+        {
+            bg->SetPixelsPerUnitMultiplier(1.0f);
+        }
+        
         m_cancelBtn->SetText("Cancel");
         m_cancelBtn->onClick = [this]() { OnCancelClicked(); };
 

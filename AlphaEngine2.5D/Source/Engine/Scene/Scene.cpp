@@ -20,7 +20,11 @@ GameObject* Scene::CreateGameObject(const std::string& name) {
     auto obj = std::make_unique<GameObject>(name);
     GameObject* ptr = obj.get();
     ptr->scene = this;
-    gameObjects.push_back(std::move(obj));
+    if (isUpdating) {
+        pendingGameObjects.push_back(std::move(obj));
+    } else {
+        gameObjects.push_back(std::move(obj));
+    }
     return ptr;
 }
 
@@ -53,6 +57,8 @@ void Scene::UpdateInternal() {
     // Run physics simulation first
     Physics2D::FixedUpdate();
     
+    isUpdating = true;
+
     // Fixed update for all GameObjects (physics components)
     for (auto& obj : gameObjects) {
         obj->InternalFixedUpdate();
@@ -69,12 +75,19 @@ void Scene::UpdateInternal() {
     for (auto& obj : gameObjects) {
         obj->InternalLateUpdate();
     }
+
+    isUpdating = false;
+
+    // Flush objects created during the update loop
+    for (auto& obj : pendingGameObjects) {
+        gameObjects.push_back(std::move(obj));
+    }
+    pendingGameObjects.clear();
     
     // Process pending destructions
     GameObject::ProcessDestroyQueue();
 
     // Remove destroyed objects from the scene
-    // This will trigger unique_ptr deletion and call the GameObject destructor
     gameObjects.erase(
         std::remove_if(gameObjects.begin(), gameObjects.end(), 
             [](const std::unique_ptr<GameObject>& obj) {

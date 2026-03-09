@@ -54,11 +54,11 @@ namespace Game {
         enemyShadow = CreateGameObject("EnemyShadow");
         auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
         {
-            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png", 5, 4);  // sprite sheet
-			shadowSheet->AddAnimation("Rolling", 2, 15, 15.f);  // Roll
+            // The rows, cols, and "Rolling" animation are now loaded from Assets/ame.png.meta
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png");
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
-			shadowSprite->Play("Rolling");
+            shadowSprite->Play("Rolling");
         }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
@@ -76,6 +76,10 @@ namespace Game {
         menuCanvas->SetReferenceResolution(1280.f, 720.f);
         menuCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
         menuCanvas->SetSortOrder(100);
+
+        // Add ControlsMenu component
+        auto controlsGO = CreateGameObject("ControlsMenu");
+        controlsMenu = controlsGO->AddComponent<ControlsMenu>();
 
         // === Title (centered at top) - starts empty for typewriter effect ===
         titleText = menuCanvas->CreateChild<Text>();
@@ -209,14 +213,6 @@ namespace Game {
         titleComplete = false;
         menuAnimTime = 0.0f;
         menuAnimComplete = false;
-
-        // === Configure confirmation dialog with 9-slice background ===
-        Engine::Texture2D* dialogBg = AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png");
-        if (dialogBg)
-        {
-            dialogBg->SetSliceBorder({ 20.0f, 20.0f, 20.0f, 20.0f });
-            DialogService::SetConfirmationBackground(dialogBg);
-        }
     }
 
     void MainMenuScene::UpdateMenuVisuals() {
@@ -442,11 +438,15 @@ namespace Game {
     }
 
     void MainMenuScene::OnControlsClicked() {
-        std::cout << "Controls clicked" << std::endl;
+        if (controlsMenu)
+        {
+            controlsMenu->Show();
+        }
     }
 
     void MainMenuScene::OnCreditsClicked() {
-        std::cout << "Credits clicked" << std::endl;
+        std::cout << "Credits clicked - Loading credit scene..." << std::endl;
+        SceneManager::LoadWithFade("Credits");
     }
 
     void MainMenuScene::OnQuitClicked() {

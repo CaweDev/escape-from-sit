@@ -5,16 +5,18 @@
 
 #include "PlayerHUD.hpp"
 #include "Game/CCTV/CCTVTerminal.hpp"
+#include "Game/PathRenderer/PathRenderer.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Components/Panel.hpp"
 #include "Engine/UI/Components/Text.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/AssetManager.hpp"
+#include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
 #include <iostream>
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.h"
-#include"Engine/Core/Time.hpp"
+#include "Engine/Core/Time.hpp"
 
 namespace Game
 {
@@ -27,7 +29,7 @@ namespace Game
     {
         // Create a dedicated canvas for the HUD
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
-        m_canvas->SetReferenceResolution(1280.0f, 720.0f);
+        m_canvas->SetReferenceResolution(1600.f, 900.0f);
         m_canvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
         m_canvas->SetSortOrder(100);
 
@@ -131,13 +133,13 @@ namespace Game
         barBg->SetSizeDelta({ 380.0f, 24.0f });
         barBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 1.0f));
 
-        // Alert bar fill
+        // Alert bar fill � point-anchored at bottom-left of barBg, sized explicitly each frame
         m_alertBar = barBg->CreateChild<UI::Panel>();
         m_alertBar->name = "AlertBarFill";
-        m_alertBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 1.0f });
+        m_alertBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_alertBar->SetPivot({ 0.0f, 0.0f });
         m_alertBar->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_alertBar->SetSizeDelta({ 95.0f, 0.0f }); // 25% of 380 = 95
+        m_alertBar->SetSizeDelta({ 95.0f, 24.0f }); // 25% of 380 = 95, height matches barBg
         m_alertBar->SetBackgroundColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f)); // Green
 
         // CCTV Warning Panel (screen border flash)
@@ -162,35 +164,26 @@ namespace Game
         m_cctvWarningText->SetColor(Engine::Color(1.0f, 0.0f, 0.0f, 1.0f));
         m_cctvWarningText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
-        // Stamina Bar (bottom-left corner, SAME approach as minimap)
+        // Stamina Bar (bottom-left corner, above minimap)
         m_staminaPanel = m_canvas->CreateChild<UI::Panel>();
         m_staminaPanel->name = "StaminaPanel";
         m_staminaPanel->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_staminaPanel->SetPivot({ 0.0f, 0.0f });
-        // Position above minimap: margin + minimap height + gap
         m_staminaPanel->SetAnchoredPosition({ m_minimapMargin, m_minimapMargin + m_minimapHeight + 10.0f });
-        m_staminaPanel->SetSizeDelta({ 200.0f, 30.0f });
-        m_staminaPanel->SetBackgroundColor(Engine::Color(0.1f, 0.1f, 0.1f, 0.8f));
-        
-        // Background bar
-        auto* staminaBg = m_staminaPanel->CreateChild<UI::Panel>();
-        staminaBg->name = "StaminaBarBg";
-        staminaBg->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
-        staminaBg->SetPivot({ 0.0f, 0.0f });
-        staminaBg->SetAnchoredPosition({ 3.0f, 3.0f });
-        staminaBg->SetSizeDelta({ -6.0f, -6.0f });
-        staminaBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
-        
-        // Stamina fill bar
-        m_staminaBar = staminaBg->CreateChild<UI::Panel>();
+        m_staminaPanel->SetSizeDelta({ 200.0f, 24.0f });
+        m_staminaPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
+
+        // Stamina fill bar � point-anchored at bottom-left of panel.
+        // Width and height are set explicitly via sizeDelta each frame.
+        m_staminaBar = m_staminaPanel->CreateChild<UI::Panel>();
         m_staminaBar->name = "StaminaBarFill";
-        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_staminaBar->SetPivot({ 0.0f, 0.0f });
         m_staminaBar->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_staminaBar->SetSizeDelta({ 0.0f, 0.0f });
+        m_staminaBar->SetSizeDelta({ 200.0f, 24.0f });
         m_staminaBar->SetBackgroundColor(Engine::Color(0.3f, 0.8f, 1.0f, 0.9f));
-        
-        // Stamina text
+
+        // Stamina text � overlaid on top of the bar, same bounds as panel
         m_staminaText = m_staminaPanel->CreateChild<UI::Text>();
         m_staminaText->name = "StaminaText";
         m_staminaText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
@@ -333,6 +326,37 @@ namespace Game
         m_bookLoreText->SetFontSize(1.6f);
         m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
         m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        // --- POPUP TEXT ---
+        m_popupText = m_popupPanel->CreateChild<UI::Text>();
+        m_popupText->name = "PopupText";
+        m_popupText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });  // Stretch text across the whole panel
+        m_popupText->SetPivot({ 0.5f, 0.5f });
+        m_popupText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_popupText->SetSizeDelta({ 0.0f, 0.0f });
+        m_popupText->SetText("");
+        m_popupText->SetFontSize(2.0f);                           // Make it nice and big
+        m_popupText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
+        m_popupText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        
+        // Access Card Display (top-left, below book count)
+        m_cardPanel = m_canvas->CreateChild<UI::Panel>();
+        m_cardPanel->name = "CardPanel";
+        m_cardPanel->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+        m_cardPanel->SetPivot({ 0.0f, 1.0f });
+        m_cardPanel->SetAnchoredPosition({ 20.0f, -70.0f }); // Below book count panel
+        m_cardPanel->SetSizeDelta({ 420.0f, 40.0f });
+        m_cardPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+
+        m_cardText = m_cardPanel->CreateChild<UI::Text>();
+        m_cardText->name = "CardText";
+        m_cardText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
+        m_cardText->SetPivot({ 0.5f, 0.5f });
+        m_cardText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_cardText->SetSizeDelta({ 0.0f, 0.0f });
+        m_cardText->SetText("Access Cards: [ ] [ ] [ ] [ ] (0/4)");
+        m_cardText->SetFontSize(1.2f);
+        m_cardText->SetColor(Engine::Color(1.0f, 0.8f, 0.0f, 1.0f)); // Gold color
+        m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
 
         // If we have a transform, use it as player transform by default
@@ -357,6 +381,25 @@ namespace Game
         if (Engine::Input::GetKeyDown(Engine::KeyCode::F2))
         {
             ToggleHeatmap();
+        }
+        
+        // Toggle path to terminals with G/P/R/Y keys (for Green/Purple/Red/Yellow cards)
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::G) && m_cardsCollected[0]) {
+            TogglePath(0); // Green card -> Zone B
+        }
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::P) && m_cardsCollected[1]) {
+            TogglePath(1); // Purple card -> Zone C
+        }
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::R) && m_cardsCollected[2]) {
+            TogglePath(2); // Red card -> Zone D
+        }
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::Y) && m_cardsCollected[3]) {
+            TogglePath(3); // Yellow card -> Zone A
+        }
+        
+        // Update active path from current position
+        if (m_pathVisible && m_activePathCardId >= 0) {
+            UpdateActivePath();
         }
 
         // Update CCTV warning timer
@@ -633,7 +676,7 @@ namespace Game
         m_zoneInfoText->SetText(subText.c_str());
         
         m_alertBar->SetBackgroundColor(stageColor);
-        m_alertBar->SetSizeDelta({ 380.0f * barFill, 0.0f }); // Update width based on fill percentage
+        m_alertBar->SetSizeDelta({ 380.0f * barFill, 24.0f }); // width = fill%, height matches barBg
     }
 
     void PlayerHUD::SetAlertUIVisible(bool visible)
@@ -682,9 +725,10 @@ namespace Game
         if (ratio < 0.0f) ratio = 0.0f;
         if (ratio > 1.0f) ratio = 1.0f;
         
-        // Update bar width by changing the right anchor
-        // Left anchor stays at 0.0, right anchor moves from 0.0 to 1.0 based on ratio
-        m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { ratio, 1.0f });
+        // Point anchor at {0,0}: sizeDelta directly sets the absolute width and height.
+        const float panelWidth  = 200.0f;
+        const float panelHeight = 24.0f;
+        m_staminaBar->SetSizeDelta({ panelWidth * ratio, panelHeight });
         
         // Update color based on stamina level
         Engine::Color barColor;
@@ -810,6 +854,178 @@ namespace Game
         m_zoneEntryTimer = m_zoneEntryDuration;
         
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
+    }
+    
+    void PlayerHUD::CollectAccessCard(int cardId, const Engine::Vector2& collectionPos)
+    {
+        if (cardId < 0 || cardId >= 4) return;
+        if (m_cardsCollected[cardId]) return; // Already collected
+        
+        m_cardsCollected[cardId] = true;
+        m_totalCardsCollected++;
+        
+        UpdateCardDisplay();
+        
+        // Show notification
+        const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+        std::string message = std::string("Collected ") + cardNames[cardId] + " Access Card (" + 
+                              std::to_string(m_totalCardsCollected) + "/4)";
+        ShowHackStatus(message, 3.0f);
+        
+        // Determine which zone this card belongs to (cardId matches zone index)
+        // Card 0 (Green) = Zone 2 (B), Card 1 (Purple) = Zone 3 (C), 
+        // Card 2 (Red) = Zone 4 (D), Card 3 (Yellow) = Zone 1 (A)
+        int targetZoneId = -1;
+        switch (cardId) {
+            case 0: targetZoneId = 2; break; // Green -> Zone B
+            case 1: targetZoneId = 3; break; // Purple -> Zone C
+            case 2: targetZoneId = 4; break; // Red -> Zone D
+            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+        }
+        
+        // Don't auto-activate path - let player toggle it with key press
+        if (targetZoneId >= 1 && targetZoneId <= 4) {
+            char zoneLetter = Game::ZoneIdToLetter(targetZoneId);
+            const char* keyName = "?";
+            switch(cardId) {
+                case 0: keyName = "G"; break; // Green
+                case 1: keyName = "P"; break; // Purple
+                case 2: keyName = "R"; break; // Red
+                case 3: keyName = "Y"; break; // Yellow
+            }
+            
+            std::string pathMessage = std::string("Press '") + keyName + "' to toggle path to Zone " + zoneLetter + " Terminal";
+            ShowHackStatus(pathMessage, 5.0f);
+            
+            std::cout << "[PlayerHUD] Card collected. Press '" << keyName 
+                      << "' to toggle path to Zone " << zoneLetter << " terminal\n";
+        }
+        
+        if (m_totalCardsCollected >= 4) {
+            ShowHackStatus("All access cards collected! Control room doors unlocked!", 5.0f);
+        }
+    }
+    
+    bool PlayerHUD::HasAccessCard(int cardId) const
+    {
+        if (cardId < 0 || cardId >= 4) return false;
+        return m_cardsCollected[cardId];
+    }
+    
+    void PlayerHUD::UpdateCardDisplay()
+    {
+        if (!m_cardText) return;
+        
+        // Build display string showing collected cards
+        std::string cardStatus = "Access Cards: ";
+        const char* cardSymbols[] = {"G", "P", "R", "Y"}; // Green, Purple, Red, Yellow
+        
+        for (int i = 0; i < 4; ++i) {
+            if (m_cardsCollected[i]) {
+                cardStatus += "[" + std::string(cardSymbols[i]) + "] ";
+            } else {
+                cardStatus += "[ ] ";
+            }
+        }
+        
+        cardStatus += "(" + std::to_string(m_totalCardsCollected) + "/4)";
+        m_cardText->SetText(cardStatus.c_str());
+    }
+    
+    void PlayerHUD::SetTerminalPosition(int zoneId, const Engine::Vector2& position)
+    {
+        if (zoneId < 1 || zoneId > 4) return;
+        m_terminalPositions[zoneId - 1] = position;
+        std::cout << "[PlayerHUD] Set Zone " << Game::ZoneIdToLetter(zoneId) 
+                  << " terminal position to (" << position.x << ", " << position.y << ")\n";
+    }
+    
+    Engine::Vector2 PlayerHUD::GetTerminalPosition(int zoneId) const
+    {
+        if (zoneId < 1 || zoneId > 4) return Engine::Vector2(0, 0);
+        return m_terminalPositions[zoneId - 1];
+    }
+    
+    void PlayerHUD::TogglePath(int cardId)
+    {
+        if (cardId < 0 || cardId >= 4) return;
+        if (!m_cardsCollected[cardId]) return;
+        
+        // Toggle visibility
+        if (m_activePathCardId == cardId && m_pathVisible) {
+            // Same card, turn off
+            m_pathVisible = false;
+            m_activePathCardId = -1;
+            
+            // Clear path from renderer
+            auto player = Engine::GameObject::Find("Player");
+            if (player) {
+                auto pathRenderer = player->GetComponent<Game::PathRenderer>();
+                if (pathRenderer) {
+                    pathRenderer->ClearPath();
+                }
+            }
+            
+            ShowHackStatus("Path hidden", 2.0f);
+        } else {
+            // Different card or was off, turn on
+            m_pathVisible = true;
+            m_activePathCardId = cardId;
+            
+            // Update path immediately
+            UpdateActivePath();
+            
+            // Determine which zone
+            int targetZoneId = -1;
+            switch (cardId) {
+                case 0: targetZoneId = 2; break; // Green -> Zone B
+                case 1: targetZoneId = 3; break; // Purple -> Zone C
+                case 2: targetZoneId = 4; break; // Red -> Zone D
+                case 3: targetZoneId = 1; break; // Yellow -> Zone A
+            }
+            
+            if (targetZoneId >= 1 && targetZoneId <= 4) {
+                char zoneLetter = Game::ZoneIdToLetter(targetZoneId);
+                std::string message = std::string("Path to Zone ") + zoneLetter + " Terminal shown";
+                ShowHackStatus(message, 2.0f);
+            }
+        }
+    }
+    
+    void PlayerHUD::UpdateActivePath()
+    {
+        if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) return;
+        if (!m_playerTransform || !m_tileMap) return;
+        
+        // Get player's current position
+        Engine::Vector2 currentPos(m_playerTransform->position.x, m_playerTransform->position.y);
+        
+        // Determine which zone to path to
+        int targetZoneId = -1;
+        switch (m_activePathCardId) {
+            case 0: targetZoneId = 2; break; // Green -> Zone B
+            case 1: targetZoneId = 3; break; // Purple -> Zone C
+            case 2: targetZoneId = 4; break; // Red -> Zone D
+            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+        }
+        
+        if (targetZoneId < 1 || targetZoneId > 4) return;
+        
+        Engine::Vector2 terminalPos = GetTerminalPosition(targetZoneId);
+        
+        // Get or create path renderer
+        auto player = Engine::GameObject::Find("Player");
+        if (!player) return;
+        
+        auto pathRenderer = player->GetComponent<Game::PathRenderer>();
+        if (!pathRenderer) {
+            pathRenderer = player->AddComponent<Game::PathRenderer>();
+            pathRenderer->tileMap = m_tileMap;
+            pathRenderer->playerTransform = m_playerTransform;
+        }
+        
+        // Update path from current position to terminal
+        pathRenderer->SetPath(currentPos, terminalPos);
     }
 
 } // namespace Game

@@ -107,6 +107,20 @@ public:
         return type == 12; // 'E' in map.txt
     }
     
+    /** Check if a tile type is a control room door marker */
+    static bool IsControlRoomDoorMarker(int type) {
+        return type == 13; // 'C' in map.txt (repurposed from 'Interactable')
+    }
+    
+    /** Check if a tile type is an access card marker (cards 0-3) */
+    static bool IsAccessCardMarker(int type, int& cardId) {
+        if (type >= 15 && type <= 18) {
+            cardId = type - 15; // 15=card 0 (Green), 16=card 1 (Purple), 17=card 2 (Red), 18=card 3 (Yellow)
+            return true;
+        }
+        return false;
+    }
+    
     /** Get all spawned doors */
     const std::vector<Door*>& GetDoors() const { return spawnedDoors; }
     
@@ -115,6 +129,12 @@ public:
     
     /** Get all exit positions from map */
     const std::vector<Vector2>& GetExitPositions() const { return exitPositions; }
+    
+    /** Get all control room door positions from map */
+    const std::vector<Vector2>& GetControlRoomDoorPositions() const { return controlRoomDoorPositions; }
+    
+    /** Get all access card spawn positions from map (4 entries, one per card type) */
+    const std::vector<std::pair<Vector2, int>>& GetAccessCardPositions() const { return accessCardPositions; }
 
 private:
     bool initialized = false;
@@ -128,6 +148,12 @@ private:
         
     /** Exit positions found in map (tile 12) */
     std::vector<Vector2> exitPositions;
+    
+    /** Control room door positions found in map (tile 13) */
+    std::vector<Vector2> controlRoomDoorPositions;
+    
+    /** Access card spawn positions found in map (tiles 15-18), paired with card ID (0-3) */
+    std::vector<std::pair<Vector2, int>> accessCardPositions;
 
     
     /** Spawn all doors present in the tile map array */

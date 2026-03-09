@@ -95,6 +95,22 @@ namespace Game
         UI::Panel* m_bookPopupPanel;
         UI::Text* m_bookTitleText;
         UI::Text* m_bookLoreText;
+        //POP UP TEXT
+        UI::Panel* m_popupPanel = nullptr;
+        UI::Text* m_popupText = nullptr;
+        
+        // Access Card tracking
+        UI::Panel* m_cardPanel = nullptr;
+        UI::Text* m_cardText = nullptr;
+        bool m_cardsCollected[4] = {false, false, false, false}; // Track 4 access cards
+        int m_totalCardsCollected = 0;
+        
+        // Terminal positions by zone (set by FPSScene)
+        Engine::Vector2 m_terminalPositions[4]; // Zone 1-4 terminals (index 0-3)
+        
+        // Active path tracking
+        int m_activePathCardId = -1; // Which card's path is currently shown (-1 = none)
+        bool m_pathVisible = false; // Is path currently being rendered
 
     public:
         PlayerHUD() = default;
@@ -232,6 +248,21 @@ namespace Game
         // Zone entry notification
         void CheckZoneChange(int zoneId); // Call this every frame with current zone
         void ShowZoneEntry(int zoneId); // Show "Entering Zone X" message
+        
+        // Access card collection
+        void CollectAccessCard(int cardId, const Engine::Vector2& collectionPos); // Called when player collects a card (0-3)
+        bool HasAccessCard(int cardId) const; // Check if specific card is collected
+        int GetCollectedCardCount() const { return m_totalCardsCollected; }
+        bool HasAllAccessCards() const { return m_totalCardsCollected >= 4; }
+        void UpdateCardDisplay(); // Update UI to show collected cards
+        
+        // Terminal positions (set by FPSScene for pathfinding)
+        void SetTerminalPosition(int zoneId, const Engine::Vector2& position); // Zone 1-4
+        Engine::Vector2 GetTerminalPosition(int zoneId) const; // Zone 1-4
+        
+        // Path control (press key to toggle)
+        void TogglePath(int cardId); // Toggle path for specific card (0-3)
+        void UpdateActivePath(); // Update path from current position each frame
 
 
     };
