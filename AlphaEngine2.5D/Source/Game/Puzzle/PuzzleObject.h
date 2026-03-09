@@ -25,7 +25,4 @@ public:
 
 
 
-void BookInit();
-void BookExit();
-AEGfxVertexList* CreateMesh();
 

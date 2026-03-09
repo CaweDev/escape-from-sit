@@ -302,29 +302,37 @@ namespace Game
         m_bookCountText->SetColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f));
         m_bookCountText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        // --- BOOK POPUP PANEL (Background) ---
+        m_bookPopupPanel = m_canvas->CreateChild<UI::Panel>();
+        m_bookPopupPanel->name = "BookPopupPanel";
+        m_bookPopupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
+        m_bookPopupPanel->SetPivot({ 0.5f, 0.5f });
+        m_bookPopupPanel->SetAnchoredPosition({ 0.0f, 200.0f });
+        m_bookPopupPanel->SetSizeDelta({ 600.0f, 200.0f });
+        m_bookPopupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f));
+        m_bookPopupPanel->visible = false; // Hidden by default
 
-        //POP UP TEXT
-        // --- POPUP PANEL (Center of Screen) ---
-        m_popupPanel = m_canvas->CreateChild<UI::Panel>();
-        m_popupPanel->name = "PopupPanel";
-        m_popupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Anchor to Dead Center
-        m_popupPanel->SetPivot({ 0.5f, 0.5f });                   // Pivot in Dead Center
-        m_popupPanel->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_popupPanel->SetSizeDelta({ 600.0f, 150.0f });           // Make it wide enough for a sentence
-        m_popupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f)); // Dark background
-        m_popupPanel->visible = false;                            // Hide it by default!
+        // --- BOOK TITLE TEXT (Top) ---
+        m_bookTitleText = m_bookPopupPanel->CreateChild<UI::Text>();
+        m_bookTitleText->name = "BookTitleText";
+        m_bookTitleText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f }); // Pin to top
+        m_bookTitleText->SetPivot({ 0.5f, 1.0f });
+        m_bookTitleText->SetAnchoredPosition({ 0.0f, -15.0f }); // Push down slightly
+        m_bookTitleText->SetSizeDelta({ 0.0f, 35.0f });
+        m_bookTitleText->SetFontSize(2.2f);
+        m_bookTitleText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f)); // Gold text
+        m_bookTitleText->SetAnchor(UI::TextAnchor::UpperCenter);
 
-        // --- POPUP TEXT ---
-        m_popupText = m_popupPanel->CreateChild<UI::Text>();
-        m_popupText->name = "PopupText";
-        m_popupText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });  // Stretch text across the whole panel
-        m_popupText->SetPivot({ 0.5f, 0.5f });
-        m_popupText->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_popupText->SetSizeDelta({ 0.0f, 0.0f });
-        m_popupText->SetText("");
-        m_popupText->SetFontSize(2.0f);                           // Make it nice and big
-        m_popupText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
-        m_popupText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        // --- BOOK LORE TEXT (Bottom) ---
+        m_bookLoreText = m_bookPopupPanel->CreateChild<UI::Text>();
+        m_bookLoreText->name = "BookLoreText";
+        m_bookLoreText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f }); // Stretch over panel
+        m_bookLoreText->SetPivot({ 0.5f, 0.5f });
+        m_bookLoreText->SetAnchoredPosition({ 0.0f, -25.0f }); // Push down below title
+        m_bookLoreText->SetSizeDelta({ 0.0f, 0.0f });
+        m_bookLoreText->SetFontSize(1.6f);
+        m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
+        m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
 
         // If we have a transform, use it as player transform by default
@@ -337,7 +345,7 @@ namespace Game
         }
     }
 
-    void PlayerHUD::Update()
+    void PlayerHUD::Update()    
     {
         // Toggle map with M key
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
@@ -397,17 +405,28 @@ namespace Game
         if (PuzzleManager::popupTimer > 0.0f) {
 
             // Ensure the panel is visible and the text is updated
-            if (!m_popupPanel->visible) {
-                m_popupPanel->visible = true;
-                m_popupText->SetText(PuzzleManager::activeBookText);
+            if (!m_bookPopupPanel->visible) {
+                // Turn on the Book panel (Removed m_popupPanel)
+                m_bookPopupPanel->visible = true;
+
+                // FORCE VISIBILITY ON CHILDREN
+                m_bookTitleText->visible = true;
+                m_bookLoreText->visible = true;
+
+                m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
+                m_bookLoreText->SetText(PuzzleManager::activeBookText);
             }
 
             // Count down the timer
-            PuzzleManager::popupTimer -= Engine::Time::deltaTime;   
+            PuzzleManager::popupTimer -= Engine::Time::deltaTime;
 
             // If the timer just hit zero, hide the panel!
             if (PuzzleManager::popupTimer <= 0.0f) {
-                m_popupPanel->visible = false;
+                // WE NOW PROPERLY HIDE THE BOOK PANEL
+                m_bookPopupPanel->visible = false;
+
+                m_bookTitleText->visible = false;
+                m_bookLoreText->visible = false;
             }
         }
     }

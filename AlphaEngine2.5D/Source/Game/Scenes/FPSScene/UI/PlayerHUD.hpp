@@ -91,9 +91,10 @@ namespace Game
         UI::Panel* m_bookCountPanel = nullptr;
         UI::Text* m_bookCountText = nullptr;
 
-        //POP UP TEXT
-        UI::Panel* m_popupPanel = nullptr;
-        UI::Text* m_popupText = nullptr;
+        //Title
+        UI::Panel* m_bookPopupPanel;
+        UI::Text* m_bookTitleText;
+        UI::Text* m_bookLoreText;
 
     public:
         PlayerHUD() = default;

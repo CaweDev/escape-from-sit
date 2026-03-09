@@ -7,6 +7,7 @@ std::vector<Book> PuzzleManager::allBooks = {};
 int PuzzleManager::booksCollected = 0;
 
 std::string PuzzleManager::activeBookText = "";
+std::string PuzzleManager::activeBookTitle = "";
 float PuzzleManager::popupTimer = 0.0f;
 
 void PuzzleManager::CreatePuzzleObject(Book book)
@@ -43,7 +44,8 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             bookObj->active = false;
             std::cout << "Book Collected";
             PuzzleManager::booksCollected++;
-
+            
+            PuzzleManager::activeBookTitle = book.BookName;
             PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
         }
@@ -56,7 +58,7 @@ void PuzzleManager::BookDataInit()
 {
     std::array<std::string,6>BookName = { "Book1","Book2","Book3","Book4","Book5","Book6" };
     std::array<std::string, 6> BookLore = {
-        "Day 1: I don't know how I got into this maze.",
+        "Fuck this hlp shit",
         "Day 3: I hear footsteps echoing in the halls.",
         "Day 7: The walls seem to be shifting.",
         "Day 12: I found a strange key.",
