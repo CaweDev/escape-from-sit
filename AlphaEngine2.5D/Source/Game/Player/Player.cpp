@@ -1,6 +1,10 @@
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 namespace Game {
+
+	bool Player::cheatInfiniteSpeed = false;
+	bool Player::cheatCatchImmune   = false;
+
 	void Player::Catch()
 	{
 		bool immune = false;
@@ -9,6 +13,9 @@ namespace Game {
 			if (hands->IsVisible()) {
 				immune = true;
 			}
+		}
+		if (cheatCatchImmune) {
+			immune = true;
 		}
 		if (!immune) {
 			state = PlayerState::Caught;

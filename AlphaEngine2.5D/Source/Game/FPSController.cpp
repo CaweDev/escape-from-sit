@@ -91,6 +91,15 @@ void FPSController::Update() {
             }
         }
 
+        // Cheat: infinite speed overrides normal speed (no stamina drain)
+        if (Player::cheatInfiniteSpeed) {
+            speed = sprintSpeed * 3.0f;
+            if (playerComp) {
+                playerComp->isSprinting = false;
+                playerComp->ResetStamina();
+            }
+        }
+
         // Calculate movement direction based on current angle
         f32 angleRad = transform->rotation * 3.14159f / 180.0f;
         f32 cosA = cosf(angleRad);

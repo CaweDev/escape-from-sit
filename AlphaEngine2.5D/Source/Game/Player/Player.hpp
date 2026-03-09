@@ -39,6 +39,10 @@ namespace Game {
 
 		bool isSprinting = false;
 
+		// Cheat flags (toggled by DebugMenu, only active in FPSScene)
+		static bool cheatInfiniteSpeed;
+		static bool cheatCatchImmune;
+
 	private:
 		PlayerState state = PlayerState::Normal;
 		Engine::Vector2 knockback{ 0.0f, 0.0f };
