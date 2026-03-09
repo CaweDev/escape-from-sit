@@ -455,11 +455,9 @@ void Physics2D::DrawDebugView() {
         f32 projH = (f32)screenWidth / (ty * planeLength * 2.0f);
         f32 sx    = halfW * (1.0f + tx / ty) - halfW;
         f32 sy    = halfH - ((f32)horizon + (camZ - tz) * projH);
-        // Clamp sy to avoid lines streaking off screen when ty is very small.
-        f32 syMax = halfH + (f32)screenHeight;
-        f32 syMin = -(f32)screenHeight;
-        if (sy > syMax) sy = syMax;
-        if (sy < syMin) sy = syMin;
+        // Clamp to screen bounds to prevent near-plane artefacts from streaking.
+        if (sy >  halfH) sy =  halfH;
+        if (sy < -halfH) sy = -halfH;
         return { sx, sy };
     };
 
@@ -545,6 +543,8 @@ void Physics2D::DrawDebugView() {
     for (Collider2D* col : colliders) {
         if (!col || !col->gameObject || !col->gameObject->active) continue;
         if (col->isTrigger) continue;
+        // Never draw the collider belonging to the camera's own GameObject.
+        if (Camera::main && col->gameObject == Camera::main->gameObject) continue;
 
         f32 hMin = col->minHeight;
         f32 hMax = col->maxHeight;
