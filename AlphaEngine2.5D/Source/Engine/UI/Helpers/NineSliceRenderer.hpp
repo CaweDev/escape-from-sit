@@ -47,10 +47,12 @@ namespace UI
          * @param worldRect  World-space rectangle to fill
          * @param texture    Source texture (must be loaded, with valid pixel dimensions and border set)
          * @param color      Tint/multiply color
+         * @param borderScale Scaling factor for the border thickness
          */
         static void Draw(const Rect& worldRect,
                          Engine::Texture2D* texture,
-                         const Engine::Color& color);
+                         const Engine::Color& color,
+                         f32 borderScale = 1.0f);
 
     private:
         /**

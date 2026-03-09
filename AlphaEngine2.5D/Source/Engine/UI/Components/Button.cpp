@@ -149,16 +149,33 @@ namespace UI
         return m_label ? m_label->GetText() : "";
     }
 
+
+
     void Button::SetBackgroundColor(const Engine::Color& color)
     {
         m_colors.normalColor = color;
-        // Derive other colors from normal color
+
+        // Derive other colors from normal color using constants
         m_colors.highlightedColor = Engine::Color(
-            color.r * 1.1f, color.g * 1.1f, color.b * 1.1f, color.a);
+            color.r * kHighlightMultiplier,
+            color.g * kHighlightMultiplier,
+            color.b * kHighlightMultiplier,
+            color.a
+        );
+
         m_colors.pressedColor = Engine::Color(
-            color.r * 0.8f, color.g * 0.8f, color.b * 0.8f, color.a);
+            color.r * kPressedMultiplier,
+            color.g * kPressedMultiplier,
+            color.b * kPressedMultiplier,
+            color.a
+        );
+
         m_colors.disabledColor = Engine::Color(
-            color.r * 0.5f, color.g * 0.5f, color.b * 0.5f, color.a * 0.5f);
+            color.r * kDisabledColorMultiplier,
+            color.g * kDisabledColorMultiplier,
+            color.b * kDisabledColorMultiplier,
+            color.a * kDisabledAlphaMultiplier
+        );
         
         UpdateTargetColor();
     }

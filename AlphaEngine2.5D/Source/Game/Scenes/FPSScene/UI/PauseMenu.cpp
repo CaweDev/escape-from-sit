@@ -17,7 +17,7 @@ namespace Game
         const Engine::Color kOverlayColor       { 0.0f,  0.0f,  0.0f,  0.75f };
 
         // Menu panel
-        const Engine::Color kMenuBgColor        { 0.05f, 0.02f, 0.02f, 0.92f };
+        const Engine::Color kMenuBgColor        { 0.3f, 0.12f, 0.12f, 0.92f };
 
         // Title
         const Engine::Color kTitleColor         { 0.8f,  0.15f, 0.10f, 1.0f };
@@ -196,10 +196,7 @@ namespace Game
         Engine::Application::RegisterPause("PauseMenu");
 
         // Unlock cursor so the player can click buttons
-        if (Engine::Input::IsCursorLocked())
-        {
-            Engine::Input::UnregisterCursorLock("FPSController");
-        }
+        Engine::Input::RegisterCursorUnlock("PauseMenu");
 
         UpdateMenuVisuals();
     }
@@ -216,7 +213,7 @@ namespace Game
         Engine::Application::UnregisterPause("PauseMenu");
 
         // Re-lock cursor for FPS controls
-        Engine::Input::RegisterCursorLock("FPSController");
+        Engine::Input::UnregisterCursorUnlock("PauseMenu");
     }
 
     void PauseMenu::Toggle()
@@ -254,13 +251,16 @@ namespace Game
         m_menuPanel->SetPivot({ 0.5f, 0.5f });
         m_menuPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         m_menuPanel->SetSizeDelta({ kMenuWidth, kMenuHeight });
+        m_menuPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
+        m_menuPanel->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_menuPanel->GetBackground()->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
         m_menuPanel->SetBackgroundColor(kMenuBgColor);
         m_menuPanel->SetRenderOrder(1);
 
         // --- Title text: "PAUSED" ---
         m_title = m_menuPanel->CreateChild<UI::Text>();
         m_title->name = "PauseTitle";
-        m_title->SetAnchors({ 0.0f, 0.78f }, { 1.0f, 0.95f });
+        m_title->SetAnchors({ 0.0f, 0.7f }, { 1.0f, 0.95f });
         m_title->SetAnchoredPosition({ 0.0f, 0.0f });
         m_title->SetSizeDelta({ 0.0f, 0.0f });
         m_title->SetText("PAUSED");
@@ -326,6 +326,9 @@ namespace Game
             btn->SetText(configs[i].label);
             btn->onClick = configs[i].callback;
             btn->SetRenderOrder(3);
+            btn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+            btn->GetBackground()->SetImageType(UI::ImageType::Sliced);
+            btn->GetBackground()->SetPixelsPerUnitMultiplier(1.0f); // Make the 9-slice borders thicker
 
             // Style the label text
             if (auto* label = btn->GetLabel())
@@ -416,7 +419,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
-                Engine::Input::RegisterCursorLock("FPSController");
+                Engine::Input::UnregisterCursorUnlock("PauseMenu");
                 Engine::SceneManager::LoadWithLoadingScreen("FPS");
             }
         );

@@ -55,6 +55,7 @@ float SplashScene::FINAL_FLICKER_DURATION = 0.2f;
 SplashScene::SplashScene() : Scene("SplashScene") {}
 
 void SplashScene::OnLoad() {
+    Input::RegisterCursorUnlock("SplashScene");
     // Seed random for flicker variation
     srand(static_cast<unsigned>(time(nullptr)));
 
@@ -299,6 +300,7 @@ bool SplashScene::IsSkipPressed() const {
 }
 
 void SplashScene::OnUnload() {
+    Input::UnregisterCursorUnlock("SplashScene");
     if (m_canvas) {
         auto* uiMgr = UIManager::GetInstance();
         if (uiMgr) {

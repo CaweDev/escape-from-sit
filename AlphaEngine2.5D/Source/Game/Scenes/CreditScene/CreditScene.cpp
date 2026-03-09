@@ -16,6 +16,7 @@ const char* CreditScene::CREDITS_TEXTURE_PATH = "Assets/UI/CreditScene.png";
 CreditScene::CreditScene() : Scene("CreditScene") {}
 
 void CreditScene::OnLoad() {
+    Input::RegisterCursorUnlock("CreditScene");
     m_transitioning = false;
     
     // Canvas setup
@@ -102,6 +103,7 @@ bool CreditScene::IsSkipPressed() const {
 }
 
 void CreditScene::OnUnload() {
+    Input::UnregisterCursorUnlock("CreditScene");
     if (m_canvas) {
         auto* uiMgr = UIManager::GetInstance();
         if (uiMgr) {
