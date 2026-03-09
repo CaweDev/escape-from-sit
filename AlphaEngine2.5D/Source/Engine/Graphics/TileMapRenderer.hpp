@@ -81,9 +81,9 @@ namespace Engine {
 		// and therefore the horizontal resolution of the wall pass.
 		// ---------------------------------------------------------------
 		/** Number of screen pixels per raycasted column. Higher = faster but blockier. */
-		static constexpr int COLUMN_STEP = 8;
+		static constexpr int COLUMN_STEP = 10;
 		/** (Legacy, unused for floor/ceiling) Row step for old strip-based rendering. */
-		static constexpr int ROW_STEP = 8;
+		static constexpr int ROW_STEP = 10;
 		/** Maximum triangles per AEGfx mesh batch before forcing a flush. */
 		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
 
