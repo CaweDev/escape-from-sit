@@ -4,6 +4,7 @@
  */
 #include "LoadingScene.hpp"
 #include "Engine/Core/ConfigManager.hpp"
+#include "Engine/Input/Input.hpp"
 #include <random>
 
 namespace Game {
@@ -28,6 +29,7 @@ namespace Game {
     };
 
     void LoadingScene::OnLoad() {
+        Input::RegisterCursorUnlock("LoadingScene");
         // Reset state
         m_elapsed = 0.0f;
         m_dotTimer = 0.0f;
@@ -151,6 +153,7 @@ namespace Game {
     }
 
     void LoadingScene::OnUnload() {
+        Input::UnregisterCursorUnlock("LoadingScene");
         if (m_canvas) {
             auto* uiMgr = UIManager::GetInstance();
             if (uiMgr) {

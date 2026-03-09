@@ -78,6 +78,13 @@
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
     <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
     <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
+    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
+    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
+    <ClCompile Include="Source\Game\Debug\DebugManager.cpp" />
+    <ClCompile Include="Source\Game\Debug\DebugMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -176,6 +183,12 @@
     <ClInclude Include="Source\Game\AccessCard\AccessCard.hpp" />
     <ClInclude Include="Source\Game\ControlRoomDoor\ControlRoomDoor.hpp" />
     <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
+    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
+    <ClInclude Include="Source\Game\Debug\DebugManager.hpp" />
+    <ClInclude Include="Source\Game\Debug\DebugMenu.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

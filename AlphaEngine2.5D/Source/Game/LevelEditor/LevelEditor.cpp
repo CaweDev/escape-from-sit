@@ -460,9 +460,7 @@ void LevelEditor::ToggleEditor() {
     if (helpText) helpText->visible = isActive;
 
     if (isActive) {
-        if (Input::IsCursorLocked()) {
-            Input::UnregisterCursorLock("FPSController");
-        }
+        Input::RegisterCursorUnlock("LevelEditor");
         Application::RegisterPause("LevelEditor");
         
         // Reset view to show full map
@@ -474,7 +472,7 @@ void LevelEditor::ToggleEditor() {
         std::cout << "[LevelEditor] Changes apply to TileMap in real-time!\n";
         std::cout << "[LevelEditor] Close editor (F1) to test changes in-game\n";
     } else {
-        Input::RegisterCursorLock("FPSController");
+        Input::UnregisterCursorUnlock("LevelEditor");
         Application::UnregisterPause("LevelEditor");
         std::cout << "[LevelEditor] Closed - changes are active! Test them now.\n";
         std::cout << "[LevelEditor] Press S to save to map.txt for persistence\n";

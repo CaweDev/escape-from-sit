@@ -20,9 +20,6 @@ void FPSController::Initialize() {
     // Initialize view height
     currentViewHeight = eyeHeight;
     targetViewHeight = eyeHeight;
-    
-    // Register for cursor lock
-    Input::RegisterCursorLock("FPSController");
 }
 
 void FPSController::Update() {
@@ -116,8 +113,8 @@ void FPSController::Update() {
         }
         prevSpace = spaceNow;
 
-        // Crouching (Ctrl or C) (only when locked)
-        if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {
+        // Crouching (C) (only when locked)
+        if (Input::GetKeyDown(KeyCode::C)) {
             rigidbody->ToggleCrouch();
         }
     }
@@ -125,21 +122,7 @@ void FPSController::Update() {
     // Set velocity on rigidbody (physics will handle collision)
     rigidbody->velocity = worldVelocity;
     
-    // Jumping
-    bool spaceNow = Input::GetKey(KeyCode::Space);
-    bool spaceDown = spaceNow && !prevSpace;
-
-    if (spaceDown && jumpCooldown <= 0.0f ) {
-        rigidbody->Jump(jumpForce);
-        jumpCooldown = 0.25f;
-    }
-    prevSpace = spaceNow;
 	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
-    
-    // Crouching (Ctrl or C)
-    if (Input::GetKeyDown(KeyCode::LeftControl) || Input::GetKeyDown(KeyCode::C)) {
-        rigidbody->ToggleCrouch();
-    }
     
     // Calculate target view height based on crouch state and jump
     // Z=0 is ground, Z=0.5 is eye level (standing), jumping adds to this
@@ -165,7 +148,7 @@ void FPSController::LateUpdate() {
 }
 
 void FPSController::OnDestroy() {
-    Input::UnregisterCursorLock("FPSController");
+    
 }
 
 } // namespace Game

@@ -7,7 +7,7 @@
 namespace Engine {
 
 // Static member definitions
-std::set<std::string> Input::cursorLockRegistrations;
+std::set<std::string> Input::cursorUnlockRegistrations;
 HWND Input::hwnd = nullptr;
 int Input::centerX = 0;
 int Input::centerY = 0;
@@ -113,31 +113,28 @@ void Input::SetCursorVisible(bool visible) {
     AEInputShowCursor(visible ? 1 : 0);
 }
 
-void Input::RegisterCursorLock(const std::string& id) {
-    bool wasEmpty = cursorLockRegistrations.empty();
-    cursorLockRegistrations.insert(id);
+void Input::RegisterCursorUnlock(const std::string& id) {
+    bool wasEmpty = cursorUnlockRegistrations.empty();
+    cursorUnlockRegistrations.insert(id);
     
-    if (wasEmpty && !cursorLockRegistrations.empty()) {
-        // First registration - initialize and lock cursor
-        ShowCursor(FALSE);
-        hwnd = GetActiveWindow();
-        UpdateWindowCenter();
-        CenterCursor();
-        firstFrame = true;
+    if (wasEmpty && !cursorUnlockRegistrations.empty()) {
+        // First registration - unlock cursor
+        SetCursorVisible(true);
     }
 }
 
-void Input::UnregisterCursorLock(const std::string& id) {
-    cursorLockRegistrations.erase(id);
+void Input::UnregisterCursorUnlock(const std::string& id) {
+    cursorUnlockRegistrations.erase(id);
     
-    if (cursorLockRegistrations.empty()) {
-        // All unregistered - show cursor
-        ShowCursor(TRUE);
+    if (cursorUnlockRegistrations.empty()) {
+        // All unregistered - lock cursor
+        SetCursorVisible(false);
+        firstFrame = true; // Will trigger lock update next frame
     }
 }
 
 bool Input::IsCursorLocked() {
-    return !cursorLockRegistrations.empty();
+    return cursorUnlockRegistrations.empty();
 }
 
 void Input::Update() {
@@ -149,9 +146,12 @@ void Input::Update() {
         return;
     }
     
-    // Skip first frame to avoid spinning on initial lock
+    // Skip first frame to avoid spinning on initial lock and apply lock state
     if (firstFrame) {
         firstFrame = false;
+        ShowCursor(FALSE);
+        hwnd = GetActiveWindow();
+        UpdateWindowCenter();
         CenterCursor();
         return;
     }

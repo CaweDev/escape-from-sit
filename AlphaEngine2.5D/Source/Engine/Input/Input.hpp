@@ -9,7 +9,6 @@
 #include "AEEngine.h"
 #include <string>
 #include <set>
-#include <Windows.h>
 
 namespace Engine {
 
@@ -65,11 +64,11 @@ public:
     
     // Cursor lock registration system
     
-    /** Register a component for cursor lock. Cursor is hidden & centered when count > 0 */
-    static void RegisterCursorLock(const std::string& id);
+    /** Register a component for cursor unlock. Cursor is shown when count > 0 */
+    static void RegisterCursorUnlock(const std::string& id);
     
-    /** Unregister a component. Cursor is shown when count reaches 0 */
-    static void UnregisterCursorLock(const std::string& id);
+    /** Unregister a component. Cursor is hidden & centered when count reaches 0 */
+    static void UnregisterCursorUnlock(const std::string& id);
     
     /** Check if cursor is currently locked */
     static bool IsCursorLocked();
@@ -83,7 +82,7 @@ private:
     static void UpdateWindowCenter();
     static void CenterCursor();
     
-    static std::set<std::string> cursorLockRegistrations;
+    static std::set<std::string> cursorUnlockRegistrations;
     static HWND hwnd;
     static int centerX;
     static int centerY;

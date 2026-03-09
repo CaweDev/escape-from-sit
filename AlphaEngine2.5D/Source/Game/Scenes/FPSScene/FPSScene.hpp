@@ -274,14 +274,12 @@ namespace Game {
             modalPanel->visible = true;
             endPanelShown = true;
 
-            if (Input::IsCursorLocked()) {
-                Input::UnregisterCursorLock("FPSController");
-            }
+            Input::RegisterCursorUnlock("EndPanel");
 
             Application::RegisterPause("Endpanel");
 
             modalButton->onClick = [onButton, this]() {
-                Input::RegisterCursorLock("FPSController");
+                Input::UnregisterCursorUnlock("EndPanel");
                 Application::UnregisterPause("Endpanel");
                 if (onButton) onButton();
                 modalPanel->visible = false;

@@ -26,6 +26,9 @@ extern "C" {
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
 
+// Debug
+#include "Game/Debug/DebugManager.hpp"
+
 using namespace Engine;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -45,6 +48,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     // Initialize UI System
     UI::UIManager::Initialize();
+
+    // Initialize Debug Manager
+    Game::DebugManager::Initialize();
 
     // Set default background color (Solid Black)
     AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
@@ -78,6 +84,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             UI::UIManager::GetInstance()->Update(Time::unscaledDeltaTime);
         }
 
+        Game::DebugManager::Update();
+
         SceneManager::RenderActiveScene();
 
         // Render UI System on top
@@ -85,14 +93,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             UI::UIManager::GetInstance()->Render();
         }
 
-		/*std::cout << "Framerate: " << AEFrameRateControllerGetFrameRate() << " FPS" << std::endl;*/
-        std::cout << "FPS" << AEFrameRateControllerGetFrameRate() << std::endl;
         // Frame end
         AESysFrameEnd();
     }
 
     // Unload active scene first (ensures components clean up before managers)
     SceneManager::UnloadActiveScene();
+
+    // Cleanup Debug Manager
+    Game::DebugManager::Shutdown();
 
     // Cleanup UI System
     UI::UIManager::Shutdown();

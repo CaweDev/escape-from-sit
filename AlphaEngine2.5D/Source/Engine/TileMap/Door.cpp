@@ -18,15 +18,7 @@ void Door::Awake() {
     
     // Set initial collider size and offset based on facing
     if (collider) {
-        if (facing == DoorFacing::NorthSouth) {
-            // Door runs East-West, blocks North-South. Thin in Y.
-            collider->size = Vector2(1.0f, 0.4f);
-            collider->offset = Vector2(0, 0);
-        } else {
-            // Door runs North-South, blocks East-West. Thin in X.
-            collider->size = Vector2(0.4f, 1.0f);
-            collider->offset = Vector2(0, 0);
-        }
+        collider->size = Vector2(1.0f, 1.0f);
     }
 
     

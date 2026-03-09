@@ -30,6 +30,8 @@ public:
     
     /** Total time elapsed since game start */
     static f32 time;
+
+	static f32 fps; // Frames per second 
     
     /** Total number of frames rendered */
     static unsigned int frameCount;

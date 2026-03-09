@@ -121,6 +121,12 @@ namespace Engine {
 		/** @brief Fallback floor color (used if no floor sprite is set). */
 		Color floorColor = Color(0.3f, 0.3f, 0.3f, 1.0f);
 
+		/** @brief Minimum fog visibility threshold below which pixels/columns are culled for performance. */
+		f32 visibilityCullThreshold = 0.01f;
+
+		/** @brief Pixel overlap added to floor/ceiling boundaries to prevent 1px sub-pixel gaps against walls. */
+		f32 wallOverlapPadding = 10.0f;
+
 		TileMapRenderer();
 		~TileMapRenderer();
 
@@ -198,9 +204,12 @@ namespace Engine {
 		void SetPathTiles(const std::vector<Vector2>& waypoints) { pathWaypoints = waypoints; }
 		void ClearPathTiles() { pathWaypoints.clear(); }
 
-		
-
-		
+		/**
+		 * @brief Draws debug colliders in the world view when Physics2D::debugDrawEnabled is true.
+		 * Call this AFTER all other renderers have drawn (e.g. from Scene::OnAfterRender)
+		 * so the lines appear on top of everything.
+		 */
+		void RenderDebugColliders(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight);
 
 	private:
 		// ---------------------------------------------------------------

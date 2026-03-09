@@ -47,6 +47,9 @@ public:
     /** Global gravity (units per second squared) */
     static f32 gravity;
     
+    /** Global flag for debug collider rendering (used by Minimap/Renderers) */
+    static bool debugDrawEnabled;
+    
     /** Reference to the active tilemap for wall collision */
     static TileMap* tileMap;
 
@@ -94,6 +97,15 @@ public:
     
     /** Try to move a rigidbody with collision */
     static Vector2 MoveWithCollision(Rigidbody2D* rb, const Vector2& movement);
+
+    /** Get the list of all registered colliders (useful for debug drawing) */
+    static const std::vector<Collider2D*>& GetColliders() { return colliders; }
+
+    /**
+     * @brief Renders 3D debug collider outlines on top of the current frame.
+     * Uses Camera::main for projection. Call after all other renderers have drawn.
+     */
+    static void DrawDebugView();
 
 private:
     Physics2D() = delete; // Static class
