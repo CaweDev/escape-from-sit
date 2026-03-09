@@ -18,17 +18,11 @@ namespace Game
         m_timeLeft = 0.0f;
         m_duration = 0.0f;
         m_intensity = 0.0f;
-        m_basePitch = 0.0f;
+        m_lastShakeOffset = 0.0f;
     }
 
     void CameraShake::Shake(float duration, float intensity)
     {
-        // Get current camera pitch as baseline
-        auto cam = gameObject->GetComponent<Engine::Camera>();
-        if (cam) {
-            m_basePitch = cam->pitch;
-        }
-
         m_duration = duration;
         m_timeLeft = duration;
         m_intensity = intensity;
@@ -42,10 +36,13 @@ namespace Game
         auto cam = gameObject->GetComponent<Engine::Camera>();
         if (!cam) return;
 
-        // IMPORTANT: when not shaking, reset to base
+        // Remove previous shake offset from camera pitch
+        cam->pitch -= m_lastShakeOffset;
+
+        // If shake is finished, clear offset and return
         if (m_timeLeft <= 0.0f)
         {
-            // No shake - camera pitch stays at base
+            m_lastShakeOffset = 0.0f;
             return;
         }
 
@@ -55,18 +52,14 @@ namespace Game
         float t = (m_duration > 0.0f) ? (m_timeLeft / m_duration) : 0.0f;
         float scale = (t < 0.0f) ? 0.0f : t;
 
-        // Apply shake to camera pitch ONLY (visual offset, doesn't affect movement)
-        float shakeOffset = RandNeg1To1() * m_intensity * scale * 100.0f; // Multiply by 100 for visible effect
-        cam->pitch = m_basePitch + shakeOffset;
+        // Calculate NEW shake offset (doesn't overwrite player's pitch input)
+        m_lastShakeOffset = RandNeg1To1() * m_intensity * scale * 100.0f;
+        
+        // ADD shake offset to current pitch (preserves player input)
+        cam->pitch += m_lastShakeOffset;
 
         // Optionally add small rotation shake
         float rotShake = RandNeg1To1() * m_intensity * scale * 2.0f;
         transform->rotation += rotShake;
-
-        // When shake ends, reset
-        if (m_timeLeft <= 0.0f)
-        {
-            cam->pitch = m_basePitch;
-        }
     }
 }

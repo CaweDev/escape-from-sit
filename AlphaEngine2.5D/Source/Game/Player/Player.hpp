@@ -48,7 +48,7 @@ namespace Game {
 		Engine::Vector2 knockback{ 0.0f, 0.0f };
 		float stamina = 100.0f;
 		float staminaMax = 100.0f;
-		float sprintResumeThreshold = 20.0f;
+		float sprintResumeThreshold = 5.0f;  // Lowered from 20.0f - player can sprint again at 5% stamina
 		float staminaDrainPerSec = 10.0f;
 		float staminaRegenPerSec = 5.0f;
 		
