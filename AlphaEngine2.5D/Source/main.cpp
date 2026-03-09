@@ -27,7 +27,7 @@ extern "C" {
 #include "Game/Scenes/SceneRegistry.hpp"
 
 // Debug
-#include "Game/Debug/DebugManager.hpp"
+#include "Game/Debugger/DebugManager.hpp"
 
 using namespace Engine;
 

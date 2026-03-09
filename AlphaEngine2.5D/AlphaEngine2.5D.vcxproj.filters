@@ -83,8 +83,8 @@
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
     <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
-    <ClCompile Include="Source\Game\Debug\DebugManager.cpp" />
-    <ClCompile Include="Source\Game\Debug\DebugMenu.cpp" />
+    <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
+    <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -187,8 +187,8 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
     <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
-    <ClInclude Include="Source\Game\Debug\DebugManager.hpp" />
-    <ClInclude Include="Source\Game\Debug\DebugMenu.hpp" />
+    <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
+    <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
