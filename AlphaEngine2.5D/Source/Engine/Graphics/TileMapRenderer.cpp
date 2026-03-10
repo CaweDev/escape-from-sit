@@ -15,6 +15,9 @@
 #include "TextureUtils.hpp"
 #include "ZBuffer.hpp"
 #include "Engine/Core/Application.hpp"
+#include "Engine/Physics/Physics2D.hpp"
+#include "Engine/Physics/BoxCollider2D.hpp"
+#include "Engine/Physics/CircleCollider2D.hpp"
 #include <cmath>
 #include <vector>
 #include <algorithm>
@@ -252,6 +255,8 @@ namespace Engine {
 		});
 
 		RenderWalls(horizon, screenHeight, managedColumns);
+		// Debug collider rendering is now handled by Physics2D::DrawDebugView(),
+		// called from Scene::RenderInternal after all renderers have drawn.
 	}
 
 	TileMapRenderer::RaycastResult TileMapRenderer::CastRay(
@@ -366,7 +371,8 @@ namespace Engine {
 
 		int startFy = 0; // Top of the framebuffer
 		if (fog.enabled && posZ > 0.001f) {
-			f32 maxVisibleDist = fog.distance * 6.9f;     // Beyond this, fog < 0.001
+			f32 cullVal = fmaxf(visibilityCullThreshold, 0.0001f);
+			f32 maxVisibleDist = fog.distance * -logf(cullVal);
 			f32 minP = rowDistFactor / maxVisibleDist; 
 			int computedScreenStart = horizon - (int)ceilf(minP);
 			int computedFbStart = (int)(computedScreenStart * fbScale);
@@ -445,7 +451,7 @@ namespace Engine {
 						if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility; // Don't exceed max brightness.
 					}
 					// If this row is so far away that it's essentially invisible, stop — all rows above are farther.
-					if (fogFactor < 0.001f && fog.minVisibility < 0.001f) continue;
+					if (fogFactor < visibilityCullThreshold) continue;
 
 					// Byte offset to the start of this row in the framebuffer (each pixel = 4 bytes RGBA).
 					int rowOffset = fy * fbWidth * 4;
@@ -459,9 +465,10 @@ namespace Engine {
 					for (int c = 0; c < numCols; ++c) {
 						const auto& col = columns[c]; // Column data from the raycast pass.
 
-						// Wall occlusion: if this screen row is at or below the wall's top edge,
+						// Wall occlusion: if this screen row is significantly below the wall's top edge,
 						// the wall covers this entire column block — skip raycasting for these pixels.
-						if (screenY >= col.ray.drawStart) continue;
+						// Added a configurable overlap to prevent sub-pixel gaps at the horizon.
+						if (screenY > col.ray.drawStart + wallOverlapPadding) continue;
 
 						// Map the column block to framebuffer X pixel range
 						int startFx = (int)(c * COLUMN_STEP * fbScale);
@@ -528,10 +535,10 @@ namespace Engine {
 		const f32 invScale = 1.0f / fbScale; // fb pixel → screen pixel multiplier.
 
 		// --- Early-out: skip rows near the horizon that would be fully fogged ---
-		// exp(-d / fogDist) = 0.001 when d ≈ 6.9 × fogDist.
 		int startFy = clampedFbHorizon; // Default: start right at the horizon.
-		if (fog.enabled && posZ > 0.001f) {
-			f32 maxVisibleDist = fog.distance * 6.9f;     // Beyond this, fog < 0.001
+		if (fog.enabled && posZ > 0.001f) { // posZ > 0.001f avoids div-by-zero near ground level
+			f32 cullVal = fmaxf(visibilityCullThreshold, 0.0001f);
+			f32 maxVisibleDist = fog.distance * -logf(cullVal);
 			f32 minP = rowDistFactor / maxVisibleDist;    // Minimum "p" that gives a visible distance.
 			int computedScreenStart = horizon + (int)ceilf(minP); // Screen row corresponding to minP.
 			int computedFbStart = (int)(computedScreenStart * fbScale); // Map to framebuffer space.
@@ -599,7 +606,7 @@ namespace Engine {
 						if (fogFactor < fog.minVisibility) fogFactor = fog.minVisibility;
 						if (fogFactor > fog.maxVisibility) fogFactor = fog.maxVisibility;
 					}
-					if (fogFactor < 0.001f && fog.minVisibility < 0.001f) continue; // Row fully fogged — skip (but don't break; closer rows may be visible).
+					if (fogFactor < visibilityCullThreshold) continue; // Row fully fogged — skip (but don't break; closer rows may be visible).
 
 					int rowOffset = fy * fbWidth * 4; // Byte offset to this row in the framebuffer.
 
@@ -612,8 +619,9 @@ namespace Engine {
 					for (int c = 0; c < numCols; ++c) {
 						const auto& col = columns[c];
 
-						// Wall occlusion: if this row is above the wall's bottom edge, the wall covers it.
-						if (screenY < col.ray.drawEnd) continue;
+						// Wall occlusion: if this row is significantly above the wall's bottom edge, the wall covers it.
+						// Added a configurable overlap to prevent sub-pixel gaps at the horizon.
+						if (screenY < col.ray.drawEnd - wallOverlapPadding) continue;
 
 						// Map the column block to framebuffer X pixel range
 						int startFx = (int)(c * COLUMN_STEP * fbScale);
@@ -685,7 +693,7 @@ namespace Engine {
 			// Skip zero-height columns (wall exactly at the horizon or degenerate).
 			if (col.screenY == col.screenY2) continue;
 			// Skip columns that are too deeply fogged to be visible.
-			if (col.fogFactor < 0.001f && fog.minVisibility < 0.001f) continue;
+			if (col.fogFactor < visibilityCullThreshold && fog.minVisibility < visibilityCullThreshold) continue;
 
 			// --- Batch boundary check ---
 			// If the tile type or fog key differs from the current batch, we need to
@@ -844,6 +852,5 @@ namespace Engine {
 		}
 		cachedFogDistance = fogDistance;                  // Cache the distance so we know when to rebuild.
 	}
-
 } // namespace Engine
 

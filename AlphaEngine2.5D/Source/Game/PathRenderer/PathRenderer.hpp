@@ -27,14 +27,17 @@ namespace Game {
         /** Path waypoints (tile coordinates) */
         std::vector<Engine::Vector2> pathWaypoints;
         
-        /** Marker color */
-        Engine::Color markerColor = Engine::Color(1.0f, 1.0f, 0.0f, 0.8f); // Yellow
+        /** Marker color (can be set per-card) */
+        Engine::Color markerColor = Engine::Color(1.0f, 1.0f, 0.0f, 0.8f); // Yellow default
         
         /** Marker size */
         float markerSize = 0.3f;
         
         /** Marker height above floor */
         float markerHeight = 0.02f;
+        
+        /** Card ID this path is for (0-3, -1 for none) */
+        int cardId = -1;
         
         /** Glow animation */
         float glowSpeed = 2.0f;
@@ -59,8 +62,8 @@ namespace Game {
         void Update() override;
         void Render() override; // IRenderer interface - called during render phase
         
-        /** Compute and set path from start to destination using A* */
-        void SetPath(const Engine::Vector2& start, const Engine::Vector2& dest);
+        /** Compute and set path from start to destination using A*, with card-specific color */
+        void SetPath(const Engine::Vector2& start, const Engine::Vector2& dest, int cardID = -1, const Engine::Color& color = Engine::Color(1.0f, 1.0f, 0.0f, 0.8f));
         
         /** Clear the path */
         void ClearPath();

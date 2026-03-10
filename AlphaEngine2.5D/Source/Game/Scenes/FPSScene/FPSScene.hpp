@@ -274,14 +274,12 @@ namespace Game {
             modalPanel->visible = true;
             endPanelShown = true;
 
-            if (Input::IsCursorLocked()) {
-                Input::UnregisterCursorLock("FPSController");
-            }
+            Input::RegisterCursorUnlock("EndPanel");
 
             Application::RegisterPause("Endpanel");
 
             modalButton->onClick = [onButton, this]() {
-                Input::RegisterCursorLock("FPSController");
+                Input::UnregisterCursorUnlock("EndPanel");
                 Application::UnregisterPause("Endpanel");
                 if (onButton) onButton();
                 modalPanel->visible = false;
@@ -526,8 +524,8 @@ namespace Game {
                     else if (c == 'D') tileValue = 10; // Door
                     else if (c == 'T') tileValue = 11; // Terminal
                     else if (c == 'E') tileValue = 12; // Exit
-                    else if (c == 'I') tileValue = 13; // Interactable
-                    else if (c == 'C') tileValue = 13; // Control Room Door
+                    else if (c == 'C') tileValue = 13; // Control Room Door (old marker)
+                    else if (c == 'K') tileValue = 20; // Control Room Door (NEW dedicated tile)
                     else if (c == 'F') tileValue = 15; // Green Access Card
                     else if (c == 'G') tileValue = 16; // Purple Access Card
                     else if (c == 'H') tileValue = 17; // Red Access Card
@@ -760,6 +758,17 @@ namespace Game {
             // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
             auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
             
+            // Register control room door positions with PlayerHUD for pathfinding
+            for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i) {
+                Vector2 pos = controlRoomDoorPositions[i];
+                int tileX = (int)std::floor(pos.x);
+                int tileY = (int)std::floor(pos.y);
+                int zoneId = GetZoneId(tileX, tileY);
+                if (zoneId >= 1 && zoneId <= 4) {
+                    playerHUD->SetControlRoomPosition(zoneId, pos);
+                }
+            }
+            
             for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i) {
                 Vector2 pos = controlRoomDoorPositions[i];
                 
@@ -821,6 +830,9 @@ namespace Game {
             // ===== Spawn Access Cards from map markers (tiles 15-18) =====
             auto accessCardPositions = map->GetAccessCardPositions();
             
+            std::cout << "[FPSScene] ===== ACCESS CARD SPAWNING DEBUG =====\n";
+            std::cout << "[FPSScene] Found " << accessCardPositions.size() << " access card markers in map\n";
+            
             const char* cardSpritePaths[] = {
                 "Assets/color_green_empty.png",
                 "Assets/color_purple_empty.png",
@@ -836,11 +848,15 @@ namespace Game {
                 
                 const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
                 
+                std::cout << "[FPSScene] Spawning " << cardNames[cardId] << " card at (" << pos.x << ", " << pos.y << ")\n";
+                
                 // Create card GameObject
                 std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
                 auto cardGO = CreateGameObject(cardName);
                 cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
                 cardGO->transform->localScale = Vector2(0.4f, 0.4f);
+                
+                std::cout << "[FPSScene]   GameObject created: " << cardGO->name << "\n";
                 
                 // Add SpriteRenderer
                 auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
@@ -848,9 +864,13 @@ namespace Game {
                 sr->billboard = true;
                 sr->sortingOrder = 200;
                 
+                std::cout << "[FPSScene]   SpriteRenderer added (billboard=" << sr->billboard << ", sortingOrder=" << sr->sortingOrder << ")\n";
+                
                 // Add Interactable
                 auto interactable = cardGO->AddComponent<Engine::Interactable>();
                 interactable->maxDistance = 2.5f;
+                
+                std::cout << "[FPSScene]   Interactable added\n";
                 
                 // Add AccessCard component
                 auto card = cardGO->AddComponent<Game::AccessCard>();
@@ -858,11 +878,17 @@ namespace Game {
                 card->cardColor = static_cast<Game::AccessCardColor>(cardId);
                 card->spriteRenderer = sr;
                 card->interactable = interactable;
+                
+                std::cout << "[FPSScene]   AccessCard component added (cardId=" << cardId << ")\n";
+                std::cout << "[FPSScene]   Card position: (" << cardGO->transform->position.x << ", " 
+                          << cardGO->transform->position.y << ", " << cardGO->transform->position.z << ")\n";
+                std::cout << "[FPSScene]   Card active: " << (cardGO->active ? "YES" : "NO") << "\n";
             }
             
             std::cout << "[FPSScene] Access card system initialized: " 
                       << controlRoomDoorPositions.size() << " doors, " 
                       << accessCardPositions.size() << " cards\n";
+            std::cout << "[FPSScene] ===== ACCESS CARD SPAWNING COMPLETE =====\n";
 
             // Connect terminals to guards
             for (auto* guard : guards) {

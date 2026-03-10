@@ -14,6 +14,7 @@ UITestScene::UITestScene() : Scene("UITest") {}
 UITestScene::~UITestScene() {}
 
 void UITestScene::OnLoad() {
+    Input::RegisterCursorUnlock("UITestScene");
     // UI System is now initialized globally in Main.cpp
     
     // Create the main canvas
@@ -90,6 +91,7 @@ void UITestScene::OnLoad() {
 }
 
 void UITestScene::OnUnload() {
+    Input::UnregisterCursorUnlock("UITestScene");
     // UI System shutdown is now handled globally in Main.cpp
     std::cout << "UITestScene Unloaded." << std::endl;
 }

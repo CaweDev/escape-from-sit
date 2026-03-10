@@ -32,6 +32,11 @@ namespace Game {
         Engine::Door* door = nullptr;
         Engine::Interactable* interactable = nullptr;
         
+        /** Hold-to-unlock mechanic */
+        float holdProgress = 0.0f;
+        float holdTimeRequired = 2.0f;
+        bool isHolding = false;
+        
         // Lifecycle
         void Awake() override;
         void Update() override;

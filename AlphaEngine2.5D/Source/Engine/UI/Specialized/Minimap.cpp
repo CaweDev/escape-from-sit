@@ -581,12 +581,179 @@ namespace UI
                 Engine::Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow tint for terminals
                 terminal.sprite);
         }
+        
+        // --- Step 6.5: Render Path Waypoints (GTA-style line) ---
+        RenderPathWaypoints(mapCenterX, mapCenterY, tileSize, playerTileX, playerTileY);
 
         // --- Step 7: Draw the decorative frame ---
         DrawBorderFrame(worldRect);
 
         // Render children
         UIElement::Render();
+    }
+    
+    void Minimap::RenderPathWaypoints(float mapCenterX, float mapCenterY, float tileSize,
+                                      float playerTileX, float playerTileY)
+    {
+        if (m_pathWaypoints.empty()) return;
+        
+        // Calculate player rotation for coordinate transformation
+        float playerRotation = m_playerTransform ? m_playerTransform->rotation : 0.0f;
+        float rad = playerRotation * Engine::Mathf::Deg2Rad;
+        float c = Engine::Mathf::Cos(rad);
+        float s = Engine::Mathf::Sin(rad);
+        
+        // Get minimap bounds for clipping (in screen space)
+        Rect worldRect = GetWorldRect();
+        float minimapLeft = worldRect.x;
+        float minimapRight = worldRect.x + worldRect.width;
+        float minimapBottom = worldRect.y;
+        float minimapTop = worldRect.y + worldRect.height;
+        
+        // RECTANGULAR minimap clipping - clip to minimap square bounds
+        // This ensures ALL path geometry stays within the minimap UI element
+        float minimapCenterX = worldRect.x + worldRect.width * 0.5f;
+        float minimapCenterY = worldRect.y + worldRect.height * 0.5f;
+        float minimapHalfWidth = worldRect.width * 0.5f;
+        float minimapHalfHeight = worldRect.height * 0.5f;
+        
+        
+        // Setup rendering
+        AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+        AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+        
+        AEMtx33 identity;
+        AEMtx33Identity(&identity);
+        AEGfxSetTransform(identity.m);
+        
+        // Draw path as connected line segments (GTA 5 style with CIRCULAR clipping)
+        AEGfxMeshStart();
+        
+        // Use the current path color (set by PlayerHUD based on card)
+        u32 colorU32 = m_pathColor.ToU32();
+        float lineWidth = tileSize * 0.3f; // Thick line, easy to see
+        
+        bool hasVisibleGeometry = false;
+        
+        // Helper function to clamp point to minimap bounds
+        auto ClampToMinimap = [&](float x, float y, float& outX, float& outY) {
+            outX = Engine::Mathf::Clamp(x, minimapLeft, minimapRight);
+            outY = Engine::Mathf::Clamp(y, minimapBottom, minimapTop);
+        };
+        
+        // Helper function to check if point is inside minimap
+        auto IsInsideMinimap = [&](float x, float y) -> bool {
+            return x >= minimapLeft && x <= minimapRight && y >= minimapBottom && y <= minimapTop;
+        };
+        
+        // Draw ALL waypoints as a continuous path, clipped to minimap rectangle
+        for (size_t i = 0; i < m_pathWaypoints.size(); ++i)
+        {
+            // Current waypoint
+            const Engine::Vector2& wp = m_pathWaypoints[i];
+            
+            // Calculate world-space offset from player (BEFORE rotation)
+            float dxW = wp.x - playerTileX;
+            float dyW = wp.y - playerTileY;
+            
+            // Convert to minimap screen space
+            float offX = dxW * tileSize;
+            float offY = dyW * tileSize;
+            float rotatedX = offX * s - offY * c;
+            float rotatedY = offX * c + offY * s;
+            float screenX = mapCenterX + rotatedX;
+            float screenY = mapCenterY + rotatedY;
+            
+            // Check if waypoint is inside minimap bounds
+            bool wpVisible = IsInsideMinimap(screenX, screenY);
+            
+            // Draw waypoint marker ONLY if visible
+            if (wpVisible)
+            {
+                float markerSize = tileSize * 0.35f;
+                float halfMarker = markerSize * 0.5f;
+                
+                // Clamp marker to minimap bounds
+                float markerLeft = Engine::Mathf::Max(screenX - halfMarker, minimapLeft);
+                float markerRight = Engine::Mathf::Min(screenX + halfMarker, minimapRight);
+                float markerBottom = Engine::Mathf::Max(screenY - halfMarker, minimapBottom);
+                float markerTop = Engine::Mathf::Min(screenY + halfMarker, minimapTop);
+                
+                // Only draw if marker has visible area
+                if (markerRight > markerLeft && markerTop > markerBottom) {
+                    AEGfxTriAdd(
+                        markerLeft, markerBottom, colorU32, 0, 0,
+                        markerRight, markerBottom, colorU32, 0, 0,
+                        markerLeft, markerTop, colorU32, 0, 0
+                    );
+                    AEGfxTriAdd(
+                        markerRight, markerBottom, colorU32, 0, 0,
+                        markerRight, markerTop, colorU32, 0, 0,
+                        markerLeft, markerTop, colorU32, 0, 0
+                    );
+                    hasVisibleGeometry = true;
+                }
+            }
+            
+            // Draw line to next waypoint
+            if (i < m_pathWaypoints.size() - 1)
+            {
+                const Engine::Vector2& nextWp = m_pathWaypoints[i + 1];
+                
+                // Calculate world-space offset for next waypoint
+                float dxW2 = nextWp.x - playerTileX;
+                float dyW2 = nextWp.y - playerTileY;
+                
+                // Convert next waypoint to minimap space
+                float offX2 = dxW2 * tileSize;
+                float offY2 = dyW2 * tileSize;
+                float rotatedX2 = offX2 * s - offY2 * c;
+                float rotatedY2 = offX2 * c + offY2 * s;
+                float screenX2 = mapCenterX + rotatedX2;
+                float screenY2 = mapCenterY + rotatedY2;
+                
+                // Clamp both line endpoints to minimap bounds
+                float clampedX1 = Engine::Mathf::Clamp(screenX, minimapLeft, minimapRight);
+                float clampedY1 = Engine::Mathf::Clamp(screenY, minimapBottom, minimapTop);
+                float clampedX2 = Engine::Mathf::Clamp(screenX2, minimapLeft, minimapRight);
+                float clampedY2 = Engine::Mathf::Clamp(screenY2, minimapBottom, minimapTop);
+                
+                // Draw thick line as a rectangle (using clamped coordinates)
+                float dx = clampedX2 - clampedX1;
+                float dy = clampedY2 - clampedY1;
+                float length = Engine::Mathf::Sqrt(dx * dx + dy * dy);
+                if (length > 0.01f)
+                {
+                    float nx = -dy / length;  // Perpendicular (normal)
+                    float ny = dx / length;
+                    
+                    float halfWidth = lineWidth * 0.5f;
+                    
+                    // Line as quad (two triangles) - all vertices clamped to minimap
+                    float x1 = Engine::Mathf::Clamp(clampedX1 + nx * halfWidth, minimapLeft, minimapRight);
+                    float y1 = Engine::Mathf::Clamp(clampedY1 + ny * halfWidth, minimapBottom, minimapTop);
+                    float x2 = Engine::Mathf::Clamp(clampedX1 - nx * halfWidth, minimapLeft, minimapRight);
+                    float y2 = Engine::Mathf::Clamp(clampedY1 - ny * halfWidth, minimapBottom, minimapTop);
+                    float x3 = Engine::Mathf::Clamp(clampedX2 + nx * halfWidth, minimapLeft, minimapRight);
+                    float y3 = Engine::Mathf::Clamp(clampedY2 + ny * halfWidth, minimapBottom, minimapTop);
+                    float x4 = Engine::Mathf::Clamp(clampedX2 - nx * halfWidth, minimapLeft, minimapRight);
+                    float y4 = Engine::Mathf::Clamp(clampedY2 - ny * halfWidth, minimapBottom, minimapTop);
+                    
+                    AEGfxTriAdd(x1, y1, colorU32, 0, 0, x2, y2, colorU32, 0, 0, x3, y3, colorU32, 0, 0);
+                    AEGfxTriAdd(x2, y2, colorU32, 0, 0, x4, y4, colorU32, 0, 0, x3, y3, colorU32, 0, 0);
+                    hasVisibleGeometry = true;
+                }
+            }
+        }
+        
+        // Only draw if we have visible geometry
+        AEGfxVertexList* mesh = AEGfxMeshEnd();
+        if (mesh && hasVisibleGeometry) {
+            AEGfxMeshDraw(mesh, AE_GFX_MDM_TRIANGLES);
+            AEGfxMeshFree(mesh);
+        } else if (mesh) {
+            AEGfxMeshFree(mesh);
+        }
     }
 
 } // namespace UI

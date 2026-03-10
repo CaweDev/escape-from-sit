@@ -51,6 +51,10 @@ void PathRenderer::Update() {
 }
 
 void PathRenderer::Render() {
+    // DISABLED: Yellow floor tiles removed per user request
+    // Path computation still works (for minimap), but 3D markers are hidden
+    return;
+    
     static int renderCallCount = 0;
     
     if (!HasPath()) {
@@ -99,18 +103,23 @@ void PathRenderer::Render() {
     }
 }
 
-void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& dest) {
+void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& dest, int cardID, const Engine::Color& color) {
     destination = dest;
+    cardId = cardID;
+    markerColor = color;
     pathWaypoints = FindPath(start, dest);
     
     if (pathWaypoints.empty()) {
         std::cout << "[PathRenderer] No path found from (" << start.x << ", " << start.y 
                   << ") to (" << dest.x << ", " << dest.y << ")\n";
     } else {
-        std::cout << "[PathRenderer] ===== PATH SET SUCCESSFULLY ====="  << std::endl;
+        const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+        std::cout << "[PathRenderer] ===== PATH SET SUCCESSFULLY =====" << std::endl;
+        std::cout << "[PathRenderer] Card: " << (cardID >= 0 && cardID <= 3 ? cardNames[cardID] : "Unknown") << " (ID=" << cardID << ")" << std::endl;
         std::cout << "[PathRenderer] Path computed with " << pathWaypoints.size() << " waypoints\n";
         std::cout << "[PathRenderer] Start: (" << start.x << ", " << start.y << ")" << std::endl;
         std::cout << "[PathRenderer] Dest: (" << dest.x << ", " << dest.y << ")" << std::endl;
+        std::cout << "[PathRenderer] Color: (" << color.r << ", " << color.g << ", " << color.b << ")" << std::endl;
         std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;
         std::cout << "[PathRenderer] Component ready to render!" << std::endl;
     }
@@ -119,6 +128,8 @@ void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& 
 void PathRenderer::ClearPath() {
     pathWaypoints.clear();
     currentAlpha = 1.0f;
+    cardId = -1;
+    std::cout << "[PathRenderer] Path cleared" << std::endl;
 }
 
 void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, float glowMod) {

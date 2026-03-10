@@ -8,8 +8,8 @@ namespace Game
         const Engine::Color kOverlayColor   { 0.0f,  0.0f,  0.0f,  0.85f };
         const Engine::Color kTitleColor     { 0.8f,  0.15f, 0.10f, 1.0f };
         
-        const Engine::Color kBtnNormal      { 0.55f, 0.05f, 0.05f, 1.0f };
-        const Engine::Color kBtnHighlighted { 0.75f, 0.08f, 0.08f, 1.0f };
+        const Engine::Color kBtnNormal      { 0.75f, 0.08f, 0.08f, 1.0f };
+        const Engine::Color kBtnHighlighted { 0.95f, 0.08f, 0.08f, 1.0f };
         const Engine::Color kBtnPressed     { 0.30f, 0.10f, 0.10f, 1.0f };
 
         const Engine::Color kTextNormal     { 0.9f,  0.9f,  0.9f,  1.0f };
@@ -134,7 +134,7 @@ namespace Game
         m_panelImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
 		m_panelImage->SetImageType(UI::ImageType::Sliced);
 		m_panelImage->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
-		m_panelImage->SetColor({ 0.2f, 0.2f, 0.2f, 1.f }); // Slightly transparent to show overlay tint
+		m_panelImage->SetColor({ 0.5f, 0.5f, 0.5f, 1.f }); // Slightly transparent to show overlay tint
 
         // Controls Image
         m_controlsImage = m_panelImage->CreateChild<UI::Image>();

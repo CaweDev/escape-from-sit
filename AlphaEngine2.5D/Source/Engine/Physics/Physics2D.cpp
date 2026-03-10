@@ -12,13 +12,18 @@
 #include "../Core/Time.hpp"
 #include "../Core/GameObject.hpp"
 #include "../TileMap/TileMap.hpp"
+#include "../TileMap/Door.hpp"
 #include "../Math/Mathf.hpp"
+#include "../Graphics/Camera.hpp"
+#include "AEEngine.h"
 #include <algorithm>
+#include <cmath>
 
 namespace Engine {
 
 // Static member initialization
 f32 Physics2D::gravity = 9.81f;
+bool Physics2D::debugDrawEnabled = false;
 
 TileMap* Physics2D::tileMap = nullptr;
 std::vector<Collider2D*> Physics2D::colliders;
@@ -408,6 +413,187 @@ Vector2 Physics2D::MoveWithCollision(Rigidbody2D* rb, const Vector2& movement) {
     }
     
     return TileMapCollision(currentPos, movement, radius);
+}
+
+void Physics2D::DrawDebugView() {
+    if (!debugDrawEnabled) return;
+    if (colliders.empty()) return;
+    if (!Camera::main || !Camera::main->transform) return;
+
+    int screenWidth  = AEGfxGetWindowWidth();
+    int screenHeight = AEGfxGetWindowHeight();
+    if (screenWidth <= 0 || screenHeight <= 0) return;
+
+    Transform* camTransform = Camera::main->transform;
+    f32 cx       = camTransform->position.x;
+    f32 cy       = camTransform->position.y;
+    f32 camZ     = camTransform->position.z;
+    f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+    f32 pitch    = Camera::main->pitch;
+    int horizon  = screenHeight / 2 + (int)pitch;
+
+    f32 fovRad      = Camera::main->fov * 3.14159f / 180.0f;
+    f32 planeLength = tanf(fovRad / 2.0f);
+
+    f32 dirX   = cosf(angleRad);
+    f32 dirY   = sinf(angleRad);
+    f32 planeX = dirY * planeLength;
+    f32 planeY = -dirX * planeLength;
+
+    f32 invDet = 1.0f / (planeX * dirY - dirX * planeY);
+    f32 halfW  = screenWidth  * 0.5f;
+    f32 halfH  = screenHeight * 0.5f;
+
+    static constexpr f32 WORLD_HEIGHT  = 2.0f;
+    static constexpr f32 NEAR_PLANE    = 0.2f; // raised to reduce near-plane projection blow-up
+    static constexpr u32 COLOR_MAGENTA = 0xFFFF00FF;
+    static constexpr u32 COLOR_WHITE   = 0xFFFFFFFF;
+
+    // Projects a single world point into AE screen-space.
+    // ty is the camera-depth; clamped to NEAR_PLANE on entry by AddLine.
+    auto ProjectPoint = [&](f32 tx, f32 ty, f32 tz) -> std::pair<f32, f32> {
+        f32 projH = (f32)screenWidth / (ty * planeLength * 2.0f);
+        f32 sx    = halfW * (1.0f + tx / ty) - halfW;
+        f32 sy    = halfH - ((f32)horizon + (camZ - tz) * projH);
+        // Clamp to screen bounds to prevent near-plane artefacts from streaking.
+        if (sy >  halfH) sy =  halfH;
+        if (sy < -halfH) sy = -halfH;
+        return { sx, sy };
+    };
+
+    // Adds a perspective-projected 3D line segment with near-plane clipping.
+    auto AddLine = [&](f32 wx1, f32 wy1, f32 wz1,
+                       f32 wx2, f32 wy2, f32 wz2, u32 col) {
+        f32 dx1 = wx1 - cx, dy1 = wy1 - cy;
+        f32 tx1 = invDet * ( dirY * dx1 - dirX  * dy1);
+        f32 ty1 = invDet * (-planeY * dx1 + planeX * dy1);
+        f32 tz1 = wz1 / WORLD_HEIGHT;
+
+        f32 dx2 = wx2 - cx, dy2 = wy2 - cy;
+        f32 tx2 = invDet * ( dirY * dx2 - dirX  * dy2);
+        f32 ty2 = invDet * (-planeY * dx2 + planeX * dy2);
+        f32 tz2 = wz2 / WORLD_HEIGHT;
+
+        if (ty1 < NEAR_PLANE && ty2 < NEAR_PLANE) return; // fully behind
+
+        // Clip endpoint that is behind the near plane.
+        if (ty1 < NEAR_PLANE || ty2 < NEAR_PLANE) {
+            f32 t = (NEAR_PLANE - ty1) / (ty2 - ty1);
+            if (ty1 < NEAR_PLANE) {
+                tx1 = tx1 + t * (tx2 - tx1);
+                tz1 = tz1 + t * (tz2 - tz1);
+                ty1 = NEAR_PLANE;
+            } else {
+                tx2 = tx1 + t * (tx2 - tx1);
+                tz2 = tz1 + t * (tz2 - tz1);
+                ty2 = NEAR_PLANE;
+            }
+        }
+
+        auto [sx1, sy1] = ProjectPoint(tx1, ty1, tz1);
+        auto [sx2, sy2] = ProjectPoint(tx2, ty2, tz2);
+
+        AEGfxVertexAdd(sx1, sy1, col, 0, 0);
+        AEGfxVertexAdd(sx2, sy2, col, 0, 0);
+    };
+
+    // Draws all 12 edges of an AABB wireframe box.
+    auto AddBox = [&](f32 x0, f32 y0, f32 x1, f32 y1, f32 hMin, f32 hMax, u32 col) -> int {
+        AddLine(x0, y0, hMax, x1, y0, hMax, col);
+        AddLine(x1, y0, hMax, x1, y1, hMax, col);
+        AddLine(x1, y1, hMax, x0, y1, hMax, col);
+        AddLine(x0, y1, hMax, x0, y0, hMax, col);
+        AddLine(x0, y0, hMin, x1, y0, hMin, col);
+        AddLine(x1, y0, hMin, x1, y1, hMin, col);
+        AddLine(x1, y1, hMin, x0, y1, hMin, col);
+        AddLine(x0, y1, hMin, x0, y0, hMin, col);
+        AddLine(x0, y0, hMin, x0, y0, hMax, col);
+        AddLine(x1, y0, hMin, x1, y0, hMax, col);
+        AddLine(x1, y1, hMin, x1, y1, hMax, col);
+        AddLine(x0, y1, hMin, x0, y1, hMax, col);
+        return 12;
+    };
+
+    AEGfxSetCamPosition(0.0f, 0.0f);
+    AEGfxSetRenderMode(AE_GFX_RM_COLOR);
+    AEGfxSetBlendMode(AE_GFX_BM_BLEND);
+    AEGfxSetColorToMultiply(1.0f, 1.0f, 1.0f, 1.0f);
+    AEGfxSetColorToAdd(0, 0, 0, 0);
+    AEGfxSetTransparency(1.0f);
+    AEMtx33 identity;
+    AEMtx33Identity(&identity);
+    AEGfxSetTransform(identity.m);
+
+    static constexpr int CIRCLE_SEGMENTS    = 16;
+    static constexpr int MAX_LINES_PER_BATCH = 3000;
+
+    AEGfxMeshStart();
+    int lineCount = 0;
+
+    auto Flush = [&]() {
+        AEGfxVertexList* mesh = AEGfxMeshEnd();
+        if (mesh) {
+            if (lineCount > 0) AEGfxMeshDraw(mesh, AE_GFX_MDM_LINES);
+            AEGfxMeshFree(mesh);
+        }
+        AEGfxMeshStart();
+        lineCount = 0;
+    };
+
+    for (Collider2D* col : colliders) {
+        if (!col || !col->gameObject || !col->gameObject->active) continue;
+        if (col->isTrigger) continue;
+        // Never draw the collider belonging to the camera's own GameObject.
+        if (Camera::main && col->gameObject == Camera::main->gameObject) continue;
+
+        f32 hMin = col->minHeight;
+        f32 hMax = col->maxHeight;
+
+        // TileMapCollider2D: one white box per wall tile.
+        TileMapCollider2D* tmc = dynamic_cast<TileMapCollider2D*>(col);
+        if (tmc && tmc->tileMap) {
+            TileMap* tm = tmc->tileMap;
+            for (int ty = 0; ty < tm->height; ++ty) {
+                for (int tx = 0; tx < tm->width; ++tx) {
+                    if (!tm->IsWall(tx, ty)) continue;
+                    f32 x0 = static_cast<f32>(tx);
+                    f32 y0 = static_cast<f32>(ty);
+                    lineCount += AddBox(x0, y0, x0 + 1.0f, y0 + 1.0f, hMin, hMax, COLOR_WHITE);
+                    if (lineCount >= MAX_LINES_PER_BATCH) Flush();
+                }
+            }
+            continue;
+        }
+
+        // Circle collider: magenta cylinder (top ring + bottom ring + vertical posts).
+        CircleCollider2D* circle = dynamic_cast<CircleCollider2D*>(col);
+        if (circle) {
+            Vector2 center = circle->GetCenter();
+            f32 r = circle->GetScaledRadius();
+            for (int s = 0; s < CIRCLE_SEGMENTS; ++s) {
+                f32 a0  = (f32)s       / (f32)CIRCLE_SEGMENTS * 2.0f * 3.14159f;
+                f32 a1  = (f32)(s + 1) / (f32)CIRCLE_SEGMENTS * 2.0f * 3.14159f;
+                f32 px0 = center.x + r * cosf(a0), py0 = center.y + r * sinf(a0);
+                f32 px1 = center.x + r * cosf(a1), py1 = center.y + r * sinf(a1);
+                AddLine(px0, py0, hMax, px1, py1, hMax, COLOR_MAGENTA);
+                AddLine(px0, py0, hMin, px1, py1, hMin, COLOR_MAGENTA);
+                AddLine(px0, py0, hMin, px0, py0, hMax, COLOR_MAGENTA);
+            }
+            lineCount += CIRCLE_SEGMENTS * 3;
+        } else {
+            // Box collider (doors, entities, etc.): magenta AABB.
+            Bounds2D b = col->GetBounds();
+            lineCount += AddBox(b.min.x, b.min.y, b.max.x, b.max.y, hMin, hMax, COLOR_MAGENTA);
+        }
+
+        if (lineCount >= MAX_LINES_PER_BATCH) Flush();
+    }
+
+    AEGfxVertexList* mesh = AEGfxMeshEnd();
+    if (mesh) {
+        if (lineCount > 0) AEGfxMeshDraw(mesh, AE_GFX_MDM_LINES);
+        AEGfxMeshFree(mesh);
+    }
 }
 
 } // namespace Engine

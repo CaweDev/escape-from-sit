@@ -196,10 +196,7 @@ namespace Game
         Engine::Application::RegisterPause("PauseMenu");
 
         // Unlock cursor so the player can click buttons
-        if (Engine::Input::IsCursorLocked())
-        {
-            Engine::Input::UnregisterCursorLock("FPSController");
-        }
+        Engine::Input::RegisterCursorUnlock("PauseMenu");
 
         UpdateMenuVisuals();
     }
@@ -216,7 +213,7 @@ namespace Game
         Engine::Application::UnregisterPause("PauseMenu");
 
         // Re-lock cursor for FPS controls
-        Engine::Input::RegisterCursorLock("FPSController");
+        Engine::Input::UnregisterCursorUnlock("PauseMenu");
     }
 
     void PauseMenu::Toggle()
@@ -422,7 +419,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
-                Engine::Input::RegisterCursorLock("FPSController");
+                Engine::Input::UnregisterCursorUnlock("PauseMenu");
                 Engine::SceneManager::LoadWithLoadingScreen("FPS");
             }
         );

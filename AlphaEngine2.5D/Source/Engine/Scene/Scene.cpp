@@ -133,6 +133,7 @@ void Scene::RenderInternal() {
     }
 
 	OnAfterRender();
+    Physics2D::DrawDebugView();
 }
 
 bool Scene::IsLoaded() const {

@@ -12,6 +12,8 @@ namespace Game {
     }
 
     void MainMenuScene::OnLoad() {
+        Input::RegisterCursorUnlock("MainMenuScene");
+
         // Seed random
         srand(static_cast<unsigned>(time(nullptr)));
 
@@ -313,6 +315,7 @@ namespace Game {
     }
 
     void MainMenuScene::OnUnload() {
+        Input::UnregisterCursorUnlock("MainMenuScene");
         if (menuCanvas) {
             UIManager::GetInstance()->DestroyCanvas(menuCanvas);
             menuCanvas = nullptr;

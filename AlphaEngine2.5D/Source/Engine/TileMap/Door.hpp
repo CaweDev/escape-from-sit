@@ -117,6 +117,12 @@ public:
     void SetupInteractable(Interactable* interactable, 
                            const char* openText = "Open",
                            const char* closeText = "Close");
+    
+    /**
+     * @brief Disable this door's interaction (for when another component takes over)
+     * Used by ControlRoomDoor to prevent base Door from handling interactions
+     */
+    void DisableInteraction();
 
     /** Cached reference to collider (for enabling/disabling) */
     BoxCollider2D* collider = nullptr;

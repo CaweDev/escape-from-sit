@@ -53,6 +53,7 @@ namespace UI
         Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
         Engine::Color m_cctvNormalColor = Engine::Color(0.0f, 1.0f, 0.0f, 0.15f);  // Green when safe (lower opacity for circles)
         Engine::Color m_cctvAlertColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.25f);   // Red when detecting (lower opacity for circles)
+        Engine::Color m_pathColor = Engine::Color(1.0f, 1.0f, 0.0f, 1.0f);         // Color for path waypoints (default yellow)
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
@@ -81,6 +82,10 @@ namespace UI
             bool isDetecting;
         };
         std::vector<CCTVConeData> m_cctvCones;
+        
+        // Path waypoints (GTA-style waypoint line)
+        std::vector<Engine::Vector2> m_pathWaypoints;
+        
         // --- Graphics Resources ---
         AEGfxVertexList* m_quadMesh = nullptr;            // Cached unit quad mesh for simple draws
 
@@ -142,6 +147,16 @@ namespace UI
             m_cctvNormalColor = normalColor;
             m_cctvAlertColor = alertColor;
         }
+        
+        // Path waypoint rendering (GTA-style)
+        void SetPathWaypoints(const std::vector<Engine::Vector2>& waypoints) { m_pathWaypoints = waypoints; }
+        void ClearPath() { m_pathWaypoints.clear(); }
+        const std::vector<Engine::Vector2>& GetPathWaypoints() const { return m_pathWaypoints; }
+        
+        // Path color control
+        void SetPathColor(const Engine::Color& color) { m_pathColor = color; }
+        const Engine::Color& GetPathColor() const { return m_pathColor; }
+        
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }
         const Engine::Color& GetWallColor() const { return m_wallColor; }
@@ -197,6 +212,12 @@ namespace UI
          */
         void RenderCCTVCones(float mapCenterX, float mapCenterY, float tileSize, 
                             float playerTileX, float playerTileY, float playerRotation);
+        
+        /**
+         * @brief Render path waypoints as a line on the minimap (GTA-style)
+         */
+        void RenderPathWaypoints(float mapCenterX, float mapCenterY, float tileSize,
+                                float playerTileX, float playerTileY);
     };
 
 } // namespace UI

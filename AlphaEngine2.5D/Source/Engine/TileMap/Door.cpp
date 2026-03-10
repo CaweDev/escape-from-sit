@@ -18,15 +18,7 @@ void Door::Awake() {
     
     // Set initial collider size and offset based on facing
     if (collider) {
-        if (facing == DoorFacing::NorthSouth) {
-            // Door runs East-West, blocks North-South. Thin in Y.
-            collider->size = Vector2(1.0f, 0.4f);
-            collider->offset = Vector2(0, 0);
-        } else {
-            // Door runs North-South, blocks East-West. Thin in X.
-            collider->size = Vector2(0.4f, 1.0f);
-            collider->offset = Vector2(0, 0);
-        }
+        collider->size = Vector2(1.0f, 1.0f);
     }
 
     
@@ -156,6 +148,15 @@ void Door::SetupInteractable(Interactable* interactable, const char* openText, c
     interactable->onInteract = [this]() {
         this->Toggle();
     };
+}
+
+void Door::DisableInteraction() {
+    // Clear the interaction callback so Door doesn't respond to interactions
+    // This allows other components (like ControlRoomDoor) to take full control
+    if (m_interactable) {
+        m_interactable->onInteract = nullptr;
+        m_interactable = nullptr;
+    }
 }
 
 void Door::RequestOpen(const void* requester)

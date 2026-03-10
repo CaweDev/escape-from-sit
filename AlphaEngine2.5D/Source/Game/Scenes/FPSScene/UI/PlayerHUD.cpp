@@ -872,15 +872,17 @@ namespace Game
                               std::to_string(m_totalCardsCollected) + "/4)";
         ShowHackStatus(message, 3.0f);
         
-        // Determine which zone this card belongs to (cardId matches zone index)
-        // Card 0 (Green) = Zone 2 (B), Card 1 (Purple) = Zone 3 (C), 
-        // Card 2 (Red) = Zone 4 (D), Card 3 (Yellow) = Zone 1 (A)
+        // Determine which zone this card unlocks (path leads TO the terminal)
+        // Green card (G key) -> Zone B (Green zone) terminal
+        // Purple card (P key) -> Zone C (Magenta zone) terminal
+        // Red card (R key) -> Zone D (Yellow zone) terminal
+        // Yellow card (Y key) -> Zone A (Blue zone) terminal
         int targetZoneId = -1;
         switch (cardId) {
-            case 0: targetZoneId = 2; break; // Green -> Zone B
-            case 1: targetZoneId = 3; break; // Purple -> Zone C
-            case 2: targetZoneId = 4; break; // Red -> Zone D
-            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+            case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+            case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+            case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+            case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
         }
         
         // Don't auto-activate path - let player toggle it with key press
@@ -946,10 +948,31 @@ namespace Game
         return m_terminalPositions[zoneId - 1];
     }
     
+    void PlayerHUD::SetControlRoomPosition(int zoneId, const Engine::Vector2& position)
+    {
+        if (zoneId < 1 || zoneId > 4) return;
+        m_controlRoomPositions[zoneId - 1] = position;
+        std::cout << "[PlayerHUD] Set Zone " << Game::ZoneIdToLetter(zoneId) 
+                  << " control room position to (" << position.x << ", " << position.y << ")\n";
+    }
+    
+    Engine::Vector2 PlayerHUD::GetControlRoomPosition(int zoneId) const
+    {
+        if (zoneId < 1 || zoneId > 4) return Engine::Vector2(0, 0);
+        return m_controlRoomPositions[zoneId - 1];
+    }
+    
     void PlayerHUD::TogglePath(int cardId)
     {
         if (cardId < 0 || cardId >= 4) return;
         if (!m_cardsCollected[cardId]) return;
+        
+        // Get path renderer reference early for clearing operations
+        auto player = Engine::GameObject::Find("Player");
+        Game::PathRenderer* pathRenderer = nullptr;
+        if (player) {
+            pathRenderer = player->GetComponent<Game::PathRenderer>();
+        }
         
         // Toggle visibility
         if (m_activePathCardId == cardId && m_pathVisible) {
@@ -957,31 +980,39 @@ namespace Game
             m_pathVisible = false;
             m_activePathCardId = -1;
             
-            // Clear path from renderer
-            auto player = Engine::GameObject::Find("Player");
-            if (player) {
-                auto pathRenderer = player->GetComponent<Game::PathRenderer>();
-                if (pathRenderer) {
-                    pathRenderer->ClearPath();
-                }
+            // Clear path from renderer AND minimap
+            if (pathRenderer) {
+                pathRenderer->ClearPath();
+            }
+            if (m_minimap) {
+                m_minimap->ClearPath(); // CRITICAL: Clear from minimap too!
             }
             
             ShowHackStatus("Path hidden", 2.0f);
         } else {
             // Different card or was off, turn on
+            // IMPORTANT: Clear old path before setting new one
+            if (pathRenderer) {
+                pathRenderer->ClearPath();
+            }
+            if (m_minimap) {
+                m_minimap->ClearPath(); // CRITICAL: Clear old minimap path!
+            }
+            
             m_pathVisible = true;
             m_activePathCardId = cardId;
             
             // Update path immediately
             UpdateActivePath();
             
-            // Determine which zone
+            // Determine which zone terminal to route to
+            // Green (G) -> Zone B, Purple (P) -> Zone C, Red (R) -> Zone D, Yellow (Y) -> Zone A
             int targetZoneId = -1;
             switch (cardId) {
-                case 0: targetZoneId = 2; break; // Green -> Zone B
-                case 1: targetZoneId = 3; break; // Purple -> Zone C
-                case 2: targetZoneId = 4; break; // Red -> Zone D
-                case 3: targetZoneId = 1; break; // Yellow -> Zone A
+                case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+                case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+                case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+                case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
             }
             
             if (targetZoneId >= 1 && targetZoneId <= 4) {
@@ -992,28 +1023,57 @@ namespace Game
         }
     }
     
+    Engine::Color PlayerHUD::GetCardColor(int cardId) const
+    {
+        switch (cardId) {
+            case 0: return Engine::Color(0.0f, 1.0f, 0.0f, 1.0f); // Green
+            case 1: return Engine::Color(0.8f, 0.0f, 1.0f, 1.0f); // Purple
+            case 2: return Engine::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red  
+            case 3: return Engine::Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
+            default: return Engine::Color(1.0f, 1.0f, 1.0f, 1.0f); // White fallback
+        }
+    }
+
     void PlayerHUD::UpdateActivePath()
     {
-        if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) return;
+        if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) {
+            // Clear path from minimap
+            if (m_minimap) {
+                m_minimap->ClearPath();
+            }
+            return;
+        }
+        
         if (!m_playerTransform || !m_tileMap) return;
         
         // Get player's current position
         Engine::Vector2 currentPos(m_playerTransform->position.x, m_playerTransform->position.y);
         
-        // Determine which zone to path to
+        // Determine which terminal to path to
+        // Green (G) -> Zone B, Purple (P) -> Zone C, Red (R) -> Zone D, Yellow (Y) -> Zone A
         int targetZoneId = -1;
         switch (m_activePathCardId) {
-            case 0: targetZoneId = 2; break; // Green -> Zone B
-            case 1: targetZoneId = 3; break; // Purple -> Zone C
-            case 2: targetZoneId = 4; break; // Red -> Zone D
-            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+            case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+            case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+            case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+            case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
         }
         
         if (targetZoneId < 1 || targetZoneId > 4) return;
         
         Engine::Vector2 terminalPos = GetTerminalPosition(targetZoneId);
         
-        // Get or create path renderer
+        // Check if terminal position is valid (not at origin)
+        if (terminalPos.x == 0.0f && terminalPos.y == 0.0f) {
+            std::cout << "[PlayerHUD] ERROR: No terminal position set for Zone " << Game::ZoneIdToLetter(targetZoneId) 
+                      << "! Please add 'T' marker in that zone using Level Editor.\n";
+            m_pathVisible = false;
+            m_activePathCardId = -1;
+            ShowHackStatus("ERROR: No terminal in that zone!", 3.0f);
+            return;
+        }
+        
+        // Get or create path renderer to compute the path
         auto player = Engine::GameObject::Find("Player");
         if (!player) return;
         
@@ -1024,8 +1084,14 @@ namespace Game
             pathRenderer->playerTransform = m_playerTransform;
         }
         
-        // Update path from current position to terminal
-        pathRenderer->SetPath(currentPos, terminalPos);
+        // Compute path using PathRenderer's A* (but don't render in 3D)
+        pathRenderer->SetPath(currentPos, terminalPos, m_activePathCardId, GetCardColor(m_activePathCardId));
+        
+        // Get the waypoints and display them on the minimap with card color!
+        if (m_minimap) {
+            m_minimap->SetPathWaypoints(pathRenderer->pathWaypoints);
+            m_minimap->SetPathColor(GetCardColor(m_activePathCardId)); // SET COLOR BASED ON CARD!
+        }
     }
 
 } // namespace Game
