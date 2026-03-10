@@ -58,7 +58,7 @@ void PuzzleManager::BookDataInit()
 {
     std::array<std::string,6>BookName = { "Book1","Book2","Book3","Book4","Book5","Book6" };
     std::array<std::string, 6> BookLore = {
-        "Fuck this hlp shit",
+        "GG HLP Mid Term F",
         "Day 3: I hear footsteps echoing in the halls.",
         "Day 7: The walls seem to be shifting.",
         "Day 12: I found a strange key.",
