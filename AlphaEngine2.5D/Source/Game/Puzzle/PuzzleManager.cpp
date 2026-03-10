@@ -30,7 +30,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
     // Enemy sprite
     auto bookSR = bookObj->AddComponent<SpriteRenderer>();
-    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook.png"));
+    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook1.png"));
     bookSR->billboard = true;
     bookSR->enabled = true;
     bookSR->sortingOrder = 100;
