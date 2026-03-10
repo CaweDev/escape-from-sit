@@ -542,6 +542,7 @@ void Physics2D::DrawDebugView() {
 
     for (Collider2D* col : colliders) {
         if (!col || !col->gameObject || !col->gameObject->active) continue;
+        if (!col->enabled) continue;
         if (col->isTrigger) continue;
         // Never draw the collider belonging to the camera's own GameObject.
         if (Camera::main && col->gameObject == Camera::main->gameObject) continue;
