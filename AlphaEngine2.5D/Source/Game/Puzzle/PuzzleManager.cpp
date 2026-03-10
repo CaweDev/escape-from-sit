@@ -16,7 +16,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     auto bookObj = SceneManager::GetActiveScene()->CreateGameObject("Book");
     bookObj->transform->position = book.BookPosition;
     bookObj->transform->rotation = 0.0f;
-    bookObj->transform->localScale = Vector2(0.8f, 0.8f);
+    bookObj->transform->localScale = Vector2(0.35f, 0.35f);
 
     // Enemy collider (static body)
     auto bookRb = bookObj->AddComponent<Rigidbody2D>();
