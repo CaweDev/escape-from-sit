@@ -91,6 +91,10 @@ namespace Game
         UI::Panel* m_bookCountPanel = nullptr;
         UI::Text* m_bookCountText = nullptr;
 
+        //Title
+        UI::Panel* m_bookPopupPanel;
+        UI::Text* m_bookTitleText;
+        UI::Text* m_bookLoreText;
         //POP UP TEXT
         UI::Panel* m_popupPanel = nullptr;
         UI::Text* m_popupText = nullptr;
@@ -103,6 +107,9 @@ namespace Game
         
         // Terminal positions by zone (set by FPSScene)
         Engine::Vector2 m_terminalPositions[4]; // Zone 1-4 terminals (index 0-3)
+        
+        // Control room door positions by zone (set by FPSScene)
+        Engine::Vector2 m_controlRoomPositions[4]; // Zone 1-4 control rooms (index 0-3)
         
         // Active path tracking
         int m_activePathCardId = -1; // Which card's path is currently shown (-1 = none)
@@ -256,9 +263,16 @@ namespace Game
         void SetTerminalPosition(int zoneId, const Engine::Vector2& position); // Zone 1-4
         Engine::Vector2 GetTerminalPosition(int zoneId) const; // Zone 1-4
         
+        // Control room door positions (set by FPSScene for pathfinding)
+        void SetControlRoomPosition(int zoneId, const Engine::Vector2& position); // Zone 1-4
+        Engine::Vector2 GetControlRoomPosition(int zoneId) const; // Zone 1-4
+        
         // Path control (press key to toggle)
         void TogglePath(int cardId); // Toggle path for specific card (0-3)
         void UpdateActivePath(); // Update path from current position each frame
+        
+        // Get color for each access card (for minimap path coloring)
+        Engine::Color GetCardColor(int cardId) const;
 
 
     };

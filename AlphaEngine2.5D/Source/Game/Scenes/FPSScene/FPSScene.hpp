@@ -758,6 +758,17 @@ namespace Game {
             // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
             auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
             
+            // Register control room door positions with PlayerHUD for pathfinding
+            for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i) {
+                Vector2 pos = controlRoomDoorPositions[i];
+                int tileX = (int)std::floor(pos.x);
+                int tileY = (int)std::floor(pos.y);
+                int zoneId = GetZoneId(tileX, tileY);
+                if (zoneId >= 1 && zoneId <= 4) {
+                    playerHUD->SetControlRoomPosition(zoneId, pos);
+                }
+            }
+            
             for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i) {
                 Vector2 pos = controlRoomDoorPositions[i];
                 

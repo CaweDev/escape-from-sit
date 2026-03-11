@@ -7,6 +7,7 @@ std::vector<Book> PuzzleManager::allBooks = {};
 int PuzzleManager::booksCollected = 0;
 
 std::string PuzzleManager::activeBookText = "";
+std::string PuzzleManager::activeBookTitle = "";
 float PuzzleManager::popupTimer = 0.0f;
 
 void PuzzleManager::CreatePuzzleObject(Book book)
@@ -15,7 +16,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     auto bookObj = SceneManager::GetActiveScene()->CreateGameObject("Book");
     bookObj->transform->position = book.BookPosition;
     bookObj->transform->rotation = 0.0f;
-    bookObj->transform->localScale = Vector2(0.8f, 0.8f);
+    bookObj->transform->localScale = Vector2(0.35f, 0.35f);
 
     // Enemy collider (static body)
     auto bookRb = bookObj->AddComponent<Rigidbody2D>();
@@ -29,7 +30,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
     // Enemy sprite
     auto bookSR = bookObj->AddComponent<SpriteRenderer>();
-    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook.png"));
+    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook1.png"));
     bookSR->billboard = true;
     bookSR->enabled = true;
     bookSR->sortingOrder = 100;
@@ -43,8 +44,9 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             bookObj->active = false;
             std::cout << "Book Collected";
             PuzzleManager::booksCollected++;
-
-            PuzzleManager::activeBookText = book.BookText; // Grab the text for this specific book
+            
+            PuzzleManager::activeBookTitle = book.BookName;
+            PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
         }
 
@@ -54,7 +56,14 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
 void PuzzleManager::BookDataInit()
 {
-    std::array<std::string,6>BookText = { "Book1","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string,6>BookName = { "Book1","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string, 6> BookLore = {
+        "GG HLP Mid Term F",
+        "Day 3: I hear footsteps echoing in the halls.",
+        "Day 7: The walls seem to be shifting.",
+        "Day 12: I found a strange key.",
+        "Day 20: I think something is hunting me.",
+        "Day ???: Do not look behind you." };
     Engine::Vector3 BookCoord[6] = { {3.5f, 3.5f, 0.0f} ,{9.5f, 37.5f, 0.1f},{105.5f, 38.5f, 0.2f},{9.5f, 30.5f, 0.1f},{9.5f, 40.5f, 0.1f},{9.5f, 45.5f, 0.1f} };
 
     for (int i{}; i < 6; ++i) {
@@ -62,7 +71,8 @@ void PuzzleManager::BookDataInit()
         i,                  // ID
         BookCoord[i],// Position (x, y, z)
         false,              // isCollected  
-        BookText[i] // Lore Text
+        BookName[i],
+        BookLore[i]
             });
     }
 }

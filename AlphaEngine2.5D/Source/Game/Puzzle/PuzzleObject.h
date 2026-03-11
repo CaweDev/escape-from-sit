@@ -9,7 +9,8 @@ struct Book {
 	int BookId;
 	Engine::Vector3 BookPosition;
 	bool BookCollected;
-	std::string BookText;
+	std::string BookName;
+	std::string BookLore;
 };
 
 class PuzzleObject :public Engine::Component
@@ -24,7 +25,4 @@ public:
 
 
 
-void BookInit();
-void BookExit();
-AEGfxVertexList* CreateMesh();
 

@@ -72,11 +72,19 @@ void FPSController::Update() {
 
         if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
             if (playerComp->CanSprint()) {
+                // Can sprint - use sprint speed and drain stamina
                 speed = sprintSpeed;
                 playerComp->isSprinting = true;
                 playerComp->DrainSprint(dt);
             }
+            else if (playerComp->GetStamina() > 0.0f) {
+                // Stamina below threshold but not empty - continue draining to 0
+                speed = moveSpeed; // Use normal speed
+                playerComp->isSprinting = false;
+                playerComp->DrainSprint(dt);
+            }
             else {
+                // Stamina completely empty
                 playerComp->isSprinting = false;
             }
         }

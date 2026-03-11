@@ -133,7 +133,7 @@ namespace Game
         barBg->SetSizeDelta({ 380.0f, 24.0f });
         barBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 1.0f));
 
-        // Alert bar fill — point-anchored at bottom-left of barBg, sized explicitly each frame
+        // Alert bar fill ï¿½ point-anchored at bottom-left of barBg, sized explicitly each frame
         m_alertBar = barBg->CreateChild<UI::Panel>();
         m_alertBar->name = "AlertBarFill";
         m_alertBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
@@ -173,7 +173,7 @@ namespace Game
         m_staminaPanel->SetSizeDelta({ 200.0f, 24.0f });
         m_staminaPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
 
-        // Stamina fill bar — point-anchored at bottom-left of panel.
+        // Stamina fill bar ï¿½ point-anchored at bottom-left of panel.
         // Width and height are set explicitly via sizeDelta each frame.
         m_staminaBar = m_staminaPanel->CreateChild<UI::Panel>();
         m_staminaBar->name = "StaminaBarFill";
@@ -183,7 +183,7 @@ namespace Game
         m_staminaBar->SetSizeDelta({ 200.0f, 24.0f });
         m_staminaBar->SetBackgroundColor(Engine::Color(0.3f, 0.8f, 1.0f, 0.9f));
 
-        // Stamina text — overlaid on top of the bar, same bounds as panel
+        // Stamina text ï¿½ overlaid on top of the bar, same bounds as panel
         m_staminaText = m_staminaPanel->CreateChild<UI::Text>();
         m_staminaText->name = "StaminaText";
         m_staminaText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
@@ -295,18 +295,37 @@ namespace Game
         m_bookCountText->SetColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f));
         m_bookCountText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        // --- BOOK POPUP PANEL (Background) ---
+        m_bookPopupPanel = m_canvas->CreateChild<UI::Panel>();
+        m_bookPopupPanel->name = "BookPopupPanel";
+        m_bookPopupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
+        m_bookPopupPanel->SetPivot({ 0.5f, 0.5f });
+        m_bookPopupPanel->SetAnchoredPosition({ 0.0f, 200.0f });
+        m_bookPopupPanel->SetSizeDelta({ 600.0f, 200.0f });
+        m_bookPopupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f));
+        m_bookPopupPanel->visible = false; // Hidden by default
 
-        //POP UP TEXT
-        // --- POPUP PANEL (Center of Screen) ---
-        m_popupPanel = m_canvas->CreateChild<UI::Panel>();
-        m_popupPanel->name = "PopupPanel";
-        m_popupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Anchor to Dead Center
-        m_popupPanel->SetPivot({ 0.5f, 0.5f });                   // Pivot in Dead Center
-        m_popupPanel->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_popupPanel->SetSizeDelta({ 600.0f, 150.0f });           // Make it wide enough for a sentence
-        m_popupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f)); // Dark background
-        m_popupPanel->visible = false;                            // Hide it by default!
+        // --- BOOK TITLE TEXT (Top) ---
+        m_bookTitleText = m_bookPopupPanel->CreateChild<UI::Text>();
+        m_bookTitleText->name = "BookTitleText";
+        m_bookTitleText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f }); // Pin to top
+        m_bookTitleText->SetPivot({ 0.5f, 1.0f });
+        m_bookTitleText->SetAnchoredPosition({ 0.0f, -15.0f }); // Push down slightly
+        m_bookTitleText->SetSizeDelta({ 0.0f, 35.0f });
+        m_bookTitleText->SetFontSize(2.2f);
+        m_bookTitleText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f)); // Gold text
+        m_bookTitleText->SetAnchor(UI::TextAnchor::UpperCenter);
 
+        // --- BOOK LORE TEXT (Bottom) ---
+        m_bookLoreText = m_bookPopupPanel->CreateChild<UI::Text>();
+        m_bookLoreText->name = "BookLoreText";
+        m_bookLoreText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f }); // Stretch over panel
+        m_bookLoreText->SetPivot({ 0.5f, 0.5f });
+        m_bookLoreText->SetAnchoredPosition({ 0.0f, -25.0f }); // Push down below title
+        m_bookLoreText->SetSizeDelta({ 0.0f, 0.0f });
+        m_bookLoreText->SetFontSize(1.6f);
+        m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
+        m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
         // --- POPUP TEXT ---
         m_popupText = m_popupPanel->CreateChild<UI::Text>();
         m_popupText->name = "PopupText";
@@ -350,7 +369,7 @@ namespace Game
         }
     }
 
-    void PlayerHUD::Update()
+    void PlayerHUD::Update()    
     {
         // Toggle map with M key
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
@@ -429,17 +448,28 @@ namespace Game
         if (PuzzleManager::popupTimer > 0.0f) {
 
             // Ensure the panel is visible and the text is updated
-            if (!m_popupPanel->visible) {
-                m_popupPanel->visible = true;
-                m_popupText->SetText(PuzzleManager::activeBookText);
+            if (!m_bookPopupPanel->visible) {
+                // Turn on the Book panel (Removed m_popupPanel)
+                m_bookPopupPanel->visible = true;
+
+                // FORCE VISIBILITY ON CHILDREN
+                m_bookTitleText->visible = true;
+                m_bookLoreText->visible = true;
+
+                m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
+                m_bookLoreText->SetText(PuzzleManager::activeBookText);
             }
 
             // Count down the timer
-            PuzzleManager::popupTimer -= Engine::Time::deltaTime;   
+            PuzzleManager::popupTimer -= Engine::Time::deltaTime;
 
             // If the timer just hit zero, hide the panel!
             if (PuzzleManager::popupTimer <= 0.0f) {
-                m_popupPanel->visible = false;
+                // WE NOW PROPERLY HIDE THE BOOK PANEL
+                m_bookPopupPanel->visible = false;
+
+                m_bookTitleText->visible = false;
+                m_bookLoreText->visible = false;
             }
         }
     }
@@ -842,15 +872,17 @@ namespace Game
                               std::to_string(m_totalCardsCollected) + "/4)";
         ShowHackStatus(message, 3.0f);
         
-        // Determine which zone this card belongs to (cardId matches zone index)
-        // Card 0 (Green) = Zone 2 (B), Card 1 (Purple) = Zone 3 (C), 
-        // Card 2 (Red) = Zone 4 (D), Card 3 (Yellow) = Zone 1 (A)
+        // Determine which zone this card unlocks (path leads TO the terminal)
+        // Green card (G key) -> Zone B (Green zone) terminal
+        // Purple card (P key) -> Zone C (Magenta zone) terminal
+        // Red card (R key) -> Zone D (Yellow zone) terminal
+        // Yellow card (Y key) -> Zone A (Blue zone) terminal
         int targetZoneId = -1;
         switch (cardId) {
-            case 0: targetZoneId = 2; break; // Green -> Zone B
-            case 1: targetZoneId = 3; break; // Purple -> Zone C
-            case 2: targetZoneId = 4; break; // Red -> Zone D
-            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+            case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+            case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+            case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+            case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
         }
         
         // Don't auto-activate path - let player toggle it with key press
@@ -916,6 +948,20 @@ namespace Game
         return m_terminalPositions[zoneId - 1];
     }
     
+    void PlayerHUD::SetControlRoomPosition(int zoneId, const Engine::Vector2& position)
+    {
+        if (zoneId < 1 || zoneId > 4) return;
+        m_controlRoomPositions[zoneId - 1] = position;
+        std::cout << "[PlayerHUD] Set Zone " << Game::ZoneIdToLetter(zoneId) 
+                  << " control room position to (" << position.x << ", " << position.y << ")\n";
+    }
+    
+    Engine::Vector2 PlayerHUD::GetControlRoomPosition(int zoneId) const
+    {
+        if (zoneId < 1 || zoneId > 4) return Engine::Vector2(0, 0);
+        return m_controlRoomPositions[zoneId - 1];
+    }
+    
     void PlayerHUD::TogglePath(int cardId)
     {
         if (cardId < 0 || cardId >= 4) return;
@@ -934,9 +980,12 @@ namespace Game
             m_pathVisible = false;
             m_activePathCardId = -1;
             
-            // Clear path from renderer
+            // Clear path from renderer AND minimap
             if (pathRenderer) {
                 pathRenderer->ClearPath();
+            }
+            if (m_minimap) {
+                m_minimap->ClearPath(); // CRITICAL: Clear from minimap too!
             }
             
             ShowHackStatus("Path hidden", 2.0f);
@@ -946,6 +995,9 @@ namespace Game
             if (pathRenderer) {
                 pathRenderer->ClearPath();
             }
+            if (m_minimap) {
+                m_minimap->ClearPath(); // CRITICAL: Clear old minimap path!
+            }
             
             m_pathVisible = true;
             m_activePathCardId = cardId;
@@ -953,13 +1005,14 @@ namespace Game
             // Update path immediately
             UpdateActivePath();
             
-            // Determine which zone
+            // Determine which zone terminal to route to
+            // Green (G) -> Zone B, Purple (P) -> Zone C, Red (R) -> Zone D, Yellow (Y) -> Zone A
             int targetZoneId = -1;
             switch (cardId) {
-                case 0: targetZoneId = 2; break; // Green -> Zone B
-                case 1: targetZoneId = 3; break; // Purple -> Zone C
-                case 2: targetZoneId = 4; break; // Red -> Zone D
-                case 3: targetZoneId = 1; break; // Yellow -> Zone A
+                case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+                case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+                case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+                case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
             }
             
             if (targetZoneId >= 1 && targetZoneId <= 4) {
@@ -970,6 +1023,17 @@ namespace Game
         }
     }
     
+    Engine::Color PlayerHUD::GetCardColor(int cardId) const
+    {
+        switch (cardId) {
+            case 0: return Engine::Color(0.0f, 1.0f, 0.0f, 1.0f); // Green
+            case 1: return Engine::Color(0.8f, 0.0f, 1.0f, 1.0f); // Purple
+            case 2: return Engine::Color(1.0f, 0.0f, 0.0f, 1.0f); // Red  
+            case 3: return Engine::Color(1.0f, 1.0f, 0.0f, 1.0f); // Yellow
+            default: return Engine::Color(1.0f, 1.0f, 1.0f, 1.0f); // White fallback
+        }
+    }
+
     void PlayerHUD::UpdateActivePath()
     {
         if (!m_pathVisible || m_activePathCardId < 0 || m_activePathCardId >= 4) {
@@ -985,13 +1049,14 @@ namespace Game
         // Get player's current position
         Engine::Vector2 currentPos(m_playerTransform->position.x, m_playerTransform->position.y);
         
-        // Determine which zone to path to
+        // Determine which terminal to path to
+        // Green (G) -> Zone B, Purple (P) -> Zone C, Red (R) -> Zone D, Yellow (Y) -> Zone A
         int targetZoneId = -1;
         switch (m_activePathCardId) {
-            case 0: targetZoneId = 2; break; // Green -> Zone B
-            case 1: targetZoneId = 3; break; // Purple -> Zone C
-            case 2: targetZoneId = 4; break; // Red -> Zone D
-            case 3: targetZoneId = 1; break; // Yellow -> Zone A
+            case 0: targetZoneId = 2; break; // Green card -> Zone B terminal
+            case 1: targetZoneId = 3; break; // Purple card -> Zone C terminal
+            case 2: targetZoneId = 4; break; // Red card -> Zone D terminal
+            case 3: targetZoneId = 1; break; // Yellow card -> Zone A terminal
         }
         
         if (targetZoneId < 1 || targetZoneId > 4) return;
@@ -1020,11 +1085,12 @@ namespace Game
         }
         
         // Compute path using PathRenderer's A* (but don't render in 3D)
-        pathRenderer->SetPath(currentPos, terminalPos);
+        pathRenderer->SetPath(currentPos, terminalPos, m_activePathCardId, GetCardColor(m_activePathCardId));
         
-        // Get the waypoints and display them on the minimap instead!
+        // Get the waypoints and display them on the minimap with card color!
         if (m_minimap) {
             m_minimap->SetPathWaypoints(pathRenderer->pathWaypoints);
+            m_minimap->SetPathColor(GetCardColor(m_activePathCardId)); // SET COLOR BASED ON CARD!
         }
     }
 

@@ -53,6 +53,7 @@ namespace UI
         Engine::Color m_cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
         Engine::Color m_cctvNormalColor = Engine::Color(0.0f, 1.0f, 0.0f, 0.15f);  // Green when safe (lower opacity for circles)
         Engine::Color m_cctvAlertColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.25f);   // Red when detecting (lower opacity for circles)
+        Engine::Color m_pathColor = Engine::Color(1.0f, 1.0f, 0.0f, 1.0f);         // Color for path waypoints (default yellow)
         // --- View Configuration ---
         int m_viewRadius = 5;            // How many tiles to show in each direction
         f32 m_tilePixelSize = 8.0f;       // Base size of a single tile in pixels
@@ -151,6 +152,10 @@ namespace UI
         void SetPathWaypoints(const std::vector<Engine::Vector2>& waypoints) { m_pathWaypoints = waypoints; }
         void ClearPath() { m_pathWaypoints.clear(); }
         const std::vector<Engine::Vector2>& GetPathWaypoints() const { return m_pathWaypoints; }
+        
+        // Path color control
+        void SetPathColor(const Engine::Color& color) { m_pathColor = color; }
+        const Engine::Color& GetPathColor() const { return m_pathColor; }
         
         // Getters and Setters for Colors
         void SetWallColor(const Engine::Color& color) { m_wallColor = color; }

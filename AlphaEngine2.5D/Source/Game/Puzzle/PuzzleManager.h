@@ -1,3 +1,5 @@
+#ifndef PUZZLEMANAGER_H
+#define PUZZLEMANAGER_H
 #include"PuzzleObject.h"
 #include <vector>
 
@@ -13,7 +15,9 @@ public:
 	static int booksCollected;
 	static std::string activeBookText;
 	static float popupTimer;
+	static std::string activeBookTitle;
 
 
 };
 
+#endif 
