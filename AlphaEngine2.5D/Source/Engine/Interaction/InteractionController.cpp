@@ -85,7 +85,7 @@ void InteractionController::Update() {
     if (m_currentTarget) {
         if (m_currentTarget->requireHold) {
             // Hold-to-interact mechanic
-            if (Input::GetKey(interactKey)) {
+            if (Input::GetKey(interactKey) || Input::GetMouseButtonDown(0)) {
                 if (!m_isHolding) {
                     m_isHolding = true;
                     m_holdTimer = 0.0f;
@@ -106,7 +106,7 @@ void InteractionController::Update() {
             }
         } else {
             // Instant interaction on key down
-            if (Input::GetKeyDown(interactKey)) {
+            if (Input::GetKeyDown(interactKey) || Input::GetMouseButtonDown(0)) {
                 m_currentTarget->Interact();
             }
         }

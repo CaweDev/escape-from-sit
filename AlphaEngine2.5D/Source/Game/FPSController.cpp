@@ -47,10 +47,6 @@ void FPSController::Update() {
             // Adjusting horizon by +/- 0.8 * screenHeight is usually a safe limit
             Camera::main->pitch = Mathf::Clamp(Camera::main->pitch, -400.f, 400.f);
         }
-
-        // Keyboard rotation
-        if (Input::GetKey(KeyCode::LeftArrow)) transform->rotation -= rotateSpeed * dt;
-        if (Input::GetKey(KeyCode::RightArrow)) transform->rotation += rotateSpeed * dt;
     }
     // Keep angle in 0-360 range
     while (transform->rotation < 0) transform->rotation += 360.0f;
@@ -63,8 +59,8 @@ void FPSController::Update() {
         Vector2 inputMovement = Vector2::zero();
         if (Input::GetKey(KeyCode::W) || Input::GetKey(KeyCode::UpArrow)) inputMovement.y += 1.0f;
         if (Input::GetKey(KeyCode::S) || Input::GetKey(KeyCode::DownArrow)) inputMovement.y -= 1.0f;
-        if (Input::GetKey(KeyCode::A)) inputMovement.x -= 1.0f;
-        if (Input::GetKey(KeyCode::D)) inputMovement.x += 1.0f;
+        if (Input::GetKey(KeyCode::A) || Input::GetKey(KeyCode::LeftArrow)) inputMovement.x -= 1.0f;
+        if (Input::GetKey(KeyCode::D) || Input::GetKey(KeyCode::RightArrow)) inputMovement.x += 1.0f;
 
         Player* playerComp = gameObject->GetComponent<Player>();
 
