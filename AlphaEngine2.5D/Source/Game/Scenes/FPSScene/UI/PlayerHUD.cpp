@@ -326,17 +326,6 @@ namespace Game
         m_bookLoreText->SetFontSize(1.6f);
         m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
         m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
-        // --- POPUP TEXT ---
-        m_popupText = m_popupPanel->CreateChild<UI::Text>();
-        m_popupText->name = "PopupText";
-        m_popupText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });  // Stretch text across the whole panel
-        m_popupText->SetPivot({ 0.5f, 0.5f });
-        m_popupText->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_popupText->SetSizeDelta({ 0.0f, 0.0f });
-        m_popupText->SetText("");
-        m_popupText->SetFontSize(2.0f);                           // Make it nice and big
-        m_popupText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
-        m_popupText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
         // Access Card Display (top-left, below book count)
         m_cardPanel = m_canvas->CreateChild<UI::Panel>();

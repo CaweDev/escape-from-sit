@@ -95,9 +95,6 @@ namespace Game
         UI::Panel* m_bookPopupPanel;
         UI::Text* m_bookTitleText;
         UI::Text* m_bookLoreText;
-        //POP UP TEXT
-        UI::Panel* m_popupPanel = nullptr;
-        UI::Text* m_popupText = nullptr;
         
         // Access Card tracking
         UI::Panel* m_cardPanel = nullptr;
