@@ -12,6 +12,7 @@
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Raycasting/ProjectionHelper.hpp"
 #include "Engine/Input/Input.hpp"
+#include "Engine/Input/XboxController.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Specialized/Crosshair.hpp"
 #include "Engine/UI/Specialized/InteractionPrompt.hpp"
@@ -84,8 +85,8 @@ void InteractionController::Update() {
     // Handle interaction input
     if (m_currentTarget) {
         if (m_currentTarget->requireHold) {
-            // Hold-to-interact mechanic
-            if (Input::GetKey(interactKey) || Input::GetMouseButtonDown(0)) {
+            // Hold-to-interact mechanic (E key, Left Click, or Xbox X button)
+            if (Input::GetKey(interactKey) || Input::GetMouseButtonDown(0) || XboxController::GetButton(XboxButton::X, 0)) {
                 if (!m_isHolding) {
                     m_isHolding = true;
                     m_holdTimer = 0.0f;
@@ -105,8 +106,8 @@ void InteractionController::Update() {
                 m_holdTimer = 0.0f;
             }
         } else {
-            // Instant interaction on key down
-            if (Input::GetKeyDown(interactKey) || Input::GetMouseButtonDown(0)) {
+            // Instant interaction on key down (E key, Left Click, or Xbox X button)
+            if (Input::GetKeyDown(interactKey) || Input::GetMouseButtonDown(0) || XboxController::GetButtonDown(XboxButton::X, 0)) {
                 m_currentTarget->Interact();
             }
         }

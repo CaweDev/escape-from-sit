@@ -3,6 +3,7 @@
  * @brief Implementation of Input class
  */
 #include "Input.hpp"
+#include "XboxController.hpp"
 
 namespace Engine {
 
@@ -88,19 +89,51 @@ f32 Input::GetAxis(const std::string& axisName) {
         f32 value = 0;
         if (GetKey(KeyCode::A) || GetKey(KeyCode::LeftArrow)) value -= 1;
         if (GetKey(KeyCode::D) || GetKey(KeyCode::RightArrow)) value += 1;
+        
+        // Add Xbox controller left stick X
+        if (XboxController::IsConnected(0)) {
+            value += XboxController::GetLeftStick(0).x;
+            // Clamp to -1 to 1
+            if (value < -1.0f) value = -1.0f;
+            if (value > 1.0f) value = 1.0f;
+        }
+        
         return value;
     }
     else if (axisName == "Vertical") {
         f32 value = 0;
         if (GetKey(KeyCode::S) || GetKey(KeyCode::DownArrow)) value -= 1;
         if (GetKey(KeyCode::W) || GetKey(KeyCode::UpArrow)) value += 1;
+        
+        // Add Xbox controller left stick Y
+        if (XboxController::IsConnected(0)) {
+            value += XboxController::GetLeftStick(0).y;
+            // Clamp to -1 to 1
+            if (value < -1.0f) value = -1.0f;
+            if (value > 1.0f) value = 1.0f;
+        }
+        
         return value;
     }
     else if (axisName == "Mouse X") {
-        return GetMouseDelta().x;
+        f32 value = GetMouseDelta().x;
+        
+        // Add Xbox controller right stick X
+        if (XboxController::IsConnected(0)) {
+            value += XboxController::GetRightStick(0).x * 300.0f; // Scale for camera movement
+        }
+        
+        return value;
     }
     else if (axisName == "Mouse Y") {
-        return GetMouseDelta().y;
+        f32 value = GetMouseDelta().y;
+        
+        // Add Xbox controller right stick Y
+        if (XboxController::IsConnected(0)) {
+            value += XboxController::GetRightStick(0).y * 300.0f; // Scale for camera movement
+        }
+        
+        return value;
     }
     return 0;
 }
@@ -138,6 +171,9 @@ bool Input::IsCursorLocked() {
 }
 
 void Input::Update() {
+    // Update Xbox controller state first
+    XboxController::Update();
+    
     // Reset delta each frame
     mouseDeltaX = 0.0f;
     mouseDeltaY = 0.0f;

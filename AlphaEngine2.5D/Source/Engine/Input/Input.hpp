@@ -5,6 +5,7 @@
 #pragma once
 
 #include "KeyCode.hpp"
+#include "XboxController.hpp"
 #include "../Math/Vector2.hpp"
 #include "AEEngine.h"
 #include <string>

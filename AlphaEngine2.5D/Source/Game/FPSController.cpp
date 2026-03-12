@@ -7,6 +7,7 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Math/Mathf.hpp"
 #include "Engine/Graphics/Camera.hpp"
+#include "Engine/Input/XboxController.hpp"
 #include <iostream>
 #include "Game/Player/Player.hpp"
 #include "AEInput.h"
@@ -34,10 +35,10 @@ void FPSController::Update() {
     }
 
     if (Input::IsCursorLocked()) { // if cursor is locked, allow mouse look
-        // Get mouse delta from Input system
+        // Get mouse delta from Input system (includes controller right stick)
         Vector2 mouseDelta = Input::GetMouseDelta();
 
-        // Apply mouse rotation
+        // Apply mouse/controller rotation
         transform->rotation -= mouseDelta.x * mouseSensitivity;
 
         // Apply vertical look (pitch)
@@ -55,17 +56,15 @@ void FPSController::Update() {
     Vector2 worldVelocity = Vector2::zero();
 
     if (Input::IsCursorLocked()) {
-        // Get local movement input
+        // Get local movement input (keyboard + controller left stick via GetAxis)
         Vector2 inputMovement = Vector2::zero();
-        if (Input::GetKey(KeyCode::W) || Input::GetKey(KeyCode::UpArrow)) inputMovement.y += 1.0f;
-        if (Input::GetKey(KeyCode::S) || Input::GetKey(KeyCode::DownArrow)) inputMovement.y -= 1.0f;
-        if (Input::GetKey(KeyCode::A) || Input::GetKey(KeyCode::LeftArrow)) inputMovement.x -= 1.0f;
-        if (Input::GetKey(KeyCode::D) || Input::GetKey(KeyCode::RightArrow)) inputMovement.x += 1.0f;
+        inputMovement.x = Input::GetAxis("Horizontal");
+        inputMovement.y = Input::GetAxis("Vertical");
 
         Player* playerComp = gameObject->GetComponent<Player>();
 
         bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
-        bool wantsSprint = Input::GetKey(KeyCode::LeftShift);
+        bool wantsSprint = Input::GetKey(KeyCode::LeftShift) || XboxController::GetButton(XboxButton::A, 0);
         bool canSprint = playerComp && playerComp->CanSprint() && !rigidbody->isCrouching;
 
         f32 speed = moveSpeed;
@@ -116,8 +115,8 @@ void FPSController::Update() {
         worldVelocity.y = (sinA * inputMovement.y * speed) // forward
             + (-cosA * inputMovement.x * speed); // strafe
 
-        // Jumping (only when locked)
-        bool spaceNow = Input::GetKey(KeyCode::Space);
+        // Jumping (only when locked) - Space or Xbox A button
+        bool spaceNow = Input::GetKey(KeyCode::Space) || XboxController::GetButton(XboxButton::A, 0);
         bool spaceDown = spaceNow && !prevSpace;
 
         if (spaceDown && jumpCooldown <= 0.0f) {
@@ -126,8 +125,8 @@ void FPSController::Update() {
         }
         prevSpace = spaceNow;
 
-        // Crouching (C) (only when locked)
-        if (Input::GetKeyDown(KeyCode::C)) {
+        // Crouching (C or Xbox B button) (only when locked)
+        if (Input::GetKeyDown(KeyCode::C) || XboxController::GetButtonDown(XboxButton::B, 0)) {
             rigidbody->ToggleCrouch();
         }
     }

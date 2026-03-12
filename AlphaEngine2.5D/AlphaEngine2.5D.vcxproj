@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
+    <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
     <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
     <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
