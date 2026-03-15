@@ -3,9 +3,9 @@
  * @brief Main entry point for the 2.5D Engine
  */
 
-
 #ifdef _WIN32
-extern "C" {
+extern "C"
+{
     // Tell NVIDIA Optimus to use the high-performance GPU
     __declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
 
@@ -29,23 +29,34 @@ extern "C" {
 // Debug
 #include "Game/Debugger/DebugManager.hpp"
 
+#include "Editor/Index.hpp"
+
 using namespace Engine;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-    _In_opt_ HINSTANCE hPrevInstance,
-    _In_ LPWSTR lpCmdLine,
-    _In_ int nCmdShow)
+                      _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR lpCmdLine,
+                      _In_ int nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+    bool isEditorMode = (wcsstr(lpCmdLine, L"-game") == nullptr);
+
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
     AESysSetWindowTitle("Escape From SIT");
-	AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
-    
+    AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
+
+    HWND hwnd = AESysGetWindowHandle();
+
+    if (isEditorMode)
+    {
+        AEEditor::EditorManager::Initialize(hwnd);
+    }
+
     // Initialize UI System
     UI::UIManager::Initialize();
 
@@ -64,36 +75,59 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         // Frame start
         AESysFrameStart();
-        
+
         // Update time
         Time::Update();
-        
+
         // Update input (processes cursor centering when locked)
         Input::Update();
-        
+
         // Check for exit conditions
-        if (!AESysDoesWindowExist()) {
+        if (!AESysDoesWindowExist())
+        {
             Application::Quit();
         }
 
-        // Update scene (handles input, physics, rendering)
-        SceneManager::UpdateActiveScene();
+        if (isEditorMode)
+        {
+            if (AEEditor::EditorManager::CheckExternalProcess(hwnd))
+            {
+                AESysFrameEnd();
+                continue;
+            }
 
-        // Update UI System
-        if (UI::UIManager::GetInstance()) {
-            UI::UIManager::GetInstance()->Update(Time::unscaledDeltaTime);
+            AEEditor::EditorManager::BuildUI(hwnd);
+
+            // Apply AEEditor::EditorManager::GetCamOffsetX() and GetCamOffsetY()
+            // to engine camera translation logic here before rendering active scene.
+
+            SceneManager::RenderActiveScene();
+
+            AEEditor::EditorManager::RenderUI();
         }
+        else
+        {
+            // Update scene (handles input, physics, rendering)
+            SceneManager::UpdateActiveScene();
 
-        Game::DebugManager::Update();
+            // Update UI System
+            if (UI::UIManager::GetInstance())
+            {
+                UI::UIManager::GetInstance()->Update(Time::unscaledDeltaTime);
+            }
 
-        SceneManager::RenderActiveScene();
+            Game::DebugManager::Update();
 
-        // Render UI System on top
-        if (UI::UIManager::GetInstance()) {
-            UI::UIManager::GetInstance()->Render();
+            SceneManager::RenderActiveScene();
+
+            // Render UI System on top
+            if (UI::UIManager::GetInstance())
+            {
+                UI::UIManager::GetInstance()->Render();
+            }
+
+            // Frame end
         }
-
-        // Frame end
         AESysFrameEnd();
     }
 
@@ -107,10 +141,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UI::UIManager::Shutdown();
 
     // Cleanup Asset Manager
-	AssetManager::UnloadAll();
+    AssetManager::UnloadAll();
+
+    if (isEditorMode)
+    {
+        AEEditor::EditorManager::Exit();
+    }
 
     // Cleanup
     AESysExit();
-    
+
     return 0;
 }
