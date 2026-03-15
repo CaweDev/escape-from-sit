@@ -5,7 +5,6 @@
 #pragma once
 
 #include <windows.h>
-
 namespace AEEditor
 {
     class EditorManager

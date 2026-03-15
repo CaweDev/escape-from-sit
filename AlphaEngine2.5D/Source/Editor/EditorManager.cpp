@@ -19,9 +19,12 @@
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 namespace AEEditor
 {
+
     // Local State
     static WNDPROC gOriginalWndProc = nullptr;
     static bool gDockInitialized = false;
+    static HWND gEditorHwnd = nullptr;
+
     static float gCamOffsetX = 0.0f;
     static float gCamOffsetY = 0.0f;
 
@@ -30,26 +33,56 @@ namespace AEEditor
 
     static LRESULT CALLBACK EditorWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
-        if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-            return true;
-        return CallWindowProc(gOriginalWndProc, hWnd, msg, wParam, lParam);
+        if (ImGui::GetCurrentContext() != nullptr)
+        {
+            if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+                return true;
+        }
+
+        // Execute original engine window procedure if valid
+        if (gOriginalWndProc != nullptr)
+        {
+            return CallWindowProc(gOriginalWndProc, hWnd, msg, wParam, lParam);
+        }
+
+        // Failsafe OS routing
+        return DefWindowProc(hWnd, msg, wParam, lParam);
     }
 
     void EditorManager::Initialize(HWND hwnd)
     {
+        gEditorHwnd = hwnd;
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-        gOriginalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)EditorWndProc);
-
+        // Initialize backends FIRST to allocate internal memory structs
         ImGui_ImplWin32_Init(hwnd);
         ImGui_ImplOpenGL3_Init("#version 130");
+
+        // Install OS message hook LAST to guarantee safe memory access
+        gOriginalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)EditorWndProc);
     }
 
     void EditorManager::Exit()
     {
+        // Retrieve handle to detach hook
+        HWND hwnd = AESysGetWindowHandle();
+        if (gEditorHwnd != nullptr && gOriginalWndProc != nullptr)
+        {
+            SetWindowLongPtr(gEditorHwnd, GWLP_WNDPROC, (LONG_PTR)gOriginalWndProc);
+            gOriginalWndProc = nullptr;
+            gEditorHwnd = nullptr;
+        }
+
+        if (gOriginalWndProc != nullptr)
+        {
+            SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)gOriginalWndProc);
+            gOriginalWndProc = nullptr;
+        }
+
         if (gActiveGameProcess != NULL)
         {
             CloseHandle(gActiveGameProcess);
@@ -58,6 +91,7 @@ namespace AEEditor
 
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplWin32_Shutdown();
+        LevelEditor::Exit();
         ImGui::DestroyContext();
     }
 
@@ -108,7 +142,7 @@ namespace AEEditor
             ImGui::DockBuilderSetNodeSize(ds_id, ImGui::GetMainViewport()->WorkSize);
             ImGuiID left = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Left, 0.2f, nullptr, &ds_id);
             ImGuiID right = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Right, 0.2f, nullptr, &ds_id);
-            ImGuiID top_left = ImGui::DockBuilderSplitNode(left, ImGuiDir_Up, 0.1f, nullptr, &left);
+            ImGuiID top_left = ImGui::DockBuilderSplitNode(left, ImGuiDir_Up, 0.4f, nullptr, &left);
             ImGui::DockBuilderDockWindow("Toolbar", top_left);
             ImGui::DockBuilderDockWindow("Hierarchy", left);
             ImGui::DockBuilderDockWindow("Inspector", right);
@@ -119,7 +153,9 @@ namespace AEEditor
         ImGui::End();
         ImGui::PopStyleColor();
 
-        
+        // 1. Render Toolbar / Drag Source
+        LevelEditor::DrawAssetBrowser();
+
         ImGui::Begin("Toolbar", nullptr, ImGuiWindowFlags_NoScrollbar);
         if (ImGui::Button("Play External"))
         {
@@ -149,7 +185,7 @@ namespace AEEditor
         ImGui::End();
 
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("Scene");
+        ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
         ImVec2 winPos = ImGui::GetWindowPos();
         ImVec2 winSize = ImGui::GetWindowSize();
@@ -159,21 +195,23 @@ namespace AEEditor
         gCamOffsetX = winCenter.x - scrCenter.x;
         gCamOffsetY = scrCenter.y - winCenter.y;
 
-        ImGui::TextDisabled("Live Game Feed (Paused in Editor)");
+        LevelEditor::DrawMapEditorViewport();
+
         ImGui::End();
         ImGui::PopStyleColor();
 
         ImGui::Begin("Hierarchy");
-        ImGui::Text("Scene Tree...");
+        ImGui::Text("TBC");
         ImGui::End();
 
         ImGui::Begin("Inspector");
-        ImGui::Text("Object Properties...");
+        ImGui::Text("TBC");
         ImGui::End();
     }
 
     void EditorManager::RenderUI()
     {
+
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }

@@ -63,12 +63,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize Debug Manager
     Game::DebugManager::Initialize();
 
-    // Set default background color (Solid Black)
     AEGfxSetBackgroundColor(0.0f, 0.0f, 0.0f);
 
     // Register all scenes and load the first one
     Game::RegisterAllScenes();
-    SceneManager::LoadFirstScene(); // Load the first scene in SceneRegistry
+
+    if (isEditorMode)
+    {
+        SceneManager::LoadScene("EditorScene");
+        Engine::Scene *activeScene = SceneManager::GetActiveScene();
+        Engine::TileMap *activeTileMap = nullptr;
+
+        if (auto worldObj = activeScene->Find("World"))
+        {
+            if (auto tmRenderer = worldObj->GetComponent<Engine::TileMapRenderer>())
+            {
+                activeTileMap = tmRenderer->gameObject->GetComponent<Engine::TileMap>();
+            }
+        }
+
+        AEEditor::LevelEditor::Initialize(activeScene, activeTileMap);
+    }
+    else
+    {
+        SceneManager::LoadFirstScene();
+    }
 
     // Main game loop
     while (Application::isRunning)
@@ -96,14 +115,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 continue;
             }
 
+            if (AEEditor::LevelEditor::Is3DMode())
+            {
+                SceneManager::UpdateActiveScene();
+            }
+
             AEEditor::EditorManager::BuildUI(hwnd);
 
-            // Apply AEEditor::EditorManager::GetCamOffsetX() and GetCamOffsetY()
-            // to engine camera translation logic here before rendering active scene.
+            if (AEEditor::LevelEditor::Is3DMode())
+            {
 
-            SceneManager::RenderActiveScene();
+                SceneManager::RenderActiveScene();
+            }
 
             AEEditor::EditorManager::RenderUI();
+            Input::RegisterCursorUnlock("EditorMode");
         }
         else
         {
