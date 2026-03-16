@@ -142,7 +142,7 @@ namespace AEEditor
             ImGui::DockBuilderSetNodeSize(ds_id, ImGui::GetMainViewport()->WorkSize);
             ImGuiID left = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Left, 0.2f, nullptr, &ds_id);
             ImGuiID right = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Right, 0.2f, nullptr, &ds_id);
-            ImGuiID top_left = ImGui::DockBuilderSplitNode(left, ImGuiDir_Up, 0.4f, nullptr, &left);
+            ImGuiID top_left = ImGui::DockBuilderSplitNode(left, ImGuiDir_Up, 0.5f, nullptr, &left);
             ImGui::DockBuilderDockWindow("Toolbar", top_left);
             ImGui::DockBuilderDockWindow("Hierarchy", left);
             ImGui::DockBuilderDockWindow("Inspector", right);
@@ -157,7 +157,7 @@ namespace AEEditor
         LevelEditor::DrawAssetBrowser();
 
         ImGui::Begin("Toolbar", nullptr, ImGuiWindowFlags_NoScrollbar);
-        if (ImGui::Button("Play External"))
+        if (ImGui::Button("Play External", ImVec2(248, 40)))
         {
             LevelEditor::SaveMap("Assets/tmpMap.txt");
             
