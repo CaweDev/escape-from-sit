@@ -82,7 +82,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
 
-        AEEditor::LevelEditor::Initialize(activeScene, activeTileMap);
+        AEEditor::GameEditor::Initialize(activeScene, activeTileMap);
     }
     else
     {
@@ -115,14 +115,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 continue;
             }
 
-            if (AEEditor::LevelEditor::Is3DMode())
+            if (AEEditor::GameEditor::Is3DMode())
             {
                 SceneManager::UpdateActiveScene();
             }
 
             AEEditor::EditorManager::BuildUI(hwnd);
 
-            if (AEEditor::LevelEditor::Is3DMode())
+            if (AEEditor::GameEditor::Is3DMode())
             {
 
                 SceneManager::RenderActiveScene();

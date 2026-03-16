@@ -20,7 +20,7 @@
 #include "Engine/Input/KeyCode.hpp"
 #include "Engine/Core/Time.hpp"
 
-#include "Editor/LevelEditor.hpp"
+#include "Editor/GameEditor.hpp"
 
 #include <fstream>
 #include <cmath>
@@ -159,7 +159,7 @@ namespace Game
         SpawnExistingCards(map);
         SpawnExistingCCTVs(map);
 
-        AEEditor::LevelEditor::Initialize(this, map);
+        AEEditor::GameEditor::Initialize(this, map);
     }
 
     void EditorScene::OnUpdate()
@@ -169,7 +169,7 @@ namespace Game
                 return;
 
             // only update if 3d
-            if (!AEEditor::LevelEditor::Is3DMode())
+            if (!AEEditor::GameEditor::Is3DMode())
                 return;
 
             float moveSpeed = 4.0f;
@@ -274,7 +274,7 @@ namespace Game
 
             bool wallNorth = map->IsWall(tileX, tileY + 1);
             bool wallSouth = map->IsWall(tileX, tileY - 1);
-            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+            // Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
 
             auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
             doorCollider->minHeight = 0.0f;

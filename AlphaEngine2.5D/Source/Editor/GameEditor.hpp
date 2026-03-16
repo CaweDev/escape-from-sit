@@ -1,6 +1,6 @@
 /**
- * @file Editor/LevelEditor.hpp
- * @brief ImGui-driven 2D Grid Level Editor
+ * @file Game Editor.hpp
+ * @brief Game editor
  */
 #pragma once
 
@@ -14,7 +14,7 @@ namespace Engine
 
 namespace AEEditor
 {
-    class LevelEditor
+    class GameEditor
     {
     public:
         static void Initialize(Engine::Scene *scene, Engine::TileMap *tileMap);
@@ -44,8 +44,6 @@ namespace AEEditor
         static int hoveredY;
 
         static void ApplyPaint(int gridX, int gridY);
-        static void SpawnDoorAt(int x, int y);
-        static void SpawnTerminalAt(int x, int y);
         static ImU32 GetTileColor(int tileValue);
     };
 }

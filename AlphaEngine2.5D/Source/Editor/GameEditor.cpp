@@ -1,8 +1,8 @@
 /**
- * @file Editor/LevelEditor.cpp
- * @brief Optimized ImGui LevelEditor implementation
+ * @file GameEditor.cpp
+ * @brief Game editor
  */
-#include "LevelEditor.hpp"
+#include "GameEditor.hpp"
 #include <fstream>
 #include <algorithm>
 #include <string>
@@ -22,24 +22,24 @@
 
 namespace AEEditor
 {
-    Engine::Scene *LevelEditor::s_scene = nullptr;
-    Engine::TileMap *LevelEditor::s_tileMap = nullptr;
+    Engine::Scene *GameEditor::s_scene = nullptr;
+    Engine::TileMap *GameEditor::s_tileMap = nullptr;
 
-    int LevelEditor::currentTileValue = 1;
-    bool LevelEditor::is3DMode = false;
+    int GameEditor::currentTileValue = 1;
+    bool GameEditor::is3DMode = false;
 
-    int LevelEditor::mapWidth = 0;
-    int LevelEditor::mapHeight = 0;
-    float LevelEditor::tileSize = 32.0f;
+    int GameEditor::mapWidth = 0;
+    int GameEditor::mapHeight = 0;
+    float GameEditor::tileSize = 32.0f;
 
-    ImVec2 LevelEditor::scrolling = ImVec2(0.0f, 0.0f);
-    float LevelEditor::zoom = 1.0f;
-    int LevelEditor::hoveredX = -1;
-    int LevelEditor::hoveredY = -1;
+    ImVec2 GameEditor::scrolling = ImVec2(0.0f, 0.0f);
+    float GameEditor::zoom = 1.0f;
+    int GameEditor::hoveredX = -1;
+    int GameEditor::hoveredY = -1;
 
-    bool LevelEditor::Is3DMode() { return is3DMode; }
+    bool GameEditor::Is3DMode() { return is3DMode; }
 
-    void LevelEditor::Initialize(Engine::Scene *scene, Engine::TileMap *tileMap)
+    void GameEditor::Initialize(Engine::Scene *scene, Engine::TileMap *tileMap)
     {
         s_scene = scene;
         s_tileMap = tileMap;
@@ -51,11 +51,12 @@ namespace AEEditor
         }
     }
 
-    void LevelEditor::Exit() {
+    void GameEditor::Exit()
+    {
         std::filesystem::remove("Assets/tmpMap.txt");
     }
 
-    void LevelEditor::DrawAssetBrowser()
+    void GameEditor::DrawAssetBrowser()
     {
         ImGui::Begin("Toolbar");
 
@@ -122,7 +123,7 @@ namespace AEEditor
         ImGui::End();
     }
 
-    ImU32 LevelEditor::GetTileColor(int tileValue)
+    ImU32 GameEditor::GetTileColor(int tileValue)
     {
         switch (tileValue)
         {
@@ -153,7 +154,7 @@ namespace AEEditor
         }
     }
 
-    void LevelEditor::DrawMapEditorViewport()
+    void GameEditor::DrawMapEditorViewport()
     {
         if (is3DMode)
         {
@@ -260,7 +261,7 @@ namespace AEEditor
         }
     }
 
-    void LevelEditor::ApplyPaint(int gridX, int gridY)
+    void GameEditor::ApplyPaint(int gridX, int gridY)
     {
         if (gridX < 0 || gridX >= mapWidth || gridY < 0 || gridY >= mapHeight)
             return;
@@ -287,7 +288,7 @@ namespace AEEditor
         s_tileMap->SetTile(gridX, gridY, newTile);
     }
 
-    void LevelEditor::SaveMap(const char *filepath)
+    void GameEditor::SaveMap(const char *filepath)
     {
         if (!s_tileMap)
             return;

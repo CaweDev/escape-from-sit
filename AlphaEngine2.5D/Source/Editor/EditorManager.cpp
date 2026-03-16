@@ -4,8 +4,7 @@
  */
 
 #include "EditorManager.hpp"
-#include "LevelEditor.hpp"
-#include <stdio.h>
+#include "GameEditor.hpp"
 
 // Alpha Engine
 #include "AEEngine.h"
@@ -91,7 +90,7 @@ namespace AEEditor
 
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplWin32_Shutdown();
-        LevelEditor::Exit();
+        GameEditor::Exit();
         ImGui::DestroyContext();
     }
 
@@ -154,13 +153,13 @@ namespace AEEditor
         ImGui::PopStyleColor();
 
         // 1. Render Toolbar / Drag Source
-        LevelEditor::DrawAssetBrowser();
+        GameEditor::DrawAssetBrowser();
 
         ImGui::Begin("Toolbar", nullptr, ImGuiWindowFlags_NoScrollbar);
         if (ImGui::Button("Play External", ImVec2(248, 40)))
         {
-            LevelEditor::SaveMap("Assets/tmpMap.txt");
-            
+            GameEditor::SaveMap("Assets/tmpMap.txt");
+
             char exePath[MAX_PATH];
             GetModuleFileNameA(NULL, exePath, MAX_PATH);
 
@@ -197,7 +196,7 @@ namespace AEEditor
         gCamOffsetX = winCenter.x - scrCenter.x;
         gCamOffsetY = scrCenter.y - winCenter.y;
 
-        LevelEditor::DrawMapEditorViewport();
+        GameEditor::DrawMapEditorViewport();
 
         ImGui::End();
         ImGui::PopStyleColor();
