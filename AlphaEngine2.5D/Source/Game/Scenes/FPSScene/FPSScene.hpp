@@ -995,15 +995,15 @@ namespace Game {
                 }
             }
 
-            // ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
-            npcs.clear();
-            for (int z = 1; z <= 4; ++z) {
-                SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
-                SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
-                SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
-                SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
-            }
-            std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
+            //// ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
+            //npcs.clear();
+            //for (int z = 1; z <= 4; ++z) {
+            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+            //}
+            //std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
 
             // Add terminal icons to minimap
             if (playerHUD && playerHUD->GetMinimap()) {
