@@ -706,10 +706,10 @@ namespace Game {
 
             // ===== spawn 4 guards (1 per zone) =====
             guards.clear();
-            SpawnGuardInZone(1, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(2, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(3, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(4, map, playerHUD, "Assets/Brocsama.png");
+            SpawnGuardInZone(1, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(2, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(3, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(4, map, playerHUD, "Assets/MetroCity/guardasset.png");
 
             // start with zone 1 priority
             prevChosenZoneId = 1;
