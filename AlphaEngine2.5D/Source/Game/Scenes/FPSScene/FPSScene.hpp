@@ -368,10 +368,11 @@ namespace Game {
             npcCol->minHeight = 0.0f;
             npcCol->maxHeight = 2.0f;
 
-            auto sr = go->AddComponent<SpriteRenderer>();
-            sr->SetSprite(AssetManager::GetSprite(spritePath));
+            auto sr = go->AddComponent<SpriteSheetRenderer>();
+            sr->SetSpriteSheet(AssetManager::GetSpriteSheet(spritePath));
             sr->billboard = true;
             sr->sortingOrder = 90;
+            sr->Play("Patrol");
 
             // Tint: Bully = reddish, Annoying = greenish
             if (npcType == NPCType::Bully)
@@ -421,10 +422,11 @@ namespace Game {
             col->minHeight = 0.0f;
             col->maxHeight = 2.0f;
 
-            auto sr = go->AddComponent<SpriteRenderer>();
-            sr->SetSprite(AssetManager::GetSprite(spritePath));
+            auto sr = go->AddComponent<SpriteSheetRenderer>();
+            sr->SetSpriteSheet(AssetManager::GetSpriteSheet(spritePath));
             sr->billboard = true;
             sr->sortingOrder = 100;
+			sr->Play("Patrol");
 
             if (hud) hud->AddEnemyTransform(go->transform);
 
@@ -715,10 +717,10 @@ namespace Game {
 
             // ===== spawn 4 guards (1 per zone) =====
             guards.clear();
-            SpawnGuardInZone(1, map, playerHUD, "Assets/MetroCity/guardasset.png");
-            SpawnGuardInZone(2, map, playerHUD, "Assets/MetroCity/guardasset.png");
-            SpawnGuardInZone(3, map, playerHUD, "Assets/MetroCity/guardasset.png");
-            SpawnGuardInZone(4, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(1, map, playerHUD, "Assets/guard.png");
+            SpawnGuardInZone(2, map, playerHUD, "Assets/guard.png");
+            SpawnGuardInZone(3, map, playerHUD, "Assets/guard.png");
+            SpawnGuardInZone(4, map, playerHUD, "Assets/guard.png");
 
             // start with zone 1 priority
             prevChosenZoneId = 1;
@@ -1067,8 +1069,8 @@ namespace Game {
             npcs.clear();
             for (int z = 1; z <= 4; ++z) {
             
-                SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
-                SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+                SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/bully.png");
+                SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/annoying_classmate.png");
             }
             std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
 
