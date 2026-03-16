@@ -62,15 +62,25 @@ namespace Game
             m_isCursorUnlocked = false;
         }
         
-        m_fpsUpdateTimer += Engine::Time::unscaledDeltaTime;
-        if (m_fpsUpdateTimer >= 0.5f) // Update FPS every 0.5 sec
+        m_cameraPositionUpdateTimer += Engine::Time::unscaledDeltaTime;
+        if (m_cameraPositionUpdateTimer >= 0.5f)
         {
-            m_fpsUpdateTimer = 0.0f;
-            if (m_fpsText)
+            m_cameraPositionUpdateTimer = 0.0f;
+            if (m_cameraPositionText)
             {
                 std::stringstream ss;
-                ss << "FPS: " << std::fixed << std::setprecision(1) << Engine::Time::fps;
-                m_fpsText->SetText(ss.str());
+                if (Engine::Camera::main && Engine::Camera::main->transform)
+                {
+                    const auto& camPos = Engine::Camera::main->transform->position;
+                    ss << "Cam Pos: ("
+                       << std::fixed << std::setprecision(2)
+                       << camPos.x << ", " << camPos.y << ", " << camPos.z << ")";
+                }
+                else
+                {
+                    ss << "Cam Pos: (N/A)";
+                }
+                m_cameraPositionText->SetText(ss.str());
             }
         }
     }
@@ -88,7 +98,7 @@ namespace Game
             m_canvas = nullptr;
             m_panel = nullptr;
             m_titleText = nullptr;
-            m_fpsText = nullptr;
+            m_cameraPositionText = nullptr;
             m_renderLimitBtn = nullptr;
             m_showCollidersBtn = nullptr;
             m_cheatPanel = nullptr;
@@ -184,15 +194,15 @@ namespace Game
         m_instructionText->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
         m_instructionText->SetRenderOrder(1);
 
-        m_fpsText = m_panel->CreateChild<UI::Text>();
-        m_fpsText->name = "DebugMenuFPS";
-        m_fpsText->SetAnchors({ 0.1f, 0.78f }, { 0.9f, 0.83f });
-        m_fpsText->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_fpsText->SetSizeDelta({ 0.0f, 0.0f });
-        m_fpsText->SetText("FPS: --");
-        m_fpsText->SetFontSize(1.5f);
-        m_fpsText->SetColor({ 0.8f, 0.8f, 0.8f, 1.0f });
-        m_fpsText->SetRenderOrder(1);
+        m_cameraPositionText = m_panel->CreateChild<UI::Text>();
+        m_cameraPositionText->name = "DebugMenuCameraPosition";
+        m_cameraPositionText->SetAnchors({ 0.1f, 0.78f }, { 0.9f, 0.83f });
+        m_cameraPositionText->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_cameraPositionText->SetSizeDelta({ 0.0f, 0.0f });
+        m_cameraPositionText->SetText("Cam Pos: (--, --, --)");
+        m_cameraPositionText->SetFontSize(1.5f);
+        m_cameraPositionText->SetColor({ 0.8f, 0.8f, 0.8f, 1.0f });
+        m_cameraPositionText->SetRenderOrder(1);
 
         m_renderLimitBtn = m_panel->CreateChild<UI::Button>();
         m_renderLimitBtn->name = "RenderLimitBtn";

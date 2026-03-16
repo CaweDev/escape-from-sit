@@ -23,6 +23,9 @@ extern "C"
 // Engine Core
 #include "Engine.hpp"
 
+// Texture static shutdown
+#include "Engine/Graphics/Texture2D.hpp"
+
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
 
@@ -30,6 +33,8 @@ extern "C"
 #include "Game/Debugger/DebugManager.hpp"
 
 #include "Editor/Index.hpp"
+// Game systems
+#include "Game/Puzzle/PuzzleManager.h"
 
 using namespace Engine;
 
@@ -56,6 +61,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         AEEditor::EditorManager::Initialize(hwnd);
     }
+
+    // Initialize Sound Manager
+    SoundManager::Initialize();
 
     // Initialize UI System
     UI::UIManager::Initialize();
@@ -100,6 +108,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         // Update input (processes cursor centering when locked)
         Input::Update();
+
+        // Update audio fades/transitions
+        SoundManager::Update(Time::unscaledDeltaTime);
 
         // Check for exit conditions
         if (!AESysDoesWindowExist())
@@ -160,11 +171,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Unload active scene first (ensures components clean up before managers)
     SceneManager::UnloadActiveScene();
 
+    // Cleanup static game data
+    PuzzleManager::FreeManager();
+
     // Cleanup Debug Manager
     Game::DebugManager::Shutdown();
 
     // Cleanup UI System
     UI::UIManager::Shutdown();
+
+    // Cleanup Sound Manager
+    SoundManager::Shutdown();
 
     // Cleanup Asset Manager
     AssetManager::UnloadAll();

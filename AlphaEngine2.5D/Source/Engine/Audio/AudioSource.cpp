@@ -30,7 +30,7 @@ void AudioSource::Play() {
     AEAudioPlay(clip->GetHandle(), group, volume, pitch, loops);
 }
 
-void AudioSource::PlayOneShot(std::shared_ptr<AudioClip> oneShot, f32 volumeScale) {
+void AudioSource::PlayOneShot(AudioClip* oneShot, f32 volumeScale) {
     if (!oneShot || !oneShot->IsLoaded()) return;
     
     AEAudioPlay(oneShot->GetHandle(), group, volume * volumeScale, pitch, 0);

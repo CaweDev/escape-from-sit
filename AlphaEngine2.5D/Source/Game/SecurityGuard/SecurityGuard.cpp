@@ -572,14 +572,16 @@ namespace Game {
         std::cout << "  Sabotage location: (" << controlRoomPos.x << ", " << controlRoomPos.y << ")\n";
         std::cout << "  Sabotaged zone: " << sabotagedZoneId << "\n";
         
-        // Only respond if currently in Patrol state
-        if (state != GuardState::Patrol) {
-            std::cout << "[Guard] Ignoring sabotage - not in Patrol state\n";
+        // Do not respond if actively catching the player
+        if (state == GuardState::Catch) {
+            std::cout << "[Guard] Ignoring sabotage - currently catching player\n";
             return;
         }
 
+        // Allow response from Patrol, Chase, Search — interrupt other behaviors to investigate
+        std::cout << "[Guard] Responding to sabotage (interrupting state " << StateToString(state) << ")\n";
+
         // Trigger investigation behavior:
-        // 1. Set memory to control room location
         memory.hasLastSeen = true;
         memory.lastSeenPos = controlRoomPos;
         memory.timeSinceSeen = 0.0f;
@@ -587,7 +589,7 @@ namespace Game {
         sabotageLocation = controlRoomPos;
         sabotageInvestigateTimer = 30.0f; // Investigate for 30 seconds (matches disabled duration)
 
-        // 2. Path to control room (add small offset to avoid wall placement)
+        // Path to control room (add small offset to avoid wall placement)
         int targetX = (int)(controlRoomPos.x + 0.5f);
         int targetY = (int)(controlRoomPos.y + 0.5f);
         
@@ -598,6 +600,7 @@ namespace Game {
                 for (int dx = -2; dx <= 2; ++dx) {
                     int testX = targetX + dx;
                     int testY = targetY + dy;
+                    if (testX < 0 || testY < 0 || testX >= tileMap->width || testY >= tileMap->height) continue;
                     if (tileMap->IsWalkable((float)testX + 0.5f, (float)testY + 0.5f)) {
                         targetX = testX;
                         targetY = testY;
@@ -612,7 +615,7 @@ namespace Game {
         BuildPathBFS_ToGoal(targetX, targetY);
         std::cout << "[Guard] Path has " << path.size() << " waypoints\n";
 
-        // 3. Switch to Search state to investigate
+        // Switch to Search state to investigate (will use SearchUpdate to start repair when arrived)
         SetState(GuardState::Search);
         searchTimer = 0.0f;
 

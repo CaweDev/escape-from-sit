@@ -5,6 +5,7 @@
 #include "SceneManager.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Helpers/FadeService.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 
 namespace Engine {
 
@@ -75,6 +76,8 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
     s_loadWithScreenTarget = sceneName;
     s_loadWithScreenFadeInDuration = fadeInDuration;
     s_loadWithScreenFadeOutDuration = fadeOutDuration;
+
+    SoundManager::StopBGM(); // stops bgm everytime loading screen appears
 
     UI::FadeService::FadeIn(fadeInDuration, []() {
         LoadScene("Loading");

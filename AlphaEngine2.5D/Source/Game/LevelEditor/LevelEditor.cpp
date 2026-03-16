@@ -14,6 +14,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <unordered_map>
 
 #undef min
 #undef max
@@ -296,6 +297,10 @@ void LevelEditor::HandleMapClick() {
         tileMap->SetTile(hoveredTileX, hoveredTileY, Engine::TileType::Empty);
         std::cout << "[LevelEditor] Erased tile at (" << hoveredTileX << ", " << hoveredTileY 
                   << ") - converted to floor (LIVE UPDATE)\n";
+        // Remove any special markers stored at this location (exit/terminal/control room/cards)
+        if (tileMap) {
+            tileMap->RemoveExitAt(hoveredTileX, hoveredTileY);
+        }
         return;
     }
     
@@ -304,6 +309,10 @@ void LevelEditor::HandleMapClick() {
         tileMap->SetTile(hoveredTileX, hoveredTileY, Engine::TileType::Wall);
         std::cout << "[LevelEditor] Built wall at (" << hoveredTileX << ", " << hoveredTileY 
                   << ") (LIVE UPDATE)\n";
+        // Placing a wall should remove any exit marker present here
+        if (tileMap) {
+            tileMap->RemoveExitAt(hoveredTileX, hoveredTileY);
+        }
         return;
     }
     
@@ -332,6 +341,7 @@ void LevelEditor::HandleMapClick() {
         case EditorMode::Exit:
             newTile = static_cast<Engine::TileType>(12); // Exit marker
             std::cout << "[LevelEditor] Placed exit at (" << hoveredTileX << ", " << hoveredTileY << ") (LIVE UPDATE)\n";
+            if (tileMap) tileMap->AddExitAt(hoveredTileX, hoveredTileY);
             break;
         case EditorMode::ControlRoom:
             newTile = static_cast<Engine::TileType>(20); // Control room door marker (NEW 'K' marker)
@@ -360,6 +370,11 @@ void LevelEditor::HandleMapClick() {
     }
     
     tileMap->SetTile(hoveredTileX, hoveredTileY, newTile);
+
+    // If we've just set the tile to empty (e.g. via Erase) remove any exit stored here
+    if (newTile == Engine::TileType::Empty) {
+        if (tileMap) tileMap->RemoveExitAt(hoveredTileX, hoveredTileY);
+    }
     
     // Note: Changes are applied to TileMap immediately
     // Renderer and collider read from TileMap each frame automatically
@@ -582,9 +597,64 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
         return;
     }
 
+    // Build overlay map from stored marker positions.
+    // LoadFromArray replaces special markers (doors, terminals, exits, cards, etc.)
+    // with Empty in the live tiles array, so GetTile() returns 0 for those.
+    // We must re-inject them from the stored position vectors before saving.
+    std::unordered_map<int, char> overlay; // key = y*width+x, value = map char
+
+    // Spawned doors (tile 10 ? 'D')
+    for (auto* door : tileMap->GetDoors()) {
+        if (!door) continue;
+        int idx = door->tileY * mapWidth + door->tileX;
+        overlay[idx] = 'D';
+    }
+
+    // Terminal positions (tile 11 ? 'T')
+    for (auto& pos : tileMap->GetTerminalPositions()) {
+        int tx = (int)std::floor(pos.x);
+        int ty = (int)std::floor(pos.y);
+        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight)
+            overlay[ty * mapWidth + tx] = 'T';
+    }
+
+    // Exit positions (tile 12 ? 'E')
+    for (auto& pos : tileMap->GetExitPositions()) {
+        int tx = (int)std::floor(pos.x);
+        int ty = (int)std::floor(pos.y);
+        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight)
+            overlay[ty * mapWidth + tx] = 'E';
+    }
+
+    // Control room door positions (tile 20 ? 'K')
+    for (auto& pos : tileMap->GetControlRoomDoorPositions()) {
+        int tx = (int)std::floor(pos.x);
+        int ty = (int)std::floor(pos.y);
+        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight)
+            overlay[ty * mapWidth + tx] = 'K';
+    }
+
+    // Access card positions (tiles 15-18 ? 'F','G','H','J')
+    const char cardChars[] = { 'F', 'G', 'H', 'J' };
+    for (auto& [pos, cardId] : tileMap->GetAccessCardPositions()) {
+        int tx = (int)std::floor(pos.x);
+        int ty = (int)std::floor(pos.y);
+        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight && cardId >= 0 && cardId <= 3)
+            overlay[ty * mapWidth + tx] = cardChars[cardId];
+    }
+
     // Write the map row by row
     for (int y = 0; y < mapHeight; ++y) {
         for (int x = 0; x < mapWidth; ++x) {
+            int idx = y * mapWidth + x;
+
+            // Check overlay first (re-injected markers)
+            auto it = overlay.find(idx);
+            if (it != overlay.end()) {
+                file << it->second;
+                continue;
+            }
+
             int tile = (int)tileMap->GetTile(x, y);
             char c = '0';
             

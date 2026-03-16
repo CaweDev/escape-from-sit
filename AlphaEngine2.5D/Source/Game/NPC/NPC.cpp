@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include "Engine/Core/GameObject.hpp"
+#include "Engine/Core/Time.hpp"
 namespace Game
 {
     void NPC::Initialize()
@@ -19,8 +20,8 @@ namespace Game
     {
         if (!tileMap) return;
 
-        // TODO: replace with your engine dt if you have it
-        float dt = 0.016f;
+        float dt = Engine::Time::deltaTime;
+        if (dt <= 0.0f) dt = 0.016f;
 
         switch (type)
         {

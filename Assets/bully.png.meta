@@ -1,0 +1,13 @@
+{
+    "rows": 1,
+    "cols": 2,
+    "animations": [
+        {
+            "name": "Patrol",
+            "startFrame": 1,
+            "frameCount": 2,
+            "fps": 2.0,
+            "loop": true
+        }
+    ]
+}

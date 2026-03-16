@@ -6,6 +6,7 @@
 #include "Engine/Core/Time.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Scene/SceneManager.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -71,6 +72,8 @@ void CCTVTerminal::OnTerminalInteract() {
         return;
     }
     
+    Engine::SoundManager::PlaySFX("terminal_hack");
+
     // For now, instant hack (TODO: add hold-E mechanic)
     DisableCameras();
     

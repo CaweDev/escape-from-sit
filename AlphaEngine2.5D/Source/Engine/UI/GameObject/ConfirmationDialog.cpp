@@ -26,21 +26,21 @@ namespace UI
         UIManager* mgr = UIManager::GetInstance();
         if (!mgr) return;
 
-        // --- Create a dedicated canvas just below the fade overlay ---
+        // --- Create a dedicated modal canvas ---
         m_canvas = mgr->CreateCanvas();
         m_canvas->SetSortOrder(100000);
         m_canvas->SetReferenceResolution(1280.f, 720.f);
         m_canvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
 
-        // --- Full-screen semi-transparent overlay (blocks clicks behind dialog) ---
+        // --- Full-screen dark backdrop (blocks clicks behind dialog) ---
         m_overlay = m_canvas->CreateChild<Panel>();
-        m_overlay->name = "ConfirmDialog_Overlay";
+        m_overlay->name = "ConfirmDialog_DarkPanel";
         m_overlay->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_overlay->SetAnchoredPosition({ 0.0f, 0.0f });
         m_overlay->SetSizeDelta({ 0.0f, 0.0f });
-        m_overlay->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.6f));
-        m_overlay->raycastTarget = true;  // Block clicks behind the dialog
-        m_overlay->SetRenderOrder(1);
+        m_overlay->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.72f));
+        m_overlay->raycastTarget = true;
+        m_overlay->SetRenderOrder(10);
 
         // --- Centered dialog panel ---
         m_dialogPanel = m_overlay->CreateChild<Panel>();
@@ -49,15 +49,15 @@ namespace UI
         m_dialogPanel->SetPivot({ 0.5f, 0.5f });
         m_dialogPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         m_dialogPanel->SetSizeDelta({ 420.0f, 220.0f });
-        
+        m_dialogPanel->SetRenderOrder(20);
+
         // Apply panel-001.png as background with 9-slice
         m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-001.png"));
-        //m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/Sample9SliceBorder.png"));
         m_dialogPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
         if (auto* bg = m_dialogPanel->GetBackground())
         {
             bg->SetImageType(ImageType::Sliced);
-            bg->SetPixelsPerUnitMultiplier(2.0f); // Make the border thicker
+            bg->SetPixelsPerUnitMultiplier(2.0f);
         }
 
         m_dialogPanel->raycastTarget = true;
@@ -91,6 +91,10 @@ namespace UI
         }
         
         m_confirmBtn->SetText("Confirm");
+        if (auto* label = m_confirmBtn->GetLabel())
+        {
+            label->SetFontSize(1.1f);
+        }
         m_confirmBtn->onClick = [this]() { OnConfirmClicked(); };
 
         // --- Cancel button (right side of lower area) ---
@@ -110,6 +114,10 @@ namespace UI
         }
         
         m_cancelBtn->SetText("Cancel");
+        if (auto* label = m_cancelBtn->GetLabel())
+        {
+            label->SetFontSize(1.1f);
+        }
         m_cancelBtn->onClick = [this]() { OnCancelClicked(); };
 
         // Start hidden
