@@ -80,7 +80,7 @@ namespace Game {
         float   playerViewRot = 0.0f;
 
         // Exit
-        Vector2 exitPos = Vector2(14.5f, 1.5f);
+        Vector2 exitPos ;
         float   winRadius = 0.6f;
         bool    printedWin = false;
 

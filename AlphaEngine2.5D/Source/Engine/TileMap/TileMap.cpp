@@ -10,6 +10,7 @@
 #include "../Graphics/TileMapRenderer.hpp"
 #include "../Physics/BoxCollider2D.hpp"
 #include "../Interaction/Interactable.hpp"
+#include "../../Game/Puzzle/PuzzleManager.h"
 #include <string>
 using namespace Engine;
 
@@ -228,6 +229,29 @@ void TileMap::SpawnDoor(int x, int y, int doorType) {
 
 	// Connect interactable to door
 	door->SetupInteractable(interactable, "Open", "Close");
+
+	// If this is an exit door (doorType 12) lock it until all puzzle books are collected
+	if (doorType == 12) {
+		int totalBooks = (int)PuzzleManager::allBooks.size();
+		int collected = PuzzleManager::booksCollected;
+		if (collected < totalBooks) {
+			// Show locked text
+			interactable->actionText = "EXIT LOCKED: Collect all books";
+		}
+		// Override interaction to enforce lock
+		interactable->onInteract = [door, totalBooks]() {
+			int collectedNow = PuzzleManager::booksCollected;
+			if (collectedNow >= totalBooks) {
+				// allow normal toggle
+				door->Toggle();
+				printf("[TileMap] Exit door opened (all books collected)\n");
+			} else {
+				int remaining = totalBooks - collectedNow;
+				printf("[TileMap] Exit is locked. %d books remaining.\n", remaining);
+			}
+		};
+		// Track spawned exit doors like other doors
+	}
 
 	// Track the spawned door
 	spawnedDoors.push_back(door);
