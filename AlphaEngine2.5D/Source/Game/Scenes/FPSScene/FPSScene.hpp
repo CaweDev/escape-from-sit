@@ -299,93 +299,93 @@ namespace Game {
         static constexpr float spawnExcludeY = 2.5f;
         static constexpr float spawnExcludeRadius = 5.0f;
 
-        //Game::NPC* SpawnNPCInZone(int zoneId, NPCType npcType, TileMap* map, const char* spritePath)
-        //{
-        //    int gx = 0, gy = 0;
-        //    bool found = false;
-        //    // Try multiple times to find a position away from the player spawn area
-        //    for (int attempt = 0; attempt < 50; ++attempt) {
-        //        if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
-        //            break;
-        //        float dx = (float)gx + 0.5f - spawnExcludeX;
-        //        float dy = (float)gy + 0.5f - spawnExcludeY;
-        //        if (dx * dx + dy * dy > spawnExcludeRadius * spawnExcludeRadius) {
-        //            found = true;
-        //            break;
-        //        }
-        //    }
-        //    if (!found) {
-        //        if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy)) {
-        //            Vector2 c = GetZoneCenter(zoneId);
-        //            gx = (int)c.x;
-        //            gy = (int)c.y;
-        //        }
-        //    }
+        Game::NPC* SpawnNPCInZone(int zoneId, NPCType npcType, TileMap* map, const char* spritePath)
+        {
+            int gx = 0, gy = 0;
+            bool found = false;
+            // Try multiple times to find a position away from the player spawn area
+            for (int attempt = 0; attempt < 50; ++attempt) {
+                if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
+                    break;
+                float dx = (float)gx + 0.5f - spawnExcludeX;
+                float dy = (float)gy + 0.5f - spawnExcludeY;
+                if (dx * dx + dy * dy > spawnExcludeRadius * spawnExcludeRadius) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy)) {
+                    Vector2 c = GetZoneCenter(zoneId);
+                    gx = (int)c.x;
+                    gy = (int)c.y;
+                }
+            }
 
-        //    const char* typeName = (npcType == NPCType::Bully) ? "Bully" : "Annoying";
-        //    auto go = CreateGameObject(std::string(typeName) + "_Z" + std::to_string(zoneId));
-        //    go->transform->position = Vector2((float)gx + 0.5f, (float)gy + 0.5f);
+            const char* typeName = (npcType == NPCType::Bully) ? "Bully" : "Annoying";
+            auto go = CreateGameObject(std::string(typeName) + "_Z" + std::to_string(zoneId));
+            go->transform->position = Vector2((float)gx + 0.5f, (float)gy + 0.5f);
 
-        //    auto npc = go->AddComponent<Game::NPC>();
-        //    npc->tileMap = map;
-        //    npc->playerTf = playerTf;
-        //    npc->playerData = playerData;
-        //    npc->type = npcType;
-        //    npc->zoneId = zoneId;
+            auto npc = go->AddComponent<Game::NPC>();
+            npc->tileMap = map;
+            npc->playerTf = playerTf;
+            npc->playerData = playerData;
+            npc->type = npcType;
+            npc->zoneId = zoneId;
 
         //    // Get CameraShake from player camera for bully push effect
-        //    if (playerCam) {
-        //        auto shake = playerCam->gameObject->GetComponent<CameraShake>();
-        //        if (!shake) {
-        //            shake = playerCam->gameObject->AddComponent<CameraShake>();
-        //            shake->Initialize();
-        //        }
-        //        npc->camShake = shake;
-        //    }
+            if (playerCam) {
+                auto shake = playerCam->gameObject->GetComponent<CameraShake>();
+                if (!shake) {
+                    shake = playerCam->gameObject->AddComponent<CameraShake>();
+                    shake->Initialize();
+                }
+                npc->camShake = shake;
+            }
 
         //    // Let NPC pick random walkable goals inside its zone via ZoneManager
-        //    npc->SetPickGoalInZone([this](int zId, int& outX, int& outY) -> bool {
-        //        return zoneMgr.PickRandomWalkableInZone(zId, outX, outY);
-        //    });
+            npc->SetPickGoalInZone([this](int zId, int& outX, int& outY) -> bool {
+                return zoneMgr.PickRandomWalkableInZone(zId, outX, outY);
+            });
 
         //    // Tuning per type
-        //    if (npcType == NPCType::Bully) {
-        //        npc->speed = 2.0f;
-        //        npc->triggerRadius = 3.0f;
-        //    } else {
-        //        npc->speed = 1.2f;
-        //        npc->triggerRadius = 2.5f;
-        //        npc->blockTime = 1.5f;
-        //    }
+            if (npcType == NPCType::Bully) {
+                npc->speed = 2.0f;
+                npc->triggerRadius = 3.0f;
+            } else {
+                npc->speed = 1.2f;
+                npc->triggerRadius = 2.5f;
+                npc->blockTime = 1.5f;
+            }
 
-        //    auto npcRb = go->AddComponent<Rigidbody2D>();
-        //    npcRb->bodyType = RigidbodyType2D::Dynamic;
-        //    npcRb->gravityScale = 0.0f;
-        //    npcRb->drag = 0.0f;
+            auto npcRb = go->AddComponent<Rigidbody2D>();
+            npcRb->bodyType = RigidbodyType2D::Dynamic;
+            npcRb->gravityScale = 0.0f;
+            npcRb->drag = 0.0f;
 
-        //    auto npcCol = go->AddComponent<CircleCollider2D>();
-        //    npcCol->radius = 0.25f;
-        //    npcCol->minHeight = 0.0f;
-        //    npcCol->maxHeight = 2.0f;
+            auto npcCol = go->AddComponent<CircleCollider2D>();
+            npcCol->radius = 0.25f;
+            npcCol->minHeight = 0.0f;
+            npcCol->maxHeight = 2.0f;
 
-        //    auto sr = go->AddComponent<SpriteRenderer>();
-        //    sr->SetSprite(AssetManager::GetSprite(spritePath));
-        //    sr->billboard = true;
-        //    sr->sortingOrder = 90;
+            auto sr = go->AddComponent<SpriteRenderer>();
+            sr->SetSprite(AssetManager::GetSprite(spritePath));
+            sr->billboard = true;
+            sr->sortingOrder = 90;
 
-        //    // Tint: Bully = reddish, Annoying = greenish
-        //    if (npcType == NPCType::Bully)
-        //        sr->color = Engine::Color(1.0f, 0.6f, 0.6f, 1.0f);
-        //    else
-        //        sr->color = Engine::Color(0.6f, 1.0f, 0.6f, 1.0f);
+            // Tint: Bully = reddish, Annoying = greenish
+            if (npcType == NPCType::Bully)
+                sr->color = Engine::Color(1.0f, 0.6f, 0.6f, 1.0f);
+            else
+                sr->color = Engine::Color(0.6f, 1.0f, 0.6f, 1.0f);
 
-        //    npcs.push_back(npc);
+            npcs.push_back(npc);
 
-        //    std::cout << "[FPSScene] Spawned " << typeName << " NPC in Zone " << zoneId
-        //              << " at (" << gx << ", " << gy << ")\n";
+            std::cout << "[FPSScene] Spawned " << typeName << " NPC in Zone " << zoneId
+                      << " at (" << gx << ", " << gy << ")\n";
 
-        //    return npc;
-        //}
+            return npc;
+        }
 
         // ===== Spawn one guard helper =====
         Game::SecurityGuard* SpawnGuardInZone(int zoneId, TileMap* map, PlayerHUD* hud, const char* spritePath)
@@ -1063,15 +1063,14 @@ namespace Game {
                 }
             }
 
-            //// ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
-            //npcs.clear();
-            //for (int z = 1; z <= 4; ++z) {
-            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
-            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
-            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
-            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
-            //}
-            //std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
+            // ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
+            npcs.clear();
+            for (int z = 1; z <= 4; ++z) {
+            
+                SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
+                SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+            }
+            std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
 
             // Add terminal icons to minimap
             if (playerHUD && playerHUD->GetMinimap()) {
