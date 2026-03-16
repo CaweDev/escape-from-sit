@@ -256,9 +256,12 @@ namespace UI
         f32 top = mapRect.y + mapRect.height;
         f32 t = m_borderThickness;
 
-        // Use a dummy world rect that is large enough to not clip the border
-        // Actually, let's just use DrawQuadClipped with a very large rect? 
-        // No, let's just implement a simple non-clipped DrawQuadInternal for decorative elements.
+        // Keep border INSIDE the minimap rect so final draw size matches UI element size.
+        // Clamp thickness so very small minimaps still render correctly.
+        t = Engine::Mathf::Min(t, mapRect.width * 0.5f);
+        t = Engine::Mathf::Min(t, mapRect.height * 0.5f);
+        if (t <= 0.0f) return;
+
         auto DrawQuadInternal = [&](f32 x, f32 y, f32 width, f32 height, const Engine::Color& color, Engine::Sprite* sprite = nullptr) {
             AEGfxSetRenderMode(sprite ? AE_GFX_RM_TEXTURE : AE_GFX_RM_COLOR);
             AEGfxSetBlendMode(AE_GFX_BM_BLEND);
@@ -274,16 +277,19 @@ namespace UI
             AEGfxMeshDraw(m_quadMesh, AE_GFX_MDM_TRIANGLES);
         };
 
-        // Draw border frame (4 sides)
         Engine::Sprite* bSprite = m_borderSprite ? m_borderSprite.get() : nullptr;
-        // Left
-        DrawQuadInternal(left - t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderColor, bSprite);
-        // Right
-        DrawQuadInternal(right + t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height + t * 2.0f, m_borderColor, bSprite);
-        // Top
-        DrawQuadInternal((left + right) * 0.5f, top + t * 0.5f, mapRect.width, t, m_borderColor, bSprite);
-        // Bottom
-        DrawQuadInternal((left + right) * 0.5f, bottom - t * 0.5f, mapRect.width, t, m_borderColor, bSprite);
+
+        // Left / Right inside edges
+        DrawQuadInternal(left + t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height, m_borderColor, bSprite);
+        DrawQuadInternal(right - t * 0.5f, (top + bottom) * 0.5f, t, mapRect.height, m_borderColor, bSprite);
+
+        // Top / Bottom inside edges (subtract side thickness to avoid corner overdraw bulge)
+        f32 innerWidth = Engine::Mathf::Max(0.0f, mapRect.width - 2.0f * t);
+        if (innerWidth > 0.0f)
+        {
+            DrawQuadInternal((left + right) * 0.5f, top - t * 0.5f, innerWidth, t, m_borderColor, bSprite);
+            DrawQuadInternal((left + right) * 0.5f, bottom + t * 0.5f, innerWidth, t, m_borderColor, bSprite);
+        }
     }
 
     void Minimap::RenderCCTVCones(float mapCenterX, float mapCenterY, float tileSize,
