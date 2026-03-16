@@ -14,6 +14,9 @@ namespace Game {
 
     bool CCTVCamera::InFov(float dx, float dy) const
     {
+        // Defensive: ensure transform exists
+        if (!gameObject || !gameObject->transform) return false;
+
         // camera forward from rotation (assuming degrees, like your scene)
         float rotRad = DegToRad((float)gameObject->transform->rotation);
         Vector2 fwd(std::cos(rotRad), std::sin(rotRad));
@@ -64,6 +67,8 @@ namespace Game {
     bool CCTVCamera::HasLineOfSighttoPlayer() const
     {
         if (!tile || !tf) return false;
+        if (!gameObject || !gameObject->transform) return false;
+
         Vector2 from(gameObject->transform->position.x, gameObject->transform->position.y);
         Vector2 to(tf->position.x, tf->position.y);
 
@@ -124,6 +129,7 @@ namespace Game {
     {
         m_visionPoly.clear();
         if (!showVision) return;
+        if (!gameObject || !gameObject->transform) return;
 
         Vector2 camPos(gameObject->transform->position.x, gameObject->transform->position.y);
 
@@ -146,10 +152,11 @@ namespace Game {
     {
        
         justSpotted = false;
-
-        if (!tile || !tf)
+        // Defensive: ensure essential pointers are valid
+        if (!gameObject || !gameObject->transform || !tile || !tf)
         {
             isSeeingPlayer = false;
+            justSpotted = false;
             return;
         }
         
@@ -222,7 +229,7 @@ namespace Game {
         }
         
         // Update minimap vision cone
-        if (minimap)
+        if (minimap && gameObject && gameObject->transform)
         {
             minimap->UpdateCCTVCone(gameObject->transform, coneWidth, maxRange, isSeeingPlayer);
         }

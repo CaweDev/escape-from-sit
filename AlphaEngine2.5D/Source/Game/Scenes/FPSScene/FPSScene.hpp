@@ -28,7 +28,6 @@
 #include "Game/NPC/CameraShake.hpp"
 #include "Game/NPC/NPC.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
-
 #include "Game/ZoneManager/ZoneManager.hpp"
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
@@ -1248,7 +1247,49 @@ namespace Game {
         }
         void OnUnload() override
         {
+            // Disconnect guards from terminal list to avoid dangling pointers
+            for (auto* g : guards) {
+                if (g) g->SetTerminals(nullptr);
+            }
 
+            // Clear terminals: remove references to cameras, HUD and guards
+            for (auto* t : cctvTerminals) {
+                if (!t) continue;
+                t->controlledCameras.clear();
+                t->playerHUD = nullptr;
+                t->spriteRenderer = nullptr;
+                t->allGuards.clear();
+                t->floatingIcon = nullptr;
+            }
+
+            // Clear sensors: null out external pointers so Update() won't dereference them
+            for (auto* s : cctvSensors) {
+                if (!s) continue;
+                s->tf = nullptr;
+                s->tile = nullptr;
+                s->hud = nullptr;
+                s->minimap = nullptr;
+                s->spriteRenderer = nullptr;
+            }
+
+            // Clear all scene-owned lists to avoid keeping stale pointers across reload
+            cctvSensors.clear();
+            cctvTerminals.clear();
+            cctvViewPos.clear();
+            cctvViewRot.clear();
+            cctvCooldown.clear();
+
+            guards.clear();
+
+            // Clear other references
+            powerUps.clear();
+            powerUpBaseZ.clear();
+
+            playerHUD = nullptr;
+            playerData = nullptr;
+            playerController = nullptr;
+            playerTf = nullptr;
+            playerCam = nullptr;
         }
     };
 
