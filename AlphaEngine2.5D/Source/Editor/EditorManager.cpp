@@ -159,6 +159,8 @@ namespace AEEditor
         ImGui::Begin("Toolbar", nullptr, ImGuiWindowFlags_NoScrollbar);
         if (ImGui::Button("Play External"))
         {
+            LevelEditor::SaveMap("Assets/tmpMap.txt");
+            
             char exePath[MAX_PATH];
             GetModuleFileNameA(NULL, exePath, MAX_PATH);
 

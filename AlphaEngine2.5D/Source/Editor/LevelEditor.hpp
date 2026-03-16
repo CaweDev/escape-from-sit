@@ -22,7 +22,7 @@ namespace AEEditor
 
         static void DrawAssetBrowser();
         static void DrawMapEditorViewport();
-        static void SaveMapTxt(const char *filepath);
+        static void SaveMap(const char *filepath);
 
         static bool Is3DMode();
 
@@ -30,18 +30,18 @@ namespace AEEditor
         static Engine::Scene *s_scene;
         static Engine::TileMap *s_tileMap;
 
-        static int s_currentTileValue;
-        static bool s_is3DMode;
+        static int currentTileValue;
+        static bool is3DMode;
 
-        static int s_mapWidth;
-        static int s_mapHeight;
-        static float s_tileSize;
+        static int mapWidth;
+        static int mapHeight;
+        static float tileSize;
 
-        static ImVec2 s_scrolling;
-        static float s_zoom;
+        static ImVec2 scrolling;
+        static float zoom;
 
-        static int s_hoveredX;
-        static int s_hoveredY;
+        static int hoveredX;
+        static int hoveredY;
 
         static void ApplyPaint(int gridX, int gridY);
         static void SpawnDoorAt(int x, int y);

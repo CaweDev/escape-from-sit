@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
+#include <filesystem>
 
 #include "Engine/Scene/Scene.hpp"
 #include "Engine/TileMap/TileMap.hpp"
@@ -24,19 +25,19 @@ namespace AEEditor
     Engine::Scene *LevelEditor::s_scene = nullptr;
     Engine::TileMap *LevelEditor::s_tileMap = nullptr;
 
-    int LevelEditor::s_currentTileValue = 1;
-    bool LevelEditor::s_is3DMode = false;
+    int LevelEditor::currentTileValue = 1;
+    bool LevelEditor::is3DMode = false;
 
-    int LevelEditor::s_mapWidth = 0;
-    int LevelEditor::s_mapHeight = 0;
-    float LevelEditor::s_tileSize = 32.0f;
+    int LevelEditor::mapWidth = 0;
+    int LevelEditor::mapHeight = 0;
+    float LevelEditor::tileSize = 32.0f;
 
-    ImVec2 LevelEditor::s_scrolling = ImVec2(0.0f, 0.0f);
-    float LevelEditor::s_zoom = 1.0f;
-    int LevelEditor::s_hoveredX = -1;
-    int LevelEditor::s_hoveredY = -1;
+    ImVec2 LevelEditor::scrolling = ImVec2(0.0f, 0.0f);
+    float LevelEditor::zoom = 1.0f;
+    int LevelEditor::hoveredX = -1;
+    int LevelEditor::hoveredY = -1;
 
-    bool LevelEditor::Is3DMode() { return s_is3DMode; }
+    bool LevelEditor::Is3DMode() { return is3DMode; }
 
     void LevelEditor::Initialize(Engine::Scene *scene, Engine::TileMap *tileMap)
     {
@@ -45,19 +46,21 @@ namespace AEEditor
 
         if (s_tileMap)
         {
-            s_mapWidth = s_tileMap->width;
-            s_mapHeight = s_tileMap->height;
+            mapWidth = s_tileMap->width;
+            mapHeight = s_tileMap->height;
         }
     }
 
-    void LevelEditor::Exit() {}
+    void LevelEditor::Exit() {
+        std::filesystem::remove("Assets/tmpMap.txt");
+    }
 
     void LevelEditor::DrawAssetBrowser()
     {
         ImGui::Begin("Toolbar");
 
-        if (s_hoveredX >= 0)
-            ImGui::Text("Hovered Tile: (%d, %d)", s_hoveredX, s_hoveredY);
+        if (hoveredX >= 0)
+            ImGui::Text("Hovered Tile: (%d, %d)", hoveredX, hoveredY);
         else
             ImGui::Text("Hovered Tile: (--, --)");
 
@@ -66,7 +69,7 @@ namespace AEEditor
         ImGui::Text("Map Editing Modes");
         ImGui::Separator();
 
-        ImGui::BeginDisabled(s_is3DMode);
+        ImGui::BeginDisabled(is3DMode);
 
         struct ModeDef
         {
@@ -78,13 +81,13 @@ namespace AEEditor
 
         for (int i = 0; i < 10; i++)
         {
-            bool isSelected = (s_currentTileValue == modes[i].value);
+            bool isSelected = (currentTileValue == modes[i].value);
             if (isSelected)
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.6f, 0.3f, 1.0f));
 
             if (ImGui::Button(modes[i].name, ImVec2(120, 30)))
             {
-                s_currentTileValue = modes[i].value;
+                currentTileValue = modes[i].value;
             }
 
             if (isSelected)
@@ -98,14 +101,14 @@ namespace AEEditor
 
         ImGui::Separator();
 
-        ImGui::PushStyleColor(ImGuiCol_Button, s_is3DMode ? ImVec4(0.2f, 0.5f, 0.8f, 1.0f) : ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
-        if (ImGui::Button(s_is3DMode ? "Viewport: 3D Scene" : "Viewport: 2D Map", ImVec2(248, 40)))
+        ImGui::PushStyleColor(ImGuiCol_Button, is3DMode ? ImVec4(0.2f, 0.5f, 0.8f, 1.0f) : ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+        if (ImGui::Button(is3DMode ? "Viewport: 3D Scene" : "Viewport: 2D Map", ImVec2(248, 40)))
         {
-            s_is3DMode = !s_is3DMode;
+            is3DMode = !is3DMode;
 
-            if (s_is3DMode)
+            if (is3DMode)
             {
-                SaveMapTxt("Assets/map_tmp.txt");
+                SaveMap("Assets/tmpMap.txt");
                 Engine::SceneManager::LoadScene("EditorScene");
             }
         }
@@ -113,7 +116,8 @@ namespace AEEditor
 
         if (ImGui::Button("Save Map (S)", ImVec2(248, 40)))
         {
-            SaveMapTxt("Assets/map.txt");
+            SaveMap("Assets/map.txt");
+            SaveMap("Assets/tmpMap.txt");
         }
         ImGui::End();
     }
@@ -151,7 +155,7 @@ namespace AEEditor
 
     void LevelEditor::DrawMapEditorViewport()
     {
-        if (s_is3DMode)
+        if (is3DMode)
         {
             ImGui::TextDisabled("3D Viewport Active (Engine Render Pass)");
             return;
@@ -178,27 +182,27 @@ namespace AEEditor
             if (io.MouseWheel != 0.0f)
             {
                 float zoomDelta = io.MouseWheel * 0.1f;
-                s_zoom = std::clamp(s_zoom + zoomDelta, 0.1f, 5.0f);
+                zoom = std::clamp(zoom + zoomDelta, 0.1f, 5.0f);
             }
 
             if (ImGui::IsMouseDragging(ImGuiMouseButton_Right, 0.0f))
             {
-                s_scrolling.x += io.MouseDelta.x;
-                s_scrolling.y += io.MouseDelta.y;
+                scrolling.x += io.MouseDelta.x;
+                scrolling.y += io.MouseDelta.y;
             }
         }
 
         drawList->AddRectFilled(canvasPos, canvasMax, IM_COL32(40, 40, 40, 255));
 
-        float scaledTileSize = s_tileSize * s_zoom;
+        float scaledTileSize = tileSize * zoom;
 
-        ImVec2 origin(canvasPos.x + s_scrolling.x,
-                      canvasPos.y + s_scrolling.y);
+        ImVec2 origin(canvasPos.x + scrolling.x,
+                      canvasPos.y + scrolling.y);
 
         int firstX = max(0, (int)std::floor((canvasPos.x - origin.x) / scaledTileSize));
         int firstY = max(0, (int)std::floor((canvasPos.y - origin.y) / scaledTileSize));
-        int lastX = min(s_mapWidth - 1, (int)std::ceil((canvasMax.x - origin.x) / scaledTileSize));
-        int lastY = min(s_mapHeight - 1, (int)std::ceil((canvasMax.y - origin.y) / scaledTileSize));
+        int lastX = min(mapWidth - 1, (int)std::ceil((canvasMax.x - origin.x) / scaledTileSize));
+        int lastY = min(mapHeight - 1, (int)std::ceil((canvasMax.y - origin.y) / scaledTileSize));
 
         float startX = origin.x + firstX * scaledTileSize;
         float startY = origin.y + firstY * scaledTileSize;
@@ -211,7 +215,7 @@ namespace AEEditor
             {
                 float px = startX + (x - firstX) * scaledTileSize;
 
-                int tileVal = (int)s_tileMap->GetTile(x, s_mapHeight - 1 - y);
+                int tileVal = (int)s_tileMap->GetTile(x, mapHeight - 1 - y);
                 ImU32 color = GetTileColor(tileVal);
 
                 ImVec2 pMin(px, py);
@@ -228,10 +232,10 @@ namespace AEEditor
             int screenGridX = static_cast<int>(std::floor((mousePos.x - origin.x) / scaledTileSize));
             int screenGridY = static_cast<int>(std::floor((mousePos.y - origin.y) / scaledTileSize));
 
-            if (screenGridX >= 0 && screenGridX < s_mapWidth && screenGridY >= 0 && screenGridY < s_mapHeight)
+            if (screenGridX >= 0 && screenGridX < mapWidth && screenGridY >= 0 && screenGridY < mapHeight)
             {
-                s_hoveredX = screenGridX;
-                s_hoveredY = s_mapHeight - 1 - screenGridY;
+                hoveredX = screenGridX;
+                hoveredY = mapHeight - 1 - screenGridY;
 
                 ImVec2 hMin = ImVec2(origin.x + (screenGridX * scaledTileSize), origin.y + (screenGridY * scaledTileSize));
                 ImVec2 hMax = ImVec2(hMin.x + scaledTileSize, hMin.y + scaledTileSize);
@@ -239,34 +243,37 @@ namespace AEEditor
 
                 if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
                 {
-                    ApplyPaint(s_hoveredX, s_hoveredY);
+                    ApplyPaint(hoveredX, hoveredY);
                 }
             }
             else
             {
-                s_hoveredX = -1;
-                s_hoveredY = -1;
+                hoveredX = -1;
+                hoveredY = -1;
             }
 
-            if (ImGui::IsKeyPressed(ImGuiKey_S))
-                SaveMapTxt("Assets/map.txt");
+            if (ImGui::IsKeyPressed(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_S))
+            {
+                SaveMap("Assets/map.txt");
+                SaveMap("Assets/tmpMap.txt");
+            }
         }
     }
 
     void LevelEditor::ApplyPaint(int gridX, int gridY)
     {
-        if (gridX < 0 || gridX >= s_mapWidth || gridY < 0 || gridY >= s_mapHeight)
+        if (gridX < 0 || gridX >= mapWidth || gridY < 0 || gridY >= mapHeight)
             return;
 
         int currentTile = static_cast<int>(s_tileMap->GetTile(gridX, gridY));
 
-        if (s_currentTileValue == 0)
+        if (currentTileValue == 0)
         {
             s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(0));
             return;
         }
 
-        if (s_currentTileValue == 1)
+        if (currentTileValue == 1)
         {
             s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(1));
             return;
@@ -275,23 +282,23 @@ namespace AEEditor
         if (currentTile != 0)
             return;
 
-        Engine::TileType newTile = static_cast<Engine::TileType>(s_currentTileValue);
+        Engine::TileType newTile = static_cast<Engine::TileType>(currentTileValue);
 
         s_tileMap->SetTile(gridX, gridY, newTile);
     }
 
-    void LevelEditor::SaveMapTxt(const char *filepath)
+    void LevelEditor::SaveMap(const char *filepath)
     {
         if (!s_tileMap)
             return;
 
-        std::ofstream file(filepath);
+        std::ofstream file(filepath, std::ios::out | std::ios::trunc);
         if (!file.is_open())
             return;
 
-        for (int y = 0; y < s_mapHeight; ++y)
+        for (int y = 0; y < mapHeight; ++y)
         {
-            for (int x = 0; x < s_mapWidth; ++x)
+            for (int x = 0; x < mapWidth; ++x)
             {
                 int tile = static_cast<int>(s_tileMap->GetTile(x, y));
                 char c = '0';

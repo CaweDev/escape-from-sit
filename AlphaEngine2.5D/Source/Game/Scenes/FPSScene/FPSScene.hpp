@@ -471,8 +471,15 @@ namespace Game {
             // ===== load map.txt =====
             std::vector<std::string> mapRows;
             {
-                std::ifstream file("Assets/map.txt");
-                if (!file.is_open()) return;
+                std::ifstream file("Assets/tmpMap.txt");
+                if (!file.is_open())
+                {
+                    file.clear();
+                    file.open("Assets/map.txt");
+                }
+
+                if (!file.is_open())
+                    return;
 
                 std::string line;
                 while (std::getline(file, line)) {

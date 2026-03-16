@@ -52,8 +52,8 @@ namespace Game
             std::ifstream file("Assets/tmpMap.txt");
             if (!file.is_open())
             {
+                file.clear();
                 file.open("Assets/map.txt");
-                
             }
 
             if (!file.is_open())
