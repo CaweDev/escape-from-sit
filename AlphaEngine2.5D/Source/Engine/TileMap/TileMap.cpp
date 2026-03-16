@@ -19,6 +19,40 @@ void TileMap::Initialize()
 	SpawnDoors();
 }
 
+void TileMap::AddExitAt(int x, int y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    Vector2 pos(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f);
+    // Avoid duplicates
+    for (auto& p : exitPositions) {
+        if ((int)std::floor(p.x) == x && (int)std::floor(p.y) == y) return;
+    }
+    exitPositions.push_back(pos);
+    // If the TileMap is already initialized, spawn a door gameobject for this exit immediately
+    if (initialized) {
+        SpawnDoor(x, y, 12);
+    }
+}
+
+void TileMap::RemoveExitAt(int x, int y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    exitPositions.erase(std::remove_if(exitPositions.begin(), exitPositions.end(), [x,y](const Vector2& p){
+        return (int)std::floor(p.x) == x && (int)std::floor(p.y) == y;
+    }), exitPositions.end());
+
+    // Also destroy any spawned door corresponding to this exit (doorType 12)
+    for (auto it = spawnedDoors.begin(); it != spawnedDoors.end();) {
+        Door* d = *it;
+        if (d && d->tileX == x && d->tileY == y && d->doorType == 12) {
+            if (d->gameObject) {
+                GameObject::Destroy(d->gameObject);
+            }
+            it = spawnedDoors.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 void TileMap::LoadFromArray(const int* data, int w, int h) {
     width = w;
     height = h;
@@ -112,6 +146,16 @@ void TileMap::SpawnDoors() {
 				// Replace door tile with empty (door handles itself)
 				tiles[index] = TileType::Empty;
 			}
+		}
+	}
+
+	// Spawn doors for exit markers that were recorded during LoadFromArray
+	for (const Vector2& p : exitPositions) {
+		int x = (int)std::floor(p.x);
+		int y = (int)std::floor(p.y);
+		// Spawn an exit door (use doorType 12) if within bounds
+		if (x >= 0 && x < width && y >= 0 && y < height) {
+			SpawnDoor(x, y, 12);
 		}
 	}
 

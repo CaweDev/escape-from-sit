@@ -704,6 +704,15 @@ namespace Game {
             }
             zoneMgr.SetZoneGrid(zoneGrid);
 
+            // ===== Read exit position from map (fallback to default) =====
+            auto mapExitPositions = map->GetExitPositions();
+            if (!mapExitPositions.empty()) {
+                exitPos = mapExitPositions[0];
+                std::cout << "[FPSScene] Exit position from map: (" << exitPos.x << ", " << exitPos.y << ")\n";
+            } else {
+                std::cout << "[FPSScene] No exit marker in map, using default: (" << exitPos.x << ", " << exitPos.y << ")\n";
+            }
+
             // ===== spawn 4 guards (1 per zone) =====
             guards.clear();
             SpawnGuardInZone(1, map, playerHUD, "Assets/MetroCity/guardasset.png");
@@ -1290,6 +1299,8 @@ namespace Game {
             playerController = nullptr;
             playerTf = nullptr;
             playerCam = nullptr;
+
+            PuzzleManager::FreeManager();
         }
     };
 

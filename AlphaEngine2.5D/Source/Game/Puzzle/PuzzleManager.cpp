@@ -89,9 +89,11 @@ void PuzzleManager::Init()
 
 void PuzzleManager::FreeManager()
 {
-
-    
-
+    allBooks.clear();
+    booksCollected = 0;
+    activeBookText.clear();
+    activeBookTitle.clear();
+    popupTimer = 0.0f;
 }
    
 

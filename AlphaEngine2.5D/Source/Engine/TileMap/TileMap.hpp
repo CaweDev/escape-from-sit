@@ -132,6 +132,13 @@ public:
     
     /** Get all exit positions from map */
     const std::vector<Vector2>& GetExitPositions() const { return exitPositions; }
+
+    /** Add an exit marker at tile coordinates (x,y). This stores a centered position and ensures
+        the underlying tile is considered empty (markers are tracked separately). */
+    void AddExitAt(int x, int y);
+
+    /** Remove any exit marker at the specified tile coordinates (x,y). */
+    void RemoveExitAt(int x, int y);
     
     /** Get all control room door positions from map */
     const std::vector<Vector2>& GetControlRoomDoorPositions() const { return controlRoomDoorPositions; }

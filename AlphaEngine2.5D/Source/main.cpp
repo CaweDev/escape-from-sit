@@ -23,11 +23,17 @@ extern "C" {
 // Engine Core
 #include "Engine.hpp"
 
+// Texture static shutdown
+#include "Engine/Graphics/Texture2D.hpp"
+
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
 
 // Debug
 #include "Game/Debugger/DebugManager.hpp"
+
+// Game systems
+#include "Game/Puzzle/PuzzleManager.h"
 
 using namespace Engine;
 
@@ -99,6 +105,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Unload active scene first (ensures components clean up before managers)
     SceneManager::UnloadActiveScene();
+
+    // Cleanup static game data
+    PuzzleManager::FreeManager();
 
     // Cleanup Debug Manager
     Game::DebugManager::Shutdown();
