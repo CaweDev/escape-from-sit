@@ -35,14 +35,14 @@ namespace Game
         UI::Panel*  m_panel = nullptr;
         UI::Panel*  m_cheatPanel = nullptr;  // wraps FPSScene-only cheat buttons
         UI::Text*   m_titleText = nullptr;
-        UI::Text*   m_fpsText = nullptr;
+        UI::Text*   m_cameraPositionText = nullptr;
         UI::Button* m_renderLimitBtn = nullptr;
         UI::Button* m_showCollidersBtn = nullptr;
         UI::Button* m_infiniteSpeedBtn = nullptr;
         UI::Button* m_catchImmuneBtn = nullptr;
         UI::Text*   m_instructionText = nullptr;
         
-        float m_fpsUpdateTimer = 0.0f;
+        float m_cameraPositionUpdateTimer = 0.0f;
         
         bool m_showRenderLimit = false;
         bool m_isCursorUnlocked = false;
