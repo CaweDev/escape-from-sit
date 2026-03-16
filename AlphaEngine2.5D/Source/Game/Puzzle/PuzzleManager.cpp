@@ -48,6 +48,11 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             PuzzleManager::activeBookTitle = book.BookName;
             PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
+
+            if (PuzzleManager::booksCollected >= 6) {
+                PuzzleManager::OpenExitDoor();
+            }
+
         }
 
         };
@@ -56,7 +61,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
 void PuzzleManager::BookDataInit()
 {
-    std::array<std::string,6>BookName = { "HLP LESSON 1 ","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string,6>BookName = { "HLP LESSON 1 ","HLP LESSON 2","HLP LESSON 3","HLP LESSON 4","HLP LESSON 5","HLP LESSON 6" };
     std::array<std::string, 6> BookLore = {
         "GG HLP Mid Term F",
         "Need to Lock in for Finals",
@@ -64,7 +69,7 @@ void PuzzleManager::BookDataInit()
         "Ok maybe can pass now",
         "B for HLP!?!?",
         "Confirm A now" };
-    Engine::Vector3 BookCoord[6] = { {3.5f, 3.5f, 0.0f} ,{9.5f, 37.5f, 0.1f},{105.5f, 38.5f, 0.2f},{9.5f, 30.5f, 0.1f},{9.5f, 40.5f, 0.1f},{9.5f, 45.5f, 0.1f} };
+    Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{83.0f, 12.0f, 0.3f},{121.0f, 19.f, 0.3f},{73.0f, 19.0f, 0.3f} };
 
     for (int i{}; i < 6; ++i) {
         allBooks.push_back({
@@ -94,5 +99,11 @@ void PuzzleManager::FreeManager()
 
 }
    
-
+void PuzzleManager::OpenExitDoor()
+{
+    
+    PuzzleManager::activeBookTitle = "SCHOOL GATE UNLOCKED";
+    PuzzleManager::activeBookText = "The the gate has opened. Make your escape.";
+    PuzzleManager::popupTimer = 5.0f;
+}
 
