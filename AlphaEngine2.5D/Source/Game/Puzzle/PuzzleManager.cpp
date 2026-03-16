@@ -41,13 +41,11 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
+
             
             Engine::GameObject::Destroy(bookObj);
             std::cout << "[MEMORY CLEANUP] GameObject "; // TEMPORARY TO TEST IF OBJECT IS DESTROYED
             PuzzleManager::allBooks[book.BookId].BookCollected = true;
-            PuzzleManager::booksCollected++;
-           
-
             PuzzleManager::booksCollected++;
             
             PuzzleManager::activeBookTitle = book.BookName;
