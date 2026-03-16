@@ -150,6 +150,15 @@ void TileMap::SpawnDoors() {
 		}
 	}
 
+	// build spawnedDoorPositions cache
+	spawnedDoorPositions.clear();
+	for (Door* d : spawnedDoors) {
+		if (!d) continue;
+		if (d->gameObject) {
+			spawnedDoorPositions.push_back(Vector2(static_cast<f32>(d->tileX) + 0.5f, static_cast<f32>(d->tileY) + 0.5f));
+		}
+	}
+
 	// Spawn doors for exit markers that were recorded during LoadFromArray
 	for (const Vector2& p : exitPositions) {
 		int x = (int)std::floor(p.x);

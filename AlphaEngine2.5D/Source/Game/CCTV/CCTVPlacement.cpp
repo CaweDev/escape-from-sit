@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <algorithm>
 #include <iostream>
+#include <queue>
+#include <unordered_set>
 namespace Game
 {
     static bool InBounds(int w, int h, int x, int y)
@@ -77,6 +79,156 @@ namespace Game
         // If more than 15 tiles in 5x5 area are open, it's likely a room
         // Corridors typically have 10-15 open tiles, rooms have 15-25
         return openCount > 15;
+    }
+
+    // Count open (floor) tiles in a small neighborhood (3x3) around tile
+    static int LocalOpenCount3x3(Engine::TileMap* map, int x, int y, int w, int h)
+    {
+        int c = 0;
+        for (int oy = -1; oy <= 1; ++oy) {
+            for (int ox = -1; ox <= 1; ++ox) {
+                int nx = x + ox, ny = y + oy;
+                if (InBounds(w,h,nx,ny) && IsFloor(map, nx, ny)) ++c;
+            }
+        }
+        return c;
+    }
+
+    static bool HasAdjacentWall(Engine::TileMap* map, int x, int y, int w, int h)
+    {
+        if (x+1 < w && IsWall(map, x+1, y, w, h)) return true;
+        if (x-1 >= 0 && IsWall(map, x-1, y, w, h)) return true;
+        if (y+1 < h && IsWall(map, x, y+1, w, h)) return true;
+        if (y-1 >= 0 && IsWall(map, x, y-1, w, h)) return true;
+        return false;
+    }
+
+    // Determine if the floor region containing (sx,sy) is enclosed by walls/doors/markers
+    // Do a bounded flood-fill; if the area is large (>AREA_LIMIT) consider it not enclosed
+    static bool IsEnclosedByWallsAndMarkers(Engine::TileMap* map, int sx, int sy, int w, int h)
+    {
+        if (!IsFloor(map, sx, sy)) return false;
+        const int AREA_LIMIT = 2000; // if region larger than this, treat as open
+
+        std::vector<std::vector<char>> seen(h, std::vector<char>(w, 0));
+        std::queue<std::pair<int,int>> q;
+        q.push({sx, sy});
+        seen[sy][sx] = 1;
+        int area = 0;
+
+        std::vector<std::pair<int,int>> perimeter;
+
+        while (!q.empty()) {
+            auto p = q.front(); q.pop();
+            ++area;
+            if (area > AREA_LIMIT) return false;
+
+            const int ox[4] = {1,-1,0,0};
+            const int oy[4] = {0,0,1,-1};
+            for (int k = 0; k < 4; ++k) {
+                int nx = p.first + ox[k];
+                int ny = p.second + oy[k];
+                if (!InBounds(w, h, nx, ny)) continue;
+                if (IsFloor(map, nx, ny)) {
+                    if (!seen[ny][nx]) { seen[ny][nx] = 1; q.push({nx, ny}); }
+                } else {
+                    perimeter.push_back({nx, ny});
+                }
+            }
+        }
+
+        // dedupe perimeter
+        std::sort(perimeter.begin(), perimeter.end());
+        perimeter.erase(std::unique(perimeter.begin(), perimeter.end()), perimeter.end());
+
+        // gather marker positions (tile coords) for terminals/exits/control room doors and spawned doors
+        std::unordered_set<int> markerTiles; // key = y*w + x
+        auto terms = map->GetTerminalPositions();
+        for (auto &pos : terms) markerTiles.insert(((int)std::floor(pos.y)) * w + (int)std::floor(pos.x));
+        auto exits = map->GetExitPositions();
+        for (auto &pos : exits) markerTiles.insert(((int)std::floor(pos.y)) * w + (int)std::floor(pos.x));
+        auto ctrls = map->GetControlRoomDoorPositions();
+        for (auto &pos : ctrls) markerTiles.insert(((int)std::floor(pos.y)) * w + (int)std::floor(pos.x));
+
+        // spawned doors (use positions cache)
+        for (auto &pos : map->GetSpawnedDoorPositionsPublic()) {
+            int tx = (int)std::floor(pos.x); int ty = (int)std::floor(pos.y);
+            if (tx >= 0 && tx < w && ty >= 0 && ty < h) markerTiles.insert(ty * w + tx);
+        }
+
+        // Check every perimeter tile: must be a wall or one of the markers
+        for (auto &pp : perimeter) {
+            int px = pp.first, py = pp.second;
+            if (IsWall(map, px, py, w, h)) continue;
+            int key = py * w + px;
+            if (markerTiles.find(key) != markerTiles.end()) continue;
+            // If perimeter tile is walkable but not marked, it's an opening -> not enclosed
+            if (IsFloor(map, px, py)) return false;
+            // Unknown non-floor type (e.g., open tile) treat as not enclosed
+            return false;
+        }
+
+        return true;
+    }
+
+    // Determine if the floor region containing (sx,sy) has any doors on its perimeter
+    // If so, treat it as guarded (rooms with doors) so we can avoid placing CCTVs there.
+    static bool RegionGuardedByDoor(Engine::TileMap* map, int sx, int sy, int w, int h)
+    {
+        if (!IsFloor(map, sx, sy)) return false;
+        const int AREA_LIMIT = 2000;
+
+        std::vector<std::vector<char>> seen(h, std::vector<char>(w, 0));
+        std::queue<std::pair<int,int>> q;
+        q.push({sx, sy});
+        seen[sy][sx] = 1;
+        int area = 0;
+
+        std::vector<std::pair<int,int>> perimeter;
+
+        while (!q.empty()) {
+            auto p = q.front(); q.pop();
+            ++area;
+            if (area > AREA_LIMIT) return false;
+
+            const int ox[4] = {1,-1,0,0};
+            const int oy[4] = {0,0,1,-1};
+            for (int k = 0; k < 4; ++k) {
+                int nx = p.first + ox[k];
+                int ny = p.second + oy[k];
+                if (!InBounds(w, h, nx, ny)) continue;
+                if (IsFloor(map, nx, ny)) {
+                    if (!seen[ny][nx]) { seen[ny][nx] = 1; q.push({nx, ny}); }
+                } else {
+                    perimeter.push_back({nx, ny});
+                }
+            }
+        }
+
+        if (perimeter.empty()) return false;
+
+        // build set of door tile keys (y*w + x)
+        std::unordered_set<int> doorKeys;
+        for (auto &pos : map->GetSpawnedDoorPositionsPublic()) {
+            int tx = (int)std::floor(pos.x); int ty = (int)std::floor(pos.y);
+            if (tx >= 0 && tx < w && ty >= 0 && ty < h) doorKeys.insert(ty * w + tx);
+        }
+        for (auto &pos : map->GetControlRoomDoorPositions()) {
+            int tx = (int)std::floor(pos.x); int ty = (int)std::floor(pos.y);
+            if (tx >= 0 && tx < w && ty >= 0 && ty < h) doorKeys.insert(ty * w + tx);
+        }
+        for (auto &pos : map->GetExitPositions()) {
+            int tx = (int)std::floor(pos.x); int ty = (int)std::floor(pos.y);
+            if (tx >= 0 && tx < w && ty >= 0 && ty < h) doorKeys.insert(ty * w + tx);
+        }
+
+        // If any perimeter tile matches a known door, region is guarded
+        for (auto &pp : perimeter) {
+            int key = pp.second * w + pp.first;
+            if (doorKeys.find(key) != doorKeys.end()) return true;
+        }
+
+        return false;
     }
 
     // Check if this is a good corridor surveillance point
@@ -216,9 +368,11 @@ namespace Game
         std::vector<Candidate> candidates[5]; // 1..4
         
         // Scan entire map for corridor tiles (not just stepped)
-        for (int y = 1; y < h - 1; ++y)
+        // Use sampling 'step' to reduce CPU cost on large maps. Default step=1 scans every tile.
+        int stepSize = (step > 1) ? step : 1;
+        for (int y = 1; y < h - 1; y += stepSize)
         {
-            for (int x = 1; x < w - 1; ++x)
+            for (int x = 1; x < w - 1; x += stepSize)
             {
                 // Skip spawn exclusion zone
                 if (IsInSpawnZone(x, y)) continue;
@@ -239,120 +393,71 @@ namespace Game
         {
             std::cout << "  Zone " << zid << ": " << candidates[zid].size() << " candidates\n";
         }
+        // For each zone, pick up to `perZone` corridor CCTV positions, distributed and spaced
+        for (int zid = 1; zid <= 4; ++zid) {
+            // build filtered candidate list
+            std::vector<Candidate> flat;
+            for (auto &c : candidates[zid]) {
+                int x = c.x, y = c.y;
+                if (!IsCorridorTile(map, x, y)) continue;
+                if (IsLikelyRoom(map, x, y, w, h)) continue;
+                if (IsEnclosedByWallsAndMarkers(map, x, y, w, h)) continue;
+                if (RegionGuardedByDoor(map, x, y, w, h)) continue;
+                if (IsInSpawnZone(x, y)) continue;
+                flat.push_back(c);
+            }
 
-        // For each zone, place cameras prioritizing high-value locations
-        for (int zid = 1; zid <= 4; ++zid)
-        {
-            // Sort by priority (highest first)
-            std::sort(candidates[zid].begin(), candidates[zid].end(),
-                [](const Candidate& a, const Candidate& b) {
-                    return a.priority > b.priority;
-                });
+            if (flat.empty()) {
+                std::cout << "[CCTV Placement] Zone " << zid << ": no corridor candidates after filtering\n";
+                continue;
+            }
 
-            int placed = 0;
-            int attempts = 0;
-            int maxAttempts = (int)candidates[zid].size();
+            // precompute positions
+            std::vector<Engine::Vector3> pos(flat.size());
+            for (size_t i=0;i<flat.size();++i) pos[i] = Engine::Vector3((float)flat[i].x + 0.5f, (float)flat[i].y + 0.5f, z);
 
-            for (auto& cand : candidates[zid])
-            {
-                if (placed >= perZone) break;
-                if (attempts >= maxAttempts) break;
-                attempts++;
+            // sort indices by priority desc for deterministic seed
+            std::vector<int> idxs((int)flat.size()); for (int i=0;i<(int)flat.size();++i) idxs[i]=i;
+            std::sort(idxs.begin(), idxs.end(), [&](int a,int b){ return flat[a].priority > flat[b].priority; });
 
-                int x = cand.x;
-                int y = cand.y;
+            std::vector<int> selected;
+            // seed with highest priority
+            selected.push_back(idxs[0]);
 
-                // Double-check spawn zone exclusion (safety check)
-                if (IsInSpawnZone(x, y)) {
-                    std::cout << "  [Zone " << zid << "] SKIPPED camera at (" << x << "," << y 
-                              << ") - in spawn zone!\n";
-                    continue;
+            // farthest-first selection until we have perZone or run out
+            while ((int)selected.size() < perZone && (int)selected.size() < (int)flat.size()) {
+                int best = -1; float bestMinD = -1.0f; int bestPr = -1;
+                for (int i=0;i<(int)flat.size();++i) {
+                    bool used = false; for (int s : selected) if (s==i) { used=true; break; }
+                    if (used) continue;
+                    float minD = 1e30f;
+                    for (int s : selected) {
+                        float d2 = DistSq2D(pos[i], pos[s]); if (d2 < minD) minD = d2;
+                    }
+                    int pr = flat[i].priority;
+                    if (minD > bestMinD || (fabs(minD - bestMinD) < 1e-6 && pr > bestPr)) { bestMinD = minD; best = i; bestPr = pr; }
                 }
+                if (best < 0) break;
+                selected.push_back(best);
+            }
 
-                CCTVInfo info{};
-                info.zoneId = zid;
-                info.tileX = x;
-                info.tileY = y;
-
-                // Place position near wall inside floor tile
-                if (!PlaceOnWallInsideFloor(map, w, h, x, y, z, eps, info.pos))
-                    continue;
-
-                // Face along corridor
-                int dx = 1, dy = 0;
-                ChooseFacingDir(map, x, y, dx, dy);
-                info.rot = RotFromDir(dx, dy);
-
-                // Min distance check (within same zone for better coverage)
+            int placedZone = 0;
+            // push selected into cams with final checks
+            for (int s : selected) {
+                if (placedZone >= perZone) break;
+                int tx = flat[s].x, ty = flat[s].y;
+                Engine::Vector3 ppos;
+                if (!PlaceOnWallInsideFloor(map, w, h, tx, ty, z, eps, ppos)) continue;
+                // check spacing vs existing cams in same zone
                 bool tooClose = false;
-                for (auto& e : cams)
-                {
-                    if (e.zoneId == zid && DistSq2D(e.pos, info.pos) < minDist * minDist)
-                    {
-                        tooClose = true;
-                        break;
-                    }
-                }
+                for (auto &e : cams) if (e.zoneId==zid && DistSq2D(e.pos, ppos) < minDist*minDist) { tooClose=true; break; }
                 if (tooClose) continue;
-
-                cams.push_back(info);
-                placed++;
-                
-                std::cout << "  [Zone " << zid << "] Placed CCTV #" << placed 
-                          << " at (" << x << "," << y << ") priority=" << cand.priority << "\n";
+                CCTVInfo info{}; info.zoneId = zid; info.tileX = tx; info.tileY = ty; info.pos = ppos;
+                int dx=1,dy=0; ChooseFacingDir(map, tx, ty, dx, dy); info.rot = RotFromDir(dx,dy);
+                cams.push_back(info); placedZone++;
             }
 
-            std::cout << "[CCTV Placement] Zone " << zid << ": Placed " << placed << "/" << perZone << " cameras\n";
-
-            // If still not enough cameras placed, try with reduced spacing
-            if (placed < perZone)
-            {
-                std::cout << "[CCTV Placement] Zone " << zid << " trying with reduced spacing...\n";
-                float reducedMinDist = minDist * 0.65f; // Reduce to 65% of original spacing
-                
-                for (auto& cand : candidates[zid])
-                {
-                    if (placed >= perZone) break;
-                    
-                    int x = cand.x;
-                    int y = cand.y;
-
-                    // Double-check spawn zone exclusion (safety check)
-                    if (IsInSpawnZone(x, y)) {
-                        std::cout << "  [Zone " << zid << "] SKIPPED camera at (" << x << "," << y 
-                                  << ") - in spawn zone (reduced spacing)!\n";
-                        continue;
-                    }
-
-                    CCTVInfo info{};
-                    info.zoneId = zid;
-                    info.tileX = x;
-                    info.tileY = y;
-
-                    PlaceOnWallInsideFloor(map, w, h, x, y, z, eps, info.pos);
-
-                    // Check with reduced min distance
-                    bool tooClose = false;
-                    for (auto& e : cams)
-                    {
-                        if (e.zoneId == zid && DistSq2D(e.pos, info.pos) < reducedMinDist * reducedMinDist)
-                        {
-                            tooClose = true;
-                            break;
-                        }
-                    }
-                    if (tooClose) continue;
-
-                    int dx = 1, dy = 0;
-                    ChooseFacingDir(map, x, y, dx, dy);
-                    info.rot = RotFromDir(dx, dy);
-
-                    cams.push_back(info);
-                    placed++;
-                    std::cout << "  [Zone " << zid << "] Placed CCTV #" << placed 
-                              << " (reduced spacing) at (" << x << "," << y << ")\n";
-                }
-            }
+            std::cout << "[CCTV Placement] Zone " << zid << ": Placed " << placedZone << "/" << perZone << " cameras\n";
         }
 
         std::cout << "[CCTV Placement] Total cameras placed: " << cams.size() << "\n";

@@ -42,6 +42,9 @@ namespace Game {
         float baseZ = 0.5f;
         float floatHeight = 0.15f;
         float floatSpeed = 2.0f;
+        // Prevent immediate pickup right after spawning (grace period)
+        float spawnSafeDelay = 0.6f;
+        float spawnSafeTimer = 0.0f;
         
         /** References */
         Engine::SpriteRenderer* spriteRenderer = nullptr;

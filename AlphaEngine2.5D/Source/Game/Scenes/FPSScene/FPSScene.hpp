@@ -946,6 +946,9 @@ namespace Game {
                 "Assets/color_yellow_empty.png"
             };
             
+            // DEBUG: set true to force access cards to spawn at player spawn for debugging
+            bool debugForceSpawnAtPlayer = true;
+
             for (size_t i = 0; i < accessCardPositions.size(); ++i) {
                 Vector2 pos = accessCardPositions[i].first;
                 int cardId = accessCardPositions[i].second;
@@ -954,6 +957,58 @@ namespace Game {
                 
                 const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
                 
+                // If card marker lies within the player spawn exclusion area, find nearest valid tile
+                auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2 {
+                    int ox = (int)std::floor(orig.x);
+                    int oy = (int)std::floor(orig.y);
+                    const int MAXR = 12;
+                    for (int r = 0; r <= MAXR; ++r) {
+                        for (int dy = -r; dy <= r; ++dy) {
+                            for (int dx = -r; dx <= r; ++dx) {
+                                // only check perimeter of the square to keep it efficient
+                                if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                                int nx = ox + dx;
+                                int ny = oy + dy;
+                                if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight) continue;
+                                // skip tiles inside player spawn radius
+                                float cdx = ((float)nx + 0.5f) - spawnExcludeX;
+                                float cdy = ((float)ny + 0.5f) - spawnExcludeY;
+                                if (cdx * cdx + cdy * cdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                                // require walkable center of tile
+                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                                return Engine::Vector2((float)nx + 0.5f, (float)ny + 0.5f);
+                            }
+                        }
+                    }
+                    // fallback to original
+                    return orig;
+                };
+
+                if (debugForceSpawnAtPlayer) {
+                    // Spread forced-spawned cards around player spawn in a small circle
+                    int total = (int)accessCardPositions.size();
+                    if (total <= 0) total = 1;
+                    float angle = (2.0f * 3.14159265f) * ((float)i / (float)total);
+                    float radius = 1.2f; // 1.2 tiles from spawn center
+                    Engine::Vector2 candidate(spawnExcludeX + std::cos(angle) * radius,
+                                              spawnExcludeY + std::sin(angle) * radius);
+                    // if the candidate isn't walkable, fallback to nearest valid
+                    if (map && !map->IsWalkable(candidate.x, candidate.y)) {
+                        candidate = findValidSpawn(candidate);
+                    }
+                    pos = candidate;
+                    std::cout << "[FPSScene][DEBUG] Forcing access card spawn near player spawn (" << pos.x << ", " << pos.y << ")\n";
+                } else {
+                    // if marker inside spawn radius, relocate
+                    float ddx = pos.x - spawnExcludeX;
+                    float ddy = pos.y - spawnExcludeY;
+                    if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius) {
+                        std::cout << "[FPSScene] Access card at spawn area detected, searching for nearby valid spawn\n";
+                        Engine::Vector2 newPos = findValidSpawn(pos);
+                        pos = newPos;
+                    }
+                }
+
                 std::cout << "[FPSScene] Spawning " << cardNames[cardId] << " card at (" << pos.x << ", " << pos.y << ")\n";
                 
                 // Create card GameObject
@@ -984,10 +1039,15 @@ namespace Game {
                 card->cardColor = static_cast<Game::AccessCardColor>(cardId);
                 card->spriteRenderer = sr;
                 card->interactable = interactable;
-                
+                // Ensure card is active and visible after creation
+                cardGO->active = true;
                 std::cout << "[FPSScene]   AccessCard component added (cardId=" << cardId << ")\n";
                 std::cout << "[FPSScene]   Card position: (" << cardGO->transform->position.x << ", " 
                           << cardGO->transform->position.y << ", " << cardGO->transform->position.z << ")\n";
+                if (!cardGO->active) {
+                    std::cout << "[FPSScene][WARN] Card GameObject inactive after creation - forcing active=true\n";
+                    cardGO->active = true;
+                }
                 std::cout << "[FPSScene]   Card active: " << (cardGO->active ? "YES" : "NO") << "\n";
             }
             
