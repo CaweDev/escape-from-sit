@@ -239,27 +239,42 @@ void TileMap::SpawnDoor(int x, int y, int doorType) {
 	// Connect interactable to door
 	door->SetupInteractable(interactable, "Open", "Close");
 
-	// If this is an exit door (doorType 12) lock it until all puzzle books are collected
-	if (doorType == 12) {
-		int totalBooks = (int)PuzzleManager::allBooks.size();
-		int collected = PuzzleManager::booksCollected;
-		if (collected < totalBooks) {
-			// Show locked text
-			interactable->actionText = "EXIT LOCKED: Collect all books";
-		}
-		// Override interaction to enforce lock
-		interactable->onInteract = [door, totalBooks]() {
-			int collectedNow = PuzzleManager::booksCollected;
-			if (collectedNow >= totalBooks) {
-				// allow normal toggle
-				door->Toggle();
-				printf("[TileMap] Exit door opened (all books collected)\n");
-			} else {
-				int remaining = totalBooks - collectedNow;
-				printf("[TileMap] Exit is locked. %d books remaining.\n", remaining);
-			}
-		};
-		// Track spawned exit doors like other doors
+    // If this is an exit door (doorType 12) lock it until all puzzle books are collected
+    if (doorType == 12) {
+        int totalBooks = (int)PuzzleManager::allBooks.size();
+
+        // Initial hover text
+        if (PuzzleManager::booksCollected < totalBooks) {
+            interactable->actionText = "EXIT LOCKED: Collect all books";
+        }
+
+        // Override interaction to enforce lock
+        // Notice we capture `interactable` here so we can change the text later!
+        interactable->onInteract = [door, totalBooks, interactable]() {
+
+            if (PuzzleManager::booksCollected >= totalBooks) {
+                // 1. Physically open the door in the world
+                door->Toggle();
+
+                // 2. Fix the hover text so it no longer says "Locked"
+                interactable->actionText = "Close";
+
+                // 3. Trigger your global win state and UI
+                PuzzleManager::OpenExitDoor();
+
+                printf("[TileMap] Exit door opened (all books collected)\n");
+            }
+            else {
+                int remaining =PuzzleManager::booksCollected;
+
+                // NEW: Route the locked message to your HUD so the player actually sees it!
+                PuzzleManager::activeBookTitle = "DOOR LOCKED";
+                PuzzleManager::activeBookText = std::to_string(remaining) + "/6 books collected";
+                PuzzleManager::popupTimer = 3.0f;
+
+                printf("[TileMap] Exit is locked. %d books remaining.\n", remaining);
+            }
+        };
 	}
 
 	// Track the spawned door

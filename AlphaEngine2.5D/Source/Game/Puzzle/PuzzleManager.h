@@ -16,6 +16,7 @@ public:
 	static std::string activeBookText;
 	static float popupTimer;
 	static std::string activeBookTitle;
+	static void OpenExitDoor();
 
 
 };
