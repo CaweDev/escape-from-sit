@@ -52,10 +52,6 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
 
-            if (PuzzleManager::booksCollected >= 6) {
-                PuzzleManager::OpenExitDoor();
-            }
-           
         }
 
         };
