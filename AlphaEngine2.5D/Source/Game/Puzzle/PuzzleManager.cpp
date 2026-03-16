@@ -41,8 +41,13 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
-            bookObj->active = false;
-            std::cout << "Book Collected";
+            
+            Engine::GameObject::Destroy(bookObj);
+            std::cout << "[MEMORY CLEANUP] GameObject "; // TEMPORARY TO TEST IF OBJECT IS DESTROYED
+            PuzzleManager::allBooks[book.BookId].BookCollected = true;
+            PuzzleManager::booksCollected++;
+           
+
             PuzzleManager::booksCollected++;
             
             PuzzleManager::activeBookTitle = book.BookName;
@@ -52,7 +57,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             if (PuzzleManager::booksCollected >= 6) {
                 PuzzleManager::OpenExitDoor();
             }
-
+           
         }
 
         };
@@ -69,7 +74,7 @@ void PuzzleManager::BookDataInit()
         "Ok maybe can pass now",
         "B for HLP!?!?",
         "Confirm A now" };
-    Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{83.0f, 12.0f, 0.3f},{121.0f, 19.f, 0.3f},{73.0f, 19.0f, 0.3f} };
+    Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
 
     for (int i{}; i < 6; ++i) {
         allBooks.push_back({
