@@ -13,6 +13,7 @@ namespace Game {
 
     void MainMenuScene::OnLoad() {
         Input::RegisterCursorUnlock("MainMenuScene");
+        SoundManager::PlayBGM("main_menu", true);
 
         // Seed random
         srand(static_cast<unsigned>(time(nullptr)));
@@ -56,16 +57,15 @@ namespace Game {
         enemyShadow = CreateGameObject("EnemyShadow");
         auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
         {
-            // The rows, cols, and "Rolling" animation are now loaded from Assets/ame.png.meta
-            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png");
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/guard.png");
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
-            shadowSprite->Play("Rolling");
+            shadowSprite->Play("Patrol");
         }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
-        enemyShadow->transform->position = Vector3(54.0f, 1.5f, 0.f);  // X=ahead, Y=center of corridor, Z=ground
-        enemyShadow->transform->localScale = Vector2(1.0f, 1.0f);
+        enemyShadow->transform->position = Vector3(54.0f, 1.5f, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
+        enemyShadow->transform->localScale = Vector2(0.75f, 0.75f);
 
         // Initialize enemy timing
         enemyTimer = 0.0f;
@@ -268,7 +268,7 @@ namespace Game {
         if (enemyX < 0.0f) enemyX = 0.0f;
         if (enemyX > static_cast<float>(CORRIDOR_LENGTH)) enemyX = static_cast<float>(CORRIDOR_LENGTH);
         
-        enemyShadow->transform->position = Vector3(enemyX, 1.5f, 0.0f);
+        enemyShadow->transform->position = Vector3(enemyX, 1.5f, enemyHeight);
 
         // Get mouse position relative to screen center
         s32 mouseX, mouseY;
@@ -372,10 +372,12 @@ namespace Game {
             // Keyboard navigation
             if (Input::GetKeyDown(KeyCode::UpArrow) || Input::GetKeyDown(KeyCode::W)) {
                 selectedIndex = (selectedIndex - 1 + static_cast<int>(menuItems.size())) % static_cast<int>(menuItems.size());
+                SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
             if (Input::GetKeyDown(KeyCode::DownArrow) || Input::GetKeyDown(KeyCode::S)) {
                 selectedIndex = (selectedIndex + 1) % static_cast<int>(menuItems.size());
+                SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
             if (Input::GetKeyDown(KeyCode::Return) || Input::GetKeyDown(KeyCode::Space)) {
@@ -400,6 +402,7 @@ namespace Game {
                 hoveredIndex = newHovered;
                 if (hoveredIndex >= 0) {
                     selectedIndex = hoveredIndex;
+                    SoundManager::PlaySFX("ui_hover", 0.7f);
                 }
                 UpdateMenuVisuals();
             }
@@ -441,11 +444,13 @@ namespace Game {
     }
 
     void MainMenuScene::OnPlayClicked() {
+        SoundManager::PlaySFX("ui_click");
         std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
     }
 
     void MainMenuScene::OnControlsClicked() {
+        SoundManager::PlaySFX("ui_click");
         if (controlsMenu)
         {
             controlsMenu->Show();
@@ -453,11 +458,13 @@ namespace Game {
     }
 
     void MainMenuScene::OnCreditsClicked() {
+        SoundManager::PlaySFX("ui_click");
         std::cout << "Credits clicked - Loading credit scene..." << std::endl;
         SceneManager::LoadWithFade("Credits");
     }
 
     void MainMenuScene::OnQuitClicked() {
+        SoundManager::PlaySFX("ui_click");
         DialogService::ShowConfirmation(
             "Are you sure you want to quit?",
             "Quit", "Cancel",

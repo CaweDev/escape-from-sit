@@ -75,6 +75,7 @@ namespace Game {
         bool enemyVisible = false;
         float enemyVisibleDuration = 0.0f;
         float enemyAlpha = 0.0f;
+        float enemyHeight = 0.2f;
 
         static constexpr int CORRIDOR_LENGTH = 100;
         static constexpr int CORRIDOR_HEIGHT = 3;

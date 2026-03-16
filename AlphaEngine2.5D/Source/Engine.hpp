@@ -8,6 +8,7 @@
 // Audio
 #include "Engine/Audio/AudioClip.hpp"
 #include "Engine/Audio/AudioSource.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 
 // Core
 #include "Engine/Core/Application.hpp"

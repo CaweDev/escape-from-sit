@@ -17,7 +17,7 @@
 #include <iostream>
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.h"
-#include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 
 namespace Game
 {
@@ -696,6 +696,7 @@ namespace Game
         if (m_map)
         {
             m_map->visible = m_mapVisible;
+            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
         }
     }
 
@@ -726,6 +727,7 @@ namespace Game
         if (m_heatmapOverlay)
         {
             m_heatmapOverlay->visible = m_heatmapVisible;
+            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
         }
     }
 
@@ -825,12 +827,14 @@ namespace Game
         if (show) {
             m_cctvWarningPanel->visible = true;
             m_cctvWarningTimer = m_cctvWarningDuration;
+            Engine::SoundManager::PlaySFX("cctv_alert", 0.8f);
         }
         else {
             m_cctvWarningPanel->visible = false;
             m_cctvWarningTimer = 0.0f;
         }
     }
+
     void PlayerHUD::SetZoneGetter(std::function<int(int, int)> fn)
     {
         m_zoneGetter = fn;
@@ -984,6 +988,7 @@ namespace Game
         // Show panel with slide-in animation (could be enhanced with smooth animation)
         m_zoneEntryPanel->visible = true;
         m_zoneEntryTimer = m_zoneEntryDuration;
+        Engine::SoundManager::PlaySFX("zone_enter", 0.6f);
         
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
@@ -995,9 +1000,10 @@ namespace Game
         
         m_cardsCollected[cardId] = true;
         m_totalCardsCollected++;
+        Engine::SoundManager::PlaySFX("card_collect");
         
         UpdateCardDisplay();
-        
+
         // Show notification
         const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
         std::string message = std::string("Collected ") + cardNames[cardId] + " Access Card (" + 
@@ -1226,4 +1232,4 @@ namespace Game
         }
     }
 
-} // namespace Game
+} // namespace Game} // namespace Game

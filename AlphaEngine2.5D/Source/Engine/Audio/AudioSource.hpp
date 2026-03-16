@@ -6,7 +6,6 @@
 
 #include "../Core/Component.hpp"
 #include "AudioClip.hpp"
-#include <memory>
 
 namespace Engine {
 
@@ -17,7 +16,7 @@ namespace Engine {
 class AudioSource : public Component {
 public:
     /** Audio clip to play */
-    std::shared_ptr<AudioClip> clip;
+    AudioClip* clip = nullptr;
     
     /** Volume (0 to 1) */
     f32 volume = 1.0f;
@@ -40,7 +39,7 @@ public:
     void Play();
     
     /** Play a specific clip (one-shot) */
-    void PlayOneShot(std::shared_ptr<AudioClip> oneShot, f32 volumeScale = 1.0f);
+    void PlayOneShot(AudioClip* oneShot, f32 volumeScale = 1.0f);
     
     /** Stop playback */
     void Stop();

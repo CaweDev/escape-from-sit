@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
@@ -101,6 +102,7 @@
     <!-- Engine Math -->
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />

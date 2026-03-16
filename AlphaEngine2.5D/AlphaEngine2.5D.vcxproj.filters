@@ -86,6 +86,7 @@
     <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
     <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
+    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
     <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
     <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
+    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

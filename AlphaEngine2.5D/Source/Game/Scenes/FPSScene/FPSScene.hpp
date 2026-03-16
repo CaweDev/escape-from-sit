@@ -12,6 +12,7 @@
 #include "Engine/Core/AssetManager.hpp"
 #include "Engine/Input/KeyCode.hpp"
 #include "Engine/Core/Application.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include "Engine/TileMap/Door.hpp"
 #include "Engine/Graphics/DoorRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
@@ -282,6 +283,7 @@ namespace Game {
             Application::RegisterPause("Endpanel");
 
             modalButton->onClick = [onButton, this]() {
+                SoundManager::PlaySFX("ui_click");
                 Input::UnregisterCursorUnlock("EndPanel");
                 Application::UnregisterPause("Endpanel");
                 if (onButton) onButton();
@@ -567,6 +569,7 @@ namespace Game {
     public:
         void OnLoad() override
         {
+            SoundManager::PlayBGM("fps_gameplay", true);
             // ===== load map.txt =====
             std::vector<std::string> mapRows;
             {
@@ -1142,6 +1145,7 @@ namespace Game {
             // Lose panel
             if (!endPanelShown && playerData) {
                 if (playerData->IsCaught()) {
+                    SoundManager::PlaySFX("lose");
                     ShowEndPanel("YOU GOT CAUGHT. GAME OVER", "Quit", []() {
                         SceneManager::LoadScene("FPSScene");
                         });
@@ -1198,9 +1202,44 @@ namespace Game {
                         nearestGuardDistance = distance;
                     }
                 }
+
+                float nearestCCTVDistance = 999999.0f;
+                for (auto* cctv : cctvSensors) {
+                    if (!cctv || !cctv->transform) continue;
+
+                    Vector2 cctvPos(cctv->transform->position.x, cctv->transform->position.y);
+                    Vector2 playerPos(playerTf->position.x, playerTf->position.y);
+
+                    float dx = cctvPos.x - playerPos.x;
+                    float dy = cctvPos.y - playerPos.y;
+                    float distance = std::sqrt(dx * dx + dy * dy);
+
+                    if (distance < nearestCCTVDistance) {
+                        nearestCCTVDistance = distance;
+                    }
+                }
+
+                float nearestTerminalDistance = 999999.0f;
+                for (auto* terminal : cctvTerminals) {
+                    if (!terminal || !terminal->transform) continue;
+
+                    Vector2 terminalPos(terminal->transform->position.x, terminal->transform->position.y);
+                    Vector2 playerPos(playerTf->position.x, playerTf->position.y);
+
+                    float dx = terminalPos.x - playerPos.x;
+                    float dy = terminalPos.y - playerPos.y;
+                    float distance = std::sqrt(dx * dx + dy * dy);
+
+                    if (distance < nearestTerminalDistance) {
+                        nearestTerminalDistance = distance;
+                    }
+                }
                 
                 // Update guard proximity warning
                 playerHUD->UpdateGuardProximity(nearestGuardDistance);
+                SoundManager::UpdateGuardProximityLoop(nearestGuardDistance);
+                SoundManager::UpdateCCTVHumLoop(nearestCCTVDistance);
+                SoundManager::UpdateTerminalBuzzLoop(nearestTerminalDistance);
                 
                 // Apply camera shake based on guard proximity
                 const float shakeDistance = 6.0f;
@@ -1301,6 +1340,7 @@ namespace Game {
             if (!printedWin && (dx * dx + dy * dy) <= winRadius * winRadius) {
                 printedWin = true;
                 gameEnded = true;
+                SoundManager::PlaySFX("win");
                 
                 // Update high score if this is a new record
                 float currentTime = playerData->GetGameTime();

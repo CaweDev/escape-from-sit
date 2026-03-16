@@ -8,10 +8,12 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include "Game/Player/Player.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 namespace Game {
 
@@ -60,6 +62,7 @@ void ControlRoomDoor::Update() {
             if (holdProgress >= 1.0f) {
                 // Unlock achieved!
                 door->Toggle();
+                Engine::SoundManager::PlaySFX("door_unlock");
                 std::cout << "[CONTROL ROOM] Door unlocked! Welcome to Zone " << char('A' + zoneId - 1) << " Control Room.\n";
                 holdProgress = 0.0f;
                 isHolding = false;
@@ -110,6 +113,7 @@ void ControlRoomDoor::OnInteract() {
     if (!HasAllCards()) {
         // Show locked message
         int collected = GetCollectedCards();
+        Engine::SoundManager::PlaySFX("door_locked");
         std::cout << "[CONTROL ROOM] Door is LOCKED. Access cards collected: " << collected << "/" << REQUIRED_CARDS << "\n";
         std::cout << "[CONTROL ROOM] Find all " << REQUIRED_CARDS << " access cards to unlock this door.\n";
         return;
@@ -118,6 +122,7 @@ void ControlRoomDoor::OnInteract() {
     // Allow toggle if door is already open (for closing)
     if (door->state != Engine::DoorState::Closed) {
         door->Toggle();
+        Engine::SoundManager::PlaySFX("door_unlock", 0.8f);
     }
     // Door opening is handled by hold mechanic in Update()
 }

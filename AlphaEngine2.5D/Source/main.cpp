@@ -51,6 +51,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
     AESysSetWindowTitle("Escape From SIT");
 	AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
+
+    // Initialize Sound Manager
+    SoundManager::Initialize();
     
     // Initialize UI System
     UI::UIManager::Initialize();
@@ -76,6 +79,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         
         // Update input (processes cursor centering when locked)
         Input::Update();
+
+        // Update audio fades/transitions
+        SoundManager::Update(Time::unscaledDeltaTime);
         
         // Check for exit conditions
         if (!AESysDoesWindowExist()) {
@@ -114,6 +120,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Cleanup UI System
     UI::UIManager::Shutdown();
+
+    // Cleanup Sound Manager
+    SoundManager::Shutdown();
 
     // Cleanup Asset Manager
 	AssetManager::UnloadAll();
