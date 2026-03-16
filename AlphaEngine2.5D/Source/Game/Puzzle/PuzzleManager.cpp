@@ -103,7 +103,7 @@ void PuzzleManager::OpenExitDoor()
 {
     
     PuzzleManager::activeBookTitle = "SCHOOL GATE UNLOCKED";
-    PuzzleManager::activeBookText = "The the gate has opened. Make your escape.";
+    PuzzleManager::activeBookText = "Faster go home lah";
     PuzzleManager::popupTimer = 5.0f;
 }
 
