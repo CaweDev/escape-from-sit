@@ -202,6 +202,9 @@ namespace UI
 
     void UIManager::ProcessInput()
     {
+        // Ensure canvas order is up-to-date before hit testing
+        SortCanvases();
+
         // Get mouse position
         s32 mouseX, mouseY;
         AEInputGetCursorPosition(&mouseX, &mouseY);

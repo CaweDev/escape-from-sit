@@ -358,15 +358,17 @@ namespace Game {
 
             // If right click pressed
             if (Input::GetMouseButtonDown(1)) {
-				crosshairImage->visible = !crosshairImage->visible;  // Toggle visibility on right-click
+                crosshairImage->visible = !crosshairImage->visible;  // Toggle visibility on right-click
             }
         }
 
         // Update enemy sighting
         UpdateEnemySighting(dt);
 
-        // Only allow menu interaction after a short delay
-        if (menuAnimTime > 0.2f) {
+        const bool isDialogOpen = UI::DialogService::IsConfirmationVisible();
+
+        // Only allow menu interaction after a short delay and when no modal dialog is open
+        if (menuAnimTime > 0.2f && !isDialogOpen) {
             // Keyboard navigation
             if (Input::GetKeyDown(KeyCode::UpArrow) || Input::GetKeyDown(KeyCode::W)) {
                 selectedIndex = (selectedIndex - 1 + static_cast<int>(menuItems.size())) % static_cast<int>(menuItems.size());
@@ -406,6 +408,9 @@ namespace Game {
             if (Input::GetMouseButtonDown(0) && hoveredIndex >= 0) {
                 SelectMenuItem(hoveredIndex);
             }
+        } else if (isDialogOpen && hoveredIndex != -1) {
+            hoveredIndex = -1;
+            UpdateMenuVisuals();
         }
 
         // Update menu animations (slide-in + font lerp)

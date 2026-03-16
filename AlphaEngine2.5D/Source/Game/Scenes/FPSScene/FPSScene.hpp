@@ -947,7 +947,7 @@ namespace Game {
             // CCTV view switching (silent)
             int camCount = (int)cctvViewPos.size();
             if (camCount > 0) {
-                if (Input::GetKeyDown(KeyCode::DownArrow)) {
+               /* if (Input::GetKeyDown(KeyCode::DownArrow)) {
                     if (activeCCTV < 0) activeCCTV = 0;
                     else activeCCTV = (activeCCTV + 1) % camCount;
                     SwitchToCCTV(activeCCTV);
@@ -956,7 +956,7 @@ namespace Game {
                     if (activeCCTV < 0) activeCCTV = camCount - 1;
                     else activeCCTV = (activeCCTV - 1 + camCount) % camCount;
                     SwitchToCCTV(activeCCTV);
-                }
+                }*/
             }
             if (Input::GetKeyDown(KeyCode::Alpha0)) {
                 SwitchToPlayerCam();
