@@ -26,8 +26,8 @@
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
+#include "Game/NPC/NPC.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
-
 #include "Game/ZoneManager/ZoneManager.hpp"
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
@@ -80,7 +80,7 @@ namespace Game {
         float   playerViewRot = 0.0f;
 
         // Exit
-        Vector2 exitPos = Vector2(14.5f, 1.5f);
+        Vector2 exitPos ;
         float   winRadius = 0.6f;
         bool    printedWin = false;
 
@@ -167,6 +167,9 @@ namespace Game {
         // Debug (no flood)
         bool  debugML = false;
         float mlSummaryTimer = 0.0f;
+
+        // NPCs (Bully + Annoying classmates)
+        std::vector<Game::NPC*> npcs;
 
         // Level Editor
         LevelEditor levelEditor;
@@ -289,6 +292,100 @@ namespace Game {
 
             gameEnded = true;
         }
+
+        // ===== Spawn one NPC helper =====
+        // Player spawn position — NPCs must not spawn near here
+        static constexpr float spawnExcludeX = 2.5f;
+        static constexpr float spawnExcludeY = 2.5f;
+        static constexpr float spawnExcludeRadius = 5.0f;
+
+        //Game::NPC* SpawnNPCInZone(int zoneId, NPCType npcType, TileMap* map, const char* spritePath)
+        //{
+        //    int gx = 0, gy = 0;
+        //    bool found = false;
+        //    // Try multiple times to find a position away from the player spawn area
+        //    for (int attempt = 0; attempt < 50; ++attempt) {
+        //        if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
+        //            break;
+        //        float dx = (float)gx + 0.5f - spawnExcludeX;
+        //        float dy = (float)gy + 0.5f - spawnExcludeY;
+        //        if (dx * dx + dy * dy > spawnExcludeRadius * spawnExcludeRadius) {
+        //            found = true;
+        //            break;
+        //        }
+        //    }
+        //    if (!found) {
+        //        if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy)) {
+        //            Vector2 c = GetZoneCenter(zoneId);
+        //            gx = (int)c.x;
+        //            gy = (int)c.y;
+        //        }
+        //    }
+
+        //    const char* typeName = (npcType == NPCType::Bully) ? "Bully" : "Annoying";
+        //    auto go = CreateGameObject(std::string(typeName) + "_Z" + std::to_string(zoneId));
+        //    go->transform->position = Vector2((float)gx + 0.5f, (float)gy + 0.5f);
+
+        //    auto npc = go->AddComponent<Game::NPC>();
+        //    npc->tileMap = map;
+        //    npc->playerTf = playerTf;
+        //    npc->playerData = playerData;
+        //    npc->type = npcType;
+        //    npc->zoneId = zoneId;
+
+        //    // Get CameraShake from player camera for bully push effect
+        //    if (playerCam) {
+        //        auto shake = playerCam->gameObject->GetComponent<CameraShake>();
+        //        if (!shake) {
+        //            shake = playerCam->gameObject->AddComponent<CameraShake>();
+        //            shake->Initialize();
+        //        }
+        //        npc->camShake = shake;
+        //    }
+
+        //    // Let NPC pick random walkable goals inside its zone via ZoneManager
+        //    npc->SetPickGoalInZone([this](int zId, int& outX, int& outY) -> bool {
+        //        return zoneMgr.PickRandomWalkableInZone(zId, outX, outY);
+        //    });
+
+        //    // Tuning per type
+        //    if (npcType == NPCType::Bully) {
+        //        npc->speed = 2.0f;
+        //        npc->triggerRadius = 3.0f;
+        //    } else {
+        //        npc->speed = 1.2f;
+        //        npc->triggerRadius = 2.5f;
+        //        npc->blockTime = 1.5f;
+        //    }
+
+        //    auto npcRb = go->AddComponent<Rigidbody2D>();
+        //    npcRb->bodyType = RigidbodyType2D::Dynamic;
+        //    npcRb->gravityScale = 0.0f;
+        //    npcRb->drag = 0.0f;
+
+        //    auto npcCol = go->AddComponent<CircleCollider2D>();
+        //    npcCol->radius = 0.25f;
+        //    npcCol->minHeight = 0.0f;
+        //    npcCol->maxHeight = 2.0f;
+
+        //    auto sr = go->AddComponent<SpriteRenderer>();
+        //    sr->SetSprite(AssetManager::GetSprite(spritePath));
+        //    sr->billboard = true;
+        //    sr->sortingOrder = 90;
+
+        //    // Tint: Bully = reddish, Annoying = greenish
+        //    if (npcType == NPCType::Bully)
+        //        sr->color = Engine::Color(1.0f, 0.6f, 0.6f, 1.0f);
+        //    else
+        //        sr->color = Engine::Color(0.6f, 1.0f, 0.6f, 1.0f);
+
+        //    npcs.push_back(npc);
+
+        //    std::cout << "[FPSScene] Spawned " << typeName << " NPC in Zone " << zoneId
+        //              << " at (" << gx << ", " << gy << ")\n";
+
+        //    return npc;
+        //}
 
         // ===== Spawn one guard helper =====
         Game::SecurityGuard* SpawnGuardInZone(int zoneId, TileMap* map, PlayerHUD* hud, const char* spritePath)
@@ -607,12 +704,21 @@ namespace Game {
             }
             zoneMgr.SetZoneGrid(zoneGrid);
 
+            // ===== Read exit position from map (fallback to default) =====
+            auto mapExitPositions = map->GetExitPositions();
+            if (!mapExitPositions.empty()) {
+                exitPos = mapExitPositions[0];
+                std::cout << "[FPSScene] Exit position from map: (" << exitPos.x << ", " << exitPos.y << ")\n";
+            } else {
+                std::cout << "[FPSScene] No exit marker in map, using default: (" << exitPos.x << ", " << exitPos.y << ")\n";
+            }
+
             // ===== spawn 4 guards (1 per zone) =====
             guards.clear();
-            SpawnGuardInZone(1, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(2, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(3, map, playerHUD, "Assets/Brocsama.png");
-            SpawnGuardInZone(4, map, playerHUD, "Assets/Brocsama.png");
+            SpawnGuardInZone(1, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(2, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(3, map, playerHUD, "Assets/MetroCity/guardasset.png");
+            SpawnGuardInZone(4, map, playerHUD, "Assets/MetroCity/guardasset.png");
 
             // start with zone 1 priority
             prevChosenZoneId = 1;
@@ -840,6 +946,9 @@ namespace Game {
                 "Assets/color_yellow_empty.png"
             };
             
+            // DEBUG: set true to force access cards to spawn at player spawn for debugging
+            bool debugForceSpawnAtPlayer = true;
+
             for (size_t i = 0; i < accessCardPositions.size(); ++i) {
                 Vector2 pos = accessCardPositions[i].first;
                 int cardId = accessCardPositions[i].second;
@@ -848,6 +957,58 @@ namespace Game {
                 
                 const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
                 
+                // If card marker lies within the player spawn exclusion area, find nearest valid tile
+                auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2 {
+                    int ox = (int)std::floor(orig.x);
+                    int oy = (int)std::floor(orig.y);
+                    const int MAXR = 12;
+                    for (int r = 0; r <= MAXR; ++r) {
+                        for (int dy = -r; dy <= r; ++dy) {
+                            for (int dx = -r; dx <= r; ++dx) {
+                                // only check perimeter of the square to keep it efficient
+                                if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                                int nx = ox + dx;
+                                int ny = oy + dy;
+                                if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight) continue;
+                                // skip tiles inside player spawn radius
+                                float cdx = ((float)nx + 0.5f) - spawnExcludeX;
+                                float cdy = ((float)ny + 0.5f) - spawnExcludeY;
+                                if (cdx * cdx + cdy * cdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                                // require walkable center of tile
+                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                                return Engine::Vector2((float)nx + 0.5f, (float)ny + 0.5f);
+                            }
+                        }
+                    }
+                    // fallback to original
+                    return orig;
+                };
+
+                if (debugForceSpawnAtPlayer) {
+                    // Spread forced-spawned cards around player spawn in a small circle
+                    int total = (int)accessCardPositions.size();
+                    if (total <= 0) total = 1;
+                    float angle = (2.0f * 3.14159265f) * ((float)i / (float)total);
+                    float radius = 1.2f; // 1.2 tiles from spawn center
+                    Engine::Vector2 candidate(spawnExcludeX + std::cos(angle) * radius,
+                                              spawnExcludeY + std::sin(angle) * radius);
+                    // if the candidate isn't walkable, fallback to nearest valid
+                    if (map && !map->IsWalkable(candidate.x, candidate.y)) {
+                        candidate = findValidSpawn(candidate);
+                    }
+                    pos = candidate;
+                    std::cout << "[FPSScene][DEBUG] Forcing access card spawn near player spawn (" << pos.x << ", " << pos.y << ")\n";
+                } else {
+                    // if marker inside spawn radius, relocate
+                    float ddx = pos.x - spawnExcludeX;
+                    float ddy = pos.y - spawnExcludeY;
+                    if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius) {
+                        std::cout << "[FPSScene] Access card at spawn area detected, searching for nearby valid spawn\n";
+                        Engine::Vector2 newPos = findValidSpawn(pos);
+                        pos = newPos;
+                    }
+                }
+
                 std::cout << "[FPSScene] Spawning " << cardNames[cardId] << " card at (" << pos.x << ", " << pos.y << ")\n";
                 
                 // Create card GameObject
@@ -878,10 +1039,15 @@ namespace Game {
                 card->cardColor = static_cast<Game::AccessCardColor>(cardId);
                 card->spriteRenderer = sr;
                 card->interactable = interactable;
-                
+                // Ensure card is active and visible after creation
+                cardGO->active = true;
                 std::cout << "[FPSScene]   AccessCard component added (cardId=" << cardId << ")\n";
                 std::cout << "[FPSScene]   Card position: (" << cardGO->transform->position.x << ", " 
                           << cardGO->transform->position.y << ", " << cardGO->transform->position.z << ")\n";
+                if (!cardGO->active) {
+                    std::cout << "[FPSScene][WARN] Card GameObject inactive after creation - forcing active=true\n";
+                    cardGO->active = true;
+                }
                 std::cout << "[FPSScene]   Card active: " << (cardGO->active ? "YES" : "NO") << "\n";
             }
             
@@ -896,6 +1062,16 @@ namespace Game {
                     guard->SetTerminals(&cctvTerminals);
                 }
             }
+
+            //// ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
+            //npcs.clear();
+            //for (int z = 1; z <= 4; ++z) {
+            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Bully,    map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+            //    SpawnNPCInZone(z, NPCType::Annoying,  map, "Assets/Brocsama.png");
+            //}
+            //std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
 
             // Add terminal icons to minimap
             if (playerHUD && playerHUD->GetMinimap()) {
@@ -1140,7 +1316,51 @@ namespace Game {
         }
         void OnUnload() override
         {
+            // Disconnect guards from terminal list to avoid dangling pointers
+            for (auto* g : guards) {
+                if (g) g->SetTerminals(nullptr);
+            }
 
+            // Clear terminals: remove references to cameras, HUD and guards
+            for (auto* t : cctvTerminals) {
+                if (!t) continue;
+                t->controlledCameras.clear();
+                t->playerHUD = nullptr;
+                t->spriteRenderer = nullptr;
+                t->allGuards.clear();
+                t->floatingIcon = nullptr;
+            }
+
+            // Clear sensors: null out external pointers so Update() won't dereference them
+            for (auto* s : cctvSensors) {
+                if (!s) continue;
+                s->tf = nullptr;
+                s->tile = nullptr;
+                s->hud = nullptr;
+                s->minimap = nullptr;
+                s->spriteRenderer = nullptr;
+            }
+
+            // Clear all scene-owned lists to avoid keeping stale pointers across reload
+            cctvSensors.clear();
+            cctvTerminals.clear();
+            cctvViewPos.clear();
+            cctvViewRot.clear();
+            cctvCooldown.clear();
+
+            guards.clear();
+
+            // Clear other references
+            powerUps.clear();
+            powerUpBaseZ.clear();
+
+            playerHUD = nullptr;
+            playerData = nullptr;
+            playerController = nullptr;
+            playerTf = nullptr;
+            playerCam = nullptr;
+
+            PuzzleManager::FreeManager();
         }
     };
 

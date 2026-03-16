@@ -570,8 +570,11 @@ namespace Game
         }
         //Book Collected
         if (m_bookCountText != nullptr) {
-            std::string countString = "Books Collected: " + std::to_string(PuzzleManager::booksCollected) + " / 6";
-            m_bookCountText->SetText(countString);
+            int collected = PuzzleManager::booksCollected;
+            int totalBooks = (int)PuzzleManager::allBooks.size();
+            if (totalBooks <= 0) totalBooks = 0; // safety
+            std::string bs = std::string("Books Collected: ") + std::to_string(collected) + " / " + std::to_string(totalBooks);
+            m_bookCountText->SetText(bs.c_str());
         }
 
         if (PuzzleManager::popupTimer > 0.0f) {

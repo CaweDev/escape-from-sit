@@ -10,6 +10,7 @@
 #include "../Graphics/TileMapRenderer.hpp"
 #include "../Physics/BoxCollider2D.hpp"
 #include "../Interaction/Interactable.hpp"
+#include "../../Game/Puzzle/PuzzleManager.h"
 #include <string>
 using namespace Engine;
 
@@ -17,6 +18,40 @@ void TileMap::Initialize()
 {
 	initialized = true;
 	SpawnDoors();
+}
+
+void TileMap::AddExitAt(int x, int y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    Vector2 pos(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f);
+    // Avoid duplicates
+    for (auto& p : exitPositions) {
+        if ((int)std::floor(p.x) == x && (int)std::floor(p.y) == y) return;
+    }
+    exitPositions.push_back(pos);
+    // If the TileMap is already initialized, spawn a door gameobject for this exit immediately
+    if (initialized) {
+        SpawnDoor(x, y, 12);
+    }
+}
+
+void TileMap::RemoveExitAt(int x, int y) {
+    if (x < 0 || x >= width || y < 0 || y >= height) return;
+    exitPositions.erase(std::remove_if(exitPositions.begin(), exitPositions.end(), [x,y](const Vector2& p){
+        return (int)std::floor(p.x) == x && (int)std::floor(p.y) == y;
+    }), exitPositions.end());
+
+    // Also destroy any spawned door corresponding to this exit (doorType 12)
+    for (auto it = spawnedDoors.begin(); it != spawnedDoors.end();) {
+        Door* d = *it;
+        if (d && d->tileX == x && d->tileY == y && d->doorType == 12) {
+            if (d->gameObject) {
+                GameObject::Destroy(d->gameObject);
+            }
+            it = spawnedDoors.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 void TileMap::LoadFromArray(const int* data, int w, int h) {
@@ -115,6 +150,25 @@ void TileMap::SpawnDoors() {
 		}
 	}
 
+	// build spawnedDoorPositions cache
+	spawnedDoorPositions.clear();
+	for (Door* d : spawnedDoors) {
+		if (!d) continue;
+		if (d->gameObject) {
+			spawnedDoorPositions.push_back(Vector2(static_cast<f32>(d->tileX) + 0.5f, static_cast<f32>(d->tileY) + 0.5f));
+		}
+	}
+
+	// Spawn doors for exit markers that were recorded during LoadFromArray
+	for (const Vector2& p : exitPositions) {
+		int x = (int)std::floor(p.x);
+		int y = (int)std::floor(p.y);
+		// Spawn an exit door (use doorType 12) if within bounds
+		if (x >= 0 && x < width && y >= 0 && y < height) {
+			SpawnDoor(x, y, 12);
+		}
+	}
+
 }
 
 void TileMap::SpawnDoor(int x, int y, int doorType) {
@@ -184,6 +238,44 @@ void TileMap::SpawnDoor(int x, int y, int doorType) {
 
 	// Connect interactable to door
 	door->SetupInteractable(interactable, "Open", "Close");
+
+    // If this is an exit door (doorType 12) lock it until all puzzle books are collected
+    if (doorType == 12) {
+        int totalBooks = (int)PuzzleManager::allBooks.size();
+
+        // Initial hover text
+        if (PuzzleManager::booksCollected < totalBooks) {
+            interactable->actionText = "EXIT LOCKED: Collect all books";
+        }
+
+        // Override interaction to enforce lock
+        // Notice we capture `interactable` here so we can change the text later!
+        interactable->onInteract = [door, totalBooks, interactable]() {
+
+            if (PuzzleManager::booksCollected >= totalBooks) {
+                // 1. Physically open the door in the world
+                door->Toggle();
+
+                // 2. Fix the hover text so it no longer says "Locked"
+                interactable->actionText = "Close";
+
+                // 3. Trigger your global win state and UI
+                PuzzleManager::OpenExitDoor();
+
+                printf("[TileMap] Exit door opened (all books collected)\n");
+            }
+            else {
+                int remaining =PuzzleManager::booksCollected;
+
+                // NEW: Route the locked message to your HUD so the player actually sees it!
+                PuzzleManager::activeBookTitle = "DOOR LOCKED";
+                PuzzleManager::activeBookText = std::to_string(remaining) + "/6 books collected";
+                PuzzleManager::popupTimer = 3.0f;
+
+                printf("[TileMap] Exit is locked. %d books remaining.\n", remaining);
+            }
+        };
+	}
 
 	// Track the spawned door
 	spawnedDoors.push_back(door);

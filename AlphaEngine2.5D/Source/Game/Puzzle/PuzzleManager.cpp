@@ -41,13 +41,17 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
-            bookObj->active = false;
-            std::cout << "Book Collected";
+
+            
+            Engine::GameObject::Destroy(bookObj);
+            std::cout << "[MEMORY CLEANUP] GameObject "; // TEMPORARY TO TEST IF OBJECT IS DESTROYED
+            PuzzleManager::allBooks[book.BookId].BookCollected = true;
             PuzzleManager::booksCollected++;
             
             PuzzleManager::activeBookTitle = book.BookName;
             PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
             PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
+
         }
 
         };
@@ -56,15 +60,15 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
 void PuzzleManager::BookDataInit()
 {
-    std::array<std::string,6>BookName = { "Book1","Book2","Book3","Book4","Book5","Book6" };
+    std::array<std::string,6>BookName = { "HLP LESSON 1 ","HLP LESSON 2","HLP LESSON 3","HLP LESSON 4","HLP LESSON 5","HLP LESSON 6" };
     std::array<std::string, 6> BookLore = {
         "GG HLP Mid Term F",
-        "Day 3: I hear footsteps echoing in the halls.",
-        "Day 7: The walls seem to be shifting.",
-        "Day 12: I found a strange key.",
-        "Day 20: I think something is hunting me.",
-        "Day ???: Do not look behind you." };
-    Engine::Vector3 BookCoord[6] = { {3.5f, 3.5f, 0.0f} ,{9.5f, 37.5f, 0.1f},{105.5f, 38.5f, 0.2f},{9.5f, 30.5f, 0.1f},{9.5f, 40.5f, 0.1f},{9.5f, 45.5f, 0.1f} };
+        "Need to Lock in for Finals",
+        "Class template???????",
+        "Ok maybe can pass now",
+        "B for HLP!?!?",
+        "Confirm A now" };
+    Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
 
     for (int i{}; i < 6; ++i) {
         allBooks.push_back({
@@ -89,10 +93,18 @@ void PuzzleManager::Init()
 
 void PuzzleManager::FreeManager()
 {
-
-    
-
+    allBooks.clear();
+    booksCollected = 0;
+    activeBookText.clear();
+    activeBookTitle.clear();
+    popupTimer = 0.0f;
 }
    
-
+void PuzzleManager::OpenExitDoor()
+{
+    
+    PuzzleManager::activeBookTitle = "SCHOOL GATE UNLOCKED";
+    PuzzleManager::activeBookText = "Faster go home lah";
+    PuzzleManager::popupTimer = 5.0f;
+}
 

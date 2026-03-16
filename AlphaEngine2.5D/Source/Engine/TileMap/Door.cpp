@@ -177,6 +177,7 @@ void Door::ReleaseOpen(const void* requester)
     m_holders.erase(requester);
     if (!IsHeldOpen()) {
         autoCloseTimer = 0.0f;
+        Close();
     }
 }
 

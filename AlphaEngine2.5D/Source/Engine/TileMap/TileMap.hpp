@@ -126,12 +126,20 @@ public:
     
     /** Get all spawned doors */
     const std::vector<Door*>& GetDoors() const { return spawnedDoors; }
+    const std::vector<Vector2>& GetSpawnedDoorPositionsPublic() const { return spawnedDoorPositions; }
     
     /** Get all terminal positions from map */
     const std::vector<Vector2>& GetTerminalPositions() const { return terminalPositions; }
     
     /** Get all exit positions from map */
     const std::vector<Vector2>& GetExitPositions() const { return exitPositions; }
+
+    /** Add an exit marker at tile coordinates (x,y). This stores a centered position and ensures
+        the underlying tile is considered empty (markers are tracked separately). */
+    void AddExitAt(int x, int y);
+
+    /** Remove any exit marker at the specified tile coordinates (x,y). */
+    void RemoveExitAt(int x, int y);
     
     /** Get all control room door positions from map */
     const std::vector<Vector2>& GetControlRoomDoorPositions() const { return controlRoomDoorPositions; }
@@ -145,6 +153,8 @@ private:
     
     /** Doors spawned from door tiles during LoadFromArray */
     std::vector<Door*> spawnedDoors;
+    /** Positions (center) of spawned doors for quick queries */
+    std::vector<Vector2> spawnedDoorPositions;
 
     /** Terminal positions found in map (tile 11) */
     std::vector<Vector2> terminalPositions;
@@ -164,6 +174,9 @@ private:
 
     /** Spawn a door at the given tile position */
     void SpawnDoor(int x, int y, int doorType);
+
+    /** Get positions of spawned doors (centers) */
+    const std::vector<Vector2>& GetSpawnedDoorPositions() const { return spawnedDoorPositions; }
 };
 
 } // namespace Engine
