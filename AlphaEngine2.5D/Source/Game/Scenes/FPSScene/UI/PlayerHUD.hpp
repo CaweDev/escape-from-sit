@@ -123,6 +123,9 @@ namespace Game
         PlayerHUD() = default;
         virtual ~PlayerHUD();
 
+        // NPC approach indicators (Annoying + Bully)
+        void UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist);
+
         /**
          * @brief Called when the component is created
          */
