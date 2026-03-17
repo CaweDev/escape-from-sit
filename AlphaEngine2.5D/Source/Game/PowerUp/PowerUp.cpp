@@ -3,6 +3,7 @@
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -48,6 +49,8 @@ namespace Game {
             // Send directly to the Controller to manage it natively!
             auto controller = playerObj->GetComponent<PlayerPowerUpController>();
             if (controller) {
+                Engine::SoundManager::PlaySFX("powerup_collect");
+
                 std::cout << "[POWERUP] Got " << reference.name << "!\n";
                 controller->AddPowerUp(reference.type, reference.duration);
 
