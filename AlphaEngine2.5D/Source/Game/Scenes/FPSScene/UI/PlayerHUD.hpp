@@ -119,6 +119,13 @@ namespace Game
         int m_activePathCardId = -1; // Which card's path is currently shown (-1 = none)
         bool m_pathVisible = false; // Is path currently being rendered
 
+        // Power-up HUD
+        UI::Panel* m_powerUpPanel = nullptr;
+        UI::Image* m_powerUpIcons[4] = { nullptr, nullptr, nullptr, nullptr };
+        UI::Text* m_powerUpTimers[4] = { nullptr, nullptr, nullptr, nullptr };
+        Engine::Texture2D* m_powerUpTextures[4] = { nullptr, nullptr, nullptr, nullptr };
+
+
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
@@ -281,7 +288,7 @@ namespace Game
         // Get color for each access card (for minimap path coloring)
         Engine::Color GetCardColor(int cardId) const;
 
-
+        void UpdatePowerUpUI();
     };
 
 } // namespace Game

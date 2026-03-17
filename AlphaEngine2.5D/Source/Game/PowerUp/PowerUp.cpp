@@ -8,7 +8,7 @@
 
 namespace Game {
 
-    void PowerUpObject::Awake() {
+    void PowerUpObject::Initialize() {
         spriteRenderer = gameObject->GetComponent<Engine::SpriteRenderer>();
         interactable = gameObject->GetComponent<Engine::Interactable>();
 
@@ -32,7 +32,7 @@ namespace Game {
     void PowerUpObject::SetupInteraction() {
         if (!interactable) return;
 
-        interactable->actionText = ("Collect " + reference.name).c_str();
+        interactable->actionText = ("Collect " + reference.name);
         interactable->maxDistance = 2.5f;
 
         interactable->onInteract = [this]() {
