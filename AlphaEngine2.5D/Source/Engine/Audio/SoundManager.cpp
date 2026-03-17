@@ -355,6 +355,20 @@ void SoundManager::PlaySFX(const std::string& key, f32 volumeScale)
     s_sfxSource->PlayOneShot(it->second, volumeScale);
 }
 
+void SoundManager::StopAllSFX()
+{
+    if (s_sfxSource) {
+        s_sfxSource->Stop();
+    }
+
+    for (auto& [_, channel] : s_distanceLoops) {
+        if (channel.source) {
+            channel.source->Stop();
+        }
+        channel.playing = false;
+    }
+}
+
 void SoundManager::SetBGMVolume(f32 volume)
 {
     if (volume < 0.0f) volume = 0.0f;
