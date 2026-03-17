@@ -42,6 +42,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
 
+            Engine::SoundManager::PlaySFX("card_collect");
             
             Engine::GameObject::Destroy(bookObj);
             std::cout << "[MEMORY CLEANUP] GameObject "; // TEMPORARY TO TEST IF OBJECT IS DESTROYED
