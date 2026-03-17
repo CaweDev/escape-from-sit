@@ -67,6 +67,13 @@ namespace Game
         UI::Text* m_proximityText = nullptr;
         float m_proximityIntensity = 0.0f;
         
+        // NPC approach indicators (Annoying + Bully)
+        UI::Text* m_annoyingApproachText = nullptr;
+        UI::Text* m_bullyApproachText = nullptr;
+        float m_annoyingApproachTimer = 0.0f;
+        float m_bullyApproachTimer = 0.0f;
+        float m_approachDisplayDuration = 3.0f; // seconds to show approach messages
+        
         // Hack status
         UI::Text* m_hackStatusText = nullptr;
         float m_hackStatusTimer = 0.0f;
@@ -115,6 +122,9 @@ namespace Game
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
+
+        // NPC approach indicators (Annoying + Bully)
+        void UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist);
 
         /**
          * @brief Called when the component is created

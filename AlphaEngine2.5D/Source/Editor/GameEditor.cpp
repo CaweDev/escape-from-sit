@@ -1,0 +1,352 @@
+/**
+ * @file GameEditor.cpp
+ * @brief Game editor
+ */
+#include "GameEditor.hpp"
+#include <fstream>
+#include <algorithm>
+#include <string>
+#include <filesystem>
+
+#include "Engine/Scene/Scene.hpp"
+#include "Engine/TileMap/TileMap.hpp"
+#include "Engine/TileMap/Door.hpp"
+#include "Engine/Graphics/DoorRenderer.hpp"
+#include "Engine/Physics/BoxCollider2D.hpp"
+#include "Engine/Interaction/Interactable.hpp"
+#include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/TileMapRenderer.hpp"
+#include "Engine/Core/AssetManager.hpp"
+#include "Game/CCTV/CCTVTerminal.hpp"
+#include "Engine/Scene/SceneManager.hpp"
+
+namespace AEEditor
+{
+    Engine::Scene *GameEditor::s_scene = nullptr;
+    Engine::TileMap *GameEditor::s_tileMap = nullptr;
+
+    int GameEditor::currentTileValue = 1;
+    bool GameEditor::is3DMode = false;
+
+    int GameEditor::mapWidth = 0;
+    int GameEditor::mapHeight = 0;
+    float GameEditor::tileSize = 32.0f;
+
+    ImVec2 GameEditor::scrolling = ImVec2(0.0f, 0.0f);
+    float GameEditor::zoom = 1.0f;
+    int GameEditor::hoveredX = -1;
+    int GameEditor::hoveredY = -1;
+
+    bool GameEditor::Is3DMode() { return is3DMode; }
+
+    void GameEditor::Initialize(Engine::Scene *scene, Engine::TileMap *tileMap)
+    {
+        s_scene = scene;
+        s_tileMap = tileMap;
+
+        if (s_tileMap)
+        {
+            mapWidth = s_tileMap->width;
+            mapHeight = s_tileMap->height;
+        }
+    }
+
+    void GameEditor::Exit()
+    {
+        std::filesystem::remove("Assets/tmpMap.txt");
+    }
+
+    void GameEditor::DrawAssetBrowser()
+    {
+        ImGui::Begin("Toolbar");
+
+        if (hoveredX >= 0)
+            ImGui::Text("Hovered Tile: (%d, %d)", hoveredX, hoveredY);
+        else
+            ImGui::Text("Hovered Tile: (--, --)");
+
+        ImGui::Separator();
+
+        ImGui::Text("Map Editing Modes");
+        ImGui::Separator();
+
+        ImGui::BeginDisabled(is3DMode);
+
+        struct ModeDef
+        {
+            const char *name;
+            int value;
+        };
+        ModeDef modes[] = {
+            {"Wall (1)", 1}, {"Door (2)", 10}, {"Terminal (3)", 11}, {"Exit (4)", 12}, {"Ctrl Room (5)", 20}, {"Green Card (6)", 15}, {"Purple Card (7)", 16}, {"Red Card (8)", 17}, {"Yellow Card (9)", 18}, {"Erase (0)", 0}};
+
+        for (int i = 0; i < 10; i++)
+        {
+            bool isSelected = (currentTileValue == modes[i].value);
+            if (isSelected)
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.6f, 0.3f, 1.0f));
+
+            if (ImGui::Button(modes[i].name, ImVec2(120, 30)))
+            {
+                currentTileValue = modes[i].value;
+            }
+
+            if (isSelected)
+                ImGui::PopStyleColor();
+
+            if (i % 2 == 0)
+                ImGui::SameLine();
+        }
+
+        ImGui::EndDisabled();
+
+        ImGui::Separator();
+
+        ImGui::PushStyleColor(ImGuiCol_Button, is3DMode ? ImVec4(0.2f, 0.5f, 0.8f, 1.0f) : ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+        if (ImGui::Button(is3DMode ? "Viewport: 3D Scene" : "Viewport: 2D Map", ImVec2(248, 40)))
+        {
+            is3DMode = !is3DMode;
+
+            if (is3DMode)
+            {
+                SaveMap("Assets/tmpMap.txt");
+                Engine::SceneManager::LoadScene("EditorScene");
+            }
+        }
+        ImGui::PopStyleColor();
+
+        if (ImGui::Button("Save Map (S)", ImVec2(248, 40)))
+        {
+            SaveMap("Assets/map.txt");
+            SaveMap("Assets/tmpMap.txt");
+        }
+        ImGui::End();
+    }
+
+    ImU32 GameEditor::GetTileColor(int tileValue)
+    {
+        switch (tileValue)
+        {
+        case 0:
+            return IM_COL32(90, 90, 90, 255);
+        case 1:
+            return IM_COL32(220, 220, 220, 255);
+        case 10:
+            return IM_COL32(100, 200, 255, 255);
+        case 11:
+            return IM_COL32(255, 200, 100, 255);
+        case 12:
+            return IM_COL32(100, 255, 100, 255);
+        case 13:
+            return IM_COL32(255, 100, 255, 255);
+        case 20:
+            return IM_COL32(255, 50, 255, 255);
+        case 15:
+            return IM_COL32(50, 255, 50, 255);
+        case 16:
+            return IM_COL32(200, 50, 255, 255);
+        case 17:
+            return IM_COL32(255, 50, 50, 255);
+        case 18:
+            return IM_COL32(255, 255, 50, 255);
+        default:
+            return IM_COL32(255, 100, 255, 255);
+        }
+    }
+
+    void GameEditor::DrawMapEditorViewport()
+    {
+        if (is3DMode)
+        {
+            ImGui::TextDisabled("3D Viewport Active (Engine Render Pass)");
+            return;
+        }
+
+        if (!s_tileMap)
+            return;
+
+        ImGuiIO &io = ImGui::GetIO();
+        ImDrawList *drawList = ImGui::GetWindowDrawList();
+
+        ImVec2 canvasPos = ImGui::GetCursorScreenPos();
+        ImVec2 canvasSize = ImGui::GetContentRegionAvail();
+
+        ImVec2 canvasMax = ImVec2(canvasPos.x + canvasSize.x, canvasPos.y + canvasSize.y);
+        drawList->AddRectFilled(canvasPos, canvasMax, IM_COL32(40, 40, 40, 255));
+        if (!s_tileMap)
+        {
+            drawList->AddText(ImVec2(canvasPos.x + 10, canvasPos.y + 10), IM_COL32(255, 0, 0, 255), "no map");
+            return;
+        }
+        if (ImGui::IsWindowHovered())
+        {
+            if (io.MouseWheel != 0.0f)
+            {
+                float zoomDelta = io.MouseWheel * 0.1f;
+                zoom = std::clamp(zoom + zoomDelta, 0.1f, 5.0f);
+            }
+
+            if (ImGui::IsMouseDragging(ImGuiMouseButton_Right, 0.0f))
+            {
+                scrolling.x += io.MouseDelta.x;
+                scrolling.y += io.MouseDelta.y;
+            }
+        }
+
+        drawList->AddRectFilled(canvasPos, canvasMax, IM_COL32(40, 40, 40, 255));
+
+        float scaledTileSize = tileSize * zoom;
+
+        ImVec2 origin(canvasPos.x + scrolling.x,
+                      canvasPos.y + scrolling.y);
+
+        int firstX = max(0, (int)std::floor((canvasPos.x - origin.x) / scaledTileSize));
+        int firstY = max(0, (int)std::floor((canvasPos.y - origin.y) / scaledTileSize));
+        int lastX = min(mapWidth - 1, (int)std::ceil((canvasMax.x - origin.x) / scaledTileSize));
+        int lastY = min(mapHeight - 1, (int)std::ceil((canvasMax.y - origin.y) / scaledTileSize));
+
+        float startX = origin.x + firstX * scaledTileSize;
+        float startY = origin.y + firstY * scaledTileSize;
+
+        for (int y = firstY; y <= lastY; ++y)
+        {
+            float py = startY + (y - firstY) * scaledTileSize;
+
+            for (int x = firstX; x <= lastX; ++x)
+            {
+                float px = startX + (x - firstX) * scaledTileSize;
+
+                int tileVal = (int)s_tileMap->GetTile(x, mapHeight - 1 - y);
+                ImU32 color = GetTileColor(tileVal);
+
+                ImVec2 pMin(px, py);
+                ImVec2 pMax(px + scaledTileSize, py + scaledTileSize);
+
+                drawList->AddRectFilled(pMin, pMax, color);
+                drawList->AddRect(pMin, pMax, IM_COL32(60, 60, 60, 255));
+            }
+        }
+
+        if (ImGui::IsWindowHovered())
+        {
+            ImVec2 mousePos = io.MousePos;
+            int screenGridX = static_cast<int>(std::floor((mousePos.x - origin.x) / scaledTileSize));
+            int screenGridY = static_cast<int>(std::floor((mousePos.y - origin.y) / scaledTileSize));
+
+            if (screenGridX >= 0 && screenGridX < mapWidth && screenGridY >= 0 && screenGridY < mapHeight)
+            {
+                hoveredX = screenGridX;
+                hoveredY = mapHeight - 1 - screenGridY;
+
+                ImVec2 hMin = ImVec2(origin.x + (screenGridX * scaledTileSize), origin.y + (screenGridY * scaledTileSize));
+                ImVec2 hMax = ImVec2(hMin.x + scaledTileSize, hMin.y + scaledTileSize);
+                drawList->AddRect(hMin, hMax, IM_COL32(255, 255, 255, 255), 0.0f, 0, 2.0f);
+
+                if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+                {
+                    ApplyPaint(hoveredX, hoveredY);
+                }
+            }
+            else
+            {
+                hoveredX = -1;
+                hoveredY = -1;
+            }
+
+            if (ImGui::IsKeyPressed(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_S))
+            {
+                SaveMap("Assets/map.txt");
+                SaveMap("Assets/tmpMap.txt");
+            }
+        }
+    }
+
+    void GameEditor::ApplyPaint(int gridX, int gridY)
+    {
+        if (gridX < 0 || gridX >= mapWidth || gridY < 0 || gridY >= mapHeight)
+            return;
+
+        int currentTile = static_cast<int>(s_tileMap->GetTile(gridX, gridY));
+
+        if (currentTileValue == 0)
+        {
+            s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(0));
+            return;
+        }
+
+        if (currentTileValue == 1)
+        {
+            s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(1));
+            return;
+        }
+
+        if (currentTile != 0)
+            return;
+
+        Engine::TileType newTile = static_cast<Engine::TileType>(currentTileValue);
+
+        s_tileMap->SetTile(gridX, gridY, newTile);
+    }
+
+    void GameEditor::SaveMap(const char *filepath)
+    {
+        if (!s_tileMap)
+            return;
+
+        std::ofstream file(filepath, std::ios::out | std::ios::trunc);
+        if (!file.is_open())
+            return;
+
+        for (int y = 0; y < mapHeight; ++y)
+        {
+            for (int x = 0; x < mapWidth; ++x)
+            {
+                int tile = static_cast<int>(s_tileMap->GetTile(x, y));
+                char c = '0';
+
+                switch (tile)
+                {
+                case 0:
+                    c = '0';
+                    break;
+                case 1:
+                    c = '1';
+                    break;
+                case 10:
+                    c = 'D';
+                    break;
+                case 11:
+                    c = 'T';
+                    break;
+                case 12:
+                    c = 'E';
+                    break;
+                case 13:
+                    c = 'C';
+                    break;
+                case 20:
+                    c = 'K';
+                    break;
+                case 15:
+                    c = 'F';
+                    break;
+                case 16:
+                    c = 'G';
+                    break;
+                case 17:
+                    c = 'H';
+                    break;
+                case 18:
+                    c = 'J';
+                    break;
+                default:
+                    c = '0';
+                    break;
+                }
+                file << c;
+            }
+            file << '\n';
+        }
+        file.close();
+    }
+}

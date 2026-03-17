@@ -63,6 +63,14 @@ namespace Game
         float bullyCooldown = 0.0f;
         std::function<bool(int, int&, int&)> m_pickGoalInZone;
 
+        // Headache / follow tracking (Annoying)
+        float followTimer = 0.0f;            // time spent continuously following the player
+        float headacheThreshold = 12.0f;     // seconds before pounding starts
+        float pulseTimer = 0.0f;             // timer for pounding pulses
+        float pulseInterval = 0.6f;          // seconds between pulses
+        float headacheIntensityMax = 0.18f;  // max shake intensity from pounding
+        bool  headacheNotified = false;      // whether HUD was notified for this follow session
+
     private:
         // Update per type
         void UpdateAnnoying(float dt);

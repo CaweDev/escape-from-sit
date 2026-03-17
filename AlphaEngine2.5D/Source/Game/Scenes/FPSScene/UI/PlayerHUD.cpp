@@ -47,6 +47,36 @@ namespace Game
         // Canvas and its children are managed by UIManager
     }
 
+    void PlayerHUD::UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist)
+    {
+        // Bully: stronger warning
+        if (bullyCount > 0 && m_bullyApproachText) {
+            char buf[128];
+            if (nearestBullyDist < 99999.0f) {
+                snprintf(buf, sizeof(buf), "BULLY APPROACHING! %d near, closest: %.1fm", bullyCount, nearestBullyDist);
+            } else {
+                snprintf(buf, sizeof(buf), "BULLY APPROACHING! %d near", bullyCount);
+            }
+            m_bullyApproachText->SetText(buf);
+            m_bullyApproachText->visible = true;
+            m_bullyApproachTimer = m_approachDisplayDuration;
+            Engine::SoundManager::PlaySFX("npc_alert", 0.9f);
+        }
+
+        // Annoying classmates: softer notification
+        if (annoyingCount > 0 && m_annoyingApproachText) {
+            char buf[128];
+            if (nearestAnnoyingDist < 99999.0f) {
+                snprintf(buf, sizeof(buf), "Annoying classmate nearby: %d, closest: %.1fm", annoyingCount, nearestAnnoyingDist);
+            } else {
+                snprintf(buf, sizeof(buf), "Annoying classmate nearby: %d", annoyingCount);
+            }
+            m_annoyingApproachText->SetText(buf);
+            m_annoyingApproachText->visible = true;
+            m_annoyingApproachTimer = m_approachDisplayDuration;
+        }
+    }
+
     void PlayerHUD::Awake()
     {
         // Create a dedicated canvas for the HUD
@@ -335,6 +365,31 @@ namespace Game
         m_proximityText->SetAnchor(UI::TextAnchor::MiddleCenter);
         m_proximityText->visible = false;
         
+        // NPC Approach indicators (center-bottom, above proximity)
+        m_bullyApproachText = m_canvas->CreateChild<UI::Text>();
+        m_bullyApproachText->name = "BullyApproach";
+        m_bullyApproachText->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_bullyApproachText->SetPivot({ 0.5f, 0.0f });
+        m_bullyApproachText->SetAnchoredPosition({ 0.0f, 140.0f });
+        m_bullyApproachText->SetSizeDelta({ 600.0f, 30.0f });
+        m_bullyApproachText->SetText("");
+        m_bullyApproachText->SetFontSize(1.2f);
+        m_bullyApproachText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Red
+        m_bullyApproachText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_bullyApproachText->visible = false;
+
+        m_annoyingApproachText = m_canvas->CreateChild<UI::Text>();
+        m_annoyingApproachText->name = "AnnoyingApproach";
+        m_annoyingApproachText->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_annoyingApproachText->SetPivot({ 0.5f, 0.0f });
+        m_annoyingApproachText->SetAnchoredPosition({ 0.0f, 120.0f });
+        m_annoyingApproachText->SetSizeDelta({ 600.0f, 26.0f });
+        m_annoyingApproachText->SetText("");
+        m_annoyingApproachText->SetFontSize(1.05f);
+        m_annoyingApproachText->SetColor(Engine::Color(0.6f, 1.0f, 0.6f, 1.0f)); // Greenish
+        m_annoyingApproachText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_annoyingApproachText->visible = false;
+        
         // Hack Status Text (center-top)
         m_hackStatusText = m_canvas->CreateChild<UI::Text>();
         m_hackStatusText->name = "HackStatusText";
@@ -567,6 +622,32 @@ namespace Game
         // Update proximity warning visibility
         if (m_proximityText) {
             m_proximityText->visible = (m_proximityIntensity > 0.01f);
+        }
+        // Update NPC approach timers
+        if (m_bullyApproachTimer > 0.0f) {
+            m_bullyApproachTimer -= Engine::Time::deltaTime;
+            if (m_bullyApproachTimer <= 0.0f && m_bullyApproachText) {
+                m_bullyApproachText->visible = false;
+            } else if (m_bullyApproachText) {
+                // subtle pulsing alpha for urgency
+                float pulse = 0.6f + 0.4f * std::abs(std::sin(Engine::Time::time * 6.0f));
+                Engine::Color c = m_bullyApproachText->GetColor();
+                c.a = pulse;
+                m_bullyApproachText->SetColor(c);
+            }
+        }
+
+        if (m_annoyingApproachTimer > 0.0f) {
+            m_annoyingApproachTimer -= Engine::Time::deltaTime;
+            if (m_annoyingApproachTimer <= 0.0f && m_annoyingApproachText) {
+                m_annoyingApproachText->visible = false;
+            } else if (m_annoyingApproachText) {
+                // modest pulse
+                float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * 4.0f));
+                Engine::Color c = m_annoyingApproachText->GetColor();
+                c.a = pulse;
+                m_annoyingApproachText->SetColor(c);
+            }
         }
         //Book Collected
         if (m_bookCountText != nullptr) {

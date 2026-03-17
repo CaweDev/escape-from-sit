@@ -11,6 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Editor\EditorManager.cpp" />
+    <ClCompile Include="Source\Editor\EditorScene.cpp" />
+    <ClCompile Include="Source\Editor\GameEditor.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
@@ -104,6 +113,10 @@
   <ItemGroup>
     <!-- Engine Math -->
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\Editor\EditorManager.hpp" />
+    <ClInclude Include="Source\Editor\EditorScene.hpp" />
+    <ClInclude Include="Source\Editor\GameEditor.hpp" />
+    <ClInclude Include="Source\Editor\Index.hpp" />
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
@@ -259,7 +272,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(SolutionDir)Extern\imgui;$(SolutionDir)Extern\imgui\backends;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -267,7 +280,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\imgui\backends;$(SolutionDir)Extern\jsoncpp\include;$(SolutionDir)Extern\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -294,7 +307,7 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
