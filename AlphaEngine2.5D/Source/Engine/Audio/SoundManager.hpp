@@ -17,6 +17,7 @@ public:
     static void PlayBGM(const std::string& key, bool loop = true);
     static void StopBGM();
     static void PlaySFX(const std::string& key, f32 volumeScale = 1.0f);
+    static void StopAllSFX();
 
     static void SetBGMVolume(f32 volume);
     static void SetSFXVolume(f32 volume);

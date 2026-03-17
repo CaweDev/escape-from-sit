@@ -119,6 +119,7 @@ void SceneManager::LoadFirstScene() {
 
 void SceneManager::UnloadActiveScene() {
     if (s_activeScene) {
+        SoundManager::StopAllSFX();
         s_activeScene->UnloadInternal();
         s_activeScene = nullptr;
     }
@@ -133,6 +134,7 @@ void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     
     if (s_activeScene) {
+        SoundManager::StopAllSFX();
         s_activeScene->UnloadInternal();
     }
     
