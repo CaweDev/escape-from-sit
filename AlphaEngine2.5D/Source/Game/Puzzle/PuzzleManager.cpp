@@ -1,5 +1,6 @@
 #include "PuzzleManager.h"
 #include "Engine.hpp"
+#include "Engine/Audio/ProximityAudio.hpp"
 #include <array>
 
 using namespace Engine;
@@ -35,24 +36,51 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookSR->enabled = true;
     bookSR->sortingOrder = 100;
 
+    // ==========================================
+    // NEW: ADD PROXIMITY AUDIO COMPONENT HERE
+    // ==========================================
+    auto proxAudio = bookObj->AddComponent<Game::ProximityAudio>();
+
+    // Find the player object to hand its transform to the book
+    auto playerObj = Engine::GameObject::Find("Player");
+    if (playerObj) {
+        proxAudio->playerTransform = playerObj->transform;
+    }
+
+    // Set the audio tuning variables
+    proxAudio->audioKey = "book_nearby";
+    proxAudio->nearDistance = 2.0f;
+    proxAudio->farDistance = 6.0f;
+    proxAudio->maxVolume = 0.5f;
+    // ==========================================
+
     auto bookInteract = bookObj->AddComponent<Interactable>();
     bookInteract->actionText = "Pick up book";
     bookInteract->maxDistance = 2.5f;
+ 
     bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
         if (!bookPuzzleObj->isReading) {
             bookPuzzleObj->isReading = true;
-
-            Engine::SoundManager::PlaySFX("card_collect");
-            
             Engine::GameObject::Destroy(bookObj);
-            std::cout << "[MEMORY CLEANUP] GameObject "; // TEMPORARY TO TEST IF OBJECT IS DESTROYED
+
             PuzzleManager::allBooks[book.BookId].BookCollected = true;
             PuzzleManager::booksCollected++;
-            
-            PuzzleManager::activeBookTitle = book.BookName;
-            PuzzleManager::activeBookText = book.BookLore; // Grab the text for this specific book
-            PuzzleManager::popupTimer = 3.0f; // Show it for 3 seconds
 
+            int totalBooks = (int)PuzzleManager::allBooks.size();
+
+            // --- NEW AUDIO LOGIC ---
+            if (PuzzleManager::booksCollected >= totalBooks) {
+                // It's the last book! Play the victory sound.
+                Engine::SoundManager::PlaySFX("all_books_collected");
+            }
+            else {
+                // Just a normal book. Play the standard pickup sound.
+                Engine::SoundManager::PlaySFX("card_collect");
+            }
+
+            PuzzleManager::activeBookTitle = book.BookName;
+            PuzzleManager::activeBookText = book.BookLore;
+            PuzzleManager::popupTimer = 3.0f;
         }
 
         };

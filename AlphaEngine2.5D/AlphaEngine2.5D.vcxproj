@@ -17,6 +17,7 @@
     <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
     <ClCompile Include="Source\Editor\EditorManager.cpp" />
     <ClCompile Include="Source\Editor\EditorScene.cpp" />
     <ClCompile Include="Source\Editor\GameEditor.cpp" />
@@ -112,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Editor\EditorManager.hpp" />
     <ClInclude Include="Source\Editor\EditorScene.hpp" />

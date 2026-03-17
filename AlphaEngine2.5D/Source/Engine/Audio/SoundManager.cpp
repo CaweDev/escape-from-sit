@@ -105,7 +105,8 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["ui_hover"] = "Assets/Audio/SFX/ui_hover.wav";
         config.sfx["ui_toggle"] = "Assets/Audio/SFX/ui_toggle.wav";
         config.sfx["access_card"] = "Assets/Audio/SFX/Access card.wav";
-        config.sfx["card_collect"] = "Assets/Audio/SFX/Book Pickup.wav";
+        config.sfx["card_collect"] = "Assets/Audio/SFX/Book_Pickup.wav";
+        config.sfx["book_nearby"] = "Assets/Audio/SFX/book_nearby.wav";
         config.sfx["terminal_hack"] = "Assets/Audio/SFX/Access Denied.wav";
         config.sfx["cctv_disabled"] = "Assets/Audio/SFX/CCTV shutdown.wav";
         config.sfx["door_open"] = "Assets/Audio/SFX/Door open.wav";
@@ -126,7 +127,7 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["player_walking"] = "Assets/Audio/SFX/player walking.wav";
         config.sfx["push"] = "Assets/Audio/SFX/push.wav";
         config.sfx["npc_alert"] = "Assets/Audio/SFX/NPC Alert.wav";
-
+        config.sfx["all_books_collected"] = "Assets/Audio/SFX/Puzzle_Complete.wav";
         // settings: keep defaults already present in AudioConfig implementation
     }
 
