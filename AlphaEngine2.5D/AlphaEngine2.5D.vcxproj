@@ -20,6 +20,9 @@
     <ClCompile Include="Source\Editor\EditorManager.cpp" />
     <ClCompile Include="Source\Editor\EditorScene.cpp" />
     <ClCompile Include="Source\Editor\GameEditor.cpp" />
+    <ClCompile Include="Source\Editor\ObjectManager.cpp" />
+    <ClCompile Include="Source\Editor\Reflection.cpp" />
+    <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
@@ -117,6 +120,9 @@
     <ClInclude Include="Source\Editor\EditorScene.hpp" />
     <ClInclude Include="Source\Editor\GameEditor.hpp" />
     <ClInclude Include="Source\Editor\Index.hpp" />
+    <ClInclude Include="Source\Editor\ObjectManager.hpp" />
+    <ClInclude Include="Source\Editor\Reflection.hpp" />
+    <ClInclude Include="Source\Editor\ReflectionRegistry.hpp" />
     <ClInclude Include="Source\Engine.hpp" />
     <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
