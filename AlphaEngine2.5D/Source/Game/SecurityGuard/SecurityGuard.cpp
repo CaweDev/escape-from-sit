@@ -40,6 +40,8 @@ namespace Game {
 
         BuildPathBFS_ToGoal((int)worldPos.x, (int)worldPos.y);
         SetState(GuardState::Chase);
+        // Play guard chasing SFX
+        Engine::SoundManager::PlaySFX("guard_chasing");
     }
 
     void SecurityGuard::Update() {
@@ -87,7 +89,13 @@ namespace Game {
 
     void SecurityGuard::SetState(GuardState newState) {
         if (state == newState) return;
+        GuardState old = state;
         state = newState;
+
+        // Play chasing SFX when entering Chase state
+        if (newState == GuardState::Chase && old != GuardState::Chase) {
+            Engine::SoundManager::PlaySFX("guard_chasing");
+        }
     }
 
     const char* SecurityGuard::StateToString(GuardState s) const {

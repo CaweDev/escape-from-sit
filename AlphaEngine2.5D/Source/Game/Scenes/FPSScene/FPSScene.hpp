@@ -376,12 +376,8 @@ namespace Game {
             sr->sortingOrder = 90;
             sr->Play("Patrol");
 
-            // Tint: Bully = reddish, Annoying = greenish
-            if (npcType == NPCType::Bully)
-                sr->color = Engine::Color(1.0f, 0.6f, 0.6f, 1.0f);
-            else
-                sr->color = Engine::Color(0.6f, 1.0f, 0.6f, 1.0f);
-
+     
+          
             npcs.push_back(npc);
 
             std::cout << "[FPSScene] Spawned " << typeName << " NPC in Zone " << zoneId
@@ -1210,6 +1206,8 @@ namespace Game {
                     }
                 }
 
+                // guard proximity handled by UpdateGuardProximityLoop (looped sound)
+
                 float nearestCCTVDistance = 999999.0f;
                 for (auto* cctv : cctvSensors) {
                     if (!cctv || !cctv->transform) continue;
@@ -1300,6 +1298,13 @@ namespace Game {
                 if (fullEscalationActive) alertStage = 4;
                 else if (priorityZoneHotTimer > fullEscalationThreshold * 0.66f) alertStage = 3;
                 else if (priorityZoneHotTimer > fullEscalationThreshold * 0.33f) alertStage = 2;
+                // Play full escalation SFX immediately when escalation triggers
+                static bool escalationSfxPlayed = false;
+                if (fullEscalationActive && !escalationSfxPlayed) {
+                    SoundManager::PlaySFX("full_escalation");
+                    escalationSfxPlayed = true;
+                }
+                if (!fullEscalationActive) escalationSfxPlayed = false;
                 
                 playerHUD->UpdateAlertLevel(alertStage, priorityZoneId, guardCount);
             }

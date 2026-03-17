@@ -113,14 +113,14 @@ void ControlRoomDoor::OnInteract() {
     if (!HasAllCards()) {
         // Show locked message
         int collected = GetCollectedCards();
-        Engine::SoundManager::PlaySFX("door_locked");
+        Engine::SoundManager::PlaySFX("door_locked", 0.8f);
         std::cout << "[CONTROL ROOM] Door is LOCKED. Access cards collected: " << collected << "/" << REQUIRED_CARDS << "\n";
         std::cout << "[CONTROL ROOM] Find all " << REQUIRED_CARDS << " access cards to unlock this door.\n";
         return;
     }
     
     // Allow toggle if door is already open (for closing)
-    if (door->state != Engine::DoorState::Closed) {
+    if (door->state == Engine::DoorState::Open) {
         door->Toggle();
         Engine::SoundManager::PlaySFX("door_unlock", 0.8f);
     }

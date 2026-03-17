@@ -90,6 +90,12 @@
     <ClCompile Include="Source\Editor\EditorScene.cpp" />
     <ClCompile Include="Source\Editor\GameEditor.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -203,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="Assets\Config\audio_config_custom.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />

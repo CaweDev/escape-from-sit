@@ -75,6 +75,7 @@ void FPSController::Update() {
                 speed = sprintSpeed;
                 playerComp->isSprinting = true;
                 playerComp->DrainSprint(dt);
+                Engine::SoundManager::PlaySFX("player_run", 0.7f);
             }
             else if (playerComp->GetStamina() > 0.0f) {
                 // Stamina below threshold but not empty - continue draining to 0
@@ -122,6 +123,7 @@ void FPSController::Update() {
         if (spaceDown && jumpCooldown <= 0.0f) {
             rigidbody->Jump(jumpForce);
             jumpCooldown = 0.25f;
+            Engine::SoundManager::PlaySFX("jump");
         }
         prevSpace = spaceNow;
 
@@ -129,10 +131,14 @@ void FPSController::Update() {
         if (Input::GetKeyDown(KeyCode::C) || XboxController::GetButtonDown(XboxButton::B, 0)) {
             rigidbody->ToggleCrouch();
         }
+
+        // Set velocity on rigidbody (physics will handle collision)
+        rigidbody->velocity = worldVelocity;
+        // Trigger walking SFX occasionally when moving
+        if (isMoving) {
+            Engine::SoundManager::PlaySFX("player_walking", 0.4f);
+        }
     }
-   
-    // Set velocity on rigidbody (physics will handle collision)
-    rigidbody->velocity = worldVelocity;
     
 	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
     

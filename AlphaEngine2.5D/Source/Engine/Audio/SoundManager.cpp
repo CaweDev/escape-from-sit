@@ -1,6 +1,7 @@
 #include "SoundManager.hpp"
 
 #include <cstdio>
+#include <filesystem>
 
 namespace Engine {
 
@@ -86,8 +87,47 @@ void SoundManager::Initialize(const std::string& configPath)
     AudioConfig config;
     if (!ConfigManager::ReadConfig(configPath, config)) {
         std::printf("[Warning] SoundManager: Failed to read audio config: %s\n", configPath.c_str());
-        s_initialized = true;
-        return;
+        std::printf("[Warning] SoundManager: Falling back to built-in default audio config\n");
+
+        // Provide a sensible default config so audio still works when the JSON file is missing
+        config.bgm.clear();
+        config.sfx.clear();
+
+        // BGM (Assets/Audio/BGM)
+        config.bgm["main_menu"] = "Assets/Audio/BGM/main_menu.mp3";
+        config.bgm["fps_gameplay"] = "Assets/Audio/BGM/Game BGM.wav";
+        config.bgm["credits"] = "Assets/Audio/BGM/credits.mp3";
+
+        // SFX (common keys used throughout the game)
+        // SFX (point to nested folder)
+        // SFX (Assets/Audio/SFX)
+        config.sfx["ui_click"] = "Assets/Audio/SFX/ui_click.wav";
+        config.sfx["ui_hover"] = "Assets/Audio/SFX/ui_hover.wav";
+        config.sfx["ui_toggle"] = "Assets/Audio/SFX/ui_toggle.wav";
+        config.sfx["access_card"] = "Assets/Audio/SFX/Access card.wav";
+        config.sfx["card_collect"] = "Assets/Audio/SFX/Book Pickup.wav";
+        config.sfx["terminal_hack"] = "Assets/Audio/SFX/Access Denied.wav";
+        config.sfx["cctv_disabled"] = "Assets/Audio/SFX/CCTV shutdown.wav";
+        config.sfx["door_open"] = "Assets/Audio/SFX/Door open.wav";
+        config.sfx["door_close"] = "Assets/Audio/SFX/Door close.wav";
+        config.sfx["door_locked"] = "Assets/Audio/SFX/Access Denied.wav";
+        config.sfx["zone_enter"] = "Assets/Audio/SFX/zone_enter.wav";
+        config.sfx["cctv_alert"] = "Assets/Audio/SFX/CCTV caught.wav";
+        config.sfx["win"] = "Assets/Audio/SFX/win.wav";
+        config.sfx["lose"] = "Assets/Audio/SFX/lose.wav";
+        config.sfx["guard_proximity_loop"] = "Assets/Audio/SFX/guard nearby.wav";
+        config.sfx["guard_chasing"] = "Assets/Audio/SFX/Guard Chasing.wav";
+        config.sfx["cctv_hum_loop"] = "Assets/Audio/SFX/CCTV ambience.wav";
+        config.sfx["terminal_buzz_loop"] = "Assets/Audio/SFX/Terminal buzz.wav";
+        config.sfx["annoying_classmate"] = "Assets/Audio/SFX/Annoying Classmate.wav";
+        config.sfx["full_escalation"] = "Assets/Audio/SFX/Full Escalation.wav";
+        config.sfx["jump"] = "Assets/Audio/SFX/jump.wav";
+        config.sfx["player_run"] = "Assets/Audio/SFX/player run.wav";
+        config.sfx["player_walking"] = "Assets/Audio/SFX/player walking.wav";
+        config.sfx["push"] = "Assets/Audio/SFX/push.wav";
+        config.sfx["npc_alert"] = "Assets/Audio/SFX/NPC Alert.wav";
+
+        // settings: keep defaults already present in AudioConfig implementation
     }
 
     if (config.bgmVolume < 0.0f) config.bgmVolume = 0.0f;
@@ -399,6 +439,12 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
     UpdateDistanceLoop(kCCTVHumLoopKey, nearestDistance, s_cctvLoopConfig.nearDistance, s_cctvLoopConfig.farDistance, s_cctvLoopConfig.maxVolume);
 }
 
+void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
+{
+    // Use terminal loop config for NPCs as a placeholder if not tuned separately
+    UpdateDistanceLoop("annoying_classmate", nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, 0.9f);
+}
+
 void SoundManager::UpdateTerminalBuzzLoop(f32 nearestDistance)
 {
     UpdateDistanceLoop(kTerminalBuzzLoopKey, nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, s_terminalLoopConfig.maxVolume);
@@ -413,22 +459,94 @@ void SoundManager::EnsureInitialized()
 
 AudioClip* SoundManager::LoadMusicClip(const std::string& path)
 {
-    auto* clip = new AudioClip();
-    if (!clip->LoadMusic(path)) {
-        delete clip;
+    namespace fs = std::filesystem;
+
+    auto tryLoad = [&](const std::string& p) -> AudioClip* {
+        auto* c = new AudioClip();
+        if (c->LoadMusic(p)) return c;
+        delete c;
         return nullptr;
+    };
+
+    // Try original path first
+    if (auto* clip = tryLoad(path)) return clip;
+
+    // Build fallback candidates based on filename
+    fs::path fp(path);
+    std::string filename = fp.filename().string();
+
+    std::vector<std::string> candidates;
+    // Try project Audio BGM and generic Audio folders first
+    candidates.push_back(std::string("Assets/Audio/BGM/") + filename);
+    candidates.push_back(std::string("Assets/Audio/") + filename);
+
+    // Try common subfolders inside Assets/Audio (project uses categorized folders)
+    const std::vector<std::string> audioSubfolders = {
+        "BGM", "Guard", "AnnoyingClassMate", "Bully", "CCTV", "Door", "Player",
+        "AccessCardPickup", "powerup", "Puzzle", "UI"
+    };
+    for (const auto& sub : audioSubfolders) {
+        candidates.push_back(std::string("Assets/Audio/") + sub + "/" + filename);
     }
-    return clip;
+
+    // legacy locations
+    candidates.push_back(std::string("Assets/sound/") + filename);
+    candidates.push_back(std::string("Assets/Audio/SFX/") + filename);
+
+    for (const auto& cpath : candidates) {
+        if (auto* clip = tryLoad(cpath)) {
+            std::printf("[Info] SoundManager: Loaded music via fallback path: %s\n", cpath.c_str());
+            return clip;
+        }
+    }
+
+    std::printf("[Warning] SoundManager: LoadMusic failed for '%s' and fallback candidates\n", path.c_str());
+    return nullptr;
 }
 
 AudioClip* SoundManager::LoadSoundClip(const std::string& path)
 {
-    auto* clip = new AudioClip();
-    if (!clip->LoadSound(path)) {
-        delete clip;
+    namespace fs = std::filesystem;
+
+    auto tryLoad = [&](const std::string& p) -> AudioClip* {
+        auto* c = new AudioClip();
+        if (c->LoadSound(p)) return c;
+        delete c;
         return nullptr;
+    };
+
+    // Try original path first
+    if (auto* clip = tryLoad(path)) return clip;
+
+    // Build fallback candidates based on filename
+    fs::path fp(path);
+    std::string filename = fp.filename().string();
+
+    std::vector<std::string> candidates;
+
+    // Prefer specific categorized subfolders inside Assets/Audio
+    const std::vector<std::string> audioSubfolders = {
+        "Guard", "AnnoyingClassMate", "Bully", "CCTV", "Door", "Player",
+        "AccessCardPickup", "powerup", "Puzzle", "UI", "BGM"
+    };
+    for (const auto& sub : audioSubfolders) {
+        candidates.push_back(std::string("Assets/Audio/") + sub + "/" + filename);
     }
-    return clip;
+
+    // Then generic Audio and legacy locations
+    candidates.push_back(std::string("Assets/Audio/") + filename);
+    candidates.push_back(std::string("Assets/sound/") + filename);
+    candidates.push_back(std::string("Assets/Audio/SFX/") + filename);
+
+    for (const auto& cpath : candidates) {
+        if (auto* clip = tryLoad(cpath)) {
+            std::printf("[Info] SoundManager: Loaded SFX via fallback path: %s\n", cpath.c_str());
+            return clip;
+        }
+    }
+
+    std::printf("[Warning] SoundManager: LoadSound failed for '%s' and fallback candidates\n", path.c_str());
+    return nullptr;
 }
 
 } // namespace Engine
