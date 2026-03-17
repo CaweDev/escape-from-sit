@@ -29,6 +29,9 @@ namespace Game {
         Transform* cameraTf = nullptr;
         TileMap* tileMap = nullptr;
 
+        // Scene transition lock (prevents button spam on Play/Credits)
+        bool transitionLocked = false;
+
         // UI
         Canvas* menuCanvas = nullptr;
         Text* titleText = nullptr;

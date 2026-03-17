@@ -100,9 +100,13 @@
     <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
 =======
+>>>>>>> origin/xavierlatest
+=======
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
 >>>>>>> origin/xavierlatest
   </ItemGroup>
   <ItemGroup>
@@ -217,8 +221,12 @@
     <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
+<<<<<<< HEAD
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
+=======
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
+>>>>>>> origin/xavierlatest
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

@@ -26,6 +26,8 @@ std::unordered_map<std::string, SoundManager::DistanceLoopChannel> SoundManager:
 SoundManager::DistanceLoopConfig SoundManager::s_guardLoopConfig{};
 SoundManager::DistanceLoopConfig SoundManager::s_cctvLoopConfig{};
 SoundManager::DistanceLoopConfig SoundManager::s_terminalLoopConfig{};
+std::unordered_map<std::string, AudioSource*> SoundManager::s_loopChannels;
+std::unordered_map<std::string, int> SoundManager::s_loopRefCount;
 
 void SoundManager::AudioConfig::FromJson(const Json::Value& json)
 {
@@ -37,6 +39,8 @@ void SoundManager::AudioConfig::FromJson(const Json::Value& json)
         for (const auto& key : bgmNode.getMemberNames()) {
             bgm[key] = bgmNode[key].asString();
         }
+
+    
     }
 
     const Json::Value& sfxNode = json["sfx"];
@@ -105,7 +109,9 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["ui_hover"] = "Assets/Audio/SFX/ui_hover.wav";
         config.sfx["ui_toggle"] = "Assets/Audio/SFX/ui_toggle.wav";
         config.sfx["access_card"] = "Assets/Audio/SFX/Access card.wav";
-        config.sfx["card_collect"] = "Assets/Audio/SFX/Book Pickup.wav";
+        config.sfx["card_collect"] = "Assets/Audio/SFX/Access card.wav";
+        
+        config.sfx["book_nearby"] = "Assets/Audio/SFX/book_nearby.wav";
         config.sfx["terminal_hack"] = "Assets/Audio/SFX/Access Denied.wav";
         config.sfx["cctv_disabled"] = "Assets/Audio/SFX/CCTV shutdown.wav";
         config.sfx["door_open"] = "Assets/Audio/SFX/Door open.wav";
@@ -126,7 +132,7 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["player_walking"] = "Assets/Audio/SFX/player walking.wav";
         config.sfx["push"] = "Assets/Audio/SFX/push.wav";
         config.sfx["npc_alert"] = "Assets/Audio/SFX/NPC Alert.wav";
-
+        config.sfx["all_books_collected"] = "Assets/Audio/SFX/Puzzle_Complete.wav";
         // settings: keep defaults already present in AudioConfig implementation
     }
 
@@ -194,6 +200,16 @@ void SoundManager::Shutdown()
         }
     }
     s_distanceLoops.clear();
+
+    // Stop and free any generic loop channels
+    for (auto& [k, src] : s_loopChannels) {
+        if (src) {
+            src->Stop();
+            delete src;
+        }
+    }
+    s_loopChannels.clear();
+    s_loopRefCount.clear();
 
     for (auto& [_, clip] : s_bgmClips) {
         delete clip;
@@ -355,6 +371,20 @@ void SoundManager::PlaySFX(const std::string& key, f32 volumeScale)
     s_sfxSource->PlayOneShot(it->second, volumeScale);
 }
 
+void SoundManager::StopAllSFX()
+{
+    if (s_sfxSource) {
+        s_sfxSource->Stop();
+    }
+
+    for (auto& [_, channel] : s_distanceLoops) {
+        if (channel.source) {
+            channel.source->Stop();
+        }
+        channel.playing = false;
+    }
+}
+
 void SoundManager::SetBGMVolume(f32 volume)
 {
     if (volume < 0.0f) volume = 0.0f;
@@ -377,6 +407,47 @@ void SoundManager::SetSFXVolume(f32 volume)
     if (volume > 1.0f) volume = 1.0f;
 
     s_sfxSource->SetVolume(volume);
+}
+
+void SoundManager::PlayLoop(const std::string& key, f32 volume)
+{
+    EnsureInitialized();
+
+    auto it = s_sfxClips.find(key);
+    if (it == s_sfxClips.end() || !it->second || !it->second->IsLoaded()) return;
+
+    auto lit = s_loopChannels.find(key);
+    if (lit == s_loopChannels.end() || !lit->second) {
+        AudioSource* src = new AudioSource();
+        src->loop = true;
+        src->clip = it->second;
+        src->SetVolume(volume);
+        src->Play();
+        s_loopChannels[key] = src;
+        s_loopRefCount[key] = 1;
+    } else {
+        // Already playing; bump refcount and update volume
+        s_loopRefCount[key]++;
+        lit->second->SetVolume(volume);
+    }
+}
+
+void SoundManager::StopLoop(const std::string& key)
+{
+    auto lit = s_loopChannels.find(key);
+    if (lit == s_loopChannels.end() || !lit->second) return;
+
+    auto rit = s_loopRefCount.find(key);
+    if (rit != s_loopRefCount.end()) {
+        rit->second--;
+        if (rit->second > 0) return; // still referenced elsewhere
+    }
+
+    // stop and delete
+    lit->second->Stop();
+    delete lit->second;
+    s_loopChannels.erase(lit);
+    s_loopRefCount.erase(key);
 }
 
 void SoundManager::UpdateDistanceLoop(const std::string& key, f32 distance, f32 nearDistance, f32 farDistance, f32 maxVolume)
