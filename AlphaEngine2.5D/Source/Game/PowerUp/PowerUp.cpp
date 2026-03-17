@@ -63,7 +63,7 @@ namespace Game {
         case PowerUpType::SpeedBoost:      return Engine::Color(0.0f, 0.5f, 0.5f, 0.0f); // Cyan
         case PowerUpType::InfiniteStamina: return Engine::Color(0.8f, 0.4f, 0.0f, 0.0f); // Orange
         case PowerUpType::Shield:          return Engine::Color(0.0f, 0.0f, 0.8f, 0.0f); // Blue
-        case PowerUpType::Invisibility:    return Engine::Color(0.8f, 0.8f, 0.8f, 0.0f); // Grey
+        case PowerUpType::Invisibility:    return Engine::Color(0.03f, 0.05f, 0.10f, 0.0f); // Dark subtle tint
         default: return Engine::Color(0.3f, 0.3f, 0.3f, 0.0f);
         }
     }

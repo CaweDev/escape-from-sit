@@ -93,6 +93,14 @@
     <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
     <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
     <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -206,6 +214,8 @@
     <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

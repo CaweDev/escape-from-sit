@@ -544,10 +544,10 @@ namespace Game
         m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
         // Power Up timer UI
-        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/powerup1.png"); // Speed
-        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/powerup2.png"); // Infinite stamina
-        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/powerup3.png"); // Shield
-        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/powerup4.png"); // Invisibility
+        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/Speed.png"); // Speed
+        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/InfStamina.png"); // Infinite stamina
+        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Shield.png"); // Shield
+        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Invis.png"); // Invisibility
 
         m_powerUpPanel = m_canvas->CreateChild<UI::Panel>();
         m_powerUpPanel->name = "PowerUpPanel";
