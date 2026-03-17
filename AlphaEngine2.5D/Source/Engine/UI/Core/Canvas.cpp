@@ -180,8 +180,8 @@ namespace UI
             if (hit) return hit;
         }
  
-        // Check this element
-        if (element->ContainsPoint(worldX, worldY))
+        // Check this element only if it is configured as a raycast target
+        if (element->raycastTarget && element->ContainsPoint(worldX, worldY))
         {
             return element;
         }

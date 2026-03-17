@@ -136,18 +136,21 @@ namespace Game {
         if (progress > 1.0f) progress = 1.0f;
         m_progressBarFill->SetFillAmount(progress);
 
-        // After minimum display time, fade to black then load target
+        // After minimum display time, hide loading widgets, then switch and reveal
         if (!m_loadTriggered && m_elapsed >= MIN_DISPLAY_TIME) {
             m_loadTriggered = true;
 
             std::string target = SceneManager::GetLoadWithScreenTarget();
             f32 fadeOutDuration = SceneManager::GetLoadWithScreenFadeOutDuration();
 
+            if (m_loadingText)    m_loadingText->visible = false;
+            if (m_progressBarBg)  m_progressBarBg->visible = false;
+            if (m_progressBarFill)m_progressBarFill->visible = false;
+            if (m_tipText)        m_tipText->visible = false;
 
-            FadeService::FadeIn(fadeOutDuration, [target, fadeOutDuration]() {
-                // Screen is now fully black — load target and start reveal
-                SceneManager::LoadSceneDeferred(target);
-                FadeService::FadeOut(fadeOutDuration);
+            FadeService::FadeIn(0.0f, [target, fadeOutDuration]() {
+                SceneManager::RequestFadeOutAfterNextSceneLoad(fadeOutDuration);
+                SceneManager::LoadScene(target);
             });
         }
     }

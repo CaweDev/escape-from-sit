@@ -99,8 +99,11 @@
     <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
+=======
+>>>>>>> origin/xavierlatest
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -219,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="Assets\Config\audio_config_custom.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />

@@ -1,0 +1,64 @@
+{
+  "settings": {
+    "bgmVolume": 0.7,
+    "sfxVolume": 1.0,
+    "bgmFadeDuration": 0.8,
+    "guardLoop": {
+      "nearDistance": 2.5,
+      "farDistance": 10.0,
+      "maxVolume": 0.85
+    },
+    "cctvLoop": {
+      "nearDistance": 1.5,
+      "farDistance": 9.0,
+      "maxVolume": 0.45
+    },
+    "terminalLoop": {
+      "nearDistance": 1.2,
+      "farDistance": 7.5,
+      "maxVolume": 0.4
+    }
+  },
+  "bgm": {
+    "main_menu": "Assets/Audio/BGM/main_menu.mp3",
+    "fps_gameplay": "Assets/Audio/BGM/Game BGM.wav",
+    "credits": "Assets/Audio/BGM/credits.mp3"
+  },
+  "sfx": {
+    "ui_click": "Assets/Audio/UI/ui_click.wav",
+    "ui_hover": "Assets/Audio/UI/ui_hover.wav",
+    "ui_toggle": "Assets/Audio/UI/ui_toggle.wav",
+
+    "access_card": "Assets/Audio/AccessCardPickup/Access card.wav",
+    "card_collect": "Assets/Audio/AccessCardPickup/Access card.wav",
+
+    "terminal_hack": "Assets/Audio/CCTV/Access Denied.wav",
+    "cctv_disabled": "Assets/Audio/CCTV/CCTV shutdown.wav",
+
+    "door_open": "Assets/Audio/Door/Door open.wav",
+    "door_close": "Assets/Audio/Door/Door close.wav",
+    "door_locked": "Assets/Audio/Door/Access Denied.wav",
+
+    "zone_enter": "Assets/Audio/UI/zone_enter.wav",
+    "cctv_alert": "Assets/Audio/CCTV/CCTV caught.wav",
+
+    "win": "Assets/Audio/UI/win.wav",
+    "lose": "Assets/Audio/UI/lose.wav",
+
+    "guard_proximity_loop": "Assets/Audio/Guard/guard nearby.wav",
+    "guard_chasing": "Assets/Audio/Guard/Guard Chasing.wav",
+    "cctv_hum_loop": "Assets/Audio/CCTV/CCTV ambience.wav",
+
+    "terminal_buzz_loop": "Assets/Audio/CCTV/Terminal buzz.wav",
+    "terminal_buzz": "Assets/Audio/CCTV/Terminal buzz.wav",
+    "annoying_classmate": "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav",
+
+    "full_escalation": "Assets/Audio/Guard/Full Escalation.wav",
+
+    "jump": "Assets/Audio/Player/jump.wav",
+    "player_run": "Assets/Audio/Player/player run.wav",
+    "player_walking": "Assets/Audio/Player/player walking.wav",
+    "push": "Assets/Audio/Bully/push.wav",
+    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav"
+  }
+}

@@ -232,6 +232,7 @@
     <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Config\audio_config_custom.json" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,13 @@
 #include "Engine/UI/Core/Canvas.hpp"
 #include "Engine/UI/Components/Image.hpp"
 #include "Engine/Graphics/Color.hpp"
+#include "Engine/Math/Mathf.hpp"
+
+namespace
+{
+    constexpr f32 kLargeFrameHitchThresholdSeconds = 0.1f;
+    bool g_skippedLargeHitchThisFade = false;
+}
 
 namespace UI
 {
@@ -60,6 +67,13 @@ namespace UI
     {
         if (!s_fading || !s_fadeImage) return;
 
+        // If the first frame after starting a fade is a large hitch (e.g., blocking OnLoad),
+        // skip exactly one update so the fade doesn't appear to pop.
+        if (!g_skippedLargeHitchThisFade && s_fadeElapsed <= 0.0f && dt > kLargeFrameHitchThresholdSeconds) {
+            g_skippedLargeHitchThisFade = true;
+            return;
+        }
+
         s_fadeElapsed += dt;
         f32 t = (s_fadeDuration > 0.0f) ? (s_fadeElapsed / s_fadeDuration) : 1.0f;
 
@@ -95,6 +109,7 @@ namespace UI
     {
         if (!s_fadeImage) return;
 
+        g_skippedLargeHitchThisFade = false;
         s_fadeImage->visible = true;
         s_fadeFrom = 0.0f;
         s_fadeTo = 1.0f;
@@ -111,6 +126,7 @@ namespace UI
     {
         if (!s_fadeImage) return;
 
+        g_skippedLargeHitchThisFade = false;
         s_fadeImage->visible = true;
         s_fadeFrom = 1.0f;
         s_fadeTo = 0.0f;
