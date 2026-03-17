@@ -15,6 +15,23 @@ namespace Game
         BuildUI();
     }
 
+    void WinScreen::Update()
+    {
+        if (!m_visible || !m_isFadingIn) return;
+
+        m_fadeTimer += Engine::Time::unscaledDeltaTime;
+        float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
+        if (t < 0.0f) t = 0.0f;
+        if (t > 1.0f) t = 1.0f;
+
+        ApplyFade(t);
+
+        if (t >= 1.0f)
+        {
+            m_isFadingIn = false;
+        }
+    }
+
     void WinScreen::OnDestroy()
     {
         if (m_visible)
@@ -53,13 +70,16 @@ namespace Game
         m_panel = m_overlay->CreateChild<UI::Panel>();
         m_panel->name = "WinPanel";
         m_panel->rectTransform.SetCentered(1000.0f, 560.0f);
+        m_panel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
+        m_panel->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_panel->GetBackground()->SetPixelsPerUnitMultiplier(4.0f);
         m_panel->SetBackgroundColor(kPanelColor);
 
         m_title = m_panel->CreateChild<UI::Text>();
         m_title->name = "WinTitle";
         m_title->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
         m_title->SetPivot({ 0.5f, 1.0f });
-        m_title->SetAnchoredPosition({ 0.0f, -24.0f });
+        m_title->SetAnchoredPosition({ 0.0f, -55.0f });
         m_title->SetSizeDelta({ 0.0f, 64.0f });
         m_title->SetText("YOU ESCAPED. WIN!");
         m_title->SetFontSize(3.0f);
@@ -70,11 +90,42 @@ namespace Game
         m_button->name = "WinButton";
         m_button->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
         m_button->SetPivot({ 0.5f, 0.0f });
-        m_button->SetAnchoredPosition({ 0.0f, 20.0f });
+        m_button->SetAnchoredPosition({ 0.0f, 55.0f });
         m_button->SetSizeDelta({ 240.0f, 56.0f });
         m_button->SetText("Main Menu");
         m_button->SetBackgroundColor(kButtonColor);
+        m_button->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+        m_button->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_button->GetBackground()->SetPixelsPerUnitMultiplier(1.0f);
         m_button->onClick = [this]() { OnButtonClicked(); };
+
+        ApplyFade(1.0f);
+    }
+
+    void WinScreen::ApplyFade(float t)
+    {
+        Engine::Color overlay = kOverlayColor;
+        overlay.a *= t;
+        if (m_overlay) m_overlay->SetBackgroundColor(overlay);
+
+        Engine::Color panel = kPanelColor;
+        panel.a *= t;
+        if (m_panel) m_panel->SetBackgroundColor(panel);
+
+        Engine::Color title = kTitleColor;
+        title.a *= t;
+        if (m_title) m_title->SetColor(title);
+
+        Engine::Color btn = kButtonColor;
+        btn.a *= t;
+        if (m_button) m_button->SetBackgroundColor(btn);
+
+        if (m_button && m_button->GetLabel())
+        {
+            Engine::Color c = Engine::Color::white();
+            c.a = t;
+            m_button->GetLabel()->SetColor(c);
+        }
     }
 
     void WinScreen::Show()
@@ -83,6 +134,10 @@ namespace Game
 
         m_visible = true;
         m_overlay->visible = true;
+
+        m_fadeTimer = 0.0f;
+        m_isFadingIn = true;
+        ApplyFade(0.0f);
 
         Engine::Application::RegisterPause("WinScreen");
         Engine::Input::RegisterCursorUnlock("WinScreen");
@@ -95,6 +150,7 @@ namespace Game
 
         m_visible = false;
         m_overlay->visible = false;
+        m_isFadingIn = false;
 
         Engine::Input::UnregisterCursorUnlock("WinScreen");
         Engine::Application::UnregisterPause("WinScreen");

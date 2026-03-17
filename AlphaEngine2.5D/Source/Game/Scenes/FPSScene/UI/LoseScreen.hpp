@@ -22,11 +22,17 @@ namespace Game
         UI::Button* m_button = nullptr;
         bool m_visible = false;
 
+        // Fade-in state
+        bool m_isFadingIn = false;
+        float m_fadeTimer = 0.0f;
+        float m_fadeDuration = 0.22f;
+
     public:
         LoseScreen() = default;
         ~LoseScreen() override = default;
 
         void Awake() override;
+        void Update() override;
         void OnDestroy() override;
 
         void Show();
@@ -35,6 +41,7 @@ namespace Game
 
     private:
         void BuildUI();
+        void ApplyFade(float t);
         void OnButtonClicked();
     };
 }
