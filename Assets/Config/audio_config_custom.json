@@ -9,14 +9,14 @@
       "maxVolume": 0.85
     },
     "cctvLoop": {
-      "nearDistance": 1.5,
-      "farDistance": 3.0,
-      "maxVolume": 0.0
+      "nearDistance": 1.0,
+      "farDistance": 4.0,
+      "maxVolume": 0.8
     },
     "terminalLoop": {
-      "nearDistance": 1.2,
-      "farDistance": 3.0,
-      "maxVolume": 0.0
+      "nearDistance": 1.0,
+      "farDistance": 4.0,
+      "maxVolume": 0.8
     }
   },
   "bgm": {
