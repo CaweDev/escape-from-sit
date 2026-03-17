@@ -87,6 +87,9 @@
     <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
+    <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
+    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -193,6 +196,9 @@
     <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
     <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
     <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

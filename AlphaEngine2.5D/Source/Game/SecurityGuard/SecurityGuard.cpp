@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include "Game/Player/PlayerPowerUpController.h"
 
 namespace Game {
 
@@ -325,12 +326,25 @@ namespace Game {
     }
 
     bool SecurityGuard::CanSeePlayer() const {
+
+        if (playerTf) {
+            auto powerUpCtrl = playerTf->gameObject->GetComponent<PlayerPowerUpController>();
+            if (powerUpCtrl && powerUpCtrl->HasPowerUp(PowerUpType::Invisibility)) {
+                return false; // Guard immediately fails to see player
+            }
+        }
+
         float dx = playerTf->position.x - gameObject->transform->position.x;
         float dy = playerTf->position.y - gameObject->transform->position.y;
         return (dx * dx + dy * dy) <= detectRadius * detectRadius;
     }
 
     bool SecurityGuard::IsCaught() const {
+
+        if (playerData && playerData->IsInvulnerable()) {
+            return false;
+        }
+
         float dx = playerTf->position.x - gameObject->transform->position.x;
         float dy = playerTf->position.y - gameObject->transform->position.y;
         return (dx * dx + dy * dy) <= catchRadius * catchRadius;

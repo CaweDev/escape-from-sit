@@ -37,6 +37,8 @@
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/ControlRoomDoor/ControlRoomDoor.hpp"
 #include "Game/PathRenderer/PathRenderer.hpp"
+#include "Game/PowerUp/PowerUpManager.h"
+#include "Game/Player/PlayerPowerUpController.h"
 
 #include "Engine/Interaction/InteractionController.hpp"
 
@@ -67,6 +69,7 @@ namespace Game {
         Transform* playerTf = nullptr;
         Camera* playerCam = nullptr;
         PlayerHUD* playerHUD = nullptr;
+        PlayerPowerUpController* powerUpController = nullptr;
 
         // Guards / CCTV
         std::vector<Game::SecurityGuard*> guards;
@@ -696,6 +699,8 @@ namespace Game {
             playerViewPos = playerTf->position;
             playerViewRot = playerTf->rotation;
 
+            powerUpController = player->AddComponent<PlayerPowerUpController>();
+
             // ===== ML init =====
             zoneMgr.Init(map, mapWidth, mapHeight);
             heatmap.Init(mapWidth, mapHeight);
@@ -1095,6 +1100,8 @@ namespace Game {
 
             PuzzleManager::BookDataInit();
             PuzzleManager::Init();
+
+            Game::PowerUpManager::Init();
         }
 
         void OnAfterRender() override

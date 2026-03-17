@@ -1,9 +1,16 @@
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
+#include <iostream>
+
 namespace Game {
 
 	bool Player::cheatInfiniteSpeed = false;
 	bool Player::cheatCatchImmune   = false;
+
+	bool Player::hasSpeedBoost = false;
+	bool Player::hasInfiniteStamina = false;
+	bool Player::hasShield = false;
+	bool Player::isInvisible = false;
 
 	void Player::Catch()
 	{
@@ -88,5 +95,17 @@ namespace Game {
 		Engine::Vector2 out = knockback;
 		knockback = Engine::Vector2(0.0f, 0.0f);
 		return out;
+	}
+
+	void Player::UpdateGameTime(float dt) {
+		gameTime += dt;
+
+		// Tick down invulnerability frames
+		if (invulnerabilityTimer > 0.0f) {
+			invulnerabilityTimer -= dt;
+			if (invulnerabilityTimer <= 0.0f) {
+				std::cout << "[PLAYER] Invulnerability wore off!\n";
+			}
+		}
 	}
 }

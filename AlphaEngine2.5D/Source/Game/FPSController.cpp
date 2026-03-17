@@ -69,21 +69,39 @@ void FPSController::Update() {
 
         f32 speed = moveSpeed;
 
+        if (Player::hasSpeedBoost) {
+            speed += 2.0f;
+        }
+
         if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
-            if (playerComp->CanSprint()) {
+            if (playerComp->hasInfiniteStamina || playerComp->CanSprint()) {
                 // Can sprint - use sprint speed and drain stamina
                 speed = sprintSpeed;
+
+                if (playerComp->hasSpeedBoost) {
+                    speed += 3.0f;
+                }
+
                 playerComp->isSprinting = true;
-                playerComp->DrainSprint(dt);
+
+                // Only drain stamina if no infinite powerup
+                if (!playerComp->hasInfiniteStamina) {
+                    playerComp->DrainSprint(dt);
+                }
+                if (playerComp->hasInfiniteStamina) {
+                    playerComp->Regen(dt);
+                }
             }
             else if (playerComp->GetStamina() > 0.0f) {
                 // Stamina below threshold but not empty - continue draining to 0
                 speed = moveSpeed; // Use normal speed
+                if (playerComp->hasSpeedBoost) speed += 2.0f; // keep base speed boost
                 playerComp->isSprinting = false;
                 playerComp->DrainSprint(dt);
             }
             else {
                 // Stamina completely empty
+                if (playerComp->hasSpeedBoost) speed += 2.0f;
                 playerComp->isSprinting = false;
             }
         }
