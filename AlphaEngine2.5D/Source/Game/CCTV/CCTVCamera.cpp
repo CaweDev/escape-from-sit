@@ -1,5 +1,6 @@
 #include "CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Game/Player/Player.hpp"
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Core/Time.hpp"
@@ -205,7 +206,7 @@ namespace Game {
         bool inRange = (dist <= maxRange);
         bool inDetectRange = (dist <= detectRadius);
         bool inFov = inRange && InFov(dx, dy);
-        bool los = inFov && HasLineOfSighttoPlayer();
+        bool los = Player::isInvisible ? false : (inFov && HasLineOfSighttoPlayer());
 
         bool nowSeeing = (inDetectRange && inFov && los);
 
