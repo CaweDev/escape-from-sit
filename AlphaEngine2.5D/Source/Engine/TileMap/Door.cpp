@@ -4,6 +4,7 @@
  */
 #include "Door.hpp"
 #include "../Core/GameObject.hpp"
+#include "../Core/Time.hpp"
 #include "../Physics/BoxCollider2D.hpp"
 #include "../Interaction/Interactable.hpp"
 #include "AEEngine.h"
@@ -26,7 +27,7 @@ void Door::Awake() {
 }
 
 void Door::Update() {
-    f32 dt = static_cast<f32>(AEFrameRateControllerGetFrameTime());
+	f32 dt = Time::deltaTime;
     
     // Handle animation
     switch (state) {

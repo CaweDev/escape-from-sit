@@ -68,6 +68,9 @@ public:
     /** Get total number of registered scenes */
     static int GetSceneCount();
 
+    /** Request a screen fade-out immediately after the next successful scene load */
+    static void RequestFadeOutAfterNextSceneLoad(f32 duration);
+
     // Internal methods (called by engine)
 
     /** Update active scene */
@@ -95,7 +98,11 @@ private:
     /** Fade durations for LoadWithScreen transitions */
     static f32 s_loadWithScreenFadeInDuration;
     static f32 s_loadWithScreenFadeOutDuration;
-    
+
+    /** One-shot fade-out request applied after next LoadSceneInternal */
+    static bool s_hasPendingPostLoadFadeOut;
+    static f32 s_pendingPostLoadFadeOutDuration;
+
     /** Internal: actually switch scenes */
     static void LoadSceneInternal(Scene* newScene);
     

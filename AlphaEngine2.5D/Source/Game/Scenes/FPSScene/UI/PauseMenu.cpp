@@ -163,6 +163,7 @@ namespace Game
         // Ensure pause is always cleaned up when the scene unloads
         if (m_isPaused)
         {
+            Engine::Input::UnregisterCursorUnlock("PauseMenu");
             Engine::Application::UnregisterPause("PauseMenu");
             m_isPaused = false;
         }
@@ -425,7 +426,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
-                Engine::Input::UnregisterCursorUnlock("PauseMenu");
+                //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("FPS");
             }
         );
@@ -438,6 +439,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
+                //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
             }
         );
