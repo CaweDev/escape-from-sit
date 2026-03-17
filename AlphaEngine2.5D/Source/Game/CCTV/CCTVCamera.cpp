@@ -4,6 +4,7 @@
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <cmath>
 #include  "Engine/Core/GameObject.hpp"
 
@@ -220,6 +221,8 @@ namespace Game {
             if (hud) {
                 hud->ShowCCTVWarning(true);
             }
+            // Play CCTV detected SFX
+            Engine::SoundManager::PlaySFX("cctv_alert");
         }
 
         isSeeingPlayer = nowSeeing;

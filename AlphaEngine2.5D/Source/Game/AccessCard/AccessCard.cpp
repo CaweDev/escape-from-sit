@@ -9,6 +9,7 @@
 #include "Engine/Core/Time.hpp"
 #include "Game/Player/Player.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -76,6 +77,8 @@ void AccessCard::OnCollect() {
     // Hide the card instead of destroying it (like books do)
     // This allows it to respawn when the scene reloads
     gameObject->active = false;
+    // Play collect SFX
+    Engine::SoundManager::PlaySFX("card_collect");
 }
 
 const char* AccessCard::GetColorName() const {

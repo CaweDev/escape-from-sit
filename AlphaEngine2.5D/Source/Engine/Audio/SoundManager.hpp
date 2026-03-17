@@ -9,7 +9,7 @@ namespace Engine {
 
 class SoundManager {
 public:
-    static void Initialize(const std::string& configPath = "Assets/Config/audio_config.json");
+    static void Initialize(const std::string& configPath = "Assets/Config/audio_config_custom.json");
     static void Shutdown();
 
     static void Update(f32 deltaTime);
@@ -25,6 +25,8 @@ public:
     static void UpdateGuardProximityLoop(f32 nearestDistance);
     static void UpdateCCTVHumLoop(f32 nearestDistance);
     static void UpdateTerminalBuzzLoop(f32 nearestDistance);
+    // NPC-specific proximity loop for annoying classmates
+    static void UpdateNPCAnnoyingLoop(f32 nearestDistance);
 
     struct DistanceLoopConfig {
         f32 nearDistance = 2.5f;
