@@ -4,6 +4,7 @@
  */
 #include "imgui.h"
 #include "EditorScene.hpp"
+#include "ObjectManager.hpp"
 
 #include "Engine/TileMap/TileMap.hpp"
 #include "Engine/Graphics/TileMapRenderer.hpp"
@@ -154,11 +155,19 @@ namespace Game
         cameraTf->position = Vector3(2.5f, 2.5f, 0.5f);
         cameraTf->rotation = 0.0f;
 
-        SpawnExistingDoors(map, renderer);
-        SpawnExistingTerminals(map);
-        SpawnExistingCards(map);
-        SpawnExistingCCTVs(map);
-
+        // std::ifstream jsonFile("Assets/Config/Scenes/EditorScene.json");
+        // if (jsonFile.is_open())
+        // {
+        //     jsonFile.close();
+        //     AEEditor::ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
+        // }
+        // else
+        // {
+            SpawnExistingDoors(map, renderer);
+            SpawnExistingTerminals(map);
+            SpawnExistingCards(map);
+            SpawnExistingCCTVs(map);
+        // }
         AEEditor::GameEditor::Initialize(this, map);
     }
 

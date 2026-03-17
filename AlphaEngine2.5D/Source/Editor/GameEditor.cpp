@@ -112,6 +112,10 @@ namespace AEEditor
             if (is3DMode)
             {
                 SaveMap("Assets/tmpMap.txt");
+                ObjectManager::SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
+                ObjectManager::selectedObject = nullptr;
+                ObjectManager::draggingObject = nullptr;
+
                 Engine::SceneManager::LoadScene("EditorScene");
             }
         }
@@ -121,6 +125,7 @@ namespace AEEditor
         {
             SaveMap("Assets/map.txt");
             SaveMap("Assets/tmpMap.txt");
+            ObjectManager::SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
         }
         ImGui::End();
     }
