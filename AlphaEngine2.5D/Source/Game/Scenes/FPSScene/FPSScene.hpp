@@ -1441,6 +1441,11 @@ namespace Game {
             playerCam = nullptr;
 
             PuzzleManager::FreeManager();
+
+            if(modalCanvas) {
+                UI::UIManager::GetInstance()->DestroyCanvas(modalCanvas);
+                modalCanvas = nullptr;
+            }
         }
     };
 

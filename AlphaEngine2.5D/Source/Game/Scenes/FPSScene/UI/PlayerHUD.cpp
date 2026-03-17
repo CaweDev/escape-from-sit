@@ -18,6 +18,7 @@
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Engine/Audio/SoundManager.hpp"
+#include "Game/Player/PlayerPowerUpController.h"
 
 namespace Game
 {
@@ -542,6 +543,47 @@ namespace Game
         m_cardText->SetColor(Engine::Color(1.0f, 0.8f, 0.0f, 1.0f)); // Gold color
         m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        // Power Up timer UI
+        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/powerup1.png"); // Speed
+        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/powerup2.png"); // Infinite stamina
+        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/powerup3.png"); // Shield
+        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/powerup4.png"); // Invisibility
+
+        m_powerUpPanel = m_canvas->CreateChild<UI::Panel>();
+        m_powerUpPanel->name = "PowerUpPanel";
+        m_powerUpPanel->SetAnchors({ 1.0f, 1.0f }, { 1.0f, 1.0f });
+        m_powerUpPanel->SetPivot({ 1.0f, 1.0f });
+        m_powerUpPanel->SetAnchoredPosition({ -20.0f, -110.0f });
+        m_powerUpPanel->SetSizeDelta({ 240.0f, 56.0f });
+        m_powerUpPanel->SetBackgroundColor(Engine::Color(0.05f, 0.05f, 0.05f, 0.65f));
+
+        for (int i = 0; i < 4; ++i)
+        {
+            auto* slot = m_powerUpPanel->CreateChild<UI::Panel>();
+            slot->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+            slot->SetPivot({ 0.0f, 0.0f });
+            slot->SetAnchoredPosition({ 8.0f + i * 58.0f, 6.0f });
+            slot->SetSizeDelta({ 52.0f, 44.0f });
+            slot->SetBackgroundColor(Engine::Color(0.12f, 0.12f, 0.12f, 0.9f));
+
+            m_powerUpIcons[i] = slot->CreateChild<UI::Image>();
+            m_powerUpIcons[i]->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+            m_powerUpIcons[i]->SetPivot({ 0.0f, 0.0f });
+            m_powerUpIcons[i]->SetAnchoredPosition({ 2.0f, 12.0f });
+            m_powerUpIcons[i]->SetSizeDelta({ 40.0f, 30.0f });
+            m_powerUpIcons[i]->SetTexture(m_powerUpTextures[i]);
+            m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f)); // inactive dim
+
+            m_powerUpTimers[i] = slot->CreateChild<UI::Text>();
+            m_powerUpTimers[i]->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.0f });
+            m_powerUpTimers[i]->SetPivot({ 0.5f, 0.0f });
+            m_powerUpTimers[i]->SetAnchoredPosition({ 0.0f, 0.0f });
+            m_powerUpTimers[i]->SetSizeDelta({ 0.0f, 12.0f });
+            m_powerUpTimers[i]->SetText("--");
+            m_powerUpTimers[i]->SetFontSize(0.75f);
+            m_powerUpTimers[i]->SetColor(Engine::Color::white());
+            m_powerUpTimers[i]->SetAnchor(UI::TextAnchor::MiddleCenter);
+        }
 
         // If we have a transform, use it as player transform by default
         if (transform && !m_playerTransform)
@@ -685,6 +727,41 @@ namespace Game
                 m_bookLoreText->visible = false;
             }
         }
+
+        UpdatePowerUpUI();
+    }
+
+    void PlayerHUD::UpdatePowerUpUI()
+    {
+        if (!gameObject) return;
+
+        auto* controller = gameObject->GetComponent<Game::PlayerPowerUpController>();
+        if (!controller) return;
+
+        const Game::PowerUpType types[4] = {
+            Game::PowerUpType::SpeedBoost,
+            Game::PowerUpType::InfiniteStamina,
+            Game::PowerUpType::Shield,
+            Game::PowerUpType::Invisibility
+        };
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (!m_powerUpIcons[i] || !m_powerUpTimers[i]) continue;
+
+            auto it = controller->activeTimers.find(types[i]);
+            if (it != controller->activeTimers.end() && it->second > 0.0f)
+            {
+                const int secs = (int)std::ceil(it->second);
+                m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 1));
+                m_powerUpTimers[i]->SetText((std::to_string(secs) + "s").c_str());
+            }
+            else
+            {
+                m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f));
+                m_powerUpTimers[i]->SetText("--");
+            }
+        }
     }
 
     void PlayerHUD::OnDestroy()
@@ -695,6 +772,7 @@ namespace Game
             m_canvas = nullptr;
             m_minimap = nullptr;
             m_map = nullptr;
+			m_powerUpPanel = nullptr;
         }
     }
 
@@ -1312,5 +1390,7 @@ namespace Game
             m_minimap->SetPathColor(GetCardColor(m_activePathCardId)); // SET COLOR BASED ON CARD!
         }
     }
+
+
 
 } // namespace Game} // namespace Game

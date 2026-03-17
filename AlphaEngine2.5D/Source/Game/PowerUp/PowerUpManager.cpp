@@ -52,25 +52,23 @@ namespace Game {
     void PowerUpManager::PowerUpDataInit() {
         allPowerUps.clear();
 
-        // Testing: Spawn Room (Player starts at 2.5, 2.5)
+        // Spawn room (keep these fixed)
         allPowerUps.push_back({ 0, {5.5f, 3.5f, 0.0f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
         allPowerUps.push_back({ 1, {6.5f, 3.5f, 0.0f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
         allPowerUps.push_back({ 2, {7.5f, 3.5f, 0.0f}, PowerUpType::Shield,          "Shield",           20.0f });
-        allPowerUps.push_back({ 3, {8.5f, 3.5f, 0.0f}, PowerUpType::Invisibility,    "Invisibility",     8.0f });
+        allPowerUps.push_back({ 3, {8.5f, 3.5f, 0.0f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
 
-        // Sector 1: Example Coordinates
-        allPowerUps.push_back({ 4, {8.5f, 12.5f, 0.0f},  PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
-        allPowerUps.push_back({ 5, {12.5f, 18.5f, 0.0f}, PowerUpType::Invisibility,    "Invisibility",     8.0f });
+        // Hallways only (hardcoded corridor coordinates)
+        allPowerUps.push_back({ 4,  {18.5f,  8.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
+        allPowerUps.push_back({ 5,  {27.5f, 10.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
 
-        // Sector 2: Example Coordinates
-        allPowerUps.push_back({ 6, {35.5f, 22.5f, 0.1f}, PowerUpType::Shield,          "Shield",           20.0f });
-        allPowerUps.push_back({ 7, {40.5f, 28.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 8, {45.5f, 35.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",     8.0f });
+        allPowerUps.push_back({ 6,  {41.5f, 19.5f, 0.1f}, PowerUpType::Shield,          "Shield",           20.0f });
+        allPowerUps.push_back({ 7,  {58.5f, 24.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 8,  {72.5f, 27.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
 
-        // Sector 3: Example Coordinates
-        allPowerUps.push_back({ 9, {65.5f, 40.5f, 0.2f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
-        allPowerUps.push_back({ 10, {75.5f, 48.5f, 0.2f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 11, {85.5f, 55.5f, 0.2f}, PowerUpType::Shield,          "Shield",           20.0f });
+        allPowerUps.push_back({ 9,  {86.5f, 31.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
+        allPowerUps.push_back({ 10, {103.5f, 36.5f, 0.1f}, PowerUpType::SpeedBoost,     "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 11, {116.5f, 39.5f, 0.1f}, PowerUpType::Shield,         "Shield",           20.0f });
     }
 
     void PowerUpManager::Init() {

@@ -36,7 +36,7 @@ namespace Game {
         Engine::SpriteRenderer* spriteRenderer = nullptr;
         Engine::Interactable* interactable = nullptr;
 
-        void Awake() override;
+        void Initialize() override;
         void Update() override;
         void SetupInteraction();
         void OnCollect();
