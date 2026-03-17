@@ -19,14 +19,14 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookObj->transform->localScale = Vector2(0.35f, 0.35f);
 
     // Enemy collider (static body)
-    auto bookRb = bookObj->AddComponent<Rigidbody2D>();
-    bookRb->bodyType = RigidbodyType2D::Static;
+    //auto bookRb = bookObj->AddComponent<Rigidbody2D>();
+    //bookRb->bodyType = RigidbodyType2D::Static;
 
     auto bookPuzzleObj = bookObj->AddComponent<PuzzleObject>();
-    auto bookCollider = bookObj->AddComponent<CircleCollider2D>();
-    bookCollider->radius = 0.5f;
-    bookCollider->minHeight = 0.0f;
-    bookCollider->maxHeight = 2.0f;
+    //auto bookCollider = bookObj->AddComponent<CircleCollider2D>();
+    //bookCollider->radius = 0.5f;
+    //bookCollider->minHeight = 0.0f;
+    //bookCollider->maxHeight = 2.0f;
 
     // Enemy sprite
     auto bookSR = bookObj->AddComponent<SpriteRenderer>();
