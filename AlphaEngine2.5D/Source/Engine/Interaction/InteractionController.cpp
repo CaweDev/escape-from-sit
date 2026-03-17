@@ -21,6 +21,7 @@
 #include "Engine/Math/Mathf.hpp"
 #include "Engine/Core/AssetManager.hpp"
 #include <cfloat>
+#include <climits>
 #include <cmath>
 #include <string>
 
@@ -140,11 +141,39 @@ bool InteractionController::IsActiveCamera() const {
 Interactable* InteractionController::FindTargetAtScreenCenter() {
     Scene* scene = SceneManager::GetActiveScene();
     if (!scene || !Camera::main) return nullptr;
-    
+
     s64 sw = Application::GetWindowWidth();
     s64 sh = Application::GetWindowHeight();
     f32 screenCenterX = static_cast<f32>(sw) / 2.0f;
     f32 screenCenterY = static_cast<f32>(sh) / 2.0f;
+
+    // UI should block world interaction when it is on top of the crosshair point.
+    if (UI::UIManager* uiManager = UI::UIManager::GetInstance()) {
+        f32 centerWorldX = 0.0f;
+        f32 centerWorldY = 0.0f;
+        UI::UIManager::ScreenToWorld(static_cast<s32>(screenCenterX), static_cast<s32>(screenCenterY), centerWorldX, centerWorldY);
+
+        const auto& canvases = uiManager->GetCanvases();
+        UI::UIElement* topHit = nullptr;
+        s32 topSortOrder = INT_MIN;
+
+        for (UI::Canvas* canvas : canvases) {
+            if (!canvas) continue;
+
+            UI::UIElement* hit = canvas->Raycast(centerWorldX, centerWorldY);
+            if (!hit) continue;
+
+            const s32 sortOrder = canvas->GetSortOrder();
+            if (!topHit || sortOrder >= topSortOrder) {
+                topHit = hit;
+                topSortOrder = sortOrder;
+            }
+        }
+
+        if (topHit) {
+            return nullptr;
+        }
+    }
     
     Interactable* closestTarget = nullptr;
     f32 closestDist = FLT_MAX;
