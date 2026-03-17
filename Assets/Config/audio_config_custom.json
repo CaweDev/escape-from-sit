@@ -30,7 +30,7 @@
     "ui_toggle": "Assets/Audio/UI/ui_toggle.wav",
 
     "access_card": "Assets/Audio/AccessCardPickup/Access card.wav",
-    "card_collect": "Assets/Audio/AccessCardPickup/Book Pickup.wav",
+    "card_collect": "Assets/Audio/AccessCardPickup/Access card.wav",
 
     "terminal_hack": "Assets/Audio/CCTV/Access Denied.wav",
     "cctv_disabled": "Assets/Audio/CCTV/CCTV shutdown.wav",
