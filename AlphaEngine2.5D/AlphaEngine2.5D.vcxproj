@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -11,6 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Editor\EditorManager.cpp" />
+    <ClCompile Include="Source\Editor\EditorScene.cpp" />
+    <ClCompile Include="Source\Editor\GameEditor.cpp" />
+    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
@@ -80,6 +90,9 @@
     <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp" />
     <ClCompile Include="Source\Game\Player\Player.cpp" />
+    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
+    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
+    <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
@@ -100,7 +113,12 @@
   <ItemGroup>
     <!-- Engine Math -->
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\Editor\EditorManager.hpp" />
+    <ClInclude Include="Source\Editor\EditorScene.hpp" />
+    <ClInclude Include="Source\Editor\GameEditor.hpp" />
+    <ClInclude Include="Source\Editor\Index.hpp" />
     <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
@@ -185,6 +203,9 @@
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
     <ClInclude Include="Source\Game\Player\Player.hpp" />
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
@@ -207,6 +228,7 @@
     <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Config\audio_config_custom.json" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
@@ -251,7 +273,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(SolutionDir)Extern\imgui;$(SolutionDir)Extern\imgui\backends;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -259,7 +281,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\jsoncpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Source;$(SolutionDir)Extern\AlphaEngine\include;$(SolutionDir)Extern\imgui\backends;$(SolutionDir)Extern\jsoncpp\include;$(SolutionDir)Extern\imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Extern\AlphaEngine\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
@@ -286,7 +308,7 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmodL.dll" "$(OutDir)" /s /r /y /q</
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>

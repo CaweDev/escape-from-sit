@@ -126,6 +126,7 @@ public:
     
     /** Get all spawned doors */
     const std::vector<Door*>& GetDoors() const { return spawnedDoors; }
+    const std::vector<Vector2>& GetSpawnedDoorPositionsPublic() const { return spawnedDoorPositions; }
     
     /** Get all terminal positions from map */
     const std::vector<Vector2>& GetTerminalPositions() const { return terminalPositions; }
@@ -152,6 +153,8 @@ private:
     
     /** Doors spawned from door tiles during LoadFromArray */
     std::vector<Door*> spawnedDoors;
+    /** Positions (center) of spawned doors for quick queries */
+    std::vector<Vector2> spawnedDoorPositions;
 
     /** Terminal positions found in map (tile 11) */
     std::vector<Vector2> terminalPositions;
@@ -171,6 +174,9 @@ private:
 
     /** Spawn a door at the given tile position */
     void SpawnDoor(int x, int y, int doorType);
+
+    /** Get positions of spawned doors (centers) */
+    const std::vector<Vector2>& GetSpawnedDoorPositions() const { return spawnedDoorPositions; }
 };
 
 } // namespace Engine

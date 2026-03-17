@@ -13,6 +13,7 @@ namespace Game {
 
     void MainMenuScene::OnLoad() {
         Input::RegisterCursorUnlock("MainMenuScene");
+        SoundManager::PlayBGM("main_menu", true);
 
         // Seed random
         srand(static_cast<unsigned>(time(nullptr)));
@@ -56,16 +57,32 @@ namespace Game {
         enemyShadow = CreateGameObject("EnemyShadow");
         auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
         {
-            // The rows, cols, and "Rolling" animation are now loaded from Assets/ame.png.meta
-            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/ame.png");
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/guard.png");
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
-            shadowSprite->Play("Rolling");
+            shadowSprite->Play("Patrol");
+            shadowSprite->SetSpeed(0.5f);
         }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
-        enemyShadow->transform->position = Vector3(54.0f, 1.5f, 0.f);  // X=ahead, Y=center of corridor, Z=ground
-        enemyShadow->transform->localScale = Vector2(1.0f, 1.0f);
+        enemyShadow->transform->position = Vector3(54.0f, 1.5f, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
+        enemyShadow->transform->localScale = Vector2(0.75f, 0.75f);
+
+        // ========== Enemy Eyes Setup ==========
+		
+        enemyEyes = CreateGameObject("EnemyEyes");
+        auto eyesSprite = enemyEyes->AddComponent<SpriteSheetRenderer>();
+        {
+            SpriteSheet* eyesSheet = AssetManager::GetSpriteSheet("Assets/guard_eyes_overlay.png");
+            eyesSprite->SetSpriteSheet(eyesSheet);
+            eyesSprite->SetIgnoreFog(true);
+            eyesSprite->Play("Patrol");
+            eyesSprite->SetSpeed(0.5f);
+        }
+        eyesSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
+        eyesSprite->billboard = true;
+        enemyEyes->transform->position = Vector3(54.0f, 1.5f, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
+        enemyEyes->transform->localScale = Vector2(0.75f, 0.75f);
 
         // Initialize enemy timing
         enemyTimer = 0.0f;
@@ -268,7 +285,7 @@ namespace Game {
         if (enemyX < 0.0f) enemyX = 0.0f;
         if (enemyX > static_cast<float>(CORRIDOR_LENGTH)) enemyX = static_cast<float>(CORRIDOR_LENGTH);
         
-        enemyShadow->transform->position = Vector3(enemyX, 1.5f, 0.0f);
+        enemyShadow->transform->position = Vector3(enemyX, 1.5f, enemyHeight);
 
         // Get mouse position relative to screen center
         s32 mouseX, mouseY;
@@ -285,6 +302,8 @@ namespace Game {
         float distY = std::abs(mouseY - centerY) / centerY;
         float distFromCenter = std::sqrt(distX * distX + distY * distY);
         
+ 
+
         // Normalize to 0-1 range (closer to center = higher value)
         float centerProximity = 1.0f - Mathf::Clamp(distFromCenter, 0.0f, 1.0f);
         
@@ -296,14 +315,24 @@ namespace Game {
         if (centerProximity > threshold && crosshairImage->visible) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
             targetAlpha += t * 0.7f;  // Max 100% opacity
+			SoundManager::UpdateGuardProximityLoop((1 - targetAlpha) * SoundManager::GetGuardLoopConfig().farDistance); // Invert target alpha to get distance (more visible = closer distance)
         }
+        else 
+        {
+			SoundManager::UpdateGuardProximityLoop(-1.f); // Force silence when not visible
 
+        }
         // Smooth alpha transition
         enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * 5.0f);
 
         // Apply dark silhouette effect (darkened sprite with alpha)
         float darkness = 0.1f;  // Very dark silhouette
         shadowSprite->SetColor(Color(darkness, darkness, darkness, enemyAlpha));
+
+        // Makes sure enemyEyes follow the shadow position
+        if (enemyEyes) {
+            enemyEyes->transform->position = enemyShadow->transform->position;
+        }
     }
 
     void MainMenuScene::SelectMenuItem(int index) {
@@ -316,6 +345,10 @@ namespace Game {
 
     void MainMenuScene::OnUnload() {
         Input::UnregisterCursorUnlock("MainMenuScene");
+
+       
+        SoundManager::UpdateGuardProximityLoop(-1.0f);  // Force silence the guard proximity loop when leaving the main menu
+
         if (menuCanvas) {
             UIManager::GetInstance()->DestroyCanvas(menuCanvas);
             menuCanvas = nullptr;
@@ -323,10 +356,13 @@ namespace Game {
         titleText = nullptr;
         crosshairImage = nullptr;
         enemyShadow = nullptr;
+        enemyEyes = nullptr;
 
         menuItems.clear();
         menuItemTexts.clear();
         menuItemFontSizes.clear();
+
+       
     }
 
     void MainMenuScene::OnUpdate() {
@@ -372,10 +408,12 @@ namespace Game {
             // Keyboard navigation
             if (Input::GetKeyDown(KeyCode::UpArrow) || Input::GetKeyDown(KeyCode::W)) {
                 selectedIndex = (selectedIndex - 1 + static_cast<int>(menuItems.size())) % static_cast<int>(menuItems.size());
+                SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
             if (Input::GetKeyDown(KeyCode::DownArrow) || Input::GetKeyDown(KeyCode::S)) {
                 selectedIndex = (selectedIndex + 1) % static_cast<int>(menuItems.size());
+                SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
             if (Input::GetKeyDown(KeyCode::Return) || Input::GetKeyDown(KeyCode::Space)) {
@@ -400,6 +438,7 @@ namespace Game {
                 hoveredIndex = newHovered;
                 if (hoveredIndex >= 0) {
                     selectedIndex = hoveredIndex;
+                    SoundManager::PlaySFX("ui_hover", 0.7f);
                 }
                 UpdateMenuVisuals();
             }
@@ -441,11 +480,13 @@ namespace Game {
     }
 
     void MainMenuScene::OnPlayClicked() {
+        SoundManager::PlaySFX("ui_click");
         std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
     }
 
     void MainMenuScene::OnControlsClicked() {
+        SoundManager::PlaySFX("ui_click");
         if (controlsMenu)
         {
             controlsMenu->Show();
@@ -453,11 +494,13 @@ namespace Game {
     }
 
     void MainMenuScene::OnCreditsClicked() {
+        SoundManager::PlaySFX("ui_click");
         std::cout << "Credits clicked - Loading credit scene..." << std::endl;
         SceneManager::LoadWithFade("Credits");
     }
 
     void MainMenuScene::OnQuitClicked() {
+        SoundManager::PlaySFX("ui_click");
         DialogService::ShowConfirmation(
             "Are you sure you want to quit?",
             "Quit", "Cancel",

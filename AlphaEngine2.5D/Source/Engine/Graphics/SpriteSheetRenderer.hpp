@@ -90,6 +90,12 @@ public:
     /** @brief Get the current frame index within the clip */
     int GetFrame() const { return currentFrame; }
 
+    /** @brief Set animation speed multiplier */
+    void SetSpeed(float speed) { playbackSpeed = speed; }
+
+    /** @brief Get animation speed multiplier */
+    float GetSpeed() const { return playbackSpeed; }
+
     /** Render the sprite (called by renderer system) */
     void Render() override;
 
@@ -103,6 +109,7 @@ private:
     const AnimationClip* currentClip = nullptr;
     int currentFrame = 0;
     float elapsedTime = 0.0f;
+    float playbackSpeed = 1.0f;
     bool playing = false;
 
     /** Build a 1x1 quad mesh with UVs sized to one cell of the spritesheet */

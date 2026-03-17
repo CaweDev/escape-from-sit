@@ -3,6 +3,8 @@
 #include <algorithm>
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
+// HUD notification
+#include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 namespace Game
 {
     void NPC::Initialize()
@@ -14,6 +16,9 @@ namespace Game
         repathTimer = 0.0f;
         path.clear();
         pathIndex = 0;
+        followTimer = 0.0f;
+        pulseTimer = 0.0f;
+        headacheNotified = false;
     }
 
     void NPC::Update()
@@ -35,9 +40,12 @@ namespace Game
     {
         if (PlayerInRange() && playerTf)
         {
+            // NPC is actively following / annoying the player
             activeTimer = blockTime;
 
-          
+            // accumulate follow time for headache effect
+            followTimer += dt;
+
             repathTimer -= dt;
             if (path.empty() || pathIndex >= (int)path.size() || repathTimer <= 0.0f)
             {
@@ -48,7 +56,6 @@ namespace Game
                 int gx = nx + (px > nx ? 1 : (px < nx ? -1 : 0));
                 int gy = ny + (py > ny ? 1 : (py < ny ? -1 : 0));
 
-             
                 if (tileMap->IsWalkable((float)gx + 0.5f, (float)gy + 0.5f))
                     BuildPathBFS_ToGoal(gx, gy);
                 else
@@ -56,18 +63,57 @@ namespace Game
 
                 repathTimer = 0.25f; 
             }
+
+            if (activeTimer > 0.0f)
+            {
+                activeTimer -= dt;
+                FollowPath(dt);
+            }
+
+            // Pounding / headache effect: start after threshold and pulse periodically
+            if (followTimer >= headacheThreshold && camShake)
+            {
+                pulseTimer -= dt;
+                if (pulseTimer <= 0.0f)
+                {
+                    pulseTimer = pulseInterval;
+
+                    // intensity scales with time beyond threshold, clamped
+                    float over = followTimer - headacheThreshold;
+                    float t = std::fmin(1.0f, over / 10.0f); // scale over 10s to full
+                    float intensity = 0.05f + t * headacheIntensityMax; // baseline small + scaled
+
+                    // short, pronounced pulse (throbbing) to simulate pounding headache
+                    camShake->Pulse(0.12f, intensity);
+
+                    // HUD feedback once when pounding begins (player HUD may be null in tests)
+                    PlayerHUD* hud = nullptr;
+                    if (playerTf && playerTf->gameObject)
+                        hud = playerTf->gameObject->GetComponent<PlayerHUD>();
+                    if (hud && !headacheNotified) {
+                        hud->ShowHackStatus("You feel a pounding headache...", 3.0f);
+                        headacheNotified = true;
+                    }
+                }
+            }
+            // Previously played one-shot SFX here. Sound is now managed by the scene
+            // via a distance-loop so it will stop when player leaves range.
+            return;
         }
 
-        if (activeTimer > 0.0f)
+        // Out of range: decay follow timer and resume normal patrol behavior
+        followTimer -= dt * 2.0f; // faster decay when not following
+        if (followTimer < 0.0f) followTimer = 0.0f;
+        pulseTimer = 0.0f;
+        headacheNotified = false;
+
+        repathTimer -= dt;
+        if (path.empty() || pathIndex >= (int)path.size() || repathTimer <= 0.0f)
         {
-            activeTimer -= dt;
-            FollowPath(dt);
+            RequestGoalInZone_Random();
+            repathTimer = patrolRepathTime;
         }
-        else
-        {
-            path.clear();
-            pathIndex = 0;
-        }
+        FollowPath(dt);
     }
 
     void NPC::UpdateCleaner(float dt)
@@ -148,6 +194,8 @@ namespace Game
                 path.clear();
                 pathIndex = 0;
                 if (m_rb) m_rb->velocity = Engine::Vector2(0, 0);
+                // Play push SFX
+                Engine::SoundManager::PlaySFX("push");
                 return;
             }
 

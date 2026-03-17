@@ -88,6 +88,7 @@ namespace Game
                 Engine::Input::GetKeyDown(Engine::KeyCode::UpArrow))
             {
                 m_selectedIndex = (m_selectedIndex - 1 + itemCount) % itemCount;
+                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
 
@@ -95,6 +96,7 @@ namespace Game
                 Engine::Input::GetKeyDown(Engine::KeyCode::DownArrow))
             {
                 m_selectedIndex = (m_selectedIndex + 1) % itemCount;
+                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
                 UpdateMenuVisuals();
             }
 
@@ -130,6 +132,7 @@ namespace Game
                 if (m_hoveredIndex >= 0)
                 {
                     m_selectedIndex = m_hoveredIndex;
+                    Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
                 }
                 UpdateMenuVisuals();
             }
@@ -160,6 +163,7 @@ namespace Game
         // Ensure pause is always cleaned up when the scene unloads
         if (m_isPaused)
         {
+            Engine::Input::UnregisterCursorUnlock("PauseMenu");
             Engine::Application::UnregisterPause("PauseMenu");
             m_isPaused = false;
         }
@@ -198,6 +202,7 @@ namespace Game
         // Unlock cursor so the player can click buttons
         Engine::Input::RegisterCursorUnlock("PauseMenu");
 
+        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
         UpdateMenuVisuals();
     }
 
@@ -214,6 +219,7 @@ namespace Game
 
         // Re-lock cursor for FPS controls
         Engine::Input::UnregisterCursorUnlock("PauseMenu");
+        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
     }
 
     void PauseMenu::Toggle()
@@ -399,6 +405,7 @@ namespace Game
 
         if (m_items[index].button && m_items[index].button->onClick)
         {
+            Engine::SoundManager::PlaySFX("ui_click");
             m_items[index].button->onClick();
         }
     }
@@ -419,7 +426,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
-                Engine::Input::UnregisterCursorUnlock("PauseMenu");
+                //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("FPS");
             }
         );
@@ -432,6 +439,7 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
+                //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
             }
         );

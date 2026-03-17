@@ -81,21 +81,21 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                 // Store terminal position (center of tile)
                 terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace terminal marker with floor
-                tiles[index] = TileType::Empty;
+                // tiles[index] = TileType::Empty;
                 printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
             }
             else if (IsExitMarker(tileValue)) {
                 // Store exit position (center of tile)
                 exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace exit marker with floor
-                tiles[index] = TileType::Empty;
+                // tiles[index] = TileType::Empty;
                 printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
             }
             else if (IsControlRoomDoorMarker(tileValue)) {
                 // Store control room door position (center of tile)
                 controlRoomDoorPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace marker with floor (door will be spawned by FPSScene)
-                tiles[index] = TileType::Empty;
+                // tiles[index] = TileType::Empty;
                 printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
             }
             else {
@@ -108,7 +108,7 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                         cardId
                     ));
                     // Replace marker with floor (card will be spawned by FPSScene)
-                    tiles[index] = TileType::Empty;
+                    // tiles[index] = TileType::Empty;
                     const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
                     printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);
                 }
@@ -147,6 +147,15 @@ void TileMap::SpawnDoors() {
 				// Replace door tile with empty (door handles itself)
 				tiles[index] = TileType::Empty;
 			}
+		}
+	}
+
+	// build spawnedDoorPositions cache
+	spawnedDoorPositions.clear();
+	for (Door* d : spawnedDoors) {
+		if (!d) continue;
+		if (d->gameObject) {
+			spawnedDoorPositions.push_back(Vector2(static_cast<f32>(d->tileX) + 0.5f, static_cast<f32>(d->tileY) + 0.5f));
 		}
 	}
 

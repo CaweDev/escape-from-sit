@@ -33,6 +33,39 @@ LevelEditor::~LevelEditor() {
 }
 
 void LevelEditor::Initialize(Scene* scn, TileMap* map, Camera* cam, Transform* playerTf) {
+    // Re-initialize safety for scene reloads (FPS can be loaded multiple times)
+    if (isActive) {
+        Input::UnregisterCursorUnlock("LevelEditor");
+        Application::UnregisterPause("LevelEditor");
+        isActive = false;
+    }
+
+    if (tileMesh) {
+        AEGfxMeshFree(tileMesh);
+        tileMesh = nullptr;
+    }
+
+    if (editorCanvas && UI::UIManager::GetInstance()) {
+        UI::UIManager::GetInstance()->DestroyCanvas(editorCanvas);
+        editorCanvas = nullptr;
+        toolPanel = nullptr;
+        mapViewPanel = nullptr;
+        statusText = nullptr;
+        helpText = nullptr;
+        wallButton = nullptr;
+        doorButton = nullptr;
+        terminalButton = nullptr;
+        exitButton = nullptr;
+        controlRoomButton = nullptr;
+        greenCardButton = nullptr;
+        purpleCardButton = nullptr;
+        redCardButton = nullptr;
+        yellowCardButton = nullptr;
+        eraseButton = nullptr;
+        saveButton = nullptr;
+        closeButton = nullptr;
+    }
+
     this->scene = scn;
     this->tileMap = map;
     this->camera = cam;

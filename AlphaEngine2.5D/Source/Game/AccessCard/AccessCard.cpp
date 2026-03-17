@@ -9,6 +9,7 @@
 #include "Engine/Core/Time.hpp"
 #include "Game/Player/Player.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -38,16 +39,24 @@ void AccessCard::Update() {
     
     // Gentle rotation
     gameObject->transform->rotation += Engine::Time::deltaTime * 30.0f;
+
+    // Update spawn safe timer
+    if (spawnSafeTimer < spawnSafeDelay) spawnSafeTimer += Engine::Time::deltaTime;
 }
 
 void AccessCard::SetupInteraction() {
     if (!interactable) return;
-    
+    // set default text and distance
     interactable->actionText = ("Collect " + std::string(GetColorName()) + " Access Card").c_str();
     interactable->maxDistance = 2.5f;
-    
-    // Set interaction callback
+
+    // Set interaction callback with spawn-safety guard
     interactable->onInteract = [this]() {
+        // ignore interactions during short spawn-safe period to avoid instant pickup
+        if (spawnSafeTimer < spawnSafeDelay) {
+            std::cout << "[ACCESS CARD] Interaction ignored: spawn safe timer (" << spawnSafeTimer << ")\n";
+            return;
+        }
         this->OnCollect();
     };
 }
@@ -68,6 +77,8 @@ void AccessCard::OnCollect() {
     // Hide the card instead of destroying it (like books do)
     // This allows it to respawn when the scene reloads
     gameObject->active = false;
+    // Play collect SFX
+    Engine::SoundManager::PlaySFX("card_collect");
 }
 
 const char* AccessCard::GetColorName() const {

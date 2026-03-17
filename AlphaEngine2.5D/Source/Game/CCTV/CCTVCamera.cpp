@@ -1,8 +1,10 @@
 #include "CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "Game/Player/Player.hpp"
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <cmath>
 #include  "Engine/Core/GameObject.hpp"
 
@@ -205,7 +207,7 @@ namespace Game {
         bool inRange = (dist <= maxRange);
         bool inDetectRange = (dist <= detectRadius);
         bool inFov = inRange && InFov(dx, dy);
-        bool los = inFov && HasLineOfSighttoPlayer();
+        bool los = Player::isInvisible ? false : (inFov && HasLineOfSighttoPlayer());
 
         bool nowSeeing = (inDetectRange && inFov && los);
 
@@ -219,6 +221,8 @@ namespace Game {
             if (hud) {
                 hud->ShowCCTVWarning(true);
             }
+            // Play CCTV detected SFX
+            Engine::SoundManager::PlaySFX("cctv_alert");
         }
 
         isSeeingPlayer = nowSeeing;

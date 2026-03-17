@@ -70,11 +70,15 @@ namespace Game {
 
         // Enemy sighting
         GameObject* enemyShadow = nullptr;
+        float enemyShadowSpriteSpeed = 2.f;
+        GameObject* enemyEyes = nullptr;
+        float enemyEyesSpriteSpeed = 2.f;
         float enemyTimer = 0.0f;
         float nextEnemyTime = 0.0f;
         bool enemyVisible = false;
         float enemyVisibleDuration = 0.0f;
         float enemyAlpha = 0.0f;
+        float enemyHeight = 0.2f;
 
         static constexpr int CORRIDOR_LENGTH = 100;
         static constexpr int CORRIDOR_HEIGHT = 3;

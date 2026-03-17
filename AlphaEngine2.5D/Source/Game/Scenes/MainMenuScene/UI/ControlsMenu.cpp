@@ -56,6 +56,9 @@ namespace Game
         if (isHovering != m_isHovered)
         {
             m_isHovered = isHovering;
+            if (m_isHovered) {
+                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
+            }
             UpdateButtonVisuals();
         }
 
@@ -92,6 +95,7 @@ namespace Game
         m_isVisible = true;
 
         if (m_overlay) m_overlay->visible = true;
+        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
     }
 
     void ControlsMenu::Hide()
@@ -100,6 +104,7 @@ namespace Game
         m_isVisible = false;
 
         if (m_overlay) m_overlay->visible = false;
+        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
     }
 
     void ControlsMenu::Toggle()
@@ -196,6 +201,7 @@ namespace Game
 
     void ControlsMenu::OnBackClicked()
     {
+        Engine::SoundManager::PlaySFX("ui_click");
         Hide();
     }
 }

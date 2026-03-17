@@ -1,0 +1,351 @@
+/**
+ * @file EditorScene.cpp
+ * @brief EditorScene implementation
+ */
+#include "imgui.h"
+#include "EditorScene.hpp"
+
+#include "Engine/TileMap/TileMap.hpp"
+#include "Engine/Graphics/TileMapRenderer.hpp"
+#include "Engine/Graphics/Camera.hpp"
+#include "Engine/Physics/TileMapCollider2D.hpp"
+#include "Engine/Physics/BoxCollider2D.hpp"
+#include "Engine/Core/AssetManager.hpp"
+#include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/DoorRenderer.hpp"
+#include "Engine/TileMap/Door.hpp"
+
+// Required for free camera input polling
+#include "Engine/Input/Input.hpp"
+#include "Engine/Input/KeyCode.hpp"
+#include "Engine/Core/Time.hpp"
+
+#include "Editor/GameEditor.hpp"
+
+#include <fstream>
+#include <cmath>
+#include <iostream>
+
+namespace Game
+{
+    using namespace Engine;
+
+    EditorScene::EditorScene() : Scene("EditorScene"), editorCamera(nullptr), cameraTf(nullptr), mapWidth(0), mapHeight(0) {}
+
+    int EditorScene::GetZoneId(int tx, int ty) const
+    {
+        for (auto const &z : zones)
+        {
+            if (tx >= z.minX && tx <= z.maxX &&
+                ty >= z.minY && ty <= z.maxY)
+            {
+                return z.id;
+            }
+        }
+        return -1;
+    }
+
+    void EditorScene::OnLoad()
+    {
+        std::vector<std::string> mapRows;
+        {
+            std::ifstream file("Assets/tmpMap.txt");
+            if (!file.is_open())
+            {
+                file.clear();
+                file.open("Assets/map.txt");
+            }
+
+            if (!file.is_open())
+                return;
+
+            std::string line;
+            while (std::getline(file, line))
+            {
+                if (!line.empty() && line.back() == '\r')
+                    line.pop_back();
+                if (!line.empty())
+                    mapRows.push_back(line);
+            }
+            file.close();
+            if (mapRows.empty())
+                return;
+        }
+
+        mapHeight = (int)mapRows.size();
+        mapWidth = (int)mapRows[0].size();
+
+        zones.clear();
+        int midX = mapWidth / 2;
+        int midY = mapHeight / 2;
+
+        zones.push_back({1, 0, midX - 1, 0, midY - 1});
+        zones.push_back({2, 0, midX - 1, midY, mapHeight - 1});
+        zones.push_back({3, midX, mapWidth - 1, midY, mapHeight - 1});
+        zones.push_back({4, midX, mapWidth - 1, 0, midY - 1});
+
+        std::vector<int> worldMap(mapWidth * mapHeight, 0);
+        for (int y = 0; y < mapHeight; ++y)
+        {
+            for (int x = 0; x < mapWidth; ++x)
+            {
+                char c = mapRows[y][x];
+                int tileValue = 0;
+
+                if (c == '0')
+                    tileValue = 0;
+                else if (c == '1')
+                    tileValue = 1;
+                else if (c == 'D')
+                    tileValue = 10;
+                else if (c == 'T')
+                    tileValue = 11;
+                else if (c == 'E')
+                    tileValue = 12;
+                else if (c == 'C')
+                    tileValue = 13;
+                else if (c == 'K')
+                    tileValue = 20;
+                else if (c == 'F')
+                    tileValue = 15;
+                else if (c == 'G')
+                    tileValue = 16;
+                else if (c == 'H')
+                    tileValue = 17;
+                else if (c == 'J')
+                    tileValue = 18;
+                else
+                    tileValue = c - '0';
+
+                worldMap[y * mapWidth + x] = tileValue;
+            }
+        }
+
+        auto world = CreateGameObject("World");
+        auto map = world->AddComponent<TileMap>();
+        map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);
+
+        auto renderer = world->AddComponent<TileMapRenderer>();
+        renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
+        renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
+        renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
+        renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+
+        renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
+        renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
+        renderer->SetWallSprite(AssetManager::GetSprite("Assets/Tilemap/Concrete_01_White_1.png"));
+        renderer->SetDoorSprite(AssetManager::GetSprite("Assets/Tilemap/school_sliding_door.png"));
+
+        auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
+        tileMapCollider->minHeight = 0.0f;
+        tileMapCollider->maxHeight = 3.0f;
+
+        auto camObj = CreateGameObject("EditorCamera");
+        editorCamera = camObj->AddComponent<Camera>();
+
+        editorCamera->backgroundColor = Color(0, 0, 0, 1);
+        editorCamera->fogEnabled = true;
+        editorCamera->fogDistance = 2.f;
+        editorCamera->fogMinVisibility = -0.1f;
+        editorCamera->fogMaxVisibility = 0.6f;
+
+        cameraTf = camObj->transform;
+
+        cameraTf->position = Vector3(2.5f, 2.5f, 0.5f);
+        cameraTf->rotation = 0.0f;
+
+        SpawnExistingDoors(map, renderer);
+        SpawnExistingTerminals(map);
+        SpawnExistingCards(map);
+        SpawnExistingCCTVs(map);
+
+        AEEditor::GameEditor::Initialize(this, map);
+    }
+
+    void EditorScene::OnUpdate()
+    {
+        {
+            if (!cameraTf)
+                return;
+
+            // only update if 3d
+            if (!AEEditor::GameEditor::Is3DMode())
+                return;
+
+            float moveSpeed = 4.0f;
+            float dt = Engine::Time::deltaTime;
+
+            if (Engine::Input::GetKey(Engine::KeyCode::LeftShift))
+            {
+                moveSpeed *= 2.5f;
+            }
+
+            static bool isDraggingCamera = false;
+            static ImVec2 lockedCursorPos;
+
+            if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+            {
+                isDraggingCamera = true;
+                lockedCursorPos = ImGui::GetMousePos();
+            }
+            else if (ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+            {
+                isDraggingCamera = false;
+                ImGui::GetIO().WantSetMousePos = true;
+                ImGui::GetIO().MousePos = lockedCursorPos;
+            }
+
+            if (isDraggingCamera)
+            {
+                ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+                float mouseDeltaX = ImGui::GetIO().MouseDelta.x;
+                float sensitivity = 0.07f;
+                cameraTf->rotation += mouseDeltaX * sensitivity;
+
+                if (cameraTf->rotation >= 360.0f)
+                    cameraTf->rotation -= 360.0f;
+                if (cameraTf->rotation < 0)
+                    cameraTf->rotation += 360.0f;
+            }
+
+            // 3. Trigonometric Vector Calculation
+            float rot = AEDegToRad(cameraTf->rotation);
+            float fwdX = std::cos(rot);
+            float fwdY = std::sin(rot);
+
+            // -90 degree phase shift for correct A/D strafing alignment
+            float rightX = std::cos(rot - HALF_PI);
+            float rightY = std::sin(rot - HALF_PI);
+
+            // 4. Local Planar Translation
+            if (Engine::Input::GetKey(Engine::KeyCode::W))
+            {
+                cameraTf->position.x += fwdX * moveSpeed * dt;
+                cameraTf->position.y += fwdY * moveSpeed * dt;
+            }
+            if (Engine::Input::GetKey(Engine::KeyCode::S))
+            {
+                cameraTf->position.x -= fwdX * moveSpeed * dt;
+                cameraTf->position.y -= fwdY * moveSpeed * dt;
+            }
+            if (Engine::Input::GetKey(Engine::KeyCode::A))
+            {
+                cameraTf->position.x -= rightX * moveSpeed * dt;
+                cameraTf->position.y -= rightY * moveSpeed * dt;
+            }
+            if (Engine::Input::GetKey(Engine::KeyCode::D))
+            {
+                cameraTf->position.x += rightX * moveSpeed * dt;
+                cameraTf->position.y += rightY * moveSpeed * dt;
+            }
+
+            // 5. Elevation Translation (Z-Axis Vertical Flight)
+            if (Engine::Input::GetKey(Engine::KeyCode::Space))
+                cameraTf->position.z += moveSpeed * dt;
+            if (Engine::Input::GetKey(Engine::KeyCode::LeftControl))
+                cameraTf->position.z -= moveSpeed * dt;
+
+            // Hardware floor/ceiling clamps
+            if (cameraTf->position.z < 0.2f)
+                cameraTf->position.z = 0.2f;
+            if (cameraTf->position.z > 2.8f)
+                cameraTf->position.z = 2.8f;
+        }
+    }
+
+    void EditorScene::OnUnload() {}
+
+    void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
+    {
+        auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
+        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
+        {
+            Vector2 pos = controlRoomDoorPositions[i];
+            int tileX = (int)std::floor(pos.x);
+            int tileY = (int)std::floor(pos.y);
+            int zoneId = GetZoneId(tileX, tileY);
+
+            if (zoneId < 1 || zoneId > 4)
+                continue;
+
+            std::string doorName = "Editor_ControlRoomDoor_Zone" + std::to_string(zoneId);
+            auto doorGO = CreateGameObject(doorName);
+            doorGO->transform->position = Vector3(pos.x, pos.y, 0.0f);
+
+            bool wallNorth = map->IsWall(tileX, tileY + 1);
+            bool wallSouth = map->IsWall(tileX, tileY - 1);
+            // Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+
+            auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
+            doorCollider->minHeight = 0.0f;
+            doorCollider->maxHeight = 2.0f;
+
+            auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
+            doorRenderer->fov = renderer->fov;
+            doorRenderer->sprite = renderer->GetDoorSprite();
+        }
+    }
+
+    void EditorScene::SpawnExistingTerminals(TileMap *map)
+    {
+        Sprite *terminalSprite = AssetManager::GetSprite("Assets/powerup3.png");
+        auto terminalPositions = map->GetTerminalPositions();
+
+        for (size_t i = 0; i < terminalPositions.size(); ++i)
+        {
+            Vector2 pos = terminalPositions[i];
+
+            auto terminalObj = CreateGameObject("Editor_CCTVTerminal_" + std::to_string(i));
+            terminalObj->transform->position = Vector3(pos.x, pos.y, 0.5f);
+            terminalObj->transform->localScale = Vector2(0.5f, 0.5f);
+
+            auto sr = terminalObj->AddComponent<SpriteRenderer>();
+            sr->SetSprite(terminalSprite);
+            sr->billboard = true;
+            sr->sortingOrder = 250;
+            sr->highlightColor = Engine::Color(0.3f, 0.3f, 0.0f, 0.0f);
+        }
+    }
+
+    void EditorScene::SpawnExistingCards(TileMap *map)
+    {
+        auto accessCardPositions = map->GetAccessCardPositions();
+        const char *cardSpritePaths[] = {
+            "Assets/color_green_empty.png",
+            "Assets/color_purple_empty.png",
+            "Assets/color_red_empty.png",
+            "Assets/color_yellow_empty.png"};
+
+        for (size_t i = 0; i < accessCardPositions.size(); ++i)
+        {
+            Vector2 pos = accessCardPositions[i].first;
+            int cardId = accessCardPositions[i].second;
+
+            if (cardId < 0 || cardId > 3)
+                continue;
+
+            auto cardGO = CreateGameObject("Editor_AccessCard_" + std::to_string(i));
+            cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
+            cardGO->transform->localScale = Vector2(0.4f, 0.4f);
+
+            auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
+            sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
+            sr->billboard = true;
+            sr->sortingOrder = 200;
+        }
+    }
+
+    void EditorScene::SpawnExistingCCTVs(TileMap *map)
+    {
+        std::vector<int> zoneGrid(mapWidth * mapHeight, 0);
+        for (int y = 0; y < mapHeight; ++y)
+        {
+            for (int x = 0; x < mapWidth; ++x)
+            {
+                int zid = GetZoneId(x, y);
+                zoneGrid[y * mapWidth + x] = (zid > 0) ? zid : 0;
+            }
+        }
+    }
+
+} // namespace Game

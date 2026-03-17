@@ -5,6 +5,7 @@
 #include "SceneManager.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Helpers/FadeService.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 
 namespace Engine {
 
@@ -17,6 +18,8 @@ bool SceneManager::s_hasPendingScene = false;
 std::string SceneManager::s_loadWithScreenTarget;
 f32 SceneManager::s_loadWithScreenFadeInDuration = 1.f;
 f32 SceneManager::s_loadWithScreenFadeOutDuration = 1.f;
+bool SceneManager::s_hasPendingPostLoadFadeOut = false;
+f32 SceneManager::s_pendingPostLoadFadeOutDuration = 0.0f;
 
 void SceneManager::LoadScene(const std::string& sceneName) {
     auto it = s_sceneRegistry.find(sceneName);
@@ -76,6 +79,8 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
     s_loadWithScreenFadeInDuration = fadeInDuration;
     s_loadWithScreenFadeOutDuration = fadeOutDuration;
 
+    SoundManager::StopBGM(); // stops bgm everytime loading screen appears
+
     UI::FadeService::FadeIn(fadeInDuration, []() {
         LoadScene("Loading");
     });
@@ -119,6 +124,11 @@ void SceneManager::UnloadActiveScene() {
     }
 }
 
+void SceneManager::RequestFadeOutAfterNextSceneLoad(f32 duration) {
+    s_hasPendingPostLoadFadeOut = true;
+    s_pendingPostLoadFadeOutDuration = duration;
+}
+
 void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     
@@ -128,6 +138,11 @@ void SceneManager::LoadSceneInternal(Scene* newScene) {
     
     s_activeScene = newScene;
     s_activeScene->LoadInternal();
+
+    if (s_hasPendingPostLoadFadeOut) {
+        s_hasPendingPostLoadFadeOut = false;
+        UI::FadeService::FadeOut(s_pendingPostLoadFadeOutDuration);
+    }
 }
 
 } // namespace Engine

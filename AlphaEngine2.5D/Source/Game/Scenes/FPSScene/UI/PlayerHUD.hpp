@@ -67,6 +67,13 @@ namespace Game
         UI::Text* m_proximityText = nullptr;
         float m_proximityIntensity = 0.0f;
         
+        // NPC approach indicators (Annoying + Bully)
+        UI::Text* m_annoyingApproachText = nullptr;
+        UI::Text* m_bullyApproachText = nullptr;
+        float m_annoyingApproachTimer = 0.0f;
+        float m_bullyApproachTimer = 0.0f;
+        float m_approachDisplayDuration = 3.0f; // seconds to show approach messages
+        
         // Hack status
         UI::Text* m_hackStatusText = nullptr;
         float m_hackStatusTimer = 0.0f;
@@ -112,9 +119,19 @@ namespace Game
         int m_activePathCardId = -1; // Which card's path is currently shown (-1 = none)
         bool m_pathVisible = false; // Is path currently being rendered
 
+        // Power-up HUD
+        UI::Panel* m_powerUpPanel = nullptr;
+        UI::Image* m_powerUpIcons[4] = { nullptr, nullptr, nullptr, nullptr };
+        UI::Text* m_powerUpTimers[4] = { nullptr, nullptr, nullptr, nullptr };
+        Engine::Texture2D* m_powerUpTextures[4] = { nullptr, nullptr, nullptr, nullptr };
+
+
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
+
+        // NPC approach indicators (Annoying + Bully)
+        void UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist);
 
         /**
          * @brief Called when the component is created
@@ -271,7 +288,7 @@ namespace Game
         // Get color for each access card (for minimap path coloring)
         Engine::Color GetCardColor(int cardId) const;
 
-
+        void UpdatePowerUpUI();
     };
 
 } // namespace Game

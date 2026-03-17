@@ -31,13 +31,23 @@ namespace Game {
 		
 		// Game timer and high score
 		float GetGameTime() const { return gameTime; }
-		void UpdateGameTime(float dt) { gameTime += dt; }
+		void UpdateGameTime(float dt);
 		void ResetGameTime() { gameTime = 0.0f; }
 		
 		float GetHighScore() const { return highScore; }
 		void SetHighScore(float score) { highScore = score; }
 
+
+		// Invulnerability check
+		bool IsInvulnerable() const { return invulnerabilityTimer > 0.0f; }
+
 		bool isSprinting = false;
+
+		// Power-up flags
+		static bool hasSpeedBoost;
+		static bool hasInfiniteStamina;
+		static bool hasShield;
+		static bool isInvisible;
 
 		// Cheat flags (toggled by DebugMenu, only active in FPSScene)
 		static bool cheatInfiniteSpeed;
@@ -54,6 +64,10 @@ namespace Game {
 		
 		float gameTime = 0.0f;
 		float highScore = 999999.0f; // Large number means no record yet
+
+		// shield break invuln
+		float invulnerabilityTimer = 0.0f;
+		const float shieldBreakIFrameDuration = 2.0f; // 2 seconds of safety after shield breaks
 	};
 
 }

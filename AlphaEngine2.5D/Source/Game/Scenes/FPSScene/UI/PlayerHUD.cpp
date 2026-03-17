@@ -9,6 +9,7 @@
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Components/Panel.hpp"
 #include "Engine/UI/Components/Text.hpp"
+#include "Engine/UI/Components/Image.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Core/AssetManager.hpp"
 #include "Engine/Core/GameObject.hpp"
@@ -16,13 +17,65 @@
 #include <iostream>
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.h"
-#include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
+#include "Game/Player/PlayerPowerUpController.h"
 
 namespace Game
 {
+    // HUD panel texture paths and background colors.
+    // These are static so they can later be updated from a config/read-from-file flow.
+    static std::string s_alertPanelTexturePath     = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_alertPanelColor     = Engine::Color(0.05f, 0.05f, 0.05f, 0.88f);
+    static std::string s_minimapPanelTexturePath   = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_minimapPanelColor   = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
+    static std::string s_alertBarBgTexturePath     = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_alertBarBgColor     = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
+    static std::string s_staminaPanelTexturePath   = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_staminaPanelColor   = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
+    static std::string s_scorePanelTexturePath     = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_scorePanelColor     = Engine::Color(0.05f, 0.05f, 0.05f, 0.88f);
+    static std::string s_zoneEntryPanelTexturePath = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_zoneEntryPanelColor = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
+    static std::string s_bookCountPanelTexturePath = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_bookCountPanelColor = Engine::Color(0.05f, 0.05f, 0.05f, 0.88f);
+    static std::string s_bookPopupPanelTexturePath = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_bookPopupPanelColor = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
+    static std::string s_cardPanelTexturePath      = "Assets/UI/UI Kit/Panel/panel-009.png";
+    static Engine::Color s_cardPanelColor      = Engine::Color(0.05f, 0.05f, 0.05f, 0.88f);
+
     PlayerHUD::~PlayerHUD()
     {
         // Canvas and its children are managed by UIManager
+    }
+
+    void PlayerHUD::UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist)
+    {
+        // Bully: stronger warning
+        if (bullyCount > 0 && m_bullyApproachText) {
+            char buf[128];
+            if (nearestBullyDist < 99999.0f) {
+                snprintf(buf, sizeof(buf), "BULLY APPROACHING! %d near, closest: %.1fm", bullyCount, nearestBullyDist);
+            } else {
+                snprintf(buf, sizeof(buf), "BULLY APPROACHING! %d near", bullyCount);
+            }
+            m_bullyApproachText->SetText(buf);
+            m_bullyApproachText->visible = true;
+            m_bullyApproachTimer = m_approachDisplayDuration;
+            Engine::SoundManager::PlaySFX("npc_alert", 0.9f);
+        }
+
+        // Annoying classmates: softer notification
+        if (annoyingCount > 0 && m_annoyingApproachText) {
+            char buf[128];
+            if (nearestAnnoyingDist < 99999.0f) {
+                snprintf(buf, sizeof(buf), "Annoying classmate nearby: %d, closest: %.1fm", annoyingCount, nearestAnnoyingDist);
+            } else {
+                snprintf(buf, sizeof(buf), "Annoying classmate nearby: %d", annoyingCount);
+            }
+            m_annoyingApproachText->SetText(buf);
+            m_annoyingApproachText->visible = true;
+            m_annoyingApproachTimer = m_approachDisplayDuration;
+        }
     }
 
     void PlayerHUD::Awake()
@@ -34,6 +87,24 @@ namespace Game
         m_canvas->SetSortOrder(100);
 
         // Create minimap in bottom-left corner
+        Engine::Texture2D* minimapPanelTexture = Engine::AssetManager::GetTexture(s_minimapPanelTexturePath.c_str());
+        auto* minimapPanel = m_canvas->CreateChild<UI::Panel>();
+        minimapPanel->name = "MinimapPanel";
+        minimapPanel->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+        minimapPanel->SetPivot({ 0.0f, 0.0f });
+        minimapPanel->SetAnchoredPosition({ m_minimapMargin - 4.0f, m_minimapMargin - 4.0f });
+        minimapPanel->SetSizeDelta({ m_minimapWidth + 8.0f, m_minimapHeight + 8.0f });
+        minimapPanel->SetBackgroundColor(s_minimapPanelColor);
+        if (minimapPanelTexture)
+        {
+            minimapPanel->SetBackgroundSprite(minimapPanelTexture);
+            if (auto* bg = minimapPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
+
         m_minimap = m_canvas->CreateChild<UI::Minimap>();
         m_minimap->name = "Minimap";
         m_minimap->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
@@ -92,13 +163,24 @@ namespace Game
         //m_map->SetTexture(Engine::AssetManager::GetTexture("Assets/border.png"));
 
         // Recommendation 2: Create Alert Level UI (top-center)
+        Engine::Texture2D* alertPanelTexture = Engine::AssetManager::GetTexture(s_alertPanelTexturePath.c_str());
         m_alertPanel = m_canvas->CreateChild<UI::Panel>();
         m_alertPanel->name = "AlertPanel";
         m_alertPanel->SetAnchors({ 0.5f, 1.0f }, { 0.5f, 1.0f });
         m_alertPanel->SetPivot({ 0.5f, 1.0f });
         m_alertPanel->SetAnchoredPosition({ 0.0f, -20.0f });
         m_alertPanel->SetSizeDelta({ 420.0f, 100.0f });
-        m_alertPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+        m_alertPanel->SetBackgroundColor(s_alertPanelColor);
+        // Alert panel texture (editable via s_alertPanelTexturePath)
+        if (alertPanelTexture)
+        {
+            m_alertPanel->SetBackgroundSprite(alertPanelTexture);
+            if (auto* bg = m_alertPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
         // Alert text (main status)
         m_alertText = m_alertPanel->CreateChild<UI::Text>();
@@ -106,9 +188,9 @@ namespace Game
         m_alertText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
         m_alertText->SetPivot({ 0.5f, 1.0f });
         m_alertText->SetAnchoredPosition({ 0.0f, -5.0f });
-        m_alertText->SetSizeDelta({ 0.0f, 25.0f });
+        m_alertText->SetSizeDelta({ -20.0f, 25.0f });
         m_alertText->SetText("SECURITY ALERT");
-        m_alertText->SetFontSize(1.6f);
+        m_alertText->SetFontSize(1.35f);
         m_alertText->SetColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f));
         m_alertText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
@@ -118,20 +200,31 @@ namespace Game
         m_zoneInfoText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
         m_zoneInfoText->SetPivot({ 0.5f, 1.0f });
         m_zoneInfoText->SetAnchoredPosition({ 0.0f, -32.0f });
-        m_zoneInfoText->SetSizeDelta({ 0.0f, 18.0f });
+        m_zoneInfoText->SetSizeDelta({ -20.0f, 18.0f });
         m_zoneInfoText->SetText("Guards Responding: 1/4");
-        m_zoneInfoText->SetFontSize(1.0f);
+        m_zoneInfoText->SetFontSize(0.9f);
         m_zoneInfoText->SetColor(Engine::Color(0.9f, 0.9f, 0.9f, 1.0f));
         m_zoneInfoText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
         // Alert bar background (at bottom of panel, centered)
+        Engine::Texture2D* alertBarBgTexture = Engine::AssetManager::GetTexture(s_alertBarBgTexturePath.c_str());
         auto* barBg = m_alertPanel->CreateChild<UI::Panel>();
         barBg->name = "AlertBarBg";
         barBg->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
         barBg->SetPivot({ 0.5f, 0.0f });
         barBg->SetAnchoredPosition({ 0.0f, 8.0f });
         barBg->SetSizeDelta({ 380.0f, 24.0f });
-        barBg->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 1.0f));
+        barBg->SetBackgroundColor(s_alertBarBgColor);
+        // Alert bar background texture (editable via s_alertBarBgTexturePath)
+        if (alertBarBgTexture)
+        {
+            barBg->SetBackgroundSprite(alertBarBgTexture);
+            if (auto* bg = barBg->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
         // Alert bar fill � point-anchored at bottom-left of barBg, sized explicitly each frame
         m_alertBar = barBg->CreateChild<UI::Panel>();
@@ -164,14 +257,37 @@ namespace Game
         m_cctvWarningText->SetColor(Engine::Color(1.0f, 0.0f, 0.0f, 1.0f));
         m_cctvWarningText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
-        // Stamina Bar (bottom-left corner, above minimap)
-        m_staminaPanel = m_canvas->CreateChild<UI::Panel>();
+        // Stamina Bar (aligned to minimap and placed above it)
+        Engine::Texture2D* staminaPanelTexture = Engine::AssetManager::GetTexture(s_staminaPanelTexturePath.c_str());
+        if (m_minimap)
+        {
+            // Parent to minimap so horizontal alignment always matches minimap exactly.
+            m_staminaPanel = m_minimap->CreateChild<UI::Panel>();
+            m_staminaPanel->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+            m_staminaPanel->SetPivot({ 0.0f, 0.0f });
+            m_staminaPanel->SetAnchoredPosition({ 0.0f, 10.0f });
+        }
+        else
+        {
+            // Fallback (should rarely happen): keep old canvas-relative placement.
+            m_staminaPanel = m_canvas->CreateChild<UI::Panel>();
+            m_staminaPanel->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+            m_staminaPanel->SetPivot({ 0.0f, 0.0f });
+            m_staminaPanel->SetAnchoredPosition({ m_minimapMargin, m_minimapMargin + m_minimapHeight + 10.0f });
+        }
         m_staminaPanel->name = "StaminaPanel";
-        m_staminaPanel->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
-        m_staminaPanel->SetPivot({ 0.0f, 0.0f });
-        m_staminaPanel->SetAnchoredPosition({ m_minimapMargin, m_minimapMargin + m_minimapHeight + 10.0f });
-        m_staminaPanel->SetSizeDelta({ 200.0f, 24.0f });
-        m_staminaPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
+        m_staminaPanel->SetSizeDelta({ m_minimapWidth, 24.0f });
+        m_staminaPanel->SetBackgroundColor(s_staminaPanelColor);
+        // Stamina panel texture (editable via s_staminaPanelTexturePath)
+        if (staminaPanelTexture)
+        {
+            m_staminaPanel->SetBackgroundSprite(staminaPanelTexture);
+            if (auto* bg = m_staminaPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
         // Stamina fill bar � point-anchored at bottom-left of panel.
         // Width and height are set explicitly via sizeDelta each frame.
@@ -179,8 +295,8 @@ namespace Game
         m_staminaBar->name = "StaminaBarFill";
         m_staminaBar->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
         m_staminaBar->SetPivot({ 0.0f, 0.0f });
-        m_staminaBar->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_staminaBar->SetSizeDelta({ 200.0f, 24.0f });
+        m_staminaBar->SetAnchoredPosition({ 4.0f, 4.0f });
+        m_staminaBar->SetSizeDelta({ m_minimapWidth - 8.0f, 16.0f });
         m_staminaBar->SetBackgroundColor(Engine::Color(0.3f, 0.8f, 1.0f, 0.9f));
 
         // Stamina text � overlaid on top of the bar, same bounds as panel
@@ -189,29 +305,40 @@ namespace Game
         m_staminaText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_staminaText->SetPivot({ 0.5f, 0.5f });
         m_staminaText->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_staminaText->SetSizeDelta({ 0.0f, 0.0f });
+        m_staminaText->SetSizeDelta({ -8.0f, -4.0f });
         m_staminaText->SetText("STAMINA 100%");
-        m_staminaText->SetFontSize(0.9f);
+        m_staminaText->SetFontSize(0.78f);
         m_staminaText->SetColor(Engine::Color::white());
         m_staminaText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
         // High Score Display (top-right)
+        Engine::Texture2D* scorePanelTexture = Engine::AssetManager::GetTexture(s_scorePanelTexturePath.c_str());
         m_scorePanel = m_canvas->CreateChild<UI::Panel>();
         m_scorePanel->name = "ScorePanel";
         m_scorePanel->SetAnchors({ 1.0f, 1.0f }, { 1.0f, 1.0f });
         m_scorePanel->SetPivot({ 1.0f, 1.0f });
         m_scorePanel->SetAnchoredPosition({ -20.0f, -20.0f });
         m_scorePanel->SetSizeDelta({ 200.0f, 80.0f });
-        m_scorePanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+        m_scorePanel->SetBackgroundColor(s_scorePanelColor);
+        // Score panel texture (editable via s_scorePanelTexturePath)
+        if (scorePanelTexture)
+        {
+            m_scorePanel->SetBackgroundSprite(scorePanelTexture);
+            if (auto* bg = m_scorePanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
         
         m_highScoreText = m_scorePanel->CreateChild<UI::Text>();
         m_highScoreText->name = "HighScoreText";
         m_highScoreText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
         m_highScoreText->SetPivot({ 0.5f, 1.0f });
-        m_highScoreText->SetAnchoredPosition({ 0.0f, -5.0f });
-        m_highScoreText->SetSizeDelta({ 0.0f, 20.0f });
+        m_highScoreText->SetAnchoredPosition({ 0.0f, -20.0f });
+        m_highScoreText->SetSizeDelta({ -16.0f, 20.0f });
         m_highScoreText->SetText("Best: --:--");
-        m_highScoreText->SetFontSize(0.9f);
+        m_highScoreText->SetFontSize(1.4f);
         m_highScoreText->SetColor(Engine::Color(1.0f, 0.8f, 0.0f, 1.0f)); // Gold
         m_highScoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
@@ -219,10 +346,10 @@ namespace Game
         m_currentTimeText->name = "CurrentTimeText";
         m_currentTimeText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.0f });
         m_currentTimeText->SetPivot({ 0.5f, 0.0f });
-        m_currentTimeText->SetAnchoredPosition({ 0.0f, 5.0f });
-        m_currentTimeText->SetSizeDelta({ 0.0f, 30.0f });
+        m_currentTimeText->SetAnchoredPosition({ 0.0f, 6.0f });
+        m_currentTimeText->SetSizeDelta({ -16.0f, 30.0f });
         m_currentTimeText->SetText("00:00");
-        m_currentTimeText->SetFontSize(1.5f);
+        m_currentTimeText->SetFontSize(1.25f);
         m_currentTimeText->SetColor(Engine::Color::white());
         m_currentTimeText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
@@ -239,6 +366,31 @@ namespace Game
         m_proximityText->SetAnchor(UI::TextAnchor::MiddleCenter);
         m_proximityText->visible = false;
         
+        // NPC Approach indicators (center-bottom, above proximity)
+        m_bullyApproachText = m_canvas->CreateChild<UI::Text>();
+        m_bullyApproachText->name = "BullyApproach";
+        m_bullyApproachText->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_bullyApproachText->SetPivot({ 0.5f, 0.0f });
+        m_bullyApproachText->SetAnchoredPosition({ 0.0f, 140.0f });
+        m_bullyApproachText->SetSizeDelta({ 600.0f, 30.0f });
+        m_bullyApproachText->SetText("");
+        m_bullyApproachText->SetFontSize(1.2f);
+        m_bullyApproachText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Red
+        m_bullyApproachText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_bullyApproachText->visible = false;
+
+        m_annoyingApproachText = m_canvas->CreateChild<UI::Text>();
+        m_annoyingApproachText->name = "AnnoyingApproach";
+        m_annoyingApproachText->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_annoyingApproachText->SetPivot({ 0.5f, 0.0f });
+        m_annoyingApproachText->SetAnchoredPosition({ 0.0f, 120.0f });
+        m_annoyingApproachText->SetSizeDelta({ 600.0f, 26.0f });
+        m_annoyingApproachText->SetText("");
+        m_annoyingApproachText->SetFontSize(1.05f);
+        m_annoyingApproachText->SetColor(Engine::Color(0.6f, 1.0f, 0.6f, 1.0f)); // Greenish
+        m_annoyingApproachText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_annoyingApproachText->visible = false;
+        
         // Hack Status Text (center-top)
         m_hackStatusText = m_canvas->CreateChild<UI::Text>();
         m_hackStatusText->name = "HackStatusText";
@@ -253,13 +405,24 @@ namespace Game
         m_hackStatusText->visible = false;
         
         // Zone Entry Notification (center of screen)
+        Engine::Texture2D* zoneEntryPanelTexture = Engine::AssetManager::GetTexture(s_zoneEntryPanelTexturePath.c_str());
         m_zoneEntryPanel = m_canvas->CreateChild<UI::Panel>();
         m_zoneEntryPanel->name = "ZoneEntryPanel";
         m_zoneEntryPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         m_zoneEntryPanel->SetPivot({ 0.5f, 0.5f });
         m_zoneEntryPanel->SetAnchoredPosition({ 0.0f, 0.0f }); // Dead center of screen
         m_zoneEntryPanel->SetSizeDelta({ 400.0f, 100.0f });
-        m_zoneEntryPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f));
+        m_zoneEntryPanel->SetBackgroundColor(s_zoneEntryPanelColor);
+        // Zone entry panel texture (editable via s_zoneEntryPanelTexturePath)
+        if (zoneEntryPanelTexture)
+        {
+            m_zoneEntryPanel->SetBackgroundSprite(zoneEntryPanelTexture);
+            if (auto* bg = m_zoneEntryPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
         m_zoneEntryPanel->visible = false;
         
         m_zoneEntryText = m_zoneEntryPanel->CreateChild<UI::Text>();
@@ -275,13 +438,24 @@ namespace Game
 
 
         //BookCount text Panel
+        Engine::Texture2D* bookCountPanelTexture = Engine::AssetManager::GetTexture(s_bookCountPanelTexturePath.c_str());
         m_bookCountPanel = m_canvas->CreateChild<UI::Panel>();
         m_bookCountPanel->name = "BookCountPanel";
         m_bookCountPanel->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
         m_bookCountPanel->SetPivot({ 0.0f, 1.0f });
         m_bookCountPanel->SetAnchoredPosition({ 20.0f, -20.0f });
         m_bookCountPanel->SetSizeDelta({ 420.0f, 40.0f });
-        m_bookCountPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+        m_bookCountPanel->SetBackgroundColor(s_bookCountPanelColor);
+        // Book count panel texture (editable via s_bookCountPanelTexturePath)
+        if (bookCountPanelTexture)
+        {
+            m_bookCountPanel->SetBackgroundSprite(bookCountPanelTexture);
+            if (auto* bg = m_bookCountPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
         // BookCount Text
         m_bookCountText = m_bookCountPanel->CreateChild<UI::Text>();
@@ -289,20 +463,31 @@ namespace Game
         m_bookCountText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
         m_bookCountText->SetPivot({ 0.5f, 1.0f });
         m_bookCountText->SetAnchoredPosition({ 0.0f, -5.0f });
-        m_bookCountText->SetSizeDelta({ 0.0f, 25.0f });
+        m_bookCountText->SetSizeDelta({ -20.0f, 25.0f });
         m_bookCountText->SetText("Books Collected: 0/6");
-        m_bookCountText->SetFontSize(1.6f);
+        m_bookCountText->SetFontSize(1.35f);
         m_bookCountText->SetColor(Engine::Color(0.3f, 1.0f, 0.3f, 1.0f));
         m_bookCountText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
         // --- BOOK POPUP PANEL (Background) ---
+        Engine::Texture2D* bookPopupPanelTexture = Engine::AssetManager::GetTexture(s_bookPopupPanelTexturePath.c_str());
         m_bookPopupPanel = m_canvas->CreateChild<UI::Panel>();
         m_bookPopupPanel->name = "BookPopupPanel";
         m_bookPopupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
         m_bookPopupPanel->SetPivot({ 0.5f, 0.5f });
         m_bookPopupPanel->SetAnchoredPosition({ 0.0f, 200.0f });
         m_bookPopupPanel->SetSizeDelta({ 600.0f, 200.0f });
-        m_bookPopupPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.85f));
+        m_bookPopupPanel->SetBackgroundColor(s_bookPopupPanelColor);
+        // Book popup panel texture (editable via s_bookPopupPanelTexturePath)
+        if (bookPopupPanelTexture)
+        {
+            m_bookPopupPanel->SetBackgroundSprite(bookPopupPanelTexture);
+            if (auto* bg = m_bookPopupPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
         m_bookPopupPanel->visible = false; // Hidden by default
 
         // --- BOOK TITLE TEXT (Top) ---
@@ -328,25 +513,77 @@ namespace Game
         m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
         
         // Access Card Display (top-left, below book count)
+        Engine::Texture2D* cardPanelTexture = Engine::AssetManager::GetTexture(s_cardPanelTexturePath.c_str());
         m_cardPanel = m_canvas->CreateChild<UI::Panel>();
         m_cardPanel->name = "CardPanel";
         m_cardPanel->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
         m_cardPanel->SetPivot({ 0.0f, 1.0f });
         m_cardPanel->SetAnchoredPosition({ 20.0f, -70.0f }); // Below book count panel
         m_cardPanel->SetSizeDelta({ 420.0f, 40.0f });
-        m_cardPanel->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.7f));
+        m_cardPanel->SetBackgroundColor(s_cardPanelColor);
+        // Access card panel texture (editable via s_cardPanelTexturePath)
+        if (cardPanelTexture)
+        {
+            m_cardPanel->SetBackgroundSprite(cardPanelTexture);
+            if (auto* bg = m_cardPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
         m_cardText = m_cardPanel->CreateChild<UI::Text>();
         m_cardText->name = "CardText";
         m_cardText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_cardText->SetPivot({ 0.5f, 0.5f });
         m_cardText->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_cardText->SetSizeDelta({ 0.0f, 0.0f });
+        m_cardText->SetSizeDelta({ -20.0f, -4.0f });
         m_cardText->SetText("Access Cards: [ ] [ ] [ ] [ ] (0/4)");
-        m_cardText->SetFontSize(1.2f);
+        m_cardText->SetFontSize(1.05f);
         m_cardText->SetColor(Engine::Color(1.0f, 0.8f, 0.0f, 1.0f)); // Gold color
         m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        // Power Up timer UI
+        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/powerup1.png"); // Speed
+        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/powerup2.png"); // Infinite stamina
+        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/powerup3.png"); // Shield
+        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/powerup4.png"); // Invisibility
+
+        m_powerUpPanel = m_canvas->CreateChild<UI::Panel>();
+        m_powerUpPanel->name = "PowerUpPanel";
+        m_powerUpPanel->SetAnchors({ 1.0f, 1.0f }, { 1.0f, 1.0f });
+        m_powerUpPanel->SetPivot({ 1.0f, 1.0f });
+        m_powerUpPanel->SetAnchoredPosition({ -20.0f, -110.0f });
+        m_powerUpPanel->SetSizeDelta({ 240.0f, 56.0f });
+        m_powerUpPanel->SetBackgroundColor(Engine::Color(0.05f, 0.05f, 0.05f, 0.65f));
+
+        for (int i = 0; i < 4; ++i)
+        {
+            auto* slot = m_powerUpPanel->CreateChild<UI::Panel>();
+            slot->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+            slot->SetPivot({ 0.0f, 0.0f });
+            slot->SetAnchoredPosition({ 8.0f + i * 58.0f, 6.0f });
+            slot->SetSizeDelta({ 52.0f, 44.0f });
+            slot->SetBackgroundColor(Engine::Color(0.12f, 0.12f, 0.12f, 0.9f));
+
+            m_powerUpIcons[i] = slot->CreateChild<UI::Image>();
+            m_powerUpIcons[i]->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
+            m_powerUpIcons[i]->SetPivot({ 0.0f, 0.0f });
+            m_powerUpIcons[i]->SetAnchoredPosition({ 2.0f, 12.0f });
+            m_powerUpIcons[i]->SetSizeDelta({ 40.0f, 30.0f });
+            m_powerUpIcons[i]->SetTexture(m_powerUpTextures[i]);
+            m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f)); // inactive dim
+
+            m_powerUpTimers[i] = slot->CreateChild<UI::Text>();
+            m_powerUpTimers[i]->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.0f });
+            m_powerUpTimers[i]->SetPivot({ 0.5f, 0.0f });
+            m_powerUpTimers[i]->SetAnchoredPosition({ 0.0f, 0.0f });
+            m_powerUpTimers[i]->SetSizeDelta({ 0.0f, 12.0f });
+            m_powerUpTimers[i]->SetText("--");
+            m_powerUpTimers[i]->SetFontSize(0.75f);
+            m_powerUpTimers[i]->SetColor(Engine::Color::white());
+            m_powerUpTimers[i]->SetAnchor(UI::TextAnchor::MiddleCenter);
+        }
 
         // If we have a transform, use it as player transform by default
         if (transform && !m_playerTransform)
@@ -428,18 +665,38 @@ namespace Game
         if (m_proximityText) {
             m_proximityText->visible = (m_proximityIntensity > 0.01f);
         }
+        // Update NPC approach timers
+        if (m_bullyApproachTimer > 0.0f) {
+            m_bullyApproachTimer -= Engine::Time::deltaTime;
+            if (m_bullyApproachTimer <= 0.0f && m_bullyApproachText) {
+                m_bullyApproachText->visible = false;
+            } else if (m_bullyApproachText) {
+                // subtle pulsing alpha for urgency
+                float pulse = 0.6f + 0.4f * std::abs(std::sin(Engine::Time::time * 6.0f));
+                Engine::Color c = m_bullyApproachText->GetColor();
+                c.a = pulse;
+                m_bullyApproachText->SetColor(c);
+            }
+        }
+
+        if (m_annoyingApproachTimer > 0.0f) {
+            m_annoyingApproachTimer -= Engine::Time::deltaTime;
+            if (m_annoyingApproachTimer <= 0.0f && m_annoyingApproachText) {
+                m_annoyingApproachText->visible = false;
+            } else if (m_annoyingApproachText) {
+                // modest pulse
+                float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * 4.0f));
+                Engine::Color c = m_annoyingApproachText->GetColor();
+                c.a = pulse;
+                m_annoyingApproachText->SetColor(c);
+            }
+        }
         //Book Collected
         if (m_bookCountText != nullptr) {
             int collected = PuzzleManager::booksCollected;
             int totalBooks = (int)PuzzleManager::allBooks.size();
             if (totalBooks <= 0) totalBooks = 0; // safety
             std::string bs = std::string("Books Collected: ") + std::to_string(collected) + " / " + std::to_string(totalBooks);
-            if (collected < totalBooks) {
-                int remaining = totalBooks - collected;
-                bs += std::string(" | EXIT LOCKED: ") + std::to_string(remaining) + std::string(" MORE");
-            } else {
-                bs += std::string(" | EXIT UNLOCKED");
-            }
             m_bookCountText->SetText(bs.c_str());
         }
 
@@ -470,6 +727,41 @@ namespace Game
                 m_bookLoreText->visible = false;
             }
         }
+
+        UpdatePowerUpUI();
+    }
+
+    void PlayerHUD::UpdatePowerUpUI()
+    {
+        if (!gameObject) return;
+
+        auto* controller = gameObject->GetComponent<Game::PlayerPowerUpController>();
+        if (!controller) return;
+
+        const Game::PowerUpType types[4] = {
+            Game::PowerUpType::SpeedBoost,
+            Game::PowerUpType::InfiniteStamina,
+            Game::PowerUpType::Shield,
+            Game::PowerUpType::Invisibility
+        };
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (!m_powerUpIcons[i] || !m_powerUpTimers[i]) continue;
+
+            auto it = controller->activeTimers.find(types[i]);
+            if (it != controller->activeTimers.end() && it->second > 0.0f)
+            {
+                const int secs = (int)std::ceil(it->second);
+                m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 1));
+                m_powerUpTimers[i]->SetText((std::to_string(secs) + "s").c_str());
+            }
+            else
+            {
+                m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f));
+                m_powerUpTimers[i]->SetText("--");
+            }
+        }
     }
 
     void PlayerHUD::OnDestroy()
@@ -480,6 +772,7 @@ namespace Game
             m_canvas = nullptr;
             m_minimap = nullptr;
             m_map = nullptr;
+			m_powerUpPanel = nullptr;
         }
     }
 
@@ -562,6 +855,7 @@ namespace Game
         if (m_map)
         {
             m_map->visible = m_mapVisible;
+            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
         }
     }
 
@@ -592,6 +886,7 @@ namespace Game
         if (m_heatmapOverlay)
         {
             m_heatmapOverlay->visible = m_heatmapVisible;
+            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
         }
     }
 
@@ -691,12 +986,14 @@ namespace Game
         if (show) {
             m_cctvWarningPanel->visible = true;
             m_cctvWarningTimer = m_cctvWarningDuration;
+            Engine::SoundManager::PlaySFX("cctv_alert", 0.8f);
         }
         else {
             m_cctvWarningPanel->visible = false;
             m_cctvWarningTimer = 0.0f;
         }
     }
+
     void PlayerHUD::SetZoneGetter(std::function<int(int, int)> fn)
     {
         m_zoneGetter = fn;
@@ -723,10 +1020,10 @@ namespace Game
         if (ratio < 0.0f) ratio = 0.0f;
         if (ratio > 1.0f) ratio = 1.0f;
         
-        // Point anchor at {0,0}: sizeDelta directly sets the absolute width and height.
-        const float panelWidth  = 200.0f;
-        const float panelHeight = 24.0f;
-        m_staminaBar->SetSizeDelta({ panelWidth * ratio, panelHeight });
+        // Keep stamina fill inset so it stays inside panel borders.
+        const float barWidth  = m_minimapWidth - 8.0f;
+        const float barHeight = 16.0f;
+        m_staminaBar->SetSizeDelta({ barWidth * ratio, barHeight });
         
         // Update color based on stamina level
         Engine::Color barColor;
@@ -850,6 +1147,7 @@ namespace Game
         // Show panel with slide-in animation (could be enhanced with smooth animation)
         m_zoneEntryPanel->visible = true;
         m_zoneEntryTimer = m_zoneEntryDuration;
+        Engine::SoundManager::PlaySFX("zone_enter", 0.6f);
         
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
@@ -861,9 +1159,10 @@ namespace Game
         
         m_cardsCollected[cardId] = true;
         m_totalCardsCollected++;
+        Engine::SoundManager::PlaySFX("card_collect");
         
         UpdateCardDisplay();
-        
+
         // Show notification
         const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
         std::string message = std::string("Collected ") + cardNames[cardId] + " Access Card (" + 
@@ -1092,4 +1391,6 @@ namespace Game
         }
     }
 
-} // namespace Game
+
+
+} // namespace Game} // namespace Game

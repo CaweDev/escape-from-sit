@@ -17,6 +17,7 @@ CreditScene::CreditScene() : Scene("CreditScene") {}
 
 void CreditScene::OnLoad() {
     Input::RegisterCursorUnlock("CreditScene");
+    SoundManager::PlayBGM("credits", true);
     m_transitioning = false;
     
     // Canvas setup

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include "Game/Player/PlayerPowerUpController.h"
 
 namespace Game {
 
@@ -40,6 +41,8 @@ namespace Game {
 
         BuildPathBFS_ToGoal((int)worldPos.x, (int)worldPos.y);
         SetState(GuardState::Chase);
+        // Play guard chasing SFX
+        Engine::SoundManager::PlaySFX("guard_chasing");
     }
 
     void SecurityGuard::Update() {
@@ -87,7 +90,13 @@ namespace Game {
 
     void SecurityGuard::SetState(GuardState newState) {
         if (state == newState) return;
+        GuardState old = state;
         state = newState;
+
+        // Play chasing SFX when entering Chase state
+        if (newState == GuardState::Chase && old != GuardState::Chase) {
+            Engine::SoundManager::PlaySFX("guard_chasing");
+        }
     }
 
     const char* SecurityGuard::StateToString(GuardState s) const {
@@ -325,12 +334,25 @@ namespace Game {
     }
 
     bool SecurityGuard::CanSeePlayer() const {
+
+        if (playerTf) {
+            auto powerUpCtrl = playerTf->gameObject->GetComponent<PlayerPowerUpController>();
+            if (powerUpCtrl && powerUpCtrl->HasPowerUp(PowerUpType::Invisibility)) {
+                return false; // Guard immediately fails to see player
+            }
+        }
+
         float dx = playerTf->position.x - gameObject->transform->position.x;
         float dy = playerTf->position.y - gameObject->transform->position.y;
         return (dx * dx + dy * dy) <= detectRadius * detectRadius;
     }
 
     bool SecurityGuard::IsCaught() const {
+
+        if (playerData && playerData->IsInvulnerable()) {
+            return false;
+        }
+
         float dx = playerTf->position.x - gameObject->transform->position.x;
         float dy = playerTf->position.y - gameObject->transform->position.y;
         return (dx * dx + dy * dy) <= catchRadius * catchRadius;

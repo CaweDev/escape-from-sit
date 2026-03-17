@@ -69,21 +69,40 @@ void FPSController::Update() {
 
         f32 speed = moveSpeed;
 
+        if (Player::hasSpeedBoost) {
+            speed += 2.0f;
+        }
+
         if (wantsSprint && isMoving && playerComp && !rigidbody->isCrouching) {
-            if (playerComp->CanSprint()) {
+            if (playerComp->hasInfiniteStamina || playerComp->CanSprint()) {
                 // Can sprint - use sprint speed and drain stamina
                 speed = sprintSpeed;
+
+                if (playerComp->hasSpeedBoost) {
+                    speed += 3.0f;
+                }
+
                 playerComp->isSprinting = true;
-                playerComp->DrainSprint(dt);
+
+                // Only drain stamina if no infinite powerup
+                if (!playerComp->hasInfiniteStamina) {
+                    playerComp->DrainSprint(dt);
+                }
+                if (playerComp->hasInfiniteStamina) {
+                    playerComp->Regen(dt);
+                }
+                Engine::SoundManager::PlaySFX("player_run", 0.7f);
             }
             else if (playerComp->GetStamina() > 0.0f) {
                 // Stamina below threshold but not empty - continue draining to 0
                 speed = moveSpeed; // Use normal speed
+                if (playerComp->hasSpeedBoost) speed += 2.0f; // keep base speed boost
                 playerComp->isSprinting = false;
                 playerComp->DrainSprint(dt);
             }
             else {
                 // Stamina completely empty
+                if (playerComp->hasSpeedBoost) speed += 2.0f;
                 playerComp->isSprinting = false;
             }
         }
@@ -122,6 +141,7 @@ void FPSController::Update() {
         if (spaceDown && jumpCooldown <= 0.0f) {
             rigidbody->Jump(jumpForce);
             jumpCooldown = 0.25f;
+            Engine::SoundManager::PlaySFX("jump");
         }
         prevSpace = spaceNow;
 
@@ -129,10 +149,14 @@ void FPSController::Update() {
         if (Input::GetKeyDown(KeyCode::C) || XboxController::GetButtonDown(XboxButton::B, 0)) {
             rigidbody->ToggleCrouch();
         }
+
+        // Set velocity on rigidbody (physics will handle collision)
+        rigidbody->velocity = worldVelocity;
+        // Trigger walking SFX occasionally when moving
+        if (isMoving) {
+            Engine::SoundManager::PlaySFX("player_walking", 0.4f);
+        }
     }
-   
-    // Set velocity on rigidbody (physics will handle collision)
-    rigidbody->velocity = worldVelocity;
     
 	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
     
