@@ -59,6 +59,8 @@
     "player_run": "Assets/Audio/Player/player run.wav",
     "player_walking": "Assets/Audio/Player/player walking.wav",
     "push": "Assets/Audio/Bully/push.wav",
-    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav"
+    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav",
+
+    "powerup_collect": "Assers/Audio/powerup/powerup collect.wav"
   }
 }
