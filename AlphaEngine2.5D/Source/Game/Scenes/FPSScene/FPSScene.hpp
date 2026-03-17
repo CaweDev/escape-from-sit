@@ -1242,8 +1242,33 @@ namespace Game {
                     }
                 }
                 
+                // NPC proximity: separate Bully vs Annoying
+                float nearestAnnoyingDistance = 999999.0f;
+                int annoyingCountNearby = 0;
+                float nearestBullyDistance = 999999.0f;
+                int bullyCountNearby = 0;
+                const float npcNoticeRadius = 6.0f; // within this range we count them as 'nearby'
+                for (auto* npc : npcs) {
+                    if (!npc || !npc->transform) continue;
+                    Vector2 npcPos(npc->transform->position.x, npc->transform->position.y);
+                    Vector2 playerPos(playerTf->position.x, playerTf->position.y);
+                    float dx = npcPos.x - playerPos.x;
+                    float dy = npcPos.y - playerPos.y;
+                    float distance = std::sqrt(dx * dx + dy * dy);
+
+                    if (npc->type == NPCType::Annoying) {
+                        if (distance < nearestAnnoyingDistance) nearestAnnoyingDistance = distance;
+                        if (distance <= npcNoticeRadius) annoyingCountNearby++;
+                    } else if (npc->type == NPCType::Bully) {
+                        if (distance < nearestBullyDistance) nearestBullyDistance = distance;
+                        if (distance <= npcNoticeRadius) bullyCountNearby++;
+                    }
+                }
+
                 // Update guard proximity warning
                 playerHUD->UpdateGuardProximity(nearestGuardDistance);
+                // Update NPC approach indicators (Annoying + Bully)
+                playerHUD->UpdateNPCApproach(annoyingCountNearby, nearestAnnoyingDistance, bullyCountNearby, nearestBullyDistance);
                 SoundManager::UpdateGuardProximityLoop(nearestGuardDistance);
                 SoundManager::UpdateCCTVHumLoop(nearestCCTVDistance);
                 SoundManager::UpdateTerminalBuzzLoop(nearestTerminalDistance);
