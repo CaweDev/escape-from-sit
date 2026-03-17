@@ -361,7 +361,7 @@ void SoundManager::UpdateDistanceLoop(const std::string& key, f32 distance, f32 
         channel.source->SetVolume(0.0f);
     }
 
-    if (distance >= farDistance) {
+    if (distance < 0.0f || distance >= farDistance) {
         if (channel.playing) {
             channel.source->Stop();
             channel.playing = false;
@@ -372,8 +372,9 @@ void SoundManager::UpdateDistanceLoop(const std::string& key, f32 distance, f32 
     if (!channel.playing) {
         channel.source->clip = clipIt->second;
         channel.source->loop = true;
-        channel.source->SetVolume(0.0f);
+        channel.source->volume = 1.0f;
         channel.source->Play();
+        channel.source->SetVolume(0.0f);
         channel.playing = true;
     }
 
@@ -402,6 +403,21 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
 void SoundManager::UpdateTerminalBuzzLoop(f32 nearestDistance)
 {
     UpdateDistanceLoop(kTerminalBuzzLoopKey, nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, s_terminalLoopConfig.maxVolume);
+}
+
+const SoundManager::DistanceLoopConfig& SoundManager::GetGuardLoopConfig()
+{
+    return s_guardLoopConfig;
+}
+
+const SoundManager::DistanceLoopConfig& SoundManager::GetCCTVLoopConfig()
+{
+    return s_cctvLoopConfig;
+}
+
+const SoundManager::DistanceLoopConfig& SoundManager::GetTerminalLoopConfig()
+{
+    return s_terminalLoopConfig;
 }
 
 void SoundManager::EnsureInitialized()

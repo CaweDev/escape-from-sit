@@ -26,17 +26,21 @@ public:
     static void UpdateCCTVHumLoop(f32 nearestDistance);
     static void UpdateTerminalBuzzLoop(f32 nearestDistance);
 
+    struct DistanceLoopConfig {
+        f32 nearDistance = 2.5f;
+        f32 farDistance = 10.0f;
+        f32 maxVolume = 0.8f;
+    };
+
+    static const DistanceLoopConfig& GetGuardLoopConfig();
+    static const DistanceLoopConfig& GetCCTVLoopConfig();
+    static const DistanceLoopConfig& GetTerminalLoopConfig();
+
 private:
     enum class BGMFadeState {
         None,
         FadingOut,
         FadingIn
-    };
-
-    struct DistanceLoopConfig {
-        f32 nearDistance = 2.5f;
-        f32 farDistance = 10.0f;
-        f32 maxVolume = 0.8f;
     };
 
     struct DistanceLoopChannel {

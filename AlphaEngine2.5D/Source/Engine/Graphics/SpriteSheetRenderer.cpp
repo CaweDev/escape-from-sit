@@ -121,7 +121,7 @@ void SpriteSheetRenderer::Render() {
 
     // --- Advance animation ---
     if (playing && currentClip->frameRate > 0.0f) {
-        elapsedTime += Time::unscaledDeltaTime;
+        elapsedTime += Time::unscaledDeltaTime * playbackSpeed;
         float frameDuration = 1.0f / currentClip->frameRate;
 
         while (elapsedTime >= frameDuration) {
