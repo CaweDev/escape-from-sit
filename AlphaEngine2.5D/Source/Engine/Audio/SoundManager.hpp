@@ -28,6 +28,10 @@ public:
     // NPC-specific proximity loop for annoying classmates
     static void UpdateNPCAnnoyingLoop(f32 nearestDistance);
 
+    // Generic loop control: start / stop a looping SFX by key
+    static void PlayLoop(const std::string& key, f32 volume = 1.0f);
+    static void StopLoop(const std::string& key);
+
     struct DistanceLoopConfig {
         f32 nearDistance = 2.5f;
         f32 farDistance = 10.0f;
@@ -88,6 +92,9 @@ private:
     static DistanceLoopConfig s_guardLoopConfig;
     static DistanceLoopConfig s_cctvLoopConfig;
     static DistanceLoopConfig s_terminalLoopConfig;
+    // Generic loop channels (key -> AudioSource*) with reference counting
+    static std::unordered_map<std::string, AudioSource*> s_loopChannels;
+    static std::unordered_map<std::string, int> s_loopRefCount;
 
     static constexpr const char* kGuardLoopKey = "guard_proximity_loop";
     static constexpr const char* kCCTVHumLoopKey = "cctv_hum_loop";
