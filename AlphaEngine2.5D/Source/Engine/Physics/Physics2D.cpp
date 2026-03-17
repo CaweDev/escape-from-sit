@@ -455,9 +455,6 @@ void Physics2D::DrawDebugView() {
         f32 projH = (f32)screenWidth / (ty * planeLength * 2.0f);
         f32 sx    = halfW * (1.0f + tx / ty) - halfW;
         f32 sy    = halfH - ((f32)horizon + (camZ - tz) * projH);
-        // Clamp to screen bounds to prevent near-plane artefacts from streaking.
-        if (sy >  halfH) sy =  halfH;
-        if (sy < -halfH) sy = -halfH;
         return { sx, sy };
     };
 

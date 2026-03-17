@@ -64,7 +64,7 @@ public:
     f32 openAmount = 0.0f;
     
     /** Animation speed (full open/close per second) */
-    f32 animationSpeed = 2.0f;
+    f32 animationSpeed = 4.0f;
     
     /** Auto-close delay in seconds (0 = never auto-close) */
     f32 autoCloseDelay = 0.0f;

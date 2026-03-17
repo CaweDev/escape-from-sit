@@ -23,6 +23,7 @@ void FPSController::Initialize() {
     targetViewHeight = eyeHeight;
 }
 
+
 void FPSController::Update() {
     if (!transform || !rigidbody) return;
 
@@ -32,6 +33,19 @@ void FPSController::Update() {
     jumpCooldown -= dt;
     if (jumpCooldown < 0.0f) {
         jumpCooldown = 0.0f;
+    }
+
+    // If cursor unlocked (e.g., menu open), ensure movement SFX loops are stopped and skip input
+    if (!Input::IsCursorLocked()) {
+        if (walkingLoopActive) {
+            Engine::SoundManager::StopLoop("player_walking");
+            walkingLoopActive = false;
+        }
+        if (runningLoopActive) {
+            Engine::SoundManager::StopLoop("player_run");
+            runningLoopActive = false;
+        }
+        return;
     }
 
     if (Input::IsCursorLocked()) { // if cursor is locked, allow mouse look
@@ -91,6 +105,11 @@ void FPSController::Update() {
                 if (playerComp->hasInfiniteStamina) {
                     playerComp->Regen(dt);
                 }
+                // Play running SFX once per start, avoid per-frame retrigger
+                if (!runningLoopActive) {
+                    Engine::SoundManager::PlayLoop("player_run", 0.7f);
+                    runningLoopActive = true;
+                }
             }
             else if (playerComp->GetStamina() > 0.0f) {
                 // Stamina below threshold but not empty - continue draining to 0
@@ -109,6 +128,11 @@ void FPSController::Update() {
             if (playerComp) {
                 playerComp->isSprinting = false;
                 playerComp->Regen(dt);
+            }
+            // stop running loop if it was playing
+            if (runningLoopActive) {
+                Engine::SoundManager::StopLoop("player_run");
+                runningLoopActive = false;
             }
         }
 
@@ -140,6 +164,7 @@ void FPSController::Update() {
         if (spaceDown && jumpCooldown <= 0.0f) {
             rigidbody->Jump(jumpForce);
             jumpCooldown = 0.25f;
+            Engine::SoundManager::PlaySFX("jump");
         }
         prevSpace = spaceNow;
 
@@ -147,10 +172,23 @@ void FPSController::Update() {
         if (Input::GetKeyDown(KeyCode::C) || XboxController::GetButtonDown(XboxButton::B, 0)) {
             rigidbody->ToggleCrouch();
         }
+
+        // Set velocity on rigidbody (physics will handle collision)
+        rigidbody->velocity = worldVelocity;
+        // Trigger walking SFX occasionally when moving
+        if (isMoving && !playerComp->isSprinting) {
+            // start walking loop if not already
+            if (!walkingLoopActive) {
+                Engine::SoundManager::PlayLoop("player_walking", 0.4f);
+                walkingLoopActive = true;
+            }
+        } else {
+            if (walkingLoopActive) {
+                Engine::SoundManager::StopLoop("player_walking");
+                walkingLoopActive = false;
+            }
+        }
     }
-   
-    // Set velocity on rigidbody (physics will handle collision)
-    rigidbody->velocity = worldVelocity;
     
 	//std::cout << transform->position.x << ", " << transform->position.y << ", " << transform->position.z << std::endl;
     

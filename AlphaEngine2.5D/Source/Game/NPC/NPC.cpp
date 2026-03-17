@@ -38,7 +38,7 @@ namespace Game
 
     void NPC::UpdateAnnoying(float dt)
     {
-        if (PlayerInRange() && playerTf)
+        if (PlayerInRange() && playerTf && !Player::isInvisible)
         {
             // NPC is actively following / annoying the player
             activeTimer = blockTime;
@@ -96,6 +96,8 @@ namespace Game
                     }
                 }
             }
+            // Previously played one-shot SFX here. Sound is now managed by the scene
+            // via a distance-loop so it will stop when player leaves range.
             return;
         }
 
@@ -192,6 +194,8 @@ namespace Game
                 path.clear();
                 pathIndex = 0;
                 if (m_rb) m_rb->velocity = Engine::Vector2(0, 0);
+                // Play push SFX
+                Engine::SoundManager::PlaySFX("push");
                 return;
             }
 

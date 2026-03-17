@@ -4,11 +4,34 @@
  */
 #include "Door.hpp"
 #include "../Core/GameObject.hpp"
+#include "../Core/Time.hpp"
 #include "../Physics/BoxCollider2D.hpp"
 #include "../Interaction/Interactable.hpp"
 #include "AEEngine.h"
+#include "Engine/Audio/SoundManager.hpp"
+#include "Engine/Graphics/Camera.hpp"
+#include <algorithm>
 
 namespace Engine {
+
+namespace {
+    static constexpr f32 kDoorSfxMaxAudibleDistance = 12.0f;
+
+    f32 ComputeDoorSfxVolumeScale(const Transform* doorTransform, int tileX, int tileY) {
+        if (!Camera::main || !Camera::main->transform) {
+            return 1.0f;
+        }
+
+        const Vector2 cameraPos(Camera::main->transform->position.x, Camera::main->transform->position.y);
+        const Vector2 doorPos = doorTransform
+            ? Vector2(doorTransform->position.x, doorTransform->position.y)
+            : Vector2(static_cast<f32>(tileX) + 0.5f, static_cast<f32>(tileY) + 0.5f);
+
+        const f32 distance = Vector2::Distance(cameraPos, doorPos);
+        const f32 t = 1.0f - (distance / kDoorSfxMaxAudibleDistance);
+        return std::clamp(t, 0.0f, 1.0f);
+    }
+}
 
 void Door::Awake() {
     // Cache collider reference only if not already set by spawning logic
@@ -26,7 +49,7 @@ void Door::Awake() {
 }
 
 void Door::Update() {
-    f32 dt = static_cast<f32>(AEFrameRateControllerGetFrameTime());
+	f32 dt = Time::deltaTime;
     
     // Handle animation
     switch (state) {
@@ -80,6 +103,11 @@ void Door::Update() {
 void Door::Open() {
     if (state == DoorState::Closed || state == DoorState::Closing) {
         state = DoorState::Opening;
+
+        // Distance-based attenuation from the main camera to this door.
+        // 1.0 at/near the door, fading linearly to 0.0 at max audible distance.
+        const f32 volumeScale = ComputeDoorSfxVolumeScale(transform, tileX, tileY);
+        SoundManager::PlaySFX("door_open", volumeScale);
     }
     autoCloseTimer = 0.0f;
 }
@@ -87,6 +115,11 @@ void Door::Open() {
 void Door::Close() {
     if (state == DoorState::Open || state == DoorState::Opening) {
         state = DoorState::Closing;
+
+        // Distance-based attenuation from the main camera to this door.
+        // 1.0 at/near the door, fading linearly to 0.0 at max audible distance.
+        const f32 volumeScale = ComputeDoorSfxVolumeScale(transform, tileX, tileY);
+        SoundManager::PlaySFX("door_close", volumeScale);
     }
 }
 

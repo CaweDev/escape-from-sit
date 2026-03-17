@@ -15,6 +15,8 @@ namespace Game {
         Input::RegisterCursorUnlock("MainMenuScene");
         SoundManager::PlayBGM("main_menu", true);
 
+        transitionLocked = false;
+
         // Seed random
         srand(static_cast<unsigned>(time(nullptr)));
 
@@ -301,29 +303,32 @@ namespace Game {
         float distX = std::abs(mouseX - centerX) / centerX;
         float distY = std::abs(mouseY - centerY) / centerY;
         float distFromCenter = std::sqrt(distX * distX + distY * distY);
-        
- 
 
         // Normalize to 0-1 range (closer to center = higher value)
         float centerProximity = 1.0f - Mathf::Clamp(distFromCenter, 0.0f, 1.0f);
         
         // Only show when mouse is near center (within ~40% of screen)
         float threshold = 0.6f;
-        float targetAlpha = 0.3f;
+        float targetAlpha = 0.0f;
         
-		// If mouse is within proximity, and flashlight is on, increase silhouette visibility
-        if (centerProximity > threshold && crosshairImage->visible) {
+        // If mouse is within proximity, and flashlight is on, increase silhouette visibility
+        if (centerProximity > threshold && crosshairImage && crosshairImage->visible) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
-            targetAlpha += t * 0.7f;  // Max 100% opacity
-			SoundManager::UpdateGuardProximityLoop((1 - targetAlpha) * SoundManager::GetGuardLoopConfig().farDistance); // Invert target alpha to get distance (more visible = closer distance)
+            targetAlpha = 0.3f + t * 0.7f;  // Max 100% opacity
         }
-        else 
-        {
-			SoundManager::UpdateGuardProximityLoop(-1.f); // Force silence when not visible
 
-        }
         // Smooth alpha transition
         enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * 5.0f);
+
+        // Drive guard loop from the lerped alpha for smoother audio transitions
+        if (enemyAlpha > 0.01f) {
+            const auto& cfg = SoundManager::GetGuardLoopConfig();
+            const float clampedAlpha = Mathf::Clamp(enemyAlpha, 0.0f, 1.0f);
+            const float lerpedDistance = Mathf::Lerp(cfg.farDistance, cfg.nearDistance, clampedAlpha);
+            SoundManager::UpdateTerminalBuzzLoop(lerpedDistance);
+        } else {
+            SoundManager::UpdateTerminalBuzzLoop(-1.0f);
+        }
 
         // Apply dark silhouette effect (darkened sprite with alpha)
         float darkness = 0.1f;  // Very dark silhouette
@@ -346,8 +351,9 @@ namespace Game {
     void MainMenuScene::OnUnload() {
         Input::UnregisterCursorUnlock("MainMenuScene");
 
-       
-        SoundManager::UpdateGuardProximityLoop(-1.0f);  // Force silence the guard proximity loop when leaving the main menu
+        transitionLocked = false;
+
+        SoundManager::UpdateTerminalBuzzLoop(-1.0f);  // Force silence the guard proximity loop when leaving the main menu
 
         if (menuCanvas) {
             UIManager::GetInstance()->DestroyCanvas(menuCanvas);
@@ -402,9 +408,11 @@ namespace Game {
         UpdateEnemySighting(dt);
 
         const bool isDialogOpen = UI::DialogService::IsConfirmationVisible();
+        const bool isControlsOpen = (controlsMenu && controlsMenu->IsVisible());
+        const bool isTopUIBlockingMenu = (isDialogOpen || isControlsOpen || transitionLocked);
 
-        // Only allow menu interaction after a short delay and when no modal dialog is open
-        if (menuAnimTime > 0.2f && !isDialogOpen) {
+        // Only allow menu interaction after a short delay and when no blocking UI is open
+        if (menuAnimTime > 0.2f && !isTopUIBlockingMenu) {
             // Keyboard navigation
             if (Input::GetKeyDown(KeyCode::UpArrow) || Input::GetKeyDown(KeyCode::W)) {
                 selectedIndex = (selectedIndex - 1 + static_cast<int>(menuItems.size())) % static_cast<int>(menuItems.size());
@@ -447,7 +455,8 @@ namespace Game {
             if (Input::GetMouseButtonDown(0) && hoveredIndex >= 0) {
                 SelectMenuItem(hoveredIndex);
             }
-        } else if (isDialogOpen && hoveredIndex != -1) {
+        }
+        else if (isTopUIBlockingMenu && hoveredIndex != -1) {
             hoveredIndex = -1;
             UpdateMenuVisuals();
         }
@@ -480,6 +489,9 @@ namespace Game {
     }
 
     void MainMenuScene::OnPlayClicked() {
+        if (transitionLocked) return;
+        transitionLocked = true;
+
         SoundManager::PlaySFX("ui_click");
         std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
@@ -494,6 +506,9 @@ namespace Game {
     }
 
     void MainMenuScene::OnCreditsClicked() {
+        if (transitionLocked) return;
+        transitionLocked = true;
+
         SoundManager::PlaySFX("ui_click");
         std::cout << "Credits clicked - Loading credit scene..." << std::endl;
         SceneManager::LoadWithFade("Credits");

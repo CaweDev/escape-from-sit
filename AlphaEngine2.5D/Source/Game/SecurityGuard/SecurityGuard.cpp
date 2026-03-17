@@ -88,7 +88,16 @@ namespace Game {
 
     void SecurityGuard::SetState(GuardState newState) {
         if (state == newState) return;
+        GuardState old = state;
         state = newState;
+
+        // Start/stop looping chasing SFX when entering/exiting Chase
+        if (newState == GuardState::Chase && old != GuardState::Chase) {
+            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
+        }
+        else if (old == GuardState::Chase && newState != GuardState::Chase) {
+            Engine::SoundManager::StopLoop("guard_chasing");
+        }
     }
 
     const char* SecurityGuard::StateToString(GuardState s) const {

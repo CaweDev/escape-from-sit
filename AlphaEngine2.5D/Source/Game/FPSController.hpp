@@ -47,6 +47,10 @@ public:
     /** Cached rigidbody reference */
     Rigidbody2D* rigidbody = nullptr;
 
+    // Audio loop state for movement SFX
+    bool walkingLoopActive = false;
+    bool runningLoopActive = false;
+
     void Initialize() override;
     
     void Update() override;

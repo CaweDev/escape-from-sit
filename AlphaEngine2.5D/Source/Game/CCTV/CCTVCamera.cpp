@@ -4,6 +4,7 @@
 #include "Engine/UI/Specialized/Minimap.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Audio/SoundManager.hpp"
 #include <cmath>
 #include  "Engine/Core/GameObject.hpp"
 
@@ -220,9 +221,19 @@ namespace Game {
             if (hud) {
                 hud->ShowCCTVWarning(true);
             }
+            // Play CCTV detected SFX
+            // Use PlayLoop for sustained alert (ensure it stops when player out of sight)
+            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
         }
 
+        // Update sight state
+        bool prevSeeing = isSeeingPlayer;
         isSeeingPlayer = nowSeeing;
+
+        // If we lost the player, stop the alert loop
+        if (prevSeeing && !isSeeingPlayer) {
+            Engine::SoundManager::StopLoop("guard_chasing");
+        }
 
         if (isSeeingPlayer)
         {

@@ -17,6 +17,7 @@
     <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
     <ClCompile Include="Source\Editor\EditorManager.cpp" />
     <ClCompile Include="Source\Editor\EditorScene.cpp" />
     <ClCompile Include="Source\Editor\GameEditor.cpp" />
@@ -98,9 +99,11 @@
     <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
@@ -115,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Engine Math -->
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Source\Editor\EditorManager.hpp" />
     <ClInclude Include="Source\Editor\EditorScene.hpp" />
@@ -214,9 +218,11 @@
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
@@ -234,6 +240,7 @@
     <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Config\audio_config_custom.json" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>

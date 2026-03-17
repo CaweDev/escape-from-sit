@@ -76,6 +76,8 @@ void CCTVTerminal::OnTerminalInteract() {
 
     // For now, instant hack (TODO: add hold-E mechanic)
     DisableCameras();
+    // Play cctv disabled SFX
+    Engine::SoundManager::PlaySFX("cctv_disabled");
     
     // Provide HUD feedback
     if (playerHUD) {

@@ -102,6 +102,12 @@
     <ClCompile Include="Source\Editor\ObjectManager.cpp" />
     <ClCompile Include="Source\Editor\Reflection.cpp" />
     <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
+
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
+
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine.hpp" />
@@ -218,9 +224,13 @@
     <ClInclude Include="Source\Editor\ObjectManager.hpp" />
     <ClInclude Include="Source\Editor\Reflection.hpp" />
     <ClInclude Include="Source\Editor\ReflectionRegistry.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="Assets\Config\audio_config_custom.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />
