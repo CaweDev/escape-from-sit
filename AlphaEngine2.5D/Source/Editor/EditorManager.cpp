@@ -5,6 +5,8 @@
 
 #include "EditorManager.hpp"
 #include "GameEditor.hpp"
+#include "ReflectionRegistry.hpp"
+#include "ObjectManager.hpp"
 
 // Alpha Engine
 #include "AEEngine.h"
@@ -63,6 +65,8 @@ namespace AEEditor
 
         // Install OS message hook LAST to guarantee safe memory access
         gOriginalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)EditorWndProc);
+
+        ReflectionRegistry::InitializeMetaRegistry();
     }
 
     void EditorManager::Exit()
@@ -201,13 +205,8 @@ namespace AEEditor
         ImGui::End();
         ImGui::PopStyleColor();
 
-        ImGui::Begin("Hierarchy");
-        ImGui::Text("TBC");
-        ImGui::End();
-
-        ImGui::Begin("Inspector");
-        ImGui::Text("TBC");
-        ImGui::End();
+        ObjectManager::DrawHierarchy();
+        ObjectManager::DrawInspector();
     }
 
     void EditorManager::RenderUI()
