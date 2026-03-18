@@ -3,6 +3,7 @@
  * @brief Base component class with Unity-like lifecycle
  */
 #pragma once
+#include <string>
 
 namespace Engine {
 
@@ -16,6 +17,8 @@ class Transform;
  */
 class Component {
 public:
+    std::string name;
+
     /** The GameObject this component is attached to */
     GameObject* gameObject = nullptr;
     
@@ -53,6 +56,7 @@ public:
     
     /** Called when component is disabled */
     virtual void OnDisable() {}
+    virtual void OnInspectorGUI() {}
 
 protected:
     friend class GameObject;

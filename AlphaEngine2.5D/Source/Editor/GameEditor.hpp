@@ -17,6 +17,8 @@ namespace AEEditor
     class GameEditor
     {
     public:
+        static int currentTileValue;
+
         static void Initialize(Engine::Scene *scene, Engine::TileMap *tileMap);
         static void Exit();
 
@@ -27,10 +29,9 @@ namespace AEEditor
         static bool Is3DMode();
 
     private:
-        static Engine::Scene *s_scene;
-        static Engine::TileMap *s_tileMap;
+        static Engine::Scene *scene;
+        static Engine::TileMap *tilemap;
 
-        static int currentTileValue;
         static bool is3DMode;
 
         static int mapWidth;

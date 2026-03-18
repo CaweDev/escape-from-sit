@@ -79,18 +79,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     if (isEditorMode)
     {
         SceneManager::LoadScene("EditorScene");
-        Engine::Scene *activeScene = SceneManager::GetActiveScene();
-        Engine::TileMap *activeTileMap = nullptr;
-
-        if (auto worldObj = activeScene->Find("World"))
-        {
-            if (auto tmRenderer = worldObj->GetComponent<Engine::TileMapRenderer>())
-            {
-                activeTileMap = tmRenderer->gameObject->GetComponent<Engine::TileMap>();
-            }
-        }
-
-        AEEditor::GameEditor::Initialize(activeScene, activeTileMap);
     }
     else
     {
