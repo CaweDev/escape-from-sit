@@ -15,6 +15,7 @@
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Graphics/DoorRenderer.hpp"
 #include "Engine/TileMap/Door.hpp"
+#include "Engine/Interaction/Interactable.hpp"
 
 // Required for free camera input polling
 #include "Engine/Input/Input.hpp"
@@ -23,6 +24,8 @@
 
 #include "Editor/GameEditor.hpp"
 #include "Game/CCTV/CCTVPlacement.hpp"
+#include "Game/AccessCard/AccessCard.hpp"
+#include "Game/CCTV/CCTVCamera.hpp"
 
 #include <fstream>
 #include <cmath>
@@ -121,7 +124,7 @@ namespace Game
                 else if (c == 'J')
                     tileValue = 18;
                 else
-                    tileValue = c - '0';
+                    tileValue = c - '0';    
 
                 worldMap[y * mapWidth + x] = tileValue;
             }
@@ -266,7 +269,7 @@ namespace Game
 
     void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
     {
-        auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
+        auto controlRoomDoorPositions = map->GetSpawnedDoorPositionsPublic();
         for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
         {
             Vector2 pos = controlRoomDoorPositions[i];
@@ -287,6 +290,15 @@ namespace Game
             auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
             doorCollider->minHeight = 0.0f;
             doorCollider->maxHeight = 2.0f;
+            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+
+            auto door = doorGO->AddComponent<Engine::Door>();
+            door->tileX = tileX;
+            door->tileY = tileY;
+            door->doorType = 10;
+            door->facing = facing;
+            door->collider = doorCollider;
+            door->state = Engine::DoorState::Closed;
 
             auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
             doorRenderer->fov = renderer->fov;
@@ -377,6 +389,16 @@ namespace Game
             sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
             sr->billboard = true;
             sr->sortingOrder = 200;
+
+            auto interactable = cardGO->AddComponent<Engine::Interactable>();
+            interactable->maxDistance = 2.5f;
+
+            auto card = cardGO->AddComponent<Game::AccessCard>();
+            card->cardId = cardId;
+            card->cardColor = static_cast<Game::AccessCardColor>(cardId);
+            card->spriteRenderer = sr;
+            card->interactable = interactable;
+            cardGO->active = true;
         }
     }
 
@@ -411,6 +433,18 @@ namespace Game
             sr->SetSprite(cctvSprite);
             sr->billboard = true;
             sr->sortingOrder = 300;
+
+            auto sensor = camObj->AddComponent<CCTVCamera>();
+            sensor->id = i + 1;
+            sensor->tile = map;
+            sensor->tf = nullptr;
+            sensor->hud = nullptr;
+            sensor->minimap =  nullptr; // Connect to minimap for vision cones
+            sensor->detectRadius = 3.0f;
+            sensor->maxRange = 6.0f;
+            sensor->coneWidth = 70.0f;
+            sensor->needLOS = true;
+            sensor->spriteRenderer = sr; // Store sprite renderer for color changes
         }
     }
 
