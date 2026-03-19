@@ -1,0 +1,8 @@
+{
+  "perpWallDistClamp": 0.1,
+  "fogLutDistScale": 100.0,
+  "fogRebuildThreshold": 0.001,
+  "doorRayDirThreshold": 0.0001,
+  "doorZBufferBias": 0.01,
+  "projectionNearClamp": 0.1
+}

@@ -26,6 +26,9 @@ extern "C"
 // Texture static shutdown
 #include "Engine/Graphics/Texture2D.hpp"
 
+// Engine subsystem config (single call initialises all config files)
+#include "Engine/Core/ConfigManager.hpp"
+
 // Game Scenes
 #include "Game/Scenes/SceneRegistry.hpp"
 
@@ -64,6 +67,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Initialize Sound Manager
     SoundManager::Initialize();
+
+    // Initialize all engine subsystems from config files
+    ConfigManager::InitializeAll();
 
     // Initialize UI System
     UI::UIManager::Initialize();

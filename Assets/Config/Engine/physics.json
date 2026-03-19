@@ -1,0 +1,7 @@
+{
+  "gravity": 9.81,
+  "defaultCollisionRadius": 0.2,
+  "fixedDeltaTimeFallback": 0.02,
+  "deltaTimeCap": 0.1,
+  "pushDirSqrThreshold": 0.0001
+}

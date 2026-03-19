@@ -1,0 +1,9 @@
+{
+  "sfxMaxAudibleDistance": 12.0,
+  "passableThreshold": 0.5,
+  "colliderChangeThreshold": 0.1,
+  "animationSpeed": 4.0,
+  "rendererColorNS": { "r": 0.6, "g": 0.4, "b": 0.2, "a": 1.0 },
+  "rendererColorEW": { "r": 0.5, "g": 0.35, "b": 0.18, "a": 1.0 },
+  "rendererFov": 75.0
+}

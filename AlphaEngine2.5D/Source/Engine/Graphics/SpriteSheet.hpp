@@ -19,10 +19,10 @@ namespace Engine {
  */
 struct AnimationClip {
     std::string name;
-    int startFrame = 0;    ///< First frame index (row-major, 0-based)
-    int frameCount = 1;    ///< Number of frames in this clip
-    float frameRate = 10.0f; ///< Playback speed (frames per second)
-    bool loop = true;      ///< Whether this clip loops
+    int startFrame = 0;    ///< First frame index (row-major, 0-based). Read from meta file later
+    int frameCount = 1;    ///< Number of frames in this clip. Read from meta file later
+    float frameRate = 10.0f; ///< Playback speed (frames per second). Read from meta file later
+    bool loop = true;      ///< Whether this clip loops. Read from meta file later
 };
 
 /**

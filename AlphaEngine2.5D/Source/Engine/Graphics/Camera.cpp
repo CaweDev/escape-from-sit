@@ -4,15 +4,40 @@
  */
 #include "Camera.hpp"
 #include "Engine/Core/Transform.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+#include <cstdio>
 
 namespace Engine {
 
 Camera* Camera::main = nullptr;
 
+// Cached config applied to every camera that becomes main
+static CameraConfig s_cameraConfig;
+
+void Camera::Initialize(const std::string& configPath)
+{
+    if (!ConfigManager::ReadConfig(configPath, s_cameraConfig))
+    {
+        std::printf("[Warning] Camera: Failed to read config '%s'. Using built-in defaults.\n",
+                    configPath.c_str());
+    }
+}
+
 void Camera::Awake() {
     // Set as main camera if none exists
     if (!main) {
         main = this;
+        // Apply config defaults to this camera instance
+        backgroundColor  = s_cameraConfig.backgroundColor;
+        orthographicSize = s_cameraConfig.orthographicSize;
+        fov              = s_cameraConfig.fov;
+        pitch            = s_cameraConfig.pitch;
+        fogColor         = s_cameraConfig.fogColor;
+        fogDistance      = s_cameraConfig.fogDistance;
+        fogMinVisibility = s_cameraConfig.fogMinVisibility;
+        fogMaxVisibility = s_cameraConfig.fogMaxVisibility;
+        fogPrecision     = s_cameraConfig.fogPrecision;
+        fogEnabled       = s_cameraConfig.fogEnabled;
     }
 }
 
