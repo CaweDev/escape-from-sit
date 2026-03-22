@@ -19,7 +19,8 @@ namespace Game
         UI::Panel* m_overlay = nullptr;
         UI::Panel* m_panel = nullptr;
         UI::Text* m_title = nullptr;
-        UI::Button* m_button = nullptr;
+        UI::Button* m_button = nullptr;          // Main Menu
+        UI::Button* m_restartButton = nullptr;   // Restart
         bool m_visible = false;
 
         // Fade-in state
@@ -43,5 +44,6 @@ namespace Game
         void BuildUI();
         void ApplyFade(float t);
         void OnButtonClicked();
+        void OnRestartButtonClicked();
     };
 }

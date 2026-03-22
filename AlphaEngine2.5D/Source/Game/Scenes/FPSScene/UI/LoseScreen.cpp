@@ -49,12 +49,20 @@ namespace Game
         Engine::Color btn = kButtonColor;
         btn.a *= t;
         if (m_button) m_button->SetBackgroundColor(btn);
+        if (m_restartButton) m_restartButton->SetBackgroundColor(btn);
 
         if (m_button && m_button->GetLabel())
         {
             Engine::Color c = Engine::Color::white();
             c.a = t;
             m_button->GetLabel()->SetColor(c);
+        }
+
+        if (m_restartButton && m_restartButton->GetLabel())
+        {
+            Engine::Color c = Engine::Color::white();
+            c.a = t;
+            m_restartButton->GetLabel()->SetColor(c);
         }
     }
 
@@ -75,6 +83,7 @@ namespace Game
             m_panel = nullptr;
             m_title = nullptr;
             m_button = nullptr;
+            m_restartButton = nullptr;
         }
     }
 
@@ -112,6 +121,19 @@ namespace Game
         m_title->SetColor(kTitleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        m_restartButton = m_panel->CreateChild<UI::Button>();
+        m_restartButton->name = "LoseRestartButton";
+        m_restartButton->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_restartButton->SetPivot({ 0.5f, 0.0f });
+        m_restartButton->SetAnchoredPosition({ 0.0f, 125.0f });
+        m_restartButton->SetSizeDelta({ 240.0f, 56.0f });
+        m_restartButton->SetText("Restart");
+        m_restartButton->SetBackgroundColor(kButtonColor);
+        m_restartButton->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+        m_restartButton->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_restartButton->GetBackground()->SetPixelsPerUnitMultiplier(1.0f);
+        m_restartButton->onClick = [this]() { OnRestartButtonClicked(); };
+
         m_button = m_panel->CreateChild<UI::Button>();
         m_button->name = "LoseButton";
         m_button->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
@@ -124,6 +146,8 @@ namespace Game
         m_button->GetBackground()->SetImageType(UI::ImageType::Sliced);
         m_button->GetBackground()->SetPixelsPerUnitMultiplier(1.0f);
         m_button->onClick = [this]() { OnButtonClicked(); };
+
+        ApplyFade(1.0f);
     }
 
     void LoseScreen::Show()
@@ -132,6 +156,10 @@ namespace Game
 
         m_visible = true;
         m_overlay->visible = true;
+
+        m_fadeTimer = 0.0f;
+        m_isFadingIn = true;
+        ApplyFade(0.0f);
 
         Engine::Application::RegisterPause("LoseScreen");
         Engine::Input::RegisterCursorUnlock("LoseScreen");
@@ -144,6 +172,7 @@ namespace Game
 
         m_visible = false;
         m_overlay->visible = false;
+        m_isFadingIn = false;
 
         Engine::Input::UnregisterCursorUnlock("LoseScreen");
         Engine::Application::UnregisterPause("LoseScreen");
@@ -154,5 +183,12 @@ namespace Game
         Engine::SoundManager::PlaySFX("ui_click");
         Hide();
         Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
+    }
+
+    void LoseScreen::OnRestartButtonClicked()
+    {
+        Engine::SoundManager::PlaySFX("ui_click");
+        Hide();
+        Engine::SceneManager::LoadWithLoadingScreen("FPS");
     }
 }
