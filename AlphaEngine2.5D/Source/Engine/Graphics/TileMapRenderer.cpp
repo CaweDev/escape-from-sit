@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file TileMapRenderer.cpp
  * @brief Implementation of the TileMapRenderer raycasting renderer.
  *
@@ -14,10 +14,12 @@
 #include "TileMapRenderer.hpp"
 #include "TextureUtils.hpp"
 #include "ZBuffer.hpp"
+#include "RendererSettings.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Physics/Physics2D.hpp"
 #include "Engine/Physics/BoxCollider2D.hpp"
 #include "Engine/Physics/CircleCollider2D.hpp"
+#include "Engine/Math/Mathf.hpp"
 #include <cmath>
 #include <vector>
 #include <algorithm>
@@ -113,7 +115,7 @@ namespace Engine {
 
 		Vector2 pos = Vector2(camTransform->position.x, camTransform->position.y);
 		f32 camZ = camTransform->position.z;
-		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+		f32 angleRad = camTransform->rotation * Mathf::Deg2Rad;
 		f32 verticalOffset = (Camera::main) ? Camera::main->pitch : 0.0f;
 		int horizon = screenHeight / 2 + (int)verticalOffset;
 
@@ -136,7 +138,7 @@ namespace Engine {
 
 		// Update Fog LUT if distance changed
 		f32 currentFogDist = fog.distance;
-		if (fabsf(currentFogDist - cachedFogDistance) > 0.001f) {
+		if (fabsf(currentFogDist - cachedFogDistance) > RendererSettings::fogRebuildThreshold) {
 			UpdateFogLUT(currentFogDist);
 		}
 
@@ -168,7 +170,7 @@ namespace Engine {
 
 				// Fog LUT lookup (0.01 unit precision)
 				f32 dist = info.ray.perpWallDist;
-				int lutIdx = (int)(dist * 100.0f);
+				int lutIdx = (int)(dist * RendererSettings::fogLutDistScale);
 				if (lutIdx < 0) lutIdx = 0;
 				if (lutIdx >= (int)fogLUT.size()) lutIdx = (int)fogLUT.size() - 1;
 
@@ -310,7 +312,7 @@ namespace Engine {
 		result.perpWallDist = (result.side == 0)
 			? (sideDistX - deltaDistX)  // X-boundary hit.
 			: (sideDistY - deltaDistY); // Y-boundary hit.
-		if (result.perpWallDist < 0.1f) result.perpWallDist = 0.1f; // Clamp to avoid divide-by-zero / z-fighting.
+		if (result.perpWallDist < RendererSettings::perpWallDistClamp) result.perpWallDist = RendererSettings::perpWallDistClamp; // Clamp to avoid divide-by-zero / z-fighting.
 
 		// Compute the exact world-space coordinate along the wall face that the ray struck.
 		// This becomes the U texture coordinate for horizontal texture wrapping.
@@ -394,7 +396,7 @@ namespace Engine {
 
 		// Recompute raycast view vectors for fast linear interpolation
 		Transform* camTransform = (Camera::main) ? Camera::main->transform : transform;
-		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+		f32 angleRad = camTransform->rotation * Mathf::Deg2Rad;
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
 		f32 planeX = dirY * cachedPlaneLength;
@@ -443,7 +445,7 @@ namespace Engine {
 					// Look up the fog attenuation for this row's distance.
 					f32 fogFactor = 1.0f; // 1.0 = fully visible (no fog).
 					if (fog.enabled) {
-						int lutIdx = (int)(rowDist * 100.0f); // LUT index at 0.01-unit precision.
+						int lutIdx = (int)(rowDist * RendererSettings::fogLutDistScale); // LUT index at configurable precision.
 						if (lutIdx < 0) lutIdx = 0;
 						if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 						fogFactor = fogLUT[lutIdx];            // Exponential decay value from pre-computed table.
@@ -556,7 +558,7 @@ namespace Engine {
 
 		// Recompute raycast view vectors for fast linear interpolation
 		Transform* camTransform = (Camera::main) ? Camera::main->transform : transform;
-		f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+		f32 angleRad = camTransform->rotation * Mathf::Deg2Rad;
 		f32 dirX = cosf(angleRad);
 		f32 dirY = sinf(angleRad);
 		f32 planeX = dirY * cachedPlaneLength;
@@ -599,7 +601,7 @@ namespace Engine {
 					// Fog attenuation for this distance.
 					f32 fogFactor = 1.0f;
 					if (fog.enabled) {
-						int lutIdx = (int)(rowDist * 100.0f);
+						int lutIdx = (int)(rowDist * RendererSettings::fogLutDistScale);
 						if (lutIdx < 0) lutIdx = 0;
 						if (lutIdx > fogLUTMax) lutIdx = fogLUTMax;
 						fogFactor = fogLUT[lutIdx];
@@ -845,10 +847,12 @@ namespace Engine {
 	// This avoids calling expf() per-pixel during rendering.
 	// fogLUT covers world distances 0–100 at 0.01-unit precision (10 000 entries).
 	void TileMapRenderer::UpdateFogLUT(f32 fogDistance) {
-		fogLUT.resize(10000);                           // 10 000 entries = distances 0..99.99.
+		const int lutSize = static_cast<int>(RendererSettings::fogLutDistScale * 100.0f); // covers 100 world units
+		fogLUT.resize(lutSize);
+		const f32 distStep = 1.0f / RendererSettings::fogLutDistScale; // e.g. 0.01 for 100 entries/unit
 		for (size_t i = 0; i < fogLUT.size(); ++i) {
-			f32 dist = (f32)i * 0.01f;                  // Convert index to world distance.
-			fogLUT[i] = expf(-dist / fogDistance);       // Exponential decay: 1 at dist=0, →0 far away.
+			f32 dist = (f32)i * distStep;                // Convert index to world distance.
+			fogLUT[i] = expf(-dist / fogDistance);       // Exponential decay: 1 at dist=0, ->0 far away.
 		}
 		cachedFogDistance = fogDistance;                  // Cache the distance so we know when to rebuild.
 	}

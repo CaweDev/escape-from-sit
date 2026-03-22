@@ -1,21 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
+    <ClCompile Include="Source\Editor\EditorManager.cpp" />
+    <ClCompile Include="Source\Editor\EditorScene.cpp" />
+    <ClCompile Include="Source\Editor\GameEditor.cpp" />
+    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
+    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
+    <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
+    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
+    <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
+    <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
+    <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
+    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
+    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
+    <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
+    <ClCompile Include="Source\Game\NPC\NPC.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Source\Engine\Core\Application.cpp" />
+    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
+    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp" />
     <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
     <ClCompile Include="Source\Engine\Core\Time.cpp" />
     <ClCompile Include="Source\Engine\Core\Transform.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
     <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\TextureUtils.cpp" />
     <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
     <ClCompile Include="Source\Engine\Input\Input.cpp" />
+    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
+    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
     <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp" />
     <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp" />
     <ClCompile Include="Source\Engine\Physics\Collider2D.cpp" />
@@ -25,21 +57,8 @@
     <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Game\FPSController.cpp" />
-    <ClCompile Include="Source\Game\Player\Player.cpp" />
-    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
-    <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
     <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
-    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
-    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
-    <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Button.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Image.cpp" />
     <ClCompile Include="Source\Engine\UI\Components\Panel.cpp" />
@@ -48,6 +67,10 @@
     <ClCompile Include="Source\Engine\UI\Core\Canvas.cpp" />
     <ClCompile Include="Source\Engine\UI\Core\UIElement.cpp" />
     <ClCompile Include="Source\Engine\UI\Core\UIManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp" />
+    <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
     <ClCompile Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.cpp" />
     <ClCompile Include="Source\Engine\UI\Layout\LayoutGroup.cpp" />
     <ClCompile Include="Source\Engine\UI\Layout\VerticalLayoutGroup.cpp" />
@@ -55,43 +78,13 @@
     <ClCompile Include="Source\Engine\UI\Specialized\InteractionPrompt.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\MiniMap.cpp" />
-    <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\TextureUtils.cpp" />
-    <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp" />
-    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
-    <ClCompile Include="Source\Game\NPC\NPC.cpp" />
-    <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
-    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
-    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
-    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
-    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
-    <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
-    <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
+    <ClCompile Include="Source\Game\FPSController.cpp" />
     <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
-    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
-    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
-    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
-    <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
-    <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
-    <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
-    <ClCompile Include="Source\Editor\EditorManager.cpp" />
-    <ClCompile Include="Source\Editor\EditorScene.cpp" />
-    <ClCompile Include="Source\Editor\GameEditor.cpp" />
-    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="Source\Game\Player\Player.cpp" />
+    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
     <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
     <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -103,23 +96,61 @@
     <ClCompile Include="Source\Editor\Reflection.cpp" />
     <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
 
+=======
+    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
+    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
+>>>>>>> origin/Caleb-AUw
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
+<<<<<<< HEAD
 
     <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
 
+=======
+    <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
+    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
+    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
+    <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
+    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp" />
+>>>>>>> origin/Caleb-AUw
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Source\Editor\EditorManager.hpp" />
+    <ClInclude Include="Source\Editor\EditorScene.hpp" />
+    <ClInclude Include="Source\Editor\GameEditor.hpp" />
+    <ClInclude Include="Source\Editor\Index.hpp" />
     <ClInclude Include="Source\Engine.hpp" />
+    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
+    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
     <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
+    <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
+    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
+    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
     <ClInclude Include="Source\Engine\Math\Vector3.hpp" />
     <ClInclude Include="Source\Engine\Math\Mathf.hpp" />
     <ClInclude Include="Source\Engine\Core\Application.hpp" />
     <ClInclude Include="Source\Engine\Core\Time.hpp" />
+    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp" />
     <ClInclude Include="Source\Engine\Core\Component.hpp" />
     <ClInclude Include="Source\Engine\Core\Transform.hpp" />
     <ClInclude Include="Source\Engine\Core\GameObject.hpp" />
@@ -141,31 +172,8 @@
     <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp" />
     <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
     <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
-    <ClInclude Include="Source\Engine\UI\UI.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\Player\Player.hpp" />
-    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
-    <ClInclude Include="Source\Game\FPSController.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
-    <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
-    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
-    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
-    <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
+    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Button.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Image.hpp" />
     <ClInclude Include="Source\Engine\UI\Components\Panel.hpp" />
@@ -176,66 +184,81 @@
     <ClInclude Include="Source\Engine\UI\Core\UIElement.hpp" />
     <ClInclude Include="Source\Engine\UI\Core\UIEventSystem.hpp" />
     <ClInclude Include="Source\Engine\UI\Core\UIManager.hpp" />
+    <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp" />
+    <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\LayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Layout\VerticalLayoutGroup.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Crosshair.hpp" />
+    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\InteractionPrompt.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
     <ClInclude Include="Source\Engine\UI\Specialized\MiniMap.hpp" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
-    <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp" />
-    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
-    <ClInclude Include="Source\Game\NPC\NPC.hpp" />
-    <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
-    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
-    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
-    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
-    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
+    <ClInclude Include="Source\Engine\UI\UI.hpp" />
     <ClInclude Include="Source\Game\AccessCard\AccessCard.hpp" />
+    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
     <ClInclude Include="Source\Game\ControlRoomDoor\ControlRoomDoor.hpp" />
-    <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
-    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
-    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
     <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
     <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
-    <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
-    <ClInclude Include="Source\Editor\EditorManager.hpp" />
-    <ClInclude Include="Source\Editor\EditorScene.hpp" />
-    <ClInclude Include="Source\Editor\Index.hpp" />
-    <ClInclude Include="Source\Editor\GameEditor.hpp" />
-    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
+    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
+    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
+    <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
+    <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
+    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
+    <ClInclude Include="Source\Game\NPC\NPC.hpp" />
+    <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
+    <ClInclude Include="Source\Game\Player\Player.hpp" />
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
+<<<<<<< HEAD
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
     <ClInclude Include="Source\Editor\ObjectManager.hpp" />
     <ClInclude Include="Source\Editor\Reflection.hpp" />
     <ClInclude Include="Source\Editor\ReflectionRegistry.hpp" />
+=======
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
+>>>>>>> origin/Caleb-AUw
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
+<<<<<<< HEAD
     <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
     <None Include="Assets\Config\audio_config_custom.json" />
+=======
+    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
+    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
+    <ClInclude Include="Source\Game\FPSController.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
+    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
+    <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
+    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
+    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp" />
+>>>>>>> origin/Caleb-AUw
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Assets\Brocsama.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Config\audio_config_custom.json" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

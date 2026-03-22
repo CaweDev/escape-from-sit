@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Editor\Reflection.cpp" />
     <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />

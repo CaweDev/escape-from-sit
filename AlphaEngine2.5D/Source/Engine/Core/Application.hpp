@@ -5,10 +5,24 @@
 #pragma once
 
 #include "AEEngine.h"
+#include "ConfigManager.hpp"
 #include <string>
 #include <unordered_set>
 
 namespace Engine {
+
+/**
+ * @brief IConfig implementation that deserialises application.json.
+ */
+struct ApplicationConfig : public IConfig
+{
+    int targetFrameRate = 60; ///< Target frames per second (0 = unlimited).
+
+    void FromJson(const Json::Value& j) override
+    {
+        targetFrameRate = j.get("targetFrameRate", targetFrameRate).asInt();
+    }
+};
 
 /**
  * @class Application
@@ -18,6 +32,12 @@ class Application {
 public:
     /** Target frame rate (0 = unlimited) */
     static int targetFrameRate;
+
+    /**
+     * @brief Load application configuration from a JSON file.
+     * @param configPath Path to application.json. Defaults to the engine config location.
+     */
+    static void Initialize(const std::string& configPath = "Assets/Config/Engine/application.json");
     
     /** Whether the application is running */
     static bool isRunning;
