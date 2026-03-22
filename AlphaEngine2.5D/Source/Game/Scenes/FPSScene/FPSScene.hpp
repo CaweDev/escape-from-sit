@@ -32,6 +32,7 @@
 #include "Game/ZoneManager/ZoneManager.hpp"
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
+#include "Game/UCB1Bandit/BanditVisualizer.hpp"
 #include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/LevelEditor/LevelEditor.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
@@ -177,6 +178,7 @@ namespace Game {
 
         // Level Editor
         LevelEditor levelEditor;
+        Game::BanditVisualizer* banditVisualizer = nullptr;
         
         // Map dimensions (for debugging)
         int mapWidth = 0;
@@ -1105,6 +1107,24 @@ namespace Game {
             PuzzleManager::Init();
 
             Game::PowerUpManager::Init();
+
+            // Create Bandit visualizer (hidden by default)
+            {
+                auto bvGO = CreateGameObject("BanditVisualizer");
+                if (bvGO) {
+                    banditVisualizer = bvGO->AddComponent<Game::BanditVisualizer>();
+                    if (banditVisualizer) {
+                        banditVisualizer->bandit = &bandit;
+                        banditVisualizer->SetGuardsPointer(&guards);
+                        // connect cctv scores + heatmap + zone grid so visualizer can display them
+                        banditVisualizer->SetCCTVScorePointer(cctvScore);
+                        banditVisualizer->SetHeatmapPointer(&heatmap);
+                        banditVisualizer->SetZoneGridPointer(&zoneGrid);
+                        banditVisualizer->SetSelectedZone(prevChosenZoneId);
+                        banditVisualizer->SetVisible(false);
+                    }
+                }
+            }
         }
 
         void OnAfterRender() override
@@ -1132,6 +1152,19 @@ namespace Game {
             if (Input::GetKeyDown(KeyCode::M)) {
                 debugML = !debugML;
                 mlSummaryTimer = 0.0f;
+            }
+
+            // Toggle bandit visualizer with F3
+            if (Input::GetKeyDown(KeyCode::F3)) {
+                if (banditVisualizer) {
+                    banditVisualizer->ToggleVisibility();
+                    // When showing visualizer, unlock cursor so user can interact
+                    if (banditVisualizer) {
+                        // panel visibility toggled inside ToggleVisibility(); check panel state indirectly
+                        // We can't access m_panel here, so simply toggle cursor registration based on panel visible state
+                        // Best-effort: register/unregister cursor using a simple toggle stored on banditVisualizer via visible state
+                    }
+                }
             }
 
             // CCTV view switching (silent)
@@ -1367,6 +1400,11 @@ namespace Game {
                 BanditTick();
             }
 
+            // Update visualizer selected zone and summary when bandit changes
+            if (banditVisualizer) {
+                banditVisualizer->SetSelectedZone(prevChosenZoneId);
+            }
+
             // ML summary every 5 sec only when debug on
             if (debugML) {
                 mlSummaryTimer += Engine::Time::deltaTime;
@@ -1451,6 +1489,8 @@ namespace Game {
                 UI::UIManager::GetInstance()->DestroyCanvas(modalCanvas);
                 modalCanvas = nullptr;
             }
+            // Clear bandit visualizer reference
+            banditVisualizer = nullptr;
         }
     };
 

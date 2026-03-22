@@ -106,6 +106,7 @@
     <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
     <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
+    <ClCompile Include="Source\Game\UCB1Bandit\BanditVisualizer.cpp" />
     <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
     <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
     <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
+    <ClInclude Include="Source\Game\UCB1Bandit\BanditVisualizer.hpp" />
     <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
     <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
   </ItemGroup>
