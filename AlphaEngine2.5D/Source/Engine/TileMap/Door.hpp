@@ -5,8 +5,10 @@
 #pragma once
 
 #include "../Core/Component.hpp"
+#include "../Core/ConfigManager.hpp"
 #include "../Math/Vector2.hpp"
 #include "AEEngine.h"
+#include <string>
 #include <unordered_set>
 #include <unordered_map>
 #include <cstdint>
@@ -17,6 +19,25 @@ namespace Engine {
 // Forward declarations
 class BoxCollider2D;
 class Interactable;
+
+/**
+ * @brief IConfig implementation that deserialises door.json.
+ */
+struct DoorConfig : public IConfig
+{
+    float sfxMaxAudibleDistance  = 12.0f;
+    float passableThreshold      = 0.5f;
+    float colliderChangeThreshold = 0.1f;
+    float animationSpeed         = 4.0f;
+
+    void FromJson(const Json::Value& j) override
+    {
+        sfxMaxAudibleDistance   = j.get("sfxMaxAudibleDistance",   sfxMaxAudibleDistance).asFloat();
+        passableThreshold       = j.get("passableThreshold",       passableThreshold).asFloat();
+        colliderChangeThreshold = j.get("colliderChangeThreshold", colliderChangeThreshold).asFloat();
+        animationSpeed          = j.get("animationSpeed",          animationSpeed).asFloat();
+    }
+};
 
 /**
  * @enum DoorState
@@ -64,7 +85,7 @@ public:
     f32 openAmount = 0.0f;
     
     /** Animation speed (full open/close per second) */
-    f32 animationSpeed = 2.0f;
+    f32 animationSpeed = 4.0f;
     
     /** Auto-close delay in seconds (0 = never auto-close) */
     f32 autoCloseDelay = 0.0f;
@@ -134,6 +155,12 @@ public:
         return !m_holders.empty();
     }
     static Door* FindAtTile(int tileX, int tileY);
+
+    /**
+     * @brief Load door configuration from door.json.
+     * Call once at startup before any doors are created.
+     */
+    static void Initialize(const std::string& configPath = "Assets/Config/Engine/door.json");
 
 private:
     

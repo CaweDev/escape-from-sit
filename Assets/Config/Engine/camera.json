@@ -1,0 +1,12 @@
+{
+  "backgroundColor": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1.0 },
+  "orthographicSize": 5.0,
+  "fov": 75.0,
+  "pitch": 0.0,
+  "fogColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+  "fogDistance": 20.0,
+  "fogMinVisibility": 0.2,
+  "fogMaxVisibility": 1.0,
+  "fogPrecision": 200.0,
+  "fogEnabled": false
+}

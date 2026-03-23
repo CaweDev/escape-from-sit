@@ -84,6 +84,12 @@ public:
     /** Unload active scene and cleanup all GameObjects (call before shutdown) */
     static void UnloadActiveScene();
 
+    /**
+     * @brief Load scene manager configuration from game.json (fade durations).
+     * Called automatically by ConfigManager::InitializeAll().
+     */
+    static void Initialize(const std::string& configPath = "Assets/Config/Engine/game.json");
+
 private:
     static Scene* s_activeScene;
     static std::unordered_map<std::string, Scene*> s_sceneRegistry;

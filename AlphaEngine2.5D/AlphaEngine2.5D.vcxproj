@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Editor\EditorScene.cpp" />
     <ClCompile Include="Source\Editor\GameEditor.cpp" />
     <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp" />
     <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
@@ -96,9 +97,11 @@
     <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
@@ -124,6 +127,7 @@
     <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
+    <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
     <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
     <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
@@ -210,9 +214,11 @@
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />

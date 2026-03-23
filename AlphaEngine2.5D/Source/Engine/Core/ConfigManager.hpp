@@ -69,6 +69,22 @@ namespace Engine
             outConfig.FromJson(root);
             return true;
         }
+
+        /**
+         * @brief Initialize ALL engine subsystems from their config files.
+         *
+         * Reads the following files under Assets/Config/Engine/:
+         *   application.json  - targetFrameRate
+         *   camera.json       - camera defaults (backgroundColor, fov, fog, ...)
+         *   physics.json      - gravity, collision radius, deltaTime cap, ...
+         *   rendering.json    - perpWallDistClamp, fogLutDistScale, ...
+         *   door.json         - door audio, animation, fallback colors, ...
+         *   game.json         - scene fade durations
+         *
+         * Call this once in main() after the engine window is created,
+         * before any scenes are loaded.
+         */
+        static void InitializeAll();
     };
 
 } // namespace Engine

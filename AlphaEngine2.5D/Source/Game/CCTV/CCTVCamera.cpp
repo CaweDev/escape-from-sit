@@ -222,10 +222,18 @@ namespace Game {
                 hud->ShowCCTVWarning(true);
             }
             // Play CCTV detected SFX
-            Engine::SoundManager::PlaySFX("cctv_alert");
+            // Use PlayLoop for sustained alert (ensure it stops when player out of sight)
+            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
         }
 
+        // Update sight state
+        bool prevSeeing = isSeeingPlayer;
         isSeeingPlayer = nowSeeing;
+
+        // If we lost the player, stop the alert loop
+        if (prevSeeing && !isSeeingPlayer) {
+            Engine::SoundManager::StopLoop("guard_chasing");
+        }
 
         if (isSeeingPlayer)
         {

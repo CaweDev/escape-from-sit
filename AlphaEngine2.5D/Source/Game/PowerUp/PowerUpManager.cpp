@@ -32,10 +32,10 @@ namespace Game {
 
         // Choose correct placeholder sprite path based on type
         switch (data.type) {
-        case PowerUpType::SpeedBoost:      sr->SetSprite(Engine::AssetManager::GetSprite("Assets/powerup1.png")); break;
-        case PowerUpType::InfiniteStamina: sr->SetSprite(Engine::AssetManager::GetSprite("Assets/powerup2.png")); break;
-        case PowerUpType::Shield:          sr->SetSprite(Engine::AssetManager::GetSprite("Assets/powerup3.png")); break;
-        case PowerUpType::Invisibility:    sr->SetSprite(Engine::AssetManager::GetSprite("Assets/powerup4.png")); break;
+        case PowerUpType::SpeedBoost:      sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Speed.png")); break;
+        case PowerUpType::InfiniteStamina: sr->SetSprite(Engine::AssetManager::GetSprite("Assets/InfStamina.png")); break;
+        case PowerUpType::Shield:          sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Shield.png")); break;
+        case PowerUpType::Invisibility:    sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Invis.png")); break;
         }
 
         sr->billboard = true;

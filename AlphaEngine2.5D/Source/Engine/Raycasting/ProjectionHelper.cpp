@@ -4,6 +4,8 @@
  */
 #include "ProjectionHelper.hpp"
 #include "Engine/Graphics/Camera.hpp"
+#include "Engine/Graphics/RendererSettings.hpp"
+#include "Engine/Math/Mathf.hpp"
 
 
 namespace Engine {
@@ -30,32 +32,32 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     // 3D distance for accurate scaling
     result.distance = std::sqrt(dx * dx + dy * dy + dz * dz);
     
-    if (dist2D < 0.1f) return result; // Too close
+    if (dist2D < RendererSettings::projectionNearClamp) return result; // Too close
 
     // 2. Calculate angle relative to camera (horizontal plane)
     f32 angleToObj = std::atan2(dy, dx);
-    f32 camAngleRad = camRotationDeg * 3.14159f / 180.0f;
+    f32 camAngleRad = camRotationDeg * Mathf::Deg2Rad;
     
     // Relative angle in radians (Inverted to match screen-X increasing right)
     f32 relAngle = camAngleRad - angleToObj;
     
     // Keep in [-PI, PI]
-    while (relAngle < -3.14159f) relAngle += 6.28318f;
-    while (relAngle > 3.14159f) relAngle -= 6.28318f;
+    while (relAngle < -PI) relAngle += 2.0f * PI;
+    while (relAngle >  PI) relAngle -= 2.0f * PI;
     
     // 4. Fisheye correction (perpendicular distance on horizontal plane)
     f32 perpDist = dist2D * std::cos(relAngle);
     result.perpDistance = perpDist;
 
     // 5. Calculate screen X and scale ALWAYS (even if off-screen/behind)
-    f32 fovRad = fovDeg * 3.14159f / 180.0f;
+    f32 fovRad = fovDeg * Mathf::Deg2Rad;
     f32 planeLength = std::tan(fovRad / 2.0f);
     f32 cameraX = std::tan(relAngle) / planeLength;
     result.screenX = (cameraX + 1.0f) * screenWidth / 2.0f;
     
     // Scale uses aspect-ratio-corrected formula matching TileMapRenderer
     // This ensures sprites scale consistently with walls at the same distance
-    f32 safePerpDist = (std::abs(perpDist) > 0.01f) ? std::abs(perpDist) : 0.01f;
+    f32 safePerpDist = (std::abs(perpDist) > RendererSettings::projectionNearClamp) ? std::abs(perpDist) : RendererSettings::projectionNearClamp;
     result.scale = static_cast<f32>(screenWidth) / (safePerpDist * planeLength * 2.0f);
 
     // Screen Y accounts for height difference (objects above camera appear higher on screen)
@@ -66,7 +68,7 @@ ProjectionResult ProjectionHelper::ProjectToScreen(
     result.screenY = (static_cast<f32>(screenHeight) / 2.0f) + pitchOffset - projectedHeight;
 
     // 6. Check visibility for return status
-    if (perpDist < 0.1f) return result; // Behind camera
+    if (perpDist < RendererSettings::projectionNearClamp) return result; // Behind camera
     if (std::abs(relAngle) > (fovRad / 2.0f) * 1.5f) return result; 
 
     result.isVisible = true;

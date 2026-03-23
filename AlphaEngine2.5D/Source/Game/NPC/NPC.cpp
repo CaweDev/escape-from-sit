@@ -38,7 +38,7 @@ namespace Game
 
     void NPC::UpdateAnnoying(float dt)
     {
-        if (PlayerInRange() && playerTf)
+        if (PlayerInRange() && playerTf && !Player::isInvisible)
         {
             // NPC is actively following / annoying the player
             activeTimer = blockTime;

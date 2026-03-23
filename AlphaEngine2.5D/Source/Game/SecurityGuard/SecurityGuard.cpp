@@ -41,8 +41,6 @@ namespace Game {
 
         BuildPathBFS_ToGoal((int)worldPos.x, (int)worldPos.y);
         SetState(GuardState::Chase);
-        // Play guard chasing SFX
-        Engine::SoundManager::PlaySFX("guard_chasing");
     }
 
     void SecurityGuard::Update() {
@@ -93,9 +91,12 @@ namespace Game {
         GuardState old = state;
         state = newState;
 
-        // Play chasing SFX when entering Chase state
+        // Start/stop looping chasing SFX when entering/exiting Chase
         if (newState == GuardState::Chase && old != GuardState::Chase) {
-            Engine::SoundManager::PlaySFX("guard_chasing");
+            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
+        }
+        else if (old == GuardState::Chase && newState != GuardState::Chase) {
+            Engine::SoundManager::StopLoop("guard_chasing");
         }
     }
 

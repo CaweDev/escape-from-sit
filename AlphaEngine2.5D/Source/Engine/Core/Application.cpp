@@ -4,12 +4,25 @@
  */
 #include "Application.hpp"
 #include "Time.hpp"
+#include "ConfigManager.hpp"
+#include <cstdio>
 
 namespace Engine {
 
 int Application::targetFrameRate = 60;
 bool Application::isRunning = true;
 std::unordered_set<std::string> Application::pauseRegistry;
+
+void Application::Initialize(const std::string& configPath)
+{
+    ApplicationConfig config;
+    if (!ConfigManager::ReadConfig(configPath, config))
+    {
+        std::printf("[Warning] Application: Failed to read config '%s'. Using built-in defaults.\n",
+                    configPath.c_str());
+    }
+    targetFrameRate = config.targetFrameRate;
+}
 
 void Application::Quit() {
     isRunning = false;

@@ -5,6 +5,7 @@
 #include "SpriteRenderer.hpp"
 #include "ZBuffer.hpp"
 #include "../Core/Application.hpp"
+#include "../Math/Mathf.hpp"
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -97,7 +98,7 @@ namespace Engine {
 			f32 worldWidth = transform->localScale.x;
 			
 			// Camera vectors for per-column depth calculation
-			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+			f32 camRotRad = Camera::main->transform->rotation * Mathf::Deg2Rad;
 			f32 camForwardX = cosf(camRotRad);
 			f32 camForwardY = sinf(camRotRad);
 			f32 camRightX = sinf(camRotRad);
@@ -118,7 +119,7 @@ namespace Engine {
 			if (screenStart > screenEnd) return;
 
 			// FOV for per-column depth
-			f32 fovRad = Camera::main->fov * 3.14159f / 180.0f;
+			f32 fovRad = Camera::main->fov * Mathf::Deg2Rad;
 			f32 tanHalfFov = tanf(fovRad / 2.0f);
 
 			// Batch visible strips into a single dynamic mesh
@@ -265,7 +266,7 @@ namespace Engine {
 		if (Camera::main && Camera::main->transform) {
 			// Calculate planar distance (dot product along camera forward vector)
 			// This prevents popping when rotating the camera
-			f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+			f32 camRotRad = Camera::main->transform->rotation * Mathf::Deg2Rad;
 			f32 camForwardX = cosf(camRotRad);
 			f32 camForwardY = sinf(camRotRad);
 
