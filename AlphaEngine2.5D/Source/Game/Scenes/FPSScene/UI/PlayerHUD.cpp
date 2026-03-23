@@ -598,6 +598,12 @@ namespace Game
 
     void PlayerHUD::Update()    
     {
+
+
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::O)) {
+            Engine::SoundManager::PlaySFX("ui_click", 1.0f);
+            std::cout << "[Audio Debug] Forced One-Shot of book_nearby!\n";
+        }
         // ==========================================
         // BOOK PROXIMITY AUDIO (DEBUG VERSION)
         // ==========================================
@@ -632,11 +638,11 @@ namespace Game
             }
 
             Engine::SoundManager::UpdateDistanceLoop(
-                "book_nearby",
+                "ui_click",
                 closestBookDist,
                 2.0f,
                 6.0f,
-                0.5f
+                1.0f
             );
         }
         else {
