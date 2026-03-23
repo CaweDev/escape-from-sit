@@ -19,6 +19,7 @@
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Engine/Audio/SoundManager.hpp"
 #include "Game/Player/PlayerPowerUpController.h"
+#include "Game/Puzzle/PuzzleManager.h"
 
 namespace Game
 {
@@ -597,6 +598,53 @@ namespace Game
 
     void PlayerHUD::Update()    
     {
+        // ==========================================
+        // BOOK PROXIMITY AUDIO (DEBUG VERSION)
+        // ==========================================
+
+        // 1. Failsafe: If HUD lost the player, try to find it again!
+        Engine::Transform* activePlayerTrans = m_playerTransform;
+        if (!activePlayerTrans) {
+            auto pObj = Engine::GameObject::Find("Player");
+            if (pObj) activePlayerTrans = pObj->transform;
+        }
+
+        if (activePlayerTrans) {
+            float closestBookDist = 999.0f;
+
+            for (const auto& book : PuzzleManager::allBooks) {
+                if (!book.BookCollected) {
+                    // Let's use pure 2D distance just in case the Z-axis is messing us up!
+                    float dx = activePlayerTrans->position.x - book.BookPosition.x;
+                    float dy = activePlayerTrans->position.y - book.BookPosition.y;
+                    float dist = std::sqrt(dx * dx + dy * dy);
+
+                    if (dist < closestBookDist) {
+                        closestBookDist = dist;
+                    }
+                }
+            }
+
+            // --- SPAM THE CONSOLE (Only when you are close) ---
+            if (closestBookDist < 8.0f) {
+                std::cout << "[Audio Debug] Closest Book: " << closestBookDist
+                    << " units away. Sending to SoundManager...\n";
+            }
+
+            Engine::SoundManager::UpdateDistanceLoop(
+                "book_nearby",
+                closestBookDist,
+                2.0f,
+                6.0f,
+                0.5f
+            );
+        }
+        else {
+            std::cout << "[Audio Debug] ERROR: Cannot find Player Transform!\n";
+        }
+        // ==========================================
+
+
         // Toggle map with M key
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
         {

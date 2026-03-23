@@ -36,23 +36,6 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookSR->enabled = true;
     bookSR->sortingOrder = 100;
 
-    // ==========================================
-    // NEW: ADD PROXIMITY AUDIO COMPONENT HERE
-    // ==========================================
-    auto proxAudio = bookObj->AddComponent<Game::ProximityAudio>();
-
-    // Find the player object to hand its transform to the book
-    auto playerObj = Engine::GameObject::Find("Player");
-    if (playerObj) {
-        proxAudio->playerTransform = playerObj->transform;
-    }
-
-    // Set the audio tuning variables
-    proxAudio->audioKey = "book_nearby";
-    proxAudio->nearDistance = 2.0f;
-    proxAudio->farDistance = 6.0f;
-    proxAudio->maxVolume = 0.5f;
-    // ==========================================
 
     auto bookInteract = bookObj->AddComponent<Interactable>();
     bookInteract->actionText = "Pick up book";
