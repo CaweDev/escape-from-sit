@@ -17,18 +17,49 @@ namespace Game
 
     void LoseScreen::Update()
     {
-        if (!m_visible || !m_isFadingIn) return;
+        if (!m_visible) return;
 
-        m_fadeTimer += Engine::Time::unscaledDeltaTime;
-        float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
-        if (t < 0.0f) t = 0.0f;
-        if (t > 1.0f) t = 1.0f;
-
-        ApplyFade(t);
-
-        if (t >= 1.0f)
+        if (m_isFadingIn)
         {
-            m_isFadingIn = false;
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t >= 1.0f)
+            {
+                m_isFadingIn = false;
+            }
+            return;
+        }
+
+        if (m_isFadingOut)
+        {
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (1.0f - (m_fadeTimer / m_fadeDuration)) : 0.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t <= 0.0f)
+            {
+                m_isFadingOut = false;
+                CompleteHide();
+
+                if (m_pendingAction == PendingAction::LoadMainMenu)
+                {
+                    m_pendingAction = PendingAction::None;
+                    Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
+                }
+                else if (m_pendingAction == PendingAction::RestartFPSScene)
+                {
+                    m_pendingAction = PendingAction::None;
+                    Engine::SceneManager::LoadWithLoadingScreen("FPS");
+                }
+            }
         }
     }
 
@@ -154,10 +185,15 @@ namespace Game
     {
         if (m_visible || !m_overlay) return;
 
+        m_pendingAction = PendingAction::None;
         m_visible = true;
         m_overlay->visible = true;
 
+        if (m_button) m_button->enabled = true;
+        if (m_restartButton) m_restartButton->enabled = true;
+
         m_fadeTimer = 0.0f;
+        m_isFadingOut = false;
         m_isFadingIn = true;
         ApplyFade(0.0f);
 
@@ -168,11 +204,22 @@ namespace Game
 
     void LoseScreen::Hide()
     {
+        if (!m_visible || !m_overlay || m_isFadingOut) return;
+
+        m_isFadingIn = false;
+        m_isFadingOut = true;
+        m_fadeTimer = 0.0f;
+
+        if (m_button) m_button->enabled = false;
+        if (m_restartButton) m_restartButton->enabled = false;
+    }
+
+    void LoseScreen::CompleteHide()
+    {
         if (!m_visible || !m_overlay) return;
 
         m_visible = false;
         m_overlay->visible = false;
-        m_isFadingIn = false;
 
         Engine::Input::UnregisterCursorUnlock("LoseScreen");
         Engine::Application::UnregisterPause("LoseScreen");
@@ -181,14 +228,14 @@ namespace Game
     void LoseScreen::OnButtonClicked()
     {
         Engine::SoundManager::PlaySFX("ui_click");
+        m_pendingAction = PendingAction::LoadMainMenu;
         Hide();
-        Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
     }
 
     void LoseScreen::OnRestartButtonClicked()
     {
         Engine::SoundManager::PlaySFX("ui_click");
+        m_pendingAction = PendingAction::RestartFPSScene;
         Hide();
-        Engine::SceneManager::LoadWithLoadingScreen("FPS");
     }
 }

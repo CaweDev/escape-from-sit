@@ -23,10 +23,20 @@ namespace Game
         UI::Button* m_restartButton = nullptr;   // Restart
         bool m_visible = false;
 
-        // Fade-in state
+        // Fade state
         bool m_isFadingIn = false;
+        bool m_isFadingOut = false;
         float m_fadeTimer = 0.0f;
-        float m_fadeDuration = 0.22f;
+        float m_fadeDuration = 0.5f;
+
+        enum class PendingAction
+        {
+            None = 0,
+            LoadMainMenu,
+            RestartFPSScene
+        };
+
+        PendingAction m_pendingAction = PendingAction::None;
 
     public:
         LoseScreen() = default;
@@ -43,6 +53,7 @@ namespace Game
     private:
         void BuildUI();
         void ApplyFade(float t);
+        void CompleteHide();
         void OnButtonClicked();
         void OnRestartButtonClicked();
     };

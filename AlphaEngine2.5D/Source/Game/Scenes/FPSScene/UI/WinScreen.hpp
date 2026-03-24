@@ -19,13 +19,18 @@ namespace Game
         UI::Panel* m_overlay = nullptr;
         UI::Panel* m_panel = nullptr;
         UI::Text* m_title = nullptr;
+        UI::Text* m_timeSpentText = nullptr;
+        UI::Text* m_highScoreText = nullptr;
         UI::Button* m_button = nullptr;
         bool m_visible = false;
 
-        // Fade-in state
+        // Fade state
         bool m_isFadingIn = false;
+        bool m_isFadingOut = false;
         float m_fadeTimer = 0.0f;
-        float m_fadeDuration = 0.22f;
+        float m_fadeDuration = 0.5f;
+
+        bool m_loadMainMenuAfterFade = false;
 
     public:
         WinScreen() = default;
@@ -42,6 +47,7 @@ namespace Game
     private:
         void BuildUI();
         void ApplyFade(float t);
+        void CompleteHide();
         void OnButtonClicked();
     };
 }

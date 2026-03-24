@@ -33,6 +33,11 @@ namespace Game {
         float floatHeight = 0.15f;
         float floatSpeed = 2.0f;
 
+        // Respawn settings
+        bool allowRespawn = true;
+        float respawnDelay = 20.0f;
+        float respawnTimer = 0.0f;
+
         Engine::SpriteRenderer* spriteRenderer = nullptr;
         Engine::Interactable* interactable = nullptr;
 
@@ -42,6 +47,10 @@ namespace Game {
         void OnCollect();
 
         Engine::Color GetHighlightColor() const;
+
+    private:
+        void SetPickupEnabled(bool enabled);
+        void Respawn();
     };
 
 } // namespace Game

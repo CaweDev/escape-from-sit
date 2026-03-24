@@ -1,4 +1,6 @@
 #include "WinScreen.hpp"
+#include "Game/Player/Player.hpp"
+#include <cstdio>
 
 namespace Game
 {
@@ -8,6 +10,22 @@ namespace Game
         const Engine::Color kPanelColor{ 0.0f, 0.0f, 0.0f, 1.0f };
         const Engine::Color kTitleColor = Engine::Color::white();
         const Engine::Color kButtonColor{ 0.25f, 0.5f, 0.25f, 1.0f };
+
+        void FormatTimeString(float timeSec, char* outBuffer, size_t outSize, const char* label)
+        {
+            if (!outBuffer || outSize == 0) return;
+
+            if (timeSec < 0.0f || timeSec >= 900000.0f)
+            {
+                std::snprintf(outBuffer, outSize, "%s --:--", label);
+                return;
+            }
+
+            int totalSeconds = static_cast<int>(timeSec);
+            int minutes = totalSeconds / 60;
+            int seconds = totalSeconds % 60;
+            std::snprintf(outBuffer, outSize, "%s %02d:%02d", label, minutes, seconds);
+        }
     }
 
     void WinScreen::Awake()
@@ -17,18 +35,44 @@ namespace Game
 
     void WinScreen::Update()
     {
-        if (!m_visible || !m_isFadingIn) return;
+        if (!m_visible) return;
 
-        m_fadeTimer += Engine::Time::unscaledDeltaTime;
-        float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
-        if (t < 0.0f) t = 0.0f;
-        if (t > 1.0f) t = 1.0f;
-
-        ApplyFade(t);
-
-        if (t >= 1.0f)
+        if (m_isFadingIn)
         {
-            m_isFadingIn = false;
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t >= 1.0f)
+            {
+                m_isFadingIn = false;
+            }
+            return;
+        }
+
+        if (m_isFadingOut)
+        {
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (1.0f - (m_fadeTimer / m_fadeDuration)) : 0.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t <= 0.0f)
+            {
+                m_isFadingOut = false;
+                CompleteHide();
+
+                if (m_loadMainMenuAfterFade)
+                {
+                    m_loadMainMenuAfterFade = false;
+                    Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
+                }
+            }
         }
     }
 
@@ -48,6 +92,8 @@ namespace Game
             m_overlay = nullptr;
             m_panel = nullptr;
             m_title = nullptr;
+            m_timeSpentText = nullptr;
+            m_highScoreText = nullptr;
             m_button = nullptr;
         }
     }
@@ -86,6 +132,28 @@ namespace Game
         m_title->SetColor(kTitleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        m_timeSpentText = m_panel->CreateChild<UI::Text>();
+        m_timeSpentText->name = "WinTimeSpent";
+        m_timeSpentText->SetAnchors({ 0.0f, 0.5f }, { 1.0f, 0.5f });
+        m_timeSpentText->SetPivot({ 0.5f, 0.5f });
+        m_timeSpentText->SetAnchoredPosition({ 0.0f, 20.0f });
+        m_timeSpentText->SetSizeDelta({ 0.0f, 42.0f });
+        m_timeSpentText->SetText("Time: 00:00");
+        m_timeSpentText->SetFontSize(2.3f);
+        m_timeSpentText->SetColor(kTitleColor);
+        m_timeSpentText->SetAnchor(UI::TextAnchor::MiddleCenter);
+
+        m_highScoreText = m_panel->CreateChild<UI::Text>();
+        m_highScoreText->name = "WinHighScore";
+        m_highScoreText->SetAnchors({ 0.0f, 0.5f }, { 1.0f, 0.5f });
+        m_highScoreText->SetPivot({ 0.5f, 0.5f });
+        m_highScoreText->SetAnchoredPosition({ 0.0f, -20.0f });
+        m_highScoreText->SetSizeDelta({ 0.0f, 42.0f });
+        m_highScoreText->SetText("Best: 00:00");
+        m_highScoreText->SetFontSize(2.1f);
+        m_highScoreText->SetColor(kTitleColor);
+        m_highScoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
+
         m_button = m_panel->CreateChild<UI::Button>();
         m_button->name = "WinButton";
         m_button->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
@@ -115,6 +183,8 @@ namespace Game
         Engine::Color title = kTitleColor;
         title.a *= t;
         if (m_title) m_title->SetColor(title);
+        if (m_timeSpentText) m_timeSpentText->SetColor(title);
+        if (m_highScoreText) m_highScoreText->SetColor(title);
 
         Engine::Color btn = kButtonColor;
         btn.a *= t;
@@ -132,10 +202,27 @@ namespace Game
     {
         if (m_visible || !m_overlay) return;
 
+        auto* player = gameObject ? gameObject->GetComponent<Player>() : nullptr;
+        if (player)
+        {
+            char currentTimeBuffer[64]{};
+            char highScoreBuffer[64]{};
+
+            FormatTimeString(player->GetGameTime(), currentTimeBuffer, sizeof(currentTimeBuffer), "Time:");
+            FormatTimeString(player->GetHighScore(), highScoreBuffer, sizeof(highScoreBuffer), "Best:");
+
+            if (m_timeSpentText) m_timeSpentText->SetText(currentTimeBuffer);
+            if (m_highScoreText) m_highScoreText->SetText(highScoreBuffer);
+        }
+
+        m_loadMainMenuAfterFade = false;
         m_visible = true;
         m_overlay->visible = true;
 
+        if (m_button) m_button->enabled = true;
+
         m_fadeTimer = 0.0f;
+        m_isFadingOut = false;
         m_isFadingIn = true;
         ApplyFade(0.0f);
 
@@ -146,11 +233,21 @@ namespace Game
 
     void WinScreen::Hide()
     {
+        if (!m_visible || !m_overlay || m_isFadingOut) return;
+
+        m_isFadingIn = false;
+        m_isFadingOut = true;
+        m_fadeTimer = 0.0f;
+
+        if (m_button) m_button->enabled = false;
+    }
+
+    void WinScreen::CompleteHide()
+    {
         if (!m_visible || !m_overlay) return;
 
         m_visible = false;
         m_overlay->visible = false;
-        m_isFadingIn = false;
 
         Engine::Input::UnregisterCursorUnlock("WinScreen");
         Engine::Application::UnregisterPause("WinScreen");
@@ -159,7 +256,7 @@ namespace Game
     void WinScreen::OnButtonClicked()
     {
         Engine::SoundManager::PlaySFX("ui_click");
+        m_loadMainMenuAfterFade = true;
         Hide();
-        Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
     }
 }
