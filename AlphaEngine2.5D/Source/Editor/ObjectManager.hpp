@@ -1,10 +1,7 @@
 #pragma once
+#include "Engine/Core/GameObject.hpp"
 
-namespace Engine
-{
-    class GameObject;
-    class Component;
-}
+
 
 namespace AEEditor
 {
@@ -13,7 +10,8 @@ namespace AEEditor
     public:
         static Engine::GameObject *selectedObject;
         static Engine::GameObject *draggingObject;
-        static void DrawHierarchy();
+        static std::vector<Engine::GameObject *> loadedObjects;
+         static void DrawHierarchy();
         static void DrawInspector();
         static void SaveSceneToJson(const char *filepath);
         static void LoadSceneFromJson(const char *filepath);

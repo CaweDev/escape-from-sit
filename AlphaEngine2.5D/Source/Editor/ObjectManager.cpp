@@ -4,16 +4,22 @@
 #include <cstring>
 #include <json/json.h>
 #include <fstream>
+#include <filesystem>
+#include <algorithm>
 
 #include "Reflection.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Component.hpp"
 #include "Engine/Scene/SceneManager.hpp"
+#include "Engine/Core/AssetManager.hpp"
+#include "Engine/Graphics/SpriteRenderer.hpp"
+
 namespace AEEditor
 {
-
     Engine::GameObject *ObjectManager::selectedObject = nullptr;
     Engine::GameObject *ObjectManager::draggingObject = nullptr;
+    std::vector<Engine::GameObject *> ObjectManager::loadedObjects;
+
     void ObjectManager::DrawHierarchy()
     {
         ImGui::Begin("Hierarchy");
@@ -26,27 +32,24 @@ namespace AEEditor
         if (ImGui::Button("Create Empty GameObject", ImVec2(-1, 0)))
         {
             auto *newObj = Engine::SceneManager::GetActiveScene()->CreateGameObject("New GameObject");
+            loadedObjects.push_back(newObj);
             selectedObject = newObj;
         }
         ImGui::Separator();
 
-        const auto &allObjects = Engine::GameObject::GetAllGameObjects();
-
-        for (auto *obj : allObjects)
+        for (auto *obj : loadedObjects)
         {
             if (!obj || obj->isPendingDestruction)
                 continue;
 
             bool isSelected = (selectedObject == obj);
 
-            // Render selectable row
             if (ImGui::Selectable(obj->name.c_str(), isSelected))
             {
                 selectedObject = obj;
                 GameEditor::currentTileValue = -1;
             }
 
-            // Keep focus if selected
             if (isSelected)
             {
                 ImGui::SetItemDefaultFocus();
@@ -91,7 +94,6 @@ namespace AEEditor
         {
             for (const auto &[name, typeIdx] : Registry::nameToType)
             {
-                // Exclude Transform to prevent duplicates
                 if (name == "Transform")
                     continue;
 
@@ -109,49 +111,40 @@ namespace AEEditor
             if (!comp)
                 continue;
 
-            // 1. Lookup metadata via RTTI
             auto it = Registry::types.find(std::type_index(typeid(*comp)));
             if (it == Registry::types.end())
-                continue; // Unregistered component
+                continue;
 
             const TypeDescriptor &meta = it->second;
 
             ImGui::PushID(comp);
             if (ImGui::CollapsingHeader(meta.name.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
             {
-
                 ImGui::Checkbox("Enabled", &comp->enabled);
 
-                // 2. Iterate memory offsets
                 for (const auto &field : meta.fields)
                 {
-
-                    // 3. Calculate absolute memory address of the specific variable
                     void *rawAddress = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
                     ImGui::Text(field.name.c_str());
                     ImGui::PushID(field.name.c_str());
                     ImGui::SetNextItemWidth(-FLT_MIN);
-                    // 4. Cast and draw based on enum
                     switch (field.type)
                     {
                     case DataType::Float:
                     {
                         float *val = static_cast<float *>(rawAddress);
-
                         ImGui::DragFloat("##", val, 0.1f);
                         break;
                     }
                     case DataType::Int:
                     {
                         int *val = static_cast<int *>(rawAddress);
-
                         ImGui::DragInt("##", val);
                         break;
                     }
                     case DataType::Bool:
                     {
                         bool *val = static_cast<bool *>(rawAddress);
-
                         ImGui::Checkbox("##", val);
                         break;
                     }
@@ -180,6 +173,78 @@ namespace AEEditor
                         }
                         break;
                     }
+                    case DataType::Sprite:
+                    {
+                        std::string *path = static_cast<std::string *>(rawAddress);
+
+                        std::string displayLabel = path->empty() ? "Select Sprite..." : *path;
+
+                        if (ImGui::BeginCombo("##SpriteCombo", displayLabel.c_str()))
+                        {
+                            if (std::filesystem::exists("Assets"))
+                            {
+                                for (const auto &entry : std::filesystem::recursive_directory_iterator("Assets"))
+                                {
+                                    if (!entry.is_regular_file())
+                                        continue;
+
+                                    std::string ext = entry.path().extension().string();
+                                    std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+                                    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
+                                    {
+                                        std::string filePath = entry.path().string();
+                                        std::replace(filePath.begin(), filePath.end(), '\\', '/');
+
+                                        bool isSelected = (*path == filePath);
+                                        if (ImGui::Selectable(filePath.c_str(), isSelected))
+                                        {
+                                            *path = filePath;
+
+                                            if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
+                                            {
+                                                sr->SetSprite(Engine::AssetManager::GetSprite(*path));
+                                            }
+                                        }
+
+                                        if (isSelected)
+                                        {
+                                            ImGui::SetItemDefaultFocus();
+                                        }
+                                    }
+                                }
+                            }
+                            ImGui::EndCombo();
+                        }
+
+                        if (ImGui::BeginDragDropTarget())
+                        {
+                            if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("DND_ASSET_SPRITE"))
+                            {
+                                const char *droppedPath = (const char *)payload->Data;
+                                *path = droppedPath;
+                                if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
+                                {
+                                    sr->SetSprite(Engine::AssetManager::GetSprite(*path));
+                                }
+                            }
+                            ImGui::EndDragDropTarget();
+                        }
+                        break;
+                    }
+                    case DataType::String:
+                    {
+                        std::string *str = static_cast<std::string *>(rawAddress);
+                        char buf[256];
+                        strncpy_s(buf, str->c_str(), sizeof(buf));
+                        buf[sizeof(buf) - 1] = '\0';
+
+                        if (ImGui::InputText("##", buf, sizeof(buf)))
+                        {
+                            *str = buf;
+                        }
+                        break;
+                    }
                     }
 
                     ImGui::PopID();
@@ -196,7 +261,7 @@ namespace AEEditor
         Json::Value root;
         Json::Value &goArray = root["GameObjects"];
 
-        for (auto *go : Engine::GameObject::GetAllGameObjects())
+        for (auto *go : loadedObjects)
         {
             if (!go || go->isPendingDestruction)
                 continue;
@@ -248,6 +313,16 @@ namespace AEEditor
                         compJson[field.name]["z"] = v->z;
                         break;
                     }
+                    case DataType::Sprite:
+                    {
+                        compJson[field.name] = *static_cast<std::string *>(addr);
+                        break;
+                    }
+                    case DataType::String:
+                    {
+                        compJson[field.name] = *static_cast<std::string *>(addr);
+                        break;
+                    }
                     }
                 }
                 compArray.append(compJson);
@@ -273,11 +348,16 @@ namespace AEEditor
         file >> root;
         file.close();
 
+        loadedObjects.clear();
+        selectedObject = nullptr;
+
         const Json::Value &goArray = root["GameObjects"];
         for (const auto &goJson : goArray)
         {
             auto *go = Engine::SceneManager::GetActiveScene()->CreateGameObject(goJson["Name"].asString());
             go->active = goJson["Active"].asBool();
+
+            loadedObjects.push_back(go);
 
             const Json::Value &compArray = goJson["Components"];
             for (const auto &compJson : compArray)
@@ -332,6 +412,22 @@ namespace AEEditor
                         v->x = val["x"].asFloat();
                         v->y = val["y"].asFloat();
                         v->z = val["z"].asFloat();
+                        break;
+                    }
+                    case DataType::Sprite:
+                    {
+                        std::string path = val.asString();
+                        *static_cast<std::string *>(addr) = path;
+
+                        if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
+                        {
+                            sr->SetSprite(Engine::AssetManager::GetSprite(path));
+                        }
+                        break;
+                    }
+                    case DataType::String:
+                    {
+                        *static_cast<std::string *>(addr) = val.asString();
                         break;
                     }
                     }

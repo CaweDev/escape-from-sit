@@ -25,7 +25,7 @@ namespace Engine {
     public:
         /** The sprite to render */
         Sprite* sprite;
-
+        std::string spritePath;
         /** Color tint multiplier */
         Color color = Color::white();
 

@@ -19,7 +19,9 @@ namespace AEEditor
         Bool,
         Vector2,
         Vector3,
-        Color
+        Color,
+        Sprite,
+        String
     };
 
     struct FieldDescriptor
