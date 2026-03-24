@@ -21,7 +21,6 @@
 #include "Engine/Math/Mathf.hpp"
 #include "Engine/Core/AssetManager.hpp"
 #include <cfloat>
-#include <climits>
 #include <cmath>
 #include <string>
 
@@ -51,6 +50,16 @@ void InteractionController::Update() {
     if (!IsActiveCamera()) {
         return;
     }
+
+    // Disable all interaction when delta time is too small
+    if (Time::deltaTime < Mathf::Epsilon) {
+        if (m_currentTarget) {
+            SetTarget(nullptr);
+        }
+        m_isHolding = false;
+        m_holdTimer = 0.0f;
+        return;
+    }
     
     // Update crosshair textures if changed at runtime
     if (m_crosshair) {
@@ -59,7 +68,10 @@ void InteractionController::Update() {
     }
     
     // Find what we're looking at
-    Interactable* target = FindTargetAtScreenCenter();
+    Interactable* target = m_currentTarget;
+    if (Time::deltaTime >= Mathf::Epsilon) {
+        target = FindTargetAtScreenCenter();
+    }
     
     // Update if target changed
     if (target != m_currentTarget) {
@@ -146,34 +158,6 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
     s64 sh = Application::GetWindowHeight();
     f32 screenCenterX = static_cast<f32>(sw) / 2.0f;
     f32 screenCenterY = static_cast<f32>(sh) / 2.0f;
-
-    // UI should block world interaction when it is on top of the crosshair point.
-    if (UI::UIManager* uiManager = UI::UIManager::GetInstance()) {
-        f32 centerWorldX = 0.0f;
-        f32 centerWorldY = 0.0f;
-        UI::UIManager::ScreenToWorld(static_cast<s32>(screenCenterX), static_cast<s32>(screenCenterY), centerWorldX, centerWorldY);
-
-        const auto& canvases = uiManager->GetCanvases();
-        UI::UIElement* topHit = nullptr;
-        s32 topSortOrder = INT_MIN;
-
-        for (UI::Canvas* canvas : canvases) {
-            if (!canvas) continue;
-
-            UI::UIElement* hit = canvas->Raycast(centerWorldX, centerWorldY);
-            if (!hit) continue;
-
-            const s32 sortOrder = canvas->GetSortOrder();
-            if (!topHit || sortOrder >= topSortOrder) {
-                topHit = hit;
-                topSortOrder = sortOrder;
-            }
-        }
-
-        if (topHit) {
-            return nullptr;
-        }
-    }
     
     Interactable* closestTarget = nullptr;
     f32 closestDist = FLT_MAX;
