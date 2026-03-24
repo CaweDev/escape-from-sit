@@ -11,6 +11,15 @@ std::string PuzzleManager::activeBookText = "";
 std::string PuzzleManager::activeBookTitle = "";
 float PuzzleManager::popupTimer = 0.0f;
 
+bool PuzzleManager::isQuizActive = false;
+int PuzzleManager::currentCorrectAnswer = 0;
+Engine::GameObject* PuzzleManager::currentBookObj = nullptr;
+int PuzzleManager::currentBookId = 0;
+
+std::string PuzzleManager::activeOpt1 = "";
+std::string PuzzleManager::activeOpt2 = "";
+std::string PuzzleManager::activeOpt3 = "";
+
 void PuzzleManager::CreatePuzzleObject(Book book)
 {
     // Create dummy enemy with collider
@@ -41,45 +50,67 @@ void PuzzleManager::CreatePuzzleObject(Book book)
     bookInteract->actionText = "Pick up book";
     bookInteract->maxDistance = 2.5f;
  
-    bookInteract->onInteract = [bookPuzzleObj, bookObj,book]() {
-        if (!bookPuzzleObj->isReading) {
+    bookInteract->onInteract = [bookPuzzleObj, bookObj, book]() {
+        // Only open the quiz if they aren't already reading or answering one!
+        if (!bookPuzzleObj->isReading && !PuzzleManager::isQuizActive) {
+
+            // 1. Mark this specific book as currently being read
             bookPuzzleObj->isReading = true;
-            Engine::GameObject::Destroy(bookObj);
 
-            PuzzleManager::allBooks[book.BookId].BookCollected = true;
-            PuzzleManager::booksCollected++;
+            // 2. Lock the engine into "Quiz Mode"
+            PuzzleManager::isQuizActive = true;
 
-            int totalBooks = (int)PuzzleManager::allBooks.size();
+            // 3. Store the data so the HUD knows which book to destroy if they are right
+            PuzzleManager::currentBookObj = bookObj;
+            PuzzleManager::currentBookId = book.BookId;
+            PuzzleManager::currentCorrectAnswer = book.CorrectAnswer;
 
-            // --- NEW AUDIO LOGIC ---
-            if (PuzzleManager::booksCollected >= totalBooks) {
-                // It's the last book! Play the victory sound.
-                Engine::SoundManager::PlaySFX("all_books_collected");
-            }
-            else {
-                // Just a normal book. Play the standard pickup sound.
-                Engine::SoundManager::PlaySFX("card_collect");
-            }
-
+            // 4. Send the Question (Lore) to the UI
             PuzzleManager::activeBookTitle = book.BookName;
             PuzzleManager::activeBookText = book.BookLore;
-            PuzzleManager::popupTimer = 3.0f;
-        }
 
+            PuzzleManager::activeOpt1 = book.Opt1;
+            PuzzleManager::activeOpt2 = book.Opt2;
+            PuzzleManager::activeOpt3 = book.Opt3;
+
+            // 5. Set timer to 999 seconds so it stays on screen until they press 1, 2, or 3
+            PuzzleManager::popupTimer = 999.0f;
+        }
         };
 
 }
 
 void PuzzleManager::BookDataInit()
 {
-    std::array<std::string,6>BookName = { "HLP LESSON 1 ","HLP LESSON 2","HLP LESSON 3","HLP LESSON 4","HLP LESSON 5","HLP LESSON 6" };
+    std::array<std::string, 6> BookName = { "POP QUIZ 1", "POP QUIZ 2", "POP QUIZ 3", "POP QUIZ 4", "POP QUIZ 5", "POP QUIZ 6" };
+
+    // Write your questions and the 3 options inside the Lore string
     std::array<std::string, 6> BookLore = {
-        "GG HLP Mid Term F",
-        "Need to Lock in for Finals",
-        "Class template???????",
-        "Ok maybe can pass now",
-        "B for HLP!?!?",
-        "Confirm A now" };
+        "What does 'int*' represent?",
+        "What is a memory leak?",
+        "Which of these is a Loop?",
+        "Question 4?",
+        "Question 5?",
+        "Question 6?"
+    };
+
+    std::array<std::string, 6> Opt1 = { "1. A memory address", "1. Spilled RAM", "1. if()", "1. A", "1. A", "1. A" };
+    std::array<std::string, 6> Opt2 = { "2. A decimal number", "2. Unfreed memory", "2. switch()", "2. B", "2. B", "2. B" };
+    std::array<std::string, 6> Opt3 = { "3. A boolean", "3. A fast CPU", "3. while()", "3. C", "3. C", "3. C" };
+
+    // The correct key they need to press (1, 2, or 3)
+    int CorrectAnswers[6] = { 1, 2, 3, 2, 1, 3 };
+
+
+
+    //std::array<std::string,6>BookName = { "HLP LESSON 1 ","HLP LESSON 2","HLP LESSON 3","HLP LESSON 4","HLP LESSON 5","HLP LESSON 6" };
+    //std::array<std::string, 6> BookLore = {
+    //    "GG HLP Mid Term F",
+    //    "Need to Lock in for Finals",
+    //    "Class template???????",
+    //    "Ok maybe can pass now",
+    //    "B for HLP!?!?",
+    //    "Confirm A now" };
     Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
 
     for (int i{}; i < 6; ++i) {
@@ -88,7 +119,11 @@ void PuzzleManager::BookDataInit()
         BookCoord[i],// Position (x, y, z)
         false,              // isCollected  
         BookName[i],
-        BookLore[i]
+        BookLore[i],
+        Opt1[i],
+        Opt2[i],
+        Opt3[i],
+        CorrectAnswers[i]
             });
     }
 }
