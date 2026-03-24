@@ -137,7 +137,7 @@ namespace Game {
         // =====================
         ZoneManager zoneMgr;
         Heatmap     heatmap;
-        UCB1Bandit  bandit{ 4, 1.25f };
+        UCB1Bandit  bandit{ 4, 2.0f };
 
         std::vector<int> zoneGrid; // w*h, values 0..4
 
@@ -147,8 +147,8 @@ namespace Game {
         int   prevChosenZoneId = 1; // 1..4 
 
         // Reward tuning
-        float wHeat = 0.75f;
-        float wCCTV = 0.25f;
+        float wHeat = 0.55f;
+        float wCCTV = 0.45f;
         float heatRef = 50.0f; // tune based on testing
         float cctvRef = 6.0f;  // tune based on testing
 
@@ -510,62 +510,105 @@ namespace Game {
                 }
             }
         }
-
         void BanditTick()
         {
-            // Observe player's actual current zone
-            int ptx = (int)std::floor(playerTf->position.x);
-            int pty = (int)std::floor(playerTf->position.y);
-            int observedZone = GetZoneId(ptx, pty);
-            if (observedZone < 1 || observedZone > 4) observedZone = 1; // fallback
+            float zoneReward[5] = { 0,0,0,0,0 };
 
-            // Compute reward for the zone player is currently in
-            float heatSum = heatmap.SumZone(zoneMgr.GetGrid(), observedZone);
-            float heatN = Clamp01(heatSum / heatRef);
+            // Compute current reward signal for ALL zones
+            for (int z = 1; z <= 4; ++z)
+            {
+                float heatSum = heatmap.SumZone(zoneMgr.GetGrid(), z);
+                float heatN = Clamp01(heatSum / heatRef);
 
-            float cctvN = Clamp01(cctvScore[observedZone] / cctvRef);
+                float cctvN = Clamp01(cctvScore[z] / cctvRef);
 
-            float reward = Clamp01(wHeat * heatN + wCCTV * cctvN);
+                zoneReward[z] = Clamp01(wHeat * heatN + wCCTV * cctvN);
+            }
 
-            // Update the bandit arm corresponding to observed zone
-            bandit.Update(observedZone - 1, reward);
+            static float switchCooldown = 0.0f;
+            switchCooldown -= banditInterval;
+            if (switchCooldown < 0.0f) switchCooldown = 0.0f;
 
-            // Choose next priority zone
             int nextArm = bandit.SelectArm();
+            if (nextArm < 0) return;
+
             int nextZone = nextArm + 1;
 
-            // Debug: Log bandit decision (only when it changes)
+            // Stay committed to current priority while cooldown is active
+            if (switchCooldown > 0.0f) {
+                nextZone = priorityZoneId;
+                nextArm = nextZone - 1;
+            }
+            else {
+                if (nextZone != priorityZoneId) {
+                    // Strong CCTV evidence -> stay longer
+                    if (cctvScore[nextZone] > 0.5f) {
+                        switchCooldown = 25.0f;
+                    }
+                    else {
+                        switchCooldown = 8.0f;
+                    }
+                }
+            }
+
+            // Update chosen arm using that zone's current reward
+            bandit.Update(nextArm, zoneReward[nextZone]);
+
+            // Debug print
             static int lastDebugZone = -1;
             if (nextZone != lastDebugZone) {
-                std::cout << "[BANDIT] Player in Zone " << Game::ZoneIdToLetter(observedZone) 
-                          << " (" << observedZone << "), ML Priority ? Zone " << Game::ZoneIdToLetter(nextZone)
-                          << " (" << nextZone << ")\n";
+                std::cout << "[BANDIT] ML Priority -> Zone "
+                    << Game::ZoneIdToLetter(nextZone)
+                    << " (" << nextZone << ")\n";
+
+                std::cout << "  Reward: Z1=" << zoneReward[1]
+                    << " Z2=" << zoneReward[2]
+                    << " Z3=" << zoneReward[3]
+                    << " Z4=" << zoneReward[4] << "\n";
+
                 std::cout << "  Heat: Z1=" << heatmap.SumZone(zoneMgr.GetGrid(), 1)
-                          << " Z2=" << heatmap.SumZone(zoneMgr.GetGrid(), 2)
-                          << " Z3=" << heatmap.SumZone(zoneMgr.GetGrid(), 3)
-                          << " Z4=" << heatmap.SumZone(zoneMgr.GetGrid(), 4) << "\n";
-                std::cout << "  CCTV: Z1=" << cctvScore[1] << " Z2=" << cctvScore[2]
-                          << " Z3=" << cctvScore[3] << " Z4=" << cctvScore[4] << "\n";
-                std::cout << "  Pulls: Arm0=" << bandit.Pulls(0) << " Arm1=" << bandit.Pulls(1)
-                          << " Arm2=" << bandit.Pulls(2) << " Arm3=" << bandit.Pulls(3) << "\n";
+                    << " Z2=" << heatmap.SumZone(zoneMgr.GetGrid(), 2)
+                    << " Z3=" << heatmap.SumZone(zoneMgr.GetGrid(), 3)
+                    << " Z4=" << heatmap.SumZone(zoneMgr.GetGrid(), 4) << "\n";
+
+                std::cout << "  CCTV: Z1=" << cctvScore[1]
+                    << " Z2=" << cctvScore[2]
+                    << " Z3=" << cctvScore[3]
+                    << " Z4=" << cctvScore[4] << "\n";
+
+                std::cout << "  Pulls: Arm0=" << bandit.Pulls(0)
+                    << " Arm1=" << bandit.Pulls(1)
+                    << " Arm2=" << bandit.Pulls(2)
+                    << " Arm3=" << bandit.Pulls(3) << "\n";
+
+                std::cout << "  Means: Arm0=" << bandit.Value(0)
+                    << " Arm1=" << bandit.Value(1)
+                    << " Arm2=" << bandit.Value(2)
+                    << " Arm3=" << bandit.Value(3) << "\n";
+
+                std::cout << "  Commit cooldown: " << switchCooldown << "s\n";
+
                 lastDebugZone = nextZone;
             }
 
-            // Track how long zone has been priority
+            // Track how long chosen zone stays priority
             if (nextZone == priorityZoneId) {
                 priorityZoneHotTimer += banditInterval;
-            } else {
-                priorityZoneHotTimer = 0.0f; // reset if zone changes
-                fullEscalationActive = false; // clear full escalation
+            }
+            else {
+                priorityZoneHotTimer = 0.0f;
+                fullEscalationActive = false;
             }
 
             prevChosenZoneId = nextZone;
+            priorityZoneId = nextZone;
             ApplyPriorityZone_AssistNearest(nextZone);
 
-            // decay CCTV score gradually
-            for (int z = 1; z <= 4; ++z) 
-                cctvScore[z] *= 0.70f;
+            // Decay CCTV score less aggressively
+            for (int z = 1; z <= 4; ++z)
+                cctvScore[z] *= 0.85f;
         }
+      
 
     public:
         void OnLoad() override
@@ -1369,24 +1412,37 @@ namespace Game {
                 if (cctvCooldown[i] > 0.0f)
                     cctvCooldown[i] -= Engine::Time::deltaTime;
 
-                if (s->hasLastSeen && cctvCooldown[i] <= 0.0f)
+                if (s->hasLastSeen)
                 {
                     int tx = (int)s->lastSeenWorld.x;
                     int ty = (int)s->lastSeenWorld.y;
                     int zid = GetZoneId(tx, ty);
+
                     if (zid >= 1 && zid <= 4) {
-                        cctvScore[zid] += cctvSpikeAmount;
 
-                        // CCTV triggers immediate priority update (feels responsive)
-                        priorityZoneId = zid;
-                        ApplyPriorityZone_AssistNearest(zid);
+                        // ALWAYS show in visualizer (real-time log)
+                        if (banditVisualizer) {
+                            banditVisualizer->SetCCTVStatus(
+                                zid,
+                                s->lastSeenWorld.x,
+                                s->lastSeenWorld.y,
+                                true
+                            );
+                        }
+
+                        // ONLY spike score if cooldown allows
+                        if (cctvCooldown[i] <= 0.0f) {
+                            cctvScore[zid] += cctvSpikeAmount;
+
+                            priorityZoneId = zid;
+                            ApplyPriorityZone_AssistNearest(zid);
+
+                            for (auto* g : guards)
+                                if (g) g->OnCCTVSpotted(s->lastSeenWorld);
+
+                            cctvCooldown[i] = cctvSpikeCooldown;
+                        }
                     }
-
-                    // notify guards (Option B: only affects Patrol guards)
-                    for (auto* g : guards)
-                        if (g) g->OnCCTVSpotted(s->lastSeenWorld);
-
-                    cctvCooldown[i] = cctvSpikeCooldown;
                 }
 
                 // clear every frame so it doesn't spam

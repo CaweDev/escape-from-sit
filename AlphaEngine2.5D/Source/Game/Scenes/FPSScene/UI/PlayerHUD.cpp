@@ -987,10 +987,24 @@ namespace Game
             m_cctvWarningPanel->visible = true;
             m_cctvWarningTimer = m_cctvWarningDuration;
             Engine::SoundManager::PlaySFX("cctv_alert", 0.8f);
+
+            if (m_banditVisualizer && m_playerTransform) {
+                float px = m_playerTransform->position.x;
+                float py = m_playerTransform->position.y;
+                int zone = m_currentZone;
+                m_banditVisualizer->SetCCTVStatus(zone, px, py, true);
+            }
         }
         else {
             m_cctvWarningPanel->visible = false;
             m_cctvWarningTimer = 0.0f;
+
+            if (m_banditVisualizer && m_playerTransform) {
+                float px = m_playerTransform->position.x;
+                float py = m_playerTransform->position.y;
+                int zone = m_currentZone;
+                m_banditVisualizer->SetCCTVStatus(zone, px, py, false);
+            }
         }
     }
 
@@ -1119,16 +1133,26 @@ namespace Game
     
     void PlayerHUD::CheckZoneChange(int zoneId)
     {
-        // Initialize on first call (don't show notification on spawn)
+        if (zoneId < 1 || zoneId > 4) return;
+
         if (m_currentZone == -1) {
             m_currentZone = zoneId;
-            std::cout << "[PlayerHUD] Initial zone set to " << Game::ZoneIdToLetter(zoneId) << " (no notification)\n";
+
+            if (m_banditVisualizer) {
+                m_banditVisualizer->SetSelectedZone(zoneId);
+            }
+
+            std::cout << "[PlayerHUD] Initial zone set to " << zoneId << "\n";
             return;
         }
-        
-        // Check if zone changed
-        if (zoneId != m_currentZone && zoneId >= 1 && zoneId <= 4) {
+
+        if (zoneId != m_currentZone) {
             m_currentZone = zoneId;
+
+            if (m_banditVisualizer) {
+                m_banditVisualizer->SetSelectedZone(zoneId);
+            }
+
             ShowZoneEntry(zoneId);
         }
     }
