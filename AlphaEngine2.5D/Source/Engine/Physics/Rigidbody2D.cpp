@@ -25,8 +25,9 @@ void Rigidbody2D::FixedUpdate() {
     if (bodyType == RigidbodyType2D::Static) return;
     if (!transform) return;
     
+    static constexpr f32 kDefaultFixedDT = 0.02f; // 50 Hz fallback when Time::fixedDeltaTime is not yet set
     f32 dt = Time::fixedDeltaTime;
-    if (dt <= 0) dt = 0.02f; // Default 50Hz physics
+    if (dt <= 0) dt = kDefaultFixedDT;
     
     // Apply gravity if not grounded
     if (!isGrounded && bodyType == RigidbodyType2D::Dynamic) {

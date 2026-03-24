@@ -8,13 +8,44 @@
 #include "../Graphics/Sprite.hpp"
 #include "../Graphics/Color.hpp"
 #include "../Core/Component.hpp"
+#include "../Core/ConfigManager.hpp"
 #include "AEEngine.h"
 #include <memory>
+#include <string>
 
 namespace Engine {
 
 // Forward declarations
 class Door;
+
+/**
+ * @brief IConfig implementation for DoorRenderer, deserialised from door.json.
+ */
+struct DoorRendererConfig : public IConfig
+{
+    Color colorNS = Color(0.6f, 0.4f, 0.2f, 1.0f);
+    Color colorEW = Color(0.5f, 0.35f, 0.18f, 1.0f);
+    float fov     = 75.0f;
+
+    void FromJson(const Json::Value& j) override
+    {
+        if (j.isMember("rendererColorNS")) {
+            const auto& c = j["rendererColorNS"];
+            colorNS = Color(c.get("r", colorNS.r).asFloat(),
+                            c.get("g", colorNS.g).asFloat(),
+                            c.get("b", colorNS.b).asFloat(),
+                            c.get("a", colorNS.a).asFloat());
+        }
+        if (j.isMember("rendererColorEW")) {
+            const auto& c = j["rendererColorEW"];
+            colorEW = Color(c.get("r", colorEW.r).asFloat(),
+                            c.get("g", colorEW.g).asFloat(),
+                            c.get("b", colorEW.b).asFloat(),
+                            c.get("a", colorEW.a).asFloat());
+        }
+        fov     = j.get("rendererFov", fov).asFloat();
+    }
+};
 
 /**
  * @class DoorRenderer
@@ -41,6 +72,12 @@ public:
     
     DoorRenderer();
     virtual ~DoorRenderer();
+
+    /**
+     * @brief Load DoorRenderer defaults from door.json.
+     * Call once at startup; newly created DoorRenderers will pick up these defaults.
+     */
+    static void Initialize(const std::string& configPath = "Assets/Config/Engine/door.json");
     
     /** Render the door */
     void Render() override;

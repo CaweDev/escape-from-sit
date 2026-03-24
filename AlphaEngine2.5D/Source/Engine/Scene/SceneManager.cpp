@@ -6,20 +6,42 @@
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/UI/Helpers/FadeService.hpp"
 #include "Engine/Audio/SoundManager.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+#include <cstdio>
 
 namespace Engine {
 
-f32 SceneManager::s_defaultLoadScreenFadeInDuration = 1.f;
+// Default values are read from file in initialize()
+f32 SceneManager::s_defaultLoadScreenFadeInDuration  = 1.f;
 f32 SceneManager::s_defaultLoadScreenFadeOutDuration = 1.f;
 Scene* SceneManager::s_activeScene = nullptr;
 std::unordered_map<std::string, Scene*> SceneManager::s_sceneRegistry;
 std::string SceneManager::s_pendingScene;
 bool SceneManager::s_hasPendingScene = false;
 std::string SceneManager::s_loadWithScreenTarget;
-f32 SceneManager::s_loadWithScreenFadeInDuration = 1.f;
+f32 SceneManager::s_loadWithScreenFadeInDuration  = 1.f;
 f32 SceneManager::s_loadWithScreenFadeOutDuration = 1.f;
 bool SceneManager::s_hasPendingPostLoadFadeOut = false;
 f32 SceneManager::s_pendingPostLoadFadeOutDuration = 0.0f;
+
+void SceneManager::Initialize(const std::string& configPath)
+{
+    struct GameConfig : public IConfig {
+        float fadeIn  = 1.0f;
+        float fadeOut = 1.0f;
+        void FromJson(const Json::Value& j) override {
+            fadeIn  = j.get("sceneLoadFadeInDuration",  fadeIn).asFloat();
+            fadeOut = j.get("sceneLoadFadeOutDuration", fadeOut).asFloat();
+        }
+    };
+    GameConfig config;
+    if (!ConfigManager::ReadConfig(configPath, config))
+        std::printf("[Warning] SceneManager: Failed to read config '%s'. Using defaults.\n", configPath.c_str());
+    s_defaultLoadScreenFadeInDuration  = config.fadeIn;
+    s_defaultLoadScreenFadeOutDuration = config.fadeOut;
+    s_loadWithScreenFadeInDuration     = config.fadeIn;
+    s_loadWithScreenFadeOutDuration    = config.fadeOut;
+}
 
 void SceneManager::LoadScene(const std::string& sceneName) {
     auto it = s_sceneRegistry.find(sceneName);

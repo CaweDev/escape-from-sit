@@ -5,6 +5,7 @@
 #include "SpriteSheetRenderer.hpp"
 #include "Engine/Core/Time.hpp"
 #include "ZBuffer.hpp"
+#include "../Math/Mathf.hpp"
 #include <cmath>
 #include <algorithm>
 
@@ -206,7 +207,7 @@ void SpriteSheetRenderer::Render() {
         f32 worldWidth = transform->localScale.x;
 
         // Camera vectors for per-column depth
-        f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+        f32 camRotRad = Camera::main->transform->rotation * Mathf::Deg2Rad;
         f32 camForwardX = cosf(camRotRad);
         f32 camForwardY = sinf(camRotRad);
         f32 camRightX = sinf(camRotRad);
@@ -362,7 +363,7 @@ f32 SpriteSheetRenderer::GetSortingKey() const {
     if (!transform) return static_cast<f32>(sortingOrder);
 
     if (Camera::main && Camera::main->transform) {
-        f32 camRotRad = Camera::main->transform->rotation * 3.14159f / 180.0f;
+        f32 camRotRad = Camera::main->transform->rotation * Mathf::Deg2Rad;
         f32 camForwardX = cosf(camRotRad);
         f32 camForwardY = sinf(camRotRad);
 
