@@ -143,7 +143,10 @@ public:
     
     /** Process pending destructions (called by engine) */
     static void ProcessDestroyQueue();
-    
+
+    // get all components in game object
+    const std::vector<std::unique_ptr<Component>> &GetComponents() const { return components; }
+
     /** Get all GameObjects */
     static const std::vector<GameObject*>& GetAllGameObjects();
 

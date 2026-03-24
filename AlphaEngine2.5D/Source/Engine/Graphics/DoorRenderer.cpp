@@ -5,11 +5,14 @@
 #include "DoorRenderer.hpp"
 #include "Camera.hpp"
 #include "ZBuffer.hpp"
+#include "RendererSettings.hpp"
 #include "../TileMap/Door.hpp"
 #include "../Core/GameObject.hpp"
 #include "../Core/Application.hpp"
+#include "../Core/ConfigManager.hpp"
 #include "../Math/Mathf.hpp"
 #include <cmath>
+#include <cstdio>
 
 namespace Engine {
 
@@ -20,6 +23,20 @@ DoorRenderer::~DoorRenderer() {
         AEGfxMeshFree(doorMesh);
         doorMesh = nullptr;
     }
+}
+
+// Config defaults, populated by DoorRenderer::Initialize()
+static DoorRendererConfig s_doorRendererConfig;
+
+void DoorRenderer::Initialize(const std::string& configPath)
+{
+    if (!ConfigManager::ReadConfig(configPath, s_doorRendererConfig))
+    {
+        std::printf("[Warning] DoorRenderer: Failed to read config '%s'. Using built-in defaults.\n",
+                    configPath.c_str());
+    }
+    // Note: existing instances are unaffected; defaults apply to instances
+    // whose members are set from s_doorRendererConfig at construction or spawn time.
 }
 
 void DoorRenderer::CacheReferences() {
@@ -132,7 +149,7 @@ void DoorRenderer::Render() {
         // Intersect ray with door segment
         if (door->facing == DoorFacing::NorthSouth) {
             // y1 = camPos.y + t * rayDirY => t = (y1 - camPos.y) / rayDirY
-            if (fabsf(rayDirY) > 0.0001f) {
+            if (fabsf(rayDirY) > RendererSettings::doorRayDirThreshold) {
                 tHit = (y1 - camPos.y) / rayDirY;
                 if (tHit > 0) {
                     f32 hitX = camPos.x + tHit * rayDirX;
@@ -145,7 +162,7 @@ void DoorRenderer::Render() {
             }
         } else {
             // x1 = camPos.x + t * rayDirX => t = (x1 - camPos.x) / rayDirX
-            if (fabsf(rayDirX) > 0.0001f) {
+            if (fabsf(rayDirX) > RendererSettings::doorRayDirThreshold) {
                 tHit = (x1 - camPos.x) / rayDirX;
                 if (tHit > 0) {
                     f32 hitY = camPos.y + tHit * rayDirY;
@@ -164,11 +181,11 @@ void DoorRenderer::Render() {
             // and (rayDir dot dir) = 1, so tHit's projection onto the camera direction is exactly tHit.
             f32 perpDist = tHit;
             
-            if (perpDist < 0.1f) perpDist = 0.1f;
+            if (perpDist < RendererSettings::perpWallDistClamp) perpDist = RendererSettings::perpWallDistClamp;
 
             // Z-Buffer check
             if (x >= 0 && x < ZBuffer::GetWidth()) {
-                if (perpDist > ZBuffer::GetDepth(x) + 0.01f) {
+                if (perpDist > ZBuffer::GetDepth(x) + RendererSettings::doorZBufferBias) {
                     continue; // Behind something
                 }
             }

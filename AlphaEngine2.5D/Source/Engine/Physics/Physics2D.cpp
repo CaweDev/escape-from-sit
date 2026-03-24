@@ -10,6 +10,7 @@
 #include "TileMapCollider2D.hpp"
 #include "../Core/Transform.hpp"
 #include "../Core/Time.hpp"
+#include "../Core/ConfigManager.hpp"
 #include "../Core/GameObject.hpp"
 #include "../TileMap/TileMap.hpp"
 #include "../TileMap/Door.hpp"
@@ -29,8 +30,31 @@ TileMap* Physics2D::tileMap = nullptr;
 std::vector<Collider2D*> Physics2D::colliders;
 std::vector<Rigidbody2D*> Physics2D::rigidbodies;
 
+// Config-driven constants — defaults match physics.json
+f32 Physics2D::s_defaultRadius       = 0.2f;
+f32 Physics2D::s_deltaTimeCap        = 0.1f;
+f32 Physics2D::s_pushDirSqrThreshold = 0.0001f;
+
+void Physics2D::Initialize(const std::string& configPath)
+{
+    PhysicsConfig config;
+    if (!ConfigManager::ReadConfig(configPath, config))
+    {
+        std::printf("[Warning] Physics2D: Failed to read config '%s'. Using built-in defaults.\n",
+                    configPath.c_str());
+    }
+    gravity                = config.gravity;
+    s_defaultRadius        = config.defaultCollisionRadius;
+    s_deltaTimeCap         = config.deltaTimeCap;
+    s_pushDirSqrThreshold  = config.pushDirSqrThreshold;
+}
+
 void Physics2D::FixedUpdate() {
     f32 dt = Time::fixedDeltaTime;
+    // Clamp deltaTime to avoid abrupt fades during large frame drops (e.g., scene loading)
+    if (dt > s_deltaTimeCap) {
+        dt = s_deltaTimeCap;
+    }
 	if (dt <= EPSILON) return; // Avoid division by zero and unnecessary calculations
     
     // Update all rigidbodies
@@ -44,7 +68,7 @@ void Physics2D::FixedUpdate() {
         // Apply tilemap collision
         Vector2 currentPos(rb->transform->position.x, rb->transform->position.y);
         Collider2D* collider = rb->GetCollider();
-        f32 radius = 0.2f; // Default collision radius
+        f32 radius = s_defaultRadius; // Default collision radius (from config)
         
         if (collider) {
             // Get radius from circle collider or box half-size
@@ -219,7 +243,7 @@ if (!rbCollider) return;
     
     // Calculate push direction
     Vector2 pushDir = rbCenter - otherCenter;
-    if (pushDir.SqrMagnitude() < 0.0001f) {
+    if (pushDir.SqrMagnitude() < s_pushDirSqrThreshold) {
         pushDir = Vector2(1, 0); // Default push direction
     }
     pushDir.Normalize();
@@ -403,7 +427,7 @@ Vector2 Physics2D::MoveWithCollision(Rigidbody2D* rb, const Vector2& movement) {
     
     Vector2 currentPos(rb->transform->position.x, rb->transform->position.y);
     Collider2D* collider = rb->GetCollider();
-    f32 radius = 0.2f;
+    f32 radius = s_defaultRadius;
     
     if (collider) {
         CircleCollider2D* circle = dynamic_cast<CircleCollider2D*>(collider);
@@ -428,11 +452,11 @@ void Physics2D::DrawDebugView() {
     f32 cx       = camTransform->position.x;
     f32 cy       = camTransform->position.y;
     f32 camZ     = camTransform->position.z;
-    f32 angleRad = camTransform->rotation * 3.14159f / 180.0f;
+    f32 angleRad = camTransform->rotation * Mathf::Deg2Rad;
     f32 pitch    = Camera::main->pitch;
     int horizon  = screenHeight / 2 + (int)pitch;
 
-    f32 fovRad      = Camera::main->fov * 3.14159f / 180.0f;
+    f32 fovRad      = Camera::main->fov * Mathf::Deg2Rad;
     f32 planeLength = tanf(fovRad / 2.0f);
 
     f32 dirX   = cosf(angleRad);
@@ -569,8 +593,8 @@ void Physics2D::DrawDebugView() {
             Vector2 center = circle->GetCenter();
             f32 r = circle->GetScaledRadius();
             for (int s = 0; s < CIRCLE_SEGMENTS; ++s) {
-                f32 a0  = (f32)s       / (f32)CIRCLE_SEGMENTS * 2.0f * 3.14159f;
-                f32 a1  = (f32)(s + 1) / (f32)CIRCLE_SEGMENTS * 2.0f * 3.14159f;
+                f32 a0  = (f32)s       / (f32)CIRCLE_SEGMENTS * 2.0f * PI;
+                f32 a1  = (f32)(s + 1) / (f32)CIRCLE_SEGMENTS * 2.0f * PI;
                 f32 px0 = center.x + r * cosf(a0), py0 = center.y + r * sinf(a0);
                 f32 px1 = center.x + r * cosf(a1), py1 = center.y + r * sinf(a1);
                 AddLine(px0, py0, hMax, px1, py1, hMax, COLOR_MAGENTA);

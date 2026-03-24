@@ -42,8 +42,8 @@
     "zone_enter": "Assets/Audio/UI/zone_enter.wav",
     "cctv_alert": "Assets/Audio/CCTV/CCTV caught.wav",
 
-    "win": "Assets/Audio/UI/win.wav",
-    "lose": "Assets/Audio/UI/lose.wav",
+    "win": "Assets/Audio/UI/Game Win.wav",
+    "lose": "Assets/Audio/UI/Game Lose.wav",
 
     "guard_proximity_loop": "Assets/Audio/Guard/guard nearby.wav",
     "guard_chasing": "Assets/Audio/Guard/Guard Chasing.wav",
@@ -59,6 +59,8 @@
     "player_run": "Assets/Audio/Player/player run.wav",
     "player_walking": "Assets/Audio/Player/player walking.wav",
     "push": "Assets/Audio/Bully/push.wav",
-    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav"
+    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav",
+
+    "powerup_collect": "Assers/Audio/powerup/powerup collect.wav"
   }
 }

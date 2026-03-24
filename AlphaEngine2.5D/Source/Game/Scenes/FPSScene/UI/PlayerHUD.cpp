@@ -19,6 +19,7 @@
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Engine/Audio/SoundManager.hpp"
 #include "Game/Player/PlayerPowerUpController.h"
+#include "Game/Puzzle/PuzzleManager.h"
 
 namespace Game
 {
@@ -475,8 +476,8 @@ namespace Game
         m_bookPopupPanel->name = "BookPopupPanel";
         m_bookPopupPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
         m_bookPopupPanel->SetPivot({ 0.5f, 0.5f });
-        m_bookPopupPanel->SetAnchoredPosition({ 0.0f, 200.0f });
-        m_bookPopupPanel->SetSizeDelta({ 600.0f, 200.0f });
+        m_bookPopupPanel->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_bookPopupPanel->SetSizeDelta({ 800.0f, 450.0f });
         m_bookPopupPanel->SetBackgroundColor(s_bookPopupPanelColor);
         // Book popup panel texture (editable via s_bookPopupPanelTexturePath)
         if (bookPopupPanelTexture)
@@ -495,22 +496,56 @@ namespace Game
         m_bookTitleText->name = "BookTitleText";
         m_bookTitleText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f }); // Pin to top
         m_bookTitleText->SetPivot({ 0.5f, 1.0f });
-        m_bookTitleText->SetAnchoredPosition({ 0.0f, -15.0f }); // Push down slightly
-        m_bookTitleText->SetSizeDelta({ 0.0f, 35.0f });
-        m_bookTitleText->SetFontSize(2.2f);
+        m_bookTitleText->SetAnchoredPosition({ 0.0f, -30.0f }); // Push down slightly
+        m_bookTitleText->SetSizeDelta({ 0.0f, 50.0f });
+        m_bookTitleText->SetFontSize(2.5f);
         m_bookTitleText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f)); // Gold text
         m_bookTitleText->SetAnchor(UI::TextAnchor::UpperCenter);
 
         // --- BOOK LORE TEXT (Bottom) ---
         m_bookLoreText = m_bookPopupPanel->CreateChild<UI::Text>();
         m_bookLoreText->name = "BookLoreText";
-        m_bookLoreText->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f }); // Stretch over panel
-        m_bookLoreText->SetPivot({ 0.5f, 0.5f });
-        m_bookLoreText->SetAnchoredPosition({ 0.0f, -25.0f }); // Push down below title
-        m_bookLoreText->SetSizeDelta({ 0.0f, 0.0f });
-        m_bookLoreText->SetFontSize(1.6f);
-        m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f)); // White text
-        m_bookLoreText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_bookLoreText->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
+        m_bookLoreText->SetPivot({ 0.5f, 1.0f });
+        m_bookLoreText->SetAnchoredPosition({ 0.0f, -100.0f });
+        m_bookLoreText->SetSizeDelta({ -40.0f, 60.0f });
+        m_bookLoreText->SetFontSize(1.5f);
+        m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f));
+        m_bookLoreText->SetAnchor(UI::TextAnchor::UpperCenter);
+
+        // --- NEW: OPTION 1 TEXT ---
+        m_option1Text = m_bookPopupPanel->CreateChild<UI::Text>(); // <--- THE MISSING CREATION LINE!
+        m_option1Text->name = "Option1Text";
+        m_option1Text->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+        m_option1Text->SetPivot({ 0.0f, 1.0f });
+        m_option1Text->SetAnchoredPosition({ 60.0f, -200.0f });
+        m_option1Text->SetSizeDelta({ -200.0f, 40.0f });
+        m_option1Text->SetFontSize(1.3f);
+        m_option1Text->SetColor(Engine::Color(0.8f, 0.8f, 0.8f, 1.0f));
+        m_option1Text->SetAnchor(UI::TextAnchor::MiddleLeft);
+
+        // --- NEW: OPTION 2 TEXT ---
+        m_option2Text = m_bookPopupPanel->CreateChild<UI::Text>(); // <--- THE MISSING CREATION LINE!
+        m_option2Text->name = "Option2Text";
+        m_option2Text->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+        m_option2Text->SetPivot({ 0.0f, 1.0f });
+        m_option2Text->SetAnchoredPosition({ 60.0f, -250.0f });
+        m_option2Text->SetSizeDelta({ -200.0f, 40.0f });
+        m_option2Text->SetFontSize(1.3f);
+        m_option2Text->SetColor(Engine::Color(0.8f, 0.8f, 0.8f, 1.0f));
+        m_option2Text->SetAnchor(UI::TextAnchor::MiddleLeft);
+
+        // --- NEW: OPTION 3 TEXT ---
+        m_option3Text = m_bookPopupPanel->CreateChild<UI::Text>(); // <--- THE MISSING CREATION LINE!
+        m_option3Text->name = "Option3Text";
+        m_option3Text->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
+        m_option3Text->SetPivot({ 0.0f, 1.0f });
+        m_option3Text->SetAnchoredPosition({ 60.0f, -300.0f });
+        m_option3Text->SetSizeDelta({ -200.0f, 40.0f });
+        m_option3Text->SetFontSize(1.3f);
+        m_option3Text->SetColor(Engine::Color(0.8f, 0.8f, 0.8f, 1.0f));
+        m_option3Text->SetAnchor(UI::TextAnchor::MiddleLeft);
+
         
         // Access Card Display (top-left, below book count)
         Engine::Texture2D* cardPanelTexture = Engine::AssetManager::GetTexture(s_cardPanelTexturePath.c_str());
@@ -544,10 +579,10 @@ namespace Game
         m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
         // Power Up timer UI
-        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/powerup1.png"); // Speed
-        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/powerup2.png"); // Infinite stamina
-        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/powerup3.png"); // Shield
-        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/powerup4.png"); // Invisibility
+        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/Speed.png"); // Speed
+        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/InfStamina.png"); // Infinite stamina
+        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Shield.png"); // Shield
+        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Invis.png"); // Invisibility
 
         m_powerUpPanel = m_canvas->CreateChild<UI::Panel>();
         m_powerUpPanel->name = "PowerUpPanel";
@@ -597,6 +632,59 @@ namespace Game
 
     void PlayerHUD::Update()    
     {
+
+
+        if (Engine::Input::GetKeyDown(Engine::KeyCode::O)) {
+            Engine::SoundManager::PlaySFX("ui_click", 1.0f);
+            std::cout << "[Audio Debug] Forced One-Shot of book_nearby!\n";
+        }
+        // ==========================================
+        // BOOK PROXIMITY AUDIO (DEBUG VERSION)
+        // ==========================================
+
+        // 1. Failsafe: If HUD lost the player, try to find it again!
+        Engine::Transform* activePlayerTrans = m_playerTransform;
+        if (!activePlayerTrans) {
+            auto pObj = Engine::GameObject::Find("Player");
+            if (pObj) activePlayerTrans = pObj->transform;
+        }
+
+        if (activePlayerTrans) {
+            float closestBookDist = 999.0f;
+
+            for (const auto& book : PuzzleManager::allBooks) {
+                if (!book.BookCollected) {
+                    // Let's use pure 2D distance just in case the Z-axis is messing us up!
+                    float dx = activePlayerTrans->position.x - book.BookPosition.x;
+                    float dy = activePlayerTrans->position.y - book.BookPosition.y;
+                    float dist = std::sqrt(dx * dx + dy * dy);
+
+                    if (dist < closestBookDist) {
+                        closestBookDist = dist;
+                    }
+                }
+            }
+
+            // --- SPAM THE CONSOLE (Only when you are close) ---
+            if (closestBookDist < 8.0f) {
+                std::cout << "[Audio Debug] Closest Book: " << closestBookDist
+                    << " units away. Sending to SoundManager...\n";
+            }
+
+            Engine::SoundManager::UpdateDistanceLoop(
+                "ui_click",
+                closestBookDist,
+                2.0f,
+                6.0f,
+                1.0f
+            );
+        }
+        else {
+            std::cout << "[Audio Debug] ERROR: Cannot find Player Transform!\n";
+        }
+        // ==========================================
+
+
         // Toggle map with M key
         if (Engine::Input::GetKeyDown(Engine::KeyCode::M))
         {
@@ -700,6 +788,89 @@ namespace Game
             m_bookCountText->SetText(bs.c_str());
         }
 
+        // ==========================================
+        // NEW: QUIZ INPUT LOGIC
+        // ==========================================
+        if (PuzzleManager::isQuizActive) {
+
+            // Force the panel to stay open and show the question
+            m_bookPopupPanel->visible = true;
+            m_bookTitleText->visible = true;
+            m_bookLoreText->visible = true;
+            m_option1Text->visible = true;
+            m_option2Text->visible = true;
+            m_option3Text->visible = true;
+
+            m_bookTitleText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f));
+
+            m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
+            m_bookLoreText->SetText(PuzzleManager::activeBookText);
+            m_option1Text->SetText(PuzzleManager::activeOpt1);
+            m_option2Text->SetText(PuzzleManager::activeOpt2);
+            m_option3Text->SetText(PuzzleManager::activeOpt3);
+
+            // Check which key the player presses
+            int playerChoice = 0;
+            if (Engine::Input::GetKeyDown(Engine::KeyCode::Alpha1)) playerChoice = 1;
+            if (Engine::Input::GetKeyDown(Engine::KeyCode::Alpha2)) playerChoice = 2;
+            if (Engine::Input::GetKeyDown(Engine::KeyCode::Alpha3)) playerChoice = 3;
+
+            if (playerChoice != 0) { // The player pressed a number!
+                if (playerChoice == PuzzleManager::currentCorrectAnswer) {
+
+
+
+                    // --- CORRECT ANSWER ---
+                    Engine::SoundManager::PlaySFX("card_collect");
+                    PuzzleManager::booksCollected++;
+                    PuzzleManager::allBooks[PuzzleManager::currentBookId].BookCollected = true;
+
+                    // Destroy the physical book
+                    if (PuzzleManager::currentBookObj) {
+                        Engine::GameObject::Destroy(PuzzleManager::currentBookObj);
+                        PuzzleManager::currentBookObj = nullptr;
+                    }
+
+                    // Check if it was the last book
+                    if (PuzzleManager::booksCollected >= (int)PuzzleManager::allBooks.size()) {
+                        Engine::SoundManager::PlaySFX("all_books_collected");
+                    }
+
+                    // Show success text and close after 2 seconds
+                    PuzzleManager::activeBookTitle = "CORRECT!";
+                    PuzzleManager::activeBookText = "+1 Knowledge Gained.";
+                    m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
+                    m_bookLoreText->SetText(PuzzleManager::activeBookText);
+                    m_bookTitleText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 1.0f)); // Flash Green!
+                    PuzzleManager::popupTimer = 0.8f;
+                    PuzzleManager::isQuizActive = false;
+
+                }
+                else {
+
+                    // --- WRONG ANSWER ---
+                    Engine::SoundManager::PlaySFX("terminal_hack"); // Reusing your "Access Denied" sound!
+
+                    // Reset the interactable so they can try again
+                    if (PuzzleManager::currentBookObj) {
+                        auto pObj = PuzzleManager::currentBookObj->GetComponent<PuzzleObject>();
+                        if (pObj) pObj->isReading = false;
+                    }
+
+                    // Show failure text and close after 2 seconds
+                    PuzzleManager::activeBookTitle = "WRONG!";
+                    PuzzleManager::activeBookText = "Try again...";
+                    m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
+                    m_bookLoreText->SetText(PuzzleManager::activeBookText);
+                    m_bookTitleText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Flash Red!
+                    PuzzleManager::popupTimer = 0.8f;
+                    PuzzleManager::isQuizActive = false;
+                }
+            }
+        }
+        // ==========================================
+
+
         if (PuzzleManager::popupTimer > 0.0f) {
 
             // Ensure the panel is visible and the text is updated
@@ -722,9 +893,12 @@ namespace Game
             if (PuzzleManager::popupTimer <= 0.0f) {
                 // WE NOW PROPERLY HIDE THE BOOK PANEL
                 m_bookPopupPanel->visible = false;
-
                 m_bookTitleText->visible = false;
                 m_bookLoreText->visible = false;
+
+                m_option1Text->visible = false;
+                m_option2Text->visible = false;
+                m_option3Text->visible = false;
             }
         }
 

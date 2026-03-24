@@ -24,6 +24,8 @@
 #include "Game/CCTV/CCTVTerminal.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Scenes/FPSScene/UI/PauseMenu.hpp"
+#include "Game/Scenes/FPSScene/UI/LoseScreen.hpp"
+#include "Game/Scenes/FPSScene/UI/WinScreen.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
@@ -94,12 +96,14 @@ namespace Game {
         float powerUpTime = 0.0f;
         struct CCTVInfo { Vector3 pos; float rotDeg; };
         PauseMenu* pauseMenu = nullptr;
+		Game::LoseScreen* loseScreen = nullptr;
+		Game::WinScreen* winScreen = nullptr;
 
-        UI::Canvas* modalCanvas = nullptr;
-        UI::Panel* modalPanel = nullptr;
-        UI::Text* modalTitle = nullptr;
-        UI::Button* modalButton = nullptr;
-        bool endPanelShown = false;
+        //UI::Canvas* modalCanvas = nullptr;
+        //UI::Panel* modalPanel = nullptr;
+        //UI::Text* modalTitle = nullptr;
+        //UI::Button* modalButton = nullptr;
+        //bool endPanelShown = false;
 
         // =====================
         // Zones (4 quadrants)
@@ -235,7 +239,7 @@ namespace Game {
             playerTf->rotation = cctvViewRot[idx];
         }
 
-        void CreateEndPanel() {
+       /* void CreateEndPanel() {
             if (!UI::UIManager::GetInstance()) return;
 
             modalCanvas = UI::UIManager::GetInstance()->CreateCanvas();
@@ -298,7 +302,7 @@ namespace Game {
                 };
 
             gameEnded = true;
-        }
+        }*/
 
         // ===== Spawn one NPC helper =====
         // Player spawn position — NPCs must not spawn near here
@@ -613,6 +617,8 @@ namespace Game {
     public:
         void OnLoad() override
         {
+            gameEnded = false;
+            printedWin = false;
             SoundManager::PlayBGM("fps_gameplay", true);
             // ===== load map.txt =====
             std::vector<std::string> mapRows;
@@ -741,6 +747,8 @@ namespace Game {
 
             pauseMenu = player->AddComponent<PauseMenu>();
             player->AddComponent<Hands67>();
+            loseScreen = player->AddComponent<LoseScreen>();
+            winScreen = player->AddComponent<WinScreen>();
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -1140,7 +1148,7 @@ namespace Game {
                 }
             }
 
-            CreateEndPanel();
+      /*      CreateEndPanel();*/
             SwitchToPlayerCam();
 
             // Initialize Level Editor
@@ -1229,13 +1237,21 @@ namespace Game {
             }
 
             // Lose panel
-            if (!endPanelShown && playerData) {
+            /*if (!endPanelShown && playerData) {
                 if (playerData->IsCaught()) {
                     SoundManager::PlaySFX("lose");
                     ShowEndPanel("YOU GOT CAUGHT. GAME OVER", "Quit", []() {
                         SceneManager::LoadScene("FPSScene");
                         });
                 }
+            }*/
+
+            if (!gameEnded && playerData && playerData->IsCaught()) {
+                gameEnded = true;
+                if (loseScreen) {
+                    loseScreen->Show();
+                }
+                return;
             }
 
             if (!playerData || !playerTf) return;
@@ -1490,7 +1506,9 @@ namespace Game {
                 
                 playerData->Win();
                 std::cout << "YOU ESCAPED. WIN!\n";
-                Application::Quit();
+                if (winScreen) {
+                    winScreen->Show();
+                }
             }
         }
         void OnUnload() override
@@ -1541,12 +1559,19 @@ namespace Game {
 
             PuzzleManager::FreeManager();
 
-            if(modalCanvas) {
+
+            loseScreen = nullptr;
+            winScreen = nullptr;
+
+            /*if (modalCanvas) {
                 UI::UIManager::GetInstance()->DestroyCanvas(modalCanvas);
                 modalCanvas = nullptr;
             }
+            */
+
             // Clear bandit visualizer reference
             banditVisualizer = nullptr;
+
         }
     };
 

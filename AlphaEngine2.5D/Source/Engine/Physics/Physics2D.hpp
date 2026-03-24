@@ -6,7 +6,9 @@
 
 #include "../Math/Vector2.hpp"
 #include "Collision2D.hpp"
+#include "../Core/ConfigManager.hpp"
 #include "AEEngine.h"
+#include <string>
 #include <vector>
 #include <functional>
 
@@ -39,6 +41,27 @@ struct RaycastHit2D {
 };
 
 /**
+ * @brief IConfig implementation that deserialises physics.json.
+ */
+struct PhysicsConfig : public IConfig
+{
+    float gravity               = 9.81f;   ///< World gravity in units per second squared.
+    float defaultCollisionRadius = 0.2f;  ///< Fallback collision radius when no collider component is found.
+    float fixedDeltaTimeFallback = 0.02f; ///< Fallback fixed delta time (50 Hz) used when Time::fixedDeltaTime is zero.
+    float deltaTimeCap          = 0.1f;   ///< Maximum allowed delta time to avoid large physics steps during frame spikes.
+    float pushDirSqrThreshold   = 0.0001f; ///< Minimum squared magnitude of the push direction before defaulting to (1,0).
+
+    void FromJson(const Json::Value& j) override
+    {
+        gravity                = j.get("gravity",                gravity).asFloat();
+        defaultCollisionRadius = j.get("defaultCollisionRadius", defaultCollisionRadius).asFloat();
+        fixedDeltaTimeFallback = j.get("fixedDeltaTimeFallback", fixedDeltaTimeFallback).asFloat();
+        deltaTimeCap           = j.get("deltaTimeCap",           deltaTimeCap).asFloat();
+        pushDirSqrThreshold    = j.get("pushDirSqrThreshold",    pushDirSqrThreshold).asFloat();
+    }
+};
+
+/**
  * @class Physics2D
  * @brief Static class managing 2.5D physics simulation
  */
@@ -52,6 +75,12 @@ public:
     
     /** Reference to the active tilemap for wall collision */
     static TileMap* tileMap;
+
+    /**
+     * @brief Load physics configuration from a JSON file.
+     * @param configPath Path to physics.json. Defaults to the engine config location.
+     */
+    static void Initialize(const std::string& configPath = "Assets/Config/Engine/physics.json");
 
     // Simulation
     
@@ -112,6 +141,11 @@ private:
     
     static std::vector<Collider2D*> colliders;
     static std::vector<Rigidbody2D*> rigidbodies;
+
+    // Config-driven constants (set by Initialize())
+    static f32 s_defaultRadius;        ///< Loaded from physics.json: defaultCollisionRadius
+    static f32 s_deltaTimeCap;         ///< Loaded from physics.json: deltaTimeCap
+    static f32 s_pushDirSqrThreshold;  ///< Loaded from physics.json: pushDirSqrThreshold
     
     /** Resolve collision between two colliders */
     static void ResolveCollision(Rigidbody2D* rb, Collider2D* other);

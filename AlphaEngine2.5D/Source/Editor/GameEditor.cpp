@@ -3,6 +3,7 @@
  * @brief Game editor
  */
 #include "GameEditor.hpp"
+#include "ObjectManager.hpp"
 #include <fstream>
 #include <algorithm>
 #include <string>
@@ -22,8 +23,8 @@
 
 namespace AEEditor
 {
-    Engine::Scene *GameEditor::s_scene = nullptr;
-    Engine::TileMap *GameEditor::s_tileMap = nullptr;
+    Engine::Scene *GameEditor::scene = nullptr;
+    Engine::TileMap *GameEditor::tilemap = nullptr;
 
     int GameEditor::currentTileValue = 1;
     bool GameEditor::is3DMode = false;
@@ -39,15 +40,15 @@ namespace AEEditor
 
     bool GameEditor::Is3DMode() { return is3DMode; }
 
-    void GameEditor::Initialize(Engine::Scene *scene, Engine::TileMap *tileMap)
+    void GameEditor::Initialize(Engine::Scene *s, Engine::TileMap *tileMap)
     {
-        s_scene = scene;
-        s_tileMap = tileMap;
+        scene = s;
+        tilemap = tileMap;
 
-        if (s_tileMap)
+        if (tilemap)
         {
-            mapWidth = s_tileMap->width;
-            mapHeight = s_tileMap->height;
+            mapWidth = tilemap->width;
+            mapHeight = tilemap->height;
         }
     }
 
@@ -89,6 +90,7 @@ namespace AEEditor
             if (ImGui::Button(modes[i].name, ImVec2(120, 30)))
             {
                 currentTileValue = modes[i].value;
+                ObjectManager::selectedObject = nullptr;
             }
 
             if (isSelected)
@@ -110,6 +112,10 @@ namespace AEEditor
             if (is3DMode)
             {
                 SaveMap("Assets/tmpMap.txt");
+                ObjectManager::SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
+                ObjectManager::selectedObject = nullptr;
+                ObjectManager::draggingObject = nullptr;
+
                 Engine::SceneManager::LoadScene("EditorScene");
             }
         }
@@ -119,6 +125,7 @@ namespace AEEditor
         {
             SaveMap("Assets/map.txt");
             SaveMap("Assets/tmpMap.txt");
+            ObjectManager::SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
         }
         ImGui::End();
     }
@@ -162,8 +169,10 @@ namespace AEEditor
             return;
         }
 
-        if (!s_tileMap)
+        if (!tilemap)
             return;
+
+        // draw the 2d map
 
         ImGuiIO &io = ImGui::GetIO();
         ImDrawList *drawList = ImGui::GetWindowDrawList();
@@ -173,7 +182,7 @@ namespace AEEditor
 
         ImVec2 canvasMax = ImVec2(canvasPos.x + canvasSize.x, canvasPos.y + canvasSize.y);
         drawList->AddRectFilled(canvasPos, canvasMax, IM_COL32(40, 40, 40, 255));
-        if (!s_tileMap)
+        if (!tilemap)
         {
             drawList->AddText(ImVec2(canvasPos.x + 10, canvasPos.y + 10), IM_COL32(255, 0, 0, 255), "no map");
             return;
@@ -216,7 +225,7 @@ namespace AEEditor
             {
                 float px = startX + (x - firstX) * scaledTileSize;
 
-                int tileVal = (int)s_tileMap->GetTile(x, mapHeight - 1 - y);
+                int tileVal = (int)tilemap->GetTile(x, mapHeight - 1 - y);
                 ImU32 color = GetTileColor(tileVal);
 
                 ImVec2 pMin(px, py);
@@ -227,7 +236,99 @@ namespace AEEditor
             }
         }
 
-        if (ImGui::IsWindowHovered())
+        // draw game object as circle
+        const auto &allObjects = Engine::GameObject::GetAllGameObjects();
+        for (auto *go : allObjects)
+        {
+            if (!go || go->isPendingDestruction || !go->active || !go->transform)
+                continue;
+
+            // Map world coordinates to screen space
+            float goX = go->transform->position.x;
+            float goY = go->transform->position.y;
+
+            // Invert Y to align with map visual representation
+            float visualY = static_cast<float>(mapHeight) - goY;
+
+            ImVec2 center(origin.x + goX * scaledTileSize, origin.y + visualY * scaledTileSize);
+            float radius = scaledTileSize * 0.4f;
+
+            // Direct Interaction Hitbox
+            ImVec2 pMin(center.x - radius, center.y - radius);
+            ImVec2 pMax(center.x + radius, center.y + radius);
+
+            // Ignore map scrolling/painting if hovering an object
+            if (ImGui::IsMouseHoveringRect(pMin, pMax))
+            {
+                if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                {
+                    ObjectManager::selectedObject = go;
+                    ObjectManager::draggingObject = go;
+                    currentTileValue = -1;
+                }
+            }
+
+            ImU32 color = (ObjectManager::selectedObject == go) ? IM_COL32(255, 200, 0, 255) : IM_COL32(0, 255, 255, 255);
+            drawList->AddCircleFilled(center, radius, color);
+            drawList->AddCircle(center, radius, IM_COL32(0, 0, 0, 255), 0, 2.0f);
+
+            // Render Object Name below icon
+            ImVec2 textSize = ImGui::CalcTextSize(go->name.c_str());
+            drawList->AddText(ImVec2(center.x - (textSize.x * 0.5f), center.y + radius + 2.0f), IM_COL32(255, 255, 255, 255), go->name.c_str());
+        }
+
+        // process dragging to map
+        if (ObjectManager::draggingObject)
+        {
+            if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
+            {
+                ImVec2 mousePos = ImGui::GetMousePos();
+
+                // Convert absolute screen coordinates back to world space
+                float worldX = (mousePos.x - origin.x) / scaledTileSize;
+                float worldY = static_cast<float>(mapHeight) - ((mousePos.y - origin.y) / scaledTileSize);
+
+                // Constrain to map boundaries
+                ObjectManager::draggingObject->transform->position.x = std::clamp(worldX, 0.0f, static_cast<float>(mapWidth));
+                ObjectManager::draggingObject->transform->position.y = std::clamp(worldY, 0.0f, static_cast<float>(mapHeight));
+            }
+            else
+            {
+                ObjectManager::draggingObject = nullptr;
+            }
+        }
+
+        // process the drop location of game object and change the object's position accordingly.
+        // Overlay an invisible button covering the entire canvas to catch the drop payload
+        ImGui::SetCursorScreenPos(canvasPos);
+        ImGui::InvisibleButton("CanvasDropTarget", canvasSize);
+
+        bool canvasHovered = ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem);
+        bool canvasActive = ImGui::IsItemActive();
+
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("DND_GAMEOBJECT"))
+            {
+                Engine::GameObject **droppedObj = (Engine::GameObject **)payload->Data;
+                if (droppedObj && *droppedObj)
+                {
+                    ImVec2 mousePos = ImGui::GetMousePos();
+
+                    float worldX = (mousePos.x - origin.x) / scaledTileSize;
+                    float worldY = static_cast<float>(mapHeight) - ((mousePos.y - origin.y) / scaledTileSize);
+
+                    (*droppedObj)->transform->position.x = std::clamp(worldX, 0.0f, static_cast<float>(mapWidth));
+                    (*droppedObj)->transform->position.y = std::clamp(worldY, 0.0f, static_cast<float>(mapHeight));
+
+                    ObjectManager::selectedObject = *droppedObj;
+                }
+            }
+            ImGui::EndDragDropTarget();
+        }
+
+        // allow adding of new tiles
+        if ((canvasHovered || canvasActive) && !ObjectManager::draggingObject && currentTileValue != -1)
         {
             ImVec2 mousePos = io.MousePos;
             int screenGridX = static_cast<int>(std::floor((mousePos.x - origin.x) / scaledTileSize));
@@ -259,6 +360,11 @@ namespace AEEditor
                 SaveMap("Assets/tmpMap.txt");
             }
         }
+        else
+        {
+            hoveredX = -1;
+            hoveredY = -1;
+        }
     }
 
     void GameEditor::ApplyPaint(int gridX, int gridY)
@@ -266,31 +372,29 @@ namespace AEEditor
         if (gridX < 0 || gridX >= mapWidth || gridY < 0 || gridY >= mapHeight)
             return;
 
-        int currentTile = static_cast<int>(s_tileMap->GetTile(gridX, gridY));
+        int currentTile = static_cast<int>(tilemap->GetTile(gridX, gridY));
 
-        if (currentTileValue == 0)
-        {
-            s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(0));
-            return;
-        }
+        // if (currentTileValue == 0)
+        // {
+        //     tilemap->SetTile(gridX, gridY, static_cast<Engine::TileType>(0));
+        //     return;
+        // }
 
-        if (currentTileValue == 1)
-        {
-            s_tileMap->SetTile(gridX, gridY, static_cast<Engine::TileType>(1));
-            return;
-        }
+        // if (currentTileValue == 1)
+        // {
+        //     tilemap->SetTile(gridX, gridY, static_cast<Engine::TileType>(1));
+        //     return;
+        // }
 
-        if (currentTile != 0)
-            return;
 
         Engine::TileType newTile = static_cast<Engine::TileType>(currentTileValue);
 
-        s_tileMap->SetTile(gridX, gridY, newTile);
+        tilemap->SetTile(gridX, gridY, newTile);
     }
 
     void GameEditor::SaveMap(const char *filepath)
     {
-        if (!s_tileMap)
+        if (!tilemap)
             return;
 
         std::ofstream file(filepath, std::ios::out | std::ios::trunc);
@@ -301,7 +405,7 @@ namespace AEEditor
         {
             for (int x = 0; x < mapWidth; ++x)
             {
-                int tile = static_cast<int>(s_tileMap->GetTile(x, y));
+                int tile = static_cast<int>(tilemap->GetTile(x, y));
                 char c = '0';
 
                 switch (tile)

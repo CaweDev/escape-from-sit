@@ -4,6 +4,7 @@
  */
 #include "imgui.h"
 #include "EditorScene.hpp"
+#include "ObjectManager.hpp"
 
 #include "Engine/TileMap/TileMap.hpp"
 #include "Engine/Graphics/TileMapRenderer.hpp"
@@ -14,6 +15,7 @@
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Graphics/DoorRenderer.hpp"
 #include "Engine/TileMap/Door.hpp"
+#include "Engine/Interaction/Interactable.hpp"
 
 // Required for free camera input polling
 #include "Engine/Input/Input.hpp"
@@ -21,6 +23,9 @@
 #include "Engine/Core/Time.hpp"
 
 #include "Editor/GameEditor.hpp"
+#include "Game/CCTV/CCTVPlacement.hpp"
+#include "Game/AccessCard/AccessCard.hpp"
+#include "Game/CCTV/CCTVCamera.hpp"
 
 #include <fstream>
 #include <cmath>
@@ -29,6 +34,10 @@
 namespace Game
 {
     using namespace Engine;
+
+    static constexpr float spawnExcludeX = 2.5f;
+    static constexpr float spawnExcludeY = 2.5f;
+    static constexpr float spawnExcludeRadius = 5.0f;
 
     EditorScene::EditorScene() : Scene("EditorScene"), editorCamera(nullptr), cameraTf(nullptr), mapWidth(0), mapHeight(0) {}
 
@@ -115,7 +124,7 @@ namespace Game
                 else if (c == 'J')
                     tileValue = 18;
                 else
-                    tileValue = c - '0';
+                    tileValue = c - '0';    
 
                 worldMap[y * mapWidth + x] = tileValue;
             }
@@ -154,12 +163,21 @@ namespace Game
         cameraTf->position = Vector3(2.5f, 2.5f, 0.5f);
         cameraTf->rotation = 0.0f;
 
+        AEEditor::GameEditor::Initialize(this, map);
+
+        // std::ifstream jsonFile("Assets/Config/Scenes/EditorScene.json");
+        // if (jsonFile.is_open())
+        // {
+        //     jsonFile.close();
+        //     AEEditor::ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
+        // }
+        // else
+        // {
         SpawnExistingDoors(map, renderer);
         SpawnExistingTerminals(map);
         SpawnExistingCards(map);
         SpawnExistingCCTVs(map);
-
-        AEEditor::GameEditor::Initialize(this, map);
+        // }
     }
 
     void EditorScene::OnUpdate()
@@ -168,7 +186,6 @@ namespace Game
             if (!cameraTf)
                 return;
 
-            // only update if 3d
             if (!AEEditor::GameEditor::Is3DMode())
                 return;
 
@@ -208,16 +225,13 @@ namespace Game
                     cameraTf->rotation += 360.0f;
             }
 
-            // 3. Trigonometric Vector Calculation
             float rot = AEDegToRad(cameraTf->rotation);
             float fwdX = std::cos(rot);
             float fwdY = std::sin(rot);
 
-            // -90 degree phase shift for correct A/D strafing alignment
             float rightX = std::cos(rot - HALF_PI);
             float rightY = std::sin(rot - HALF_PI);
 
-            // 4. Local Planar Translation
             if (Engine::Input::GetKey(Engine::KeyCode::W))
             {
                 cameraTf->position.x += fwdX * moveSpeed * dt;
@@ -239,13 +253,11 @@ namespace Game
                 cameraTf->position.y += rightY * moveSpeed * dt;
             }
 
-            // 5. Elevation Translation (Z-Axis Vertical Flight)
             if (Engine::Input::GetKey(Engine::KeyCode::Space))
                 cameraTf->position.z += moveSpeed * dt;
             if (Engine::Input::GetKey(Engine::KeyCode::LeftControl))
                 cameraTf->position.z -= moveSpeed * dt;
 
-            // Hardware floor/ceiling clamps
             if (cameraTf->position.z < 0.2f)
                 cameraTf->position.z = 0.2f;
             if (cameraTf->position.z > 2.8f)
@@ -257,7 +269,7 @@ namespace Game
 
     void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
     {
-        auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
+        auto controlRoomDoorPositions = map->GetSpawnedDoorPositionsPublic();
         for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
         {
             Vector2 pos = controlRoomDoorPositions[i];
@@ -274,11 +286,19 @@ namespace Game
 
             bool wallNorth = map->IsWall(tileX, tileY + 1);
             bool wallSouth = map->IsWall(tileX, tileY - 1);
-            // Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
 
             auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
             doorCollider->minHeight = 0.0f;
             doorCollider->maxHeight = 2.0f;
+            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+
+            auto door = doorGO->AddComponent<Engine::Door>();
+            door->tileX = tileX;
+            door->tileY = tileY;
+            door->doorType = 10;
+            door->facing = facing;
+            door->collider = doorCollider;
+            door->state = Engine::DoorState::Closed;
 
             auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
             doorRenderer->fov = renderer->fov;
@@ -316,6 +336,36 @@ namespace Game
             "Assets/color_red_empty.png",
             "Assets/color_yellow_empty.png"};
 
+        auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2
+        {
+            int ox = (int)std::floor(orig.x);
+            int oy = (int)std::floor(orig.y);
+            const int MAXR = 12;
+            for (int r = 0; r <= MAXR; ++r)
+            {
+                for (int dy = -r; dy <= r; ++dy)
+                {
+                    for (int dx = -r; dx <= r; ++dx)
+                    {
+                        if (std::abs(dx) != r && std::abs(dy) != r)
+                            continue;
+                        int nx = ox + dx;
+                        int ny = oy + dy;
+                        if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
+                            continue;
+                        float cdx = ((float)nx + 0.5f) - spawnExcludeX;
+                        float cdy = ((float)ny + 0.5f) - spawnExcludeY;
+                        if (cdx * cdx + cdy * cdy < spawnExcludeRadius * spawnExcludeRadius)
+                            continue;
+                        if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
+                            continue;
+                        return Engine::Vector2((float)nx + 0.5f, (float)ny + 0.5f);
+                    }
+                }
+            }
+            return orig;
+        };
+
         for (size_t i = 0; i < accessCardPositions.size(); ++i)
         {
             Vector2 pos = accessCardPositions[i].first;
@@ -323,6 +373,13 @@ namespace Game
 
             if (cardId < 0 || cardId > 3)
                 continue;
+
+            float ddx = pos.x - spawnExcludeX;
+            float ddy = pos.y - spawnExcludeY;
+            if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius)
+            {
+                pos = findValidSpawn(pos);
+            }
 
             auto cardGO = CreateGameObject("Editor_AccessCard_" + std::to_string(i));
             cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
@@ -332,6 +389,16 @@ namespace Game
             sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
             sr->billboard = true;
             sr->sortingOrder = 200;
+
+            auto interactable = cardGO->AddComponent<Engine::Interactable>();
+            interactable->maxDistance = 2.5f;
+
+            auto card = cardGO->AddComponent<Game::AccessCard>();
+            card->cardId = cardId;
+            card->cardColor = static_cast<Game::AccessCardColor>(cardId);
+            card->spriteRenderer = sr;
+            card->interactable = interactable;
+            cardGO->active = true;
         }
     }
 
@@ -345,6 +412,39 @@ namespace Game
                 int zid = GetZoneId(x, y);
                 zoneGrid[y * mapWidth + x] = (zid > 0) ? zid : 0;
             }
+        }
+
+        const float CCTV_Z = 0.85f;
+        const float EPS = 0.02f;
+        auto placements = Game::GenerateCCTVsPerZone(
+            map, zoneGrid, mapWidth, mapHeight,
+            10, 1, 3.5f, CCTV_Z, EPS);
+
+        Sprite *cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
+        for (size_t i = 0; i < placements.size(); ++i)
+        {
+            auto &p = placements[i];
+            auto camObj = CreateGameObject("Editor_CCTV_" + std::to_string(i + 1));
+            camObj->transform->position = p.pos;
+            camObj->transform->rotation = p.rot;
+            camObj->transform->localScale = Vector2(0.25f, 0.25f);
+
+            auto sr = camObj->AddComponent<SpriteRenderer>();
+            sr->SetSprite(cctvSprite);
+            sr->billboard = true;
+            sr->sortingOrder = 300;
+
+            auto sensor = camObj->AddComponent<CCTVCamera>();
+            sensor->id = i + 1;
+            sensor->tile = map;
+            sensor->tf = nullptr;
+            sensor->hud = nullptr;
+            sensor->minimap =  nullptr; // Connect to minimap for vision cones
+            sensor->detectRadius = 3.0f;
+            sensor->maxRange = 6.0f;
+            sensor->coneWidth = 70.0f;
+            sensor->needLOS = true;
+            sensor->spriteRenderer = sr; // Store sprite renderer for color changes
         }
     }
 
