@@ -66,7 +66,6 @@ namespace AEEditor
         // Install OS message hook LAST to guarantee safe memory access
         gOriginalWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)EditorWndProc);
 
-        ReflectionRegistry::InitializeMetaRegistry();
     }
 
     void EditorManager::Exit()

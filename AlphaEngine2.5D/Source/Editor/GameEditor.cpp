@@ -1,7 +1,3 @@
-/**
- * @file GameEditor.cpp
- * @brief Game editor
- */
 #include "GameEditor.hpp"
 #include "ObjectManager.hpp"
 #include <fstream>
@@ -50,6 +46,8 @@ namespace AEEditor
             mapWidth = tilemap->width;
             mapHeight = tilemap->height;
         }
+
+        ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
     }
 
     void GameEditor::Exit()
@@ -118,6 +116,10 @@ namespace AEEditor
 
                 Engine::SceneManager::LoadScene("EditorScene");
             }
+            else
+            {
+                ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
+            }
         }
         ImGui::PopStyleColor();
 
@@ -171,8 +173,6 @@ namespace AEEditor
 
         if (!tilemap)
             return;
-
-        // draw the 2d map
 
         ImGuiIO &io = ImGui::GetIO();
         ImDrawList *drawList = ImGui::GetWindowDrawList();
@@ -236,28 +236,22 @@ namespace AEEditor
             }
         }
 
-        // draw game object as circle
-        const auto &allObjects = Engine::GameObject::GetAllGameObjects();
-        for (auto *go : allObjects)
+        for (auto *go : ObjectManager::loadedObjects)
         {
             if (!go || go->isPendingDestruction || !go->active || !go->transform)
                 continue;
 
-            // Map world coordinates to screen space
             float goX = go->transform->position.x;
             float goY = go->transform->position.y;
 
-            // Invert Y to align with map visual representation
             float visualY = static_cast<float>(mapHeight) - goY;
 
             ImVec2 center(origin.x + goX * scaledTileSize, origin.y + visualY * scaledTileSize);
             float radius = scaledTileSize * 0.4f;
 
-            // Direct Interaction Hitbox
             ImVec2 pMin(center.x - radius, center.y - radius);
             ImVec2 pMax(center.x + radius, center.y + radius);
 
-            // Ignore map scrolling/painting if hovering an object
             if (ImGui::IsMouseHoveringRect(pMin, pMax))
             {
                 if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
@@ -272,23 +266,19 @@ namespace AEEditor
             drawList->AddCircleFilled(center, radius, color);
             drawList->AddCircle(center, radius, IM_COL32(0, 0, 0, 255), 0, 2.0f);
 
-            // Render Object Name below icon
             ImVec2 textSize = ImGui::CalcTextSize(go->name.c_str());
             drawList->AddText(ImVec2(center.x - (textSize.x * 0.5f), center.y + radius + 2.0f), IM_COL32(255, 255, 255, 255), go->name.c_str());
         }
 
-        // process dragging to map
         if (ObjectManager::draggingObject)
         {
             if (ImGui::IsMouseDown(ImGuiMouseButton_Left))
             {
                 ImVec2 mousePos = ImGui::GetMousePos();
 
-                // Convert absolute screen coordinates back to world space
                 float worldX = (mousePos.x - origin.x) / scaledTileSize;
                 float worldY = static_cast<float>(mapHeight) - ((mousePos.y - origin.y) / scaledTileSize);
 
-                // Constrain to map boundaries
                 ObjectManager::draggingObject->transform->position.x = std::clamp(worldX, 0.0f, static_cast<float>(mapWidth));
                 ObjectManager::draggingObject->transform->position.y = std::clamp(worldY, 0.0f, static_cast<float>(mapHeight));
             }
@@ -298,8 +288,6 @@ namespace AEEditor
             }
         }
 
-        // process the drop location of game object and change the object's position accordingly.
-        // Overlay an invisible button covering the entire canvas to catch the drop payload
         ImGui::SetCursorScreenPos(canvasPos);
         ImGui::InvisibleButton("CanvasDropTarget", canvasSize);
 
@@ -327,7 +315,6 @@ namespace AEEditor
             ImGui::EndDragDropTarget();
         }
 
-        // allow adding of new tiles
         if ((canvasHovered || canvasActive) && !ObjectManager::draggingObject && currentTileValue != -1)
         {
             ImVec2 mousePos = io.MousePos;
@@ -372,23 +359,7 @@ namespace AEEditor
         if (gridX < 0 || gridX >= mapWidth || gridY < 0 || gridY >= mapHeight)
             return;
 
-        int currentTile = static_cast<int>(tilemap->GetTile(gridX, gridY));
-
-        // if (currentTileValue == 0)
-        // {
-        //     tilemap->SetTile(gridX, gridY, static_cast<Engine::TileType>(0));
-        //     return;
-        // }
-
-        // if (currentTileValue == 1)
-        // {
-        //     tilemap->SetTile(gridX, gridY, static_cast<Engine::TileType>(1));
-        //     return;
-        // }
-
-
         Engine::TileType newTile = static_cast<Engine::TileType>(currentTileValue);
-
         tilemap->SetTile(gridX, gridY, newTile);
     }
 

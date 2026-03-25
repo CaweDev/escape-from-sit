@@ -84,7 +84,7 @@
     <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
     <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
     <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
-<<<<<<< HEAD
+
     <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
@@ -96,21 +96,15 @@
     <ClCompile Include="Source\Editor\Reflection.cpp" />
     <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
 
-=======
     <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
     <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
->>>>>>> origin/Caleb-AUw
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
     <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
-<<<<<<< HEAD
 
-    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
-<<<<<<< HEAD
 
-=======
     <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
@@ -123,10 +117,9 @@
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
     <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp" />
->>>>>>> origin/Caleb-AUw
-=======
+
     <ClCompile Include="Source\Game\UCB1Bandit\BanditVisualizer.cpp" />
->>>>>>> origin/xavierlatest
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
@@ -217,28 +210,24 @@
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
+
     <ClInclude Include="Source\Editor\ObjectManager.hpp" />
     <ClInclude Include="Source\Editor\Reflection.hpp" />
     <ClInclude Include="Source\Editor\ReflectionRegistry.hpp" />
-=======
+
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
->>>>>>> origin/Caleb-AUw
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
-<<<<<<< HEAD
-    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
+
     <ClInclude Include="Source\Game\UCB1Bandit\BanditVisualizer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
     <None Include="Assets\Config\audio_config_custom.json" />
-=======
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
     <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
@@ -254,7 +243,6 @@
     <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
     <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
     <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp" />
->>>>>>> origin/Caleb-AUw
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />

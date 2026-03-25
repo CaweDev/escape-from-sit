@@ -3,6 +3,7 @@
 #include "Reflection.hpp"
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Interaction/Interactable.hpp"
 
 #include "game/Items/Item.hpp"
 #include "game/AccessCard/AccessCard.hpp"
@@ -27,15 +28,22 @@ namespace AEEditor
 
     void RegisterSpriteRenderer()
     {
-        Registry::RegisterClassType<Engine::SpriteRenderer>("SpriteRenderer");
+        AEEditor::Registry::RegisterClassType<Engine::SpriteRenderer>("SpriteRenderer");
+        AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("spritePath", offsetof(Engine::SpriteRenderer, spritePath), AEEditor::DataType::Sprite);
+        AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("sortingOrder", offsetof(Engine::SpriteRenderer, sortingOrder), AEEditor::DataType::Int);
+        AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("flipX", offsetof(Engine::SpriteRenderer, flipX), AEEditor::DataType::Bool);
+        AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("flipY", offsetof(Engine::SpriteRenderer, flipY), AEEditor::DataType::Bool);
+        AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("billboard", offsetof(Engine::SpriteRenderer, billboard), AEEditor::DataType::Bool);
+    }
 
-        Registry::RegisterFieldType<Engine::SpriteRenderer>("color", offsetof(Engine::SpriteRenderer, color), DataType::Color);
-        Registry::RegisterFieldType<Engine::SpriteRenderer>("sortingOrder", offsetof(Engine::SpriteRenderer, sortingOrder), DataType::Int);
-
-        Registry::RegisterFieldType<Engine::SpriteRenderer>("flipX", offsetof(Engine::SpriteRenderer, flipX), DataType::Bool);
-        Registry::RegisterFieldType<Engine::SpriteRenderer>("flipY", offsetof(Engine::SpriteRenderer, flipY), DataType::Bool);
-
-        Registry::RegisterFieldType<Engine::SpriteRenderer>("billboard", offsetof(Engine::SpriteRenderer, billboard), DataType::Bool);
+    void RegisterInteractable()
+    {
+        AEEditor::Registry::RegisterClassType<Engine::Interactable>("Interactable");
+        AEEditor::Registry::RegisterFieldType<Engine::Interactable>("actionText", offsetof(Engine::Interactable, actionText), AEEditor::DataType::String);
+        AEEditor::Registry::RegisterFieldType<Engine::Interactable>("maxDistance", offsetof(Engine::Interactable, maxDistance), AEEditor::DataType::Float);
+        AEEditor::Registry::RegisterFieldType<Engine::Interactable>("hitShape", offsetof(Engine::Interactable, hitShape), AEEditor::DataType::Int);
+        AEEditor::Registry::RegisterFieldType<Engine::Interactable>("requireHold", offsetof(Engine::Interactable, requireHold), AEEditor::DataType::Bool);
+        AEEditor::Registry::RegisterFieldType<Engine::Interactable>("holdDuration", offsetof(Engine::Interactable, holdDuration), AEEditor::DataType::Float);
     }
 
     void RegisterItem()
@@ -49,7 +57,7 @@ namespace AEEditor
     void RegisterAccessCard()
     {
         Registry::RegisterClassType<Game::AccessCard>("AccessCard");
-        Registry::RegisterFieldType<Game::AccessCard>("CardColor", offsetof(Game::AccessCard, cardColor), DataType::Int);
+        // Registry::RegisterFieldType<Game::AccessCard>("CardColor", offsetof(Game::AccessCard, cardColor), DataType::Int);
         Registry::RegisterFieldType<Game::AccessCard>("CardId", offsetof(Game::AccessCard, cardId), DataType::Int);
         Registry::RegisterFieldType<Game::AccessCard>("FloatTime", offsetof(Game::AccessCard, floatTime), DataType::Float);
         Registry::RegisterFieldType<Game::AccessCard>("BaseZ", offsetof(Game::AccessCard, baseZ), DataType::Float);
@@ -145,6 +153,7 @@ namespace AEEditor
 
         RegisterTransform();
         RegisterSpriteRenderer();
+        RegisterInteractable();
         RegisterItem();
         RegisterAccessCard();
         RegisterCCTVCamera();

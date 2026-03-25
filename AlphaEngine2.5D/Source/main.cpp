@@ -38,6 +38,7 @@ extern "C"
 #include "Editor/Index.hpp"
 // Game systems
 #include "Game/Puzzle/PuzzleManager.h"
+#include "Editor/ReflectionRegistry.hpp"
 
 using namespace Engine;
 
@@ -64,6 +65,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         AEEditor::EditorManager::Initialize(hwnd);
     }
+
+    AEEditor::ReflectionRegistry::InitializeMetaRegistry();
 
     // Initialize Sound Manager
     SoundManager::Initialize();
