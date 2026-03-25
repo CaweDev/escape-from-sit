@@ -330,6 +330,12 @@ namespace AEEditor
             goArray.append(goJson);
         }
 
+        std::filesystem::path pathObj(filepath);
+        if (pathObj.has_parent_path())
+        {
+            std::filesystem::create_directories(pathObj.parent_path());
+        }
+
         std::ofstream file(filepath, std::ios::out | std::ios::trunc);
         if (file.is_open())
         {
