@@ -536,7 +536,7 @@ namespace Game
         m_option2Text->SetAnchor(UI::TextAnchor::MiddleLeft);
 
         // --- NEW: OPTION 3 TEXT ---
-        m_option3Text = m_bookPopupPanel->CreateChild<UI::Text>(); // <--- THE MISSING CREATION LINE!
+        m_option3Text = m_bookPopupPanel->CreateChild<UI::Text>(); 
         m_option3Text->name = "Option3Text";
         m_option3Text->SetAnchors({ 0.0f, 1.0f }, { 0.0f, 1.0f });
         m_option3Text->SetPivot({ 0.0f, 1.0f });

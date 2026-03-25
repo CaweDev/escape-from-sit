@@ -89,17 +89,17 @@ void PuzzleManager::BookDataInit()
         "What does 'int*' represent?",
         "What is a memory leak?",
         "Which of these is a Loop?",
-        "Question 4?",
+        "|Cinema|",
         "Question 5?",
         "Question 6?"
     };
 
-    std::array<std::string, 6> Opt1 = { "1. A memory address", "1. Spilled RAM", "1. if()", "1. A", "1. A", "1. A" };
-    std::array<std::string, 6> Opt2 = { "2. A decimal number", "2. Unfreed memory", "2. switch()", "2. B", "2. B", "2. B" };
-    std::array<std::string, 6> Opt3 = { "3. A boolean", "3. A fast CPU", "3. while()", "3. C", "3. C", "3. C" };
+    std::array<std::string, 6> Opt1 = { "1. A memory address", "1. Spilled RAM", "1. if()", "1. Absolute Cinema", "1. A", "1. A" };
+    std::array<std::string, 6> Opt2 = { "2. A decimal number", "2. Unfreed memory", "2. switch()", "2. ???", "2. B", "2. B" };
+    std::array<std::string, 6> Opt3 = { "3. A boolean", "3. A fast CPU", "3. while()", "3. Cinema?", "3. C", "3. C" };
 
     // The correct key they need to press (1, 2, or 3)
-    int CorrectAnswers[6] = { 1, 2, 3, 2, 1, 3 };
+    int CorrectAnswers[6] = { 1, 2, 3, 1, 1, 3 };
 
 
 
