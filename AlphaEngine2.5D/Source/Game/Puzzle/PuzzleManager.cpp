@@ -80,7 +80,7 @@ void PuzzleManager::BookDataInit()
         "Ok maybe can pass now",
         "B for HLP!?!?",
         "Confirm A now" };
-    Engine::Vector3 BookCoord[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
+    Engine::Vector3 BookCoord[6] = { {5.5f, 2.5f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
 
     for (int i{}; i < 6; ++i) {
         allBooks.push_back({
