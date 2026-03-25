@@ -52,7 +52,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    bool isEditorMode = (wcsstr(lpCmdLine, L"-game") != nullptr);
+    bool isEditorMode = (wcsstr(lpCmdLine, L"-game") == nullptr);
 
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1600, 900, 1, 60, false, NULL);
