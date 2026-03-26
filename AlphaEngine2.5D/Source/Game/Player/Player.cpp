@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
+#include "Game/Player/PlayerPowerUpController.h"
 #include <iostream>
 
 namespace Game {
@@ -20,6 +21,22 @@ namespace Game {
 			if (hands->IsVisible()) {
 				immune = true;
 			}
+		}
+
+		if(Player::hasShield) {
+			auto* controller = gameObject->GetComponent<PlayerPowerUpController>();
+
+			if (controller) {
+				controller->RemovePowerUp(PowerUpType::Shield);
+			}
+			else {
+				// Fallback: keep state consistent even if controller is missing
+				Player::hasShield = false;
+			}
+
+			invulnerabilityTimer = shieldBreakIFrameDuration; // Start invulnerability frames
+			immune = true;
+			std::cout << "[PLAYER] Shield absorbed the catch! Player is now invulnerable for " << shieldBreakIFrameDuration << " seconds.\n";
 		}
 		if (cheatCatchImmune) {
 			immune = true;

@@ -2,7 +2,6 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
-#include "Engine/Physics/CircleCollider2D.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Core/AssetManager.hpp"
@@ -22,11 +21,6 @@ namespace Game {
 
         auto rb = powerUpObj->AddComponent<Engine::Rigidbody2D>();
         rb->bodyType = Engine::RigidbodyType2D::Static;
-
-        auto collider = powerUpObj->AddComponent<Engine::CircleCollider2D>();
-        collider->radius = 0.5f;
-        collider->minHeight = 0.0f;
-        collider->maxHeight = 2.0f;
 
         auto sr = powerUpObj->AddComponent<Engine::SpriteRenderer>();
 
@@ -54,9 +48,7 @@ namespace Game {
 
         // Spawn room (keep these fixed)
         allPowerUps.push_back({ 0, {5.5f, 3.5f, 0.0f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 1, {6.5f, 3.5f, 0.0f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
-        allPowerUps.push_back({ 2, {7.5f, 3.5f, 0.0f}, PowerUpType::Shield,          "Shield",           20.0f });
-        allPowerUps.push_back({ 3, {8.5f, 3.5f, 0.0f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
+        
 
         // Hallways only (hardcoded corridor coordinates)
         allPowerUps.push_back({ 4,  {18.5f,  8.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
@@ -72,7 +64,7 @@ namespace Game {
     }
 
     void PowerUpManager::Init() {
-        PowerUpDataInit();  
+        PowerUpDataInit();
         for (const auto& data : allPowerUps) {
             CreatePowerUpObject(data);
         }

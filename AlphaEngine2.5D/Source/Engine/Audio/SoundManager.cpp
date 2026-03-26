@@ -111,7 +111,8 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["access_card"] = "Assets/Audio/SFX/Access card.wav";
         config.sfx["card_collect"] = "Assets/Audio/SFX/Access card.wav";
         
-        config.sfx["book_nearby"] = "Assets/Audio/SFX/book_nearby.wav";
+       /* config.sfx["book_nearby"] = "Assets/Audio/Puzzle/book_nearby.wav";*/
+        config.sfx["book_nearby"] = "Assets/Audio/SFX/ui_click.wav";
         config.sfx["terminal_hack"] = "Assets/Audio/SFX/Access Denied.wav";
         config.sfx["cctv_disabled"] = "Assets/Audio/SFX/CCTV shutdown.wav";
         config.sfx["door_open"] = "Assets/Audio/SFX/Door open.wav";
