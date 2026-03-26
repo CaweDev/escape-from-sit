@@ -17,18 +17,49 @@ namespace Game
 
     void LoseScreen::Update()
     {
-        if (!m_visible || !m_isFadingIn) return;
+        if (!m_visible) return;
 
-        m_fadeTimer += Engine::Time::unscaledDeltaTime;
-        float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
-        if (t < 0.0f) t = 0.0f;
-        if (t > 1.0f) t = 1.0f;
-
-        ApplyFade(t);
-
-        if (t >= 1.0f)
+        if (m_isFadingIn)
         {
-            m_isFadingIn = false;
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t >= 1.0f)
+            {
+                m_isFadingIn = false;
+            }
+            return;
+        }
+
+        if (m_isFadingOut)
+        {
+            m_fadeTimer += Engine::Time::unscaledDeltaTime;
+            float t = (m_fadeDuration > 0.0f) ? (1.0f - (m_fadeTimer / m_fadeDuration)) : 0.0f;
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            ApplyFade(t);
+
+            if (t <= 0.0f)
+            {
+                m_isFadingOut = false;
+                CompleteHide();
+
+                if (m_pendingAction == PendingAction::LoadMainMenu)
+                {
+                    m_pendingAction = PendingAction::None;
+                    Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
+                }
+                else if (m_pendingAction == PendingAction::RestartFPSScene)
+                {
+                    m_pendingAction = PendingAction::None;
+                    Engine::SceneManager::LoadWithLoadingScreen("FPS");
+                }
+            }
         }
     }
 
@@ -49,12 +80,20 @@ namespace Game
         Engine::Color btn = kButtonColor;
         btn.a *= t;
         if (m_button) m_button->SetBackgroundColor(btn);
+        if (m_restartButton) m_restartButton->SetBackgroundColor(btn);
 
         if (m_button && m_button->GetLabel())
         {
             Engine::Color c = Engine::Color::white();
             c.a = t;
             m_button->GetLabel()->SetColor(c);
+        }
+
+        if (m_restartButton && m_restartButton->GetLabel())
+        {
+            Engine::Color c = Engine::Color::white();
+            c.a = t;
+            m_restartButton->GetLabel()->SetColor(c);
         }
     }
 
@@ -75,6 +114,7 @@ namespace Game
             m_panel = nullptr;
             m_title = nullptr;
             m_button = nullptr;
+            m_restartButton = nullptr;
         }
     }
 
@@ -112,6 +152,19 @@ namespace Game
         m_title->SetColor(kTitleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+        m_restartButton = m_panel->CreateChild<UI::Button>();
+        m_restartButton->name = "LoseRestartButton";
+        m_restartButton->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_restartButton->SetPivot({ 0.5f, 0.0f });
+        m_restartButton->SetAnchoredPosition({ 0.0f, 125.0f });
+        m_restartButton->SetSizeDelta({ 240.0f, 56.0f });
+        m_restartButton->SetText("Restart");
+        m_restartButton->SetBackgroundColor(kButtonColor);
+        m_restartButton->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+        m_restartButton->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_restartButton->GetBackground()->SetPixelsPerUnitMultiplier(1.0f);
+        m_restartButton->onClick = [this]() { OnRestartButtonClicked(); };
+
         m_button = m_panel->CreateChild<UI::Button>();
         m_button->name = "LoseButton";
         m_button->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
@@ -124,14 +177,25 @@ namespace Game
         m_button->GetBackground()->SetImageType(UI::ImageType::Sliced);
         m_button->GetBackground()->SetPixelsPerUnitMultiplier(1.0f);
         m_button->onClick = [this]() { OnButtonClicked(); };
+
+        ApplyFade(1.0f);
     }
 
     void LoseScreen::Show()
     {
         if (m_visible || !m_overlay) return;
 
+        m_pendingAction = PendingAction::None;
         m_visible = true;
         m_overlay->visible = true;
+
+        if (m_button) m_button->enabled = true;
+        if (m_restartButton) m_restartButton->enabled = true;
+
+        m_fadeTimer = 0.0f;
+        m_isFadingOut = false;
+        m_isFadingIn = true;
+        ApplyFade(0.0f);
 
         Engine::Application::RegisterPause("LoseScreen");
         Engine::Input::RegisterCursorUnlock("LoseScreen");
@@ -139,6 +203,18 @@ namespace Game
     }
 
     void LoseScreen::Hide()
+    {
+        if (!m_visible || !m_overlay || m_isFadingOut) return;
+
+        m_isFadingIn = false;
+        m_isFadingOut = true;
+        m_fadeTimer = 0.0f;
+
+        if (m_button) m_button->enabled = false;
+        if (m_restartButton) m_restartButton->enabled = false;
+    }
+
+    void LoseScreen::CompleteHide()
     {
         if (!m_visible || !m_overlay) return;
 
@@ -152,7 +228,14 @@ namespace Game
     void LoseScreen::OnButtonClicked()
     {
         Engine::SoundManager::PlaySFX("ui_click");
+        m_pendingAction = PendingAction::LoadMainMenu;
         Hide();
-        Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
+    }
+
+    void LoseScreen::OnRestartButtonClicked()
+    {
+        Engine::SoundManager::PlaySFX("ui_click");
+        m_pendingAction = PendingAction::RestartFPSScene;
+        Hide();
     }
 }

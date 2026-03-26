@@ -14,6 +14,7 @@
 #include "Engine/TileMap/TileMap.hpp"
 #include <vector>
 #include <functional>
+#include "Game/ucb1bandit/BanditVisualizer.hpp"
 namespace Game
 {
     /**
@@ -102,6 +103,11 @@ namespace Game
         UI::Panel* m_bookPopupPanel;
         UI::Text* m_bookTitleText;
         UI::Text* m_bookLoreText;
+
+        //Question Answers
+        UI::Text* m_option1Text = nullptr;
+        UI::Text* m_option2Text = nullptr;
+        UI::Text* m_option3Text = nullptr;
         
         // Access Card tracking
         UI::Panel* m_cardPanel = nullptr;
@@ -125,14 +131,14 @@ namespace Game
         UI::Text* m_powerUpTimers[4] = { nullptr, nullptr, nullptr, nullptr };
         Engine::Texture2D* m_powerUpTextures[4] = { nullptr, nullptr, nullptr, nullptr };
 
-
+        Game::BanditVisualizer* m_banditVisualizer = nullptr;
     public:
         PlayerHUD() = default;
         virtual ~PlayerHUD();
 
         // NPC approach indicators (Annoying + Bully)
         void UpdateNPCApproach(int annoyingCount, float nearestAnnoyingDist, int bullyCount, float nearestBullyDist);
-
+        void SetBanditVisualizer(Game::BanditVisualizer* bv) { m_banditVisualizer = bv; }
         /**
          * @brief Called when the component is created
          */

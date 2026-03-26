@@ -20,10 +20,21 @@ namespace Game {
         }
 
         SetupInteraction();
+        SetPickupEnabled(true);
     }
 
     void PowerUpObject::Update() {
-        if (!isCollected && gameObject->transform) {
+        if (isCollected) {
+            if (!allowRespawn) return;
+
+            respawnTimer -= Engine::Time::deltaTime;
+            if (respawnTimer <= 0.0f) {
+                Respawn();
+            }
+            return;
+        }
+
+        if (gameObject->transform) {
             floatTime += Engine::Time::deltaTime * floatSpeed;
             gameObject->transform->position.z = baseZ + std::sin(floatTime) * floatHeight;
             gameObject->transform->rotation += Engine::Time::deltaTime * 30.0f;
@@ -38,27 +49,53 @@ namespace Game {
 
         interactable->onInteract = [this]() {
             this->OnCollect();
-            };
+        };
     }
 
     void PowerUpObject::OnCollect() {
         if (isCollected) return;
 
         auto playerObj = Engine::GameObject::Find("Player");
-        if (playerObj) {
-            // Send directly to the Controller to manage it natively!
-            auto controller = playerObj->GetComponent<PlayerPowerUpController>();
-            if (controller) {
-                Engine::SoundManager::PlaySFX("powerup_collect");
+        if (!playerObj) return;
 
-                std::cout << "[POWERUP] Got " << reference.name << "!\n";
-                controller->AddPowerUp(reference.type, reference.duration);
+        auto controller = playerObj->GetComponent<PlayerPowerUpController>();
+        if (!controller) return;
 
-                isCollected = true;
-                // Disable this world item to hide it and ignore further interactions
-                gameObject->active = false;
+        Engine::SoundManager::PlaySFX("powerup_collect");
+
+        std::cout << "[POWERUP] Got " << reference.name << "!\n";
+        controller->AddPowerUp(reference.type, reference.duration);
+
+        isCollected = true;
+        respawnTimer = respawnDelay;
+        SetPickupEnabled(false);
+    }
+
+    void PowerUpObject::SetPickupEnabled(bool enabled) {
+        if (spriteRenderer) {
+            spriteRenderer->enabled = enabled;
+        }
+
+        if (interactable) {
+            interactable->enabled = enabled;
+            if (enabled) {
+                interactable->actionText = ("Collect " + reference.name);
             }
         }
+    }
+
+    void PowerUpObject::Respawn() {
+        isCollected = false;
+        respawnTimer = 0.0f;
+
+        SetPickupEnabled(true);
+
+        // reset bobbing baseline in case transform moved
+        if (gameObject && gameObject->transform) {
+            baseZ = gameObject->transform->position.z;
+        }
+
+        std::cout << "[POWERUP] Respawned " << reference.name << ".\n";
     }
 
     Engine::Color PowerUpObject::GetHighlightColor() const {
