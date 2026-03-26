@@ -1158,6 +1158,7 @@ namespace Game
 
                 // Add Interactable
                 auto interactable = cardGO->AddComponent<Engine::Interactable>();
+                interactable->actionText = "Collect Access Card";
                 interactable->maxDistance = 2.5f;
 
                 std::cout << "[FPSScene]   Interactable added\n";
