@@ -37,6 +37,39 @@ namespace AEEditor
         }
         ImGui::Separator();
 
+        // Global delete trigger when not typing in an input field
+        if (selectedObject && ImGui::IsKeyPressed(ImGuiKey_Delete) && !ImGui::GetIO().WantTextInput)
+        {
+            ImGui::OpenPopup("Delete Confirmation");
+        }
+
+        if (ImGui::BeginPopupModal("Delete Confirmation", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Are you sure you want to delete '%s'?", selectedObject->name.c_str());
+            ImGui::Separator();
+
+            if (ImGui::Button("Yes", ImVec2(120, 0)))
+            {
+                selectedObject->isPendingDestruction = true;
+
+                loadedObjects.erase(std::remove(loadedObjects.begin(), loadedObjects.end(), selectedObject), loadedObjects.end());
+
+                selectedObject = nullptr;
+                GameEditor::currentTileValue = -1;
+
+                SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
+
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("No", ImVec2(120, 0)))
+            {
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+
         for (auto *obj : loadedObjects)
         {
             if (!obj || obj->isPendingDestruction)
