@@ -27,6 +27,7 @@
 #include "Game/Scenes/FPSScene/UI/LoseScreen.hpp"
 #include "Game/Scenes/FPSScene/UI/WinScreen.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
+#include "Game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
 #include "Game/Puzzle/PuzzleManager.h"
 #include "Game/NPC/CameraShake.hpp"
 #include "Game/NPC/NPC.hpp"
@@ -105,6 +106,8 @@ namespace Game
         PauseMenu *pauseMenu = nullptr;
         Game::LoseScreen *loseScreen = nullptr;
         Game::WinScreen *winScreen = nullptr;
+        Game::ControlsMenu *controlsMenu = nullptr;
+        bool showControlsAtStart = false;
 
         // UI::Canvas* modalCanvas = nullptr;
         // UI::Panel* modalPanel = nullptr;
@@ -821,6 +824,8 @@ namespace Game
             player->AddComponent<Hands67>();
             loseScreen = player->AddComponent<LoseScreen>();
             winScreen = player->AddComponent<WinScreen>();
+            controlsMenu = player->AddComponent<ControlsMenu>();
+            showControlsAtStart = true;
 
             playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
             playerTf->rotation = 0.0f;
@@ -1311,6 +1316,17 @@ namespace Game
                 return;
             }
 
+            if (showControlsAtStart && controlsMenu)
+            {
+                controlsMenu->Show();
+                showControlsAtStart = false;
+            }
+
+            if (controlsMenu && controlsMenu->IsVisible())
+            {
+                return;
+            }
+
             // Toggle ML debug summary (no flood)
             if (Input::GetKeyDown(KeyCode::M))
             {
@@ -1723,6 +1739,8 @@ namespace Game
 
             loseScreen = nullptr;
             winScreen = nullptr;
+            controlsMenu = nullptr;
+            showControlsAtStart = false;
 
             /*if (modalCanvas) {
                 UI::UIManager::GetInstance()->DestroyCanvas(modalCanvas);
