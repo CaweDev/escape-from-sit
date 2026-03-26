@@ -1,252 +1,747 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
-    <ClCompile Include="Source\Editor\EditorManager.cpp" />
-    <ClCompile Include="Source\Editor\EditorScene.cpp" />
-    <ClCompile Include="Source\Editor\GameEditor.cpp" />
-    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp" />
-    <ClCompile Include="Source\Engine\Input\XboxController.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
-    <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
-    <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
-    <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
-    <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
-    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
-    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
-    <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
-    <ClCompile Include="Source\Game\NPC\NPC.cpp" />
-    <ClCompile Include="Source\Engine\Audio\AudioClip.cpp" />
-    <ClCompile Include="Source\Engine\Audio\AudioSource.cpp" />
-    <ClCompile Include="Source\Engine\Core\Application.cpp" />
-    <ClCompile Include="Source\Engine\Core\AssetManager.cpp" />
-    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp" />
-    <ClCompile Include="Source\Engine\Core\GameObject.cpp" />
-    <ClCompile Include="Source\Engine\Core\Time.cpp" />
-    <ClCompile Include="Source\Engine\Core\Transform.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\Camera.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\Color.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\Sprite.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\TextureUtils.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp" />
-    <ClCompile Include="Source\Engine\Input\Input.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp" />
-    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp" />
-    <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp" />
-    <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp" />
-    <ClCompile Include="Source\Engine\Physics\Collider2D.cpp" />
-    <ClCompile Include="Source\Engine\Physics\Physics2D.cpp" />
-    <ClCompile Include="Source\Engine\Physics\Rigidbody2D.cpp" />
-    <ClCompile Include="Source\Engine\Physics\TileMapCollider2D.cpp" />
-    <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp" />
-    <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
-    <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
-    <ClCompile Include="Source\Engine\TileMap\Door.cpp" />
-    <ClCompile Include="Source\Engine\TileMap\TileMap.cpp" />
-    <ClCompile Include="Source\Engine\UI\Components\Button.cpp" />
-    <ClCompile Include="Source\Engine\UI\Components\Image.cpp" />
-    <ClCompile Include="Source\Engine\UI\Components\Panel.cpp" />
-    <ClCompile Include="Source\Engine\UI\Components\SpriteSheetImage.cpp" />
-    <ClCompile Include="Source\Engine\UI\Components\Text.cpp" />
-    <ClCompile Include="Source\Engine\UI\Core\Canvas.cpp" />
-    <ClCompile Include="Source\Engine\UI\Core\UIElement.cpp" />
-    <ClCompile Include="Source\Engine\UI\Core\UIManager.cpp" />
-    <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp" />
-    <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp" />
-    <ClCompile Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.cpp" />
-    <ClCompile Include="Source\Engine\UI\Layout\LayoutGroup.cpp" />
-    <ClCompile Include="Source\Engine\UI\Layout\VerticalLayoutGroup.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\Crosshair.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\InteractionPrompt.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp" />
-    <ClCompile Include="Source\Engine\UI\Specialized\MiniMap.cpp" />
-    <ClCompile Include="Source\Game\FPSController.cpp" />
-    <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp" />
-    <ClCompile Include="Source\Game\Player\Player.cpp" />
-    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
-    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
-    <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp" />
-    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp" />
-    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp" />
-    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Source\Editor\ObjectManager.cpp" />
-    <ClCompile Include="Source\Editor\Reflection.cpp" />
-    <ClCompile Include="Source\Editor\ReflectionRegistry.cpp" />
-
-    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp" />
-    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp" />
-
-    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp" />
-
-    <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp" />
-    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp" />
-    <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp" />
-    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp" />
-    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp" />
-    <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp" />
+    <Filter Include="Assets" />
+    <Filter Include="Assets\Config" />
+    <Filter Include="Extern">
+      <UniqueIdentifier>{00000000-0000-0000-0000-000000000000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\imgui">
+      <UniqueIdentifier>{00000000-0000-0000-0000-000000000001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\jsoncpp" />
+    <Filter Include="Extern\jsoncpp\src" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{1e9fcc7b-b0b1-4622-9426-972e9faf6b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Editor">
+      <UniqueIdentifier>{640118ca-8dee-4b25-b271-cf3354289382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine">
+      <UniqueIdentifier>{a85b2fff-b647-46d6-8d51-0c7cc6df6e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine\Audio" />
+    <Filter Include="Source\Engine\Core" />
+    <Filter Include="Source\Engine\Graphics" />
+    <Filter Include="Source\Engine\Input" />
+    <Filter Include="Source\Engine\Interaction" />
+    <Filter Include="Source\Engine\Math" />
+    <Filter Include="Source\Engine\Physics" />
+    <Filter Include="Source\Engine\Raycasting" />
+    <Filter Include="Source\Engine\Scene" />
+    <Filter Include="Source\Engine\TileMap" />
+    <Filter Include="Source\Engine\UI" />
+    <Filter Include="Source\Engine\UI\Components" />
+    <Filter Include="Source\Engine\UI\Core" />
+    <Filter Include="Source\Engine\UI\GameObject" />
+    <Filter Include="Source\Engine\UI\Helpers" />
+    <Filter Include="Source\Engine\UI\Layout" />
+    <Filter Include="Source\Engine\UI\Specialized" />
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{a04211b8-e5f0-42b7-a785-f3df08aa516e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game\AccessCard" />
+    <Filter Include="Source\Game\CCTV" />
+    <Filter Include="Source\Game\ControlRoomDoor" />
+    <Filter Include="Source\Game\Debugger" />
+    <Filter Include="Source\Game\Heatmap" />
+    <Filter Include="Source\Game\LevelEditor" />
+    <Filter Include="Source\Game\NPC" />
+    <Filter Include="Source\Game\PathRenderer" />
+    <Filter Include="Source\Game\Player" />
+    <Filter Include="Source\Game\PowerUp" />
+    <Filter Include="Source\Game\Puzzle" />
+    <Filter Include="Source\Game\Scenes" />
+    <Filter Include="Source\Game\Scenes\CreditScene" />
+    <Filter Include="Source\Game\Scenes\FPSScene" />
+    <Filter Include="Source\Game\Scenes\FPSScene\UI" />
+    <Filter Include="Source\Game\Scenes\InteractionDemoScene" />
+    <Filter Include="Source\Game\Scenes\LoadingScene" />
+    <Filter Include="Source\Game\Scenes\MainMenuScene" />
+    <Filter Include="Source\Game\Scenes\MainMenuScene\UI" />
+    <Filter Include="Source\Game\Scenes\Puzzle" />
+    <Filter Include="Source\Game\Scenes\SplashScene" />
+    <Filter Include="Source\Game\Scenes\UITestScene" />
+    <Filter Include="Source\Game\SecurityGuard" />
+    <Filter Include="Source\Game\UCB1Bandit" />
+    <Filter Include="Source\Game\ZoneManager" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_draw.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_tables.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp">
+      <Filter>Extern\imgui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\EditorManager.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\EditorScene.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\GameEditor.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Audio\SoundManager.cpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Input\XboxController.cpp">
+      <Filter>Source\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp">
+      <Filter>Source\Game\AccessCard</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp">
+      <Filter>Source\Game\ControlRoomDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Debugger\DebugManager.cpp">
+      <Filter>Source\Game\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp">
+      <Filter>Source\Game\Debugger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp">
+      <Filter>Source\Game\Heatmap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp">
+      <Filter>Source\Game\LevelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\NPC\CameraShake.cpp">
+      <Filter>Source\Game\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\NPC\NPC.cpp">
+      <Filter>Source\Game\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Audio\AudioClip.cpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Audio\AudioSource.cpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\Application.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\AssetManager.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\ConfigManager.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\GameObject.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\Time.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\Transform.cpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\Camera.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\Color.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\DoorRenderer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\IRenderer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\Sprite.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\SpriteRenderer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheet.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\SpriteSheetRenderer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\Texture2D.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\TextureUtils.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\TileMapRenderer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\ZBuffer.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Input\Input.cpp">
+      <Filter>Source\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Interaction\Interactable.cpp">
+      <Filter>Source\Engine\Interaction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Interaction\InteractionController.cpp">
+      <Filter>Source\Engine\Interaction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\BoxCollider2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\CircleCollider2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\Collider2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\Physics2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\Rigidbody2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Physics\TileMapCollider2D.cpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Raycasting\ProjectionHelper.cpp">
+      <Filter>Source\Engine\Raycasting</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Scene\Scene.cpp">
+      <Filter>Source\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Scene\SceneManager.cpp">
+      <Filter>Source\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\TileMap\Door.cpp">
+      <Filter>Source\Engine\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\TileMap\TileMap.cpp">
+      <Filter>Source\Engine\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Components\Button.cpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Components\Image.cpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Components\Panel.cpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Components\SpriteSheetImage.cpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Components\Text.cpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Core\Canvas.cpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Core\UIElement.cpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Core\UIManager.cpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\GameObject\ConfirmationDialog.cpp">
+      <Filter>Source\Engine\UI\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Helpers\DialogService.cpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Helpers\FadeService.cpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Helpers\NineSliceRenderer.cpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.cpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Layout\LayoutGroup.cpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Layout\VerticalLayoutGroup.cpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Specialized\Crosshair.cpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Specialized\InteractionPrompt.cpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Specialized\Map.cpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Specialized\MiniMap.cpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\FPSController.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PathRenderer\PathRenderer.cpp">
+      <Filter>Source\Game\PathRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Player\Player.cpp">
+      <Filter>Source\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Player\PlayerPowerUpController.cpp">
+      <Filter>Source\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\PowerUp\PowerUpManager.cpp">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\ObjectManager.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\Reflection.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Editor\ReflectionRegistry.cpp">
+      <Filter>Source\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Puzzle\PuzzleManager.cpp">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Puzzle\PuzzleObject.cpp">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.cpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.cpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\Hands67.cpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\UI\WinScreen.cpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\LoadingScene\LoadingScene.cpp">
+      <Filter>Source\Game\Scenes\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp">
+      <Filter>Source\Game\Scenes\MainMenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp">
+      <Filter>Source\Game\Scenes\MainMenuScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\CreditScene\CreditScene.cpp">
+      <Filter>Source\Game\Scenes\CreditScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\SplashScene\SplashScene.cpp">
+      <Filter>Source\Game\Scenes\SplashScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\UITestScene\UITestScene.cpp">
+      <Filter>Source\Game\Scenes\UITestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\SecurityGuard\SecurityGuard.cpp">
+      <Filter>Source\Game\SecurityGuard</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UCB1Bandit\UCB1Bandit.cpp">
+      <Filter>Source\Game\UCB1Bandit</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\ZoneManager\ZoneManager.cpp">
+      <Filter>Source\Game\ZoneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Extern\jsoncpp\src\jsoncpp.cpp">
+      <Filter>Extern\jsoncpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\RendererSettings.cpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Source\Editor\EditorManager.hpp" />
-    <ClInclude Include="Source\Editor\EditorScene.hpp" />
-    <ClInclude Include="Source\Editor\GameEditor.hpp" />
-    <ClInclude Include="Source\Editor\Index.hpp" />
-    <ClInclude Include="Source\Engine.hpp" />
-    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp" />
-    <ClInclude Include="Source\Engine\Core\AssetManager.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp" />
-    <ClInclude Include="Source\Engine\Input\XboxController.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp" />
-    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp" />
-    <ClInclude Include="Source\Engine\Math\Vector2.hpp" />
-    <ClInclude Include="Source\Engine\Math\Vector3.hpp" />
-    <ClInclude Include="Source\Engine\Math\Mathf.hpp" />
-    <ClInclude Include="Source\Engine\Core\Application.hpp" />
-    <ClInclude Include="Source\Engine\Core\Time.hpp" />
-    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp" />
-    <ClInclude Include="Source\Engine\Core\Component.hpp" />
-    <ClInclude Include="Source\Engine\Core\Transform.hpp" />
-    <ClInclude Include="Source\Engine\Core\GameObject.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\Color.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\Sprite.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\SpriteRenderer.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\Camera.hpp" />
-    <ClInclude Include="Source\Engine\Input\KeyCode.hpp" />
-    <ClInclude Include="Source\Engine\Input\Input.hpp" />
-    <ClInclude Include="Source\Engine\Audio\AudioClip.hpp" />
-    <ClInclude Include="Source\Engine\Audio\AudioSource.hpp" />
-    <ClInclude Include="Source\Engine\Physics\BoxCollider2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\CircleCollider2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\Collider2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\Collision2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\Physics2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\Rigidbody2D.hpp" />
-    <ClInclude Include="Source\Engine\Physics\TileMapCollider2D.hpp" />
-    <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp" />
-    <ClInclude Include="Source\Engine\Scene\Scene.hpp" />
-    <ClInclude Include="Source\Engine\Scene\SceneManager.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\Door.hpp" />
-    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp" />
-    <ClInclude Include="Source\Engine\UI\Components\Button.hpp" />
-    <ClInclude Include="Source\Engine\UI\Components\Image.hpp" />
-    <ClInclude Include="Source\Engine\UI\Components\Panel.hpp" />
-    <ClInclude Include="Source\Engine\UI\Components\SpriteSheetImage.hpp" />
-    <ClInclude Include="Source\Engine\UI\Components\Text.hpp" />
-    <ClInclude Include="Source\Engine\UI\Core\Canvas.hpp" />
-    <ClInclude Include="Source\Engine\UI\Core\RectTransform.hpp" />
-    <ClInclude Include="Source\Engine\UI\Core\UIElement.hpp" />
-    <ClInclude Include="Source\Engine\UI\Core\UIEventSystem.hpp" />
-    <ClInclude Include="Source\Engine\UI\Core\UIManager.hpp" />
-    <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp" />
-    <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp" />
-    <ClInclude Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.hpp" />
-    <ClInclude Include="Source\Engine\UI\Layout\LayoutGroup.hpp" />
-    <ClInclude Include="Source\Engine\UI\Layout\VerticalLayoutGroup.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\Crosshair.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\InteractionPrompt.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp" />
-    <ClInclude Include="Source\Engine\UI\Specialized\MiniMap.hpp" />
-    <ClInclude Include="Source\Engine\UI\UI.hpp" />
-    <ClInclude Include="Source\Game\AccessCard\AccessCard.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp" />
-    <ClInclude Include="Source\Game\ControlRoomDoor\ControlRoomDoor.hpp" />
-    <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
-    <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
-    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
-    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
-    <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
-    <ClInclude Include="Source\Game\NPC\NPC.hpp" />
-    <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
-    <ClInclude Include="Source\Game\Player\Player.hpp" />
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
-    <ClInclude Include="Source\Editor\ObjectManager.hpp" />
-    <ClInclude Include="Source\Editor\Reflection.hpp" />
-    <ClInclude Include="Source\Editor\ReflectionRegistry.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp" />
-    <ClInclude Include="Source\Engine\Audio\ProximityAudio.hpp" />
+    <ClInclude Include="Source\Editor\EditorManager.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\EditorScene.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\GameEditor.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Index.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Audio\SoundManager.hpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\AssetManager.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\DoorRenderer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\IRenderer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheet.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\SpriteSheetRenderer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\Texture2D.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\TextureUtils.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\TileMapRenderer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\ZBuffer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Input\XboxController.hpp">
+      <Filter>Source\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Interaction\Interactable.hpp">
+      <Filter>Source\Engine\Interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Interaction\InteractionController.hpp">
+      <Filter>Source\Engine\Interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Math\Vector2.hpp">
+      <Filter>Source\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Math\Vector3.hpp">
+      <Filter>Source\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Math\Mathf.hpp">
+      <Filter>Source\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Application.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Time.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\ConfigManager.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Component.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\Transform.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Core\GameObject.hpp">
+      <Filter>Source\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\Color.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\Sprite.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\SpriteRenderer.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\Camera.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Input\KeyCode.hpp">
+      <Filter>Source\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Input\Input.hpp">
+      <Filter>Source\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Audio\AudioClip.hpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Audio\AudioSource.hpp">
+      <Filter>Source\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\BoxCollider2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\CircleCollider2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\Collider2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\Collision2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\Physics2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\Rigidbody2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Physics\TileMapCollider2D.hpp">
+      <Filter>Source\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Raycasting\ProjectionHelper.hpp">
+      <Filter>Source\Engine\Raycasting</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Scene\Scene.hpp">
+      <Filter>Source\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Scene\SceneManager.hpp">
+      <Filter>Source\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\TileMap\Door.hpp">
+      <Filter>Source\Engine\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\TileMap\TileMap.hpp">
+      <Filter>Source\Engine\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Components\Button.hpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Components\Image.hpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Components\Panel.hpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Components\SpriteSheetImage.hpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Components\Text.hpp">
+      <Filter>Source\Engine\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Core\Canvas.hpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Core\RectTransform.hpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Core\UIElement.hpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Core\UIEventSystem.hpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Core\UIManager.hpp">
+      <Filter>Source\Engine\UI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\GameObject\ConfirmationDialog.hpp">
+      <Filter>Source\Engine\UI\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Helpers\DialogService.hpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Helpers\FadeService.hpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Helpers\NineSliceRenderer.hpp">
+      <Filter>Source\Engine\UI\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Layout\HorizontalLayoutGroup.hpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Layout\LayoutGroup.hpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Layout\VerticalLayoutGroup.hpp">
+      <Filter>Source\Engine\UI\Layout</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Specialized\Crosshair.hpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Specialized\HeatmapOverlay.hpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Specialized\InteractionPrompt.hpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Specialized\Map.hpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Specialized\MiniMap.hpp">
+      <Filter>Source\Engine\UI\Specialized</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\UI.hpp">
+      <Filter>Source\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\AccessCard\AccessCard.hpp">
+      <Filter>Source\Game\AccessCard</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\CCTV\CCTVTerminal.hpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ControlRoomDoor\ControlRoomDoor.hpp">
+      <Filter>Source\Game\ControlRoomDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Debugger\DebugManager.hpp">
+      <Filter>Source\Game\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp">
+      <Filter>Source\Game\Debugger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp">
+      <Filter>Source\Game\Heatmap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp">
+      <Filter>Source\Game\LevelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\NPC\CameraShake.hpp">
+      <Filter>Source\Game\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp">
+      <Filter>Source\Game\CCTV</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\NPC\NPC.hpp">
+      <Filter>Source\Game\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp">
+      <Filter>Source\Game\PathRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Player\Player.hpp">
+      <Filter>Source\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h">
+      <Filter>Source\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.h">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\ObjectManager.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\Reflection.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Editor\ReflectionRegistry.hpp">
+      <Filter>Source\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\Hands67.hpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp">
+      <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="Assets\Config\audio_config_custom.json" />
-    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp" />
-    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp" />
-    <ClInclude Include="Source\Game\FPSController.hpp" />
-    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp" />
-    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp" />
-    <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp" />
-    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp" />
-    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp" />
-    <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp" />
+    <None Include="Assets\Config\audio_config_custom.json">
+      <Filter>Assets\Config</Filter>
+    </None>
+    <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp">
+      <Filter>Source\Game\Scenes\InteractionDemoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\LoadingScene\LoadingScene.hpp">
+      <Filter>Source\Game\Scenes\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\MainMenuScene.hpp">
+      <Filter>Source\Game\Scenes\MainMenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp">
+      <Filter>Source\Game\Scenes\MainMenuScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\Puzzle\PuzzleScene.hpp">
+      <Filter>Source\Game\Scenes\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SceneRegistry.hpp">
+      <Filter>Source\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\FPSController.hpp">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\FPSScene\FPSScene.hpp">
+      <Filter>Source\Game\Scenes\FPSScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\CreditScene\CreditScene.hpp">
+      <Filter>Source\Game\Scenes\CreditScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\SplashScene\SplashScene.hpp">
+      <Filter>Source\Game\Scenes\SplashScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scenes\UITestScene\UITestScene.hpp">
+      <Filter>Source\Game\Scenes\UITestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\SecurityGuard\SecurityGuard.hpp">
+      <Filter>Source\Game\SecurityGuard</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UCB1Bandit\UCB1Bandit.hpp">
+      <Filter>Source\Game\UCB1Bandit</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\ZoneManager\ZoneManager.hpp">
+      <Filter>Source\Game\ZoneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp">
+      <Filter>Source\Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Assets\Brocsama.ico" />
+    <Image Include="..\Assets\Brocsama.ico">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Config\audio_config_custom.json" />
+    <None Include="Assets\Config\audio_config_custom.json">
+      <Filter>Assets\Config</Filter>
+    </None>
     <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
