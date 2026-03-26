@@ -431,7 +431,7 @@ namespace Game
         m_zoneEntryText->SetPivot({ 0.5f, 0.5f });
         m_zoneEntryText->SetAnchoredPosition({ 0.0f, 0.0f });
         m_zoneEntryText->SetSizeDelta({ -10.0f, -10.0f });
-        m_zoneEntryText->SetText("ENTERING\nZONE A");
+        m_zoneEntryText->SetText("ENTERING ZONE A");
         m_zoneEntryText->SetFontSize(2.0f); // Larger font for center display
         m_zoneEntryText->SetColor(Engine::Color(0.3f, 1.0f, 1.0f, 1.0f)); // Cyan
         m_zoneEntryText->SetAnchor(UI::TextAnchor::MiddleCenter);

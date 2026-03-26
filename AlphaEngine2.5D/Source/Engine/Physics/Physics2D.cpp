@@ -100,38 +100,76 @@ void Physics2D::FixedUpdate() {
             newPos = TileMapCollision(currentPos, movement, radius);
         }
         
-        // Check collider-to-collider collisions
+        // Preventive collider-to-collider collision (axis-separated, like tilemap)
         if (collider) {
-            // Temporarily move to new position
-            rb->transform->position.x = newPos.x;
-            rb->transform->position.y = newPos.y;
-            
+            auto wouldOverlapSolid = [&](const Vector2& testPos) -> bool {
+                rb->transform->position.x = testPos.x;
+                rb->transform->position.y = testPos.y;
+                for (Collider2D* other : colliders) {
+                    if (!other || other == collider || !other->enabled) continue;
+                    if (!other->gameObject || !other->gameObject->active) continue;
+                    if (other->gameObject == rb->gameObject) continue;
+                    if (!collider->CanCollideWith(other)) continue;
+                    if (other->isTrigger || collider->isTrigger) continue;
+                    // Skip TileMapCollider2D (handled separately above)
+                    if (dynamic_cast<TileMapCollider2D*>(other)) continue;
+                    if (collider->Overlaps(other)) return true;
+                }
+                return false;
+            };
+
+            Vector2 validatedPos = currentPos;
+
+            // Try X axis
+            Vector2 testX(newPos.x, currentPos.y);
+            if (!wouldOverlapSolid(testX)) {
+                validatedPos.x = newPos.x;
+            } else {
+                rb->velocity.x = 0;
+            }
+
+            // Try Y axis (using accepted X)
+            Vector2 testY(validatedPos.x, newPos.y);
+            if (!wouldOverlapSolid(testY)) {
+                validatedPos.y = newPos.y;
+            } else {
+                rb->velocity.y = 0;
+            }
+
+            // Commit the validated position
+            rb->transform->position.x = validatedPos.x;
+            rb->transform->position.y = validatedPos.y;
+
+            // Trigger callbacks (separate pass, no position mutation)
             for (Collider2D* other : colliders) {
-                if (!other || other == collider || !other->enabled || !other->gameObject->active) continue;
+                if (!other || other == collider || !other->enabled) continue;
+                if (!other->gameObject || !other->gameObject->active) continue;
                 if (other->gameObject == rb->gameObject) continue;
-                
-                // Layer-based collision filtering
                 if (!collider->CanCollideWith(other)) continue;
-                
+                if (!(other->isTrigger || collider->isTrigger)) continue;
                 if (collider->Overlaps(other)) {
-                    if (other->isTrigger || collider->isTrigger) {
-                        // Trigger callbacks
-                        collider->OnTriggerStay2D(other);
-                        other->OnTriggerStay2D(collider);
-                    } else {
-                        // Debug: log collision detection
-                        // std::cout << "[Physics2D] Collision: " << rb->gameObject->name << " <-> " << other->gameObject->name << std::endl;
-                        
-                        // Collision response
-                        ResolveCollision(rb, other);
-                    }
+                    collider->OnTriggerStay2D(other);
+                    other->OnTriggerStay2D(collider);
                 }
             }
-            
-            // Re-validate position against tilemap after collider-to-collider resolution
+
+            // Fallback: if the OTHER object moved into us, hard-resolve any residual overlap
+            for (Collider2D* other : colliders) {
+                if (!other || other == collider || !other->enabled) continue;
+                if (!other->gameObject || !other->gameObject->active) continue;
+                if (other->gameObject == rb->gameObject) continue;
+                if (!collider->CanCollideWith(other)) continue;
+                if (other->isTrigger || collider->isTrigger) continue;
+                if (dynamic_cast<TileMapCollider2D*>(other)) continue;
+                if (collider->Overlaps(other)) {
+                    ResolveCollision(rb, other);
+                }
+            }
+
+            // Re-validate position against tilemap after any residual push-out
             // This prevents being pushed into walls by other entities
             Vector2 pushedPos(rb->transform->position.x, rb->transform->position.y);
-            bool needsTileMapCheck = (pushedPos.x != newPos.x || pushedPos.y != newPos.y);
+            bool needsTileMapCheck = (pushedPos.x != validatedPos.x || pushedPos.y != validatedPos.y);
             
             if (needsTileMapCheck) {
                 bool validPosition = true;
@@ -140,7 +178,6 @@ void Physics2D::FixedUpdate() {
                 for (Collider2D* tmCollider : colliders) {
                     TileMapCollider2D* tileMapCollider = dynamic_cast<TileMapCollider2D*>(tmCollider);
                     if (tileMapCollider && tileMapCollider->enabled && tileMapCollider->tileMap) {
-                        // Check all four corners of the collision radius
                         if (!tileMapCollider->IsWalkable(pushedPos.x - radius, pushedPos.y - radius) ||
                             !tileMapCollider->IsWalkable(pushedPos.x + radius, pushedPos.y - radius) ||
                             !tileMapCollider->IsWalkable(pushedPos.x - radius, pushedPos.y + radius) ||
@@ -161,10 +198,10 @@ void Physics2D::FixedUpdate() {
                     }
                 }
                 
-                // If pushed into a wall, revert to the tilemap-resolved position
+                // If pushed into a wall, revert to the validated position
                 if (!validPosition) {
-                    rb->transform->position.x = newPos.x;
-                    rb->transform->position.y = newPos.y;
+                    rb->transform->position.x = validatedPos.x;
+                    rb->transform->position.y = validatedPos.y;
                 }
             }
         } else {
