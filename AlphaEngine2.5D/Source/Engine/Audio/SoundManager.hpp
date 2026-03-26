@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AudioSource.hpp"
+#include "AudioClip.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <string>
 #include <unordered_map>

@@ -32,14 +32,14 @@
     "access_card": "Assets/Audio/AccessCardPickup/Access card.wav",
     "card_collect": "Assets/Audio/AccessCardPickup/Access card.wav",
 
-    "terminal_hack": "Assets/Audio/CCTV/Access Denied.wav",
+    "terminal_hack": "Assets/Audio/Door/Access Denied.wav",
     "cctv_disabled": "Assets/Audio/CCTV/CCTV shutdown.wav",
 
     "door_open": "Assets/Audio/Door/Door open.wav",
     "door_close": "Assets/Audio/Door/Door close.wav",
     "door_locked": "Assets/Audio/Door/Access Denied.wav",
 
-    "zone_enter": "Assets/Audio/UI/zone_enter.wav",
+    "zone_enter": "Assets/Audio/UI/Notif.wav",
     "cctv_alert": "Assets/Audio/CCTV/CCTV caught.wav",
 
     "win": "Assets/Audio/UI/Game Win.wav",
@@ -55,12 +55,12 @@
 
     "full_escalation": "Assets/Audio/Guard/Full Escalation.wav",
 
-    "jump": "Assets/Audio/Player/jump.wav",
-    "player_run": "Assets/Audio/Player/player run.wav",
-    "player_walking": "Assets/Audio/Player/player walking.wav",
+    "jump": "Assets/Audio/UI/UI click.wav",
+    "player_run": "Assets/Audio/Guard/guard nearby.wav",
+    "player_walking": "Assets/Audio/Guard/guard nearby.wav",
     "push": "Assets/Audio/Bully/push.wav",
-    "npc_alert": "Assets/Audio/AnnoyingClassMate/NPC Alert.wav",
+    "npc_alert": "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav",
 
-    "powerup_collect": "Assers/Audio/powerup/powerup collect.wav"
+    "powerup_collect": "Assets/Audio/powerup/powerup collect.wav"
   }
 }
