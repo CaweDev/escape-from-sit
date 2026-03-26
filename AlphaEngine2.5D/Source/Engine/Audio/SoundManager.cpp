@@ -2,6 +2,10 @@
 
 #include <cstdio>
 #include <filesystem>
+#include <algorithm>
+#include <cctype>
+#include <unordered_map>
+#include <vector>
 
 namespace Engine {
 
@@ -28,6 +32,58 @@ SoundManager::DistanceLoopConfig SoundManager::s_cctvLoopConfig{};
 SoundManager::DistanceLoopConfig SoundManager::s_terminalLoopConfig{};
 std::unordered_map<std::string, AudioSource*> SoundManager::s_loopChannels;
 std::unordered_map<std::string, int> SoundManager::s_loopRefCount;
+
+// Cache for loose filename resolution (requested -> actual path)
+static std::unordered_map<std::string, std::string> s_loosePathCache;
+
+// Normalize a filename for loose comparison: lowercase, remove non-alphanumeric
+static std::string NormalizeLoose(const std::string& s) {
+    std::string out;
+    out.reserve(s.size());
+    for (unsigned char c : s) {
+        if (std::isalnum(c)) out.push_back((char)std::tolower(c));
+    }
+    return out;
+}
+
+// Try to find a file under Assets/Audio whose filename (without extension) loosely
+// matches the requested name. Returns empty string if not found.
+static std::string FindLooseAudioFile(const std::string& requested)
+{
+    namespace fs = std::filesystem;
+    if (requested.empty()) return {};
+
+    auto it = s_loosePathCache.find(requested);
+    if (it != s_loosePathCache.end()) return it->second;
+
+    std::string target = NormalizeLoose(requested);
+
+    fs::path base("Assets/Audio");
+    try {
+        if (!fs::exists(base)) {
+            s_loosePathCache[requested] = std::string();
+            return {};
+        }
+
+        for (auto& pe : fs::recursive_directory_iterator(base)) {
+            if (!pe.is_regular_file()) continue;
+            std::string fname = pe.path().filename().string();
+            std::string stem = pe.path().stem().string();
+            std::string normStem = NormalizeLoose(stem);
+            std::string normName = NormalizeLoose(fname);
+            if (normStem == target || normName == target) {
+                std::string found = pe.path().generic_string();
+                s_loosePathCache[requested] = found;
+                return found;
+            }
+        }
+    } catch (...) {
+        // ignore filesystem errors
+    }
+
+    s_loosePathCache[requested] = std::string();
+    return {};
+}
 
 void SoundManager::AudioConfig::FromJson(const Json::Value& json)
 {
@@ -105,35 +161,34 @@ void SoundManager::Initialize(const std::string& configPath)
         // SFX (common keys used throughout the game)
         // SFX (point to nested folder)
         // SFX (Assets/Audio/SFX)
-        config.sfx["ui_click"] = "Assets/Audio/SFX/ui_click.wav";
-        config.sfx["ui_hover"] = "Assets/Audio/SFX/ui_hover.wav";
-        config.sfx["ui_toggle"] = "Assets/Audio/SFX/ui_toggle.wav";
-        config.sfx["access_card"] = "Assets/Audio/SFX/Access card.wav";
-        config.sfx["card_collect"] = "Assets/Audio/SFX/Access card.wav";
-        
-       /* config.sfx["book_nearby"] = "Assets/Audio/Puzzle/book_nearby.wav";*/
-        config.sfx["book_nearby"] = "Assets/Audio/SFX/ui_click.wav";
-        config.sfx["terminal_hack"] = "Assets/Audio/SFX/Access Denied.wav";
-        config.sfx["cctv_disabled"] = "Assets/Audio/SFX/CCTV shutdown.wav";
-        config.sfx["door_open"] = "Assets/Audio/SFX/Door open.wav";
-        config.sfx["door_close"] = "Assets/Audio/SFX/Door close.wav";
-        config.sfx["door_locked"] = "Assets/Audio/SFX/Access Denied.wav";
-        config.sfx["zone_enter"] = "Assets/Audio/SFX/zone_enter.wav";
-        config.sfx["cctv_alert"] = "Assets/Audio/SFX/CCTV caught.wav";
-        config.sfx["win"] = "Assets/Audio/SFX/win.wav";
-        config.sfx["lose"] = "Assets/Audio/SFX/lose.wav";
-        config.sfx["guard_proximity_loop"] = "Assets/Audio/SFX/guard nearby.wav";
-        config.sfx["guard_chasing"] = "Assets/Audio/SFX/Guard Chasing.wav";
-        config.sfx["cctv_hum_loop"] = "Assets/Audio/SFX/CCTV ambience.wav";
-        config.sfx["terminal_buzz_loop"] = "Assets/Audio/SFX/Terminal buzz.wav";
-        config.sfx["annoying_classmate"] = "Assets/Audio/SFX/Annoying Classmate.wav";
-        config.sfx["full_escalation"] = "Assets/Audio/SFX/Full Escalation.wav";
-        config.sfx["jump"] = "Assets/Audio/SFX/jump.wav";
-        config.sfx["player_run"] = "Assets/Audio/SFX/player run.wav";
-        config.sfx["player_walking"] = "Assets/Audio/SFX/player walking.wav";
-        config.sfx["push"] = "Assets/Audio/SFX/push.wav";
-        config.sfx["npc_alert"] = "Assets/Audio/SFX/NPC Alert.wav";
-        config.sfx["all_books_collected"] = "Assets/Audio/SFX/Puzzle_Complete.wav";
+        config.sfx["ui_click"] = "Assets/Audio/UI/UI click.wav";
+        config.sfx["ui_hover"] = "Assets/Audio/UI/UI hover.wav";
+        config.sfx["ui_toggle"] = "Assets/Audio/UI/UI click.wav";
+        config.sfx["access_card"] = "Assets/Audio/AccessCardPickup/Access card.wav";
+        config.sfx["card_collect"] = "Assets/Audio/AccessCardPickup/Access card.wav";
+
+        config.sfx["book_nearby"] = "Assets/Audio/Puzzle/book_nearby.wav";
+        config.sfx["terminal_hack"] = "Assets/Audio/Door/Access Denied.wav";
+        config.sfx["cctv_disabled"] = "Assets/Audio/CCTV/CCTV shutdown.wav";
+        config.sfx["door_open"] = "Assets/Audio/Door/Door open.wav";
+        config.sfx["door_close"] = "Assets/Audio/Door/Door close.wav";
+        config.sfx["door_locked"] = "Assets/Audio/Door/Door lock.wav";
+        config.sfx["zone_enter"] = "Assets/Audio/UI/Notif.wav";
+        config.sfx["cctv_alert"] = "Assets/Audio/CCTV/CCTV caught.wav";
+        config.sfx["win"] = "Assets/Audio/UI/Game Win.wav";
+        config.sfx["lose"] = "Assets/Audio/UI/Game Lose.wav";
+        config.sfx["guard_proximity_loop"] = "Assets/Audio/Guard/guard nearby.wav";
+        config.sfx["guard_chasing"] = "Assets/Audio/Guard/Guard Chasing.wav";
+        config.sfx["cctv_hum_loop"] = "Assets/Audio/CCTV/CCTV ambience.wav";
+        config.sfx["terminal_buzz_loop"] = "Assets/Audio/CCTV/Terminal buzz.mp3";
+        config.sfx["annoying_classmate"] = "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav";
+        config.sfx["full_escalation"] = "Assets/Audio/Guard/Full Escalation.wav";
+        config.sfx["jump"] = "Assets/Audio/UI/UI click.wav";
+        config.sfx["player_run"] = "Assets/Audio/Guard/guard nearby.wav";
+        config.sfx["player_walking"] = "Assets/Audio/Guard/guard nearby.wav";
+        config.sfx["push"] = "Assets/Audio/Bully/push.wav";
+        config.sfx["npc_alert"] = "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav";
+        config.sfx["all_books_collected"] = "Assets/Audio/Puzzle/Puzzle_Complete.wav";
         // settings: keep defaults already present in AudioConfig implementation
     }
 
@@ -173,6 +228,16 @@ void SoundManager::Initialize(const std::string& configPath)
 
     for (const auto& [key, path] : config.sfx) {
         auto* clip = LoadSoundClip(path);
+        if (!(clip && clip->IsLoaded())) {
+            // Try resolving by key (loose filename search)
+            std::string resolved = FindLooseAudioFile(key);
+            if (!resolved.empty()) {
+                std::printf("[Info] SoundManager: Attempting to load SFX '%s' via resolved path: %s\n", key.c_str(), resolved.c_str());
+                delete clip;
+                clip = LoadSoundClip(resolved);
+            }
+        }
+
         if (clip && clip->IsLoaded()) {
             s_sfxClips[key] = clip;
         } else {
@@ -226,6 +291,12 @@ void SoundManager::Shutdown()
     s_bgmFadeTimer = 0.0f;
     s_bgmFadeState = BGMFadeState::None;
     s_stopAfterFadeOut = false;
+
+    // Clear any resolver cache used for loose filename matching to free memory
+    try {
+        s_loosePathCache.clear();
+        s_loosePathCache.rehash(0);
+    } catch (...) {}
 
     delete s_bgmSource;
     delete s_sfxSource;
@@ -556,36 +627,103 @@ AudioClip* SoundManager::LoadMusicClip(const std::string& path)
         return nullptr;
     };
 
+    // Helper: build additional fallback candidate paths by trying
+    // common subfolders, alternative filename variants (spaces -> '_', '-')
+    // and common audio extensions.
+    auto buildCandidates = [&](const fs::path& fp, const std::vector<std::string>& subfolders) {
+        std::vector<std::string> out;
+
+        std::string filename = fp.filename().string();
+        std::string stem = fp.stem().string();
+        std::string ext = fp.extension().string();
+
+        // common extensions to try (original extension first if present)
+        std::vector<std::string> exts;
+        if (!ext.empty()) exts.push_back(ext);
+        const std::vector<std::string> extraExts = { ".wav", ".ogg", ".mp3", ".flac" };
+        for (const auto& e : extraExts) {
+            if (exts.end() == std::find(exts.begin(), exts.end(), e)) exts.push_back(e);
+        }
+
+        // name variants
+        std::vector<std::string> nameVars;
+        nameVars.push_back(filename);
+        // replace spaces
+        auto replaceChar = [&](const std::string& s, char a, char b){ std::string r = s; std::replace(r.begin(), r.end(), a, b); return r; };
+        nameVars.push_back(replaceChar(filename, ' ', '_'));
+        nameVars.push_back(replaceChar(filename, ' ', '-'));
+
+        // lowercase variants
+        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return std::tolower(c); }); return r; };
+        nameVars.push_back(toLower(filename));
+        nameVars.push_back(toLower(replaceChar(filename, ' ', '_')));
+        nameVars.push_back(toLower(replaceChar(filename, ' ', '-')));
+
+        // ensure unique
+        std::sort(nameVars.begin(), nameVars.end());
+        nameVars.erase(std::unique(nameVars.begin(), nameVars.end()), nameVars.end());
+
+        // prefer project Audio BGM and generic Audio folders
+        for (const auto& nv : nameVars) {
+            for (const auto& e : exts) {
+                out.push_back(std::string("Assets/Audio/BGM/") + nv);
+                out.push_back(std::string("Assets/Audio/") + nv);
+            }
+        }
+
+        // try categorized subfolders
+        for (const auto& sub : subfolders) {
+            for (const auto& nv : nameVars) {
+                out.push_back(std::string("Assets/Audio/") + sub + "/" + nv);
+            }
+        }
+
+        // legacy locations
+        for (const auto& nv : nameVars) {
+            out.push_back(std::string("Assets/sound/") + nv);
+            out.push_back(std::string("Assets/Audio/SFX/") + nv);
+        }
+
+        // Finally try the raw filename (without any directory) with extensions
+        for (const auto& nv : nameVars) {
+            out.push_back(nv);
+        }
+
+        return out;
+    };
+
     // Try original path first
     if (auto* clip = tryLoad(path)) return clip;
 
-    // Build fallback candidates based on filename
+    // If not found, try loose filename resolution (scan Assets/Audio)
+    std::string loose = FindLooseAudioFile(path.empty() ? std::string() : std::filesystem::path(path).filename().string());
+    if (!loose.empty()) {
+        std::printf("[Info] SoundManager: Resolved loose SFX path '%s' -> '%s'\n", path.c_str(), loose.c_str());
+        if (auto* clip = tryLoad(loose)) return clip;
+    }
+
     fs::path fp(path);
-    std::string filename = fp.filename().string();
-
-    std::vector<std::string> candidates;
-    // Try project Audio BGM and generic Audio folders first
-    candidates.push_back(std::string("Assets/Audio/BGM/") + filename);
-    candidates.push_back(std::string("Assets/Audio/") + filename);
-
-    // Try common subfolders inside Assets/Audio (project uses categorized folders)
     const std::vector<std::string> audioSubfolders = {
         "BGM", "Guard", "AnnoyingClassMate", "Bully", "CCTV", "Door", "Player",
         "AccessCardPickup", "powerup", "Puzzle", "UI"
     };
-    for (const auto& sub : audioSubfolders) {
-        candidates.push_back(std::string("Assets/Audio/") + sub + "/" + filename);
-    }
 
-    // legacy locations
-    candidates.push_back(std::string("Assets/sound/") + filename);
-    candidates.push_back(std::string("Assets/Audio/SFX/") + filename);
-
+    auto candidates = buildCandidates(fp, audioSubfolders);
     for (const auto& cpath : candidates) {
+        bool exists = false;
+        try { exists = fs::exists(fs::path(cpath)); } catch (...) { exists = false; }
+        std::printf("[Debug] SoundManager: Trying music candidate: %s (exists=%d)\n", cpath.c_str(), exists ? 1 : 0);
         if (auto* clip = tryLoad(cpath)) {
             std::printf("[Info] SoundManager: Loaded music via fallback path: %s\n", cpath.c_str());
             return clip;
         }
+    }
+
+    // Try loose filename resolution for music as well
+    std::string looseMusic = FindLooseAudioFile(fp.filename().string());
+    if (!looseMusic.empty()) {
+        std::printf("[Info] SoundManager: Resolved loose music path '%s' -> '%s'\n", path.c_str(), looseMusic.c_str());
+        if (auto* clip = tryLoad(looseMusic)) return clip;
     }
 
     std::printf("[Warning] SoundManager: LoadMusic failed for '%s' and fallback candidates\n", path.c_str());
@@ -606,27 +744,62 @@ AudioClip* SoundManager::LoadSoundClip(const std::string& path)
     // Try original path first
     if (auto* clip = tryLoad(path)) return clip;
 
-    // Build fallback candidates based on filename
     fs::path fp(path);
-    std::string filename = fp.filename().string();
-
-    std::vector<std::string> candidates;
-
-    // Prefer specific categorized subfolders inside Assets/Audio
     const std::vector<std::string> audioSubfolders = {
         "Guard", "AnnoyingClassMate", "Bully", "CCTV", "Door", "Player",
         "AccessCardPickup", "powerup", "Puzzle", "UI", "BGM"
     };
-    for (const auto& sub : audioSubfolders) {
-        candidates.push_back(std::string("Assets/Audio/") + sub + "/" + filename);
-    }
 
-    // Then generic Audio and legacy locations
-    candidates.push_back(std::string("Assets/Audio/") + filename);
-    candidates.push_back(std::string("Assets/sound/") + filename);
-    candidates.push_back(std::string("Assets/Audio/SFX/") + filename);
+    // reuse same candidate builder used for music
+    auto buildCandidatesLocal = [&](const fs::path& p) {
+        // reuse logic from LoadMusicClip buildCandidates
+        std::vector<std::string> out;
 
+        std::string filename = p.filename().string();
+        std::string ext = p.extension().string();
+
+        std::vector<std::string> exts;
+        if (!ext.empty()) exts.push_back(ext);
+        const std::vector<std::string> extraExts = { ".wav", ".ogg", ".mp3", ".flac" };
+        for (const auto& e : extraExts) {
+            if (exts.end() == std::find(exts.begin(), exts.end(), e)) exts.push_back(e);
+        }
+
+        auto replaceChar = [&](const std::string& s, char a, char b){ std::string r = s; std::replace(r.begin(), r.end(), a, b); return r; };
+        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return std::tolower(c); }); return r; };
+
+        std::vector<std::string> nameVars;
+        nameVars.push_back(filename);
+        nameVars.push_back(replaceChar(filename, ' ', '_'));
+        nameVars.push_back(replaceChar(filename, ' ', '-'));
+        nameVars.push_back(toLower(filename));
+        nameVars.push_back(toLower(replaceChar(filename, ' ', '_')));
+        nameVars.push_back(toLower(replaceChar(filename, ' ', '-')));
+
+        std::sort(nameVars.begin(), nameVars.end());
+        nameVars.erase(std::unique(nameVars.begin(), nameVars.end()), nameVars.end());
+
+        for (const auto& sub : audioSubfolders) {
+            for (const auto& nv : nameVars) {
+                out.push_back(std::string("Assets/Audio/") + sub + "/" + nv);
+            }
+        }
+
+        for (const auto& nv : nameVars) {
+            out.push_back(std::string("Assets/Audio/") + nv);
+            out.push_back(std::string("Assets/sound/") + nv);
+            out.push_back(std::string("Assets/Audio/SFX/") + nv);
+            out.push_back(nv);
+        }
+
+        return out;
+    };
+
+    auto candidates = buildCandidatesLocal(fp);
     for (const auto& cpath : candidates) {
+        bool exists = false;
+        try { exists = fs::exists(fs::path(cpath)); } catch (...) { exists = false; }
+        std::printf("[Debug] SoundManager: Trying SFX candidate: %s (exists=%d)\n", cpath.c_str(), exists ? 1 : 0);
         if (auto* clip = tryLoad(cpath)) {
             std::printf("[Info] SoundManager: Loaded SFX via fallback path: %s\n", cpath.c_str());
             return clip;
