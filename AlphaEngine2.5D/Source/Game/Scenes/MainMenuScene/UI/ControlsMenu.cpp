@@ -14,6 +14,9 @@ namespace Game
 
         const Engine::Color kTextNormal     { 0.9f,  0.9f,  0.9f,  1.0f };
         const Engine::Color kTextSelected   { 1.0f,  1.0f,  1.0f,  1.0f };
+
+        constexpr const char* kCursorUnlockId = "ControlsMenu";
+        constexpr const char* kPauseId = "ControlsMenu";
     }
 
     ControlsMenu::~ControlsMenu()
@@ -82,6 +85,10 @@ namespace Game
 
     void ControlsMenu::OnDestroy()
     {
+        Engine::Input::UnregisterCursorUnlock(kCursorUnlockId);
+        Engine::Application::UnregisterPause(kPauseId);
+        m_isVisible = false;
+
         if (m_canvas)
         {
             UI::UIManager::GetInstance()->DestroyCanvas(m_canvas);
@@ -94,6 +101,8 @@ namespace Game
         if (m_isVisible) return;
         m_isVisible = true;
 
+        Engine::Application::RegisterPause(kPauseId);
+        Engine::Input::RegisterCursorUnlock(kCursorUnlockId);
         if (m_overlay) m_overlay->visible = true;
         Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
     }
@@ -103,6 +112,8 @@ namespace Game
         if (!m_isVisible) return;
         m_isVisible = false;
 
+        Engine::Application::UnregisterPause(kPauseId);
+        Engine::Input::UnregisterCursorUnlock(kCursorUnlockId);
         if (m_overlay) m_overlay->visible = false;
         Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
     }
@@ -152,7 +163,7 @@ namespace Game
 
         // Back Button
         m_backBtn = m_panelImage->CreateChild<UI::Button>();
-        m_backBtn->name = "Back";
+        m_backBtn->name = "Close";
         m_backBtn->SetAnchors({ 0.5f, 0.15f }, { 0.5f, 0.15f });
         m_backBtn->SetPivot({ 0.5f, 0.5f });
         m_backBtn->SetAnchoredPosition({ 0.0f, 0.0f });
