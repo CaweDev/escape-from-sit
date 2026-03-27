@@ -34,6 +34,14 @@ SoundManager::DistanceLoopConfig SoundManager::s_terminalLoopConfig{};
 std::unordered_map<std::string, AudioSource*> SoundManager::s_loopChannels;
 std::unordered_map<std::string, int> SoundManager::s_loopRefCount;
 
+// NPC annoying proximity loop intentionally disabled to avoid extremely loud
+// or 'earrape' behavior. Keep as a no-op so calls remain valid but produce
+// no audible effect for both Bully and Annoying NPC types.
+void SoundManager::UpdateNPCAnnoyingLoop(f32 /*nearestDistance*/)
+{
+    // Intentionally left empty to disable NPC proximity looping.
+}
+
 // Cache for loose filename resolution (requested -> actual path)
 static std::unordered_map<std::string, std::string> s_loosePathCache;
 
