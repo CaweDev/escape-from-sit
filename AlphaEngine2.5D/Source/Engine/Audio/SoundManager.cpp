@@ -6,6 +6,7 @@
 #include <cctype>
 #include <unordered_map>
 #include <vector>
+#include "Engine/Math/Mathf.hpp"
 
 namespace Engine {
 
@@ -486,16 +487,44 @@ void SoundManager::PlayLoop(const std::string& key, f32 volume)
     EnsureInitialized();
 
     auto it = s_sfxClips.find(key);
-    if (it == s_sfxClips.end() || !it->second || !it->second->IsLoaded()) return;
+    // If clip not loaded, attempt to resolve and load at runtime (fallbacks)
+    if (it == s_sfxClips.end() || !it->second || !it->second->IsLoaded()) {
+        // Try loading directly using provided key as path
+        AudioClip* dynamicClip = LoadSoundClip(key);
+        if (!dynamicClip) {
+            // Try loose filename resolution (scan Assets/Audio)
+            std::string resolved = FindLooseAudioFile(key);
+            if (!resolved.empty()) {
+                dynamicClip = LoadSoundClip(resolved);
+            }
+        }
+
+        if (dynamicClip && dynamicClip->IsLoaded()) {
+            s_sfxClips[key] = dynamicClip;
+            it = s_sfxClips.find(key);
+        } else {
+            // Cleanup if partially created
+            delete dynamicClip;
+            return;
+        }
+    }
 
     auto lit = s_loopChannels.find(key);
     if (lit == s_loopChannels.end() || !lit->second) {
         AudioSource* src = new AudioSource();
         src->loop = true;
         src->clip = it->second;
-        // Apply master SFX volume so generic loops respect global SFX settings
+        // Apply master SFX volume so generic loops respect global SFX settings.
+        // If masterSfx is very low, guarantee a small minimum floor for important loops
+        // so footsteps remain audible. The floor is proportional to the requested loop volume.
         f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
-        src->SetVolume(volume * masterSfx);
+        f32 effectiveMaster = masterSfx; // use actual master
+        f32 finalVolume = volume * effectiveMaster;
+        // Ensure a stronger minimum so footsteps/running are audible even when master is low.
+        // Minimum is max(50% of requested loop volume, absolute 0.25).
+        f32 minFinal = Mathf::Max(volume * 0.5f, 0.25f);
+        if (finalVolume < minFinal) finalVolume = minFinal;
+        src->SetVolume(finalVolume);
         src->Play();
         s_loopChannels[key] = src;
         s_loopRefCount[key] = 1;
@@ -503,7 +532,10 @@ void SoundManager::PlayLoop(const std::string& key, f32 volume)
         // Already playing; bump refcount and update volume
         s_loopRefCount[key]++;
         f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
-        lit->second->SetVolume(volume * masterSfx);
+        f32 finalVolume = volume * masterSfx;
+        f32 minFinal = Mathf::Max(volume * 0.5f, 0.25f);
+        if (finalVolume < minFinal) finalVolume = minFinal;
+        lit->second->SetVolume(finalVolume);
     }
 }
 
@@ -591,9 +623,17 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
 
 void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
 {
-    // Use terminal loop config for NPCs as a placeholder if not tuned separately
-    // Use configured maxVolume so loudness follows audio config instead of a hardcoded value
-    UpdateDistanceLoop("annoying_classmate", nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, s_terminalLoopConfig.maxVolume);
+    // Previously this used distance-based volume scaling. Switch to a simple on/off loop
+    // so NPC proximity sound no longer scales with distance (prevents loud spikes).
+    const char* key = "annoying_classmate";
+    // If outside the far distance, ensure loop is stopped
+    if (nearestDistance < 0.0f || nearestDistance >= s_terminalLoopConfig.farDistance) {
+        StopLoop(key);
+        return;
+    }
+
+    // Within activation radius: start a constant-volume loop (PlayLoop applies master SFX volume)
+    PlayLoop(key, s_terminalLoopConfig.maxVolume);
 }
 
 void SoundManager::UpdateTerminalBuzzLoop(f32 nearestDistance)
