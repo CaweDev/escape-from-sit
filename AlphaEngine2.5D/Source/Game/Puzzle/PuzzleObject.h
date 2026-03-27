@@ -20,7 +20,6 @@ struct Book {
 class PuzzleObject :public Engine::Component
 {
 public:
-	REQUIRE_COMPONENT(Engine::SpriteRenderer);
 	bool PuzzleCompleted;
 	Book Reference;
 	void Update() override;
