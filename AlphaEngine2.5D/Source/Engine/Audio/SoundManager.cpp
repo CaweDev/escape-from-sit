@@ -493,14 +493,17 @@ void SoundManager::PlayLoop(const std::string& key, f32 volume)
         AudioSource* src = new AudioSource();
         src->loop = true;
         src->clip = it->second;
-        src->SetVolume(volume);
+        // Apply master SFX volume so generic loops respect global SFX settings
+        f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
+        src->SetVolume(volume * masterSfx);
         src->Play();
         s_loopChannels[key] = src;
         s_loopRefCount[key] = 1;
     } else {
         // Already playing; bump refcount and update volume
         s_loopRefCount[key]++;
-        lit->second->SetVolume(volume);
+        f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
+        lit->second->SetVolume(volume * masterSfx);
     }
 }
 

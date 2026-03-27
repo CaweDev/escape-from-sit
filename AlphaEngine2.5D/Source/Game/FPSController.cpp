@@ -164,7 +164,15 @@ void FPSController::Update() {
         if (spaceDown && jumpCooldown <= 0.0f) {
             rigidbody->Jump(jumpForce);
             jumpCooldown = 0.25f;
-            Engine::SoundManager::PlaySFX("jump");
+            // Reduce jump SFX when moving/running so it doesn't peak over movement loops
+            float jumpVol = 1.0f;
+            if (playerComp) {
+                if (playerComp->isSprinting) jumpVol = 0.45f;
+                else if (isMoving) jumpVol = 0.65f;
+            } else if (isMoving) {
+                jumpVol = 0.65f;
+            }
+            Engine::SoundManager::PlaySFX("jump", jumpVol);
         }
         prevSpace = spaceNow;
 
