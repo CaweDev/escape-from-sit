@@ -154,8 +154,8 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
     Scene* scene = SceneManager::GetActiveScene();
     if (!scene || !Camera::main) return nullptr;
 
-    s64 sw = Application::GetWindowWidth();
-    s64 sh = Application::GetWindowHeight();
+    int sw = static_cast<int>(Application::GetWindowWidth());
+    int sh = static_cast<int>(Application::GetWindowHeight());
     f32 screenCenterX = static_cast<f32>(sw) / 2.0f;
     f32 screenCenterY = static_cast<f32>(sh) / 2.0f;
     

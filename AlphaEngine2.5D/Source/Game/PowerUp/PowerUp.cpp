@@ -135,14 +135,14 @@ namespace Game {
         SetPickupEnabled(false);
     }
 
-    void PowerUpObject::SetPickupEnabled(bool enabled) {
+    void PowerUpObject::SetPickupEnabled(bool isEnabled) {
         if (spriteRenderer) {
-            spriteRenderer->enabled = enabled;
+            spriteRenderer->enabled = isEnabled;
         }
 
         if (interactable) {
-            interactable->enabled = enabled;
-            if (enabled) {
+            interactable->enabled = isEnabled;
+            if (isEnabled) {
                 interactable->actionText = ("Collect " + reference.name);
             }
         }

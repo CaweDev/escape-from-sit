@@ -140,28 +140,6 @@ namespace Game
         return openCount > GetCCTVPlacementConfig().roomOpenThreshold5x5;
     }
 
-    // Count open (floor) tiles in a small neighborhood (3x3) around tile
-    static int LocalOpenCount3x3(Engine::TileMap* map, int x, int y, int w, int h)
-    {
-        int c = 0;
-        for (int oy = -1; oy <= 1; ++oy) {
-            for (int ox = -1; ox <= 1; ++ox) {
-                int nx = x + ox, ny = y + oy;
-                if (InBounds(w,h,nx,ny) && IsFloor(map, nx, ny)) ++c;
-            }
-        }
-        return c;
-    }
-
-    static bool HasAdjacentWall(Engine::TileMap* map, int x, int y, int w, int h)
-    {
-        if (x+1 < w && IsWall(map, x+1, y, w, h)) return true;
-        if (x-1 >= 0 && IsWall(map, x-1, y, w, h)) return true;
-        if (y+1 < h && IsWall(map, x, y+1, w, h)) return true;
-        if (y-1 >= 0 && IsWall(map, x, y-1, w, h)) return true;
-        return false;
-    }
-
     // Determine if the floor region containing (sx,sy) is enclosed by walls/doors/markers
     // Do a bounded flood-fill; if the area is large (>AREA_LIMIT) consider it not enclosed
     static bool IsEnclosedByWallsAndMarkers(Engine::TileMap* map, int sx, int sy, int w, int h)

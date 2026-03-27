@@ -145,7 +145,6 @@ void FPSController::Update() {
 
         bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
         bool wantsSprint = Input::GetKey(KeyCode::LeftShift) || XboxController::GetButton(XboxButton::A, 0);
-        bool canSprint = playerComp && playerComp->CanSprint() && !rigidbody->isCrouching;
 
         f32 speed = moveSpeed;
 
@@ -269,10 +268,6 @@ void FPSController::Update() {
     // Z=0 is ground, Z=0.5 is eye level (standing), jumping adds to this
     f32 crouchOffset = rigidbody->isCrouching ? -0.25f : 0.0f; // Crouch lowers view
     targetViewHeight = eyeHeight + rigidbody->currentHeight + crouchOffset;
-    f32 actualSpeed = sqrtf(rigidbody->velocity.x * rigidbody->velocity.x +
-        rigidbody->velocity.y * rigidbody->velocity.y);
-    
-   
 }
 
 void FPSController::LateUpdate() {

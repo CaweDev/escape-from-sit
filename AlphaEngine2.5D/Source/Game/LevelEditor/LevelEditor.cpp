@@ -583,9 +583,6 @@ void LevelEditor::RenderMap() {
     AEGfxSetBlendMode(AE_GFX_BM_BLEND);
     AEGfxSetTransparency(1.0f);
     
-    int screenWidth = AEGfxGetWindowWidth();
-    int screenHeight = AEGfxGetWindowHeight();
-    
     float scaledTileSize = tileSize * viewZoom;
     float mapOriginX = -mapWidth * scaledTileSize / 2.0f + viewOffsetX;
     float mapOriginY = -mapHeight * scaledTileSize / 2.0f + viewOffsetY;

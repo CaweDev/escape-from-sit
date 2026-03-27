@@ -7,14 +7,14 @@
 
 namespace Engine {
 
-bool SpriteSheet::Load(const std::string& filepath, int rows, int cols) {
-    if (rows <= 0 || cols <= 0) {
-        printf("[Error] SpriteSheet: Invalid grid dimensions (%d x %d)\n", rows, cols);
+bool SpriteSheet::Load(const std::string& filepath, int numRows, int numCols) {
+    if (numRows <= 0 || numCols <= 0) {
+        printf("[Error] SpriteSheet: Invalid grid dimensions (%d x %d)\n", numRows, numCols);
         return false;
     }
 
-    this->rows = rows;
-    this->cols = cols;
+    this->rows = numRows;
+    this->cols = numCols;
 
     texture = AssetManager::GetTexture(filepath);
     if (!texture || !texture->IsLoaded()) {

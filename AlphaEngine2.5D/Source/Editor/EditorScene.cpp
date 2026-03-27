@@ -382,7 +382,7 @@ namespace Game
             }
 
             auto cardGO = CreateGameObject("Editor_AccessCard_" + std::to_string(i));
-            cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
+            cardGO->transform->position = Vector3(pos.x, pos.y, 0.15f);
             cardGO->transform->localScale = Vector2(0.4f, 0.4f);
 
             auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
@@ -435,7 +435,7 @@ namespace Game
             sr->sortingOrder = 300;
 
             auto sensor = camObj->AddComponent<CCTVCamera>();
-            sensor->id = i + 1;
+            sensor->id = static_cast<int>(i) + 1;
             sensor->tile = map;
             sensor->tf = nullptr;
             sensor->hud = nullptr;

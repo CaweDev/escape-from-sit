@@ -790,16 +790,16 @@ namespace Game
                     return;
             }
 
-            const int mapHeight = (int)mapRows.size();
-            const int mapWidth = (int)mapRows[0].size();
+            const int loadedMapHeight = (int)mapRows.size();
+            const int loadedMapWidth = (int)mapRows[0].size();
 
             // Store for later use
-            this->mapWidth = mapWidth;
-            this->mapHeight = mapHeight;
+            this->mapWidth = loadedMapWidth;
+            this->mapHeight = loadedMapHeight;
 
-            for (int y = 0; y < mapHeight; ++y)
+            for (int y = 0; y < loadedMapHeight; ++y)
             {
-                if ((int)mapRows[y].size() != mapWidth)
+                if ((int)mapRows[y].size() != loadedMapWidth)
                     return;
             }
 
@@ -813,19 +813,19 @@ namespace Game
             //   Minimap Bot-Left (Blue):     Zone A (Game coords: Y=0-20, top-left)
             //   Minimap Bot-Right (Yellow):  Zone D (Game coords: Y=0-20, top-right)
             zones.clear();
-            int midX = mapWidth / 2;
-            int midY = mapHeight / 2;
+            int midX = loadedMapWidth / 2;
+            int midY = loadedMapHeight / 2;
 
             zones.push_back({1, 0, midX - 1, 0, midY - 1});                // A: Blue (Game top-left, Minimap bottom-left)
-            zones.push_back({2, 0, midX - 1, midY, mapHeight - 1});        // B: Green (Game bottom-left, Minimap top-left)
-            zones.push_back({3, midX, mapWidth - 1, midY, mapHeight - 1}); // C: Magenta (Game bottom-right, Minimap top-right)
-            zones.push_back({4, midX, mapWidth - 1, 0, midY - 1});         // D: Yellow (Game top-right, Minimap bottom-right)
+            zones.push_back({2, 0, midX - 1, midY, loadedMapHeight - 1});        // B: Green (Game bottom-left, Minimap top-left)
+            zones.push_back({3, midX, loadedMapWidth - 1, midY, loadedMapHeight - 1}); // C: Magenta (Game bottom-right, Minimap top-right)
+            zones.push_back({4, midX, loadedMapWidth - 1, 0, midY - 1});         // D: Yellow (Game top-right, Minimap bottom-right)
 
             // ===== build tile array =====
-            std::vector<int> worldMap(mapWidth * mapHeight, 0);
-            for (int y = 0; y < mapHeight; ++y)
+            std::vector<int> worldMap(loadedMapWidth * loadedMapHeight, 0);
+            for (int y = 0; y < loadedMapHeight; ++y)
             {
-                for (int x = 0; x < mapWidth; ++x)
+                for (int x = 0; x < loadedMapWidth; ++x)
                 {
                     char c = mapRows[y][x];
                     int tileValue = 0;
@@ -855,13 +855,13 @@ namespace Game
                     else
                         tileValue = c - '0'; // Fallback numeric
 
-                    worldMap[y * mapWidth + x] = tileValue;
+                    worldMap[y * loadedMapWidth + x] = tileValue;
                 }
             }
 
             auto world = CreateGameObject("World");
             auto map = world->AddComponent<TileMap>();
-            map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);
+            map->LoadFromArray(worldMap.data(), loadedMapWidth, loadedMapHeight);
 
             auto renderer = world->AddComponent<TileMapRenderer>();
             renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
@@ -925,16 +925,16 @@ namespace Game
             powerUpController = player->AddComponent<PlayerPowerUpController>();
 
             // ===== ML init =====
-            zoneMgr.Init(map, mapWidth, mapHeight);
-            heatmap.Init(mapWidth, mapHeight);
+            zoneMgr.Init(map, loadedMapWidth, loadedMapHeight);
+            heatmap.Init(loadedMapWidth, loadedMapHeight);
 
-            zoneGrid.assign(mapWidth * mapHeight, 0);
-            for (int y = 0; y < mapHeight; ++y)
+            zoneGrid.assign(loadedMapWidth * loadedMapHeight, 0);
+            for (int y = 0; y < loadedMapHeight; ++y)
             {
-                for (int x = 0; x < mapWidth; ++x)
+                for (int x = 0; x < loadedMapWidth; ++x)
                 {
                     int zid = GetZoneId(x, y);
-                    zoneGrid[y * mapWidth + x] = (zid > 0) ? zid : 0;
+                    zoneGrid[y * loadedMapWidth + x] = (zid > 0) ? zid : 0;
                 }
             }
             zoneMgr.SetZoneGrid(zoneGrid);
@@ -970,7 +970,7 @@ namespace Game
             // Place 8-12 cameras per zone for substantial corridor coverage
             // Reduced minDist to 3.5f to allow denser placement
             auto placements = Game::GenerateCCTVsPerZone(
-                map, zoneGrid, mapWidth, mapHeight,
+                map, zoneGrid, loadedMapWidth, loadedMapHeight,
                 10,   // perZone: 10 cameras per zone (40 total)
                 1,    // step: check every tile (not used anymore with new algorithm)
                 3.5f, // minDist: minimum 3.5 tiles apart within same zone
@@ -1195,7 +1195,7 @@ namespace Game
                 "Assets/color_yellow_empty.png"};
 
             // DEBUG: set true to force access cards to spawn at player spawn for debugging
-            bool debugForceSpawnAtPlayer = true;
+            bool debugForceSpawnAtPlayer = false;
 
             for (size_t i = 0; i < accessCardPositions.size(); ++i)
             {
@@ -1278,7 +1278,7 @@ namespace Game
                 // Create card GameObject
                 std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
                 auto cardGO = CreateGameObject(cardName);
-                cardGO->transform->position = Vector3(pos.x, pos.y, 0.5f);
+                cardGO->transform->position = Vector3(pos.x, pos.y, 0.15f);
                 cardGO->transform->localScale = Vector2(0.4f, 0.4f);
 
                 std::cout << "[FPSScene]   GameObject created: " << cardGO->name << "\n";

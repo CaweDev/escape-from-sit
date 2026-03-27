@@ -133,9 +133,6 @@ void PathRenderer::Render() {
     }
     renderCallCount++;
     
-    // Pulsing glow effect
-    float glowMod = 1.0f + std::sin(animTime) * glowIntensity;
-    
     // Render each waypoint marker
     for (size_t i = 0; i < pathWaypoints.size(); ++i) {
         const auto& wp = pathWaypoints[i];
@@ -279,11 +276,11 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
     AEGfxSetColorToAdd(0, 0, 0, 0);
     
     // Create transform matrix
-    AEMtx33 scale, trans, transform;
+    AEMtx33 scale, trans, worldMtx;
     AEMtx33Scale(&scale, screenSize, screenSize);
     AEMtx33Trans(&trans, aeX, aeY);
-    AEMtx33Concat(&transform, &trans, &scale);
-    AEGfxSetTransform(transform.m);
+    AEMtx33Concat(&worldMtx, &trans, &scale);
+    AEGfxSetTransform(worldMtx.m);
     
     // Create and draw a simple quad for this marker
     AEGfxMeshStart();

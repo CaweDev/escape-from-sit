@@ -701,7 +701,7 @@ AudioClip* SoundManager::LoadMusicClip(const std::string& path)
         nameVars.push_back(replaceChar(filename, ' ', '-'));
 
         // lowercase variants
-        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return std::tolower(c); }); return r; };
+        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return static_cast<char>(std::tolower(c)); }); return r; };
         nameVars.push_back(toLower(filename));
         nameVars.push_back(toLower(replaceChar(filename, ' ', '_')));
         nameVars.push_back(toLower(replaceChar(filename, ' ', '-')));
@@ -713,8 +713,11 @@ AudioClip* SoundManager::LoadMusicClip(const std::string& path)
         // prefer project Audio BGM and generic Audio folders
         for (const auto& nv : nameVars) {
             for (const auto& e : exts) {
-                out.push_back(std::string("Assets/Audio/BGM/") + nv);
-                out.push_back(std::string("Assets/Audio/") + nv);
+                std::filesystem::path p(nv);
+                p.replace_extension(e);
+                const std::string withExt = p.string();
+                out.push_back(std::string("Assets/Audio/BGM/") + withExt);
+                out.push_back(std::string("Assets/Audio/") + withExt);
             }
         }
 
@@ -813,7 +816,7 @@ AudioClip* SoundManager::LoadSoundClip(const std::string& path)
         }
 
         auto replaceChar = [&](const std::string& s, char a, char b){ std::string r = s; std::replace(r.begin(), r.end(), a, b); return r; };
-        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return std::tolower(c); }); return r; };
+        auto toLower = [&](const std::string& s){ std::string r = s; std::transform(r.begin(), r.end(), r.begin(), [](unsigned char c){ return static_cast<char>(std::tolower(c)); }); return r; };
 
         std::vector<std::string> nameVars;
         nameVars.push_back(filename);

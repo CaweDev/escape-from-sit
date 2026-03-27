@@ -119,8 +119,6 @@ namespace Engine {
 			if (screenStart > screenEnd) return;
 
 			// FOV for per-column depth
-			f32 fovRad = Camera::main->fov * Mathf::Deg2Rad;
-			f32 tanHalfFov = tanf(fovRad / 2.0f);
 
 			// Batch visible strips into a single dynamic mesh
 			AEGfxMeshStart();
@@ -213,7 +211,6 @@ namespace Engine {
 
 	void SpriteRenderer::AddStripToMesh(int x1, int x2, f32 spriteStart, f32 spriteWidth, f32 yTop, f32 yBottom) {
 		int sw = Application::GetWindowWidth();
-		int sh = Application::GetWindowHeight();
 
 		// Convert screen coords to AE coords (center is 0,0)
 		f32 sx1 = static_cast<f32>(x1) - sw / 2.0f;

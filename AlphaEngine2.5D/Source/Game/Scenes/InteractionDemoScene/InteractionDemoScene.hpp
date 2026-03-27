@@ -92,7 +92,7 @@ public:
 
         // Create player with camera
         auto player = CreateGameObject("Player");
-        auto cam = player->AddComponent<Camera>();
+        player->AddComponent<Camera>();
         
         auto rb = player->AddComponent<Rigidbody2D>();
         rb->gravityScale = 1.0f;

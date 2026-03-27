@@ -10,14 +10,14 @@
 
 namespace Engine {
 
-Scene::Scene(const std::string& name) : name(name) {}
+Scene::Scene(const std::string& sceneName) : name(sceneName) {}
 
 Scene::~Scene() {
     UnloadInternal();
 }
 
-GameObject* Scene::CreateGameObject(const std::string& name) {
-    auto obj = std::make_unique<GameObject>(name);
+GameObject* Scene::CreateGameObject(const std::string& objectName) {
+    auto obj = std::make_unique<GameObject>(objectName);
     GameObject* ptr = obj.get();
     ptr->scene = this;
     if (isUpdating) {
@@ -28,9 +28,9 @@ GameObject* Scene::CreateGameObject(const std::string& name) {
     return ptr;
 }
 
-GameObject* Scene::Find(const std::string& name) const {
+GameObject* Scene::Find(const std::string& objectName) const {
     for (const auto& obj : gameObjects) {
-        if (obj->name == name) return obj.get();
+        if (obj->name == objectName) return obj.get();
     }
     return nullptr;
 }

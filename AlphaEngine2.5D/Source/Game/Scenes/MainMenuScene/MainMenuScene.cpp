@@ -510,9 +510,9 @@ namespace Game {
 
         // Drive guard loop from the lerped alpha for smoother audio transitions
         if (enemyAlpha > 0.01f) {
-            const auto& cfg = SoundManager::GetGuardLoopConfig();
+            const auto& soundCfg = SoundManager::GetGuardLoopConfig();
             const float clampedAlpha = Mathf::Clamp(enemyAlpha, 0.0f, 1.0f);
-            const float lerpedDistance = Mathf::Lerp(cfg.farDistance, cfg.nearDistance, clampedAlpha);
+            const float lerpedDistance = Mathf::Lerp(soundCfg.farDistance, soundCfg.nearDistance, clampedAlpha);
             SoundManager::UpdateTerminalBuzzLoop(lerpedDistance);
         } else {
 			SoundManager::UpdateTerminalBuzzLoop(-1.0f); // Force silence when not visible

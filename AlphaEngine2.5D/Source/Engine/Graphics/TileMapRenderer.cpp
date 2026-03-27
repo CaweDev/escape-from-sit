@@ -268,7 +268,7 @@ namespace Engine {
 
 	TileMapRenderer::RaycastResult TileMapRenderer::CastRay(
 		const Vector2& pos, f32 rayDirX, f32 rayDirY,
-		f32 camZ, int horizon, int screenWidth, int screenHeight, TileMap* map) {
+		f32 camZ, int horizon, int screenWidth, [[maybe_unused]] int screenHeight, TileMap* map) {
 
 		RaycastResult result;
 
@@ -353,7 +353,7 @@ namespace Engine {
 	// result into a CPU pixel buffer. After the loop, upload the buffer
 	// as a transient GPU texture and draw it with one fullscreen quad.
 	// ===================================================================
-	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
+	void TileMapRenderer::RenderCeiling(const Vector2& pos, f32 camZ, int horizon, int screenWidth, [[maybe_unused]] int screenHeight, 
 		const std::vector<ColumnInfo>& columns) {
 		
 		if (tileSprites.empty() || columns.empty()) return; // No sprites assigned — nothing to draw.
@@ -522,7 +522,7 @@ namespace Engine {
 	// Includes an early-out optimisation: rows near the horizon that are
 	// beyond the maximum visible fog distance are skipped entirely.
 	// ===================================================================
-	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, int screenHeight, 
+	void TileMapRenderer::RenderFloor(const Vector2& pos, f32 camZ, int horizon, int screenWidth, [[maybe_unused]] int screenHeight, 
 		const std::vector<ColumnInfo>& columns) {
 		
 		if (tileSprites.empty() || columns.empty()) return; // No sprites assigned — nothing to draw.
@@ -677,7 +677,7 @@ namespace Engine {
 	// the current mesh and start a new one with the new GPU state.
 	// This keeps GPU state changes to a minimum (~1 draw call per unique tileType).
 	// ===================================================================
-	void TileMapRenderer::RenderWalls(int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
+	void TileMapRenderer::RenderWalls([[maybe_unused]] int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return; // Nothing to draw.
 
 		AEGfxSetTextureMode(AE_GFX_TM_AVERAGE); // Bilinear filtering for wall textures.

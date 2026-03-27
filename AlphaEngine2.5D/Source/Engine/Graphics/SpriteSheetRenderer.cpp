@@ -311,7 +311,6 @@ void SpriteSheetRenderer::AddStripToMesh(int x1, int x2, f32 spriteStart, f32 sp
                                           f32 yTop, f32 yBottom, f32 uOffsetX, f32 uOffsetY,
                                           f32 cellU, f32 cellV) {
     int sw = Application::GetWindowWidth();
-    int sh = Application::GetWindowHeight();
 
     f32 sx1 = static_cast<f32>(x1) - sw / 2.0f;
     f32 sx2 = static_cast<f32>(x2 + 1) - sw / 2.0f;

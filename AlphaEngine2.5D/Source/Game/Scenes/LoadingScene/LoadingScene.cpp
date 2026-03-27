@@ -185,7 +185,7 @@ namespace Game {
         if (!m_tips.empty()) {
             static std::random_device rd;
             static std::mt19937 gen(rd());
-            std::uniform_int_distribution<> distrib(0, m_tips.size() - 1);
+            std::uniform_int_distribution<size_t> distrib(0, m_tips.size() - 1);
             m_tipText->SetText(m_tips[distrib(gen)]);
         } else {
             m_tipText->SetText("");

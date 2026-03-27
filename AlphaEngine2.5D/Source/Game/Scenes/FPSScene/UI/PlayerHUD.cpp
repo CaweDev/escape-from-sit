@@ -1231,7 +1231,7 @@ namespace Game
         }
     }
 
-    void PlayerHUD::UpdateAlertLevel(int stage, int priorityZone, int guardCount)
+    void PlayerHUD::UpdateAlertLevel(int stage, int priorityZone, [[maybe_unused]] int guardCount)
     {
         if (!m_alertText || !m_alertBar || !m_zoneInfoText) return;
 
@@ -1330,7 +1330,7 @@ namespace Game
             m_map->SetZoneGetter(m_zoneGetter);
     }
 
-    void PlayerHUD::SetAlertDetailMode(bool detailed)
+    void PlayerHUD::SetAlertDetailMode([[maybe_unused]] bool detailed)
     {
         // This method can be used to toggle between different alert display modes
         // For now, it's a placeholder for future functionality
@@ -1489,7 +1489,7 @@ namespace Game
         std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
     
-    void PlayerHUD::CollectAccessCard(int cardId, const Engine::Vector2& collectionPos)
+    void PlayerHUD::CollectAccessCard(int cardId, [[maybe_unused]] const Engine::Vector2& collectionPos)
     {
         if (cardId < 0 || cardId >= 4) return;
         if (m_cardsCollected[cardId]) return; // Already collected

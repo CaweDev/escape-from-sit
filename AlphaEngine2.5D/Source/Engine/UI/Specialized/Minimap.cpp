@@ -770,14 +770,6 @@ namespace UI
         float minimapBottom = worldRect.y;
         float minimapTop = worldRect.y + worldRect.height;
         
-        // RECTANGULAR minimap clipping - clip to minimap square bounds
-        // This ensures ALL path geometry stays within the minimap UI element
-        float minimapCenterX = worldRect.x + worldRect.width * 0.5f;
-        float minimapCenterY = worldRect.y + worldRect.height * 0.5f;
-        float minimapHalfWidth = worldRect.width * 0.5f;
-        float minimapHalfHeight = worldRect.height * 0.5f;
-        
-        
         // Setup rendering
         AEGfxSetRenderMode(AE_GFX_RM_COLOR);
         AEGfxSetBlendMode(AE_GFX_BM_BLEND);
@@ -794,12 +786,6 @@ namespace UI
         float lineWidth = tileSize * GetMinimapConfig().pathLineWidthScale; // Thick line, easy to see
         
         bool hasVisibleGeometry = false;
-        
-        // Helper function to clamp point to minimap bounds
-        auto ClampToMinimap = [&](float x, float y, float& outX, float& outY) {
-            outX = Engine::Mathf::Clamp(x, minimapLeft, minimapRight);
-            outY = Engine::Mathf::Clamp(y, minimapBottom, minimapTop);
-        };
         
         // Helper function to check if point is inside minimap
         auto IsInsideMinimap = [&](float x, float y) -> bool {

@@ -33,7 +33,7 @@ void Time::Update() {
     time += unscaledDeltaTime;
     deltaTime = unscaledDeltaTime * gameSpeed;
     frameCount = AEFrameRateControllerGetFrameCount();
-	fps = AEFrameRateControllerGetFrameRate();
+	fps = static_cast<f32>(AEFrameRateControllerGetFrameRate());
 }
 
 void Time::Reset() {

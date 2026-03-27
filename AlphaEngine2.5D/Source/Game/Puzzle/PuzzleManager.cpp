@@ -128,7 +128,7 @@ void PuzzleManager::BookDataInit()
 
     int correctAnswers[6] = { 1, 2, 3, 1, 1, 3 };
 
-    Engine::Vector3 bookCoords[6] = { {8.0f, 17.0f, 0.3f} ,{9.0f, 41.0f, 0.3f},{90.f, 40.f, 0.3f},{121.0f, 19.f, 0.3f},{83.0f, 12.0f, 0.3f},{73.0f, 19.0f, 0.3f} };
+    Engine::Vector3 bookCoords[6] = { {8.0f, 17.0f, 0.12f} ,{9.0f, 41.0f, 0.12f},{90.f, 40.f, 0.12f},{121.0f, 19.f, 0.12f},{83.0f, 12.0f, 0.12f},{73.0f, 19.0f, 0.12f} };
 
     for (int i{}; i < 6; ++i) {
         allBooks.push_back({

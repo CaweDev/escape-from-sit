@@ -605,7 +605,7 @@ namespace Game {
         if (!tileMap) return;
 
         int bestX = -1, bestY = -1;
-        int bestScore = 1e9;
+        int bestScore = 1000000000;
 
         for (int i = 0; i < patrolSampleCount; ++i) {
             int gx = std::rand() % tileMap->width;
