@@ -146,27 +146,27 @@ namespace Game
         m_panelImage->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         m_panelImage->SetPivot({ 0.5f, 0.5f });
         m_panelImage->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_panelImage->SetSizeDelta({ 800.0f, 600.0f }); // Adjust size as needed
+        m_panelImage->SetSizeDelta({ 1120.0f, 760.0f }); // Increased menu size
         m_panelImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
 		m_panelImage->SetImageType(UI::ImageType::Sliced);
 		m_panelImage->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
-		m_panelImage->SetColor({ 0.5f, 0.5f, 0.5f, 1.f }); // Slightly transparent to show overlay tint
+		m_panelImage->SetColor({ 1.0f, 1.0f, 1.0f, 1.f }); // Slightly transparent to show overlay tint
 
         // Controls Image
         m_controlsImage = m_panelImage->CreateChild<UI::Image>();
         m_controlsImage->name = "ControlsContent";
-        m_controlsImage->SetAnchors({ 0.5f, 0.6f }, { 0.5f, 0.6f });
+        m_controlsImage->SetAnchors({ 0.5f, 0.55f }, { 0.5f, 0.55f });
         m_controlsImage->SetPivot({ 0.5f, 0.5f });
-        m_controlsImage->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_controlsImage->SetSizeDelta({ 700.0f, 400.0f }); // Adjust size depending on Controls.png aspect ratio
+        m_controlsImage->SetAnchoredPosition({ 0.0f, -20.0f });
+        m_controlsImage->SetSizeDelta({ 980.0f, 620.0f });
         m_controlsImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/Controls.png"));
 
         // Back Button
         m_backBtn = m_panelImage->CreateChild<UI::Button>();
         m_backBtn->name = "Close";
-        m_backBtn->SetAnchors({ 0.5f, 0.15f }, { 0.5f, 0.15f });
+        m_backBtn->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
         m_backBtn->SetPivot({ 0.5f, 0.5f });
-        m_backBtn->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_backBtn->SetAnchoredPosition({ 0.0f, 20.f });
         m_backBtn->SetSizeDelta({ 240.0f, 50.0f });
         m_backBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
         m_backBtn->GetBackground()->SetImageType(UI::ImageType::Sliced);
