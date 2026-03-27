@@ -15,27 +15,27 @@ namespace Game {
 void CCTVTerminal::Awake() {
     std::cout << "[CCTVTerminal::Awake] Terminal spawned for Zone " << controlledZone << "\n";
     
-    spriteRenderer = gameObject->GetComponent<Engine::SpriteRenderer>();
+   /* spriteRenderer = gameObject->GetComponent<Engine::SpriteRenderer>();*/
     
     // Create floating icon using same sprite
-    auto* scene = Engine::SceneManager::GetActiveScene();
-    if (scene && spriteRenderer && spriteRenderer->sprite) {
-        floatingIcon = scene->CreateGameObject("TerminalIcon_" + std::to_string(controlledZone));
-        floatingIcon->transform->position = Engine::Vector3(
-            transform->position.x,
-            transform->position.y,
-            transform->position.z + 0.8f // Float above terminal
-        );
-        floatingIcon->transform->localScale = Engine::Vector2(0.3f, 0.3f);
-        
-        auto iconSR = floatingIcon->AddComponent<Engine::SpriteRenderer>();
-        iconSR->SetSprite(spriteRenderer->sprite);
-        iconSR->billboard = true;
-        iconSR->sortingOrder = 251;
-        
-        std::cout << "[CCTVTerminal::Awake] Created floating icon\n";
-    }
-    
+    //auto* scene = Engine::SceneManager::GetActiveScene();
+    //if (scene && spriteRenderer && spriteRenderer->sprite) {
+    //    floatingIcon = scene->CreateGameObject("TerminalIcon_" + std::to_string(controlledZone));
+    //    floatingIcon->transform->position = Engine::Vector3(
+    //        transform->position.x,
+    //        transform->position.y,
+    //        transform->position.z + 0.8f // Float above terminal
+    //    );
+    //    floatingIcon->transform->localScale = Engine::Vector2(0.3f, 0.3f);
+    //    
+    //    auto iconSR = floatingIcon->AddComponent<Engine::SpriteRenderer>();
+    //    iconSR->SetSprite(spriteRenderer->sprite);
+    //    iconSR->billboard = true;
+    //    iconSR->sortingOrder = 251;
+    //    
+    //    std::cout << "[CCTVTerminal::Awake] Created floating icon\n";
+    //}
+    //
     UpdateVisualState();
     SetupInteraction();
 }
