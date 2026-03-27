@@ -34,14 +34,6 @@ SoundManager::DistanceLoopConfig SoundManager::s_terminalLoopConfig{};
 std::unordered_map<std::string, AudioSource*> SoundManager::s_loopChannels;
 std::unordered_map<std::string, int> SoundManager::s_loopRefCount;
 
-// NPC annoying proximity loop intentionally disabled to avoid extremely loud
-// or 'earrape' behavior. Keep as a no-op so calls remain valid but produce
-// no audible effect for both Bully and Annoying NPC types.
-void SoundManager::UpdateNPCAnnoyingLoop(f32 /*nearestDistance*/)
-{
-    // Intentionally left empty to disable NPC proximity looping.
-}
-
 // Cache for loose filename resolution (requested -> actual path)
 static std::unordered_map<std::string, std::string> s_loosePathCache;
 
@@ -631,17 +623,9 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
 
 void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
 {
-    // Previously this used distance-based volume scaling. Switch to a simple on/off loop
-    // so NPC proximity sound no longer scales with distance (prevents loud spikes).
-    const char* key = "annoying_classmate";
-    // If outside the far distance, ensure loop is stopped
-    if (nearestDistance < 0.0f || nearestDistance >= s_terminalLoopConfig.farDistance) {
-        StopLoop(key);
-        return;
-    }
-
-    // Within activation radius: start a constant-volume loop (PlayLoop applies master SFX volume)
-    PlayLoop(key, s_terminalLoopConfig.maxVolume);
+    // Fully disable NPC proximity loop: ensure any playing NPC loop is stopped
+    // and do not start it under any circumstances.
+    StopLoop("annoying_classmate");
 }
 
 void SoundManager::UpdateTerminalBuzzLoop(f32 nearestDistance)
