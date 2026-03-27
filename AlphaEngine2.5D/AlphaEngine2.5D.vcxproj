@@ -245,6 +245,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Config\audio_config_custom.json" />
+    <None Include="Assets\Config\Engine\application.json" />
+    <None Include="Assets\Config\Engine\camera.json" />
+    <None Include="Assets\Config\Engine\door.json" />
+    <None Include="Assets\Config\Engine\game.json" />
+    <None Include="Assets\Config\Engine\minimap.json" />
+    <None Include="Assets\Config\Engine\physics.json" />
+    <None Include="Assets\Config\Engine\rendering.json" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>

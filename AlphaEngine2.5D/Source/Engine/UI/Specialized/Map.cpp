@@ -5,8 +5,88 @@
 
 #include "Engine/UI/Specialized/Map.hpp"
 #include "AEEngine.h"
+#include "Engine/Core/ConfigManager.hpp"
 #include <functional>
 #include <iostream>
+namespace
+{
+    struct MapConfig : public Engine::IConfig
+    {
+        Engine::Color wallColor = Engine::Color(0.5f, 0.5f, 0.6f, 1.0f);
+        Engine::Color floorColor = Engine::Color(0.25f, 0.25f, 0.3f, 1.0f);
+        Engine::Color playerColor = Engine::Color(0.0f, 1.0f, 0.3f, 1.0f);
+        Engine::Color backgroundColor = Engine::Color(0.08f, 0.08f, 0.1f, 0.95f);
+        Engine::Color borderColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+        Engine::Color enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+
+        Engine::Color zoneColor0 = Engine::Color(1.0f, 0.0f, 0.0f, 0.7f);
+        Engine::Color zoneColor1 = Engine::Color(0.0f, 1.0f, 0.0f, 0.7f);
+        Engine::Color zoneColor2 = Engine::Color(0.0f, 0.5f, 1.0f, 0.7f);
+        Engine::Color zoneColor3 = Engine::Color(1.0f, 1.0f, 0.0f, 0.7f);
+        Engine::Color zoneColorDefault = Engine::Color(1.0f, 0.0f, 1.0f, 0.7f);
+
+        float borderThickness = 10.0f;
+        float cctvIconScale = 1.05f;
+        float enemyIconScale = 1.2f;
+        float playerIconScale = 1.5f;
+        float cctvSpriteAlpha = 0.9f;
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const Json::Value& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            wallColor = ParseColor(j, "wallColor", wallColor);
+            floorColor = ParseColor(j, "floorColor", floorColor);
+            playerColor = ParseColor(j, "playerColor", playerColor);
+            backgroundColor = ParseColor(j, "backgroundColor", backgroundColor);
+            borderColor = ParseColor(j, "borderColor", borderColor);
+            enemyColor = ParseColor(j, "enemyColor", enemyColor);
+            cctvColor = ParseColor(j, "cctvColor", cctvColor);
+
+            zoneColor0 = ParseColor(j, "zoneColor0", zoneColor0);
+            zoneColor1 = ParseColor(j, "zoneColor1", zoneColor1);
+            zoneColor2 = ParseColor(j, "zoneColor2", zoneColor2);
+            zoneColor3 = ParseColor(j, "zoneColor3", zoneColor3);
+            zoneColorDefault = ParseColor(j, "zoneColorDefault", zoneColorDefault);
+
+            borderThickness = j.get("borderThickness", borderThickness).asFloat();
+            cctvIconScale = j.get("cctvIconScale", cctvIconScale).asFloat();
+            enemyIconScale = j.get("enemyIconScale", enemyIconScale).asFloat();
+            playerIconScale = j.get("playerIconScale", playerIconScale).asFloat();
+            cctvSpriteAlpha = j.get("cctvSpriteAlpha", cctvSpriteAlpha).asFloat();
+        }
+    };
+
+    MapConfig g_mapConfig;
+    bool g_mapConfigLoaded = false;
+
+    const MapConfig& GetMapConfig()
+    {
+        if (!g_mapConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/map.json", g_mapConfig);
+            g_mapConfig.borderThickness = Engine::Mathf::Max(0.0f, g_mapConfig.borderThickness);
+            g_mapConfig.cctvIconScale = Engine::Mathf::Max(0.0f, g_mapConfig.cctvIconScale);
+            g_mapConfig.enemyIconScale = Engine::Mathf::Max(0.0f, g_mapConfig.enemyIconScale);
+            g_mapConfig.playerIconScale = Engine::Mathf::Max(0.0f, g_mapConfig.playerIconScale);
+            g_mapConfig.cctvSpriteAlpha = Engine::Mathf::Clamp(g_mapConfig.cctvSpriteAlpha, 0.0f, 1.0f);
+            g_mapConfigLoaded = true;
+        }
+
+        return g_mapConfig;
+    }
+}
+
 namespace UI
 {
     Map::Map()
@@ -17,7 +97,15 @@ namespace UI
         , m_borderColor(1.0f, 1.0f, 1.0f, 1.0f)
         , m_borderThickness(10.0f)
     {
-        // Start hidden by default
+        const MapConfig& config = GetMapConfig();
+        m_wallColor = config.wallColor;
+        m_floorColor = config.floorColor;
+        m_playerColor = config.playerColor;
+        m_backgroundColor = config.backgroundColor;
+        m_borderColor = config.borderColor;
+        m_enemyColor = config.enemyColor;
+        m_cctvColor = config.cctvColor;
+        m_borderThickness = config.borderThickness;
         visible = false;
         InitMesh();
     }
@@ -229,15 +317,15 @@ namespace UI
                     if (zid >= 0)
                     {
                         // Pick a simple color per zone (keep alpha low)
-                        Engine::Color zc(1, 1, 1, 0.0f);
+                        Engine::Color zc = GetMapConfig().zoneColorDefault;
 
                         switch (zid)
                         {
-                        case 0: zc = Engine::Color(1.0f, 0.0f, 0.0f, 0.7f); break; // red
-                        case 1: zc = Engine::Color(0.0f, 1.0f, 0.0f, 0.7f); break; // green
-                        case 2: zc = Engine::Color(0.0f, 0.5f, 1.0f, 0.7f); break; // blue
-                        case 3: zc = Engine::Color(1.0f, 1.0f, 0.0f, 0.7f); break; // yellow
-                        default: zc = Engine::Color(1.0f, 0.0f, 1.0f, 0.7f); break; // magenta
+                        case 0: zc = GetMapConfig().zoneColor0; break;
+                        case 1: zc = GetMapConfig().zoneColor1; break;
+                        case 2: zc = GetMapConfig().zoneColor2; break;
+                        case 3: zc = GetMapConfig().zoneColor3; break;
+                        default: zc = GetMapConfig().zoneColorDefault; break;
                         }
 
                         DrawQuad(screenX, screenY, tileSize, tileSize, zc);
@@ -246,7 +334,7 @@ namespace UI
             }
         }
         {
-            f32 sz = tileSize * 1.05f;
+            f32 sz = tileSize * GetMapConfig().cctvIconScale;
 
             for (auto* tf : m_cctvTransforms)
             {
@@ -258,13 +346,13 @@ namespace UI
                 f32 sx = offsetX + x * tileSize;
                 f32 sy = offsetY + y * tileSize;
 
-                if (m_cctvSprite) DrawQuadSprite(sx, sy, sz, sz, m_cctvSprite, Engine::Color(1, 1, 1, 0.90f));
+                if (m_cctvSprite) DrawQuadSprite(sx, sy, sz, sz, m_cctvSprite, Engine::Color(1, 1, 1, GetMapConfig().cctvSpriteAlpha));
                 else              DrawQuad(sx, sy, sz, sz, m_cctvColor);
             }
         }
 
         {
-            f32 enemySize = tileSize * 1.2f;
+            f32 enemySize = tileSize * GetMapConfig().enemyIconScale;
 
             for (auto* enemyTf : m_enemyTransforms)
             {
@@ -297,7 +385,7 @@ namespace UI
             f32 playerScreenY = offsetY + playerTileY * tileSize;
 
             // Draw the player as a slightly larger contrasting dot
-            f32 playerSize = tileSize * 1.5f;
+            f32 playerSize = tileSize * GetMapConfig().playerIconScale;
             DrawQuad(playerScreenX, playerScreenY, playerSize, playerSize, m_playerColor);
         }
 

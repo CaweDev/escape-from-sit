@@ -13,7 +13,37 @@
 #include "Engine/Input/Input.hpp"
 #include "Engine/UI/Helpers/DialogService.hpp"
 #include "Engine/UI/Helpers/FadeService.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <algorithm>
+
+namespace
+{
+    struct UIManagerConfig : public Engine::IConfig
+    {
+        std::string defaultFontPath = "Assets/liberation-mono.ttf";
+        int defaultFontSize = 16;
+
+        void FromJson(const Json::Value& j) override
+        {
+            defaultFontPath = j.get("defaultFontPath", defaultFontPath).asString();
+            defaultFontSize = j.get("defaultFontSize", defaultFontSize).asInt();
+        }
+    };
+
+    UIManagerConfig g_uiManagerConfig;
+    bool g_uiManagerConfigLoaded = false;
+
+    const UIManagerConfig& GetUIManagerConfig()
+    {
+        if (!g_uiManagerConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/ui_manager.json", g_uiManagerConfig);
+            if (g_uiManagerConfig.defaultFontSize < 1) g_uiManagerConfig.defaultFontSize = 1;
+            g_uiManagerConfigLoaded = true;
+        }
+        return g_uiManagerConfig;
+    }
+}
 
 namespace UI
 {
@@ -29,7 +59,8 @@ namespace UI
         }
 
         s_instance = new UIManager();
-		s_instance->LoadDefaultFont("Assets/liberation-mono.ttf", 16);
+        const auto& cfg = GetUIManagerConfig();
+        s_instance->LoadDefaultFont(cfg.defaultFontPath.c_str(), cfg.defaultFontSize);
 
         // Create shared resources
         CreateQuadMesh();

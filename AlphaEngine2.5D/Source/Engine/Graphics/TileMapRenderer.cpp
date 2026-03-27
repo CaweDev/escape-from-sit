@@ -32,6 +32,11 @@ namespace Engine {
 	TileMapRenderer::TileMapRenderer() : columnMesh(nullptr), fullscreenMesh(nullptr) 
 	{
 		AEMtx33Identity(&identityMtx);
+		columnStep = RendererSettings::raycastColumnStep;
+		maxTrianglesPerMesh = RendererSettings::maxTrianglesPerMesh;
+		fbScale = RendererSettings::tilemapFbScale;
+		visibilityCullThreshold = RendererSettings::visibilityCullThreshold;
+		wallOverlapPadding = RendererSettings::wallOverlapPadding;
 	}
 
 	TileMapRenderer::~TileMapRenderer() {
@@ -144,18 +149,18 @@ namespace Engine {
 
 		// Perform unified raycasting pass
 		managedColumns.clear();
-		int numCols = (screenWidth + COLUMN_STEP - 1) / COLUMN_STEP;
+		int numCols = (screenWidth + columnStep - 1) / columnStep;
 		managedColumns.resize(numCols);
 
 		// Lambda for processing a range of columns
 		auto ProcessColumnRange = [&](int startIndex, int endIndex) {
 			for (int i = startIndex; i < endIndex; ++i) {
-				int x = i * COLUMN_STEP;
+				int x = i * columnStep;
 				// Safety check for last column if screenWidth isn't multiple of COLUMN_STEP
 				if (x >= screenWidth) break;
 
 				f32 cameraX = 2.0f * x / (f32)screenWidth - 1.0f;
-				f32 cameraX2 = 2.0f * (x + COLUMN_STEP) / (f32)screenWidth - 1.0f;
+				f32 cameraX2 = 2.0f * (x + columnStep) / (f32)screenWidth - 1.0f;
 
 				ColumnInfo info;
 				info.rayDirX = dirX + planeX * cameraX;
@@ -181,7 +186,7 @@ namespace Engine {
 				info.fogKey = (int)(info.fogFactor * fog.precision);
 
 				info.screenX = (f32)x - screenWidth / 2.0f;
-				info.screenX2 = (f32)(x + COLUMN_STEP) - screenWidth / 2.0f;
+				info.screenX2 = (f32)(x + columnStep) - screenWidth / 2.0f;
 				if (info.screenX2 > screenWidth / 2.0f) info.screenX2 = screenWidth / 2.0f;
 
 				info.screenY = screenHeight / 2.0f - drawEnd;
@@ -194,7 +199,7 @@ namespace Engine {
 				managedColumns[i] = info;
 
 				// Fill Z-buffer (thread-safe as indices are distinct per column block)
-				for (int k = 0; k < COLUMN_STEP && (x + k) < screenWidth; ++k) {
+				for (int k = 0; k < columnStep && (x + k) < screenWidth; ++k) {
 					ZBuffer::SetDepth(x + k, info.ray.perpWallDist);
 				}
 			}
@@ -473,8 +478,8 @@ namespace Engine {
 						if (screenY > col.ray.drawStart + wallOverlapPadding) continue;
 
 						// Map the column block to framebuffer X pixel range
-						int startFx = (int)(c * COLUMN_STEP * fbScale);
-						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * COLUMN_STEP * fbScale);
+						int startFx = (int)(c * columnStep * fbScale);
+						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * columnStep * fbScale);
 						
 						if (startFx < 0) startFx = 0;
 						if (endFx > fbWidth) endFx = fbWidth;
@@ -626,8 +631,8 @@ namespace Engine {
 						if (screenY < col.ray.drawEnd - wallOverlapPadding) continue;
 
 						// Map the column block to framebuffer X pixel range
-						int startFx = (int)(c * COLUMN_STEP * fbScale);
-						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * COLUMN_STEP * fbScale);
+						int startFx = (int)(c * columnStep * fbScale);
+						int endFx = (c == numCols - 1) ? fbWidth : (int)((c + 1) * columnStep * fbScale);
 						
 						if (startFx < 0) startFx = 0;
 						if (endFx > fbWidth) endFx = fbWidth;
@@ -762,7 +767,7 @@ namespace Engine {
 			// --- Mid-loop mesh overflow flush ---
 			// AEGfx meshes have a triangle limit. If we exceed it, flush and restart
 			// without changing the batch key so the next column continues seamlessly.
-			if (triCount >= MAX_TRIANGLES_PER_MESH) {
+			if (triCount >= maxTrianglesPerMesh) {
 				AEGfxVertexList* mesh = AEGfxMeshEnd();
 				if (mesh) {
 					if (currentSprite) {

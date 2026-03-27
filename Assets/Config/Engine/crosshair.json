@@ -1,0 +1,11 @@
+{
+  "anchorX": 0.5,
+  "anchorY": 0.5,
+  "pivotX": 0.5,
+  "pivotY": 0.5,
+  "posX": 0.0,
+  "posY": 0.0,
+  "width": 32.0,
+  "height": 32.0,
+  "renderOrder": 100000
+}

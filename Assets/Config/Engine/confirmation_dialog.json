@@ -1,0 +1,23 @@
+{
+  "canvasSortOrder": 100000,
+  "referenceWidth": 1280.0,
+  "referenceHeight": 720.0,
+  "panelWidth": 420.0,
+  "panelHeight": 220.0,
+  "messageAnchorMinY": 0.4,
+  "messageOffsetY": -10.0,
+  "messageWidthInset": -40.0,
+  "messageFontSize": 1.2,
+  "buttonWidth": 140.0,
+  "buttonHeight": 45.0,
+  "buttonOffsetY": 50.0,
+  "buttonLabelFontSize": 1.1,
+  "panelPixelsPerUnitMultiplier": 2.0,
+  "buttonPixelsPerUnitMultiplier": 1.0,
+  "panelSpritePath": "Assets/UI/UI Kit/Panel/panel-001.png",
+  "buttonSpritePath": "Assets/UI/UI Kit/Panel/panel-027.png",
+  "overlayColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 0.72 },
+  "panelColor": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 0.9 },
+  "confirmButtonColor": { "r": 0.2, "g": 0.6, "b": 0.2, "a": 1.0 },
+  "cancelButtonColor": { "r": 0.6, "g": 0.2, "b": 0.2, "a": 1.0 }
+}

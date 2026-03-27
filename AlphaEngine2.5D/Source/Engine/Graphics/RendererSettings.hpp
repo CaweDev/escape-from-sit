@@ -35,6 +35,12 @@ struct RenderingConfig : public IConfig
     float doorZBufferBias     = 0.01f;   ///< Depth bias added when comparing against the Z-buffer.
     float projectionNearClamp = 0.1f;    ///< Minimum 2D distance / perp-distance in ProjectionHelper.
 
+    float raycastColumnStep = 10.0f;         ///< Horizontal ray step in pixels for TileMapRenderer.
+    float maxTrianglesPerMesh = 8000.0f;     ///< Triangle flush threshold for TileMapRenderer batches.
+    float tilemapFbScale = 0.2f;             ///< TileMapRenderer floor/ceiling framebuffer scale.
+    float visibilityCullThreshold = 0.01f;   ///< Visibility threshold used to cull heavily fogged rows/columns.
+    float wallOverlapPadding = 10.0f;        ///< Pixel overlap to avoid tiny gaps between walls and floor/ceiling.
+
     void FromJson(const Json::Value& j) override
     {
         perpWallDistClamp   = j.get("perpWallDistClamp",   perpWallDistClamp).asFloat();
@@ -43,6 +49,12 @@ struct RenderingConfig : public IConfig
         doorRayDirThreshold = j.get("doorRayDirThreshold", doorRayDirThreshold).asFloat();
         doorZBufferBias     = j.get("doorZBufferBias",     doorZBufferBias).asFloat();
         projectionNearClamp = j.get("projectionNearClamp", projectionNearClamp).asFloat();
+
+        raycastColumnStep   = j.get("raycastColumnStep",   raycastColumnStep).asFloat();
+        maxTrianglesPerMesh = j.get("maxTrianglesPerMesh", maxTrianglesPerMesh).asFloat();
+        tilemapFbScale      = j.get("tilemapFbScale",      tilemapFbScale).asFloat();
+        visibilityCullThreshold = j.get("visibilityCullThreshold", visibilityCullThreshold).asFloat();
+        wallOverlapPadding  = j.get("wallOverlapPadding",  wallOverlapPadding).asFloat();
     }
 };
 
@@ -70,6 +82,12 @@ public:
     static float doorRayDirThreshold; ///< @see RenderingConfig::doorRayDirThreshold
     static float doorZBufferBias;     ///< @see RenderingConfig::doorZBufferBias
     static float projectionNearClamp; ///< @see RenderingConfig::projectionNearClamp
+
+    static int   raycastColumnStep;       ///< @see RenderingConfig::raycastColumnStep
+    static int   maxTrianglesPerMesh;     ///< @see RenderingConfig::maxTrianglesPerMesh
+    static float tilemapFbScale;          ///< @see RenderingConfig::tilemapFbScale
+    static float visibilityCullThreshold; ///< @see RenderingConfig::visibilityCullThreshold
+    static float wallOverlapPadding;      ///< @see RenderingConfig::wallOverlapPadding
 };
 
 } // namespace Engine

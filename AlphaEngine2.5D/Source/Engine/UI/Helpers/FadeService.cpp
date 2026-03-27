@@ -9,10 +9,45 @@
 #include "Engine/UI/Components/Image.hpp"
 #include "Engine/Graphics/Color.hpp"
 #include "Engine/Math/Mathf.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 
 namespace
 {
-    constexpr f32 kLargeFrameHitchThresholdSeconds = 0.1f;
+    struct FadeServiceConfig : public Engine::IConfig
+    {
+        float largeFrameHitchThresholdSeconds = 0.1f;
+        int canvasSortOrder = 9999;
+        float referenceWidth = 1280.0f;
+        float referenceHeight = 720.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            largeFrameHitchThresholdSeconds = j.get("largeFrameHitchThresholdSeconds", largeFrameHitchThresholdSeconds).asFloat();
+            canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
+            referenceWidth = j.get("referenceWidth", referenceWidth).asFloat();
+            referenceHeight = j.get("referenceHeight", referenceHeight).asFloat();
+        }
+    };
+
+    FadeServiceConfig g_fadeServiceConfig;
+    bool g_fadeServiceConfigLoaded = false;
+
+    const FadeServiceConfig& GetFadeServiceConfig()
+    {
+        if (!g_fadeServiceConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/fade_service.json", g_fadeServiceConfig);
+            if (g_fadeServiceConfig.largeFrameHitchThresholdSeconds < 0.0f)
+                g_fadeServiceConfig.largeFrameHitchThresholdSeconds = 0.0f;
+            if (g_fadeServiceConfig.referenceWidth < 1.0f)
+                g_fadeServiceConfig.referenceWidth = 1.0f;
+            if (g_fadeServiceConfig.referenceHeight < 1.0f)
+                g_fadeServiceConfig.referenceHeight = 1.0f;
+            g_fadeServiceConfigLoaded = true;
+        }
+        return g_fadeServiceConfig;
+    }
+
     bool g_skippedLargeHitchThisFade = false;
 }
 
@@ -37,10 +72,12 @@ namespace UI
         UIManager* mgr = UIManager::GetInstance();
         if (!mgr) return;
 
+        const auto& cfg = GetFadeServiceConfig();
+
         // Dedicated canvas at the highest sort order
         s_fadeCanvas = mgr->CreateCanvas();
-        s_fadeCanvas->SetSortOrder(9999);
-        s_fadeCanvas->SetReferenceResolution(1280.f, 720.f);
+        s_fadeCanvas->SetSortOrder(cfg.canvasSortOrder);
+        s_fadeCanvas->SetReferenceResolution(cfg.referenceWidth, cfg.referenceHeight);
         s_fadeCanvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
 
         s_fadeImage = s_fadeCanvas->CreateChild<Image>();
@@ -69,7 +106,7 @@ namespace UI
 
         // If the first frame after starting a fade is a large hitch (e.g., blocking OnLoad),
         // skip exactly one update so the fade doesn't appear to pop.
-        if (!g_skippedLargeHitchThisFade && s_fadeElapsed <= 0.0f && dt > kLargeFrameHitchThresholdSeconds) {
+        if (!g_skippedLargeHitchThisFade && s_fadeElapsed <= 0.0f && dt > GetFadeServiceConfig().largeFrameHitchThresholdSeconds) {
             g_skippedLargeHitchThisFade = true;
             return;
         }

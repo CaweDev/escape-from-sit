@@ -4,5 +4,10 @@
   "fogRebuildThreshold": 0.001,
   "doorRayDirThreshold": 0.0001,
   "doorZBufferBias": 0.01,
-  "projectionNearClamp": 0.1
+  "projectionNearClamp": 0.1,
+  "raycastColumnStep": 10,
+  "maxTrianglesPerMesh": 8000,
+  "tilemapFbScale": 0.2,
+  "visibilityCullThreshold": 0.01,
+  "wallOverlapPadding": 10.0
 }

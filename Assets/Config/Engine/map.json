@@ -1,0 +1,19 @@
+{
+  "wallColor": { "r": 0.5, "g": 0.5, "b": 0.6, "a": 1.0 },
+  "floorColor": { "r": 0.25, "g": 0.25, "b": 0.3, "a": 1.0 },
+  "playerColor": { "r": 0.0, "g": 1.0, "b": 0.3, "a": 1.0 },
+  "backgroundColor": { "r": 0.08, "g": 0.08, "b": 0.1, "a": 0.95 },
+  "borderColor": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "enemyColor": { "r": 0.9, "g": 0.1, "b": 0.1, "a": 1.0 },
+  "cctvColor": { "r": 0.9, "g": 0.1, "b": 0.1, "a": 1.0 },
+  "zoneColor0": { "r": 1.0, "g": 0.0, "b": 0.0, "a": 0.7 },
+  "zoneColor1": { "r": 0.0, "g": 1.0, "b": 0.0, "a": 0.7 },
+  "zoneColor2": { "r": 0.0, "g": 0.5, "b": 1.0, "a": 0.7 },
+  "zoneColor3": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 0.7 },
+  "zoneColorDefault": { "r": 1.0, "g": 0.0, "b": 1.0, "a": 0.7 },
+  "borderThickness": 10.0,
+  "cctvIconScale": 1.05,
+  "enemyIconScale": 1.2,
+  "playerIconScale": 1.5,
+  "cctvSpriteAlpha": 0.9
+}

@@ -4,7 +4,108 @@
  */
 
 #include "Engine/UI/Specialized/Minimap.hpp"
+#include "Engine/TileMap/Door.hpp"
 #include "AEEngine.h"
+#include "Engine/Core/ConfigManager.hpp"
+
+namespace
+{
+    struct MinimapConfig : public Engine::IConfig
+    {
+        Engine::Color wallColor = Engine::Color(0.4f, 0.4f, 0.5f, 1.0f);
+        Engine::Color floorColor = Engine::Color(0.2f, 0.2f, 0.25f, 1.0f);
+        Engine::Color doorColor = Engine::Color(0.9f, 0.7f, 0.2f, 1.0f);
+        Engine::Color playerColor = Engine::Color(0.0f, 0.8f, 0.2f, 1.0f);
+        Engine::Color backgroundColor = Engine::Color(0.1f, 0.1f, 0.12f, 0.85f);
+        Engine::Color borderColor = Engine::Color(0.3f, 0.3f, 0.35f, 1.0f);
+        Engine::Color enemyColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color cctvColor = Engine::Color(0.9f, 0.1f, 0.1f, 1.0f);
+        Engine::Color cctvNormalColor = Engine::Color(0.0f, 1.0f, 0.0f, 0.15f);
+        Engine::Color cctvAlertColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.25f);
+        Engine::Color pathColor = Engine::Color(1.0f, 1.0f, 0.0f, 1.0f);
+        Engine::Color terminalTintColor = Engine::Color(1.0f, 1.0f, 0.0f, 1.0f);
+
+        int viewRadius = 5;
+        float tilePixelSize = 8.0f;
+        bool centerOnPlayer = true;
+        float borderThickness = 8.0f;
+
+        int cctvCircleSegments = 20;
+        float searchRadiusMultiplier = 1.5f;
+        float playerIconScale = 0.8f;
+        float cctvIconScale = 0.55f;
+        float enemyIconScale = 0.6f;
+        float terminalIconScale = 0.7f;
+        float pathLineWidthScale = 0.3f;
+        float pathMarkerSizeScale = 0.35f;
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const Json::Value& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            wallColor = ParseColor(j, "wallColor", wallColor);
+            floorColor = ParseColor(j, "floorColor", floorColor);
+            doorColor = ParseColor(j, "doorColor", doorColor);
+            playerColor = ParseColor(j, "playerColor", playerColor);
+            backgroundColor = ParseColor(j, "backgroundColor", backgroundColor);
+            borderColor = ParseColor(j, "borderColor", borderColor);
+            enemyColor = ParseColor(j, "enemyColor", enemyColor);
+            cctvColor = ParseColor(j, "cctvColor", cctvColor);
+            cctvNormalColor = ParseColor(j, "cctvNormalColor", cctvNormalColor);
+            cctvAlertColor = ParseColor(j, "cctvAlertColor", cctvAlertColor);
+            pathColor = ParseColor(j, "pathColor", pathColor);
+            terminalTintColor = ParseColor(j, "terminalTintColor", terminalTintColor);
+
+            viewRadius = j.get("viewRadius", viewRadius).asInt();
+            tilePixelSize = j.get("tilePixelSize", tilePixelSize).asFloat();
+            centerOnPlayer = j.get("centerOnPlayer", centerOnPlayer).asBool();
+            borderThickness = j.get("borderThickness", borderThickness).asFloat();
+
+            cctvCircleSegments = j.get("cctvCircleSegments", cctvCircleSegments).asInt();
+            searchRadiusMultiplier = j.get("searchRadiusMultiplier", searchRadiusMultiplier).asFloat();
+            playerIconScale = j.get("playerIconScale", playerIconScale).asFloat();
+            cctvIconScale = j.get("cctvIconScale", cctvIconScale).asFloat();
+            enemyIconScale = j.get("enemyIconScale", enemyIconScale).asFloat();
+            terminalIconScale = j.get("terminalIconScale", terminalIconScale).asFloat();
+            pathLineWidthScale = j.get("pathLineWidthScale", pathLineWidthScale).asFloat();
+            pathMarkerSizeScale = j.get("pathMarkerSizeScale", pathMarkerSizeScale).asFloat();
+        }
+    };
+
+    MinimapConfig g_minimapConfig;
+    bool g_minimapConfigLoaded = false;
+
+    const MinimapConfig& GetMinimapConfig()
+    {
+        if (!g_minimapConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/minimap.json", g_minimapConfig);
+            g_minimapConfig.viewRadius = Engine::Mathf::Max(1, g_minimapConfig.viewRadius);
+            g_minimapConfig.tilePixelSize = Engine::Mathf::Max(0.1f, g_minimapConfig.tilePixelSize);
+            g_minimapConfig.borderThickness = Engine::Mathf::Max(0.0f, g_minimapConfig.borderThickness);
+            g_minimapConfig.cctvCircleSegments = Engine::Mathf::Max(3, g_minimapConfig.cctvCircleSegments);
+            g_minimapConfig.searchRadiusMultiplier = Engine::Mathf::Max(1.0f, g_minimapConfig.searchRadiusMultiplier);
+            g_minimapConfig.playerIconScale = Engine::Mathf::Max(0.0f, g_minimapConfig.playerIconScale);
+            g_minimapConfig.cctvIconScale = Engine::Mathf::Max(0.0f, g_minimapConfig.cctvIconScale);
+            g_minimapConfig.enemyIconScale = Engine::Mathf::Max(0.0f, g_minimapConfig.enemyIconScale);
+            g_minimapConfig.terminalIconScale = Engine::Mathf::Max(0.0f, g_minimapConfig.terminalIconScale);
+            g_minimapConfig.pathLineWidthScale = Engine::Mathf::Max(0.0f, g_minimapConfig.pathLineWidthScale);
+            g_minimapConfig.pathMarkerSizeScale = Engine::Mathf::Max(0.0f, g_minimapConfig.pathMarkerSizeScale);
+            g_minimapConfigLoaded = true;
+        }
+
+        return g_minimapConfig;
+    }
+}
 
 namespace UI
 {
@@ -16,6 +117,22 @@ namespace UI
         , m_backgroundColor(0.1f, 0.1f, 0.12f, 0.85f)
         , m_borderColor(0.3f, 0.3f, 0.35f, 1.0f)
     {
+        const MinimapConfig& config = GetMinimapConfig();
+        m_wallColor = config.wallColor;
+        m_floorColor = config.floorColor;
+        m_doorColor = config.doorColor;
+        m_playerColor = config.playerColor;
+        m_backgroundColor = config.backgroundColor;
+        m_borderColor = config.borderColor;
+        m_enemyColor = config.enemyColor;
+        m_cctvColor = config.cctvColor;
+        m_cctvNormalColor = config.cctvNormalColor;
+        m_cctvAlertColor = config.cctvAlertColor;
+        m_pathColor = config.pathColor;
+        m_viewRadius = config.viewRadius;
+        m_tilePixelSize = config.tilePixelSize;
+        m_centerOnPlayer = config.centerOnPlayer;
+        m_borderThickness = config.borderThickness;
         InitMesh();
     }
 
@@ -353,7 +470,7 @@ namespace UI
             }
             
             // Draw filled circle as triangle fan
-            int segments = 20; // More segments = smoother circle
+            int segments = GetMinimapConfig().cctvCircleSegments; // More segments = smoother circle
             Engine::Color color = cone.isDetecting ? m_cctvAlertColor : m_cctvNormalColor;
             u32 colorU32 = color.ToU32();
             
@@ -441,7 +558,7 @@ namespace UI
         }
 
         // --- Step 3: Batch render nearby tiles ---
-        int searchRadius = static_cast<int>(m_viewRadius * 1.5f); 
+        int searchRadius = static_cast<int>(m_viewRadius * GetMinimapConfig().searchRadiusMultiplier); 
         
         AEGfxSetRenderMode(AE_GFX_RM_COLOR);
         AEGfxSetBlendMode(AE_GFX_BM_BLEND);
@@ -465,18 +582,29 @@ namespace UI
                 Engine::Color tileColor = m_wallColor;
                 if (tileX >= 0 && tileX < m_tileMap->width && tileY >= 0 && tileY < m_tileMap->height)
                 {
-                    int tileValue = static_cast<int>(m_tileMap->GetTile(tileX, tileY));
-                    if (tileValue == 0) {
-                        tileColor = m_floorColor;
-                    } else if (tileValue >= 10 && tileValue <= 13) {
-                        // Doors (10-13) show as orange/yellow
+                    const int tileValue = static_cast<int>(m_tileMap->GetTile(tileX, tileY));
+
+                    // Default all in-bounds tiles to floor unless explicitly wall/door.
+                    tileColor = m_floorColor;
+
+                    int cardId = -1;
+                    const bool isDoorMarker = Engine::TileMap::IsDoorType(tileValue) ||
+                                              Engine::TileMap::IsExitMarker(tileValue) ||
+                                              Engine::TileMap::IsControlRoomDoorMarker(tileValue);
+
+                    if (m_tileMap->IsWall(tileX, tileY)) {
+                        tileColor = m_wallColor;
+                    } else if (isDoorMarker) {
                         tileColor = m_doorColor;
+                    } else if (Engine::TileMap::IsTerminalMarker(tileValue) ||
+                               Engine::TileMap::IsAccessCardMarker(tileValue, cardId)) {
+                        tileColor = m_floorColor;
                     }
                 }
 
                 f32 fracX = playerTileX - Engine::Mathf::Floor(playerTileX);
                 f32 fracY = playerTileY - Engine::Mathf::Floor(playerTileY);
-                
+
                 f32 offX = (dx - fracX + 0.5f) * tileSize;
                 f32 offY = (dy - fracY + 0.5f) * tileSize;
 
@@ -495,7 +623,7 @@ namespace UI
                         AEGfxTriAdd(
                             verts[0].pos.x, verts[0].pos.y, verts[0].color, verts[0].uv.x, verts[0].uv.y,
                             verts[i].pos.x, verts[i].pos.y, verts[i].color, verts[i].uv.x, verts[i].uv.y,
-                            verts[i+1].pos.x, verts[i+1].pos.y, verts[i+1].color, verts[i+1].uv.x, verts[i+1].uv.y
+                            verts[i + 1].pos.x, verts[i + 1].pos.y, verts[i + 1].color, verts[i + 1].uv.x, verts[i + 1].uv.y
                         );
                     }
                 }
@@ -511,16 +639,42 @@ namespace UI
             AEGfxMeshEnd(); 
         }
 
+        // Draw spawned door actors as minimap door tiles.
+        // Door markers in TileMap are converted to Empty after spawning, so this keeps doors visible.
+        const auto& doors = m_tileMap->GetDoors();
+        for (const auto* door : doors)
+        {
+            if (!door || !door->gameObject) continue;
+            if (door->IsFullyOpen()) continue;
+
+            f32 dxW = (static_cast<f32>(door->tileX) + 0.5f) - playerTileX;
+            f32 dyW = (static_cast<f32>(door->tileY) + 0.5f) - playerTileY;
+
+            f32 offX = dxW * tileSize;
+            f32 offY = dyW * tileSize;
+
+            f32 rotatedX = offX * s - offY * c;
+            f32 rotatedY = offX * c + offY * s;
+
+            DrawQuadClipped(
+                mapCenterX + rotatedX,
+                mapCenterY + rotatedY,
+                tileSize,
+                tileSize,
+                renderRotRad,
+                m_doorColor);
+        }
+
         // --- Step 4: Overlay the player icon ---
         // The player is always at the center of the minimap when m_centerOnPlayer is true
-        f32 playerSize = tileSize * 0.8f;
+        f32 playerSize = tileSize * GetMinimapConfig().playerIconScale;
         DrawQuadClipped(mapCenterX, mapCenterY, playerSize, playerSize, 0.0f, m_playerColor, m_playerSprite.get());
 
         // --- Step 4.5: Render CCTV vision circles (DISABLED - needs proper clipping) ---
         // TODO: Implement proper circle clipping to minimap bounds
         // RenderCCTVCones(mapCenterX, mapCenterY, tileSize, playerTileX, playerTileY, playerRotation);
 
-        f32 cctvSize = tileSize * 0.55f;
+        f32 cctvSize = tileSize * GetMinimapConfig().cctvIconScale;
 
         for (auto* cctvTf : m_cctvTransforms)
         {
@@ -544,7 +698,7 @@ namespace UI
                 m_cctvSprite);
         }
 
-        f32 enemySize = tileSize * 0.6f;
+        f32 enemySize = tileSize * GetMinimapConfig().enemyIconScale;
         for (auto* enemyTf : m_enemyTransforms)
         {
             if (!enemyTf) continue;
@@ -567,7 +721,7 @@ namespace UI
         }
 
         // --- Step 6: Render Terminal Icons ---
-        f32 terminalSize = tileSize * 0.7f;
+        f32 terminalSize = tileSize * GetMinimapConfig().terminalIconScale;
         for (const auto& terminal : m_terminalIcons)
         {
             f32 dxW = terminal.worldPos.x - playerTileX;
@@ -584,7 +738,7 @@ namespace UI
                 terminalSize,
                 terminalSize,
                 0.0f,
-                Engine::Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow tint for terminals
+                GetMinimapConfig().terminalTintColor,
                 terminal.sprite);
         }
         
@@ -637,7 +791,7 @@ namespace UI
         
         // Use the current path color (set by PlayerHUD based on card)
         u32 colorU32 = m_pathColor.ToU32();
-        float lineWidth = tileSize * 0.3f; // Thick line, easy to see
+        float lineWidth = tileSize * GetMinimapConfig().pathLineWidthScale; // Thick line, easy to see
         
         bool hasVisibleGeometry = false;
         
@@ -676,7 +830,7 @@ namespace UI
             // Draw waypoint marker ONLY if visible
             if (wpVisible)
             {
-                float markerSize = tileSize * 0.35f;
+                float markerSize = tileSize * GetMinimapConfig().pathMarkerSizeScale;
                 float halfMarker = markerSize * 0.5f;
                 
                 // Clamp marker to minimap bounds

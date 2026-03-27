@@ -2,8 +2,12 @@
 #include <iomanip>
 #include <sstream>
 #include "Engine.hpp"
+#include "Engine/Core/GameObject.hpp"
 #include "Engine/Scene/SceneManager.hpp"
+#include "Game/AccessCard/AccessCard.hpp"
 #include "Game/Player/Player.hpp"
+#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 
 namespace Game
 {
@@ -104,6 +108,8 @@ namespace Game
             m_cheatPanel = nullptr;
             m_infiniteSpeedBtn = nullptr;
             m_catchImmuneBtn = nullptr;
+            m_getAllAccessCardsBtn = nullptr;
+            m_collectAllPuzzlesBtn = nullptr;
             m_instructionText = nullptr;
         }
     }
@@ -252,7 +258,7 @@ namespace Game
         // Wrapping buttons in their own panel so visible toggling works in the hierarchy.
         m_cheatPanel = m_panel->CreateChild<UI::Panel>();
         m_cheatPanel->name = "CheatPanel";
-        m_cheatPanel->SetAnchors({ 0.0f, 0.25f }, { 1.0f, 0.5f });
+        m_cheatPanel->SetAnchors({ 0.0f, 0.20f }, { 1.0f, 0.5f });
         m_cheatPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         m_cheatPanel->SetSizeDelta({ 0.0f, 0.0f });
         m_cheatPanel->SetBackgroundColor({ 0.0f, 0.0f, 0.0f, 0.0f }); // transparent
@@ -262,7 +268,7 @@ namespace Game
         // ---- Cheat panel title ----
         UI::Text* cheatTitle = m_cheatPanel->CreateChild<UI::Text>();
         cheatTitle->name = "CheatPanelTitle";
-        cheatTitle->SetAnchors({ 0.1f, 0.78f }, { 0.9f, 0.98f });
+        cheatTitle->SetAnchors({ 0.1f, 0.84f }, { 0.9f, 0.98f });
         cheatTitle->SetAnchoredPosition({ 0.0f, 0.0f });
         cheatTitle->SetSizeDelta({ 0.0f, 0.0f });
         cheatTitle->SetText("Game Scene");
@@ -274,7 +280,7 @@ namespace Game
         // ---- Cheat buttons are children of m_cheatPanel ----
         m_infiniteSpeedBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_infiniteSpeedBtn->name = "InfiniteSpeedBtn";
-        m_infiniteSpeedBtn->SetAnchors({ 0.1f, 0.42f }, { 0.9f, 0.74f });
+        m_infiniteSpeedBtn->SetAnchors({ 0.1f, 0.60f }, { 0.9f, 0.80f });
         m_infiniteSpeedBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_infiniteSpeedBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_infiniteSpeedBtn->SetBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
@@ -291,7 +297,7 @@ namespace Game
 
         m_catchImmuneBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_catchImmuneBtn->name = "CatchImmuneBtn";
-        m_catchImmuneBtn->SetAnchors({ 0.1f, 0.05f }, { 0.9f, 0.37f });
+        m_catchImmuneBtn->SetAnchors({ 0.1f, 0.38f }, { 0.9f, 0.58f });
         m_catchImmuneBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_catchImmuneBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_catchImmuneBtn->SetBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
@@ -305,6 +311,40 @@ namespace Game
             m_catchImmuneBtn->GetLabel()->SetColor({ 0.9f, 0.9f, 0.9f, 1.0f });
         }
         m_catchImmuneBtn->SetRenderOrder(2);
+
+        m_getAllAccessCardsBtn = m_cheatPanel->CreateChild<UI::Button>();
+        m_getAllAccessCardsBtn->name = "GetAllAccessCardsBtn";
+        m_getAllAccessCardsBtn->SetAnchors({ 0.1f, 0.16f }, { 0.9f, 0.36f });
+        m_getAllAccessCardsBtn->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_getAllAccessCardsBtn->SetSizeDelta({ 0.0f, 0.0f });
+        m_getAllAccessCardsBtn->SetBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
+        m_getAllAccessCardsBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        if (m_getAllAccessCardsBtn->GetBackground()) m_getAllAccessCardsBtn->GetBackground()->SetPixelsPerUnitMultiplier(2.0f);
+        m_getAllAccessCardsBtn->SetColors(btnColors);
+        m_getAllAccessCardsBtn->SetText("Get All Access Cards");
+        if (m_getAllAccessCardsBtn->GetLabel())
+        {
+            m_getAllAccessCardsBtn->GetLabel()->SetFontSize(1.1f);
+            m_getAllAccessCardsBtn->GetLabel()->SetColor({ 0.9f, 0.9f, 0.9f, 1.0f });
+        }
+        m_getAllAccessCardsBtn->SetRenderOrder(2);
+
+        m_collectAllPuzzlesBtn = m_cheatPanel->CreateChild<UI::Button>();
+        m_collectAllPuzzlesBtn->name = "CollectAllPuzzlesBtn";
+        m_collectAllPuzzlesBtn->SetAnchors({ 0.1f, 0.00f }, { 0.9f, 0.14f });
+        m_collectAllPuzzlesBtn->SetAnchoredPosition({ 0.0f, 0.0f });
+        m_collectAllPuzzlesBtn->SetSizeDelta({ 0.0f, 0.0f });
+        m_collectAllPuzzlesBtn->SetBackgroundColor({ 0.3f, 0.3f, 0.3f, 1.0f });
+        m_collectAllPuzzlesBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        if (m_collectAllPuzzlesBtn->GetBackground()) m_collectAllPuzzlesBtn->GetBackground()->SetPixelsPerUnitMultiplier(2.0f);
+        m_collectAllPuzzlesBtn->SetColors(btnColors);
+        m_collectAllPuzzlesBtn->SetText("Collect All Puzzles");
+        if (m_collectAllPuzzlesBtn->GetLabel())
+        {
+            m_collectAllPuzzlesBtn->GetLabel()->SetFontSize(1.1f);
+            m_collectAllPuzzlesBtn->GetLabel()->SetColor({ 0.9f, 0.9f, 0.9f, 1.0f });
+        }
+        m_collectAllPuzzlesBtn->SetRenderOrder(2);
 
         // ---- Cheat button callbacks ----
         m_infiniteSpeedBtn->onClick = [this]() {
@@ -329,6 +369,60 @@ namespace Game
             if (isON) { c.normalColor = { 0.2f, 0.6f, 0.2f, 1.0f }; c.highlightedColor = { 0.3f, 0.7f, 0.3f, 1.0f }; c.pressedColor = { 0.4f, 0.8f, 0.4f, 1.0f }; }
             else      { c.normalColor = { 0.3f, 0.3f, 0.3f, 1.0f }; c.highlightedColor = { 0.4f, 0.4f, 0.4f, 1.0f }; c.pressedColor = { 0.5f, 0.5f, 0.5f, 1.0f }; }
             m_catchImmuneBtn->SetColors(c);
+        };
+
+        m_getAllAccessCardsBtn->onClick = [this]() {
+            auto* playerObj = Engine::GameObject::Find("Player");
+            auto* hud = playerObj ? playerObj->GetComponent<Game::PlayerHUD>() : nullptr;
+            Engine::Vector2 collectPos = playerObj && playerObj->transform
+                ? Engine::Vector2(playerObj->transform->position.x, playerObj->transform->position.y)
+                : Engine::Vector2(0.0f, 0.0f);
+
+            if (hud)
+            {
+                for (int cardId = 0; cardId < 4; ++cardId)
+                {
+                    if (!hud->HasAccessCard(cardId))
+                    {
+                        hud->CollectAccessCard(cardId, collectPos);
+                    }
+                }
+            }
+
+            for (auto* obj : Engine::GameObject::GetAllGameObjects())
+            {
+                if (!obj || obj->isPendingDestruction) continue;
+                if (obj->GetComponent<Game::AccessCard>())
+                {
+                    obj->active = false;
+                }
+            }
+
+            m_getAllAccessCardsBtn->SetText("Get All Access Cards (Done)");
+        };
+
+        m_collectAllPuzzlesBtn->onClick = [this]() {
+            for (auto& book : PuzzleManager::allBooks)
+            {
+                book.BookCollected = true;
+            }
+
+            PuzzleManager::booksCollected = static_cast<int>(PuzzleManager::allBooks.size());
+            PuzzleManager::isQuizActive = false;
+            PuzzleManager::popupTimer = 0.0f;
+            PuzzleManager::currentBookObj = nullptr;
+
+            for (auto* obj : Engine::GameObject::GetAllGameObjects())
+            {
+                if (!obj || obj->isPendingDestruction) continue;
+                if (obj->name == "Book")
+                {
+                    Engine::GameObject::Destroy(obj);
+                }
+            }
+
+            PuzzleManager::OpenExitDoor();
+            m_collectAllPuzzlesBtn->SetText("Collect All Puzzles (Done)");
         };
 
         m_renderLimitBtn->onClick = [this]() {

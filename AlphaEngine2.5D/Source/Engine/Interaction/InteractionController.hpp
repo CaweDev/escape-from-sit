@@ -35,7 +35,7 @@ namespace Engine {
 	class InteractionController : public Component {
 	public:
 		/** Key to trigger interaction */
-		KeyCode interactKey = KeyCode::E;
+		KeyCode interactKey = KeyCode::E; // default to 'E'
 
 		/** Default crosshair texture (set by user) */
 		Texture2D* defaultCrosshairTexture = nullptr;

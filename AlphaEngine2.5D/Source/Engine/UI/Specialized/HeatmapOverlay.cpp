@@ -5,24 +5,88 @@
 
 #include "HeatmapOverlay.hpp"
 #include "Engine/Core/Application.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include "Engine/Math/Mathf.hpp"
 #include <algorithm>
+
+namespace
+{
+    struct HeatmapOverlayConfig : public Engine::IConfig
+    {
+        Engine::Color coldColor = Engine::Color(0.0f, 0.0f, 1.0f, 0.0f);
+        Engine::Color warmColor = Engine::Color(1.0f, 1.0f, 0.0f, 0.7f);
+        Engine::Color hotColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.9f);
+
+        Engine::Color backgroundColor = Engine::Color(0.0f, 0.0f, 0.0f, 0.8f);
+        Engine::Color wallColor = Engine::Color(0.3f, 0.3f, 0.3f, 1.0f);
+        Engine::Color floorColor = Engine::Color(0.1f, 0.1f, 0.1f, 0.5f);
+
+        float minThreshold = 0.5f;
+        float maxValue = 100.0f;
+        float opacity = 0.7f;
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const Json::Value& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            coldColor = ParseColor(j, "coldColor", coldColor);
+            warmColor = ParseColor(j, "warmColor", warmColor);
+            hotColor = ParseColor(j, "hotColor", hotColor);
+
+            backgroundColor = ParseColor(j, "backgroundColor", backgroundColor);
+            wallColor = ParseColor(j, "wallColor", wallColor);
+            floorColor = ParseColor(j, "floorColor", floorColor);
+
+            minThreshold = j.get("minThreshold", minThreshold).asFloat();
+            maxValue = j.get("maxValue", maxValue).asFloat();
+            opacity = j.get("opacity", opacity).asFloat();
+        }
+    };
+
+    HeatmapOverlayConfig g_heatmapConfig;
+    bool g_heatmapConfigLoaded = false;
+
+    const HeatmapOverlayConfig& GetHeatmapOverlayConfig()
+    {
+        if (!g_heatmapConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/heatmap_overlay.json", g_heatmapConfig);
+            if (g_heatmapConfig.minThreshold < 0.0f) g_heatmapConfig.minThreshold = 0.0f;
+            if (g_heatmapConfig.maxValue < 0.001f) g_heatmapConfig.maxValue = 0.001f;
+            g_heatmapConfig.opacity = Engine::Mathf::Clamp(g_heatmapConfig.opacity, 0.0f, 1.0f);
+            g_heatmapConfigLoaded = true;
+        }
+        return g_heatmapConfig;
+    }
+}
 
 namespace UI
 {
     HeatmapOverlay::HeatmapOverlay()
     {
-        // Set default gradient: Blue (cold) -> Yellow (warm) -> Red (hot)
-        m_coldColor = Engine::Color(0.0f, 0.0f, 1.0f, 0.0f);   // Blue, transparent initially
-        m_warmColor = Engine::Color(1.0f, 1.0f, 0.0f, 0.7f);  // Yellow
-        m_hotColor = Engine::Color(1.0f, 0.0f, 0.0f, 0.9f);   // Red
-        
-        // Set default background to semi-transparent dark
-        SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.8f));
-        
-        // Make walls more visible
-        SetWallColor(Engine::Color(0.3f, 0.3f, 0.3f, 1.0f));
-        SetFloorColor(Engine::Color(0.1f, 0.1f, 0.1f, 0.5f));
+        const HeatmapOverlayConfig& cfg = GetHeatmapOverlayConfig();
+
+        m_coldColor = cfg.coldColor;
+        m_warmColor = cfg.warmColor;
+        m_hotColor = cfg.hotColor;
+
+        m_minThreshold = cfg.minThreshold;
+        m_maxValue = cfg.maxValue;
+        m_opacity = cfg.opacity;
+
+        // Set background, wall, and floor colors using the config
+        SetBackgroundColor(cfg.backgroundColor);
+        SetWallColor(cfg.wallColor);
+        SetFloorColor(cfg.floorColor);
     }
 
     HeatmapOverlay::~HeatmapOverlay()

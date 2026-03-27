@@ -81,9 +81,9 @@ namespace Engine {
 		// and therefore the horizontal resolution of the wall pass.
 		// ---------------------------------------------------------------
 		/** Number of screen pixels per raycasted column. Higher = faster but blockier. */
-		static constexpr int COLUMN_STEP = 10;
+		int columnStep = 10;
 		/** Maximum triangles per AEGfx mesh batch before forcing a flush. */
-		static constexpr int MAX_TRIANGLES_PER_MESH = 8000;
+		int maxTrianglesPerMesh = 8000;
 
 		// ---------------------------------------------------------------
 		// Framebuffer quality setting (public, adjustable at runtime)

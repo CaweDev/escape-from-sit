@@ -11,6 +11,96 @@
 #include "Engine/UI/Components/Button.hpp"
 #include "Engine/UI/Components/Image.hpp"
 #include "Engine/Core/AssetManager.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+
+namespace
+{
+    struct ConfirmationDialogConfig : public Engine::IConfig
+    {
+        int canvasSortOrder = 100000;
+        float referenceWidth = 1280.0f;
+        float referenceHeight = 720.0f;
+
+        float panelWidth = 420.0f;
+        float panelHeight = 220.0f;
+
+        float messageAnchorMinY = 0.4f;
+        float messageOffsetY = -10.0f;
+        float messageWidthInset = -40.0f;
+        float messageFontSize = 1.2f;
+
+        float buttonWidth = 140.0f;
+        float buttonHeight = 45.0f;
+        float buttonOffsetY = 50.0f;
+        float buttonLabelFontSize = 1.1f;
+
+        float panelPixelsPerUnitMultiplier = 2.0f;
+        float buttonPixelsPerUnitMultiplier = 1.0f;
+
+        std::string panelSpritePath = "Assets/UI/UI Kit/Panel/panel-001.png";
+        std::string buttonSpritePath = "Assets/UI/UI Kit/Panel/panel-027.png";
+
+        Engine::Color overlayColor = Engine::Color(0.0f, 0.0f, 0.0f, 0.72f);
+        Engine::Color panelColor = Engine::Color(0.2f, 0.2f, 0.2f, 0.9f);
+        Engine::Color confirmButtonColor = Engine::Color(0.2f, 0.6f, 0.2f, 1.0f);
+        Engine::Color cancelButtonColor = Engine::Color(0.6f, 0.2f, 0.2f, 1.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const Json::Value& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
+            referenceWidth = j.get("referenceWidth", referenceWidth).asFloat();
+            referenceHeight = j.get("referenceHeight", referenceHeight).asFloat();
+
+            panelWidth = j.get("panelWidth", panelWidth).asFloat();
+            panelHeight = j.get("panelHeight", panelHeight).asFloat();
+
+            messageAnchorMinY = j.get("messageAnchorMinY", messageAnchorMinY).asFloat();
+            messageOffsetY = j.get("messageOffsetY", messageOffsetY).asFloat();
+            messageWidthInset = j.get("messageWidthInset", messageWidthInset).asFloat();
+            messageFontSize = j.get("messageFontSize", messageFontSize).asFloat();
+
+            buttonWidth = j.get("buttonWidth", buttonWidth).asFloat();
+            buttonHeight = j.get("buttonHeight", buttonHeight).asFloat();
+            buttonOffsetY = j.get("buttonOffsetY", buttonOffsetY).asFloat();
+            buttonLabelFontSize = j.get("buttonLabelFontSize", buttonLabelFontSize).asFloat();
+
+            panelPixelsPerUnitMultiplier = j.get("panelPixelsPerUnitMultiplier", panelPixelsPerUnitMultiplier).asFloat();
+            buttonPixelsPerUnitMultiplier = j.get("buttonPixelsPerUnitMultiplier", buttonPixelsPerUnitMultiplier).asFloat();
+
+            panelSpritePath = j.get("panelSpritePath", panelSpritePath).asString();
+            buttonSpritePath = j.get("buttonSpritePath", buttonSpritePath).asString();
+
+            overlayColor = ParseColor(j, "overlayColor", overlayColor);
+            panelColor = ParseColor(j, "panelColor", panelColor);
+            confirmButtonColor = ParseColor(j, "confirmButtonColor", confirmButtonColor);
+            cancelButtonColor = ParseColor(j, "cancelButtonColor", cancelButtonColor);
+        }
+    };
+
+    ConfirmationDialogConfig g_confirmationDialogConfig;
+    bool g_confirmationDialogConfigLoaded = false;
+
+    const ConfirmationDialogConfig& GetConfirmationDialogConfig()
+    {
+        if (!g_confirmationDialogConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Engine/confirmation_dialog.json", g_confirmationDialogConfig);
+            g_confirmationDialogConfigLoaded = true;
+        }
+        return g_confirmationDialogConfig;
+    }
+}
 
 namespace UI
 {
@@ -25,11 +115,12 @@ namespace UI
 
         UIManager* mgr = UIManager::GetInstance();
         if (!mgr) return;
+        const auto& cfg = GetConfirmationDialogConfig();
 
         // --- Create a dedicated modal canvas ---
         m_canvas = mgr->CreateCanvas();
-        m_canvas->SetSortOrder(100000);
-        m_canvas->SetReferenceResolution(1280.f, 720.f);
+        m_canvas->SetSortOrder(cfg.canvasSortOrder);
+        m_canvas->SetReferenceResolution(cfg.referenceWidth, cfg.referenceHeight);
         m_canvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
 
         // --- Full-screen dark backdrop (blocks clicks behind dialog) ---
@@ -38,7 +129,7 @@ namespace UI
         m_overlay->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_overlay->SetAnchoredPosition({ 0.0f, 0.0f });
         m_overlay->SetSizeDelta({ 0.0f, 0.0f });
-        m_overlay->SetBackgroundColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.72f));
+        m_overlay->SetBackgroundColor(cfg.overlayColor);
         m_overlay->raycastTarget = true;
         m_overlay->SetRenderOrder(10);
 
@@ -48,16 +139,16 @@ namespace UI
         m_dialogPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         m_dialogPanel->SetPivot({ 0.5f, 0.5f });
         m_dialogPanel->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_dialogPanel->SetSizeDelta({ 420.0f, 220.0f });
+        m_dialogPanel->SetSizeDelta({ cfg.panelWidth, cfg.panelHeight });
         m_dialogPanel->SetRenderOrder(20);
 
         // Apply panel-001.png as background with 9-slice
-        m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-001.png"));
-        m_dialogPanel->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 0.9f));
+        m_dialogPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.panelSpritePath.c_str()));
+        m_dialogPanel->SetBackgroundColor(cfg.panelColor);
         if (auto* bg = m_dialogPanel->GetBackground())
         {
             bg->SetImageType(ImageType::Sliced);
-            bg->SetPixelsPerUnitMultiplier(2.0f);
+            bg->SetPixelsPerUnitMultiplier(cfg.panelPixelsPerUnitMultiplier);
         }
 
         m_dialogPanel->raycastTarget = true;
@@ -65,12 +156,12 @@ namespace UI
         // --- Message text (upper portion of dialog) ---
         m_messageText = m_dialogPanel->CreateChild<Text>();
         m_messageText->name = "ConfirmDialog_Message";
-        m_messageText->SetAnchors({ 0.0f, 0.4f }, { 1.0f, 1.0f });
-        m_messageText->SetAnchoredPosition({ 0.0f, -10.0f });
-        m_messageText->SetSizeDelta({ -40.0f, 0.0f });
+        m_messageText->SetAnchors({ 0.0f, cfg.messageAnchorMinY }, { 1.0f, 1.0f });
+        m_messageText->SetAnchoredPosition({ 0.0f, cfg.messageOffsetY });
+        m_messageText->SetSizeDelta({ cfg.messageWidthInset, 0.0f });
         m_messageText->SetAnchor(TextAnchor::MiddleCenter);
         m_messageText->SetColor(Engine::Color::white());
-        m_messageText->SetFontSize(1.2f);
+        m_messageText->SetFontSize(cfg.messageFontSize);
         m_messageText->raycastTarget = false;
         m_messageText->SetText("Are you sure?");
 
@@ -79,21 +170,21 @@ namespace UI
         m_confirmBtn->name = "ConfirmDialog_ConfirmBtn";
         m_confirmBtn->SetAnchors({ 0.25f, 0.0f }, { 0.25f, 0.0f });
         m_confirmBtn->SetPivot({ 0.5f, 0.5f });
-        m_confirmBtn->SetAnchoredPosition({ 0.0f, 50.0f });
-        m_confirmBtn->SetSizeDelta({ 140.0f, 45.0f });
+        m_confirmBtn->SetAnchoredPosition({ 0.0f, cfg.buttonOffsetY });
+        m_confirmBtn->SetSizeDelta({ cfg.buttonWidth, cfg.buttonHeight });
         
         // Apply panel-022.png to buttons (9-slice enabled by default in SetBackgroundSprite)
-        m_confirmBtn->SetBackgroundColor(Engine::Color(0.2f, 0.6f, 0.2f, 1.0f)); // Pleasant Green
-        m_confirmBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        m_confirmBtn->SetBackgroundColor(cfg.confirmButtonColor);
+        m_confirmBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonSpritePath.c_str()), true);
         if (auto* bg = m_confirmBtn->GetBackground())
         {
-            bg->SetPixelsPerUnitMultiplier(1.0f);
+            bg->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
         }
         
         m_confirmBtn->SetText("Confirm");
         if (auto* label = m_confirmBtn->GetLabel())
         {
-            label->SetFontSize(1.1f);
+            label->SetFontSize(cfg.buttonLabelFontSize);
         }
         m_confirmBtn->onClick = [this]() { OnConfirmClicked(); };
 
@@ -102,21 +193,21 @@ namespace UI
         m_cancelBtn->name = "ConfirmDialog_CancelBtn";
         m_cancelBtn->SetAnchors({ 0.75f, 0.0f }, { 0.75f, 0.0f });
         m_cancelBtn->SetPivot({ 0.5f, 0.5f });
-        m_cancelBtn->SetAnchoredPosition({ 0.0f, 50.0f });
-        m_cancelBtn->SetSizeDelta({ 140.0f, 45.0f });
+        m_cancelBtn->SetAnchoredPosition({ 0.0f, cfg.buttonOffsetY });
+        m_cancelBtn->SetSizeDelta({ cfg.buttonWidth, cfg.buttonHeight });
         
         // Apply panel-022.png to buttons
-        m_cancelBtn->SetBackgroundColor(Engine::Color(0.6f, 0.2f, 0.2f, 1.0f)); // Pleasant Red
-        m_cancelBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"), true);
+        m_cancelBtn->SetBackgroundColor(cfg.cancelButtonColor);
+        m_cancelBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonSpritePath.c_str()), true);
         if (auto* bg = m_cancelBtn->GetBackground())
         {
-            bg->SetPixelsPerUnitMultiplier(1.0f);
+            bg->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
         }
         
         m_cancelBtn->SetText("Cancel");
         if (auto* label = m_cancelBtn->GetLabel())
         {
-            label->SetFontSize(1.1f);
+            label->SetFontSize(cfg.buttonLabelFontSize);
         }
         m_cancelBtn->onClick = [this]() { OnCancelClicked(); };
 

@@ -40,6 +40,8 @@ namespace Game
         UI::Button* m_showCollidersBtn = nullptr;
         UI::Button* m_infiniteSpeedBtn = nullptr;
         UI::Button* m_catchImmuneBtn = nullptr;
+        UI::Button* m_getAllAccessCardsBtn = nullptr;
+        UI::Button* m_collectAllPuzzlesBtn = nullptr;
         UI::Text*   m_instructionText = nullptr;
         
         float m_cameraPositionUpdateTimer = 0.0f;
