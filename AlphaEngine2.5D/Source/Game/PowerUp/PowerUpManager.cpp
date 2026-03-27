@@ -5,36 +5,116 @@
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Core/AssetManager.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+
+namespace
+{
+    struct PowerUpManagerConfig : public Engine::IConfig
+    {
+        float spawnScale = 0.6f;
+        float spawnRotation = 0.0f;
+        int sortingOrder = 100;
+        float defaultSpawnZ = 0.1f;
+
+        std::string speedBoostSpritePath = "Assets/Speed.png";
+        std::string infiniteStaminaSpritePath = "Assets/InfStamina.png";
+        std::string shieldSpritePath = "Assets/Shield.png";
+        std::string invisibilitySpritePath = "Assets/Invis.png";
+
+        struct Entry
+        {
+            int id = 0;
+            float x = 0.0f;
+            float y = 0.0f;
+            float z = 0.1f;
+            int type = 0;
+            std::string name;
+            float duration = 0.0f;
+        };
+
+        std::vector<Entry> entries;
+
+        void FromJson(const Json::Value& j) override
+        {
+            spawnScale = j.get("spawnScale", spawnScale).asFloat();
+            spawnRotation = j.get("spawnRotation", spawnRotation).asFloat();
+            sortingOrder = j.get("sortingOrder", sortingOrder).asInt();
+            defaultSpawnZ = j.get("defaultSpawnZ", defaultSpawnZ).asFloat();
+
+            speedBoostSpritePath = j.get("speedBoostSpritePath", speedBoostSpritePath).asString();
+            infiniteStaminaSpritePath = j.get("infiniteStaminaSpritePath", infiniteStaminaSpritePath).asString();
+            shieldSpritePath = j.get("shieldSpritePath", shieldSpritePath).asString();
+            invisibilitySpritePath = j.get("invisibilitySpritePath", invisibilitySpritePath).asString();
+
+            entries.clear();
+            const Json::Value& arr = j["entries"];
+            if (arr.isArray())
+            {
+                for (const auto& it : arr)
+                {
+                    Entry e;
+                    e.id = it.get("id", e.id).asInt();
+                    e.x = it.get("x", e.x).asFloat();
+                    e.y = it.get("y", e.y).asFloat();
+                    e.z = it.get("z", defaultSpawnZ).asFloat();
+                    e.type = it.get("type", e.type).asInt();
+                    e.name = it.get("name", "PowerUp").asString();
+                    e.duration = it.get("duration", e.duration).asFloat();
+                    entries.push_back(e);
+                }
+            }
+        }
+    };
+
+    PowerUpManagerConfig g_powerUpManagerConfig;
+    bool g_powerUpManagerConfigLoaded = false;
+
+    const PowerUpManagerConfig& GetPowerUpManagerConfig()
+    {
+        if (!g_powerUpManagerConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/powerup_manager.json", g_powerUpManagerConfig);
+            g_powerUpManagerConfigLoaded = true;
+        }
+        return g_powerUpManagerConfig;
+    }
+
+    std::string GetSpritePathForType(Game::PowerUpType type)
+    {
+        const auto& cfg = GetPowerUpManagerConfig();
+        switch (type) {
+        case Game::PowerUpType::SpeedBoost:      return cfg.speedBoostSpritePath;
+        case Game::PowerUpType::InfiniteStamina: return cfg.infiniteStaminaSpritePath;
+        case Game::PowerUpType::Shield:          return cfg.shieldSpritePath;
+        case Game::PowerUpType::Invisibility:    return cfg.invisibilitySpritePath;
+        default:                           return cfg.speedBoostSpritePath;
+        }
+    }
+}
 
 namespace Game {
 
     std::vector<PowerUpData> PowerUpManager::allPowerUps = {};
 
     void PowerUpManager::CreatePowerUpObject(PowerUpData data) {
+        const auto& cfg = GetPowerUpManagerConfig();
         auto scene = Engine::SceneManager::GetActiveScene();
         if (!scene) return;
 
         auto powerUpObj = scene->CreateGameObject("PowerUp_" + data.name);
         powerUpObj->transform->position = data.position;
-        powerUpObj->transform->rotation = 0.0f;
-        powerUpObj->transform->localScale = Engine::Vector2(0.6f, 0.6f);
+        powerUpObj->transform->rotation = cfg.spawnRotation;
+        powerUpObj->transform->localScale = Engine::Vector2(cfg.spawnScale, cfg.spawnScale);
 
         auto rb = powerUpObj->AddComponent<Engine::Rigidbody2D>();
         rb->bodyType = Engine::RigidbodyType2D::Static;
 
         auto sr = powerUpObj->AddComponent<Engine::SpriteRenderer>();
-
-        // Choose correct placeholder sprite path based on type
-        switch (data.type) {
-        case PowerUpType::SpeedBoost:      sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Speed.png")); break;
-        case PowerUpType::InfiniteStamina: sr->SetSprite(Engine::AssetManager::GetSprite("Assets/InfStamina.png")); break;
-        case PowerUpType::Shield:          sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Shield.png")); break;
-        case PowerUpType::Invisibility:    sr->SetSprite(Engine::AssetManager::GetSprite("Assets/Invis.png")); break;
-        }
+        sr->SetSprite(Engine::AssetManager::GetSprite(GetSpritePathForType(data.type).c_str()));
 
         sr->billboard = true;
         sr->enabled = true;
-        sr->sortingOrder = 100;
+        sr->sortingOrder = cfg.sortingOrder;
 
         // Must add interactable before the Component so Awake gets it cleanly
         powerUpObj->AddComponent<Engine::Interactable>();
@@ -45,22 +125,35 @@ namespace Game {
 
     void PowerUpManager::PowerUpDataInit() {
         allPowerUps.clear();
+        const auto& cfg = GetPowerUpManagerConfig();
 
-        // Hallways only (hardcoded corridor coordinates)
-        allPowerUps.push_back({ 4,  {18.5f,  8.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
-        allPowerUps.push_back({ 5,  {27.5f, 10.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
+        if (!cfg.entries.empty())
+        {
+            for (const auto& e : cfg.entries)
+            {
+                PowerUpData d;
+                d.id = e.id;
+                d.position = Engine::Vector3(e.x, e.y, e.z);
+                d.type = static_cast<PowerUpType>(e.type);
+                d.name = e.name;
+                d.duration = e.duration;
+                allPowerUps.push_back(d);
+            }
+            return;
+        }
 
-        allPowerUps.push_back({ 6,  {41.5f, 19.5f, 0.1f}, PowerUpType::Shield,          "Shield",           20.0f });
-        allPowerUps.push_back({ 7,  {58.5f, 24.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 8,  {72.5f, 27.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
-
-        allPowerUps.push_back({ 9,  {86.5f, 31.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
-        allPowerUps.push_back({ 10, {103.5f, 36.5f, 0.1f}, PowerUpType::SpeedBoost,     "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 11, {116.5f, 39.5f, 0.1f}, PowerUpType::Shield,         "Shield",           20.0f });
-
-        allPowerUps.push_back({ 12, {33.5f, 13.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 13, {94.5f, 34.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        allPowerUps.push_back({ 14, {110.5f, 35.5f, 0.1f}, PowerUpType::Invisibility,   "Invisibility",      8.0f });
+        // Hallways only fallback
+        allPowerUps.push_back({ 4,  {18.5f,  8.5f, cfg.defaultSpawnZ}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
+        allPowerUps.push_back({ 5,  {27.5f, 10.5f, cfg.defaultSpawnZ}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
+        allPowerUps.push_back({ 6,  {41.5f, 19.5f, cfg.defaultSpawnZ}, PowerUpType::Shield,          "Shield",           20.0f });
+        allPowerUps.push_back({ 7,  {58.5f, 24.5f, cfg.defaultSpawnZ}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 8,  {72.5f, 27.5f, cfg.defaultSpawnZ}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
+        allPowerUps.push_back({ 9,  {86.5f, 31.5f, cfg.defaultSpawnZ}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
+        allPowerUps.push_back({ 10, {103.5f, 36.5f, cfg.defaultSpawnZ}, PowerUpType::SpeedBoost,     "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 11, {116.5f, 39.5f, cfg.defaultSpawnZ}, PowerUpType::Shield,         "Shield",           20.0f });
+        allPowerUps.push_back({ 12, {33.5f, 13.5f, cfg.defaultSpawnZ}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 13, {94.5f, 34.5f, cfg.defaultSpawnZ}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 14, {110.5f, 35.5f, cfg.defaultSpawnZ}, PowerUpType::Invisibility,   "Invisibility",      8.0f });
     }
 
     void PowerUpManager::Init() {

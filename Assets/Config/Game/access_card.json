@@ -1,0 +1,12 @@
+{
+  "floatHeight": 0.15,
+  "floatSpeed": 2.0,
+  "rotationSpeed": 30.0,
+  "spawnSafeDelay": 0.6,
+
+  "greenHighlight": { "r": 0.0, "g": 0.5, "b": 0.0, "a": 0.0 },
+  "purpleHighlight": { "r": 0.5, "g": 0.0, "b": 0.5, "a": 0.0 },
+  "redHighlight": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 0.0 },
+  "yellowHighlight": { "r": 0.5, "g": 0.5, "b": 0.0, "a": 0.0 },
+  "defaultHighlight": { "r": 0.3, "g": 0.3, "b": 0.3, "a": 0.0 }
+}

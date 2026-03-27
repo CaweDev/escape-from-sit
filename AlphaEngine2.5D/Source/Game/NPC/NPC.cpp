@@ -3,8 +3,63 @@
 #include <algorithm>
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 // HUD notification
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+
+namespace
+{
+    struct NPCConfig : public Engine::IConfig
+    {
+        float dtFallback = 0.016f;
+        float annoyingRepathInterval = 0.25f;
+        float headacheRampSeconds = 10.0f;
+        float headachePulseDuration = 0.12f;
+        float headachePulseBaseIntensity = 0.05f;
+        float headacheHudDuration = 3.0f;
+
+        float bullyPushShakeDuration = 0.8f;
+        float bullyPushShakeIntensity = 0.75f;
+        int searchWanderRadius = 2;
+
+        float sabotageInvestigateDuration = 30.0f;
+        float terminalRepairStartDistance = 2.5f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            dtFallback = j.get("dtFallback", dtFallback).asFloat();
+            annoyingRepathInterval = j.get("annoyingRepathInterval", annoyingRepathInterval).asFloat();
+            headacheRampSeconds = j.get("headacheRampSeconds", headacheRampSeconds).asFloat();
+            headachePulseDuration = j.get("headachePulseDuration", headachePulseDuration).asFloat();
+            headachePulseBaseIntensity = j.get("headachePulseBaseIntensity", headachePulseBaseIntensity).asFloat();
+            headacheHudDuration = j.get("headacheHudDuration", headacheHudDuration).asFloat();
+            bullyPushShakeDuration = j.get("bullyPushShakeDuration", bullyPushShakeDuration).asFloat();
+            bullyPushShakeIntensity = j.get("bullyPushShakeIntensity", bullyPushShakeIntensity).asFloat();
+            searchWanderRadius = j.get("searchWanderRadius", searchWanderRadius).asInt();
+            sabotageInvestigateDuration = j.get("sabotageInvestigateDuration", sabotageInvestigateDuration).asFloat();
+            terminalRepairStartDistance = j.get("terminalRepairStartDistance", terminalRepairStartDistance).asFloat();
+        }
+    };
+
+    NPCConfig g_npcConfig;
+    bool g_npcConfigLoaded = false;
+
+    const NPCConfig& GetNPCConfig()
+    {
+        if (!g_npcConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/npc.json", g_npcConfig);
+            if (g_npcConfig.dtFallback <= 0.0f) g_npcConfig.dtFallback = 0.016f;
+            if (g_npcConfig.annoyingRepathInterval <= 0.0f) g_npcConfig.annoyingRepathInterval = 0.25f;
+            if (g_npcConfig.headacheRampSeconds <= 0.01f) g_npcConfig.headacheRampSeconds = 10.0f;
+            if (g_npcConfig.searchWanderRadius < 1) g_npcConfig.searchWanderRadius = 1;
+            if (g_npcConfig.terminalRepairStartDistance < 0.1f) g_npcConfig.terminalRepairStartDistance = 0.1f;
+            g_npcConfigLoaded = true;
+        }
+        return g_npcConfig;
+    }
+}
+
 namespace Game
 {
     void NPC::Initialize()
@@ -26,7 +81,7 @@ namespace Game
         if (!tileMap) return;
 
         float dt = Engine::Time::deltaTime;
-        if (dt <= 0.0f) dt = 0.016f;
+        if (dt <= 0.0f) dt = GetNPCConfig().dtFallback;
 
         switch (type)
         {
@@ -61,7 +116,7 @@ namespace Game
                 else
                     RequestGoalInZone_BiasedNearPlayer();
 
-                repathTimer = 0.25f; 
+                repathTimer = GetNPCConfig().annoyingRepathInterval; 
             }
 
             if (activeTimer > 0.0f)
@@ -80,18 +135,18 @@ namespace Game
 
                     // intensity scales with time beyond threshold, clamped
                     float over = followTimer - headacheThreshold;
-                    float t = std::fmin(1.0f, over / 10.0f); // scale over 10s to full
-                    float intensity = 0.05f + t * headacheIntensityMax; // baseline small + scaled
+                    float t = std::fmin(1.0f, over / GetNPCConfig().headacheRampSeconds);
+                    float intensity = GetNPCConfig().headachePulseBaseIntensity + t * headacheIntensityMax;
 
                     // short, pronounced pulse (throbbing) to simulate pounding headache
-                    camShake->Pulse(0.12f, intensity);
+                    camShake->Pulse(GetNPCConfig().headachePulseDuration, intensity);
 
                     // HUD feedback once when pounding begins (player HUD may be null in tests)
                     PlayerHUD* hud = nullptr;
                     if (playerTf && playerTf->gameObject)
                         hud = playerTf->gameObject->GetComponent<PlayerHUD>();
                     if (hud && !headacheNotified) {
-                        hud->ShowHackStatus("You feel a pounding headache...", 3.0f);
+                        hud->ShowHackStatus("You feel a pounding headache...", GetNPCConfig().headacheHudDuration);
                         headacheNotified = true;
                     }
                 }
@@ -188,7 +243,7 @@ namespace Game
                     playerTf->position.y += ny * bullyPushDistance;
                 }
                 if (camShake)
-                    camShake->Shake(0.8f, 0.75f);
+                    camShake->Shake(GetNPCConfig().bullyPushShakeDuration, GetNPCConfig().bullyPushShakeIntensity);
                 activeTimer = 0.0f;
                 bullyCooldown = bullyCooldownTime;
                 path.clear();

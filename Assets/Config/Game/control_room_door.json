@@ -1,0 +1,8 @@
+{
+  "requiredCards": 4,
+  "holdTimeRequired": 2.0,
+  "holdDecayMultiplier": 2.0,
+  "interactMaxDistance": 2.5,
+  "lockedSfxVolume": 0.8,
+  "unlockSfxVolume": 0.8
+}

@@ -1,0 +1,13 @@
+{
+  "dtFallback": 0.016,
+  "annoyingRepathInterval": 0.25,
+  "headacheRampSeconds": 10.0,
+  "headachePulseDuration": 0.12,
+  "headachePulseBaseIntensity": 0.05,
+  "headacheHudDuration": 3.0,
+  "bullyPushShakeDuration": 0.8,
+  "bullyPushShakeIntensity": 0.75,
+  "searchWanderRadius": 2,
+  "sabotageInvestigateDuration": 30.0,
+  "terminalRepairStartDistance": 2.5
+}

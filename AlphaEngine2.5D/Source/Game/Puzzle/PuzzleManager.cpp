@@ -1,7 +1,54 @@
 #include "PuzzleManager.h"
 #include "Engine.hpp"
 #include "Engine/Audio/ProximityAudio.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <array>
+
+namespace
+{
+    struct PuzzleManagerConfig : public Engine::IConfig
+    {
+        float bookScale = 0.35f;
+        float interactDistance = 2.5f;
+        int spriteSortOrder = 100;
+        std::string bookSpritePath = "Assets/TempBook1.png";
+        std::string interactText = "Pick up book";
+        float quizPopupHoldDuration = 999.0f;
+        float exitPopupDuration = 5.0f;
+        std::string exitPopupTitle = "SCHOOL GATE UNLOCKED";
+        std::string exitPopupBody = "Faster go home lah";
+
+        void FromJson(const Json::Value& j) override
+        {
+            bookScale = j.get("bookScale", bookScale).asFloat();
+            interactDistance = j.get("interactDistance", interactDistance).asFloat();
+            spriteSortOrder = j.get("spriteSortOrder", spriteSortOrder).asInt();
+            bookSpritePath = j.get("bookSpritePath", bookSpritePath).asString();
+            interactText = j.get("interactText", interactText).asString();
+            quizPopupHoldDuration = j.get("quizPopupHoldDuration", quizPopupHoldDuration).asFloat();
+            exitPopupDuration = j.get("exitPopupDuration", exitPopupDuration).asFloat();
+            exitPopupTitle = j.get("exitPopupTitle", exitPopupTitle).asString();
+            exitPopupBody = j.get("exitPopupBody", exitPopupBody).asString();
+        }
+    };
+
+    PuzzleManagerConfig g_puzzleManagerConfig;
+    bool g_puzzleManagerConfigLoaded = false;
+
+    const PuzzleManagerConfig& GetPuzzleManagerConfig()
+    {
+        if (!g_puzzleManagerConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/puzzle_manager.json", g_puzzleManagerConfig);
+            if (g_puzzleManagerConfig.bookScale <= 0.01f) g_puzzleManagerConfig.bookScale = 0.35f;
+            if (g_puzzleManagerConfig.interactDistance < 0.1f) g_puzzleManagerConfig.interactDistance = 0.1f;
+            if (g_puzzleManagerConfig.quizPopupHoldDuration < 0.0f) g_puzzleManagerConfig.quizPopupHoldDuration = 0.0f;
+            if (g_puzzleManagerConfig.exitPopupDuration < 0.0f) g_puzzleManagerConfig.exitPopupDuration = 0.0f;
+            g_puzzleManagerConfigLoaded = true;
+        }
+        return g_puzzleManagerConfig;
+    }
+}
 
 using namespace Engine;
 std::vector<Book> PuzzleManager::allBooks = {};
@@ -22,11 +69,13 @@ std::string PuzzleManager::activeOpt3 = "";
 
 void PuzzleManager::CreatePuzzleObject(Book book)
 {
+    const auto& cfg = GetPuzzleManagerConfig();
+
     // Create dummy enemy with collider
     auto bookObj = SceneManager::GetActiveScene()->CreateGameObject("Book");
     bookObj->transform->position = book.BookPosition;
     bookObj->transform->rotation = 0.0f;
-    bookObj->transform->localScale = Vector2(0.35f, 0.35f);
+    bookObj->transform->localScale = Vector2(cfg.bookScale, cfg.bookScale);
 
     // Enemy collider (static body)
     //auto bookRb = bookObj->AddComponent<Rigidbody2D>();
@@ -40,17 +89,18 @@ void PuzzleManager::CreatePuzzleObject(Book book)
 
     // Enemy sprite
     auto bookSR = bookObj->AddComponent<SpriteRenderer>();
-    bookSR->SetSprite(AssetManager::GetSprite("Assets/TempBook1.png"));
+    bookSR->SetSprite(AssetManager::GetSprite(cfg.bookSpritePath.c_str()));
     bookSR->billboard = true;
     bookSR->enabled = true;
-    bookSR->sortingOrder = 100;
+    bookSR->sortingOrder = cfg.spriteSortOrder;
 
 
     auto bookInteract = bookObj->AddComponent<Interactable>();
-    bookInteract->actionText = "Pick up book";
-    bookInteract->maxDistance = 2.5f;
+    bookInteract->actionText = cfg.interactText;
+    bookInteract->maxDistance = cfg.interactDistance;
  
     bookInteract->onInteract = [bookPuzzleObj, bookObj, book]() {
+        const auto& cfg = GetPuzzleManagerConfig();
         // Only open the quiz if they aren't already reading or answering one!
         if (!bookPuzzleObj->isReading && !PuzzleManager::isQuizActive) {
 
@@ -74,7 +124,7 @@ void PuzzleManager::CreatePuzzleObject(Book book)
             PuzzleManager::activeOpt3 = book.Opt3;
 
             // 5. Set timer to 999 seconds so it stays on screen until they press 1, 2, or 3
-            PuzzleManager::popupTimer = 999.0f;
+            PuzzleManager::popupTimer = cfg.quizPopupHoldDuration;
         }
         };
 
@@ -149,9 +199,9 @@ void PuzzleManager::FreeManager()
    
 void PuzzleManager::OpenExitDoor()
 {
-    
-    PuzzleManager::activeBookTitle = "SCHOOL GATE UNLOCKED";
-    PuzzleManager::activeBookText = "Faster go home lah";
-    PuzzleManager::popupTimer = 5.0f;
+    const auto& cfg = GetPuzzleManagerConfig();
+    PuzzleManager::activeBookTitle = cfg.exitPopupTitle;
+    PuzzleManager::activeBookText = cfg.exitPopupBody;
+    PuzzleManager::popupTimer = cfg.exitPopupDuration;
 }
 

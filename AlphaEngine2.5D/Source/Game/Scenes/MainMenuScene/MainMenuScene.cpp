@@ -1,7 +1,184 @@
 #include "MainMenuScene.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+
+namespace
+{
+    bool TryReadVec2(const Json::Value& node, const char* key, AEVec2& out)
+    {
+        if (!node.isMember(key) || !node[key].isObject()) return false;
+        const auto& v = node[key];
+        out.x = v.get("x", out.x).asFloat();
+        out.y = v.get("y", out.y).asFloat();
+        return true;
+    }
+
+    void ApplyLayoutNode(UI::UIElement* e, const Json::Value& layout)
+    {
+        if (!e || e->name.empty() || !layout.isObject()) return;
+        const auto& n = layout[e->name];
+        if (!n.isObject()) return;
+
+        AEVec2 v{};
+        v = e->GetAnchoredPosition(); if (TryReadVec2(n, "anchoredPosition", v)) e->SetAnchoredPosition(v);
+        v = e->GetSizeDelta();        if (TryReadVec2(n, "sizeDelta", v))        e->SetSizeDelta(v);
+        v = e->GetPivot();            if (TryReadVec2(n, "pivot", v))            e->SetPivot(v);
+        AEVec2 amin = e->GetAnchorMin(), amax = e->GetAnchorMax();
+        bool hasMin = TryReadVec2(n, "anchorMin", amin);
+        bool hasMax = TryReadVec2(n, "anchorMax", amax);
+        if (hasMin || hasMax) e->SetAnchors(amin, amax);
+        if (n.isMember("renderOrder")) e->SetRenderOrder(n["renderOrder"].asInt());
+    }
+
+    void ApplyLayoutRecursive(UI::UIElement* e, const Json::Value& layout)
+    {
+        if (!e) return;
+        ApplyLayoutNode(e, layout);
+        for (auto* c : e->GetChildren()) ApplyLayoutRecursive(c, layout);
+    }
+
+    void ApplyLayoutToCanvas(UI::Canvas* canvas, const Json::Value& layout)
+    {
+        if (!canvas || !layout.isObject()) return;
+        for (auto* root : canvas->GetRootElements()) ApplyLayoutRecursive(root, layout);
+    }
+
+    struct MainMenuSceneConfig : public Engine::IConfig
+    {
+        Json::Value layout;
+        std::string mainMenuBgmKey = "main_menu";
+
+        Engine::Color cameraBackgroundColor = Engine::Color(0.0f, 0.0f, 0.0f, 1.0f);
+        float fogPrecision = 10000.0f;
+        float fogDistance = 0.7f;
+        float fogMinVisibility = 0.0f;
+        float fogMaxVisibility = 0.5f;
+
+        float moveSpeed = 0.3f;
+        float baseRotation = 180.0f;
+        float baseHeight = 0.6f;
+        float cameraStartX = 50.0f;
+        float cameraStartY = 1.5f;
+
+        float wrapStart = 50.0f;
+        float wrapEnd = 90.0f;
+
+        float enemyShadowAnimSpeed = 0.5f;
+        float enemyEyesAnimSpeed = 0.5f;
+        float enemySpawnX = 54.0f;
+        float enemySpawnY = 1.5f;
+        float enemyHeight = 0.2f;
+        float enemyScale = 0.75f;
+        float enemyInitialAlpha = 0.0f;
+        float enemySightAheadOffset = 2.0f;
+        float enemyAlphaLerpSpeed = 5.0f;
+        float enemyCenterThreshold = 0.6f;
+        float enemyTargetMinAlpha = 0.3f;
+        float enemyTargetMaxAlpha = 1.0f;
+        float enemyDarkness = 0.1f;
+        float enemyVisibleMinTime = 8.0f;
+        float enemyVisibleMaxTime = 15.0f;
+
+        float titleTypewriterCharsPerSecond = 12.0f;
+        float titlePulseSpeed = 3.0f;
+
+        float menuHoverScaleMultiplier = 1.15f;
+        float menuFontLerpSpeed = 10.0f;
+        float menuAnimationCompleteTime = 0.1f;
+        float menuInteractionDelay = 0.2f;
+
+        float cameraParallaxRotationStrength = 3.0f;
+
+        float crosshairWidth = 300.0f;
+        float crosshairHeight = 300.0f;
+        Engine::Color crosshairColor = Engine::Color(1.0f, 1.0f, 0.0f, 0.8f);
+        int crosshairRenderOrder = 1;
+
+        Engine::Color menuNormalColor = Engine::Color(0.6f, 0.6f, 0.6f, 1.0f);
+        Engine::Color menuSelectedColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const auto& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            layout = j["layout"];
+            mainMenuBgmKey = j.get("mainMenuBgmKey", mainMenuBgmKey).asString();
+
+            cameraBackgroundColor = ParseColor(j, "cameraBackgroundColor", cameraBackgroundColor);
+            fogPrecision = j.get("fogPrecision", fogPrecision).asFloat();
+            fogDistance = j.get("fogDistance", fogDistance).asFloat();
+            fogMinVisibility = j.get("fogMinVisibility", fogMinVisibility).asFloat();
+            fogMaxVisibility = j.get("fogMaxVisibility", fogMaxVisibility).asFloat();
+
+            moveSpeed = j.get("moveSpeed", moveSpeed).asFloat();
+            baseRotation = j.get("baseRotation", baseRotation).asFloat();
+            baseHeight = j.get("baseHeight", baseHeight).asFloat();
+            cameraStartX = j.get("cameraStartX", cameraStartX).asFloat();
+            cameraStartY = j.get("cameraStartY", cameraStartY).asFloat();
+
+            wrapStart = j.get("wrapStart", wrapStart).asFloat();
+            wrapEnd = j.get("wrapEnd", wrapEnd).asFloat();
+
+            enemyShadowAnimSpeed = j.get("enemyShadowAnimSpeed", enemyShadowAnimSpeed).asFloat();
+            enemyEyesAnimSpeed = j.get("enemyEyesAnimSpeed", enemyEyesAnimSpeed).asFloat();
+            enemySpawnX = j.get("enemySpawnX", enemySpawnX).asFloat();
+            enemySpawnY = j.get("enemySpawnY", enemySpawnY).asFloat();
+            enemyHeight = j.get("enemyHeight", enemyHeight).asFloat();
+            enemyScale = j.get("enemyScale", enemyScale).asFloat();
+            enemyInitialAlpha = j.get("enemyInitialAlpha", enemyInitialAlpha).asFloat();
+            enemySightAheadOffset = j.get("enemySightAheadOffset", enemySightAheadOffset).asFloat();
+            enemyAlphaLerpSpeed = j.get("enemyAlphaLerpSpeed", enemyAlphaLerpSpeed).asFloat();
+            enemyCenterThreshold = j.get("enemyCenterThreshold", enemyCenterThreshold).asFloat();
+            enemyTargetMinAlpha = j.get("enemyTargetMinAlpha", enemyTargetMinAlpha).asFloat();
+            enemyTargetMaxAlpha = j.get("enemyTargetMaxAlpha", enemyTargetMaxAlpha).asFloat();
+            enemyDarkness = j.get("enemyDarkness", enemyDarkness).asFloat();
+            enemyVisibleMinTime = j.get("enemyVisibleMinTime", enemyVisibleMinTime).asFloat();
+            enemyVisibleMaxTime = j.get("enemyVisibleMaxTime", enemyVisibleMaxTime).asFloat();
+
+            titleTypewriterCharsPerSecond = j.get("titleTypewriterCharsPerSecond", titleTypewriterCharsPerSecond).asFloat();
+            titlePulseSpeed = j.get("titlePulseSpeed", titlePulseSpeed).asFloat();
+
+            menuHoverScaleMultiplier = j.get("menuHoverScaleMultiplier", menuHoverScaleMultiplier).asFloat();
+            menuFontLerpSpeed = j.get("menuFontLerpSpeed", menuFontLerpSpeed).asFloat();
+            menuAnimationCompleteTime = j.get("menuAnimationCompleteTime", menuAnimationCompleteTime).asFloat();
+            menuInteractionDelay = j.get("menuInteractionDelay", menuInteractionDelay).asFloat();
+
+            cameraParallaxRotationStrength = j.get("cameraParallaxRotationStrength", cameraParallaxRotationStrength).asFloat();
+
+            crosshairWidth = j.get("crosshairWidth", crosshairWidth).asFloat();
+            crosshairHeight = j.get("crosshairHeight", crosshairHeight).asFloat();
+            crosshairColor = ParseColor(j, "crosshairColor", crosshairColor);
+            crosshairRenderOrder = j.get("crosshairRenderOrder", crosshairRenderOrder).asInt();
+
+            menuNormalColor = ParseColor(j, "menuNormalColor", menuNormalColor);
+            menuSelectedColor = ParseColor(j, "menuSelectedColor", menuSelectedColor);
+        }
+    };
+
+    MainMenuSceneConfig g_mainMenuSceneConfig;
+    bool g_mainMenuSceneConfigLoaded = false;
+
+    const MainMenuSceneConfig& GetMainMenuSceneConfig()
+    {
+        if (!g_mainMenuSceneConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/main_menu_scene.json", g_mainMenuSceneConfig);
+            g_mainMenuSceneConfigLoaded = true;
+        }
+        return g_mainMenuSceneConfig;
+    }
+}
 
 namespace Game {
 
@@ -12,8 +189,10 @@ namespace Game {
     }
 
     void MainMenuScene::OnLoad() {
+        const auto& cfg = GetMainMenuSceneConfig();
+
         Input::RegisterCursorUnlock("MainMenuScene");
-        SoundManager::PlayBGM("main_menu", true);
+        SoundManager::PlayBGM(cfg.mainMenuBgmKey, true);
 
         transitionLocked = false;
 
@@ -41,18 +220,23 @@ namespace Game {
         auto cam = cameraGO->AddComponent<Camera>();
         cameraTf = cameraGO->transform;
 
-        cam->backgroundColor = Color(0.0f, 0.0f, 0.0f, 1.0f);
+        cam->backgroundColor = cfg.cameraBackgroundColor;
         cam->fogEnabled = true;
-        cam->fogPrecision = 10000.f;
-        cam->fogDistance = 0.7f;
-        cam->fogMinVisibility = 0.f;
-        cam->fogMaxVisibility = 0.5f;
+        cam->fogPrecision = cfg.fogPrecision;
+        cam->fogDistance = cfg.fogDistance;
+        cam->fogMinVisibility = cfg.fogMinVisibility;
+        cam->fogMaxVisibility = cfg.fogMaxVisibility;
 
-        cameraTf->position = Vector3(50.0f, 1.5f, baseHeight);  // X=forward, Y=lateral (0.5=center), Z=height
+        moveSpeed = cfg.moveSpeed;
+        baseRotation = cfg.baseRotation;
+        baseHeight = cfg.baseHeight;
+        enemyHeight = cfg.enemyHeight;
+
+        cameraTf->position = Vector3(cfg.cameraStartX, cfg.cameraStartY, baseHeight);  // X=forward, Y=lateral (0.5=center), Z=height
         cameraTf->rotation = baseRotation;
 
-        wrapStart = 50.0f;
-        wrapEnd = 90.0f;
+        wrapStart = cfg.wrapStart;
+        wrapEnd = cfg.wrapEnd;
 
         // ========== Enemy Shadow Setup ==========
 		
@@ -63,12 +247,12 @@ namespace Game {
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
             shadowSprite->Play("Patrol");
-            shadowSprite->SetSpeed(0.5f);
+            shadowSprite->SetSpeed(cfg.enemyShadowAnimSpeed);
         }
         shadowSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         shadowSprite->billboard = true;
-        enemyShadow->transform->position = Vector3(54.0f, 1.5f, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
-        enemyShadow->transform->localScale = Vector2(0.75f, 0.75f);
+        enemyShadow->transform->position = Vector3(cfg.enemySpawnX, cfg.enemySpawnY, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
+        enemyShadow->transform->localScale = Vector2(cfg.enemyScale, cfg.enemyScale);
 
         // ========== Enemy Eyes Setup ==========
 		
@@ -79,18 +263,17 @@ namespace Game {
             eyesSprite->SetSpriteSheet(eyesSheet);
             eyesSprite->SetIgnoreFog(true);
             eyesSprite->Play("Patrol");
-            eyesSprite->SetSpeed(0.5f);
+            eyesSprite->SetSpeed(cfg.enemyEyesAnimSpeed);
         }
-        eyesSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));  // Start visible for debug
         eyesSprite->billboard = true;
-        enemyEyes->transform->position = Vector3(54.0f, 1.5f, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
-        enemyEyes->transform->localScale = Vector2(0.75f, 0.75f);
+        enemyEyes->transform->position = Vector3(cfg.enemySpawnX, cfg.enemySpawnY, enemyHeight);  // X=ahead, Y=center of corridor, Z=ground
+        enemyEyes->transform->localScale = Vector2(cfg.enemyScale, cfg.enemyScale);
 
         // Initialize enemy timing
         enemyTimer = 0.0f;
-        nextEnemyTime = RandomFloat(8.0f, 15.0f);  // First appearance between 8-15 seconds
+        nextEnemyTime = RandomFloat(cfg.enemyVisibleMinTime, cfg.enemyVisibleMaxTime);
         enemyVisible = false;
-        enemyAlpha = 0.0f;
+        enemyAlpha = cfg.enemyInitialAlpha;
 
         // ========== UI Setup ==========
         menuCanvas = UIManager::GetInstance()->CreateCanvas();
@@ -160,7 +343,7 @@ namespace Game {
             item.label->SetSizeDelta({ 0.0f, 0.0f });
             item.label->SetText(configs[i].text);
             item.label->SetFontSize(configs[i].fontSize);
-            item.label->SetColor(Color(0.6f, 0.6f, 0.6f, 1.0f));  // Start visible
+            item.label->SetColor(cfg.menuNormalColor);  // Start visible
             item.label->SetAnchor(TextAnchor::MiddleRight);
 
             item.selector = nullptr;
@@ -219,17 +402,19 @@ namespace Game {
         }
         crosshairImage->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         crosshairImage->SetPivot({ 0.5f, 0.5f });
-        crosshairImage->SetSizeDelta({ 300.f, 300.f });
-		crosshairImage->SetColor(Color(1.0f, 1.0f, 0.f, 0.8f));  // Yellow
-        crosshairImage->SetRenderOrder(1); // Lowest Priority
+        crosshairImage->SetSizeDelta({ cfg.crosshairWidth, cfg.crosshairHeight });
+		crosshairImage->SetColor(cfg.crosshairColor);
+        crosshairImage->SetRenderOrder(cfg.crosshairRenderOrder); // Lowest Priority
         {
             Vector2 mousePos = Input::GetMousePosition();
             auto canvasPos = menuCanvas->ScreenToCanvasPosition(static_cast<s32>(mousePos.x), static_cast<s32>(mousePos.y));
             crosshairImage->SetAnchoredPosition({ canvasPos.x, canvasPos.y });
         }
-      
 
-        // Reset animation states
+        ApplyLayoutToCanvas(menuCanvas, cfg.layout);
+
+
+         // Reset animation states
         typewriterTime = 0.0f;
         titleComplete = false;
         menuAnimTime = 0.0f;
@@ -237,34 +422,36 @@ namespace Game {
     }
 
     void MainMenuScene::UpdateMenuVisuals() {
+        const auto& cfg = GetMainMenuSceneConfig();
         for (int i = 0; i < static_cast<int>(menuItems.size()); ++i) {
             bool isSelected = (i == selectedIndex);
             bool isHovered = (i == hoveredIndex);
 
             if (isSelected || isHovered) {
                 menuItems[i].label->SetText("> " + menuItemTexts[i]);
-                menuItems[i].label->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
-                menuItems[i].targetFontSize = menuItemFontSizes[i] * 1.15f;
+                menuItems[i].label->SetColor(cfg.menuSelectedColor);
+                menuItems[i].targetFontSize = menuItemFontSizes[i] * cfg.menuHoverScaleMultiplier;
             }
             else {
                 menuItems[i].label->SetText(menuItemTexts[i]);
-                menuItems[i].label->SetColor(Color(0.6f, 0.6f, 0.6f, 1.0f));
+                menuItems[i].label->SetColor(cfg.menuNormalColor);
                 menuItems[i].targetFontSize = menuItemFontSizes[i];
             }
         }
     }
 
     void MainMenuScene::UpdateMenuAnimations(float dt) {
+        const auto& cfg = GetMainMenuSceneConfig();
         menuAnimTime += dt;
         
         // Mark animation as complete immediately (no slide-in for now)
-        if (!menuAnimComplete && menuAnimTime > 0.1f) {
+        if (!menuAnimComplete && menuAnimTime > cfg.menuAnimationCompleteTime) {
             menuAnimComplete = true;
         }
 
         // Smooth font size lerping
         for (int i = 0; i < static_cast<int>(menuItems.size()); ++i) {
-            float lerpSpeed = 10.0f;
+            float lerpSpeed = cfg.menuFontLerpSpeed;
             menuItems[i].currentFontSize = Mathf::Lerp(
                 menuItems[i].currentFontSize,
                 menuItems[i].targetFontSize,
@@ -275,13 +462,14 @@ namespace Game {
     }
 
     void MainMenuScene::UpdateEnemySighting(float dt) {
+        const auto& cfg = GetMainMenuSceneConfig();
         if (!enemyShadow) return;
 
         auto shadowSprite = enemyShadow->GetComponent<SpriteSheetRenderer>();
         if (!shadowSprite) return;
 
         // Camera faces backwards (rotation ~180), so enemy should be at LOWER X to be in front
-        float enemyX = cameraTf->position.x - 2.0f;
+        float enemyX = cameraTf->position.x - cfg.enemySightAheadOffset;
         
         // Clamp to valid corridor range
         if (enemyX < 0.0f) enemyX = 0.0f;
@@ -308,17 +496,17 @@ namespace Game {
         float centerProximity = 1.0f - Mathf::Clamp(distFromCenter, 0.0f, 1.0f);
         
         // Only show when mouse is near center (within ~40% of screen)
-        float threshold = 0.6f;
+        float threshold = cfg.enemyCenterThreshold;
         float targetAlpha = 0.0f;
         
         // If mouse is within proximity, and flashlight is on, increase silhouette visibility
         if (centerProximity > threshold && crosshairImage && crosshairImage->visible) {
             float t = (centerProximity - threshold) / (1.0f - threshold);
-            targetAlpha = 0.3f + t * 0.7f;  // Max 100% opacity
+            targetAlpha = cfg.enemyTargetMinAlpha + t * (cfg.enemyTargetMaxAlpha - cfg.enemyTargetMinAlpha);
         }
 
         // Smooth alpha transition
-        enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * 5.0f);
+        enemyAlpha = Mathf::Lerp(enemyAlpha, targetAlpha, dt * cfg.enemyAlphaLerpSpeed);
 
         // Drive guard loop from the lerped alpha for smoother audio transitions
         if (enemyAlpha > 0.01f) {
@@ -327,11 +515,11 @@ namespace Game {
             const float lerpedDistance = Mathf::Lerp(cfg.farDistance, cfg.nearDistance, clampedAlpha);
             SoundManager::UpdateTerminalBuzzLoop(lerpedDistance);
         } else {
-            SoundManager::UpdateTerminalBuzzLoop(-1.0f);
+			SoundManager::UpdateTerminalBuzzLoop(-1.0f); // Force silence when not visible
         }
 
         // Apply dark silhouette effect (darkened sprite with alpha)
-        float darkness = 0.1f;  // Very dark silhouette
+        float darkness = cfg.enemyDarkness;
         shadowSprite->SetColor(Color(darkness, darkness, darkness, enemyAlpha));
 
         // Makes sure enemyEyes follow the shadow position
@@ -372,6 +560,7 @@ namespace Game {
     }
 
     void MainMenuScene::OnUpdate() {
+        const auto& cfg = GetMainMenuSceneConfig();
         if (!cameraTf) return;
 
         float dt = Time::unscaledDeltaTime;
@@ -391,7 +580,7 @@ namespace Game {
 
         float normalizedMouseX = (mouseX / screenWidth - 0.5f) * 2.0f;
 
-        cameraTf->rotation = baseRotation - normalizedMouseX * 3.0f;
+        cameraTf->rotation = baseRotation - normalizedMouseX * cfg.cameraParallaxRotationStrength;
 
         // Update crosshair position to follow mouse
         if (crosshairImage) {
@@ -412,7 +601,7 @@ namespace Game {
         const bool isTopUIBlockingMenu = (isDialogOpen || isControlsOpen || transitionLocked);
 
         // Only allow menu interaction after a short delay and when no blocking UI is open
-        if (menuAnimTime > 0.2f && !isTopUIBlockingMenu) {
+        if (menuAnimTime > cfg.menuInteractionDelay && !isTopUIBlockingMenu) {
             // Keyboard navigation
             if (Input::GetKeyDown(KeyCode::UpArrow) || Input::GetKeyDown(KeyCode::W)) {
                 selectedIndex = (selectedIndex - 1 + static_cast<int>(menuItems.size())) % static_cast<int>(menuItems.size());
@@ -468,7 +657,7 @@ namespace Game {
         if (titleText) {
             if (!titleComplete) {
                 typewriterTime += dt;
-                int charsToShow = static_cast<int>(typewriterTime * 12.0f);
+                int charsToShow = static_cast<int>(typewriterTime * cfg.titleTypewriterCharsPerSecond);
 
                 if (charsToShow >= static_cast<int>(fullTitle.length())) {
                     titleText->SetText(fullTitle);
@@ -481,7 +670,7 @@ namespace Game {
             }
             else {
                 titlePulseTime += dt;
-                float pulse = 0.5f + 0.5f * Mathf::Sin(titlePulseTime * 3.f);
+                float pulse = 0.5f + 0.5f * Mathf::Sin(titlePulseTime * cfg.titlePulseSpeed);
                 float alpha = 0.5f + 0.5f * pulse;
                 titleText->SetColor(Color(1.0f, 1.0f, 1.0f, alpha));
             }

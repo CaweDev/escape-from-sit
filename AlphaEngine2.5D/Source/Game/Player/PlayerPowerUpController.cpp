@@ -2,7 +2,36 @@
 #include "Game/Player/Player.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
+
+namespace
+{
+    struct PlayerPowerUpControllerConfig : public Engine::IConfig
+    {
+        float expireEpsilon = 0.0f;
+        bool logEnabled = true;
+
+        void FromJson(const Json::Value& j) override
+        {
+            expireEpsilon = j.get("expireEpsilon", expireEpsilon).asFloat();
+            logEnabled = j.get("logEnabled", logEnabled).asBool();
+        }
+    };
+
+    PlayerPowerUpControllerConfig g_playerPowerUpConfig;
+    bool g_playerPowerUpConfigLoaded = false;
+
+    const PlayerPowerUpControllerConfig& GetPlayerPowerUpControllerConfig()
+    {
+        if (!g_playerPowerUpConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/player_powerup_controller.json", g_playerPowerUpConfig);
+            g_playerPowerUpConfigLoaded = true;
+        }
+        return g_playerPowerUpConfig;
+    }
+}
 
 namespace Game {
 
@@ -12,11 +41,12 @@ void PlayerPowerUpController::Awake() {
 
 void PlayerPowerUpController::Update() {
     if (!player) return;
+    const auto& cfg = GetPlayerPowerUpControllerConfig();
 
     for (auto it = activeTimers.begin(); it != activeTimers.end();) {
         it->second -= Engine::Time::deltaTime;
 
-        if (it->second <= 0.0f) {
+        if (it->second <= cfg.expireEpsilon) {
             UpdatePlayerFlags(it->first, false);
             it = activeTimers.erase(it);
         }
@@ -30,7 +60,8 @@ void PlayerPowerUpController::AddPowerUp(PowerUpType type, float duration) {
     if (!player) return;
     activeTimers[type] = duration;
     UpdatePlayerFlags(type, true);
-    std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";
+    if (GetPlayerPowerUpControllerConfig().logEnabled)
+        std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";
 }
 
 void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive) {
@@ -50,7 +81,8 @@ void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive)
     }
 
     if (!isActive) {
-        std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " has worn off.\n";
+        if (GetPlayerPowerUpControllerConfig().logEnabled)
+            std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " has worn off.\n";
     }
 }
 
@@ -59,7 +91,8 @@ void PlayerPowerUpController::RemovePowerUp(PowerUpType type) {
     if (it != activeTimers.end()) {
         UpdatePlayerFlags(type, false);
         activeTimers.erase(it);
-        std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " was removed prematurely.\n";
+        if (GetPlayerPowerUpControllerConfig().logEnabled)
+            std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " was removed prematurely.\n";
     }
 }
 

@@ -1,10 +1,69 @@
 #include "CCTVPlacement.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <algorithm>
 #include <iostream>
 #include <queue>
 #include <unordered_set>
+
+namespace
+{
+    struct CCTVPlacementConfig : public Engine::IConfig
+    {
+        int roomOpenThreshold5x5 = 15;
+        int enclosedAreaLimit = 2000;
+        int guardedAreaLimit = 2000;
+
+        int spawnExcludeLeft = 0;
+        int spawnExcludeRight = 15;
+        int spawnExcludeBottom = 0;
+        int spawnExcludeTop = 15;
+
+        int junctionPriority = 100;
+        int turnPriority = 80;
+        int straightPriority = 50;
+        int deadEndPriority = 30;
+
+        float placementClampMargin = 0.05f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            roomOpenThreshold5x5 = j.get("roomOpenThreshold5x5", roomOpenThreshold5x5).asInt();
+            enclosedAreaLimit = j.get("enclosedAreaLimit", enclosedAreaLimit).asInt();
+            guardedAreaLimit = j.get("guardedAreaLimit", guardedAreaLimit).asInt();
+
+            spawnExcludeLeft = j.get("spawnExcludeLeft", spawnExcludeLeft).asInt();
+            spawnExcludeRight = j.get("spawnExcludeRight", spawnExcludeRight).asInt();
+            spawnExcludeBottom = j.get("spawnExcludeBottom", spawnExcludeBottom).asInt();
+            spawnExcludeTop = j.get("spawnExcludeTop", spawnExcludeTop).asInt();
+
+            junctionPriority = j.get("junctionPriority", junctionPriority).asInt();
+            turnPriority = j.get("turnPriority", turnPriority).asInt();
+            straightPriority = j.get("straightPriority", straightPriority).asInt();
+            deadEndPriority = j.get("deadEndPriority", deadEndPriority).asInt();
+
+            placementClampMargin = j.get("placementClampMargin", placementClampMargin).asFloat();
+        }
+    };
+
+    CCTVPlacementConfig g_cctvPlacementConfig;
+    bool g_cctvPlacementConfigLoaded = false;
+
+    const CCTVPlacementConfig& GetCCTVPlacementConfig()
+    {
+        if (!g_cctvPlacementConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/cctv_placement.json", g_cctvPlacementConfig);
+            if (g_cctvPlacementConfig.enclosedAreaLimit < 1) g_cctvPlacementConfig.enclosedAreaLimit = 1;
+            if (g_cctvPlacementConfig.guardedAreaLimit < 1) g_cctvPlacementConfig.guardedAreaLimit = 1;
+            if (g_cctvPlacementConfig.placementClampMargin < 0.0f) g_cctvPlacementConfig.placementClampMargin = 0.0f;
+            g_cctvPlacementConfigLoaded = true;
+        }
+        return g_cctvPlacementConfig;
+    }
+}
+
 namespace Game
 {
     static bool InBounds(int w, int h, int x, int y)
@@ -78,7 +137,7 @@ namespace Game
         
         // If more than 15 tiles in 5x5 area are open, it's likely a room
         // Corridors typically have 10-15 open tiles, rooms have 15-25
-        return openCount > 15;
+        return openCount > GetCCTVPlacementConfig().roomOpenThreshold5x5;
     }
 
     // Count open (floor) tiles in a small neighborhood (3x3) around tile
@@ -108,7 +167,7 @@ namespace Game
     static bool IsEnclosedByWallsAndMarkers(Engine::TileMap* map, int sx, int sy, int w, int h)
     {
         if (!IsFloor(map, sx, sy)) return false;
-        const int AREA_LIMIT = 2000; // if region larger than this, treat as open
+        const int AREA_LIMIT = GetCCTVPlacementConfig().enclosedAreaLimit; // if region larger than this, treat as open
 
         std::vector<std::vector<char>> seen(h, std::vector<char>(w, 0));
         std::queue<std::pair<int,int>> q;
@@ -176,7 +235,7 @@ namespace Game
     static bool RegionGuardedByDoor(Engine::TileMap* map, int sx, int sy, int w, int h)
     {
         if (!IsFloor(map, sx, sy)) return false;
-        const int AREA_LIMIT = 2000;
+        const int AREA_LIMIT = GetCCTVPlacementConfig().guardedAreaLimit;
 
         std::vector<std::vector<char>> seen(h, std::vector<char>(w, 0));
         std::queue<std::pair<int,int>> q;
@@ -239,9 +298,10 @@ namespace Game
         if (IsLikelyRoom(map, x, y, w, h)) return 0; // Skip rooms entirely
         
         int open = OpenNeighborCount(map, x, y);
+        const auto& cfg = GetCCTVPlacementConfig();
         
         // Junction (3-4 way) = highest priority
-        if (open >= 3) return 100;
+        if (open >= 3) return cfg.junctionPriority;
         
         // Straight corridor (2 way) = medium priority
         if (open == 2)
@@ -254,14 +314,14 @@ namespace Game
             
             // L-shaped turn (higher priority)
             if ((R && U) || (R && D) || (L && U) || (L && D))
-                return 80;
+                return cfg.turnPriority;
             
             // Straight corridor (lower priority)
-            return 50;
+            return cfg.straightPriority;
         }
         
         // Dead end = low priority (but still place some)
-        if (open == 1) return 30;
+        if (open == 1) return cfg.deadEndPriority;
         
         return 0;
     }
@@ -320,8 +380,9 @@ namespace Game
             {
                 outPos = Engine::Vector3(fx + c.pushX, fy + c.pushY, z);
                 // safety clamp
-                outPos.x = (std::max)(0.05f, (std::min)(outPos.x, (float)w - 0.05f));
-                outPos.y = (std::max)(0.05f, (std::min)(outPos.y, (float)h - 0.05f));
+                const float margin = GetCCTVPlacementConfig().placementClampMargin;
+                outPos.x = (std::max)(margin, (std::min)(outPos.x, (float)w - margin));
+                outPos.y = (std::max)(margin, (std::min)(outPos.y, (float)h - margin));
                 return true;
             }
         }
@@ -347,12 +408,13 @@ namespace Game
         if (!map) return cams;
         if ((int)zoneGrid.size() != w * h) return cams;
 
+        const auto& cfg = GetCCTVPlacementConfig();
+
         // Define spawn exclusion zone (top-left corner area where player spawns)
-        // Increased to 15x15 for guaranteed spawn safety
-        const int spawnExcludeLeft = 0;
-        const int spawnExcludeRight = 15;   // Increased from 8 to 15
-        const int spawnExcludeBottom = 0;
-        const int spawnExcludeTop = 15;     // Increased from 8 to 15
+        const int spawnExcludeLeft = cfg.spawnExcludeLeft;
+        const int spawnExcludeRight = cfg.spawnExcludeRight;
+        const int spawnExcludeBottom = cfg.spawnExcludeBottom;
+        const int spawnExcludeTop = cfg.spawnExcludeTop;
 
         std::cout << "[CCTV Placement] Spawn exclusion zone: (" << spawnExcludeLeft << "," << spawnExcludeBottom 
                   << ") to (" << spawnExcludeRight << "," << spawnExcludeTop << ") - Player spawns at (2, 2)\n";

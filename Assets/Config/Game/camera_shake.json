@@ -1,0 +1,8 @@
+{
+  "randMin": -1.0,
+  "randMax": 1.0,
+  "shakePitchScale": 100.0,
+  "shakeRotationScale": 2.0,
+  "pulsePitchScale": 120.0,
+  "pulseWavePi": 3.14159265
+}

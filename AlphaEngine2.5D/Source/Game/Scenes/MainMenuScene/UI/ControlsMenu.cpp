@@ -1,19 +1,147 @@
 #include "ControlsMenu.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 
 namespace Game
 {
     namespace
     {
-        const Engine::Color kOverlayColor   { 0.0f,  0.0f,  0.0f,  0.85f };
-        const Engine::Color kTitleColor     { 0.8f,  0.15f, 0.10f, 1.0f };
-        
-        const Engine::Color kBtnNormal      { 0.75f, 0.08f, 0.08f, 1.0f };
-        const Engine::Color kBtnHighlighted { 0.95f, 0.08f, 0.08f, 1.0f };
-        const Engine::Color kBtnPressed     { 0.30f, 0.10f, 0.10f, 1.0f };
+        bool TryReadVec2(const Json::Value& node, const char* key, AEVec2& out)
+        {
+            if (!node.isMember(key) || !node[key].isObject()) return false;
+            const auto& v = node[key];
+            out.x = v.get("x", out.x).asFloat();
+            out.y = v.get("y", out.y).asFloat();
+            return true;
+        }
 
-        const Engine::Color kTextNormal     { 0.9f,  0.9f,  0.9f,  1.0f };
-        const Engine::Color kTextSelected   { 1.0f,  1.0f,  1.0f,  1.0f };
+        void ApplyLayoutNode(UI::UIElement* e, const Json::Value& layout)
+        {
+            if (!e || e->name.empty() || !layout.isObject()) return;
+            const auto& n = layout[e->name];
+            if (!n.isObject()) return;
+
+            AEVec2 v{};
+            v = e->GetAnchoredPosition(); if (TryReadVec2(n, "anchoredPosition", v)) e->SetAnchoredPosition(v);
+            v = e->GetSizeDelta();        if (TryReadVec2(n, "sizeDelta", v))        e->SetSizeDelta(v);
+            v = e->GetPivot();            if (TryReadVec2(n, "pivot", v))            e->SetPivot(v);
+            AEVec2 amin = e->GetAnchorMin(), amax = e->GetAnchorMax();
+            bool hasMin = TryReadVec2(n, "anchorMin", amin);
+            bool hasMax = TryReadVec2(n, "anchorMax", amax);
+            if (hasMin || hasMax) e->SetAnchors(amin, amax);
+            if (n.isMember("renderOrder")) e->SetRenderOrder(n["renderOrder"].asInt());
+        }
+
+        void ApplyLayoutRecursive(UI::UIElement* e, const Json::Value& layout)
+        {
+            if (!e) return;
+            ApplyLayoutNode(e, layout);
+            for (auto* c : e->GetChildren()) ApplyLayoutRecursive(c, layout);
+        }
+
+        void ApplyLayoutToCanvas(UI::Canvas* canvas, const Json::Value& layout)
+        {
+            if (!canvas || !layout.isObject()) return;
+            for (auto* root : canvas->GetRootElements()) ApplyLayoutRecursive(root, layout);
+        }
+
+        struct ControlsMenuConfig : public Engine::IConfig
+        {
+            Json::Value layout;
+            Engine::Color overlayColor = Engine::Color(0.0f, 0.0f, 0.0f, 0.85f);
+            Engine::Color btnNormal = Engine::Color(0.75f, 0.08f, 0.08f, 1.0f);
+            Engine::Color btnHighlighted = Engine::Color(0.95f, 0.08f, 0.08f, 1.0f);
+            Engine::Color btnPressed = Engine::Color(0.30f, 0.10f, 0.10f, 1.0f);
+            Engine::Color textNormal = Engine::Color(0.9f, 0.9f, 0.9f, 1.0f);
+            Engine::Color textSelected = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+            Engine::Color panelTint = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+            float referenceWidth = 1280.0f;
+            float referenceHeight = 720.0f;
+            int canvasSortOrder = 600;
+
+            float panelWidth = 1120.0f;
+            float panelHeight = 760.0f;
+            float panelPixelsPerUnitMultiplier = 4.0f;
+
+            float controlsPosY = -20.0f;
+            float controlsWidth = 980.0f;
+            float controlsHeight = 620.0f;
+
+            float backButtonPosY = 20.0f;
+            float backButtonWidth = 240.0f;
+            float backButtonHeight = 50.0f;
+            float backButtonPixelsPerUnitMultiplier = 1.0f;
+            float backButtonFontSize = 2.0f;
+
+            float uiToggleSfxVolume = 0.8f;
+            float uiHoverSfxVolume = 0.7f;
+
+            std::string panelTexturePath = "Assets/UI/UI Kit/Panel/panel-000.png";
+            std::string controlsTexturePath = "Assets/UI/Controls.png";
+            std::string buttonTexturePath = "Assets/UI/UI Kit/Panel/panel-027.png";
+
+            static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+            {
+                if (!j.isMember(key) || !j[key].isObject()) return fallback;
+                const Json::Value& c = j[key];
+                return Engine::Color(
+                    c.get("r", fallback.r).asFloat(),
+                    c.get("g", fallback.g).asFloat(),
+                    c.get("b", fallback.b).asFloat(),
+                    c.get("a", fallback.a).asFloat());
+            }
+
+            void FromJson(const Json::Value& j) override
+            {
+                layout = j["layout"];
+                overlayColor = ParseColor(j, "overlayColor", overlayColor);
+                btnNormal = ParseColor(j, "btnNormal", btnNormal);
+                btnHighlighted = ParseColor(j, "btnHighlighted", btnHighlighted);
+                btnPressed = ParseColor(j, "btnPressed", btnPressed);
+                textNormal = ParseColor(j, "textNormal", textNormal);
+                textSelected = ParseColor(j, "textSelected", textSelected);
+                panelTint = ParseColor(j, "panelTint", panelTint);
+
+                referenceWidth = j.get("referenceWidth", referenceWidth).asFloat();
+                referenceHeight = j.get("referenceHeight", referenceHeight).asFloat();
+                canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
+
+                panelWidth = j.get("panelWidth", panelWidth).asFloat();
+                panelHeight = j.get("panelHeight", panelHeight).asFloat();
+                panelPixelsPerUnitMultiplier = j.get("panelPixelsPerUnitMultiplier", panelPixelsPerUnitMultiplier).asFloat();
+
+                controlsPosY = j.get("controlsPosY", controlsPosY).asFloat();
+                controlsWidth = j.get("controlsWidth", controlsWidth).asFloat();
+                controlsHeight = j.get("controlsHeight", controlsHeight).asFloat();
+
+                backButtonPosY = j.get("backButtonPosY", backButtonPosY).asFloat();
+                backButtonWidth = j.get("backButtonWidth", backButtonWidth).asFloat();
+                backButtonHeight = j.get("backButtonHeight", backButtonHeight).asFloat();
+                backButtonPixelsPerUnitMultiplier = j.get("backButtonPixelsPerUnitMultiplier", backButtonPixelsPerUnitMultiplier).asFloat();
+                backButtonFontSize = j.get("backButtonFontSize", backButtonFontSize).asFloat();
+
+                uiToggleSfxVolume = j.get("uiToggleSfxVolume", uiToggleSfxVolume).asFloat();
+                uiHoverSfxVolume = j.get("uiHoverSfxVolume", uiHoverSfxVolume).asFloat();
+
+                panelTexturePath = j.get("panelTexturePath", panelTexturePath).asString();
+                controlsTexturePath = j.get("controlsTexturePath", controlsTexturePath).asString();
+                buttonTexturePath = j.get("buttonTexturePath", buttonTexturePath).asString();
+            }
+        };
+
+        ControlsMenuConfig g_controlsMenuConfig;
+        bool g_controlsMenuConfigLoaded = false;
+
+        const ControlsMenuConfig& GetControlsMenuConfig()
+        {
+            if (!g_controlsMenuConfigLoaded)
+            {
+                Engine::ConfigManager::ReadConfig("Assets/Config/Game/controls_menu.json", g_controlsMenuConfig);
+                g_controlsMenuConfigLoaded = true;
+            }
+            return g_controlsMenuConfig;
+        }
 
         constexpr const char* kCursorUnlockId = "ControlsMenu";
         constexpr const char* kPauseId = "ControlsMenu";
@@ -31,6 +159,7 @@ namespace Game
     void ControlsMenu::Update()
     {
         if (!m_isVisible) return;
+        const auto& cfg = GetControlsMenuConfig();
 
         // Close on Escape
         if (Engine::Input::GetKeyDown(Engine::KeyCode::Escape))
@@ -60,7 +189,7 @@ namespace Game
         {
             m_isHovered = isHovering;
             if (m_isHovered) {
-                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
+                Engine::SoundManager::PlaySFX("ui_hover", cfg.uiHoverSfxVolume);
             }
             UpdateButtonVisuals();
         }
@@ -100,22 +229,24 @@ namespace Game
     {
         if (m_isVisible) return;
         m_isVisible = true;
+        const auto& cfg = GetControlsMenuConfig();
 
         Engine::Application::RegisterPause(kPauseId);
         Engine::Input::RegisterCursorUnlock(kCursorUnlockId);
         if (m_overlay) m_overlay->visible = true;
-        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
+        Engine::SoundManager::PlaySFX("ui_toggle", cfg.uiToggleSfxVolume);
     }
 
     void ControlsMenu::Hide()
     {
         if (!m_isVisible) return;
         m_isVisible = false;
+        const auto& cfg = GetControlsMenuConfig();
 
         Engine::Application::UnregisterPause(kPauseId);
         Engine::Input::UnregisterCursorUnlock(kCursorUnlockId);
         if (m_overlay) m_overlay->visible = false;
-        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
+        Engine::SoundManager::PlaySFX("ui_toggle", cfg.uiToggleSfxVolume);
     }
 
     void ControlsMenu::Toggle()
@@ -126,10 +257,11 @@ namespace Game
 
     void ControlsMenu::BuildUI()
     {
+        const auto& cfg = GetControlsMenuConfig();
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
-        m_canvas->SetReferenceResolution(1280.0f, 720.0f);
+        m_canvas->SetReferenceResolution(cfg.referenceWidth, cfg.referenceHeight);
         m_canvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
-        m_canvas->SetSortOrder(600); // Above Main Menu and Pause Menu
+        m_canvas->SetSortOrder(cfg.canvasSortOrder); // Above Main Menu and Pause Menu
 
         // Full screen overlay
         m_overlay = m_canvas->CreateChild<UI::Panel>();
@@ -137,7 +269,7 @@ namespace Game
         m_overlay->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_overlay->SetAnchoredPosition({ 0.0f, 0.0f });
         m_overlay->SetSizeDelta({ 0.0f, 0.0f });
-        m_overlay->SetBackgroundColor(kOverlayColor);
+        m_overlay->SetBackgroundColor(cfg.overlayColor);
         m_overlay->visible = false;
 
         // Background Panel from UI Kit
@@ -146,67 +278,70 @@ namespace Game
         m_panelImage->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         m_panelImage->SetPivot({ 0.5f, 0.5f });
         m_panelImage->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_panelImage->SetSizeDelta({ 1120.0f, 760.0f }); // Increased menu size
-        m_panelImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
+        m_panelImage->SetSizeDelta({ cfg.panelWidth, cfg.panelHeight });
+        m_panelImage->SetTexture(Engine::AssetManager::GetTexture(cfg.panelTexturePath.c_str()));
 		m_panelImage->SetImageType(UI::ImageType::Sliced);
-		m_panelImage->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
-		m_panelImage->SetColor({ 1.0f, 1.0f, 1.0f, 1.f }); // Slightly transparent to show overlay tint
+		m_panelImage->SetPixelsPerUnitMultiplier(cfg.panelPixelsPerUnitMultiplier); // Make the 9-slice borders thicker
+		m_panelImage->SetColor(cfg.panelTint); // Slightly transparent to show overlay tint
 
         // Controls Image
         m_controlsImage = m_panelImage->CreateChild<UI::Image>();
         m_controlsImage->name = "ControlsContent";
         m_controlsImage->SetAnchors({ 0.5f, 0.55f }, { 0.5f, 0.55f });
         m_controlsImage->SetPivot({ 0.5f, 0.5f });
-        m_controlsImage->SetAnchoredPosition({ 0.0f, -20.0f });
-        m_controlsImage->SetSizeDelta({ 980.0f, 620.0f });
-        m_controlsImage->SetTexture(Engine::AssetManager::GetTexture("Assets/UI/Controls.png"));
+        m_controlsImage->SetAnchoredPosition({ 0.0f, cfg.controlsPosY });
+        m_controlsImage->SetSizeDelta({ cfg.controlsWidth, cfg.controlsHeight });
+        m_controlsImage->SetTexture(Engine::AssetManager::GetTexture(cfg.controlsTexturePath.c_str()));
 
         // Back Button
         m_backBtn = m_panelImage->CreateChild<UI::Button>();
         m_backBtn->name = "Close";
         m_backBtn->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
         m_backBtn->SetPivot({ 0.5f, 0.5f });
-        m_backBtn->SetAnchoredPosition({ 0.0f, 20.f });
-        m_backBtn->SetSizeDelta({ 240.0f, 50.0f });
-        m_backBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+        m_backBtn->SetAnchoredPosition({ 0.0f, cfg.backButtonPosY });
+        m_backBtn->SetSizeDelta({ cfg.backButtonWidth, cfg.backButtonHeight });
+        m_backBtn->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonTexturePath.c_str()));
         m_backBtn->GetBackground()->SetImageType(UI::ImageType::Sliced);
-        m_backBtn->GetBackground()->SetPixelsPerUnitMultiplier(1.0f); // Make the 9-slice borders thicker
+        m_backBtn->GetBackground()->SetPixelsPerUnitMultiplier(cfg.backButtonPixelsPerUnitMultiplier);
         
         UI::ColorBlock btnColors;
-        btnColors.normalColor      = kBtnNormal;
-        btnColors.highlightedColor = kBtnHighlighted;
-        btnColors.pressedColor     = kBtnPressed;
+        btnColors.normalColor      = cfg.btnNormal;
+        btnColors.highlightedColor = cfg.btnHighlighted;
+        btnColors.pressedColor     = cfg.btnPressed;
         
         m_backBtn->SetColors(btnColors);
-        m_backBtn->SetBackgroundColor(kBtnNormal);
+        m_backBtn->SetBackgroundColor(cfg.btnNormal);
         m_backBtn->SetText("Back");
         m_backBtn->onClick = [this]() { OnBackClicked(); };
         
         if (auto* label = m_backBtn->GetLabel())
         {
-            label->SetFontSize(2.0f);
-            label->SetColor(kTextNormal);
+            label->SetFontSize(cfg.backButtonFontSize);
+            label->SetColor(cfg.textNormal);
         }
+
+        ApplyLayoutToCanvas(m_canvas, cfg.layout);
     }
 
     void ControlsMenu::UpdateButtonVisuals()
     {
         if (!m_backBtn) return;
+        const auto& cfg = GetControlsMenuConfig();
         
         if (m_isPressed)
         {
-            m_backBtn->SetBackgroundColor(kBtnPressed);
-            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(kTextSelected);
+            m_backBtn->SetBackgroundColor(cfg.btnPressed);
+            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(cfg.textSelected);
         }
         else if (m_isHovered)
         {
-            m_backBtn->SetBackgroundColor(kBtnHighlighted);
-            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(kTextSelected);
+            m_backBtn->SetBackgroundColor(cfg.btnHighlighted);
+            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(cfg.textSelected);
         }
         else
         {
-            m_backBtn->SetBackgroundColor(kBtnNormal);
-            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(kTextNormal);
+            m_backBtn->SetBackgroundColor(cfg.btnNormal);
+            if (auto* lbl = m_backBtn->GetLabel()) lbl->SetColor(cfg.textNormal);
         }
     }
 

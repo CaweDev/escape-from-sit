@@ -1,0 +1,27 @@
+{
+  "interactMaxDistance": 2.5,
+  "holdDuration": 3.0,
+  "disabledDuration": 30.0,
+  "repairTime": 5.0,
+  "cooldownDuration": 10.0,
+  "hackStatusDuration": 3.0,
+  "repairMaxDistance": 2.0,
+
+  "floatSpeed": 2.0,
+  "floatAmplitude": 0.15,
+  "floatBaseHeightOffset": 0.8,
+  "pulseSpeed": 3.0,
+
+  "activeColor": { "r": 0.2, "g": 0.8, "b": 1.0, "a": 1.0 },
+  "hackingColor": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+  "disabledColor": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 1.0 },
+  "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 },
+
+  "interactText": "Hold E to Hack Terminal",
+  "zoneHackTextPrefix": "Hold E to Hack ",
+  "zoneHackTextSuffix": " Cameras",
+  "disabledTextSuffix": " CAMERAS OFFLINE",
+  "cooldownText": "TERMINAL COOLING DOWN",
+  "repairingText": "GUARD REPAIRING SYSTEM",
+  "hackStatusPrefix": " CAMERAS DISABLED FOR 30s"
+}

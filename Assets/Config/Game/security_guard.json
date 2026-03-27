@@ -1,0 +1,11 @@
+{
+  "chaseRepathInterval": 0.35,
+  "sabotageInvestigateDuration": 30.0,
+  "terminalRepairDistance": 2.5,
+  "fallbackSearchRadius": 2,
+  "walkableSearchRadius": 2,
+  "doorAutoCloseDelay": 3.0,
+  "doorInteractDistance": 2.5,
+  "defaultDoorFov": 75.0,
+  "chaseLoopVolume": 1.0
+}

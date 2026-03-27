@@ -1,6 +1,7 @@
 #include "BanditVisualizer.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <sstream>
 #include <iomanip>
 #include <cstdio>
@@ -8,6 +9,50 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
+
+namespace
+{
+    struct BanditVisualizerConfig : public Engine::IConfig
+    {
+        float dtFallback = 0.016f;
+        float panelWidthScale = 0.78f;
+        float panelHeightScale = 0.78f;
+        float headerHeight = 92.0f;
+        float maxHeat = 50.0f;
+        float maxCCTV = 6.0f;
+        float barWidth = 120.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            dtFallback = j.get("dtFallback", dtFallback).asFloat();
+            panelWidthScale = j.get("panelWidthScale", panelWidthScale).asFloat();
+            panelHeightScale = j.get("panelHeightScale", panelHeightScale).asFloat();
+            headerHeight = j.get("headerHeight", headerHeight).asFloat();
+            maxHeat = j.get("maxHeat", maxHeat).asFloat();
+            maxCCTV = j.get("maxCCTV", maxCCTV).asFloat();
+            barWidth = j.get("barWidth", barWidth).asFloat();
+        }
+    };
+
+    BanditVisualizerConfig g_banditVisConfig;
+    bool g_banditVisConfigLoaded = false;
+
+    const BanditVisualizerConfig& GetBanditVisualizerConfig()
+    {
+        if (!g_banditVisConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/bandit_visualizer.json", g_banditVisConfig);
+            if (g_banditVisConfig.dtFallback <= 0.0f) g_banditVisConfig.dtFallback = 0.016f;
+            if (g_banditVisConfig.panelWidthScale <= 0.01f) g_banditVisConfig.panelWidthScale = 0.78f;
+            if (g_banditVisConfig.panelHeightScale <= 0.01f) g_banditVisConfig.panelHeightScale = 0.78f;
+            if (g_banditVisConfig.maxHeat <= 0.01f) g_banditVisConfig.maxHeat = 50.0f;
+            if (g_banditVisConfig.maxCCTV <= 0.01f) g_banditVisConfig.maxCCTV = 6.0f;
+            if (g_banditVisConfig.barWidth < 0.0f) g_banditVisConfig.barWidth = 0.0f;
+            g_banditVisConfigLoaded = true;
+        }
+        return g_banditVisConfig;
+    }
+}
 
 namespace Game {
 
@@ -32,6 +77,7 @@ namespace Game {
     BanditVisualizer::~BanditVisualizer() {}
 
     void BanditVisualizer::Initialize() {
+        const auto& cfg = GetBanditVisualizerConfig();
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
         if (!m_canvas) return;
 
@@ -50,15 +96,15 @@ namespace Game {
         m_panel->SetPivot({ 0.5f, 0.5f });
         m_panel->SetAnchoredPosition({ 0.0f, 0.0f });
 
-        float panelW = (float)winW * 0.78f;
-        float panelH = (float)winH * 0.78f;
+        float panelW = (float)winW * cfg.panelWidthScale;
+        float panelH = (float)winH * cfg.panelHeightScale;
         m_panel->SetSizeDelta({ panelW, panelH });
         m_panel->SetBackgroundColor(Engine::Color(0.05f, 0.05f, 0.05f, 0.95f));
         m_panel->visible = false;
 
         m_panelWidth = panelW;
         m_panelHeight = panelH;
-        m_headerHeight = 92.0f;
+        m_headerHeight = cfg.headerHeight;
 
         BuildHeader(m_panel);
         BuildBreakdownPanel(m_panel);
@@ -409,8 +455,9 @@ namespace Game {
     }
 
     void BanditVisualizer::Update() {
+        const auto& cfg = GetBanditVisualizerConfig();
         float dt = Time::deltaTime;
-        if (dt <= 0.0f) dt = 0.016f;
+        if (dt <= 0.0f) dt = cfg.dtFallback;
 
         m_elapsedTime += dt;
         m_timer += dt;
@@ -506,6 +553,7 @@ namespace Game {
         const ZoneBreakdown* breakdown,
         const char* reason)
     {
+        const auto& cfg = GetBanditVisualizerConfig();
         m_selectedZone = priorityZone;
 
         if (m_selectedZoneText)
@@ -526,8 +574,8 @@ namespace Game {
             m_lastBreakdown = *breakdown;
 
         // use fixed refs so bar reflects actual zone heat sum / cctv score
-        const float maxHeat = 50.0f;
-        const float maxCCTV = 6.0f;
+        const float maxHeat = cfg.maxHeat;
+        const float maxCCTV = cfg.maxCCTV;
 
         for (int i = 0; i < 4; ++i) {
             int z = i + 1;
@@ -733,7 +781,7 @@ namespace Game {
         if (t < 0.0f) t = 0.0f;
         if (t > 1.0f) t = 1.0f;
 
-        const float kBarWidth = 120.0f;
+        const float kBarWidth = GetBanditVisualizerConfig().barWidth;
 
         bar->SetAnchors({ 0.0f, 0.5f }, { 0.0f, 0.5f });
         bar->SetPivot({ 0.0f, 0.5f });

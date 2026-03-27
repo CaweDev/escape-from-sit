@@ -8,12 +8,58 @@
 #include "Engine/Core/Time.hpp"
 #include "Engine/Graphics/Camera.hpp"
 #include "Engine/Math/Mathf.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include "AEEngine.h"
 #include <queue>
 #include <unordered_map>
 #include <cmath>
 #include <algorithm>
 #include <iostream>
+
+namespace
+{
+    struct PathRendererConfig : public Engine::IConfig
+    {
+        bool renderEnabled = false;
+        bool verboseLogging = true;
+        float clearAlphaThreshold = 0.1f;
+        float renderDistanceLimit = 20.0f;
+        int offscreenPaddingPercent = 120;
+        float minPerpDist = 0.1f;
+        float minScreenSize = 2.0f;
+        float maxScreenSize = 100.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            renderEnabled = j.get("renderEnabled", renderEnabled).asBool();
+            verboseLogging = j.get("verboseLogging", verboseLogging).asBool();
+            clearAlphaThreshold = j.get("clearAlphaThreshold", clearAlphaThreshold).asFloat();
+            renderDistanceLimit = j.get("renderDistanceLimit", renderDistanceLimit).asFloat();
+            offscreenPaddingPercent = j.get("offscreenPaddingPercent", offscreenPaddingPercent).asInt();
+            minPerpDist = j.get("minPerpDist", minPerpDist).asFloat();
+            minScreenSize = j.get("minScreenSize", minScreenSize).asFloat();
+            maxScreenSize = j.get("maxScreenSize", maxScreenSize).asFloat();
+        }
+    };
+
+    PathRendererConfig g_pathRendererConfig;
+    bool g_pathRendererConfigLoaded = false;
+
+    const PathRendererConfig& GetPathRendererConfig()
+    {
+        if (!g_pathRendererConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/path_renderer.json", g_pathRendererConfig);
+            if (g_pathRendererConfig.renderDistanceLimit < 0.1f) g_pathRendererConfig.renderDistanceLimit = 20.0f;
+            if (g_pathRendererConfig.offscreenPaddingPercent < 100) g_pathRendererConfig.offscreenPaddingPercent = 100;
+            if (g_pathRendererConfig.minPerpDist < 0.001f) g_pathRendererConfig.minPerpDist = 0.001f;
+            if (g_pathRendererConfig.minScreenSize < 0.1f) g_pathRendererConfig.minScreenSize = 0.1f;
+            if (g_pathRendererConfig.maxScreenSize < g_pathRendererConfig.minScreenSize) g_pathRendererConfig.maxScreenSize = g_pathRendererConfig.minScreenSize;
+            g_pathRendererConfigLoaded = true;
+        }
+        return g_pathRendererConfig;
+    }
+}
 
 namespace Game {
 
@@ -41,7 +87,7 @@ void PathRenderer::Update() {
         if (distToDest < fadeDistance) {
             // Fade out as we approach
             currentAlpha = distToDest / fadeDistance;
-            if (currentAlpha < 0.1f) {
+            if (currentAlpha < GetPathRendererConfig().clearAlphaThreshold) {
                 ClearPath(); // Remove path when very close
             }
         } else {
@@ -51,14 +97,13 @@ void PathRenderer::Update() {
 }
 
 void PathRenderer::Render() {
-    // DISABLED: Yellow floor tiles removed per user request
-    // Path computation still works (for minimap), but 3D markers are hidden
-    return;
+    // DISABLED by default: 3D path markers can be enabled via config
+    if (!GetPathRendererConfig().renderEnabled) return;
     
     static int renderCallCount = 0;
     
     if (!HasPath()) {
-        if (renderCallCount % 60 == 0) { // Log once per second at 60fps
+        if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) { // Log once per second at 60fps
             std::cout << "[PathRenderer::Render] No path (waypoints empty)" << std::endl;
         }
         renderCallCount++;
@@ -66,7 +111,7 @@ void PathRenderer::Render() {
     }
     
     if (currentAlpha <= 0.0f) {
-        if (renderCallCount % 60 == 0) {
+        if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) {
             std::cout << "[PathRenderer::Render] Path exists but alpha=0" << std::endl;
         }
         renderCallCount++;
@@ -74,7 +119,7 @@ void PathRenderer::Render() {
     }
     
     if (!Engine::Camera::main) {
-        if (renderCallCount % 60 == 0) {
+        if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) {
             std::cout << "[PathRenderer::Render] No Camera::main!" << std::endl;
         }
         renderCallCount++;
@@ -82,7 +127,7 @@ void PathRenderer::Render() {
     }
     
     // Only log first few renders to avoid spam
-    if (renderCallCount < 5) {
+    if (GetPathRendererConfig().verboseLogging && renderCallCount < 5) {
         std::cout << "[PathRenderer::Render] Rendering " << pathWaypoints.size() 
                   << " markers with alpha=" << currentAlpha << std::endl;
     }
@@ -150,7 +195,7 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
     float distance = std::sqrt(dx * dx + dy * dy);
     
     // Only render if reasonably close (optimization)
-    if (distance > 20.0f) return;
+    if (distance > GetPathRendererConfig().renderDistanceLimit) return;
     
     // Calculate if marker is in front of camera
     float dirX = std::cos(camAngle);
@@ -164,7 +209,7 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
     
     // Calculate perpendicular distance (correct raycasting distance)
     float perpDist = std::abs(dx * dirX + dy * dirY);
-    if (perpDist < 0.1f) perpDist = 0.1f;
+    if (perpDist < GetPathRendererConfig().minPerpDist) perpDist = GetPathRendererConfig().minPerpDist;
     
     // Calculate screen position
     float fov = Engine::Camera::main->fov * Engine::Mathf::Deg2Rad;
@@ -181,7 +226,8 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
     
     // Screen X position based on angle
     float screenXNorm = relativeAngle / (fov / 2.0f); // -1 to 1
-    if (std::abs(screenXNorm) > 1.2f) return; // Off screen horizontally
+    const float offscreenPadding = (float)GetPathRendererConfig().offscreenPaddingPercent / 100.0f;
+    if (std::abs(screenXNorm) > offscreenPadding) return; // Off screen horizontally
     float screenX = screenW / 2.0f + screenXNorm * (screenW / 2.0f);
     
     // Screen Y position (floor markers)
@@ -192,8 +238,8 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
     
     // Screen size for marker
     float screenSize = (markerSize * screenW) / (perpDist * planeLength * 2.0f);
-    if (screenSize < 2.0f) screenSize = 2.0f; // Minimum 2 pixels
-    if (screenSize > 100.0f) screenSize = 100.0f; // Maximum 100 pixels
+    if (screenSize < GetPathRendererConfig().minScreenSize) screenSize = GetPathRendererConfig().minScreenSize;
+    if (screenSize > GetPathRendererConfig().maxScreenSize) screenSize = GetPathRendererConfig().maxScreenSize;
     
     // Skip if completely off-screen
     if (screenX + screenSize < 0 || screenX - screenSize > screenW) return;
@@ -363,7 +409,7 @@ std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start
                     // Check if direction changed
                     Engine::Vector2 dir1(curr.x - prev.x, curr.y - prev.y);
                     Engine::Vector2 dir2(next.x - curr.x, next.y - curr.y);
-                    
+            
                     if (std::abs(dir1.x - dir2.x) > 0.01f || std::abs(dir1.y - dir2.y) > 0.01f) {
                         simplifiedPath.push_back(curr);
                     }
@@ -425,7 +471,8 @@ std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start
     }
     
     if (!foundPath) {
-        std::cout << "[PathRenderer] No path found after " << iterations << " iterations\n";
+        if (GetPathRendererConfig().verboseLogging)
+            std::cout << "[PathRenderer] No path found after " << iterations << " iterations\n";
     }
     
     return path;

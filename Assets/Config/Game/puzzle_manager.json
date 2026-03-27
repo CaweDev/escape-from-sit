@@ -1,0 +1,11 @@
+{
+  "bookScale": 0.35,
+  "interactDistance": 2.5,
+  "spriteSortOrder": 100,
+  "bookSpritePath": "Assets/TempBook1.png",
+  "interactText": "Pick up book",
+  "quizPopupHoldDuration": 999.0,
+  "exitPopupDuration": 5.0,
+  "exitPopupTitle": "SCHOOL GATE UNLOCKED",
+  "exitPopupBody": "Faster go home lah"
+}

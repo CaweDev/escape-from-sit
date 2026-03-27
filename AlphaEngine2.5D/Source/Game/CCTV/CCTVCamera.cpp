@@ -7,12 +7,58 @@
 #include "Engine/Audio/SoundManager.hpp"
 #include <cmath>
 #include  "Engine/Core/GameObject.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 
-using namespace Engine;
+namespace {
+
+    struct CCTVCameraConfig : public Engine::IConfig
+    {
+        float degToRad = 3.14159265f / 180.0f;
+        float epsilon = 0.0001f;
+        Engine::Color disabledColor = Engine::Color(0.5f, 0.5f, 0.5f, 1.0f);
+        Engine::Color detectingColor = Engine::Color(1.0f, 0.3f, 0.3f, 1.0f);
+        Engine::Color idleColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const auto& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            degToRad = j.get("degToRad", degToRad).asFloat();
+            epsilon = j.get("epsilon", epsilon).asFloat();
+            disabledColor = ParseColor(j, "disabledColor", disabledColor);
+            detectingColor = ParseColor(j, "detectingColor", detectingColor);
+            idleColor = ParseColor(j, "idleColor", idleColor);
+        }
+    };
+
+    CCTVCameraConfig g_cctvCamConfig;
+    bool g_cctvCamConfigLoaded = false;
+
+    const CCTVCameraConfig& GetCCTVCameraConfig()
+    {
+        if (!g_cctvCamConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/cctv_camera.json", g_cctvCamConfig);
+            if (g_cctvCamConfig.epsilon <= 0.0f) g_cctvCamConfig.epsilon = 0.0001f;
+            g_cctvCamConfigLoaded = true;
+        }
+        return g_cctvCamConfig;
+    }
+
+    static float DegToRad(float deg) { return deg * GetCCTVCameraConfig().degToRad; }
+
+}
 
 namespace Game {
-
-    static float DegToRad(float deg) { return deg * 3.14159265f / 180.0f; }
 
     bool CCTVCamera::InFov(float dx, float dy) const
     {
@@ -25,7 +71,7 @@ namespace Game {
 
         Vector2 to(dx, dy);
         float len = std::sqrt(to.x * to.x + to.y * to.y);
-        if (len <= 0.0001f) return true;
+        if (len <= GetCCTVCameraConfig().epsilon) return true;
         to.x /= len; to.y /= len;
 
         float dot = fwd.x * to.x + fwd.y * to.y;
@@ -41,7 +87,7 @@ namespace Game {
 
         Vector2 dir = Vector2(to.x - from.x, to.y - from.y);
         float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-        if (dist <= 0.0001f) return true;
+        if (dist <= GetCCTVCameraConfig().epsilon) return true;
 
         dir.x /= dist;
         dir.y /= dist;
@@ -184,7 +230,7 @@ namespace Game {
             // Update sprite color for visual feedback
             if (spriteRenderer)
             {
-                spriteRenderer->SetColor(Engine::Color(0.5f, 0.5f, 0.5f, 1.0f)); // Gray
+                spriteRenderer->SetColor(GetCCTVCameraConfig().disabledColor);
             }
             else
             {
@@ -251,13 +297,11 @@ namespace Game {
         {
             if (isSeeingPlayer)
             {
-                // Red tint when detecting
-                spriteRenderer->SetColor(Engine::Color(1.0f, 0.3f, 0.3f, 1.0f));
+                spriteRenderer->SetColor(GetCCTVCameraConfig().detectingColor);
             }
             else
             {
-                // White (normal) when idle
-                spriteRenderer->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f));
+                spriteRenderer->SetColor(GetCCTVCameraConfig().idleColor);
             }
         }
     }

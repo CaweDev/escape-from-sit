@@ -1,0 +1,19 @@
+{
+  "fixedDtFallback": 0.016,
+  "pitchMultiplier": 5.0,
+  "pitchClampMin": -400.0,
+  "pitchClampMax": 400.0,
+
+  "speedBoostWalkBonus": 2.0,
+  "speedBoostSprintBonus": 3.0,
+  "cheatInfiniteSpeedMultiplier": 3.0,
+
+  "jumpCooldown": 0.25,
+  "jumpSfxIdleVolume": 1.0,
+  "jumpSfxWalkVolume": 0.65,
+  "jumpSfxRunVolume": 0.45,
+
+  "runLoopBaseVolume": 0.7,
+  "walkLoopBaseVolume": 0.4,
+  "movementLoopVolumeMultiplier": 2.05
+}

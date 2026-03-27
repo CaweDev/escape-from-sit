@@ -1,0 +1,17 @@
+{
+  "roomOpenThreshold5x5": 15,
+  "enclosedAreaLimit": 2000,
+  "guardedAreaLimit": 2000,
+
+  "spawnExcludeLeft": 0,
+  "spawnExcludeRight": 15,
+  "spawnExcludeBottom": 0,
+  "spawnExcludeTop": 15,
+
+  "junctionPriority": 100,
+  "turnPriority": 80,
+  "straightPriority": 50,
+  "deadEndPriority": 30,
+
+  "placementClampMargin": 0.05
+}

@@ -1,0 +1,13 @@
+{
+  "layout": {},
+  "canvasRefWidth": 1600.0,
+  "canvasRefHeight": 900.0,
+  "canvasSortOrder": 100,
+  "creditsTexturePath": "Assets/UI/CreditScene.png",
+  "creditsBgmKey": "credits",
+  "imageScrollSpeed": 100.0,
+  "imageEndPadding": 100.0,
+  "fadeOutDuration": 1.0,
+  "backgroundColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+  "creditsTint": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+}

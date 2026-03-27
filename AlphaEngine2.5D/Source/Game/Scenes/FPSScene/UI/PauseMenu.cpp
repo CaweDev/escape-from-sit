@@ -4,47 +4,163 @@
  */
 
 #include "PauseMenu.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 
 namespace Game
 {
-    // ────────────────────────────────────────────────────────────
-    //  Horror palette constants
-    // ────────────────────────────────────────────────────────────
     namespace
     {
-        // Overlay
-        const Engine::Color kOverlayColor       { 0.0f,  0.0f,  0.0f,  0.75f };
+        bool TryReadVec2(const Json::Value& node, const char* key, AEVec2& out)
+        {
+            if (!node.isMember(key) || !node[key].isObject()) return false;
+            const auto& v = node[key];
+            out.x = v.get("x", out.x).asFloat();
+            out.y = v.get("y", out.y).asFloat();
+            return true;
+        }
 
-        // Menu panel
-        const Engine::Color kMenuBgColor        { 0.3f, 0.12f, 0.12f, 0.92f };
+        void ApplyLayoutNode(UI::UIElement* e, const Json::Value& layout)
+        {
+            if (!e || e->name.empty() || !layout.isObject()) return;
+            const auto& n = layout[e->name];
+            if (!n.isObject()) return;
 
-        // Title
-        const Engine::Color kTitleColor         { 0.8f,  0.15f, 0.10f, 1.0f };
+            AEVec2 v{};
+            v = e->GetAnchoredPosition(); if (TryReadVec2(n, "anchoredPosition", v)) e->SetAnchoredPosition(v);
+            v = e->GetSizeDelta();        if (TryReadVec2(n, "sizeDelta", v))        e->SetSizeDelta(v);
+            v = e->GetPivot();            if (TryReadVec2(n, "pivot", v))            e->SetPivot(v);
+            AEVec2 amin = e->GetAnchorMin(), amax = e->GetAnchorMax();
+            bool hasMin = TryReadVec2(n, "anchorMin", amin);
+            bool hasMax = TryReadVec2(n, "anchorMax", amax);
+            if (hasMin || hasMax) e->SetAnchors(amin, amax);
+            if (n.isMember("renderOrder")) e->SetRenderOrder(n["renderOrder"].asInt());
+        }
 
-        // Divider
-        const Engine::Color kDividerColor       { 0.6f,  0.10f, 0.08f, 0.7f };
+        void ApplyLayoutRecursive(UI::UIElement* e, const Json::Value& layout)
+        {
+            if (!e) return;
+            ApplyLayoutNode(e, layout);
+            for (auto* c : e->GetChildren()) ApplyLayoutRecursive(c, layout);
+        }
 
-        // Button states
-        const Engine::Color kBtnNormal          { 0.12f, 0.05f, 0.05f, 0.9f };
-        const Engine::Color kBtnHighlighted     { 0.22f, 0.08f, 0.08f, 1.0f };
-        const Engine::Color kBtnPressed         { 0.30f, 0.10f, 0.10f, 1.0f };
-        const Engine::Color kBtnDisabled        { 0.08f, 0.04f, 0.04f, 0.5f };
+        void ApplyLayoutToCanvas(UI::Canvas* canvas, const Json::Value& layout)
+        {
+            if (!canvas || !layout.isObject()) return;
+            for (auto* root : canvas->GetRootElements()) ApplyLayoutRecursive(root, layout);
+        }
 
-        // Text
-        const Engine::Color kTextNormal         { 0.6f,  0.6f,  0.6f,  1.0f };
-        const Engine::Color kTextSelected       { 1.0f,  1.0f,  1.0f,  1.0f };
+        struct PauseMenuConfig : public Engine::IConfig
+        {
+            Json::Value layout;
+            Engine::Color overlayColor = Engine::Color(0.0f, 0.0f, 0.0f, 0.75f);
+            Engine::Color menuBgColor = Engine::Color(0.3f, 0.12f, 0.12f, 0.92f);
+            Engine::Color titleColor = Engine::Color(0.8f, 0.15f, 0.10f, 1.0f);
+            Engine::Color dividerColor = Engine::Color(0.6f, 0.10f, 0.08f, 0.7f);
 
-        // Layout
-        constexpr float kMenuWidth   = 400.0f;
-        constexpr float kMenuHeight  = 400.0f;
-        constexpr float kBtnWidth    = 280.0f;
-        constexpr float kBtnHeight   = 52.0f;
-        constexpr float kBtnSpacing  = 16.0f;
+            Engine::Color btnNormal = Engine::Color(0.12f, 0.05f, 0.05f, 0.9f);
+            Engine::Color btnHighlighted = Engine::Color(0.22f, 0.08f, 0.08f, 1.0f);
+            Engine::Color btnPressed = Engine::Color(0.30f, 0.10f, 0.10f, 1.0f);
+            Engine::Color btnDisabled = Engine::Color(0.08f, 0.04f, 0.04f, 0.5f);
 
-        constexpr float kFontSizeBase = 1.8f;
-        constexpr float kFontSizeSelectedScale = 1.15f;
-        constexpr float kLerpSpeed = 10.0f;
+            Engine::Color textNormal = Engine::Color(0.6f, 0.6f, 0.6f, 1.0f);
+            Engine::Color textSelected = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+            float menuWidth = 400.0f;
+            float menuHeight = 400.0f;
+            float btnWidth = 280.0f;
+            float btnHeight = 52.0f;
+            float btnSpacing = 16.0f;
+
+            float fontSizeBase = 1.8f;
+            float fontSizeSelectedScale = 1.15f;
+            float fontLerpSpeed = 10.0f;
+
+            float referenceWidth = 1280.0f;
+            float referenceHeight = 720.0f;
+            int canvasSortOrder = 500;
+            int overlayRenderOrder = 0;
+            int menuRenderOrder = 1;
+            int titleRenderOrder = 2;
+            int buttonRenderOrder = 3;
+            float titleFontSize = 3.5f;
+            float titleDividerThickness = 2.0f;
+            float panelPixelsPerUnitMultiplier = 4.0f;
+            float buttonPixelsPerUnitMultiplier = 1.0f;
+            float uiHoverSfxVolume = 0.7f;
+            float uiToggleSfxVolume = 0.8f;
+
+            std::string panelTexturePath = "Assets/UI/UI Kit/Panel/panel-000.png";
+            std::string buttonTexturePath = "Assets/UI/UI Kit/Panel/panel-027.png";
+
+            static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+            {
+                if (!j.isMember(key) || !j[key].isObject()) return fallback;
+                const auto& c = j[key];
+                return Engine::Color(
+                    c.get("r", fallback.r).asFloat(),
+                    c.get("g", fallback.g).asFloat(),
+                    c.get("b", fallback.b).asFloat(),
+                    c.get("a", fallback.a).asFloat());
+            }
+
+            void FromJson(const Json::Value& j) override
+            {
+                layout = j["layout"];
+                overlayColor = ParseColor(j, "overlayColor", overlayColor);
+                menuBgColor = ParseColor(j, "menuBgColor", menuBgColor);
+                titleColor = ParseColor(j, "titleColor", titleColor);
+                dividerColor = ParseColor(j, "dividerColor", dividerColor);
+
+                btnNormal = ParseColor(j, "btnNormal", btnNormal);
+                btnHighlighted = ParseColor(j, "btnHighlighted", btnHighlighted);
+                btnPressed = ParseColor(j, "btnPressed", btnPressed);
+                btnDisabled = ParseColor(j, "btnDisabled", btnDisabled);
+
+                textNormal = ParseColor(j, "textNormal", textNormal);
+                textSelected = ParseColor(j, "textSelected", textSelected);
+
+                menuWidth = j.get("menuWidth", menuWidth).asFloat();
+                menuHeight = j.get("menuHeight", menuHeight).asFloat();
+                btnWidth = j.get("btnWidth", btnWidth).asFloat();
+                btnHeight = j.get("btnHeight", btnHeight).asFloat();
+                btnSpacing = j.get("btnSpacing", btnSpacing).asFloat();
+
+                fontSizeBase = j.get("fontSizeBase", fontSizeBase).asFloat();
+                fontSizeSelectedScale = j.get("fontSizeSelectedScale", fontSizeSelectedScale).asFloat();
+                fontLerpSpeed = j.get("fontLerpSpeed", fontLerpSpeed).asFloat();
+
+                referenceWidth = j.get("referenceWidth", referenceWidth).asFloat();
+                referenceHeight = j.get("referenceHeight", referenceHeight).asFloat();
+                canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
+                overlayRenderOrder = j.get("overlayRenderOrder", overlayRenderOrder).asInt();
+                menuRenderOrder = j.get("menuRenderOrder", menuRenderOrder).asInt();
+                titleRenderOrder = j.get("titleRenderOrder", titleRenderOrder).asInt();
+                buttonRenderOrder = j.get("buttonRenderOrder", buttonRenderOrder).asInt();
+                titleFontSize = j.get("titleFontSize", titleFontSize).asFloat();
+                titleDividerThickness = j.get("titleDividerThickness", titleDividerThickness).asFloat();
+                panelPixelsPerUnitMultiplier = j.get("panelPixelsPerUnitMultiplier", panelPixelsPerUnitMultiplier).asFloat();
+                buttonPixelsPerUnitMultiplier = j.get("buttonPixelsPerUnitMultiplier", buttonPixelsPerUnitMultiplier).asFloat();
+                uiHoverSfxVolume = j.get("uiHoverSfxVolume", uiHoverSfxVolume).asFloat();
+                uiToggleSfxVolume = j.get("uiToggleSfxVolume", uiToggleSfxVolume).asFloat();
+
+                panelTexturePath = j.get("panelTexturePath", panelTexturePath).asString();
+                buttonTexturePath = j.get("buttonTexturePath", buttonTexturePath).asString();
+            }
+        };
+
+        PauseMenuConfig g_pauseMenuConfig;
+        bool g_pauseMenuConfigLoaded = false;
+
+        const PauseMenuConfig& GetPauseMenuConfig()
+        {
+            if (!g_pauseMenuConfigLoaded)
+            {
+                Engine::ConfigManager::ReadConfig("Assets/Config/Game/pause_menu.json", g_pauseMenuConfig);
+                g_pauseMenuConfigLoaded = true;
+            }
+            return g_pauseMenuConfig;
+        }
     }
 
     // ────────────────────────────────────────────────────────────
@@ -63,6 +179,7 @@ namespace Game
 
     void PauseMenu::Update()
     {
+        const auto& cfg = GetPauseMenuConfig();
         // Toggle on Escape (uses unscaledDeltaTime-independent key check)
         if (Engine::Input::GetKeyDown(Engine::KeyCode::Escape))
         {
@@ -88,7 +205,7 @@ namespace Game
                 Engine::Input::GetKeyDown(Engine::KeyCode::UpArrow))
             {
                 m_selectedIndex = (m_selectedIndex - 1 + itemCount) % itemCount;
-                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
+                Engine::SoundManager::PlaySFX("ui_hover", cfg.uiHoverSfxVolume);
                 UpdateMenuVisuals();
             }
 
@@ -96,7 +213,7 @@ namespace Game
                 Engine::Input::GetKeyDown(Engine::KeyCode::DownArrow))
             {
                 m_selectedIndex = (m_selectedIndex + 1) % itemCount;
-                Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
+                Engine::SoundManager::PlaySFX("ui_hover", cfg.uiHoverSfxVolume);
                 UpdateMenuVisuals();
             }
 
@@ -132,7 +249,7 @@ namespace Game
                 if (m_hoveredIndex >= 0)
                 {
                     m_selectedIndex = m_hoveredIndex;
-                    Engine::SoundManager::PlaySFX("ui_hover", 0.7f);
+                    Engine::SoundManager::PlaySFX("ui_hover", cfg.uiHoverSfxVolume);
                 }
                 UpdateMenuVisuals();
             }
@@ -189,6 +306,7 @@ namespace Game
 
     void PauseMenu::Show()
     {
+        const auto& cfg = GetPauseMenuConfig();
         if (m_isPaused) return;
 
         m_isPaused = true;
@@ -202,12 +320,13 @@ namespace Game
         // Unlock cursor so the player can click buttons
         Engine::Input::RegisterCursorUnlock("PauseMenu");
 
-        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
+        Engine::SoundManager::PlaySFX("ui_toggle", cfg.uiToggleSfxVolume);
         UpdateMenuVisuals();
     }
 
     void PauseMenu::Hide()
     {
+        const auto& cfg = GetPauseMenuConfig();
         if (!m_isPaused) return;
 
         m_isPaused = false;
@@ -219,7 +338,7 @@ namespace Game
 
         // Re-lock cursor for FPS controls
         Engine::Input::UnregisterCursorUnlock("PauseMenu");
-        Engine::SoundManager::PlaySFX("ui_toggle", 0.8f);
+        Engine::SoundManager::PlaySFX("ui_toggle", cfg.uiToggleSfxVolume);
     }
 
     void PauseMenu::Toggle()
@@ -234,11 +353,12 @@ namespace Game
 
     void PauseMenu::BuildUI()
     {
+        const auto& cfg = GetPauseMenuConfig();
         // --- Canvas ---
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
-        m_canvas->SetReferenceResolution(1280.0f, 720.0f);
+        m_canvas->SetReferenceResolution(cfg.referenceWidth, cfg.referenceHeight);
         m_canvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
-        m_canvas->SetSortOrder(500);  // Above HUD (100), below end-panel (1000)
+        m_canvas->SetSortOrder(cfg.canvasSortOrder);  // Above HUD (100), below end-panel (1000)
 
         // --- Full-screen overlay ---
         m_overlay = m_canvas->CreateChild<UI::Panel>();
@@ -246,8 +366,8 @@ namespace Game
         m_overlay->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_overlay->SetAnchoredPosition({ 0.0f, 0.0f });
         m_overlay->SetSizeDelta({ 0.0f, 0.0f });
-        m_overlay->SetBackgroundColor(kOverlayColor);
-        m_overlay->SetRenderOrder(0);
+        m_overlay->SetBackgroundColor(cfg.overlayColor);
+        m_overlay->SetRenderOrder(cfg.overlayRenderOrder);
         m_overlay->visible = false;  // Start hidden
 
         // --- Centered menu panel ---
@@ -256,12 +376,12 @@ namespace Game
         m_menuPanel->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f });
         m_menuPanel->SetPivot({ 0.5f, 0.5f });
         m_menuPanel->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_menuPanel->SetSizeDelta({ kMenuWidth, kMenuHeight });
-        m_menuPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-000.png"));
+        m_menuPanel->SetSizeDelta({ cfg.menuWidth, cfg.menuHeight });
+        m_menuPanel->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.panelTexturePath.c_str()));
         m_menuPanel->GetBackground()->SetImageType(UI::ImageType::Sliced);
-        m_menuPanel->GetBackground()->SetPixelsPerUnitMultiplier(4.0f); // Make the 9-slice borders thicker
-        m_menuPanel->SetBackgroundColor(kMenuBgColor);
-        m_menuPanel->SetRenderOrder(1);
+        m_menuPanel->GetBackground()->SetPixelsPerUnitMultiplier(cfg.panelPixelsPerUnitMultiplier);
+        m_menuPanel->SetBackgroundColor(cfg.menuBgColor);
+        m_menuPanel->SetRenderOrder(cfg.menuRenderOrder);
 
         // --- Title text: "PAUSED" ---
         m_title = m_menuPanel->CreateChild<UI::Text>();
@@ -270,10 +390,10 @@ namespace Game
         m_title->SetAnchoredPosition({ 0.0f, 0.0f });
         m_title->SetSizeDelta({ 0.0f, 0.0f });
         m_title->SetText("PAUSED");
-        m_title->SetFontSize(3.5f);
-        m_title->SetColor(kTitleColor);
+        m_title->SetFontSize(cfg.titleFontSize);
+        m_title->SetColor(cfg.titleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
-        m_title->SetRenderOrder(2);
+        m_title->SetRenderOrder(cfg.titleRenderOrder);
 
         // --- Divider line ---
         m_divider = m_menuPanel->CreateChild<UI::Image>();
@@ -281,16 +401,16 @@ namespace Game
         m_divider->SetAnchors({ 0.15f, 0.74f }, { 0.85f, 0.74f });
         m_divider->SetPivot({ 0.5f, 0.5f });
         m_divider->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_divider->SetSizeDelta({ 0.0f, 2.0f });
-        m_divider->SetColor(kDividerColor);
-        m_divider->SetRenderOrder(2);
+        m_divider->SetSizeDelta({ 0.0f, cfg.titleDividerThickness });
+        m_divider->SetColor(cfg.dividerColor);
+        m_divider->SetRenderOrder(cfg.titleRenderOrder);
 
         // --- Button style ---
         UI::ColorBlock btnColors;
-        btnColors.normalColor      = kBtnNormal;
-        btnColors.highlightedColor = kBtnHighlighted;
-        btnColors.pressedColor     = kBtnPressed;
-        btnColors.disabledColor    = kBtnDisabled;
+        btnColors.normalColor      = cfg.btnNormal;
+        btnColors.highlightedColor = cfg.btnHighlighted;
+        btnColors.pressedColor     = cfg.btnPressed;
+        btnColors.disabledColor    = cfg.btnDisabled;
         btnColors.fadeDuration     = 0.12f;
 
         // --- Button configs ---
@@ -313,7 +433,7 @@ namespace Game
         const float regionTop    = 0.66f;
         const float regionBottom = 0.10f;
         const float regionH     = regionTop - regionBottom;
-        const float btnNormH    = kBtnHeight / kMenuHeight;          // button height in anchor space
+        const float btnNormH    = cfg.btnHeight / cfg.menuHeight;          // button height in anchor space
         const float spacing     = (regionH - btnCount * btnNormH) / (btnCount + 1);
 
         for (int i = 0; i < btnCount; ++i)
@@ -326,30 +446,30 @@ namespace Game
             btn->SetAnchors({ 0.5f, btnBot }, { 0.5f, btnTop });
             btn->SetPivot({ 0.5f, 0.5f });
             btn->SetAnchoredPosition({ 0.0f, 0.0f });
-            btn->SetSizeDelta({ kBtnWidth, 0.0f });
+            btn->SetSizeDelta({ cfg.btnWidth, 0.0f });
             btn->SetColors(btnColors);
-            btn->SetBackgroundColor(kBtnNormal);
+            btn->SetBackgroundColor(cfg.btnNormal);
             btn->SetText(configs[i].label);
             btn->onClick = configs[i].callback;
-            btn->SetRenderOrder(3);
-            btn->SetBackgroundSprite(Engine::AssetManager::GetTexture("Assets/UI/UI Kit/Panel/panel-027.png"));
+            btn->SetRenderOrder(cfg.buttonRenderOrder);
+            btn->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonTexturePath.c_str()));
             btn->GetBackground()->SetImageType(UI::ImageType::Sliced);
-            btn->GetBackground()->SetPixelsPerUnitMultiplier(1.0f); // Make the 9-slice borders thicker
+            btn->GetBackground()->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
 
             // Style the label text
             if (auto* label = btn->GetLabel())
             {
-                label->SetFontSize(kFontSizeBase);
-                label->SetColor(kTextNormal);
+                label->SetFontSize(cfg.fontSizeBase);
+                label->SetColor(cfg.textNormal);
             }
 
             // Track for keyboard nav
             MenuItem item;
             item.button          = btn;
             item.label           = configs[i].label;
-            item.baseFontSize    = kFontSizeBase;
-            item.currentFontSize = kFontSizeBase;
-            item.targetFontSize  = kFontSizeBase;
+            item.baseFontSize    = cfg.fontSizeBase;
+            item.currentFontSize = cfg.fontSizeBase;
+            item.targetFontSize  = cfg.fontSizeBase;
             m_items.push_back(item);
         }
 
@@ -357,6 +477,8 @@ namespace Game
         m_resumeBtn   = m_items[0].button;
         m_restartBtn  = m_items[1].button;
         m_mainMenuBtn = m_items[2].button;
+
+        ApplyLayoutToCanvas(m_canvas, cfg.layout);
     }
 
     // ────────────────────────────────────────────────────────────
@@ -365,6 +487,7 @@ namespace Game
 
     void PauseMenu::UpdateMenuVisuals()
     {
+        const auto& cfg = GetPauseMenuConfig();
         for (int i = 0; i < static_cast<int>(m_items.size()); ++i)
         {
             bool selected = (i == m_selectedIndex);
@@ -374,13 +497,13 @@ namespace Game
             if (selected)
             {
                 label->SetText("> " + m_items[i].label);
-                label->SetColor(kTextSelected);
-                m_items[i].targetFontSize = m_items[i].baseFontSize * kFontSizeSelectedScale;
+                label->SetColor(cfg.textSelected);
+                m_items[i].targetFontSize = m_items[i].baseFontSize * cfg.fontSizeSelectedScale;
             }
             else
             {
                 label->SetText(m_items[i].label);
-                label->SetColor(kTextNormal);
+                label->SetColor(cfg.textNormal);
                 m_items[i].targetFontSize = m_items[i].baseFontSize;
             }
         }
@@ -388,9 +511,10 @@ namespace Game
 
     void PauseMenu::UpdateMenuAnimations(float dt)
     {
+        const auto& cfg = GetPauseMenuConfig();
         for (auto& item : m_items)
         {
-            item.currentFontSize += (item.targetFontSize - item.currentFontSize) * dt * kLerpSpeed;
+            item.currentFontSize += (item.targetFontSize - item.currentFontSize) * dt * cfg.fontLerpSpeed;
 
             if (auto* label = item.button->GetLabel())
             {
@@ -401,11 +525,12 @@ namespace Game
 
     void PauseMenu::SelectMenuItem(int index)
     {
+        const auto& cfg = GetPauseMenuConfig();
         if (index < 0 || index >= static_cast<int>(m_items.size())) return;
 
         if (m_items[index].button && m_items[index].button->onClick)
         {
-            Engine::SoundManager::PlaySFX("ui_click");
+            Engine::SoundManager::PlaySFX("ui_click", cfg.uiToggleSfxVolume);
             m_items[index].button->onClick();
         }
     }

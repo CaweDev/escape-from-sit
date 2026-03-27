@@ -14,6 +14,7 @@
 #include "Engine/Core/AssetManager.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.h"
@@ -23,6 +24,104 @@
 
 namespace Game
 {
+    static bool TryReadVec2(const Json::Value& node, const char* key, AEVec2& out)
+    {
+        if (!node.isMember(key) || !node[key].isObject()) return false;
+        const auto& v = node[key];
+        out.x = v.get("x", out.x).asFloat();
+        out.y = v.get("y", out.y).asFloat();
+        return true;
+    }
+
+    static void ApplyLayoutNode(UI::UIElement* e, const Json::Value& layout)
+    {
+        if (!e || e->name.empty() || !layout.isObject()) return;
+        const auto& n = layout[e->name];
+        if (!n.isObject()) return;
+
+        AEVec2 v{};
+        v = e->GetAnchoredPosition(); if (TryReadVec2(n, "anchoredPosition", v)) e->SetAnchoredPosition(v);
+        v = e->GetSizeDelta();        if (TryReadVec2(n, "sizeDelta", v))        e->SetSizeDelta(v);
+        v = e->GetPivot();            if (TryReadVec2(n, "pivot", v))            e->SetPivot(v);
+        AEVec2 amin = e->GetAnchorMin(), amax = e->GetAnchorMax();
+        bool hasMin = TryReadVec2(n, "anchorMin", amin);
+        bool hasMax = TryReadVec2(n, "anchorMax", amax);
+        if (hasMin || hasMax) e->SetAnchors(amin, amax);
+        if (n.isMember("renderOrder")) e->SetRenderOrder(n["renderOrder"].asInt());
+    }
+
+    static void ApplyLayoutRecursive(UI::UIElement* e, const Json::Value& layout)
+    {
+        if (!e) return;
+        ApplyLayoutNode(e, layout);
+        for (auto* c : e->GetChildren()) ApplyLayoutRecursive(c, layout);
+    }
+
+    static void ApplyLayoutToCanvas(UI::Canvas* canvas, const Json::Value& layout)
+    {
+        if (!canvas || !layout.isObject()) return;
+        for (auto* root : canvas->GetRootElements()) ApplyLayoutRecursive(root, layout);
+    }
+
+    struct PlayerHUDConfig : public Engine::IConfig
+    {
+        Json::Value layout;
+        float uiToggleVolume = 0.75f;
+        float audioDebugClickVolume = 1.0f;
+        float nearestBookDebugDistance = 8.0f;
+        float bookNearDistance = 2.0f;
+        float bookFarDistance = 6.0f;
+        float bookLoopVolume = 1.0f;
+
+        float cctvWarningFlashSpeed = 8.0f;
+        float cctvWarningPanelAlphaScale = 0.3f;
+
+        float bullyPulseSpeed = 6.0f;
+        float annoyingPulseSpeed = 4.0f;
+
+        float guardWarningDistance = 8.0f;
+        float guardCriticalDistance = 4.0f;
+        float guardPulseSpeedBase = 5.0f;
+
+        float quizResultPopupDuration = 0.8f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            layout = j["layout"];
+            uiToggleVolume = j.get("uiToggleVolume", uiToggleVolume).asFloat();
+            audioDebugClickVolume = j.get("audioDebugClickVolume", audioDebugClickVolume).asFloat();
+            nearestBookDebugDistance = j.get("nearestBookDebugDistance", nearestBookDebugDistance).asFloat();
+            bookNearDistance = j.get("bookNearDistance", bookNearDistance).asFloat();
+            bookFarDistance = j.get("bookFarDistance", bookFarDistance).asFloat();
+            bookLoopVolume = j.get("bookLoopVolume", bookLoopVolume).asFloat();
+
+            cctvWarningFlashSpeed = j.get("cctvWarningFlashSpeed", cctvWarningFlashSpeed).asFloat();
+            cctvWarningPanelAlphaScale = j.get("cctvWarningPanelAlphaScale", cctvWarningPanelAlphaScale).asFloat();
+
+            bullyPulseSpeed = j.get("bullyPulseSpeed", bullyPulseSpeed).asFloat();
+            annoyingPulseSpeed = j.get("annoyingPulseSpeed", annoyingPulseSpeed).asFloat();
+
+            guardWarningDistance = j.get("guardWarningDistance", guardWarningDistance).asFloat();
+            guardCriticalDistance = j.get("guardCriticalDistance", guardCriticalDistance).asFloat();
+            guardPulseSpeedBase = j.get("guardPulseSpeedBase", guardPulseSpeedBase).asFloat();
+
+            quizResultPopupDuration = j.get("quizResultPopupDuration", quizResultPopupDuration).asFloat();
+        }
+    };
+
+    static PlayerHUDConfig g_playerHUDConfig;
+    static bool g_playerHUDConfigLoaded = false;
+
+    static const PlayerHUDConfig& GetPlayerHUDConfig()
+    {
+        if (!g_playerHUDConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/player_hud.json", g_playerHUDConfig);
+            g_playerHUDConfigLoaded = true;
+        }
+        return g_playerHUDConfig;
+    }
+
     // HUD panel texture paths and background colors.
     // These are static so they can later be updated from a config/read-from-file flow.
     static std::string s_alertPanelTexturePath     = "Assets/UI/UI Kit/Panel/panel-009.png";
@@ -666,14 +765,17 @@ namespace Game
         if (m_map && m_zoneGetter) {
             m_map->SetZoneGetter(m_zoneGetter);
         }
+        
+        ApplyLayoutToCanvas(m_canvas, GetPlayerHUDConfig().layout);
     }
 
     void PlayerHUD::Update()    
     {
+        const auto& cfg = GetPlayerHUDConfig();
 
 
         if (Engine::Input::GetKeyDown(Engine::KeyCode::O)) {
-            Engine::SoundManager::PlaySFX("ui_click", 1.0f);
+            Engine::SoundManager::PlaySFX("ui_click", cfg.audioDebugClickVolume);
             std::cout << "[Audio Debug] Forced One-Shot of book_nearby!\n";
         }
         // ==========================================
@@ -704,7 +806,7 @@ namespace Game
             }
 
             // --- SPAM THE CONSOLE (Only when you are close) ---
-            if (closestBookDist < 8.0f) {
+            if (closestBookDist < cfg.nearestBookDebugDistance) {
                 std::cout << "[Audio Debug] Closest Book: " << closestBookDist
                     << " units away. Sending to SoundManager...\n";
             }
@@ -712,9 +814,9 @@ namespace Game
             Engine::SoundManager::UpdateDistanceLoop(
                 "ui_click",
                 closestBookDist,
-                2.0f,
-                6.0f,
-                1.0f
+                cfg.bookNearDistance,
+                cfg.bookFarDistance,
+                cfg.bookLoopVolume
             );
         }
         else {
@@ -763,9 +865,9 @@ namespace Game
             }
             else if (m_cctvWarningPanel) {
                 // Flash effect with lower alpha for better visibility
-                float flashSpeed = 8.0f;
+                float flashSpeed = cfg.cctvWarningFlashSpeed;
                 float alpha = 0.5f + 0.5f * std::abs(std::sin(m_cctvWarningTimer * flashSpeed));
-                m_cctvWarningPanel->SetBackgroundColor(Engine::Color(1.0f, 0.0f, 0.0f, alpha * 0.3f)); // Reduced from 0.8f to 0.3f
+                m_cctvWarningPanel->SetBackgroundColor(Engine::Color(1.0f, 0.0f, 0.0f, alpha * cfg.cctvWarningPanelAlphaScale));
             }
         }
 
@@ -798,7 +900,7 @@ namespace Game
                 m_bullyApproachText->visible = false;
             } else if (m_bullyApproachText) {
                 // subtle pulsing alpha for urgency
-                float pulse = 0.6f + 0.4f * std::abs(std::sin(Engine::Time::time * 6.0f));
+                float pulse = 0.6f + 0.4f * std::abs(std::sin(Engine::Time::time * cfg.bullyPulseSpeed));
                 Engine::Color c = m_bullyApproachText->GetColor();
                 c.a = pulse;
                 m_bullyApproachText->SetColor(c);
@@ -811,7 +913,7 @@ namespace Game
                 m_annoyingApproachText->visible = false;
             } else if (m_annoyingApproachText) {
                 // modest pulse
-                float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * 4.0f));
+                float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * cfg.annoyingPulseSpeed));
                 Engine::Color c = m_annoyingApproachText->GetColor();
                 c.a = pulse;
                 m_annoyingApproachText->SetColor(c);
@@ -880,7 +982,7 @@ namespace Game
                     m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
                     m_bookLoreText->SetText(PuzzleManager::activeBookText);
                     m_bookTitleText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 1.0f)); // Flash Green!
-                    PuzzleManager::popupTimer = 0.8f;
+                    PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
                     PuzzleManager::isQuizActive = false;
 
                 }
@@ -901,7 +1003,7 @@ namespace Game
                     m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
                     m_bookLoreText->SetText(PuzzleManager::activeBookText);
                     m_bookTitleText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Flash Red!
-                    PuzzleManager::popupTimer = 0.8f;
+                    PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
                     PuzzleManager::isQuizActive = false;
                 }
             }
@@ -1067,7 +1169,7 @@ namespace Game
         if (m_map)
         {
             m_map->visible = m_mapVisible;
-            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
+            Engine::SoundManager::PlaySFX("ui_toggle", GetPlayerHUDConfig().uiToggleVolume);
         }
     }
 
@@ -1098,7 +1200,7 @@ namespace Game
         if (m_heatmapOverlay)
         {
             m_heatmapOverlay->visible = m_heatmapVisible;
-            Engine::SoundManager::PlaySFX("ui_toggle", 0.75f);
+            Engine::SoundManager::PlaySFX("ui_toggle", GetPlayerHUDConfig().uiToggleVolume);
         }
     }
 
@@ -1304,8 +1406,8 @@ namespace Game
         if (!m_proximityText) return;
         
         // Show warning when guard is within 8 units
-        const float warningDistance = 8.0f;
-        const float criticalDistance = 4.0f;
+        const float warningDistance = GetPlayerHUDConfig().guardWarningDistance;
+        const float criticalDistance = GetPlayerHUDConfig().guardCriticalDistance;
         
         if (nearestDistance < warningDistance) {
             m_proximityIntensity = 1.0f - (nearestDistance / warningDistance);
@@ -1325,7 +1427,7 @@ namespace Game
             m_proximityText->SetColor(warningColor);
             
             // Pulse effect
-            float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * 5.0f * m_proximityIntensity));
+            float pulse = 0.7f + 0.3f * std::abs(std::sin(Engine::Time::time * GetPlayerHUDConfig().guardPulseSpeedBase * m_proximityIntensity));
             Engine::Color pulseColor = warningColor;
             pulseColor.a = pulse;
             m_proximityText->SetColor(pulseColor);

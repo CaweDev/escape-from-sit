@@ -1,0 +1,7 @@
+{
+  "zoomInFactor": 1.2,
+  "zoomOutFactor": 0.8,
+  "zoomMin": 0.25,
+  "zoomMax": 4.0,
+  "defaultSavePath": "Assets/map.txt"
+}

@@ -1,0 +1,36 @@
+{
+  "layout": {},
+  "fadeInDuration": 1.2,
+  "holdAndExpandDuration": 2.0,
+  "finalHoldDuration": 1.0,
+
+  "canvasRefWidth": 1600.0,
+  "canvasRefHeight": 900.0,
+  "canvasSortOrder": 100,
+
+  "logoRenderOrder": 1,
+  "logoExpandScale": 1.05,
+  "logoWidth": 600.0,
+  "logoHeight": 200.0,
+  "logoWhitePath": "Assets/UI/DigiPen_BLACK.png",
+  "logo2Width": 600.0,
+  "logo2Height": 600.0,
+  "logo2Path": "Assets/xav.jpg",
+
+  "ccTextPath": "Assets/UI/DigiPen_CC_Text.png",
+  "ccTextWidth": 1050.0,
+  "ccTextHeight": 50.0,
+  "ccTextRenderOrder": 1,
+  "ccTextBottomMargin": 20.0,
+
+  "flickerDipDuration": 0.2,
+  "flickerDepth": 1.0,
+  "flickerDuration": 0.2,
+  "finalFlickerDuration": 0.2,
+
+  "logoWhiteColor": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "logo2Color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "backgroundColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+
+  "nextSceneName": "MainMenu"
+}

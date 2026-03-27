@@ -15,9 +15,48 @@
 #include <iomanip>
 #include <algorithm>
 #include <unordered_map>
+#include "Engine/Core/ConfigManager.hpp"
 
 #undef min
 #undef max
+
+namespace
+{
+    struct LevelEditorConfig : public Engine::IConfig
+    {
+        float zoomInFactor = 1.2f;
+        float zoomOutFactor = 0.8f;
+        float zoomMin = 0.25f;
+        float zoomMax = 4.0f;
+        std::string defaultSavePath = "Assets/map.txt";
+
+        void FromJson(const Json::Value& j) override
+        {
+            zoomInFactor = j.get("zoomInFactor", zoomInFactor).asFloat();
+            zoomOutFactor = j.get("zoomOutFactor", zoomOutFactor).asFloat();
+            zoomMin = j.get("zoomMin", zoomMin).asFloat();
+            zoomMax = j.get("zoomMax", zoomMax).asFloat();
+            defaultSavePath = j.get("defaultSavePath", defaultSavePath).asString();
+        }
+    };
+
+    LevelEditorConfig g_levelEditorConfig;
+    bool g_levelEditorConfigLoaded = false;
+
+    const LevelEditorConfig& GetLevelEditorConfig()
+    {
+        if (!g_levelEditorConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/level_editor.json", g_levelEditorConfig);
+            if (g_levelEditorConfig.zoomMin < 0.01f) g_levelEditorConfig.zoomMin = 0.01f;
+            if (g_levelEditorConfig.zoomMax < g_levelEditorConfig.zoomMin) g_levelEditorConfig.zoomMax = g_levelEditorConfig.zoomMin;
+            if (g_levelEditorConfig.zoomInFactor <= 0.0f) g_levelEditorConfig.zoomInFactor = 1.2f;
+            if (g_levelEditorConfig.zoomOutFactor <= 0.0f) g_levelEditorConfig.zoomOutFactor = 0.8f;
+            g_levelEditorConfigLoaded = true;
+        }
+        return g_levelEditorConfig;
+    }
+}
 
 namespace Game {
 
@@ -200,7 +239,7 @@ void LevelEditor::CreateUI() {
     saveButton->SetSizeDelta({120.0f, 0.0f});
     saveButton->SetText("Save (S)");
     saveButton->SetBackgroundColor(Engine::Color(0.3f, 0.7f, 0.3f, 1.0f));
-    saveButton->onClick = [this]() { SaveMapTxt("Assets/map.txt"); };
+    saveButton->onClick = [this]() { SaveMapTxt(GetLevelEditorConfig().defaultSavePath); };
 
     // Close button
     closeButton = buttonLayout->CreateChild<UI::Button>();
@@ -271,7 +310,7 @@ if (Input::GetKeyDown(KeyCode::K)) SetMode(EditorMode::ControlRoom);
 
     // Save
     if (Input::GetKeyDown(KeyCode::S)) {
-        SaveMapTxt("Assets/map.txt");
+        SaveMapTxt(GetLevelEditorConfig().defaultSavePath);
     }
 
     // Get mouse position
@@ -300,10 +339,12 @@ if (Input::GetKeyDown(KeyCode::K)) SetMode(EditorMode::ControlRoom);
 
     // Zoom with mouse wheel (simulated with +/- keys for now)
     if (Input::GetKeyDown(KeyCode::Equals)) {
-        viewZoom = std::min(viewZoom * 1.2f, 4.0f);
+        const auto& cfg = GetLevelEditorConfig();
+        viewZoom = std::min(viewZoom * cfg.zoomInFactor, cfg.zoomMax);
     }
     if (Input::GetKeyDown(KeyCode::Minus)) {
-        viewZoom = std::max(viewZoom * 0.8f, 0.25f);
+        const auto& cfg = GetLevelEditorConfig();
+        viewZoom = std::max(viewZoom * cfg.zoomOutFactor, cfg.zoomMin);
     }
 
     // Update hovered tile

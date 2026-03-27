@@ -1,5 +1,42 @@
 #include "Heatmap.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <algorithm>
+
+namespace
+{
+    struct HeatmapGameConfig : public Engine::IConfig
+    {
+        float decayMin = 0.0f;
+        float decayMax = 1.0f;
+        float cellMinValue = 0.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            decayMin = j.get("decayMin", decayMin).asFloat();
+            decayMax = j.get("decayMax", decayMax).asFloat();
+            cellMinValue = j.get("cellMinValue", cellMinValue).asFloat();
+        }
+    };
+
+    HeatmapGameConfig g_heatmapGameConfig;
+    bool g_heatmapGameConfigLoaded = false;
+
+    const HeatmapGameConfig& GetHeatmapGameConfig()
+    {
+        if (!g_heatmapGameConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/heatmap_game.json", g_heatmapGameConfig);
+            if (g_heatmapGameConfig.decayMin > g_heatmapGameConfig.decayMax)
+            {
+                float t = g_heatmapGameConfig.decayMin;
+                g_heatmapGameConfig.decayMin = g_heatmapGameConfig.decayMax;
+                g_heatmapGameConfig.decayMax = t;
+            }
+            g_heatmapGameConfigLoaded = true;
+        }
+        return g_heatmapGameConfig;
+    }
+}
 
 void Heatmap::Init(int w, int h)
 {
@@ -10,13 +47,14 @@ void Heatmap::Init(int w, int h)
 
 void Heatmap::Clear()
 {
-    std::fill(m_cells.begin(), m_cells.end(), 0.0f);
+    std::fill(m_cells.begin(), m_cells.end(), GetHeatmapGameConfig().cellMinValue);
 }
 
 void Heatmap::Decay(float factor)
 {
-    if (factor < 0.0f) factor = 0.0f;
-    if (factor > 1.0f) factor = 1.0f;
+    const auto& cfg = GetHeatmapGameConfig();
+    if (factor < cfg.decayMin) factor = cfg.decayMin;
+    if (factor > cfg.decayMax) factor = cfg.decayMax;
 
     for (float& v : m_cells)
         v *= factor;
@@ -28,7 +66,7 @@ void Heatmap::AddAt(int x, int y, float amt)
 
     float& v = m_cells[(size_t)y * (size_t)m_w + (size_t)x];
     v += amt;
-    if (v < 0.0f) v = 0.0f;
+    if (v < GetHeatmapGameConfig().cellMinValue) v = GetHeatmapGameConfig().cellMinValue;
 }
 
 float Heatmap::Get(int x, int y) const

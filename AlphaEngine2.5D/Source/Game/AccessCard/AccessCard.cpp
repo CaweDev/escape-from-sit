@@ -10,12 +10,76 @@
 #include "Game/Player/Player.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Engine/Audio/SoundManager.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 #include <cmath>
+
+namespace
+{
+    struct AccessCardConfig : public Engine::IConfig
+    {
+        float floatHeight = 0.15f;
+        float floatSpeed = 2.0f;
+        float rotationSpeed = 30.0f;
+        float spawnSafeDelay = 0.6f;
+
+        Engine::Color greenHighlight = Engine::Color(0.0f, 0.5f, 0.0f, 0.0f);
+        Engine::Color purpleHighlight = Engine::Color(0.5f, 0.0f, 0.5f, 0.0f);
+        Engine::Color redHighlight = Engine::Color(0.5f, 0.0f, 0.0f, 0.0f);
+        Engine::Color yellowHighlight = Engine::Color(0.5f, 0.5f, 0.0f, 0.0f);
+        Engine::Color defaultHighlight = Engine::Color(0.3f, 0.3f, 0.3f, 0.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const auto& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            floatHeight = j.get("floatHeight", floatHeight).asFloat();
+            floatSpeed = j.get("floatSpeed", floatSpeed).asFloat();
+            rotationSpeed = j.get("rotationSpeed", rotationSpeed).asFloat();
+            spawnSafeDelay = j.get("spawnSafeDelay", spawnSafeDelay).asFloat();
+
+            greenHighlight = ParseColor(j, "greenHighlight", greenHighlight);
+            purpleHighlight = ParseColor(j, "purpleHighlight", purpleHighlight);
+            redHighlight = ParseColor(j, "redHighlight", redHighlight);
+            yellowHighlight = ParseColor(j, "yellowHighlight", yellowHighlight);
+            defaultHighlight = ParseColor(j, "defaultHighlight", defaultHighlight);
+        }
+    };
+
+    AccessCardConfig g_accessCardConfig;
+    bool g_accessCardConfigLoaded = false;
+
+    const AccessCardConfig& GetAccessCardConfig()
+    {
+        if (!g_accessCardConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/access_card.json", g_accessCardConfig);
+            if (g_accessCardConfig.floatHeight < 0.0f) g_accessCardConfig.floatHeight = 0.0f;
+            if (g_accessCardConfig.floatSpeed < 0.0f) g_accessCardConfig.floatSpeed = 0.0f;
+            if (g_accessCardConfig.spawnSafeDelay < 0.0f) g_accessCardConfig.spawnSafeDelay = 0.0f;
+            g_accessCardConfigLoaded = true;
+        }
+        return g_accessCardConfig;
+    }
+}
 
 namespace Game {
 
 void AccessCard::Awake() {
+    const auto& cfg = GetAccessCardConfig();
+    floatHeight = cfg.floatHeight;
+    floatSpeed = cfg.floatSpeed;
+    spawnSafeDelay = cfg.spawnSafeDelay;
+
     // Cache component references
     spriteRenderer = gameObject->GetComponent<Engine::SpriteRenderer>();
     interactable = gameObject->GetComponent<Engine::Interactable>();
@@ -33,12 +97,13 @@ void AccessCard::Awake() {
 }
 
 void AccessCard::Update() {
+    const auto& cfg = GetAccessCardConfig();
     // Floating animation
     floatTime += Engine::Time::deltaTime * floatSpeed;
     gameObject->transform->position.z = baseZ + std::sin(floatTime) * floatHeight;
     
     // Gentle rotation
-    gameObject->transform->rotation += Engine::Time::deltaTime * 30.0f;
+    gameObject->transform->rotation += Engine::Time::deltaTime * cfg.rotationSpeed;
 
     // Update spawn safe timer
     if (spawnSafeTimer < spawnSafeDelay) spawnSafeTimer += Engine::Time::deltaTime;
@@ -89,12 +154,13 @@ const char* AccessCard::GetColorName() const {
 }
 
 Engine::Color AccessCard::GetHighlightColor() const {
+    const auto& cfg = GetAccessCardConfig();
     switch (cardColor) {
-        case AccessCardColor::Green:  return Engine::Color(0.0f, 0.5f, 0.0f, 0.0f);
-        case AccessCardColor::Purple: return Engine::Color(0.5f, 0.0f, 0.5f, 0.0f);
-        case AccessCardColor::Red:    return Engine::Color(0.5f, 0.0f, 0.0f, 0.0f);
-        case AccessCardColor::Yellow: return Engine::Color(0.5f, 0.5f, 0.0f, 0.0f);
-        default: return Engine::Color(0.3f, 0.3f, 0.3f, 0.0f);
+        case AccessCardColor::Green:  return cfg.greenHighlight;
+        case AccessCardColor::Purple: return cfg.purpleHighlight;
+        case AccessCardColor::Red:    return cfg.redHighlight;
+        case AccessCardColor::Yellow: return cfg.yellowHighlight;
+        default: return cfg.defaultHighlight;
     }
 }
 

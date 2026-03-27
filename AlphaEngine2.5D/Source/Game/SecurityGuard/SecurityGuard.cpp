@@ -5,6 +5,7 @@
 #include "Game/CCTV/CCTVTerminal.hpp"
 #include "Engine.hpp"
 #include "Engine/Core/Time.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -12,6 +13,52 @@
 #include <algorithm>
 #include <queue>
 #include "Game/Player/PlayerPowerUpController.h"
+
+namespace
+{
+    struct SecurityGuardConfig : public Engine::IConfig
+    {
+        float chaseRepathInterval = 0.35f;
+        float sabotageInvestigateDuration = 30.0f;
+        float terminalRepairDistance = 2.5f;
+        int fallbackSearchRadius = 2;
+        int walkableSearchRadius = 2;
+        float doorAutoCloseDelay = 3.0f;
+        float doorInteractDistance = 2.5f;
+        float defaultDoorFov = 75.0f;
+        float chaseLoopVolume = 1.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            chaseRepathInterval = j.get("chaseRepathInterval", chaseRepathInterval).asFloat();
+            sabotageInvestigateDuration = j.get("sabotageInvestigateDuration", sabotageInvestigateDuration).asFloat();
+            terminalRepairDistance = j.get("terminalRepairDistance", terminalRepairDistance).asFloat();
+            fallbackSearchRadius = j.get("fallbackSearchRadius", fallbackSearchRadius).asInt();
+            walkableSearchRadius = j.get("walkableSearchRadius", walkableSearchRadius).asInt();
+            doorAutoCloseDelay = j.get("doorAutoCloseDelay", doorAutoCloseDelay).asFloat();
+            doorInteractDistance = j.get("doorInteractDistance", doorInteractDistance).asFloat();
+            defaultDoorFov = j.get("defaultDoorFov", defaultDoorFov).asFloat();
+            chaseLoopVolume = j.get("chaseLoopVolume", chaseLoopVolume).asFloat();
+        }
+    };
+
+    SecurityGuardConfig g_securityGuardConfig;
+    bool g_securityGuardConfigLoaded = false;
+
+    const SecurityGuardConfig& GetSecurityGuardConfig()
+    {
+        if (!g_securityGuardConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/security_guard.json", g_securityGuardConfig);
+            if (g_securityGuardConfig.chaseRepathInterval <= 0.0f) g_securityGuardConfig.chaseRepathInterval = 0.35f;
+            if (g_securityGuardConfig.terminalRepairDistance < 0.1f) g_securityGuardConfig.terminalRepairDistance = 0.1f;
+            if (g_securityGuardConfig.fallbackSearchRadius < 1) g_securityGuardConfig.fallbackSearchRadius = 1;
+            if (g_securityGuardConfig.walkableSearchRadius < 1) g_securityGuardConfig.walkableSearchRadius = 1;
+            g_securityGuardConfigLoaded = true;
+        }
+        return g_securityGuardConfig;
+    }
+}
 
 namespace Game {
 
@@ -93,7 +140,7 @@ namespace Game {
 
         // Start/stop looping chasing SFX when entering/exiting Chase
         if (newState == GuardState::Chase && old != GuardState::Chase) {
-            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
+            Engine::SoundManager::PlayLoop("guard_chasing", GetSecurityGuardConfig().chaseLoopVolume);
         }
         else if (old == GuardState::Chase && newState != GuardState::Chase) {
             Engine::SoundManager::StopLoop("guard_chasing");
@@ -215,7 +262,7 @@ namespace Game {
         repathTimer -= Engine::Time::deltaTime;
         if (repathTimer <= 0.0f && memory.hasLastSeen) {
             BuildPathBFS_ToGoal((int)memory.lastSeenPos.x, (int)memory.lastSeenPos.y);
-            repathTimer = 0.35f;
+            repathTimer = GetSecurityGuardConfig().chaseRepathInterval;
         }
 
         if (!path.empty()) {
@@ -280,7 +327,7 @@ namespace Game {
                     float dy = termPos.y - guardPos.y;
                     float dist = std::sqrt(dx*dx + dy*dy);
                     
-                    if (dist <= 2.5f && !terminal->guardIsRepairing)
+                    if (dist <= GetSecurityGuardConfig().terminalRepairDistance && !terminal->guardIsRepairing)
                     {
                         terminal->StartRepair(this);
                         foundTerminal = true;
@@ -294,8 +341,9 @@ namespace Game {
                 if (!foundTerminal)
                 {
                     // Path to a random nearby location to continue searching
-                    int gx = (int)transform->position.x + (std::rand() % 5 - 2);
-                    int gy = (int)transform->position.y + (std::rand() % 5 - 2);
+                    int r = GetSecurityGuardConfig().fallbackSearchRadius;
+                    int gx = (int)transform->position.x + (std::rand() % (r * 2 + 1) - r);
+                    int gy = (int)transform->position.y + (std::rand() % (r * 2 + 1) - r);
                     if (tileMap && tileMap->IsWalkable((float)gx + 0.5f, (float)gy + 0.5f))
                     {
                         BuildPathBFS_ToGoal(gx, gy);
@@ -523,7 +571,7 @@ namespace Game {
             path.push_back(WorldFromTile(x, y));
             cur = parent[cur];
             if (cur < 0) { path.clear(); return; }
-            }
+        }
 
         std::reverse(path.begin(), path.end());
     }
@@ -618,7 +666,7 @@ namespace Game {
         memory.timeSinceSeen = 0.0f;
         investigatingSabotage = true;
         sabotageLocation = controlRoomPos;
-        sabotageInvestigateTimer = 30.0f; // Investigate for 30 seconds (matches disabled duration)
+        sabotageInvestigateTimer = GetSecurityGuardConfig().sabotageInvestigateDuration; // Investigate duration
 
         // Path to control room (add small offset to avoid wall placement)
         int targetX = (int)(controlRoomPos.x + 0.5f);
@@ -627,8 +675,8 @@ namespace Game {
         // Ensure target is walkable
         if (tileMap && !tileMap->IsWalkable((float)targetX + 0.5f, (float)targetY + 0.5f)) {
             // Find nearest walkable tile
-            for (int dy = -2; dy <= 2; ++dy) {
-                for (int dx = -2; dx <= 2; ++dx) {
+            for (int dy = -GetSecurityGuardConfig().walkableSearchRadius; dy <= GetSecurityGuardConfig().walkableSearchRadius; ++dy) {
+                for (int dx = -GetSecurityGuardConfig().walkableSearchRadius; dx <= GetSecurityGuardConfig().walkableSearchRadius; ++dx) {
                     int testX = targetX + dx;
                     int testY = targetY + dy;
                     if (testX < 0 || testY < 0 || testX >= tileMap->width || testY >= tileMap->height) continue;

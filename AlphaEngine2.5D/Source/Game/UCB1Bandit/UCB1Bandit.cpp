@@ -2,9 +2,50 @@
 // UCB1Bandit.cpp
 // =======================
 #include "UCB1Bandit.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
 #include <limits>
 #include <algorithm> // std::max, std::clamp
+
+namespace
+{
+    struct UCB1BanditConfig : public Engine::IConfig
+    {
+        int minArms = 0;
+        int minTotalPullsForLog = 1;
+        float rewardMin = 0.0f;
+        float rewardMax = 1.0f;
+
+        void FromJson(const Json::Value& j) override
+        {
+            minArms = j.get("minArms", minArms).asInt();
+            minTotalPullsForLog = j.get("minTotalPullsForLog", minTotalPullsForLog).asInt();
+            rewardMin = j.get("rewardMin", rewardMin).asFloat();
+            rewardMax = j.get("rewardMax", rewardMax).asFloat();
+        }
+    };
+
+    UCB1BanditConfig g_ucb1BanditConfig;
+    bool g_ucb1BanditConfigLoaded = false;
+
+    const UCB1BanditConfig& GetUCB1BanditConfig()
+    {
+        if (!g_ucb1BanditConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/ucb1_bandit.json", g_ucb1BanditConfig);
+            if (g_ucb1BanditConfig.minArms < 0) g_ucb1BanditConfig.minArms = 0;
+            if (g_ucb1BanditConfig.minTotalPullsForLog < 1) g_ucb1BanditConfig.minTotalPullsForLog = 1;
+            if (g_ucb1BanditConfig.rewardMin > g_ucb1BanditConfig.rewardMax)
+            {
+                float t = g_ucb1BanditConfig.rewardMin;
+                g_ucb1BanditConfig.rewardMin = g_ucb1BanditConfig.rewardMax;
+                g_ucb1BanditConfig.rewardMax = t;
+            }
+            g_ucb1BanditConfigLoaded = true;
+        }
+        return g_ucb1BanditConfig;
+    }
+}
 
 UCB1Bandit::UCB1Bandit(int arms, float c)
 {
@@ -13,7 +54,8 @@ UCB1Bandit::UCB1Bandit(int arms, float c)
 
 void UCB1Bandit::Reset(int arms, float c)
 {
-    if (arms < 0) arms = 0;
+    const auto& cfg = GetUCB1BanditConfig();
+    if (arms < cfg.minArms) arms = cfg.minArms;
     m_c = c;
     m_totalPulls = 0;
     m_pulls.assign((size_t)arms, 0);
@@ -31,7 +73,8 @@ int UCB1Bandit::SelectArm()
             return i;
 
     // UCB = mean + c * sqrt( ln(N) / n_i )
-    const float lnN = std::log((float)std::max(1, m_totalPulls));
+    const auto& cfg = GetUCB1BanditConfig();
+    const float lnN = std::log((float)std::max(cfg.minTotalPullsForLog, m_totalPulls));
 
     int best = 0;
     float bestScore = -std::numeric_limits<float>::infinity();
@@ -57,7 +100,8 @@ void UCB1Bandit::Update(int arm, float reward)
     const int k = (int)m_pulls.size();
     if (arm < 0 || arm >= k) return;
 
-    reward = std::clamp(reward, 0.0f, 1.0f);
+    const auto& cfg = GetUCB1BanditConfig();
+    reward = std::clamp(reward, cfg.rewardMin, cfg.rewardMax);
 
     m_totalPulls += 1;
     m_pulls[arm] += 1;

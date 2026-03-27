@@ -1,0 +1,30 @@
+{
+  "overlayColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 0.75 },
+  "panelColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+  "titleColor": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "buttonColor": { "r": 0.25, "g": 0.5, "b": 0.25, "a": 1.0 },
+
+  "canvasSortOrder": 1000,
+  "referenceWidth": 1280.0,
+  "referenceHeight": 720.0,
+
+  "panelWidth": 1000.0,
+  "panelHeight": 560.0,
+  "panelPixelsPerUnitMultiplier": 4.0,
+  "titlePosY": -55.0,
+  "titleHeight": 64.0,
+  "titleFontSize": 3.0,
+
+  "restartButtonPosY": 125.0,
+  "mainMenuButtonPosY": 55.0,
+  "buttonWidth": 240.0,
+  "buttonHeight": 56.0,
+  "buttonPixelsPerUnitMultiplier": 1.0,
+
+  "fadeDuration": 0.5,
+  "uiClickSfxVolume": 1.0,
+  "loseSfxVolume": 1.0,
+
+  "panelTexturePath": "Assets/UI/UI Kit/Panel/panel-000.png",
+  "buttonTexturePath": "Assets/UI/UI Kit/Panel/panel-027.png"
+}

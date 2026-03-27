@@ -1,0 +1,9 @@
+{
+  "dtFallback": 0.016,
+  "panelWidthScale": 0.78,
+  "panelHeightScale": 0.78,
+  "headerHeight": 92.0,
+  "maxHeat": 50.0,
+  "maxCCTV": 6.0,
+  "barWidth": 120.0
+}

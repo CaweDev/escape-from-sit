@@ -26,7 +26,7 @@ namespace Game {
         int zoneId = 1;
         
         /** Required number of cards to unlock */
-        static const int REQUIRED_CARDS = 4;
+        int requiredCards = 4;
         
         /** References */
         Engine::Door* door = nullptr;
@@ -35,6 +35,10 @@ namespace Game {
         /** Hold-to-unlock mechanic */
         float holdProgress = 0.0f;
         float holdTimeRequired = 2.0f;
+        float holdDecayMultiplier = 2.0f;
+        float interactMaxDistance = 2.5f;
+        float lockedSfxVolume = 0.8f;
+        float unlockSfxVolume = 0.8f;
         bool isHolding = false;
         
         // Lifecycle

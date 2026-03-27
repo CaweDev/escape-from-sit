@@ -1,0 +1,10 @@
+{
+  "renderEnabled": false,
+  "verboseLogging": true,
+  "clearAlphaThreshold": 0.1,
+  "renderDistanceLimit": 20.0,
+  "offscreenPaddingPercent": 120,
+  "minPerpDist": 0.1,
+  "minScreenSize": 2.0,
+  "maxScreenSize": 100.0
+}

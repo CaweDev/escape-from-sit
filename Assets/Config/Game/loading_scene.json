@@ -1,0 +1,17 @@
+{
+  "referenceWidth": 1280.0,
+  "referenceHeight": 720.0,
+  "canvasSortOrder": 100,
+  "minDisplayTime": 1.2,
+  "progressDuration": 1.2,
+  "dotInterval": 0.3,
+  "tipsConfigPath": "Assets/Config/LoadingScene/tips.json",
+  "loadingFontSize": 3.0,
+  "tipFontSize": 1.5,
+  "progressBarHeight": 8.0,
+  "backgroundColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+  "loadingTextColor": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "progressBarBgColor": { "r": 0.2, "g": 0.2, "b": 0.2, "a": 1.0 },
+  "progressBarFillColor": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 },
+  "tipTextColor": { "r": 0.8, "g": 0.8, "b": 0.8, "a": 1.0 }
+}

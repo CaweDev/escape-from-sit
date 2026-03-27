@@ -1,7 +1,38 @@
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Player/PlayerPowerUpController.h"
+#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
+
+namespace
+{
+	struct PlayerConfig : public Engine::IConfig
+	{
+		bool hands67ProvidesImmunity = true;
+		bool logShieldAbsorb = true;
+		bool logInvulnerabilityEnd = true;
+
+		void FromJson(const Json::Value& j) override
+		{
+			hands67ProvidesImmunity = j.get("hands67ProvidesImmunity", hands67ProvidesImmunity).asBool();
+			logShieldAbsorb = j.get("logShieldAbsorb", logShieldAbsorb).asBool();
+			logInvulnerabilityEnd = j.get("logInvulnerabilityEnd", logInvulnerabilityEnd).asBool();
+		}
+	};
+
+	PlayerConfig g_playerConfig;
+	bool g_playerConfigLoaded = false;
+
+	const PlayerConfig& GetPlayerConfig()
+	{
+		if (!g_playerConfigLoaded)
+		{
+			Engine::ConfigManager::ReadConfig("Assets/Config/Game/player.json", g_playerConfig);
+			g_playerConfigLoaded = true;
+		}
+		return g_playerConfig;
+	}
+}
 
 namespace Game {
 
@@ -18,7 +49,7 @@ namespace Game {
 		bool immune = false;
 		{
 			Hands67* hands = gameObject->GetComponent<Hands67>();
-			if (hands->IsVisible()) {
+			if (GetPlayerConfig().hands67ProvidesImmunity && hands->IsVisible()) {
 				immune = true;
 			}
 		}
@@ -36,7 +67,8 @@ namespace Game {
 
 			invulnerabilityTimer = shieldBreakIFrameDuration; // Start invulnerability frames
 			immune = true;
-			std::cout << "[PLAYER] Shield absorbed the catch! Player is now invulnerable for " << shieldBreakIFrameDuration << " seconds.\n";
+			if (GetPlayerConfig().logShieldAbsorb)
+				std::cout << "[PLAYER] Shield absorbed the catch! Player is now invulnerable for " << shieldBreakIFrameDuration << " seconds.\n";
 		}
 		if (cheatCatchImmune) {
 			immune = true;
@@ -121,7 +153,8 @@ namespace Game {
 		if (invulnerabilityTimer > 0.0f) {
 			invulnerabilityTimer -= dt;
 			if (invulnerabilityTimer <= 0.0f) {
-				std::cout << "[PLAYER] Invulnerability wore off!\n";
+				if (GetPlayerConfig().logInvulnerabilityEnd)
+					std::cout << "[PLAYER] Invulnerability wore off!\n";
 			}
 		}
 	}

@@ -1,0 +1,17 @@
+{
+  "layout": {},
+  "uiToggleVolume": 0.75,
+  "audioDebugClickVolume": 1.0,
+  "nearestBookDebugDistance": 8.0,
+  "bookNearDistance": 2.0,
+  "bookFarDistance": 6.0,
+  "bookLoopVolume": 1.0,
+  "cctvWarningFlashSpeed": 8.0,
+  "cctvWarningPanelAlphaScale": 0.3,
+  "bullyPulseSpeed": 6.0,
+  "annoyingPulseSpeed": 4.0,
+  "guardWarningDistance": 8.0,
+  "guardCriticalDistance": 4.0,
+  "guardPulseSpeedBase": 5.0,
+  "quizResultPopupDuration": 0.8
+}

@@ -1,6 +1,34 @@
 #include "ZoneManager.hpp"
 #include "Engine/TileMap/TileMap.hpp"
+#include "Engine/Core/ConfigManager.hpp"
 #include <cstdlib> // std::rand
+
+namespace
+{
+    struct ZoneManagerConfig : public Engine::IConfig
+    {
+        int randomPickTries = 400;
+
+        void FromJson(const Json::Value& j) override
+        {
+            randomPickTries = j.get("randomPickTries", randomPickTries).asInt();
+        }
+    };
+
+    ZoneManagerConfig g_zoneManagerConfig;
+    bool g_zoneManagerConfigLoaded = false;
+
+    const ZoneManagerConfig& GetZoneManagerConfig()
+    {
+        if (!g_zoneManagerConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/zone_manager.json", g_zoneManagerConfig);
+            if (g_zoneManagerConfig.randomPickTries < 1) g_zoneManagerConfig.randomPickTries = 1;
+            g_zoneManagerConfigLoaded = true;
+        }
+        return g_zoneManagerConfig;
+    }
+}
 
 void ZoneManager::Init(Engine::TileMap* map, int w, int h)
 {
@@ -31,7 +59,7 @@ bool ZoneManager::PickRandomWalkableInZone(int zoneId, int& outX, int& outY) con
     if ((int)m_zoneGrid.size() != m_w * m_h) return false;
 
     // random tries first
-    for (int tries = 0; tries < 400; ++tries)
+    for (int tries = 0; tries < GetZoneManagerConfig().randomPickTries; ++tries)
     {
         int x = std::rand() % m_w;
         int y = std::rand() % m_h;

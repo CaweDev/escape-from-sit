@@ -1,0 +1,33 @@
+{
+  "referenceWidth": 1280.0,
+  "referenceHeight": 720.0,
+  "canvasSortOrder": 9999,
+
+  "cameraRefreshInterval": 0.5,
+  "cameraPositionPrecision": 2,
+
+  "renderLimitColor": { "r": 0.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+  "panelColor": { "r": 0.1, "g": 0.1, "b": 0.1, "a": 0.85 },
+  "textPrimary": { "r": 0.9, "g": 0.9, "b": 0.9, "a": 1.0 },
+  "textSecondary": { "r": 0.8, "g": 0.8, "b": 0.8, "a": 1.0 },
+  "textHint": { "r": 0.7, "g": 0.7, "b": 0.7, "a": 1.0 },
+  "cheatTitleColor": { "r": 0.9, "g": 0.9, "b": 0.5, "a": 1.0 },
+
+  "buttonNormal": { "r": 0.3, "g": 0.3, "b": 0.3, "a": 1.0 },
+  "buttonHighlight": { "r": 0.4, "g": 0.4, "b": 0.4, "a": 1.0 },
+  "buttonPressed": { "r": 0.5, "g": 0.5, "b": 0.5, "a": 1.0 },
+  "buttonOn": { "r": 0.1, "g": 0.5, "b": 0.1, "a": 1.0 },
+  "buttonOnNormal": { "r": 0.2, "g": 0.6, "b": 0.2, "a": 1.0 },
+  "buttonOnHighlight": { "r": 0.3, "g": 0.7, "b": 0.3, "a": 1.0 },
+  "buttonOnPressed": { "r": 0.4, "g": 0.8, "b": 0.4, "a": 1.0 },
+
+  "buttonPixelsPerUnitMultiplier": 2.0,
+  "titleFontSize": 2.5,
+  "instructionFontSize": 1.1,
+  "cameraPosFontSize": 1.5,
+  "buttonFontSize": 1.2,
+  "longButtonFontSize": 1.1,
+  "cheatTitleFontSize": 1.3,
+
+  "buttonSpritePath": "Assets/UI/UI Kit/Panel/panel-027.png"
+}

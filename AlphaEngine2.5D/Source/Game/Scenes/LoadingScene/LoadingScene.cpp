@@ -7,6 +7,84 @@
 #include "Engine/Input/Input.hpp"
 #include <random>
 
+namespace {
+
+    struct LoadingSceneConfig : public Engine::IConfig {
+        float referenceWidth = 1280.0f;
+        float referenceHeight = 720.0f;
+        int canvasSortOrder = 100;
+
+        float minDisplayTime = 1.2f;
+        float progressDuration = 1.2f;
+        float dotInterval = 0.3f;
+
+        std::string tipsConfigPath = "Assets/Config/LoadingScene/tips.json";
+
+        float loadingFontSize = 3.0f;
+        float tipFontSize = 1.5f;
+        float progressBarHeight = 8.0f;
+
+        Engine::Color backgroundColor = Engine::Color(0.0f, 0.0f, 0.0f, 1.0f);
+        Engine::Color loadingTextColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+        Engine::Color progressBarBgColor = Engine::Color(0.2f, 0.2f, 0.2f, 1.0f);
+        Engine::Color progressBarFillColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
+        Engine::Color tipTextColor = Engine::Color(0.8f, 0.8f, 0.8f, 1.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const Json::Value& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override {
+            referenceWidth = j.get("referenceWidth", referenceWidth).asFloat();
+            referenceHeight = j.get("referenceHeight", referenceHeight).asFloat();
+            canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
+
+            minDisplayTime = j.get("minDisplayTime", minDisplayTime).asFloat();
+            progressDuration = j.get("progressDuration", progressDuration).asFloat();
+            dotInterval = j.get("dotInterval", dotInterval).asFloat();
+
+            tipsConfigPath = j.get("tipsConfigPath", tipsConfigPath).asString();
+
+            loadingFontSize = j.get("loadingFontSize", loadingFontSize).asFloat();
+            tipFontSize = j.get("tipFontSize", tipFontSize).asFloat();
+            progressBarHeight = j.get("progressBarHeight", progressBarHeight).asFloat();
+
+            backgroundColor = ParseColor(j, "backgroundColor", backgroundColor);
+            loadingTextColor = ParseColor(j, "loadingTextColor", loadingTextColor);
+            progressBarBgColor = ParseColor(j, "progressBarBgColor", progressBarBgColor);
+            progressBarFillColor = ParseColor(j, "progressBarFillColor", progressBarFillColor);
+            tipTextColor = ParseColor(j, "tipTextColor", tipTextColor);
+        }
+    };
+
+    LoadingSceneConfig g_loadingSceneConfig;
+    bool g_loadingSceneConfigLoaded = false;
+
+    const LoadingSceneConfig& GetLoadingSceneConfig()
+    {
+        if (!g_loadingSceneConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/loading_scene.json", g_loadingSceneConfig);
+            if (g_loadingSceneConfig.referenceWidth < 1.0f) g_loadingSceneConfig.referenceWidth = 1.0f;
+            if (g_loadingSceneConfig.referenceHeight < 1.0f) g_loadingSceneConfig.referenceHeight = 1.0f;
+            if (g_loadingSceneConfig.minDisplayTime < 0.0f) g_loadingSceneConfig.minDisplayTime = 0.0f;
+            if (g_loadingSceneConfig.progressDuration < 0.01f) g_loadingSceneConfig.progressDuration = 0.01f;
+            if (g_loadingSceneConfig.dotInterval < 0.01f) g_loadingSceneConfig.dotInterval = 0.01f;
+            if (g_loadingSceneConfig.progressBarHeight < 0.1f) g_loadingSceneConfig.progressBarHeight = 0.1f;
+            g_loadingSceneConfigLoaded = true;
+        }
+        return g_loadingSceneConfig;
+    }
+
+}
+
 namespace Game {
 
     LoadingScene::LoadingScene() : Scene("LoadingScene") {}
@@ -29,6 +107,7 @@ namespace Game {
     };
 
     void LoadingScene::OnLoad() {
+        const auto& cfg = GetLoadingSceneConfig();
         Input::RegisterCursorUnlock("LoadingScene");
         // Reset state
         m_elapsed = 0.0f;
@@ -41,9 +120,9 @@ namespace Game {
 
         // ========== Canvas ==========
         m_canvas = uiMgr->CreateCanvas();
-        m_canvas->SetReferenceResolution(1280.f, 720.f);
+        m_canvas->SetReferenceResolution(cfg.referenceWidth, cfg.referenceHeight);
         m_canvas->SetScaleMode(CanvasScaleMode::ScaleWithScreenSize);
-        m_canvas->SetSortOrder(100);
+        m_canvas->SetSortOrder(cfg.canvasSortOrder);
 
         // ========== Background ==========
         m_background = m_canvas->CreateChild<Panel>();
@@ -51,7 +130,7 @@ namespace Game {
         m_background->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 1.0f });
         m_background->SetAnchoredPosition({ 0.0f, 0.0f });
         m_background->SetSizeDelta({ 0.0f, 0.0f });
-        m_background->SetBackgroundColor(Color(0.0f, 0.0f, 0.0f, 1.0f));
+        m_background->SetBackgroundColor(cfg.backgroundColor);
 
         // ========== Loading Text ==========
         m_loadingText = m_canvas->CreateChild<Text>();
@@ -60,8 +139,8 @@ namespace Game {
         m_loadingText->SetAnchoredPosition({ 0.0f, 0.0f });
         m_loadingText->SetSizeDelta({ 0.0f, 0.0f });
         m_loadingText->SetText("LOADING");
-        m_loadingText->SetFontSize(3.0f);
-        m_loadingText->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+        m_loadingText->SetFontSize(cfg.loadingFontSize);
+        m_loadingText->SetColor(cfg.loadingTextColor);
         m_loadingText->SetAnchor(TextAnchor::MiddleCenter);
 
         // ========== Progress Bar Background ==========
@@ -70,8 +149,8 @@ namespace Game {
         m_progressBarBg->SetAnchors({ 0.3f, 0.40f }, { 0.7f, 0.40f });
         m_progressBarBg->SetPivot({ 0.5f, 0.5f });
         m_progressBarBg->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_progressBarBg->SetSizeDelta({ 0.0f, 8.0f });
-        m_progressBarBg->SetColor(Color(0.2f, 0.2f, 0.2f, 1.0f));
+        m_progressBarBg->SetSizeDelta({ 0.0f, cfg.progressBarHeight });
+        m_progressBarBg->SetColor(cfg.progressBarBgColor);
 
         // ========== Progress Bar Fill ==========
         m_progressBarFill = m_canvas->CreateChild<Image>();
@@ -79,8 +158,8 @@ namespace Game {
         m_progressBarFill->SetAnchors({ 0.3f, 0.40f }, { 0.7f, 0.40f });
         m_progressBarFill->SetPivot({ 0.5f, 0.5f });
         m_progressBarFill->SetAnchoredPosition({ 0.0f, 0.0f });
-        m_progressBarFill->SetSizeDelta({ 0.0f, 8.0f });
-        m_progressBarFill->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f));
+        m_progressBarFill->SetSizeDelta({ 0.0f, cfg.progressBarHeight });
+        m_progressBarFill->SetColor(cfg.progressBarFillColor);
         m_progressBarFill->SetFillAmount(0.0f);
         m_progressBarFill->SetRenderOrder(1);
 
@@ -90,14 +169,14 @@ namespace Game {
         m_tipText->SetAnchors({ 0.1f, 0.20f }, { 0.9f, 0.35f });
         m_tipText->SetAnchoredPosition({ 0.0f, 0.0f });
         m_tipText->SetSizeDelta({ 0.0f, 0.0f });
-        m_tipText->SetFontSize(1.5f);
-        m_tipText->SetColor(Color(0.8f, 0.8f, 0.8f, 1.0f));
+        m_tipText->SetFontSize(cfg.tipFontSize);
+        m_tipText->SetColor(cfg.tipTextColor);
         m_tipText->SetAnchor(TextAnchor::MiddleCenter);
 
         // Load tips from config if not already loaded
         if (m_tips.empty()) {
             TipsConfig config;
-            if (Engine::ConfigManager::ReadConfig("Assets/Config/LoadingScene/tips.json", config)) {
+            if (Engine::ConfigManager::ReadConfig(cfg.tipsConfigPath, config)) {
                 m_tips = config.tips;
             }
         }
@@ -118,13 +197,14 @@ namespace Game {
     }
 
     void LoadingScene::OnUpdate() {
+        const auto& cfg = GetLoadingSceneConfig();
         float dt = Time::unscaledDeltaTime;
         m_elapsed += dt;
 
         // Animate loading dots
         m_dotTimer += dt;
-        if (m_dotTimer >= DOT_INTERVAL) {
-            m_dotTimer -= DOT_INTERVAL;
+        if (m_dotTimer >= cfg.dotInterval) {
+            m_dotTimer -= cfg.dotInterval;
             m_dotCount = (m_dotCount + 1) % 4;
 
             std::string dots(m_dotCount, '.');
@@ -132,12 +212,12 @@ namespace Game {
         }
 
         // Animate progress bar
-        float progress = m_elapsed / PROGRESS_DURATION;
+        float progress = m_elapsed / cfg.progressDuration;
         if (progress > 1.0f) progress = 1.0f;
         m_progressBarFill->SetFillAmount(progress);
 
         // After minimum display time, hide loading widgets, then switch and reveal
-        if (!m_loadTriggered && m_elapsed >= MIN_DISPLAY_TIME) {
+        if (!m_loadTriggered && m_elapsed >= cfg.minDisplayTime) {
             m_loadTriggered = true;
 
             std::string target = SceneManager::GetLoadWithScreenTarget();
