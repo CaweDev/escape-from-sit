@@ -137,7 +137,7 @@ namespace Game
         bullyCooldown -= dt;
 
         // start chase when player walks past (enters range) and bully is not cooling down
-        if (PlayerInRange() && bullyCooldown <= 0.0f && activeTimer <= 0.0f)
+        if (PlayerInRange() && bullyCooldown <= 0.0f && activeTimer <= 0.0f && !Player::isInvisible)
         {
             activeTimer = bullyChaseTime;   // chasing window
             repathTimer = 0.0f;             // force immediate repath

@@ -43,6 +43,7 @@ namespace Game
     static Engine::Color s_bookPopupPanelColor = Engine::Color(0.05f, 0.05f, 0.05f, 0.92f);
     static std::string s_cardPanelTexturePath      = "Assets/UI/UI Kit/Panel/panel-009.png";
     static Engine::Color s_cardPanelColor      = Engine::Color(0.05f, 0.05f, 0.05f, 0.88f);
+    static std::string s_powerUpPanelTexturePath   = "Assets/UI/UI Kit/Panel/panel-009.png";
 
     PlayerHUD::~PlayerHUD()
     {
@@ -584,35 +585,72 @@ namespace Game
         m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Shield.png"); // Shield
         m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Invis.png"); // Invisibility
 
+        Engine::Texture2D* powerUpPanelTexture = Engine::AssetManager::GetTexture(s_powerUpPanelTexturePath.c_str());
+        constexpr float powerUpPanelScale = 1.15f; // +15% panel size
+
+        const float panelWidth = (240.0f * powerUpPanelScale) + 100.0f; 
+        const float panelHeight = (56.0f * powerUpPanelScale) + 25.0f;  // +50 total on Y axis
+
+        const int slotCount = 4;
+        const float slotWidth = 72.0f;
+        const float slotHeight = 70.0f;
+        const float sidePadding = 10.0f;
+        const float yPos = 6.0f;
+        const float spacing = (panelWidth - (2.0f * sidePadding) - slotWidth) / (slotCount - 1);
+
         m_powerUpPanel = m_canvas->CreateChild<UI::Panel>();
         m_powerUpPanel->name = "PowerUpPanel";
         m_powerUpPanel->SetAnchors({ 1.0f, 1.0f }, { 1.0f, 1.0f });
         m_powerUpPanel->SetPivot({ 1.0f, 1.0f });
         m_powerUpPanel->SetAnchoredPosition({ -20.0f, -110.0f });
-        m_powerUpPanel->SetSizeDelta({ 240.0f, 56.0f });
+        m_powerUpPanel->SetSizeDelta({ panelWidth, panelHeight });
         m_powerUpPanel->SetBackgroundColor(Engine::Color(0.05f, 0.05f, 0.05f, 0.65f));
+        if (powerUpPanelTexture)
+        {
+            m_powerUpPanel->SetBackgroundSprite(powerUpPanelTexture);
+            if (auto* bg = m_powerUpPanel->GetBackground())
+            {
+                bg->SetImageType(UI::ImageType::Sliced);
+                bg->SetPixelsPerUnitMultiplier(1.0f);
+            }
+        }
 
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < slotCount; ++i)
         {
             auto* slot = m_powerUpPanel->CreateChild<UI::Panel>();
             slot->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
             slot->SetPivot({ 0.0f, 0.0f });
-            slot->SetAnchoredPosition({ 8.0f + i * 58.0f, 6.0f });
-            slot->SetSizeDelta({ 52.0f, 44.0f });
+            slot->SetAnchoredPosition({ sidePadding + spacing * i, yPos });
+            slot->SetSizeDelta({ slotWidth, slotHeight });
             slot->SetBackgroundColor(Engine::Color(0.12f, 0.12f, 0.12f, 0.9f));
+            if (powerUpPanelTexture)
+            {
+                slot->SetBackgroundSprite(powerUpPanelTexture);
+                if (auto* bg = slot->GetBackground())
+                {
+                    bg->SetImageType(UI::ImageType::Sliced);
+                    bg->SetPixelsPerUnitMultiplier(1.0f);
+                }
+            }
 
             m_powerUpIcons[i] = slot->CreateChild<UI::Image>();
             m_powerUpIcons[i]->SetAnchors({ 0.0f, 0.0f }, { 0.0f, 0.0f });
             m_powerUpIcons[i]->SetPivot({ 0.0f, 0.0f });
-            m_powerUpIcons[i]->SetAnchoredPosition({ 2.0f, 12.0f });
-            m_powerUpIcons[i]->SetSizeDelta({ 40.0f, 30.0f });
+
+            const float iconWidth = 50.0f;
+            const float iconHeight = 50.0f;
+            const float iconX = (slotWidth - iconWidth) * 0.5f;
+            const float iconY = (slotHeight - iconHeight) * 0.75f;
+
+            m_powerUpIcons[i]->SetAnchoredPosition({ iconX, iconY });
+            m_powerUpIcons[i]->SetSizeDelta({ iconWidth, iconHeight });
             m_powerUpIcons[i]->SetTexture(m_powerUpTextures[i]);
             m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f)); // inactive dim
 
             m_powerUpTimers[i] = slot->CreateChild<UI::Text>();
             m_powerUpTimers[i]->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.0f });
             m_powerUpTimers[i]->SetPivot({ 0.5f, 0.0f });
-            m_powerUpTimers[i]->SetAnchoredPosition({ 0.0f, 0.0f });
+            m_powerUpTimers[i]->SetAnchoredPosition({ 0.0f, 8.0f }); // moved up from 0.0f
             m_powerUpTimers[i]->SetSizeDelta({ 0.0f, 12.0f });
             m_powerUpTimers[i]->SetText("--");
             m_powerUpTimers[i]->SetFontSize(0.75f);
@@ -1567,4 +1605,4 @@ namespace Game
 
 
 
-} // namespace Game} // namespace Game
+} // namespace Game
