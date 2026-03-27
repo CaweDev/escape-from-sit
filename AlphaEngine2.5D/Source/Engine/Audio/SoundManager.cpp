@@ -555,7 +555,8 @@ void SoundManager::UpdateDistanceLoop(const std::string& key, f32 distance, f32 
     if (!channel.playing) {
         channel.source->clip = clipIt->second;
         channel.source->loop = true;
-        channel.source->volume = 1.0f;
+        // Start channel at the current global SFX master volume so loops respect user SFX volume
+        channel.source->volume = s_sfxSource ? s_sfxSource->volume : 1.0f;
         channel.source->Play();
         channel.source->SetVolume(0.0f);
         channel.playing = true;
@@ -570,7 +571,9 @@ void SoundManager::UpdateDistanceLoop(const std::string& key, f32 distance, f32 
         if (t > 1.0f) t = 1.0f;
     }
 
-    channel.source->SetVolume(maxVolume * t);
+    // Apply master SFX volume so distance loops scale with overall SFX settings
+    f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
+    channel.source->SetVolume(maxVolume * t * masterSfx);
 }
 
 void SoundManager::UpdateGuardProximityLoop(f32 nearestDistance)
@@ -586,7 +589,8 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
 void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
 {
     // Use terminal loop config for NPCs as a placeholder if not tuned separately
-    UpdateDistanceLoop("annoying_classmate", nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, 0.9f);
+    // Use configured maxVolume so loudness follows audio config instead of a hardcoded value
+    UpdateDistanceLoop("annoying_classmate", nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, s_terminalLoopConfig.maxVolume);
 }
 
 void SoundManager::UpdateTerminalBuzzLoop(f32 nearestDistance)
