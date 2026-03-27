@@ -46,9 +46,6 @@ void AccessCard::Update() {
 
 void AccessCard::SetupInteraction() {
     if (!interactable) return;
-    // set default text and distance
-    interactable->actionText = ("Collect " + std::string(GetColorName()) + " Access Card").c_str();
-    interactable->maxDistance = 2.5f;
 
     // Set interaction callback with spawn-safety guard
     interactable->onInteract = [this]() {
