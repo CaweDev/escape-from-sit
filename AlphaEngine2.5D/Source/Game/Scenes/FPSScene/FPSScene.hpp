@@ -335,32 +335,69 @@ namespace Game
         // Player spawn position - NPCs must not spawn near here
         static constexpr float spawnExcludeX = 2.5f;
         static constexpr float spawnExcludeY = 2.5f;
-        static constexpr float spawnExcludeRadius = 5.0f;
+        static constexpr float spawnExcludeRadius = 7.0f; // increase to keep guards/NPCs farther from player spawn
 
         Game::NPC *SpawnNPCInZone(int zoneId, NPCType npcType, TileMap *map, const char *spritePath)
         {
             int gx = 0, gy = 0;
+            // helper: check if a tile coordinate corresponds to a door/exit/control-room door
+            auto IsDoorTile = [&](int tx, int ty) {
+                if (!map) return false;
+                for (auto &p : map->GetSpawnedDoorPositionsPublic()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                for (auto &p : map->GetControlRoomDoorPositions()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                for (auto &p : map->GetExitPositions()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                return false;
+            };
+
             bool found = false;
-            // Try multiple times to find a position away from the player spawn area
-            for (int attempt = 0; attempt < 50; ++attempt)
+            // Try multiple times to find a position away from the player spawn area and not on doors
+            for (int attempt = 0; attempt < 100; ++attempt)
             {
                 if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
                     break;
                 float dx = (float)gx + 0.5f - spawnExcludeX;
                 float dy = (float)gy + 0.5f - spawnExcludeY;
-                if (dx * dx + dy * dy > spawnExcludeRadius * spawnExcludeRadius)
-                {
-                    found = true;
-                    break;
-                }
+                if (dx * dx + dy * dy <= spawnExcludeRadius * spawnExcludeRadius) continue;
+                if (IsDoorTile(gx, gy)) continue;
+                found = true;
+                break;
             }
+
             if (!found)
             {
-                if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
+                // fallback: search outward from zone center for a valid tile
+                Vector2 c = GetZoneCenter(zoneId);
+                int cx = (int)std::floor(c.x);
+                int cy = (int)std::floor(c.y);
+                const int MAXR = 20;
+                bool placed = false;
+                for (int r = 0; r <= MAXR && !placed; ++r) {
+                    for (int dy = -r; dy <= r && !placed; ++dy) {
+                        for (int dx = -r; dx <= r && !placed; ++dx) {
+                            if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                            int nx = cx + dx;
+                            int ny = cy + dy;
+                            if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                            float sdx = (float)nx + 0.5f - spawnExcludeX;
+                            float sdy = (float)ny + 0.5f - spawnExcludeY;
+                            if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                            if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                            if (IsDoorTile(nx, ny)) continue;
+                            gx = nx; gy = ny; placed = true; break;
+                        }
+                    }
+                }
+                if (!placed)
                 {
-                    Vector2 c = GetZoneCenter(zoneId);
-                    gx = (int)c.x;
-                    gy = (int)c.y;
+                    Vector2 c2 = GetZoneCenter(zoneId);
+                    gx = (int)c2.x;
+                    gy = (int)c2.y;
                 }
             }
 
@@ -432,12 +469,65 @@ namespace Game
         Game::SecurityGuard *SpawnGuardInZone(int zoneId, TileMap *map, PlayerHUD *hud, const char *spritePath)
         {
             int gx = 0, gy = 0;
-            if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
-            {
-                // fallback: just try near center
+            // helper: check if a tile coordinate corresponds to a door/exit/control-room door
+            auto IsDoorTile = [&](int tx, int ty) {
+                if (!map) return false;
+                for (auto &p : map->GetSpawnedDoorPositionsPublic()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                for (auto &p : map->GetControlRoomDoorPositions()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                for (auto &p : map->GetExitPositions()) {
+                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
+                }
+                return false;
+            };
+
+            bool found = false;
+            // Try multiple times to find a position that is walkable, not inside player spawn area and not a door
+            for (int attempt = 0; attempt < 100; ++attempt) {
+                if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy)) break;
+                // exclude player spawn area
+                float dx = (float)gx + 0.5f - spawnExcludeX;
+                float dy = (float)gy + 0.5f - spawnExcludeY;
+                if (dx * dx + dy * dy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                // exclude door tiles
+                if (IsDoorTile(gx, gy)) continue;
+                found = true;
+                break;
+            }
+
+            if (!found) {
+                // fallback: try zone center then search outward for a valid tile
                 Vector2 c = GetZoneCenter(zoneId);
-                gx = (int)c.x;
-                gy = (int)c.y;
+                int cx = (int)std::floor(c.x);
+                int cy = (int)std::floor(c.y);
+                const int MAXR = 20;
+                bool placed = false;
+                for (int r = 0; r <= MAXR && !placed; ++r) {
+                    for (int dy = -r; dy <= r && !placed; ++dy) {
+                        for (int dx = -r; dx <= r && !placed; ++dx) {
+                            // check perimeter only for efficiency
+                            if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                            int nx = cx + dx;
+                            int ny = cy + dy;
+                            if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                            // skip spawn area
+                            float sdx = (float)nx + 0.5f - spawnExcludeX;
+                            float sdy = (float)ny + 0.5f - spawnExcludeY;
+                            if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                            // must be walkable and not a door
+                            if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                            if (IsDoorTile(nx, ny)) continue;
+                            gx = nx; gy = ny; placed = true; break;
+                        }
+                    }
+                }
+                if (!placed) {
+                    // last resort: use center clamped
+                    gx = cx; gy = cy;
+                }
             }
 
             auto go = CreateGameObject("Guard_Z" + std::to_string(zoneId));
@@ -1245,7 +1335,7 @@ namespace Game
             npcs.clear();
             for (int z = 1; z <= 4; ++z)
             {
-
+                // Spawn with extra checks - avoid player spawn and doors
                 SpawnNPCInZone(z, NPCType::Bully, map, "Assets/bully.png");
                 SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/annoying_classmate.png");
             }

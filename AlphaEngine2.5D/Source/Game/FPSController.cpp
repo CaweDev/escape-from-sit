@@ -107,7 +107,8 @@ void FPSController::Update() {
                 }
                 // Play running SFX once per start, avoid per-frame retrigger
                 if (!runningLoopActive) {
-                    Engine::SoundManager::PlayLoop("player_run", 0.7f);
+                    // Boost running SFX volume by 205% (user request)
+                    Engine::SoundManager::PlayLoop("player_run", 0.7f * 2.05f);
                     runningLoopActive = true;
                 }
             }
@@ -187,7 +188,8 @@ void FPSController::Update() {
         if (isMoving && !playerComp->isSprinting) {
             // start walking loop if not already
             if (!walkingLoopActive) {
-                Engine::SoundManager::PlayLoop("player_walking", 0.4f);
+                // Boost walking SFX volume by 205% (user request)
+                Engine::SoundManager::PlayLoop("player_walking", 0.4f * 2.05f);
                 walkingLoopActive = true;
             }
         } else {

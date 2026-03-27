@@ -431,6 +431,14 @@ namespace Game {
 
         UpdateDoorAuto();
 
+        // If we're holding a door open for us and it's not yet passable,
+        // stop movement instead of pushing into the door collider which can
+        // cause the guard to get stuck. We'll resume once the door opens.
+        if (heldDoor && !heldDoor->IsPassable()) {
+            if (rb) rb->velocity = Engine::Vector2(0.0f, 0.0f);
+            return;
+        }
+
         auto& pos = gameObject->transform->position;
         auto target = path[pathIndex];
 
