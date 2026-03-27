@@ -621,7 +621,7 @@ void SoundManager::UpdateCCTVHumLoop(f32 nearestDistance)
     UpdateDistanceLoop(kCCTVHumLoopKey, nearestDistance, s_cctvLoopConfig.nearDistance, s_cctvLoopConfig.farDistance, s_cctvLoopConfig.maxVolume);
 }
 
-void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
+void SoundManager::UpdateNPCAnnoyingLoop(f32)
 {
     // Fully disable NPC proximity loop: ensure any playing NPC loop is stopped
     // and do not start it under any circumstances.

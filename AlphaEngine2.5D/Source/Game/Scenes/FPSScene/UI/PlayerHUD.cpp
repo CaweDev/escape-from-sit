@@ -1478,7 +1478,7 @@ namespace Game
         // Zone 1 = A (Bottom-Left), 2 = B (Top-Left), 3 = C (Top-Right), 4 = D (Bottom-Right)
         char zoneLetter = Game::ZoneIdToLetter(zoneId);
         
-        std::string message = std::string("ENTERING\nZONE ") + zoneLetter;
+        std::string message = std::string("ENTERING ZONE ") + zoneLetter;
         m_zoneEntryText->SetText(message.c_str());
         
         // Show panel with slide-in animation (could be enhanced with smooth animation)

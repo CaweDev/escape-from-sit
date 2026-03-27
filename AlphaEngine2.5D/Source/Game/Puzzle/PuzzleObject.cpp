@@ -34,6 +34,13 @@ namespace
     }
 }
 
+void Game::PuzzleObject::Initialize()
+{
+    if (gameObject && gameObject->transform) {
+        baseZ = gameObject->transform->position.z;
+    }
+}
+
 void Game::PuzzleObject::Update()
 {
     if (!gameObject || !gameObject->transform) return;
@@ -41,7 +48,6 @@ void Game::PuzzleObject::Update()
     const auto& cfg = GetPuzzleObjectConfig();
     const float t = Engine::Time::time;
 
-    const float baseZ = (reference.bookPosition.z != 0.0f) ? reference.bookPosition.z : gameObject->transform->position.z;
     gameObject->transform->position.z = baseZ + std::sin(t * cfg.floatSpeed) * cfg.floatAmplitude;
     gameObject->transform->rotation += Engine::Time::deltaTime * cfg.rotateSpeed;
 }

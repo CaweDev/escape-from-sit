@@ -1,5 +1,5 @@
 {
-  "floatAmplitude": 0.02,
-  "floatSpeed": 2.0,
+  "floatAmplitude": 0.1,
+  "floatSpeed": 1.0,
   "rotateSpeed": 10.0
 }

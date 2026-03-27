@@ -51,7 +51,7 @@ namespace Game {
         Engine::Interactable* interactable = nullptr;
         
         // Lifecycle
-        void Awake() override;
+        void Initialize() override;
         void Update() override;
         
         /** Setup interaction for player pickup */

@@ -39,6 +39,9 @@ public:
     Book reference;
     void Update() override;
     bool isReading;
+
+    float baseZ = 0.0f;
+    void Initialize() override;
 };
 
 } // namespace Game

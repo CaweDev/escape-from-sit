@@ -1197,6 +1197,8 @@ namespace Game
             // DEBUG: set true to force access cards to spawn at player spawn for debugging
             bool debugForceSpawnAtPlayer = false;
 
+            std::vector<Engine::Vector2> usedCardLocations;
+
             for (size_t i = 0; i < accessCardPositions.size(); ++i)
             {
                 Vector2 pos = accessCardPositions[i].first;
@@ -1234,7 +1236,18 @@ namespace Game
                                 // require walkable center of tile
                                 if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
                                     continue;
-                                return Engine::Vector2((float)nx + 0.5f, (float)ny + 0.5f);
+                                    
+                                Engine::Vector2 candidate((float)nx + 0.5f, (float)ny + 0.5f);
+                                bool alreadyUsed = false;
+                                for (const auto& used : usedCardLocations) {
+                                    if (std::abs(used.x - candidate.x) < 0.1f && std::abs(used.y - candidate.y) < 0.1f) {
+                                        alreadyUsed = true;
+                                        break;
+                                    }
+                                }
+                                if (alreadyUsed) continue;
+
+                                return candidate;
                             }
                         }
                     }
@@ -1272,6 +1285,8 @@ namespace Game
                         pos = newPos;
                     }
                 }
+
+                usedCardLocations.push_back(pos);
 
                 std::cout << "[FPSScene] Spawning " << cardNames[cardId] << " card at (" << pos.x << ", " << pos.y << ")\n";
 

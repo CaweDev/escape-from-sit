@@ -74,7 +74,7 @@ namespace
 
 namespace Game {
 
-void AccessCard::Awake() {
+void AccessCard::Initialize() {
     const auto& cfg = GetAccessCardConfig();
     floatHeight = cfg.floatHeight;
     floatSpeed = cfg.floatSpeed;
