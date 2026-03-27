@@ -7,7 +7,7 @@
 #include "Engine/Core/ConfigManager.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/Player/Player.hpp"
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Puzzle/PuzzleManager.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 
 namespace
@@ -506,15 +506,15 @@ namespace Game
         };
 
         m_collectAllPuzzlesBtn->onClick = [this]() {
-            for (auto& book : PuzzleManager::allBooks)
+            for (auto& book : Game::PuzzleManager::allBooks)
             {
-                book.BookCollected = true;
+                book.bookCollected = true;
             }
 
-            PuzzleManager::booksCollected = static_cast<int>(PuzzleManager::allBooks.size());
-            PuzzleManager::isQuizActive = false;
-            PuzzleManager::popupTimer = 0.0f;
-            PuzzleManager::currentBookObj = nullptr;
+            Game::PuzzleManager::booksCollected = static_cast<int>(Game::PuzzleManager::allBooks.size());
+            Game::PuzzleManager::isQuizActive = false;
+            Game::PuzzleManager::popupTimer = 0.0f;
+            Game::PuzzleManager::currentBookObj = nullptr;
 
             for (auto* obj : Engine::GameObject::GetAllGameObjects())
             {
@@ -525,7 +525,7 @@ namespace Game
                 }
             }
 
-            PuzzleManager::OpenExitDoor();
+            Game::PuzzleManager::OpenExitDoor();
             m_collectAllPuzzlesBtn->SetText("Collect All Puzzles (Done)");
         };
 

@@ -36,6 +36,7 @@
     <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
     <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
     <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
+    <ClCompile Include="Source\Game\Items\Item.cpp" />
     <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
     <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
     <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
+    <ClInclude Include="Source\Game\Items\Item.hpp" />
     <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
@@ -217,10 +219,15 @@
     <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
     <ClInclude Include="Source\Game\Player\Player.hpp" />
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.hpp" />
     <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.hpp" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.hpp" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PauseMenu.hpp" />

@@ -11,8 +11,8 @@
 #include "game/ControlRoomDoor/ControlRoomDoor.hpp"
 #include "game/NPC/NPC.hpp"
 #include "game/Player/Player.hpp"
-#include "game/PowerUp/PowerUp.h"
-#include "game/Puzzle/PuzzleObject.h"
+#include "game/PowerUp/PowerUp.hpp"
+#include "game/Puzzle/PuzzleObject.hpp"
 
 namespace AEEditor
 {
@@ -140,10 +140,10 @@ namespace AEEditor
 
     void RegisterPuzzleObject()
     {
-        Registry::RegisterClassType<PuzzleObject>("PuzzleObject");
+        Registry::RegisterClassType<Game::PuzzleObject>("PuzzleObject");
 
-        Registry::RegisterFieldType<PuzzleObject>("PuzzleCompleted", offsetof(PuzzleObject, PuzzleCompleted), DataType::Bool);
-        Registry::RegisterFieldType<PuzzleObject>("isReading", offsetof(PuzzleObject, isReading), DataType::Bool);
+        Registry::RegisterFieldType<Game::PuzzleObject>("puzzleCompleted", offsetof(Game::PuzzleObject, puzzleCompleted), DataType::Bool);
+        Registry::RegisterFieldType<Game::PuzzleObject>("isReading", offsetof(Game::PuzzleObject, isReading), DataType::Bool);
     }
 
     void ReflectionRegistry::InitializeMetaRegistry()

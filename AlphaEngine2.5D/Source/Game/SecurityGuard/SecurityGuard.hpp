@@ -21,7 +21,7 @@
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/ZoneManager/ZoneManager.hpp"
 
-class ZoneManager;
+
 
 namespace Game {
 
@@ -33,8 +33,8 @@ namespace Game {
         Engine::Transform* playerTf = nullptr;
         Player* playerData = nullptr;
 
-        ZoneManager* zoneMgr = nullptr;
-        Heatmap* heatmap = nullptr;
+        Game::ZoneManager* zoneMgr = nullptr;
+        Game::Heatmap* heatmap = nullptr;
         std::vector<CCTVTerminal*>* cctvTerminals = nullptr;
 
         float patrolSpeed = 1.5f;

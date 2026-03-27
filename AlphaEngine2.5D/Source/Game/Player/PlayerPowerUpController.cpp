@@ -1,4 +1,4 @@
-#include "PlayerPowerUpController.h"
+#include "PlayerPowerUpController.hpp"
 #include "Game/Player/Player.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"

@@ -23,7 +23,7 @@ namespace UI
     {
     private:
         // --- Heatmap Data ---
-        Heatmap* m_heatmap = nullptr;
+        Game::Heatmap* m_heatmap = nullptr;
         
         // --- Gradient Colors ---
         Engine::Color m_coldColor;   // Color for low heat (e.g., blue)
@@ -48,8 +48,8 @@ namespace UI
          * @brief Set the heatmap data source
          * @param heatmap Pointer to the heatmap (not owned)
          */
-        void SetHeatmap(Heatmap* heatmap) { m_heatmap = heatmap; }
-        Heatmap* GetHeatmap() const { return m_heatmap; }
+        void SetHeatmap(Game::Heatmap* heatmap) { m_heatmap = heatmap; }
+        Game::Heatmap* GetHeatmap() const { return m_heatmap; }
 
         /**
          * @brief Set the color gradient for heatmap visualization

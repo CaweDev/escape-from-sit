@@ -1,4 +1,4 @@
-#include "PowerUp.h"
+#include "PowerUp.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Core/GameObject.hpp"

@@ -1,4 +1,4 @@
-#include "PowerUpManager.h"
+#include "PowerUpManager.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"

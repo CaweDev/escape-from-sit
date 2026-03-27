@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Core/Transform.hpp"
 #include "Engine/Core/Component.hpp"
 #include "Engine/Core/Time.hpp"
 #include "Engine/Core/ConfigManager.hpp"

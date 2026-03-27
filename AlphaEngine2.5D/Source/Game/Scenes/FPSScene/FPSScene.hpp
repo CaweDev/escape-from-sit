@@ -28,7 +28,7 @@
 #include "Game/Scenes/FPSScene/UI/WinScreen.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Puzzle/PuzzleManager.hpp"
 #include "Game/NPC/CameraShake.hpp"
 #include "Game/NPC/NPC.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
@@ -41,8 +41,8 @@
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/ControlRoomDoor/ControlRoomDoor.hpp"
 #include "Game/PathRenderer/PathRenderer.hpp"
-#include "Game/PowerUp/PowerUpManager.h"
-#include "Game/Player/PlayerPowerUpController.h"
+#include "Game/PowerUp/PowerUpManager.hpp"
+#include "Game/Player/PlayerPowerUpController.hpp"
 
 #include "Engine/Interaction/InteractionController.hpp"
 #include "Editor/ObjectManager.hpp"
@@ -156,9 +156,9 @@ namespace Game
         // =====================
         // ML owner
         // =====================
-        ZoneManager zoneMgr;
-        Heatmap     heatmap;
-        UCB1Bandit  bandit{ 4, 2.0f };
+        Game::ZoneManager zoneMgr;
+        Game::Heatmap     heatmap;
+        Game::UCB1Bandit  bandit{ 4, 2.0f };
 
         std::vector<int> zoneGrid; // w*h, values 0..4
 
@@ -1358,8 +1358,8 @@ namespace Game
             // Initialize Level Editor
             levelEditor.Initialize(this, map, playerCam, playerTf);
 
-            PuzzleManager::BookDataInit();
-            PuzzleManager::Init();
+            Game::PuzzleManager::BookDataInit();
+            Game::PuzzleManager::Init();
 
             Game::PowerUpManager::Init();
 

@@ -1,3 +1,9 @@
+/**
+ * @file DebugMenu.hpp
+ * @brief Header for the in-game debug menu system.
+ */
+#pragma once
+
 #include "Engine.hpp"
 #include "Engine/Graphics/Camera.hpp"
 

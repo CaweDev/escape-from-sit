@@ -12,7 +12,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
-#include "Game/Player/PlayerPowerUpController.h"
+#include "Game/Player/PlayerPowerUpController.hpp"
 
 namespace
 {
@@ -657,7 +657,7 @@ namespace Game {
             return;
         }
 
-        // Allow response from Patrol, Chase, Search — interrupt other behaviors to investigate
+        // Allow response from Patrol, Chase, Search ï¿½ interrupt other behaviors to investigate
         std::cout << "[Guard] Responding to sabotage (interrupting state " << StateToString(state) << ")\n";
 
         // Trigger investigation behavior:

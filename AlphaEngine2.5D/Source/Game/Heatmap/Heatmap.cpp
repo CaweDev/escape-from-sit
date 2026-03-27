@@ -38,66 +38,70 @@ namespace
     }
 }
 
-void Heatmap::Init(int w, int h)
-{
-    m_w = w;
-    m_h = h;
-    m_cells.assign((size_t)m_w * (size_t)m_h, 0.0f);
-}
+namespace Game {
 
-void Heatmap::Clear()
-{
-    std::fill(m_cells.begin(), m_cells.end(), GetHeatmapGameConfig().cellMinValue);
-}
+    void Heatmap::Init(int w, int h)
+    {
+        m_w = w;
+        m_h = h;
+        m_cells.assign((size_t)m_w * (size_t)m_h, 0.0f);
+    }
 
-void Heatmap::Decay(float factor)
-{
-    const auto& cfg = GetHeatmapGameConfig();
-    if (factor < cfg.decayMin) factor = cfg.decayMin;
-    if (factor > cfg.decayMax) factor = cfg.decayMax;
+    void Heatmap::Clear()
+    {
+        std::fill(m_cells.begin(), m_cells.end(), GetHeatmapGameConfig().cellMinValue);
+    }
 
-    for (float& v : m_cells)
-        v *= factor;
-}
+    void Heatmap::Decay(float factor)
+    {
+        const auto& cfg = GetHeatmapGameConfig();
+        if (factor < cfg.decayMin) factor = cfg.decayMin;
+        if (factor > cfg.decayMax) factor = cfg.decayMax;
 
-void Heatmap::AddAt(int x, int y, float amt)
-{
-    if (!InBounds(x, y)) return;
+        for (float& v : m_cells)
+            v *= factor;
+    }
 
-    float& v = m_cells[(size_t)y * (size_t)m_w + (size_t)x];
-    v += amt;
-    if (v < GetHeatmapGameConfig().cellMinValue) v = GetHeatmapGameConfig().cellMinValue;
-}
+    void Heatmap::AddAt(int x, int y, float amt)
+    {
+        if (!InBounds(x, y)) return;
 
-float Heatmap::Get(int x, int y) const
-{
-    if (!InBounds(x, y)) return 0.0f;
-    return m_cells[(size_t)y * (size_t)m_w + (size_t)x];
-}
+        float& v = m_cells[(size_t)y * (size_t)m_w + (size_t)x];
+        v += amt;
+        if (v < GetHeatmapGameConfig().cellMinValue) v = GetHeatmapGameConfig().cellMinValue;
+    }
 
-float Heatmap::SumZone(const std::vector<int>& zoneGrid, int zoneId) const
-{
-    if ((int)zoneGrid.size() != m_w * m_h) return 0.0f;
+    float Heatmap::Get(int x, int y) const
+    {
+        if (!InBounds(x, y)) return 0.0f;
+        return m_cells[(size_t)y * (size_t)m_w + (size_t)x];
+    }
 
-    float sum = 0.0f;
-    for (int i = 0; i < m_w * m_h; ++i)
-        if (zoneGrid[i] == zoneId)
-            sum += m_cells[(size_t)i];
+    float Heatmap::SumZone(const std::vector<int>& zoneGrid, int zoneId) const
+    {
+        if ((int)zoneGrid.size() != m_w * m_h) return 0.0f;
 
-    return sum;
-}
+        float sum = 0.0f;
+        for (int i = 0; i < m_w * m_h; ++i)
+            if (zoneGrid[i] == zoneId)
+                sum += m_cells[(size_t)i];
 
-float Heatmap::MaxValue() const
-{
-    float mx = 0.0f;
-    for (float v : m_cells)
-        if (v > mx) mx = v;
-    return mx;
-}
+        return sum;
+    }
 
-float Heatmap::Total() const
-{
-    float sum = 0.0f;
-    for (float v : m_cells) sum += v;
-    return sum;
-}
+    float Heatmap::MaxValue() const
+    {
+        float mx = 0.0f;
+        for (float v : m_cells)
+            if (v > mx) mx = v;
+        return mx;
+    }
+
+    float Heatmap::Total() const
+    {
+        float sum = 0.0f;
+        for (float v : m_cells) sum += v;
+        return sum;
+    }
+
+} // namespace Game

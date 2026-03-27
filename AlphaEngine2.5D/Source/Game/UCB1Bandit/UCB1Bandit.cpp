@@ -1,6 +1,3 @@
-// =======================
-// UCB1Bandit.cpp
-// =======================
 #include "UCB1Bandit.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
@@ -47,67 +44,71 @@ namespace
     }
 }
 
-UCB1Bandit::UCB1Bandit(int arms, float c)
-{
-    Reset(arms, c);
-}
+namespace Game {
 
-void UCB1Bandit::Reset(int arms, float c)
-{
-    const auto& cfg = GetUCB1BanditConfig();
-    if (arms < cfg.minArms) arms = cfg.minArms;
-    m_c = c;
-    m_totalPulls = 0;
-    m_pulls.assign((size_t)arms, 0);
-    m_values.assign((size_t)arms, 0.0f);
-}
-
-int UCB1Bandit::SelectArm()
-{
-    const int k = (int)m_pulls.size();
-    if (k == 0) return -1;
-
-    // Ensure each arm is tried at least once
-    for (int i = 0; i < k; ++i)
-        if (m_pulls[i] == 0)
-            return i;
-
-    // UCB = mean + c * sqrt( ln(N) / n_i )
-    const auto& cfg = GetUCB1BanditConfig();
-    const float lnN = std::log((float)std::max(cfg.minTotalPullsForLog, m_totalPulls));
-
-    int best = 0;
-    float bestScore = -std::numeric_limits<float>::infinity();
-
-    for (int i = 0; i < k; ++i)
+    UCB1Bandit::UCB1Bandit(int arms, float c)
     {
-        const float mean = m_values[i];
-        const float bonus = m_c * std::sqrt(lnN / (float)m_pulls[i]);
-        const float score = mean + bonus;
-
-        if (score > bestScore)
-        {
-            bestScore = score;
-            best = i;
-        }
+        Reset(arms, c);
     }
 
-    return best;
-}
+    void UCB1Bandit::Reset(int arms, float c)
+    {
+        const auto& cfg = GetUCB1BanditConfig();
+        if (arms < cfg.minArms) arms = cfg.minArms;
+        m_c = c;
+        m_totalPulls = 0;
+        m_pulls.assign((size_t)arms, 0);
+        m_values.assign((size_t)arms, 0.0f);
+    }
 
-void UCB1Bandit::Update(int arm, float reward)
-{
-    const int k = (int)m_pulls.size();
-    if (arm < 0 || arm >= k) return;
+    int UCB1Bandit::SelectArm()
+    {
+        const int k = (int)m_pulls.size();
+        if (k == 0) return -1;
 
-    const auto& cfg = GetUCB1BanditConfig();
-    reward = std::clamp(reward, cfg.rewardMin, cfg.rewardMax);
+        // Ensure each arm is tried at least once
+        for (int i = 0; i < k; ++i)
+            if (m_pulls[i] == 0)
+                return i;
 
-    m_totalPulls += 1;
-    m_pulls[arm] += 1;
+        // UCB = mean + c * sqrt( ln(N) / n_i )
+        const auto& cfg = GetUCB1BanditConfig();
+        const float lnN = std::log((float)std::max(cfg.minTotalPullsForLog, m_totalPulls));
 
-    // Incremental mean update
-    const float n = (float)m_pulls[arm];
-    const float old = m_values[arm];
-    m_values[arm] = old + (reward - old) / n;
-}
+        int best = 0;
+        float bestScore = -std::numeric_limits<float>::infinity();
+
+        for (int i = 0; i < k; ++i)
+        {
+            const float mean = m_values[i];
+            const float bonus = m_c * std::sqrt(lnN / (float)m_pulls[i]);
+            const float score = mean + bonus;
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                best = i;
+            }
+        }
+
+        return best;
+    }
+
+    void UCB1Bandit::Update(int arm, float reward)
+    {
+        const int k = (int)m_pulls.size();
+        if (arm < 0 || arm >= k) return;
+
+        const auto& cfg = GetUCB1BanditConfig();
+        reward = std::clamp(reward, cfg.rewardMin, cfg.rewardMax);
+
+        m_totalPulls += 1;
+        m_pulls[arm] += 1;
+
+        // Incremental mean update
+        const float n = (float)m_pulls[arm];
+        const float old = m_values[arm];
+        m_values[arm] = old + (reward - old) / n;
+    }
+
+} // namespace Game

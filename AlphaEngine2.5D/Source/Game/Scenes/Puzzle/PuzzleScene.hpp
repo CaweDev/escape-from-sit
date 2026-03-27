@@ -14,7 +14,7 @@
 #include "Game/FPSController.hpp"
 #include <Engine/Graphics/SpriteRenderer.hpp>
 #include "Game/Player.hpp"
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Puzzle/PuzzleManager.hpp"
 #include "Engine/UI/Components/Text.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
 
@@ -120,25 +120,25 @@ public:
         bookCountText->SetAnchor(UI::TextAnchor::UpperLeft);
         bookCountText->SetRenderOrder(1000);
 
-        PuzzleManager::BookDataInit();
-        PuzzleManager::Init();
+        Game::PuzzleManager::BookDataInit();
+        Game::PuzzleManager::Init();
         
     }
     
     void OnUpdate() override {
         // Physics and rendering handled by components
-        if (PuzzleManager::booksCollected != lastBookCount) {
+        if (Game::PuzzleManager::booksCollected != lastBookCount) {
 
             if (bookCountText != nullptr) {
                 // Construct the string
-                std::string uiString = "Books Collected: " + std::to_string(PuzzleManager::booksCollected) + " / 6";
+                std::string uiString = "Books Collected: " + std::to_string(Game::PuzzleManager::booksCollected) + " / 6";
 
                 // Pass it to your setter
                 bookCountText->SetText(uiString);
             }
 
             // Save the current count so we don't run this code again until the next book
-            lastBookCount = PuzzleManager::booksCollected;
+            lastBookCount = Game::PuzzleManager::booksCollected;
         }
     }
 };

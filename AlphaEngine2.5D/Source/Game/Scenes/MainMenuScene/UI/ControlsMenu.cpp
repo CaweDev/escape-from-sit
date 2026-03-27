@@ -311,7 +311,7 @@ namespace Game
         
         m_backBtn->SetColors(btnColors);
         m_backBtn->SetBackgroundColor(cfg.btnNormal);
-        m_backBtn->SetText("Back");
+        m_backBtn->SetText("Close");
         m_backBtn->onClick = [this]() { OnBackClicked(); };
         
         if (auto* label = m_backBtn->GetLabel())

@@ -1,6 +1,6 @@
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
-#include "Game/Player/PlayerPowerUpController.h"
+#include "Game/Player/PlayerPowerUpController.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 

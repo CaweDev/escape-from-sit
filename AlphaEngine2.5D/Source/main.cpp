@@ -37,7 +37,7 @@ extern "C"
 
 #include "Editor/Index.hpp"
 // Game systems
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Puzzle/PuzzleManager.hpp"
 #include "Editor/ReflectionRegistry.hpp"
 
 using namespace Engine;
@@ -169,7 +169,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SceneManager::UnloadActiveScene();
 
     // Cleanup static game data
-    PuzzleManager::FreeManager();
+    Game::PuzzleManager::FreeManager();
 
     // Cleanup Debug Manager
     Game::DebugManager::Shutdown();

@@ -17,10 +17,9 @@
 #include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 #include <cmath>
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Puzzle/PuzzleManager.hpp"
 #include "Engine/Audio/SoundManager.hpp"
-#include "Game/Player/PlayerPowerUpController.h"
-#include "Game/Puzzle/PuzzleManager.h"
+#include "Game/Player/PlayerPowerUpController.hpp"
 
 namespace Game
 {
@@ -792,11 +791,11 @@ namespace Game
         if (activePlayerTrans) {
             float closestBookDist = 999.0f;
 
-            for (const auto& book : PuzzleManager::allBooks) {
-                if (!book.BookCollected) {
+            for (const auto& book : Game::PuzzleManager::allBooks) {
+                if (!book.bookCollected) {
                     // Let's use pure 2D distance just in case the Z-axis is messing us up!
-                    float dx = activePlayerTrans->position.x - book.BookPosition.x;
-                    float dy = activePlayerTrans->position.y - book.BookPosition.y;
+                    float dx = activePlayerTrans->position.x - book.bookPosition.x;
+                    float dy = activePlayerTrans->position.y - book.bookPosition.y;
                     float dist = std::sqrt(dx * dx + dy * dy);
 
                     if (dist < closestBookDist) {
@@ -921,8 +920,8 @@ namespace Game
         }
         //Book Collected
         if (m_bookCountText != nullptr) {
-            int collected = PuzzleManager::booksCollected;
-            int totalBooks = (int)PuzzleManager::allBooks.size();
+            int collected = Game::PuzzleManager::booksCollected;
+            int totalBooks = (int)Game::PuzzleManager::allBooks.size();
             if (totalBooks <= 0) totalBooks = 0; // safety
             std::string bs = std::string("Books Collected: ") + std::to_string(collected) + " / " + std::to_string(totalBooks);
             m_bookCountText->SetText(bs.c_str());
@@ -931,7 +930,7 @@ namespace Game
         // ==========================================
         // NEW: QUIZ INPUT LOGIC
         // ==========================================
-        if (PuzzleManager::isQuizActive) {
+        if (Game::PuzzleManager::isQuizActive) {
 
             // Force the panel to stay open and show the question
             m_bookPopupPanel->visible = true;
@@ -943,11 +942,11 @@ namespace Game
 
             m_bookTitleText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f));
 
-            m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
-            m_bookLoreText->SetText(PuzzleManager::activeBookText);
-            m_option1Text->SetText(PuzzleManager::activeOpt1);
-            m_option2Text->SetText(PuzzleManager::activeOpt2);
-            m_option3Text->SetText(PuzzleManager::activeOpt3);
+            m_bookTitleText->SetText(Game::PuzzleManager::activeBookTitle);
+            m_bookLoreText->SetText(Game::PuzzleManager::activeBookText);
+            m_option1Text->SetText(Game::PuzzleManager::activeOpt1);
+            m_option2Text->SetText(Game::PuzzleManager::activeOpt2);
+            m_option3Text->SetText(Game::PuzzleManager::activeOpt3);
 
             // Check which key the player presses
             int playerChoice = 0;
@@ -956,34 +955,34 @@ namespace Game
             if (Engine::Input::GetKeyDown(Engine::KeyCode::Alpha3)) playerChoice = 3;
 
             if (playerChoice != 0) { // The player pressed a number!
-                if (playerChoice == PuzzleManager::currentCorrectAnswer) {
+                if (playerChoice == Game::PuzzleManager::currentCorrectAnswer) {
 
 
 
                     // --- CORRECT ANSWER ---
                     Engine::SoundManager::PlaySFX("card_collect");
-                    PuzzleManager::booksCollected++;
-                    PuzzleManager::allBooks[PuzzleManager::currentBookId].BookCollected = true;
+                    Game::PuzzleManager::booksCollected++;
+                    Game::PuzzleManager::allBooks[Game::PuzzleManager::currentBookId].bookCollected = true;
 
                     // Destroy the physical book
-                    if (PuzzleManager::currentBookObj) {
-                        Engine::GameObject::Destroy(PuzzleManager::currentBookObj);
-                        PuzzleManager::currentBookObj = nullptr;
+                    if (Game::PuzzleManager::currentBookObj) {
+                        Engine::GameObject::Destroy(Game::PuzzleManager::currentBookObj);
+                        Game::PuzzleManager::currentBookObj = nullptr;
                     }
 
                     // Check if it was the last book
-                    if (PuzzleManager::booksCollected >= (int)PuzzleManager::allBooks.size()) {
+                    if (Game::PuzzleManager::booksCollected >= (int)Game::PuzzleManager::allBooks.size()) {
                         Engine::SoundManager::PlaySFX("all_books_collected");
                     }
 
                     // Show success text and close after 2 seconds
-                    PuzzleManager::activeBookTitle = "CORRECT!";
-                    PuzzleManager::activeBookText = "+1 Knowledge Gained.";
-                    m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
-                    m_bookLoreText->SetText(PuzzleManager::activeBookText);
+                    Game::PuzzleManager::activeBookTitle = "CORRECT!";
+                    Game::PuzzleManager::activeBookText = "+1 Knowledge Gained.";
+                    m_bookTitleText->SetText(Game::PuzzleManager::activeBookTitle);
+                    m_bookLoreText->SetText(Game::PuzzleManager::activeBookText);
                     m_bookTitleText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 1.0f)); // Flash Green!
-                    PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
-                    PuzzleManager::isQuizActive = false;
+                    Game::PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
+                    Game::PuzzleManager::isQuizActive = false;
 
                 }
                 else {
@@ -992,26 +991,26 @@ namespace Game
                     Engine::SoundManager::PlaySFX("terminal_hack"); // Reusing your "Access Denied" sound!
 
                     // Reset the interactable so they can try again
-                    if (PuzzleManager::currentBookObj) {
-                        auto pObj = PuzzleManager::currentBookObj->GetComponent<PuzzleObject>();
+                    if (Game::PuzzleManager::currentBookObj) {
+                        auto pObj = Game::PuzzleManager::currentBookObj->GetComponent<PuzzleObject>();
                         if (pObj) pObj->isReading = false;
                     }
 
                     // Show failure text and close after 2 seconds
-                    PuzzleManager::activeBookTitle = "WRONG!";
-                    PuzzleManager::activeBookText = "Try again...";
-                    m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
-                    m_bookLoreText->SetText(PuzzleManager::activeBookText);
+                    Game::PuzzleManager::activeBookTitle = "WRONG!";
+                    Game::PuzzleManager::activeBookText = "Try again...";
+                    m_bookTitleText->SetText(Game::PuzzleManager::activeBookTitle);
+                    m_bookLoreText->SetText(Game::PuzzleManager::activeBookText);
                     m_bookTitleText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Flash Red!
-                    PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
-                    PuzzleManager::isQuizActive = false;
+                    Game::PuzzleManager::popupTimer = cfg.quizResultPopupDuration;
+                    Game::PuzzleManager::isQuizActive = false;
                 }
             }
         }
         // ==========================================
 
 
-        if (PuzzleManager::popupTimer > 0.0f) {
+        if (Game::PuzzleManager::popupTimer > 0.0f) {
 
             // Ensure the panel is visible and the text is updated
             if (!m_bookPopupPanel->visible) {
@@ -1022,15 +1021,15 @@ namespace Game
                 m_bookTitleText->visible = true;
                 m_bookLoreText->visible = true;
 
-                m_bookTitleText->SetText(PuzzleManager::activeBookTitle);
-                m_bookLoreText->SetText(PuzzleManager::activeBookText);
+                m_bookTitleText->SetText(Game::PuzzleManager::activeBookTitle);
+                m_bookLoreText->SetText(Game::PuzzleManager::activeBookText);
             }
 
             // Count down the timer
-            PuzzleManager::popupTimer -= Engine::Time::deltaTime;
+            Game::PuzzleManager::popupTimer -= Engine::Time::deltaTime;
 
             // If the timer just hit zero, hide the panel!
-            if (PuzzleManager::popupTimer <= 0.0f) {
+            if (Game::PuzzleManager::popupTimer <= 0.0f) {
                 // WE NOW PROPERLY HIDE THE BOOK PANEL
                 m_bookPopupPanel->visible = false;
                 m_bookTitleText->visible = false;
