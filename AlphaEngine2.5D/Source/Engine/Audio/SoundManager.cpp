@@ -183,9 +183,9 @@ void SoundManager::Initialize(const std::string& configPath)
         config.sfx["terminal_buzz_loop"] = "Assets/Audio/CCTV/Terminal buzz.mp3";
         config.sfx["annoying_classmate"] = "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav";
         config.sfx["full_escalation"] = "Assets/Audio/Guard/Full Escalation.wav";
-        config.sfx["jump"] = "Assets/Audio/UI/UI click.wav";
-        config.sfx["player_run"] = "Assets/Audio/Guard/guard nearby.wav";
-        config.sfx["player_walking"] = "Assets/Audio/Guard/guard nearby.wav";
+        config.sfx["jump"] = "Assets/Audio/Player/jump.wav";
+        config.sfx["player_run"] = "Assets/Audio/Player/player run.wav";
+        config.sfx["player_walking"] = "Assets/Audio/Player/player walking.wav";
         config.sfx["push"] = "Assets/Audio/Bully/push.wav";
         config.sfx["npc_alert"] = "Assets/Audio/AnnoyingClassMate/Annoying Classmate.wav";
         config.sfx["all_books_collected"] = "Assets/Audio/Puzzle/Puzzle_Complete.wav";
@@ -810,4 +810,15 @@ AudioClip* SoundManager::LoadSoundClip(const std::string& path)
     return nullptr;
 }
 
+} // namespace Engine
+
+// Auto-cleanup to ensure resources are freed if the application doesn't
+// explicitly call SoundManager::Shutdown(). This helps prevent static
+// allocations from being reported as leaks by the CRT at process exit.
+namespace Engine {
+struct SoundManagerAutoShutdown {
+    ~SoundManagerAutoShutdown() { SoundManager::Shutdown(); }
+};
+
+static SoundManagerAutoShutdown s_soundManagerAutoShutdown;
 } // namespace Engine
