@@ -46,10 +46,6 @@ namespace Game {
     void PowerUpManager::PowerUpDataInit() {
         allPowerUps.clear();
 
-        // Spawn room (keep these fixed)
-        allPowerUps.push_back({ 0, {5.5f, 3.5f, 0.0f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
-        
-
         // Hallways only (hardcoded corridor coordinates)
         allPowerUps.push_back({ 4,  {18.5f,  8.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
         allPowerUps.push_back({ 5,  {27.5f, 10.5f, 0.1f}, PowerUpType::Invisibility,    "Invisibility",      8.0f });
@@ -61,6 +57,10 @@ namespace Game {
         allPowerUps.push_back({ 9,  {86.5f, 31.5f, 0.1f}, PowerUpType::InfiniteStamina, "Infinite Stamina", 15.0f });
         allPowerUps.push_back({ 10, {103.5f, 36.5f, 0.1f}, PowerUpType::SpeedBoost,     "Speed Boost",      10.0f });
         allPowerUps.push_back({ 11, {116.5f, 39.5f, 0.1f}, PowerUpType::Shield,         "Shield",           20.0f });
+
+        allPowerUps.push_back({ 12, {33.5f, 13.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 13, {94.5f, 34.5f, 0.1f}, PowerUpType::SpeedBoost,      "Speed Boost",      10.0f });
+        allPowerUps.push_back({ 14, {110.5f, 35.5f, 0.1f}, PowerUpType::Invisibility,   "Invisibility",      8.0f });
     }
 
     void PowerUpManager::Init() {
