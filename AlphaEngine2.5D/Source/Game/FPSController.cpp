@@ -144,7 +144,7 @@ void FPSController::Update() {
         Player* playerComp = gameObject->GetComponent<Player>();
 
         bool isMoving = (inputMovement.x != 0.0f || inputMovement.y != 0.0f);
-        bool wantsSprint = Input::GetKey(KeyCode::LeftShift) || XboxController::GetButton(XboxButton::A, 0);
+        bool wantsSprint = Input::GetKey(KeyCode::LeftShift) || XboxController::GetButton(XboxButton::LeftShoulder, 0);
 
         f32 speed = moveSpeed;
 
@@ -182,11 +182,19 @@ void FPSController::Update() {
                 if (playerComp->hasSpeedBoost) speed += cfg.speedBoostWalkBonus; // keep base speed boost
                 playerComp->isSprinting = false;
                 playerComp->DrainSprint(dt);
+                if (runningLoopActive) {
+                    Engine::SoundManager::StopLoop("player_run");
+                    runningLoopActive = false;
+                }
             }
             else {
                 // Stamina completely empty
                 if (playerComp->hasSpeedBoost) speed += cfg.speedBoostWalkBonus;
                 playerComp->isSprinting = false;
+                if (runningLoopActive) {
+                    Engine::SoundManager::StopLoop("player_run");
+                    runningLoopActive = false;
+                }
             }
         }
         else {
@@ -248,7 +256,8 @@ void FPSController::Update() {
         // Set velocity on rigidbody (physics will handle collision)
         rigidbody->velocity = worldVelocity;
         // Trigger walking SFX occasionally when moving
-        if (isMoving && !playerComp->isSprinting) {
+        const bool isSprintingNow = (playerComp && playerComp->isSprinting);
+        if (isMoving && !isSprintingNow) {
             // start walking loop if not already
             if (!walkingLoopActive) {
                 Engine::SoundManager::PlayLoop("player_walking", cfg.walkLoopBaseVolume * cfg.movementLoopVolumeMultiplier);
