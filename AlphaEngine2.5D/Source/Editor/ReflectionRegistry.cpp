@@ -17,6 +17,15 @@
 #include "game/PowerUp/PowerUp.hpp"
 #include "game/Puzzle/PuzzleObject.hpp"
 
+#include "game/FPSController.hpp"
+#include "game/Scenes/FPSScene/UI/PlayerHUD.hpp"
+#include "game/Scenes/FPSScene/UI/PauseMenu.hpp"
+#include "game/Scenes/FPSScene/UI/LoseScreen.hpp"
+#include "game/Scenes/FPSScene/UI/WinScreen.hpp"
+#include "game/Scenes/FPSScene/UI/Hands67.hpp"
+#include "game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
+#include "game/Player/PlayerPowerUpController.hpp"
+
 namespace AEEditor
 {
 
@@ -176,6 +185,53 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::Rigidbody2D>("isGrounded", offsetof(Engine::Rigidbody2D, isGrounded), DataType::Bool);
     }
 
+    void RegisterCamera()
+    {
+        Registry::RegisterClassType<Engine::Camera>("Camera");
+        Registry::RegisterFieldType<Engine::Camera>("backgroundColor", offsetof(Engine::Camera, backgroundColor), DataType::Color);
+        Registry::RegisterFieldType<Engine::Camera>("fogEnabled", offsetof(Engine::Camera, fogEnabled), DataType::Bool);
+        Registry::RegisterFieldType<Engine::Camera>("fogDistance", offsetof(Engine::Camera, fogDistance), DataType::Float);
+        Registry::RegisterFieldType<Engine::Camera>("fogMinVisibility", offsetof(Engine::Camera, fogMinVisibility), DataType::Float);
+        Registry::RegisterFieldType<Engine::Camera>("fogMaxVisibility", offsetof(Engine::Camera, fogMaxVisibility), DataType::Float);
+    }
+
+    void RegisterCircleCollider2D()
+    {
+        Registry::RegisterClassType<Engine::CircleCollider2D>("CircleCollider2D");
+        Registry::RegisterFieldType<Engine::CircleCollider2D>("radius", offsetof(Engine::CircleCollider2D, radius), DataType::Float);
+        Registry::RegisterFieldType<Engine::CircleCollider2D>("minHeight", offsetof(Engine::CircleCollider2D, minHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::CircleCollider2D>("maxHeight", offsetof(Engine::CircleCollider2D, maxHeight), DataType::Float);
+    }
+
+    void RegisterFPSController()
+    {
+        Registry::RegisterClassType<Game::FPSController>("FPSController");
+        Registry::RegisterFieldType<Game::FPSController>("moveSpeed", offsetof(Game::FPSController, moveSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("sprintSpeed", offsetof(Game::FPSController, sprintSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("rotateSpeed", offsetof(Game::FPSController, rotateSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("mouseSensitivity", offsetof(Game::FPSController, mouseSensitivity), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("jumpForce", offsetof(Game::FPSController, jumpForce), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("eyeHeight", offsetof(Game::FPSController, eyeHeight), DataType::Float);
+        Registry::RegisterFieldType<Game::FPSController>("viewHeightSmoothSpeed", offsetof(Game::FPSController, viewHeightSmoothSpeed), DataType::Float);
+    }
+
+    void RegisterInteractionController()
+    {
+        Registry::RegisterClassType<Engine::InteractionController>("InteractionController");
+        Registry::RegisterFieldType<Engine::InteractionController>("interactKey", offsetof(Engine::InteractionController, interactKey), DataType::KeyCode);
+    }
+
+    void RegisterPlayerUIComponents()
+    {
+        Registry::RegisterClassType<Game::PlayerHUD>("PlayerHUD");
+        Registry::RegisterClassType<Game::PauseMenu>("PauseMenu");
+        Registry::RegisterClassType<Game::Hands67>("Hands67");
+        Registry::RegisterClassType<Game::LoseScreen>("LoseScreen");
+        Registry::RegisterClassType<Game::WinScreen>("WinScreen");
+        Registry::RegisterClassType<Game::ControlsMenu>("ControlsMenu");
+        Registry::RegisterClassType<Game::PlayerPowerUpController>("PlayerPowerUpController");
+    }
+
     void ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
@@ -195,6 +251,13 @@ namespace AEEditor
         RegisterPlayer();
         RegisterPowerUpObject();
         RegisterPuzzleObject();
+
+        RegisterCamera();
+        RegisterCircleCollider2D();
+        RegisterFPSController();
+        RegisterInteractionController();
+        RegisterPlayerUIComponents();
     }
+
 
 }

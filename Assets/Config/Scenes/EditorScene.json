@@ -1,0 +1,220 @@
+{
+  "GameObjects": [
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 6.71875,
+            "y": 3.53125,
+            "z": 0.0
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Pick Up Laptop",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 5.0,
+          "requireHold": false
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/Shield.png"
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.30000001192092896,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 1.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "LaptopItem",
+          "itemName": "Laptop",
+          "timer": 1.5
+        }
+      ],
+      "Name": "Laptop 1"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 8.375,
+            "y": 3.5,
+            "z": 0.0
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Pick Up Laptop",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 5.0,
+          "requireHold": false
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/Shield.png"
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.30000001192092896,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 1.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "LaptopItem",
+          "itemName": "Laptop",
+          "timer": 1.5
+        }
+      ],
+      "Name": "Laptop 1 (Copy)"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 2.40625,
+            "y": 2.9375,
+            "z": 0.0
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "Camera",
+          "backgroundColor": {
+            "a": 1.0,
+            "b": 0.0,
+            "g": 0.0,
+            "r": 0.0
+          },
+          "fogDistance": 2.0,
+          "fogEnabled": true,
+          "fogMaxVisibility": 0.60000002384185791,
+          "fogMinVisibility": -0.10000000149011612
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.30000001192092896,
+          "currentHeight": 0.0,
+          "drag": 5.0,
+          "freezeRotation": true,
+          "gravityScale": 1.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "CircleCollider2D",
+          "maxHeight": 1.7999999523162842,
+          "minHeight": 0.0,
+          "radius": 0.20000000298023224
+        },
+        {
+          "Type": "FPSController",
+          "eyeHeight": 0.5,
+          "jumpForce": 3.0,
+          "mouseSensitivity": 0.15000000596046448,
+          "moveSpeed": 3.0,
+          "rotateSpeed": 60.0,
+          "sprintSpeed": 6.0,
+          "viewHeightSmoothSpeed": 15.0
+        },
+        {
+          "Type": "Player",
+          "isSprinting": false
+        },
+        {
+          "Type": "InteractionController"
+        },
+        {
+          "Type": "PlayerHUD"
+        },
+        {
+          "Type": "PauseMenu"
+        },
+        {
+          "Type": "Hands67"
+        },
+        {
+          "Type": "LoseScreen"
+        },
+        {
+          "Type": "WinScreen"
+        },
+        {
+          "Type": "ControlsMenu"
+        },
+        {
+          "Type": "PlayerPowerUpController"
+        },
+        {
+          "Type": "Inventory"
+        }
+      ],
+      "Name": "Player"
+    }
+  ]
+}

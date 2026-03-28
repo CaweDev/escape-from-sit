@@ -96,10 +96,11 @@ namespace
         Engine::Color ceilingColor = Engine::Color(0.1f, 0.1f, 0.2f, 1.0f);
         Engine::Color floorColor = Engine::Color(0.3f, 0.25f, 0.2f, 1.0f);
 
-        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        static Engine::Color ParseColor(const Json::Value &j, const char *key, const Engine::Color &fallback)
         {
-            if (!j.isMember(key) || !j[key].isObject()) return fallback;
-            const auto& c = j[key];
+            if (!j.isMember(key) || !j[key].isObject())
+                return fallback;
+            const auto &c = j[key];
             return Engine::Color(
                 c.get("r", fallback.r).asFloat(),
                 c.get("g", fallback.g).asFloat(),
@@ -107,7 +108,7 @@ namespace
                 c.get("a", fallback.a).asFloat());
         }
 
-        void FromJson(const Json::Value& j) override
+        void FromJson(const Json::Value &j) override
         {
             winRadius = j.get("winRadius", winRadius).asFloat();
             banditInterval = j.get("banditInterval", banditInterval).asFloat();
@@ -204,7 +205,7 @@ namespace
     FPSSceneConfig g_fpsSceneConfig;
     bool g_fpsSceneConfigLoaded = false;
 
-    const FPSSceneConfig& GetFPSSceneConfig()
+    const FPSSceneConfig &GetFPSSceneConfig()
     {
         if (!g_fpsSceneConfigLoaded)
         {
@@ -220,7 +221,9 @@ namespace Game
 
     inline void FPSScene::OnLoad()
     {
-        const auto& cfg = GetFPSSceneConfig();
+        AEEditor::ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
+
+        const auto &cfg = GetFPSSceneConfig();
 
         winRadius = cfg.winRadius;
         banditInterval = cfg.banditInterval;
@@ -303,10 +306,10 @@ namespace Game
         int midX = loadedMapWidth / 2;
         int midY = loadedMapHeight / 2;
 
-        zones.push_back({1, 0, midX - 1, 0, midY - 1});                             // A: Blue (Game top-left, Minimap bottom-left)
-        zones.push_back({2, 0, midX - 1, midY, loadedMapHeight - 1});               // B: Green (Game bottom-left, Minimap top-left)
-        zones.push_back({3, midX, loadedMapWidth - 1, midY, loadedMapHeight - 1});  // C: Magenta (Game bottom-right, Minimap top-right)
-        zones.push_back({4, midX, loadedMapWidth - 1, 0, midY - 1});                // D: Yellow (Game top-right, Minimap bottom-right)
+        zones.push_back({1, 0, midX - 1, 0, midY - 1});                            // A: Blue (Game top-left, Minimap bottom-left)
+        zones.push_back({2, 0, midX - 1, midY, loadedMapHeight - 1});              // B: Green (Game bottom-left, Minimap top-left)
+        zones.push_back({3, midX, loadedMapWidth - 1, midY, loadedMapHeight - 1}); // C: Magenta (Game bottom-right, Minimap top-right)
+        zones.push_back({4, midX, loadedMapWidth - 1, 0, midY - 1});               // D: Yellow (Game top-right, Minimap bottom-right)
 
         // ===== build tile array =====
         std::vector<int> worldMap(loadedMapWidth * loadedMapHeight, 0);
@@ -366,52 +369,30 @@ namespace Game
         tileMapCollider->maxHeight = cfg.tileMapColliderMaxHeight;
 
         // ===== player =====
-        auto player = CreateGameObject("Player");
-        playerCam = player->AddComponent<Camera>();
-        playerCam->backgroundColor = Color(0, 0, 0, 1);
-        playerCam->fogEnabled = true;
-        playerCam->fogDistance = cfg.playerFogDistance;
-        playerCam->fogMinVisibility = cfg.playerFogMinVisibility;
-        playerCam->fogMaxVisibility = cfg.playerFogMaxVisibility;
 
-        auto rb = player->AddComponent<Rigidbody2D>();
-        rb->gravityScale = cfg.playerGravityScale;
-        rb->drag = cfg.playerDrag;
 
-        auto col = player->AddComponent<CircleCollider2D>();
-        col->radius = cfg.playerColliderRadius;
-        col->minHeight = cfg.playerColliderMinHeight;
-        col->maxHeight = cfg.playerColliderMaxHeight;
-
-        playerController = player->AddComponent<FPSController>();
-        playerData = player->AddComponent<Player>();
+        auto player = GameObject::Find("Player");
         playerTf = player->transform;
+        playerViewPos = playerTf->position;
+        playerViewRot = playerTf->rotation;
+        std::cout << playerTf->position.x << "y: " << playerTf->position.y;
 
-        auto interactionCtrl = player->AddComponent<InteractionController>();
-        interactionCtrl->interactKey = KeyCode::E;
-
-        playerHUD = player->AddComponent<PlayerHUD>();
+        playerCam = player->GetComponent<Camera>();
+        playerController = player->GetComponent<FPSController>();
+        playerData = player->GetComponent<Player>();
+        playerHUD = player->GetComponent<PlayerHUD>();
         playerHUD->SetTileMap(map);
         playerHUD->SetPlayerTransform(playerTf);
         playerHUD->SetZoneGetter([this](int tx, int ty)
-                                 { return this->GetZoneId(tx, ty); });
+        { return this->GetZoneId(tx, ty); });
         playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
-
-        pauseMenu = player->AddComponent<PauseMenu>();
-        player->AddComponent<Hands67>();
-        loseScreen = player->AddComponent<LoseScreen>();
-        winScreen = player->AddComponent<WinScreen>();
-        controlsMenu = player->AddComponent<ControlsMenu>();
+        pauseMenu  = player->GetComponent<PauseMenu>();
+        loseScreen = player->GetComponent<LoseScreen>();
+        winScreen= player->GetComponent<WinScreen>();
+        controlsMenu = player->GetComponent<ControlsMenu>();
+        powerUpController = player->GetComponent<PlayerPowerUpController>();
+        
         showControlsAtStart = true;
-
-        playerTf->position = Vector3(cfg.playerSpawnX, cfg.playerSpawnY, cfg.playerSpawnZ);
-        playerTf->rotation = cfg.playerSpawnRot;
-        playerViewPos = playerTf->position;
-        playerViewRot = playerTf->rotation;
-
-        powerUpController = player->AddComponent<PlayerPowerUpController>();
-
-        player->AddComponent<Inventory>();
         // ===== ML init =====
         zoneMgr.Init(map, loadedMapWidth, loadedMapHeight);
         heatmap.Init(loadedMapWidth, loadedMapHeight);
@@ -837,8 +818,7 @@ namespace Game
                 }
             }
         }
-        // Load GameObjects from Editor JSON
-        AEEditor::ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
+
     }
 
     inline void FPSScene::OnAfterRender()
@@ -849,7 +829,7 @@ namespace Game
 
     inline void FPSScene::OnUpdate()
     {
-        const auto& cfg = GetFPSSceneConfig();
+        const auto &cfg = GetFPSSceneConfig();
 
         // Toggle Level Editor
         if (Input::GetKeyDown(KeyCode::F1))

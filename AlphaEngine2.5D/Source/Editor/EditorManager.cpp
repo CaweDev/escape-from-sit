@@ -5,6 +5,7 @@
 
 #include "EditorManager.hpp"
 #include "GameEditor.hpp"
+#include "ObjectManager.hpp"
 #include "ReflectionRegistry.hpp"
 #include "ObjectManager.hpp"
 

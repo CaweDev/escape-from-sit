@@ -12,6 +12,7 @@
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Core/AssetManager.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Input/KeyCode.hpp"
 
 namespace AEEditor
 {
@@ -177,6 +178,11 @@ namespace AEEditor
                 case DataType::String:
                 {
                     *static_cast<std::string *>(addr) = val.asString();
+                    break;
+                }
+                case DataType::KeyCode:
+                {
+                    *static_cast<Engine::KeyCode *>(addr) = static_cast<Engine::KeyCode>(val.asInt());
                     break;
                 }
                 }
@@ -524,6 +530,12 @@ namespace AEEditor
             {
                 *str = buf;
             }
+            break;
+        }
+        case DataType::KeyCode:
+        {
+            int *val = reinterpret_cast<int *>(rawAddress);
+            ImGui::DragInt("##", val, 1.0f, 0, 255, "Key Code: %d");
             break;
         }
         }
