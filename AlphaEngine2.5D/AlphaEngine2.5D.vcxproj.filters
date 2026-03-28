@@ -86,6 +86,8 @@
       <Filter>Extern\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\UCB1Bandit\BanditVisualizer.cpp" />
+    <ClCompile Include="Source\Game\Items\Item.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FPSScene\FPSScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp">
@@ -680,6 +682,12 @@
       <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\UCB1Bandit\BanditVisualizer.hpp" />
+    <ClInclude Include="Source\Game\Items\Item.hpp" />
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.hpp" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.hpp" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.hpp" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.hpp" />
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
