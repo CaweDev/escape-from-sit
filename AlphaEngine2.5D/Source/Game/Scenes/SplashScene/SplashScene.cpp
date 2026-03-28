@@ -61,7 +61,7 @@ namespace
 
         float logo2Width = 600.0f;
         float logo2Height = 600.0f;
-        std::string logo2Path = "Assets/xav.jpg";
+        std::string logo2Path = "Assets/Sprites/xav.jpg";
 
         std::string ccTextPath = "Assets/UI/DigiPen_CC_Text.png";
         float ccTextWidth = 1050.0f;
@@ -173,7 +173,7 @@ float SplashScene::LOGO_HEIGHT       = 200.0f;
 const char* SplashScene::LOGO_WHITE_PATH = "Assets/UI/DigiPen_BLACK.png";
 float SplashScene::LOGO2_WIDTH        = 600.0f;
 float SplashScene::LOGO2_HEIGHT       = 600.0f;
-const char* SplashScene::LOGO2_PATH      = "Assets/xav.jpg";
+const char* SplashScene::LOGO2_PATH      = "Assets/Sprites/xav.jpg";
 
 // Logo colors
 Color SplashScene::LOGO_WHITE_COLOR = Color(1.0f, 1.0f, 1.0f, 1.0f);

@@ -242,7 +242,7 @@ namespace Game {
         enemyShadow = CreateGameObject("EnemyShadow");
         auto shadowSprite = enemyShadow->AddComponent<SpriteSheetRenderer>();
         {
-            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/guard.png");
+            SpriteSheet* shadowSheet = AssetManager::GetSpriteSheet("Assets/Sprites/guard.png");
             shadowSprite->SetSpriteSheet(shadowSheet);
             shadowSprite->SetIgnoreFog(true);
             shadowSprite->Play("Patrol");
@@ -258,7 +258,7 @@ namespace Game {
         enemyEyes = CreateGameObject("EnemyEyes");
         auto eyesSprite = enemyEyes->AddComponent<SpriteSheetRenderer>();
         {
-            SpriteSheet* eyesSheet = AssetManager::GetSpriteSheet("Assets/guard_eyes_overlay.png");
+            SpriteSheet* eyesSheet = AssetManager::GetSpriteSheet("Assets/Sprites/guard_eyes_overlay.png");
             eyesSprite->SetSpriteSheet(eyesSheet);
             eyesSprite->SetIgnoreFog(true);
             eyesSprite->Play("Patrol");

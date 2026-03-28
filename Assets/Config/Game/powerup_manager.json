@@ -4,10 +4,10 @@
   "sortingOrder": 100,
   "defaultSpawnZ": 0.1,
 
-  "speedBoostSpritePath": "Assets/Speed.png",
-  "infiniteStaminaSpritePath": "Assets/InfStamina.png",
-  "shieldSpritePath": "Assets/Shield.png",
-  "invisibilitySpritePath": "Assets/Invis.png",
+  "speedBoostSpritePath": "Assets/Sprites/Speed.png",
+  "infiniteStaminaSpritePath": "Assets/Sprites/InfStamina.png",
+  "shieldSpritePath": "Assets/Sprites/Shield.png",
+  "invisibilitySpritePath": "Assets/Sprites/Invis.png",
 
   "entries": [
     { "id": 4,  "x": 18.5,  "y": 8.5,  "z": 0.1, "type": 1, "name": "Infinite Stamina", "duration": 15.0 },

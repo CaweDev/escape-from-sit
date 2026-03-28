@@ -435,17 +435,17 @@ namespace Game
 
         // ===== spawn 4 guards (1 per zone) =====
         guards.clear();
-        SpawnGuardInZone(1, map, playerHUD, "Assets/guard.png");
-        SpawnGuardInZone(2, map, playerHUD, "Assets/guard.png");
-        SpawnGuardInZone(3, map, playerHUD, "Assets/guard.png");
-        SpawnGuardInZone(4, map, playerHUD, "Assets/guard.png");
+        SpawnGuardInZone(1, map, playerHUD, "Assets/Sprites/guard.png");
+        SpawnGuardInZone(2, map, playerHUD, "Assets/Sprites/guard.png");
+        SpawnGuardInZone(3, map, playerHUD, "Assets/Sprites/guard.png");
+        SpawnGuardInZone(4, map, playerHUD, "Assets/Sprites/guard.png");
 
         // start with zone 1 priority
         prevChosenZoneId = 1;
         ApplyPriorityZone_AssistNearest(prevChosenZoneId);
 
         // ===== CCTV placement =====
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
+        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
 
         auto placements = Game::GenerateCCTVsPerZone(
             map, zoneGrid, loadedMapWidth, loadedMapHeight,
@@ -494,7 +494,7 @@ namespace Game
         cctvCooldown.assign(cctvSensors.size(), 0.0f);
 
         // ===== CCTV Terminals - Spawn from map markers ('T' in map.txt) =====
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/powerup3.png");
+        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
 
         // Get terminal positions from map
         auto terminalPositions = map->GetTerminalPositions();
@@ -646,10 +646,10 @@ namespace Game
         auto accessCardPositions = map->GetAccessCardPositions();
 
         const char *cardSpritePaths[] = {
-            "Assets/color_green_empty.png",
-            "Assets/color_purple_empty.png",
-            "Assets/color_red_empty.png",
-            "Assets/color_yellow_empty.png"};
+            "Assets/Sprites/color_green_empty.png",
+            "Assets/Sprites/color_purple_empty.png",
+            "Assets/Sprites/color_red_empty.png",
+            "Assets/Sprites/color_yellow_empty.png"};
 
         // DEBUG: set true to force access cards to spawn at player spawn for debugging
         bool debugForceSpawnAtPlayer = cfg.debugForceSpawnAtPlayer;
@@ -791,8 +791,8 @@ namespace Game
         for (int z = 1; z <= 4; ++z)
         {
             // Spawn with extra checks - avoid player spawn and doors
-            SpawnNPCInZone(z, NPCType::Bully, map, "Assets/bully.png");
-            SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/annoying_classmate.png");
+            SpawnNPCInZone(z, NPCType::Bully, map, "Assets/Sprites/bully.png");
+            SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/Sprites/annoying_classmate.png");
         }
 
         // Add terminal icons to minimap
@@ -802,7 +802,7 @@ namespace Game
             {
                 playerHUD->GetMinimap()->AddTerminalIcon(
                     pos,
-                    AssetManager::GetSprite("Assets/hill_top_smile.png"));
+                    AssetManager::GetSprite("Assets/Sprites/hill_top_smile.png"));
             }
         }
 

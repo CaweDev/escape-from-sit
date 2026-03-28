@@ -308,7 +308,7 @@ namespace Game
 
     void EditorScene::SpawnExistingTerminals(TileMap *map)
     {
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/powerup3.png");
+        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
         auto terminalPositions = map->GetTerminalPositions();
 
         for (size_t i = 0; i < terminalPositions.size(); ++i)
@@ -331,10 +331,10 @@ namespace Game
     {
         auto accessCardPositions = map->GetAccessCardPositions();
         const char *cardSpritePaths[] = {
-            "Assets/color_green_empty.png",
-            "Assets/color_purple_empty.png",
-            "Assets/color_red_empty.png",
-            "Assets/color_yellow_empty.png"};
+            "Assets/Sprites/color_green_empty.png",
+            "Assets/Sprites/color_purple_empty.png",
+            "Assets/Sprites/color_red_empty.png",
+            "Assets/Sprites/color_yellow_empty.png"};
 
         auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2
         {
@@ -420,7 +420,7 @@ namespace Game
             map, zoneGrid, mapWidth, mapHeight,
             10, 1, 3.5f, CCTV_Z, EPS);
 
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
+        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
         for (size_t i = 0; i < placements.size(); ++i)
         {
             auto &p = placements[i];

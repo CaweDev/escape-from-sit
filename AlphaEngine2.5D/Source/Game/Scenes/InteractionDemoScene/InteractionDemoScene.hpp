@@ -116,7 +116,7 @@ public:
         keySprite->Load("Assets/powerup2.png");
         
         chestSprite = std::make_shared<Sprite>();
-        chestSprite->Load("Assets/powerup3.png");
+        chestSprite->Load("Assets/Sprites/powerup3.png");
 
         // === INTERACTABLE OBJECTS ===
 

@@ -251,7 +251,7 @@ namespace Game
             if (m_minimap) m_minimap->AddEnemyTransform(tf);
         }
 
-        Engine::Sprite* cctvSpr = Engine::AssetManager::GetSprite("Assets/cctv.png");
+        Engine::Sprite* cctvSpr = Engine::AssetManager::GetSprite("Assets/Sprites/cctv.png");
         if (m_minimap) m_minimap->SetCCTVSprites(cctvSpr);
         if (m_map)     m_map->SetCCTVSprites(cctvSpr);
 
@@ -681,10 +681,10 @@ namespace Game
         m_cardText->SetAnchor(UI::TextAnchor::MiddleCenter);
 
         // Power Up timer UI
-        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/Speed.png"); // Speed
-        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/InfStamina.png"); // Infinite stamina
-        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Shield.png"); // Shield
-        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Invis.png"); // Invisibility
+        m_powerUpTextures[0] = Engine::AssetManager::GetTexture("Assets/Sprites/Speed.png"); // Speed
+        m_powerUpTextures[1] = Engine::AssetManager::GetTexture("Assets/Sprites/InfStamina.png"); // Infinite stamina
+        m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Sprites/Shield.png"); // Shield
+        m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Sprites/Invis.png"); // Invisibility
 
         Engine::Texture2D* powerUpPanelTexture = Engine::AssetManager::GetTexture(s_powerUpPanelTexturePath.c_str());
         constexpr float powerUpPanelScale = 1.15f; // +15% panel size

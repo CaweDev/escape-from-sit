@@ -16,10 +16,10 @@ namespace
         int sortingOrder = 100;
         float defaultSpawnZ = 0.1f;
 
-        std::string speedBoostSpritePath = "Assets/Speed.png";
-        std::string infiniteStaminaSpritePath = "Assets/InfStamina.png";
-        std::string shieldSpritePath = "Assets/Shield.png";
-        std::string invisibilitySpritePath = "Assets/Invis.png";
+        std::string speedBoostSpritePath = "Assets/Sprites/Speed.png";
+        std::string infiniteStaminaSpritePath = "Assets/Sprites/InfStamina.png";
+        std::string shieldSpritePath = "Assets/Sprites/Shield.png";
+        std::string invisibilitySpritePath = "Assets/Sprites/Invis.png";
 
         struct Entry
         {

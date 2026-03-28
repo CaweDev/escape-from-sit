@@ -261,7 +261,7 @@ namespace Game {
         {
             justSpotted = true;   // edge trigger
             // Debug output
-            printf("[CCTV %d] Player spotted at (%.1f, %.1f)!\n", id, playerPos.x, playerPos.y);
+            //printf("[CCTV %d] Player spotted at (%.1f, %.1f)!\n", id, playerPos.x, playerPos.y);
             
             // Trigger HUD warning
             if (hud) {

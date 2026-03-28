@@ -845,7 +845,7 @@ void LevelEditor::SpawnTerminalAt(int x, int y) {
     
     // Add sprite renderer
     auto sr = terminalObj->AddComponent<SpriteRenderer>();
-    auto terminalSprite = AssetManager::GetSprite("Assets/powerup3.png");
+    auto terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
     sr->SetSprite(terminalSprite);
     sr->billboard = true;
     sr->sortingOrder = 250;

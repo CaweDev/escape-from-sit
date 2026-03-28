@@ -11,7 +11,7 @@ namespace
         float bookScale = 0.35f;
         float interactDistance = 2.5f;
         int spriteSortOrder = 100;
-        std::string bookSpritePath = "Assets/TempBook1.png";
+        std::string bookSpritePath = "Assets/Sprites/TempBook1.png";
         std::string interactText = "Pick up book";
         float quizPopupHoldDuration = 999.0f;
         float exitPopupDuration = 5.0f;

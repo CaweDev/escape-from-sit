@@ -14,7 +14,7 @@ namespace
         float referenceHeight = 900.0f;
         float imageWidth = 1600.0f;
         float imageHeight = 900.0f;
-        std::string spriteSheetPath = "Assets/67.png";
+        std::string spriteSheetPath = "Assets/Sprites/67.png";
 
         int toggleKeyA = static_cast<int>(Engine::KeyCode::Alpha6);
         int toggleKeyB = static_cast<int>(Engine::KeyCode::Alpha7);
