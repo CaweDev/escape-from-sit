@@ -53,7 +53,7 @@ namespace Game {
         void UpdateStateColor();
 
         void OnCCTVSpotted(const Engine::Vector2& worldPos);
-        void OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, int sabotagedZoneId);
+        void OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, [[maybe_unused]] int sabotagedZoneId);
         void SetTerminals(std::vector<CCTVTerminal*>* terminals) { cctvTerminals = terminals; }
 
         // ML Zone Control

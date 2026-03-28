@@ -737,7 +737,7 @@ namespace Game {
         }
     }
 
-    void SecurityGuard::OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, int sabotagedZoneId)
+    void SecurityGuard::OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, [[maybe_unused]] int sabotagedZoneId)
     {
         // Do not respond if actively catching the player
         if (state == GuardState::Catch) {

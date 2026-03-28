@@ -165,7 +165,6 @@ void ControlRoomDoor::OnInteract() {
     
     if (!HasAllCards()) {
         // Show locked message
-        int collected = GetCollectedCards();
         Engine::SoundManager::PlaySFX("door_locked", lockedSfxVolume);
         //std::cout << "[CONTROL ROOM] Door is LOCKED. Access cards collected: " << collected << "/" << requiredCards << "\n";
         //std::cout << "[CONTROL ROOM] Find all " << requiredCards << " access cards to unlock this door.\n";
