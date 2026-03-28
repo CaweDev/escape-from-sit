@@ -14,7 +14,7 @@ namespace Game
     public:
         // Pointers and settings
         Engine::Transform* playerTransform = nullptr;
-        std::string audioKey = "book_hum_loop";
+        std::string audioKey = "";
 
         // Tuning variables
         float nearDistance = 2.0f;

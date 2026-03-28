@@ -32,8 +32,6 @@ namespace Engine {
         static void UpdateGuardProximityLoop(f32 nearestDistance);
         static void UpdateCCTVHumLoop(f32 nearestDistance);
         static void UpdateTerminalBuzzLoop(f32 nearestDistance);
-        // NPC-specific proximity loop for annoying classmates
-        static void UpdateNPCAnnoyingLoop(f32 nearestDistance);
         // Stop a distance-based loop by key (forces channel stop and cleanup)
         static void StopDistanceLoop(const std::string& key);
 

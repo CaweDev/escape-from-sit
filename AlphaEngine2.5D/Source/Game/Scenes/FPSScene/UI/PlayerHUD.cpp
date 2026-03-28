@@ -815,7 +815,7 @@ namespace Game
             }
 
             Engine::SoundManager::UpdateDistanceLoop(
-                "ui_click",
+                "puzzle_nearby",
                 closestBookDist,
                 cfg.bookNearDistance,
                 cfg.bookFarDistance,

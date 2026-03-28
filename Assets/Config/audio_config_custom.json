@@ -60,6 +60,7 @@
     "player_walking": "Assets/Audio/Player/player walking.wav",
     "push": "Assets/Audio/Bully/push.wav",
 
-    "powerup_collect": "Assets/Audio/powerup/powerup collect.wav"
+    "powerup_collect": "Assets/Audio/powerup/powerup collect.wav",
+    "puzzle_nearby": "Assets/Audio/Puzzle/book_nearby.wav"
   }
 }

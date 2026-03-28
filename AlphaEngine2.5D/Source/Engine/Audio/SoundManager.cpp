@@ -703,41 +703,6 @@ namespace Engine {
         UpdateDistanceLoop(kTerminalBuzzLoopKey, nearestDistance, s_terminalLoopConfig.nearDistance, s_terminalLoopConfig.farDistance, s_terminalLoopConfig.maxVolume);
     }
 
-    void SoundManager::UpdateNPCAnnoyingLoop(f32 nearestDistance)
-    {
-        const f32 nearDist = 1.0f;
-        const f32 farDist = 6.0f;
-        const f32 maxVol = 0.8f;
-
-        if (!s_sfxEnabled) {
-            StopDistanceLoop("annoying_classmate");
-            return;
-        }
-
-        UpdateDistanceLoop("annoying_classmate", nearestDistance, nearDist, farDist, maxVol);
-
-        f32 t = 0.0f;
-        if (nearestDistance <= nearDist) {
-            t = 1.0f;
-        }
-        else if (nearestDistance >= farDist) {
-            t = 0.0f;
-        }
-        else {
-            t = (farDist - nearestDistance) / (farDist - nearDist);
-            if (t < 0.0f) t = 0.0f;
-            if (t > 1.0f) t = 1.0f;
-        }
-
-        const f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
-        const f32 finalVol = maxVol * t * masterSfx;
-
-        const f32 STOP_THRESHOLD = 0.005f;
-        if (finalVol <= STOP_THRESHOLD) {
-            StopDistanceLoop("annoying_classmate");
-        }
-    }
-
     void SoundManager::StopDistanceLoop(const std::string& key)
     {
         auto it = s_distanceLoops.find(key);
