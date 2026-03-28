@@ -411,6 +411,7 @@ namespace Game
 
         powerUpController = player->AddComponent<PlayerPowerUpController>();
 
+        player->AddComponent<Inventory>();
         // ===== ML init =====
         zoneMgr.Init(map, loadedMapWidth, loadedMapHeight);
         heatmap.Init(loadedMapWidth, loadedMapHeight);

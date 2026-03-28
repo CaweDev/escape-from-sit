@@ -31,11 +31,13 @@ namespace AEEditor
         size_t offset;
     };
     using InstantiateFn = Engine::Component *(*)(Engine::GameObject *);
+    using RemoveFn = void (*)(Engine::GameObject *);
     struct TypeDescriptor
     {
         std::string name;
         std::vector<FieldDescriptor> fields;
         InstantiateFn instantiate;
+        RemoveFn remove;
     };
 
     class Registry
@@ -54,6 +56,10 @@ namespace AEEditor
             types[typeIdx].instantiate = [](Engine::GameObject *go) -> Engine::Component *
             {
                 return go->AddComponent<ClassType>();
+            };
+            types[typeIdx].remove = [](Engine::GameObject *go)
+            {
+                go->RemoveComponent<ClassType>();
             };
 
             nameToType.emplace(className, typeIdx);

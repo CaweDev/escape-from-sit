@@ -1,7 +1,7 @@
 #include "ObjectManager.hpp"
 #include "GameEditor.hpp"
 #include "imgui.h"
-#include <cstring>
+#include <string>
 #include <json/json.h>
 #include <fstream>
 #include <filesystem>
@@ -109,6 +109,38 @@ namespace AEEditor
             return;
         }
 
+        DrawGameObjectHeader();
+
+        Engine::Component *componentToRemove = nullptr;
+
+        for (const auto &compPtr : selectedObject->GetComponents())
+        {
+            Engine::Component *comp = compPtr.get();
+            if (!comp)
+                continue;
+
+            auto it = Registry::types.find(std::type_index(typeid(*comp)));
+            if (it == Registry::types.end())
+                continue;
+
+            DrawComponent(comp, it->second, componentToRemove);
+        }
+
+        if (componentToRemove)
+        {
+            auto it = Registry::types.find(std::type_index(typeid(*componentToRemove)));
+            if (it != Registry::types.end())
+            {
+                it->second.remove(selectedObject);
+                SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
+            }
+        }
+
+        ImGui::End();
+    }
+
+    void ObjectManager::DrawGameObjectHeader()
+    {
         ImGui::Checkbox("Active", &selectedObject->active);
 
         char nameBuf[256];
@@ -137,158 +169,175 @@ namespace AEEditor
             }
             ImGui::EndPopup();
         }
+    }
 
-        for (const auto &compPtr : selectedObject->GetComponents())
+    void ObjectManager::DrawComponent(Engine::Component *comp, const TypeDescriptor &meta, Engine::Component *&componentToRemove)
+    {
+        ImGui::PushID(comp);
+
+        bool isHeaderOpen = ImGui::CollapsingHeader(meta.name.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+        if (ImGui::BeginPopupContextItem("ComponentContextMenu"))
         {
-            Engine::Component *comp = compPtr.get();
-            if (!comp)
-                continue;
-
-            auto it = Registry::types.find(std::type_index(typeid(*comp)));
-            if (it == Registry::types.end())
-                continue;
-
-            const TypeDescriptor &meta = it->second;
-
-            ImGui::PushID(comp);
-            if (ImGui::CollapsingHeader(meta.name.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            if (meta.name == "Transform")
             {
-                ImGui::Checkbox("Enabled", &comp->enabled);
+                ImGui::TextDisabled("Cannot remove Transform");
+            }
+            else if (ImGui::MenuItem("Remove Component"))
+            {
+                componentToRemove = comp;
+            }
+            ImGui::EndPopup();
+        }
 
-                for (const auto &field : meta.fields)
+        if (isHeaderOpen)
+        {
+            ImGui::Checkbox("Enabled", &comp->enabled);
+
+            for (const auto &field : meta.fields)
+            {
+                DrawField(comp, field);
+            }
+        }
+        ImGui::PopID();
+    }
+
+    void ObjectManager::DrawField(Engine::Component *comp, const FieldDescriptor &field)
+    {
+        void *rawAddress = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
+        ImGui::Text(field.name.c_str());
+        ImGui::PushID(field.name.c_str());
+        ImGui::SetNextItemWidth(-FLT_MIN);
+
+        switch (field.type)
+        {
+        case DataType::Float:
+        {
+            float *val = static_cast<float *>(rawAddress);
+            ImGui::DragFloat("##", val, 0.1f);
+            break;
+        }
+        case DataType::Int:
+        {
+            int *val = static_cast<int *>(rawAddress);
+            ImGui::DragInt("##", val);
+            break;
+        }
+        case DataType::Bool:
+        {
+            bool *val = static_cast<bool *>(rawAddress);
+            ImGui::Checkbox("##", val);
+            break;
+        }
+        case DataType::Vector2:
+        {
+            auto *val = static_cast<Engine::Vector2 *>(rawAddress);
+            float vec[2] = {val->x, val->y};
+
+            if (ImGui::DragFloat2("##", vec, 0.1f))
+            {
+                val->x = vec[0];
+                val->y = vec[1];
+            }
+            break;
+        }
+        case DataType::Vector3:
+        {
+            auto *val = static_cast<Engine::Vector3 *>(rawAddress);
+            float vec[3] = {val->x, val->y, val->z};
+
+            if (ImGui::DragFloat3("##", vec, 0.1f))
+            {
+                val->x = vec[0];
+                val->y = vec[1];
+                val->z = vec[2];
+            }
+            break;
+        }
+        case DataType::Color:
+        {
+            auto *val = static_cast<Engine::Color *>(rawAddress);
+            float col[4] = {val->r, val->g, val->b, val->a};
+
+            if (ImGui::ColorEdit4("##", col))
+            {
+                val->r = col[0];
+                val->g = col[1];
+                val->b = col[2];
+                val->a = col[3];
+            }
+            break;
+        }
+        case DataType::Sprite:
+        {
+            std::string *path = static_cast<std::string *>(rawAddress);
+            std::string displayLabel = path->empty() ? "Select Sprite..." : *path;
+
+            if (ImGui::BeginCombo("##SpriteCombo", displayLabel.c_str()))
+            {
+                if (std::filesystem::exists("Assets"))
                 {
-                    void *rawAddress = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
-                    ImGui::Text(field.name.c_str());
-                    ImGui::PushID(field.name.c_str());
-                    ImGui::SetNextItemWidth(-FLT_MIN);
-                    switch (field.type)
+                    for (const auto &entry : std::filesystem::recursive_directory_iterator("Assets"))
                     {
-                    case DataType::Float:
-                    {
-                        float *val = static_cast<float *>(rawAddress);
-                        ImGui::DragFloat("##", val, 0.1f);
-                        break;
-                    }
-                    case DataType::Int:
-                    {
-                        int *val = static_cast<int *>(rawAddress);
-                        ImGui::DragInt("##", val);
-                        break;
-                    }
-                    case DataType::Bool:
-                    {
-                        bool *val = static_cast<bool *>(rawAddress);
-                        ImGui::Checkbox("##", val);
-                        break;
-                    }
-                    case DataType::Vector2:
-                    {
-                        auto *val = static_cast<Engine::Vector2 *>(rawAddress);
-                        float vec[2] = {val->x, val->y};
+                        if (!entry.is_regular_file())
+                            continue;
 
-                        if (ImGui::DragFloat2("##", vec, 0.1f))
+                        std::string ext = entry.path().extension().string();
+                        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+                        if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                         {
-                            val->x = vec[0];
-                            val->y = vec[1];
-                        }
-                        break;
-                    }
-                    case DataType::Vector3:
-                    {
-                        auto *val = static_cast<Engine::Vector3 *>(rawAddress);
-                        float vec[3] = {val->x, val->y, val->z};
+                            std::string filePath = entry.path().string();
+                            std::replace(filePath.begin(), filePath.end(), '\\', '/');
 
-                        if (ImGui::DragFloat3("##", vec, 0.1f))
-                        {
-                            val->x = vec[0];
-                            val->y = vec[1];
-                            val->z = vec[2];
-                        }
-                        break;
-                    }
-                    case DataType::Sprite:
-                    {
-                        std::string *path = static_cast<std::string *>(rawAddress);
-
-                        std::string displayLabel = path->empty() ? "Select Sprite..." : *path;
-
-                        if (ImGui::BeginCombo("##SpriteCombo", displayLabel.c_str()))
-                        {
-                            if (std::filesystem::exists("Assets"))
+                            bool isSelected = (*path == filePath);
+                            if (ImGui::Selectable(filePath.c_str(), isSelected))
                             {
-                                for (const auto &entry : std::filesystem::recursive_directory_iterator("Assets"))
-                                {
-                                    if (!entry.is_regular_file())
-                                        continue;
-
-                                    std::string ext = entry.path().extension().string();
-                                    std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
-                                        return static_cast<char>(std::tolower(c));
-                                    });
-
-                                    if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
-                                    {
-                                        std::string filePath = entry.path().string();
-                                        std::replace(filePath.begin(), filePath.end(), '\\', '/');
-
-                                        bool isSelected = (*path == filePath);
-                                        if (ImGui::Selectable(filePath.c_str(), isSelected))
-                                        {
-                                            *path = filePath;
-
-                                            if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
-                                            {
-                                                sr->SetSprite(Engine::AssetManager::GetSprite(*path));
-                                            }
-                                        }
-
-                                        if (isSelected)
-                                        {
-                                            ImGui::SetItemDefaultFocus();
-                                        }
-                                    }
-                                }
-                            }
-                            ImGui::EndCombo();
-                        }
-
-                        if (ImGui::BeginDragDropTarget())
-                        {
-                            if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("DND_ASSET_SPRITE"))
-                            {
-                                const char *droppedPath = (const char *)payload->Data;
-                                *path = droppedPath;
+                                *path = filePath;
                                 if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
                                 {
                                     sr->SetSprite(Engine::AssetManager::GetSprite(*path));
                                 }
                             }
-                            ImGui::EndDragDropTarget();
-                        }
-                        break;
-                    }
-                    case DataType::String:
-                    {
-                        std::string *str = static_cast<std::string *>(rawAddress);
-                        char buf[256];
-                        strncpy_s(buf, str->c_str(), sizeof(buf));
-                        buf[sizeof(buf) - 1] = '\0';
 
-                        if (ImGui::InputText("##", buf, sizeof(buf)))
-                        {
-                            *str = buf;
+                            if (isSelected)
+                                ImGui::SetItemDefaultFocus();
                         }
-                        break;
                     }
-                    }
-
-                    ImGui::PopID();
                 }
+                ImGui::EndCombo();
             }
-            ImGui::PopID();
-        }
 
-        ImGui::End();
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("DND_ASSET_SPRITE"))
+                {
+                    const char *droppedPath = (const char *)payload->Data;
+                    *path = droppedPath;
+                    if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
+                    {
+                        sr->SetSprite(Engine::AssetManager::GetSprite(*path));
+                    }
+                }
+                ImGui::EndDragDropTarget();
+            }
+            break;
+        }
+        case DataType::String:
+        {
+            std::string *str = static_cast<std::string *>(rawAddress);
+            char buf[256];
+            strncpy_s(buf, str->c_str(), sizeof(buf));
+            buf[sizeof(buf) - 1] = '\0';
+
+            if (ImGui::InputText("##", buf, sizeof(buf)))
+            {
+                *str = buf;
+            }
+            break;
+        }
+        }
+        ImGui::PopID();
     }
 
     void ObjectManager::SaveSceneToJson(const char *filepath)
@@ -346,6 +395,15 @@ namespace AEEditor
                         compJson[field.name]["x"] = v->x;
                         compJson[field.name]["y"] = v->y;
                         compJson[field.name]["z"] = v->z;
+                        break;
+                    }
+                    case DataType::Color:
+                    {
+                        auto *c = static_cast<Engine::Color *>(addr);
+                        compJson[field.name]["r"] = c->r;
+                        compJson[field.name]["g"] = c->g;
+                        compJson[field.name]["b"] = c->b;
+                        compJson[field.name]["a"] = c->a;
                         break;
                     }
                     case DataType::Sprite:
@@ -453,6 +511,15 @@ namespace AEEditor
                         v->x = val["x"].asFloat();
                         v->y = val["y"].asFloat();
                         v->z = val["z"].asFloat();
+                        break;
+                    }
+                    case DataType::Color:
+                    {
+                        auto *c = static_cast<Engine::Color *>(addr);
+                        c->r = val["r"].asFloat();
+                        c->g = val["g"].asFloat();
+                        c->b = val["b"].asFloat();
+                        c->a = val["a"].asFloat();
                         break;
                     }
                     case DataType::Sprite:

@@ -4,8 +4,11 @@
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
+#include "Engine/Physics/Rigidbody2D.hpp"
 
-#include "game/Items/Item.hpp"
+#include "game/Items/SodaCanItem.hpp"
+#include "game/Items/LaptopItem.hpp"
+#include "game/Inventory/Inventory.hpp"
 #include "game/AccessCard/AccessCard.hpp"
 #include "game/CCTV/CCTVCamera.hpp"
 #include "game/ControlRoomDoor/ControlRoomDoor.hpp"
@@ -46,18 +49,25 @@ namespace AEEditor
         AEEditor::Registry::RegisterFieldType<Engine::Interactable>("holdDuration", offsetof(Engine::Interactable, holdDuration), AEEditor::DataType::Float);
     }
 
-    void RegisterItem()
+    void RegisterInventory()
     {
-        Registry::RegisterClassType<Game::Item>("Item");
-        Registry::RegisterFieldType<Game::Item>("Position", offsetof(Game::Item, isCollected), DataType::Bool);
-        Registry::RegisterFieldType<Game::Item>("Rotation", offsetof(Game::Item, floatTime), DataType::Float);
-        Registry::RegisterFieldType<Game::Item>("Scale", offsetof(Game::Item, baseZ), DataType::Float);
+        Registry::RegisterClassType<Game::Inventory>("Inventory");
+    }
+
+    void RegisterItems()
+    {
+        Registry::RegisterClassType<Game::SodaCanItem>("SodaCanItem");
+        Registry::RegisterFieldType<Game::SodaCanItem>("itemName", offsetof(Game::SodaCanItem, itemName), DataType::String);
+
+        Registry::RegisterClassType<Game::LaptopItem>("LaptopItem");
+        Registry::RegisterFieldType<Game::LaptopItem>("itemName", offsetof(Game::LaptopItem, itemName), DataType::String);
+        Registry::RegisterFieldType<Game::LaptopItem>("fuseTimer", offsetof(Game::LaptopItem, fuseTimer), DataType::Float);
     }
 
     void RegisterAccessCard()
     {
         Registry::RegisterClassType<Game::AccessCard>("AccessCard");
-        // Registry::RegisterFieldType<Game::AccessCard>("CardColor", offsetof(Game::AccessCard, cardColor), DataType::Int);
+        Registry::RegisterFieldType<Game::AccessCard>("CardColor", offsetof(Game::AccessCard, cardColor), DataType::Color);
         Registry::RegisterFieldType<Game::AccessCard>("CardId", offsetof(Game::AccessCard, cardId), DataType::Int);
         Registry::RegisterFieldType<Game::AccessCard>("FloatTime", offsetof(Game::AccessCard, floatTime), DataType::Float);
         Registry::RegisterFieldType<Game::AccessCard>("BaseZ", offsetof(Game::AccessCard, baseZ), DataType::Float);
@@ -146,6 +156,26 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::PuzzleObject>("isReading", offsetof(Game::PuzzleObject, isReading), DataType::Bool);
     }
 
+    void RegisterRigidbody2D()
+    {
+        Registry::RegisterClassType<Engine::Rigidbody2D>("Rigidbody2D");
+
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("velocity", offsetof(Engine::Rigidbody2D, velocity), DataType::Vector2);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("verticalVelocity", offsetof(Engine::Rigidbody2D, verticalVelocity), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("mass", offsetof(Engine::Rigidbody2D, mass), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("drag", offsetof(Engine::Rigidbody2D, drag), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("gravityScale", offsetof(Engine::Rigidbody2D, gravityScale), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("bodyType", offsetof(Engine::Rigidbody2D, bodyType), DataType::Int);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("freezeRotation", offsetof(Engine::Rigidbody2D, freezeRotation), DataType::Bool);
+
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("currentHeight", offsetof(Engine::Rigidbody2D, currentHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("standingHeight", offsetof(Engine::Rigidbody2D, standingHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("crouchHeight", offsetof(Engine::Rigidbody2D, crouchHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("collisionHeight", offsetof(Engine::Rigidbody2D, collisionHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("isCrouching", offsetof(Engine::Rigidbody2D, isCrouching), DataType::Bool);
+        Registry::RegisterFieldType<Engine::Rigidbody2D>("isGrounded", offsetof(Engine::Rigidbody2D, isGrounded), DataType::Bool);
+    }
+
     void ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
@@ -153,8 +183,11 @@ namespace AEEditor
 
         RegisterTransform();
         RegisterSpriteRenderer();
+        RegisterRigidbody2D();
+
         RegisterInteractable();
-        RegisterItem();
+        RegisterInventory();
+        RegisterItems();
         RegisterAccessCard();
         RegisterCCTVCamera();
         RegisterControlRoomDoor();

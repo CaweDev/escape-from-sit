@@ -145,8 +145,8 @@ namespace AEEditor
             ImGuiID left = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Left, 0.2f, nullptr, &ds_id);
             ImGuiID right = ImGui::DockBuilderSplitNode(ds_id, ImGuiDir_Right, 0.2f, nullptr, &ds_id);
             ImGuiID top_left = ImGui::DockBuilderSplitNode(left, ImGuiDir_Up, 0.5f, nullptr, &left);
-            ImGui::DockBuilderDockWindow("Toolbar", top_left);
-            ImGui::DockBuilderDockWindow("Hierarchy", left);
+            ImGui::DockBuilderDockWindow("Hierarchy", top_left);
+            ImGui::DockBuilderDockWindow("Toolbar", left);
             ImGui::DockBuilderDockWindow("Inspector", right);
             ImGui::DockBuilderDockWindow("Scene", ds_id);
             ImGui::DockBuilderFinish(ds_id);

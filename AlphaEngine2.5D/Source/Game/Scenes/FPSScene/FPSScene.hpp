@@ -43,6 +43,7 @@
 #include "Game/PathRenderer/PathRenderer.hpp"
 #include "Game/PowerUp/PowerUpManager.hpp"
 #include "Game/Player/PlayerPowerUpController.hpp"
+#include "Game/Inventory/Inventory.hpp"
 
 #include "Engine/Interaction/InteractionController.hpp"
 #include "Editor/ObjectManager.hpp"
