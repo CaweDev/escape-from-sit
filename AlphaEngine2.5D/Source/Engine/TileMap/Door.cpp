@@ -106,13 +106,17 @@ void Door::Update() {
 }
 
 void Door::Open() {
-    if (state == DoorState::Closed || state == DoorState::Closing) {
+    if (state == DoorState::Closed) {
         state = DoorState::Opening;
 
         // Distance-based attenuation from the main camera to this door.
         // 1.0 at/near the door, fading linearly to 0.0 at max audible distance.
         const f32 volumeScale = ComputeDoorSfxVolumeScale(transform, tileX, tileY);
         SoundManager::PlaySFX("door_open", volumeScale);
+    }
+    else if (state == DoorState::Closing) {
+        // Reopen silently from closing to avoid rapid open-sfx retrigger spam.
+        state = DoorState::Opening;
     }
     autoCloseTimer = 0.0f;
 }
@@ -202,9 +206,24 @@ void Door::RequestOpen(const void* requester)
     if (!requester) {
         return;
    }
-    m_holders.insert(requester);
+
+    const auto [it, inserted] = m_holders.insert(requester);
+    (void)it;
+
+    // Always refresh hold timer while requested.
     autoCloseTimer = 0.0f;
-    Open();
+
+    // New holder: request open normally.
+    if (inserted) {
+        Open();
+        return;
+    }
+
+    // Existing holder: if door was externally forced shut/closing,
+    // reassert opening so AI holders don't get stuck behind it.
+    if (state == DoorState::Closed || state == DoorState::Closing) {
+        Open();
+    }
 }
 
 void Door::ReleaseOpen(const void* requester)
@@ -212,7 +231,14 @@ void Door::ReleaseOpen(const void* requester)
     if (!requester) {
         return;
     }
-    m_holders.erase(requester);
+
+    const size_t removed = m_holders.erase(requester);
+
+    // Ignore duplicate/invalid releases from non-holders.
+    if (removed == 0) {
+        return;
+    }
+
     if (!IsHeldOpen()) {
         autoCloseTimer = 0.0f;
         Close();

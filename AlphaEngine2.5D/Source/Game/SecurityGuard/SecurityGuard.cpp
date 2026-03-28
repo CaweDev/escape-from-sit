@@ -443,37 +443,128 @@ namespace Game {
     }
 
     void SecurityGuard::UpdateDoorAuto() {
+        const float releaseDistSq = doorHoldReleaseDist * doorHoldReleaseDist;
+        const float interactDist = GetSecurityGuardConfig().doorInteractDistance;
+        const float interactDistSq = interactDist * interactDist;
+
+        bool shouldReleaseHeldDoor = false;
+
         if (heldDoor) {
             int doorTx = heldDoor->tileX;
             int doorTy = heldDoor->tileY;
 
+            bool stillTargetingHeldDoor = false;
             if (pathIndex < (int)path.size()) {
                 int nextTx = (int)path[pathIndex].x;
                 int nextTy = (int)path[pathIndex].y;
+                stillTargetingHeldDoor = (nextTx == doorTx && nextTy == doorTy);
+            }
 
-                if (!(nextTx == doorTx && nextTy == doorTy)) {
-                    heldDoor->ReleaseOpen(this);
-                    heldDoor = nullptr;
+            float doorCx = (float)doorTx + 0.5f;
+            float doorCy = (float)doorTy + 0.5f;
+            bool movedClearOfDoor = DistSqTo(doorCx, doorCy) >= releaseDistSq;
+
+            shouldReleaseHeldDoor = (!stillTargetingHeldDoor && movedClearOfDoor);
+        }
+
+        Engine::Door* desiredDoor = nullptr;
+
+        // Primary: door on the next waypoint tile.
+        if (pathIndex < (int)path.size()) {
+            int nextTx = (int)path[pathIndex].x;
+            int nextTy = (int)path[pathIndex].y;
+            desiredDoor = FindDoorAtTile(nextTx, nextTy);
+        }
+
+        // If we're currently on a door tile, keep that door open too.
+        if (!desiredDoor) {
+            int curTx = 0, curTy = 0;
+            GetCurrentTile(curTx, curTy);
+            desiredDoor = FindDoorAtTile(curTx, curTy);
+        }
+
+        // Recovery: if we just stepped off a door waypoint but got pushed back,
+        // re-acquire that previous door until we've moved clear.
+        if (!desiredDoor && pathIndex > 0) {
+            int prevTx = (int)path[pathIndex - 1].x;
+            int prevTy = (int)path[pathIndex - 1].y;
+            Engine::Door* prevDoor = FindDoorAtTile(prevTx, prevTy);
+            if (prevDoor) {
+                float prevDoorCx = (float)prevTx + 0.5f;
+                float prevDoorCy = (float)prevTy + 0.5f;
+                bool stillNearPrevDoor = DistSqTo(prevDoorCx, prevDoorCy) < releaseDistSq;
+                if (stillNearPrevDoor) {
+                    desiredDoor = prevDoor;
                 }
             }
-            else {
+        }
+
+        // Constrained fallback for collision push-outs:
+        // if path says move to next waypoint and no route door was found,
+        // pick a nearby door only when it is also close to that next waypoint.
+        if (!desiredDoor && pathIndex < (int)path.size()) {
+            auto* scene = Engine::SceneManager::GetActiveScene();
+            if (scene) {
+                float bestD2 = interactDistSq + 1.0f;
+                const Engine::Vector2 nextWp = path[pathIndex];
+                for (auto& obj : scene->GetGameObjects()) {
+                    if (!obj || !obj->active) continue;
+                    auto* door = obj->GetComponent<Engine::Door>();
+                    if (!door) continue;
+
+                    float doorCx = (float)door->tileX + 0.5f;
+                    float doorCy = (float)door->tileY + 0.5f;
+
+                    float toGuardD2 = DistSqTo(doorCx, doorCy);
+                    if (toGuardD2 > interactDistSq) continue;
+
+                    float dxWp = nextWp.x - doorCx;
+                    float dyWp = nextWp.y - doorCy;
+                    float toWaypointD2 = dxWp * dxWp + dyWp * dyWp;
+                    if (toWaypointD2 > 2.25f) continue; // ~1.5 tiles from next waypoint
+
+                    if (toGuardD2 < bestD2) {
+                        bestD2 = toGuardD2;
+                        desiredDoor = door;
+                    }
+                }
+            }
+        }
+
+        // If logic would release the held door but we still desire that same door,
+        // keep holding it to avoid close/open churn and deadlock.
+        if (heldDoor && desiredDoor == heldDoor) {
+            shouldReleaseHeldDoor = false;
+        }
+
+        if (!desiredDoor) {
+            if (heldDoor && shouldReleaseHeldDoor) {
                 heldDoor->ReleaseOpen(this);
                 heldDoor = nullptr;
             }
+            return;
         }
 
-        if (pathIndex >= (int)path.size()) return;
-
-        int nextTx = (int)path[pathIndex].x;
-        int nextTy = (int)path[pathIndex].y;
-
-        Engine::Door* door = FindDoorAtTile(nextTx, nextTy);
-        if (!door) return;
-
-        if (heldDoor != door) {
-            heldDoor = door;
-            heldDoor->RequestOpen(this);
+        // Avoid rapid A<->B door switching while still near the currently held door.
+        if (heldDoor && desiredDoor != heldDoor) {
+            float heldDoorCx = (float)heldDoor->tileX + 0.5f;
+            float heldDoorCy = (float)heldDoor->tileY + 0.5f;
+            bool stillNearHeldDoor = DistSqTo(heldDoorCx, heldDoorCy) < releaseDistSq;
+            if (stillNearHeldDoor) {
+                desiredDoor = heldDoor;
+                shouldReleaseHeldDoor = false;
+            }
         }
+
+        if (heldDoor != desiredDoor) {
+            if (heldDoor) {
+                heldDoor->ReleaseOpen(this);
+            }
+            heldDoor = desiredDoor;
+        }
+
+        // Reassert every frame so a forced close while held is immediately recovered.
+        heldDoor->RequestOpen(this);
     }
 
     void SecurityGuard::FollowPath(float speed) {
