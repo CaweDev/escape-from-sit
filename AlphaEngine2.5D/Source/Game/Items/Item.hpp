@@ -13,13 +13,14 @@ namespace Game
     class Item : public Engine::Component
     {
     public:
+        Engine::Interactable *interactable = nullptr;
+
         std::string itemName = "Unknown";
         void Initialize() override;
 
         virtual void Use(Engine::GameObject *user) = 0;
 
     private:
-        Engine::Interactable *interactable = nullptr;
         Item *itemData = nullptr;
 
         void OnCollect();

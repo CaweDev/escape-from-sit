@@ -38,12 +38,17 @@ namespace Game
 
         // Cleaner patrol
         float patrolRepathTime = 2.0f;
+        
+        bool isDistracted  = false;
+        Engine::Vector2 distractionPos;
 
         void Initialize() override;
         void Update() override;
 
         // FPSScene passes: (zoneId, outX, outY) -> bool
         void SetPickGoalInZone(std::function<bool(int, int&, int&)> fn) { m_pickGoalInZone = fn; }
+        void OnDistracted(const Engine::Vector2 &noisePos);
+        void ClearDistraction();
 
     private:
         // Path

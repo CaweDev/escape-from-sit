@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Reflection.hpp"
+#include <json/json.h>
 namespace Engine
 {
     class GameObject;
@@ -21,6 +22,10 @@ namespace AEEditor
         static void LoadSceneFromJson(const char *filepath);
 
     private:
+        static Json::Value clipboardObject;
+        static bool hasClipboard;
+        static Json::Value SerializeGameObject(Engine::GameObject *go);
+        static Engine::GameObject *DeserializeGameObject(const Json::Value &goJson);
         static void DrawGameObjectHeader();
         static void DrawComponent(Engine::Component *comp, const TypeDescriptor &meta, Engine::Component *&componentToRemove);
         static void DrawField(Engine::Component *comp, const FieldDescriptor &field);

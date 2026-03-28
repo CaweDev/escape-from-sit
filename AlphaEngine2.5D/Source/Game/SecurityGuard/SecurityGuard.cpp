@@ -89,6 +89,29 @@ namespace Game {
         SetState(GuardState::Chase);
     }
 
+    void SecurityGuard::OnDistracted(const Engine::Vector2 &noisePos)
+    {
+        isDistracted = true;
+        distractionPos = noisePos;
+
+        memory.hasLastSeen = true;
+        memory.lastSeenPos = noisePos;
+        memory.timeSinceSeen = 0.0f;
+
+        int targetX = static_cast<int>(noisePos.x);
+        int targetY = static_cast<int>(noisePos.y);
+        BuildPathBFS_ToGoal(targetX, targetY);
+
+        SetState(GuardState::Search);
+        searchTimer = 0.0f;
+        repathTimer = 0.0f;
+    }
+
+    void SecurityGuard::ClearDistraction()
+    {
+        isDistracted = false;
+    }
+
     void SecurityGuard::Update() {
         if (!tileMap || !playerTf || !playerData) return;
         UpdateStateColor();
@@ -284,54 +307,88 @@ namespace Game {
         }
     }
 
-    void SecurityGuard::SearchUpdate() {
-    // If investigating sabotage, prioritize terminal repair over chasing player
-    if (investigatingSabotage) {
-        // Only interrupt for immediate catch
-        if (IsCaught()) {
-            investigatingSabotage = false;
-            SetState(GuardState::Catch);
-            if (playerData) playerData->Catch();
+    void SecurityGuard::SearchUpdate()
+    {
+        if (isDistracted)
+        {
+            repathTimer -= Engine::Time::deltaTime;
+            if (repathTimer <= 0.0f)
+            {
+                BuildPathBFS_ToGoal((int)distractionPos.x, (int)distractionPos.y);
+                repathTimer = GetSecurityGuardConfig().chaseRepathInterval;
+            }
+
+            if (path.empty() || pathIndex >= (int)path.size())
+            {
+                float dx = distractionPos.x - transform->position.x;
+                float dy = distractionPos.y - transform->position.y;
+                float distSq = dx * dx + dy * dy;
+
+                auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
+                if (distSq > 0.05f)
+                {
+                    float len = std::sqrt(distSq);
+                    if (rb)
+                        rb->velocity = Engine::Vector2((dx / len) * searchSpeed, (dy / len) * searchSpeed);
+                }
+                else
+                {
+                    if (rb)
+                        rb->velocity = Engine::Vector2(0.0f, 0.0f);
+                }
+            }
+            else
+            {
+                FollowPath(searchSpeed);
+            }
             return;
         }
-        // Otherwise stay focused on reaching terminal even if player spotted
-    }
-    else if (CanSeePlayer()) {
-        // Normal search behavior: spot player ? chase
-        memory.lastSeenPos = { playerTf->position.x, playerTf->position.y };
-        memory.hasLastSeen = true;
-        memory.timeSinceSeen = 0.0f;
-        repathTimer = 0.0f;
-        cctvPursuitTimer = 0.0f;
-        SetState(GuardState::Chase);
-        return;
-    }
+
+        if (investigatingSabotage)
+        {
+            if (IsCaught())
+            {
+                investigatingSabotage = false;
+                SetState(GuardState::Catch);
+                if (playerData)
+                    playerData->Catch();
+                return;
+            }
+        }
+        else if (CanSeePlayer())
+        {
+            memory.lastSeenPos = {playerTf->position.x, playerTf->position.y};
+            memory.hasLastSeen = true;
+            memory.timeSinceSeen = 0.0f;
+            repathTimer = 0.0f;
+            cctvPursuitTimer = 0.0f;
+            SetState(GuardState::Chase);
+            return;
+        }
 
         searchTimer += Engine::Time::deltaTime;
 
-        // Handle sabotage investigation
         if (investigatingSabotage && cctvTerminals)
         {
             sabotageInvestigateTimer -= Engine::Time::deltaTime;
-            
-            // Check if we're at destination
+
             bool atDestination = (path.empty() || pathIndex >= (int)path.size());
-            
+
             if (atDestination)
             {
-                // Find nearby disabled terminal and start repair
                 bool foundTerminal = false;
-                for (auto* terminal : *cctvTerminals)
+                for (auto *terminal : *cctvTerminals)
                 {
-                    if (!terminal || !terminal->isDisabled) continue;
-                    
+                    if (!terminal || !terminal->isDisabled)
+                        continue;
+
                     Engine::Vector2 termPos(terminal->transform->position.x, terminal->transform->position.y);
                     Engine::Vector2 guardPos(transform->position.x, transform->position.y);
-                    
+
                     float dx = termPos.x - guardPos.x;
                     float dy = termPos.y - guardPos.y;
-                    float dist = std::sqrt(dx*dx + dy*dy);
-                    
+                    float dist = std::sqrt(dx * dx + dy * dy);
+
                     if (dist <= GetSecurityGuardConfig().terminalRepairDistance && !terminal->guardIsRepairing)
                     {
                         terminal->StartRepair(this);
@@ -339,11 +396,9 @@ namespace Game {
                         break;
                     }
                 }
-                
-                // If no terminal found at destination, search nearby area
+
                 if (!foundTerminal)
                 {
-                    // Path to a random nearby location to continue searching
                     int r = GetSecurityGuardConfig().fallbackSearchRadius;
                     int gx = (int)transform->position.x + (std::rand() % (r * 2 + 1) - r);
                     int gy = (int)transform->position.y + (std::rand() % (r * 2 + 1) - r);
@@ -353,8 +408,7 @@ namespace Game {
                     }
                 }
             }
-            
-            // Timeout: return to patrol
+
             if (sabotageInvestigateTimer <= 0.0f)
             {
                 investigatingSabotage = false;
@@ -365,17 +419,20 @@ namespace Game {
             }
         }
 
-        if (!path.empty() && pathIndex < (int)path.size()) {
+        if (!path.empty() && pathIndex < (int)path.size())
+        {
             FollowPath(searchSpeed);
         }
-        else {
+        else
+        {
             float oldMin = patrolMinGoalDist;
             patrolMinGoalDist = 2.0f;
             BuildPathBFS_PatrolExplore();
             patrolMinGoalDist = oldMin;
         }
 
-        if (searchTimer >= searchDuration) {
+        if (searchTimer >= searchDuration)
+        {
             memory.hasLastSeen = false;
             memory.timeSinceSeen = 0.0f;
             investigatingSabotage = false;

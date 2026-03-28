@@ -21,21 +21,21 @@
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/ZoneManager/ZoneManager.hpp"
 
-
-
-namespace Game {
+namespace Game
+{
 
     class CCTVTerminal;
 
-    class SecurityGuard : public Engine::Component {
+    class SecurityGuard : public Engine::Component
+    {
     public:
-        Engine::TileMap* tileMap = nullptr;
-        Engine::Transform* playerTf = nullptr;
-        Player* playerData = nullptr;
+        Engine::TileMap *tileMap = nullptr;
+        Engine::Transform *playerTf = nullptr;
+        Player *playerData = nullptr;
 
-        Game::ZoneManager* zoneMgr = nullptr;
-        Game::Heatmap* heatmap = nullptr;
-        std::vector<CCTVTerminal*>* cctvTerminals = nullptr;
+        Game::ZoneManager *zoneMgr = nullptr;
+        Game::Heatmap *heatmap = nullptr;
+        std::vector<CCTVTerminal *> *cctvTerminals = nullptr;
 
         float patrolSpeed = 1.5f;
         float chaseSpeed = 2.4f;
@@ -48,17 +48,20 @@ namespace Game {
         float maxLostSightTime = 2.5f;
         float searchDuration = 4.0f;
 
+        bool isDistracted = false;
+        Engine::Vector2 distractionPos;
+        
         void Initialize() override;
         void Update() override;
         void UpdateStateColor();
 
-        void OnCCTVSpotted(const Engine::Vector2& worldPos);
-        void OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, [[maybe_unused]] int sabotagedZoneId);
-        void SetTerminals(std::vector<CCTVTerminal*>* terminals) { cctvTerminals = terminals; }
+        void OnCCTVSpotted(const Engine::Vector2 &worldPos);
+        void OnCCTVSystemSabotaged(const Engine::Vector2 &controlRoomPos, [[maybe_unused]] int sabotagedZoneId);
+        void SetTerminals(std::vector<CCTVTerminal *> *terminals) { cctvTerminals = terminals; }
 
         // ML Zone Control
         void SetPatrolZoneOverride(int zoneId);
-        int  GetPatrolZoneOverride() const { return m_hasForcedZone ? m_forcedZoneId : -1; }
+        int GetPatrolZoneOverride() const { return m_hasForcedZone ? m_forcedZoneId : -1; }
 
         int homeZoneId = 1;
 
@@ -70,25 +73,32 @@ namespace Game {
         void ClearAssist();
         void SetFullEscalation(int zoneId);
         void ClearFullEscalation();
-
-        Engine::Transform* transform = nullptr;
+        void OnDistracted(const Engine::Vector2 &noisePos);
+        void ClearDistraction();
+        Engine::Transform *transform = nullptr;
 
         // CCTV sabotage response (public for ML system access)
         bool investigatingSabotage = false;
 
     private:
-        enum class GuardState { Patrol = 0, Chase, Search, Catch };
+        enum class GuardState
+        {
+            Patrol = 0,
+            Chase,
+            Search,
+            Catch
+        };
         GuardState state = GuardState::Patrol;
 
         bool assisting = false;
         bool fullEscalation = false;
-        
+
         // Sabotage tracking (moved from public section)
         Engine::Vector2 sabotageLocation{};
         float sabotageInvestigateTimer = 0.0f;
 
         bool m_hasForcedZone = false;
-        int  m_forcedZoneId = 1;
+        int m_forcedZoneId = 1;
 
         float zoneCommitTimer = 0.0f;
         float zoneCommitDuration = 3.0f;
@@ -96,7 +106,8 @@ namespace Game {
         float cctvPursuitTimer = 0.0f;
         float cctvPursuitDuration = 4.0f;
 
-        struct GuardMemory {
+        struct GuardMemory
+        {
             Engine::Vector2 lastSeenPos{};
             bool hasLastSeen = false;
             float timeSinceSeen = 0.0f;
@@ -108,7 +119,7 @@ namespace Game {
         float repathTimer = 0.0f;
         float searchTimer = 0.0f;
 
-        Engine::Door* heldDoor = nullptr;
+        Engine::Door *heldDoor = nullptr;
         float doorHoldReleaseDist = 1.25f;
 
         std::unordered_map<int, int> visitCount;
@@ -124,7 +135,7 @@ namespace Game {
 
     private:
         void SetState(GuardState newState);
-        const char* StateToString(GuardState s) const;
+        const char *StateToString(GuardState s) const;
 
         void PatrolUpdate();
         void ChaseUpdate();
@@ -135,14 +146,14 @@ namespace Game {
 
         void FollowPath(float speed);
         void UpdateDoorAuto();
-        Engine::Door* FindDoorAtTile(int tx, int ty) const;
+        Engine::Door *FindDoorAtTile(int tx, int ty) const;
 
         void BuildPathBFS_ToGoal(int gx, int gy);
         void BuildPathBFS_PatrolExplore();
 
         int iD(int x, int y) const { return y * tileMap->width + x; }
         Engine::Vector2 WorldFromTile(int x, int y) const { return Engine::Vector2((float)x + 0.5f, (float)y + 0.5f); }
-        void GetCurrentTile(int& tx, int& ty) const;
+        void GetCurrentTile(int &tx, int &ty) const;
         float DistSqTo(float x, float y) const;
     };
 

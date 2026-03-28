@@ -2,7 +2,6 @@
 #include "GameEditor.hpp"
 #include "imgui.h"
 #include <string>
-#include <json/json.h>
 #include <fstream>
 #include <filesystem>
 #include <algorithm>
@@ -19,6 +18,176 @@ namespace AEEditor
     Engine::GameObject *ObjectManager::selectedObject = nullptr;
     Engine::GameObject *ObjectManager::draggingObject = nullptr;
     std::vector<Engine::GameObject *> ObjectManager::loadedObjects;
+
+    Json::Value ObjectManager::clipboardObject;
+    bool ObjectManager::hasClipboard = false;
+
+    // =========================================================================
+    // CORE SERIALIZATION HELPERS
+    // =========================================================================
+
+    Json::Value ObjectManager::SerializeGameObject(Engine::GameObject *go)
+    {
+        Json::Value goJson;
+        goJson["Name"] = go->name;
+        goJson["Active"] = go->active;
+
+        Json::Value &compArray = goJson["Components"];
+        for (const auto &compPtr : go->GetComponents())
+        {
+            Engine::Component *comp = compPtr.get();
+            if (!comp)
+                continue;
+
+            auto it = Registry::types.find(std::type_index(typeid(*comp)));
+            if (it == Registry::types.end())
+                continue;
+
+            Json::Value compJson;
+            compJson["Type"] = it->second.name;
+
+            for (const auto &field : it->second.fields)
+            {
+                void *addr = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
+                switch (field.type)
+                {
+                case DataType::Int:
+                    compJson[field.name] = *static_cast<int *>(addr);
+                    break;
+                case DataType::Float:
+                    compJson[field.name] = *static_cast<float *>(addr);
+                    break;
+                case DataType::Bool:
+                    compJson[field.name] = *static_cast<bool *>(addr);
+                    break;
+                case DataType::Vector2:
+                {
+                    auto *v = static_cast<Engine::Vector2 *>(addr);
+                    compJson[field.name]["x"] = v->x;
+                    compJson[field.name]["y"] = v->y;
+                    break;
+                }
+                case DataType::Vector3:
+                {
+                    auto *v = static_cast<Engine::Vector3 *>(addr);
+                    compJson[field.name]["x"] = v->x;
+                    compJson[field.name]["y"] = v->y;
+                    compJson[field.name]["z"] = v->z;
+                    break;
+                }
+                case DataType::Color:
+                {
+                    auto *c = static_cast<Engine::Color *>(addr);
+                    compJson[field.name]["r"] = c->r;
+                    compJson[field.name]["g"] = c->g;
+                    compJson[field.name]["b"] = c->b;
+                    compJson[field.name]["a"] = c->a;
+                    break;
+                }
+                case DataType::Sprite:
+                case DataType::String:
+                    compJson[field.name] = *static_cast<std::string *>(addr);
+                    break;
+                }
+            }
+            compArray.append(compJson);
+        }
+        return goJson;
+    }
+
+    Engine::GameObject *ObjectManager::DeserializeGameObject(const Json::Value &goJson)
+    {
+        auto *go = Engine::SceneManager::GetActiveScene()->CreateGameObject(goJson["Name"].asString());
+        go->active = goJson["Active"].asBool();
+
+        const Json::Value &compArray = goJson["Components"];
+        for (const auto &compJson : compArray)
+        {
+            std::string typeName = compJson["Type"].asString();
+
+            auto it = Registry::nameToType.find(typeName);
+            if (it == Registry::nameToType.end())
+                continue;
+
+            const TypeDescriptor &meta = Registry::types[it->second];
+
+            Engine::Component *comp = nullptr;
+            if (typeName == "Transform")
+            {
+                comp = go->transform;
+            }
+            else
+            {
+                comp = meta.instantiate(go);
+            }
+
+            for (const auto &field : meta.fields)
+            {
+                if (!compJson.isMember(field.name))
+                    continue;
+
+                void *addr = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
+                const Json::Value &val = compJson[field.name];
+
+                switch (field.type)
+                {
+                case DataType::Int:
+                    *static_cast<int *>(addr) = val.asInt();
+                    break;
+                case DataType::Float:
+                    *static_cast<float *>(addr) = val.asFloat();
+                    break;
+                case DataType::Bool:
+                    *static_cast<bool *>(addr) = val.asBool();
+                    break;
+                case DataType::Vector2:
+                {
+                    auto *v = static_cast<Engine::Vector2 *>(addr);
+                    v->x = val["x"].asFloat();
+                    v->y = val["y"].asFloat();
+                    break;
+                }
+                case DataType::Vector3:
+                {
+                    auto *v = static_cast<Engine::Vector3 *>(addr);
+                    v->x = val["x"].asFloat();
+                    v->y = val["y"].asFloat();
+                    v->z = val["z"].asFloat();
+                    break;
+                }
+                case DataType::Color:
+                {
+                    auto *c = static_cast<Engine::Color *>(addr);
+                    c->r = val["r"].asFloat();
+                    c->g = val["g"].asFloat();
+                    c->b = val["b"].asFloat();
+                    c->a = val["a"].asFloat();
+                    break;
+                }
+                case DataType::Sprite:
+                {
+                    std::string path = val.asString();
+                    *static_cast<std::string *>(addr) = path;
+                    if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
+                    {
+                        sr->SetSprite(Engine::AssetManager::GetSprite(path));
+                    }
+                    break;
+                }
+                case DataType::String:
+                {
+                    *static_cast<std::string *>(addr) = val.asString();
+                    break;
+                }
+                }
+            }
+        }
+        return go;
+    }
+
+    // =========================================================================
+    // EDITOR UI
+    // =========================================================================
 
     void ObjectManager::DrawHierarchy()
     {
@@ -37,10 +206,39 @@ namespace AEEditor
         }
         ImGui::Separator();
 
-        // Global delete trigger when not typing in an input field
-        if (selectedObject && ImGui::IsKeyPressed(ImGuiKey_Delete) && !ImGui::GetIO().WantTextInput)
+        ImGuiIO &io = ImGui::GetIO();
+
+        // Keyboard Shortcuts (Delete, Copy, Paste)
+        if (!io.WantTextInput)
         {
-            ImGui::OpenPopup("Delete Confirmation");
+            if (selectedObject && ImGui::IsKeyPressed(ImGuiKey_Delete))
+            {
+                ImGui::OpenPopup("Delete Confirmation");
+            }
+
+            // COPY
+            if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_C))
+            {
+                if (selectedObject && !selectedObject->isPendingDestruction)
+                {
+                    clipboardObject = SerializeGameObject(selectedObject);
+                    hasClipboard = true;
+                }
+            }
+
+            // PASTE
+            if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_V))
+            {
+                if (hasClipboard)
+                {
+                    Engine::GameObject *newGo = DeserializeGameObject(clipboardObject);
+                    newGo->name += " (Copy)"; // Distinguish the copy
+
+                    loadedObjects.push_back(newGo);
+                    selectedObject = newGo;
+                    SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
+                }
+            }
         }
 
         if (ImGui::BeginPopupModal("Delete Confirmation", NULL, ImGuiWindowFlags_AlwaysAutoResize))
@@ -51,14 +249,11 @@ namespace AEEditor
             if (ImGui::Button("Yes", ImVec2(120, 0)))
             {
                 selectedObject->isPendingDestruction = true;
-
                 loadedObjects.erase(std::remove(loadedObjects.begin(), loadedObjects.end(), selectedObject), loadedObjects.end());
-
                 selectedObject = nullptr;
                 GameEditor::currentTileValue = -1;
 
                 SaveSceneToJson("Assets/Config/Scenes/EditorScene.json");
-
                 ImGui::CloseCurrentPopup();
             }
             ImGui::SetItemDefaultFocus();
@@ -193,7 +388,6 @@ namespace AEEditor
         if (isHeaderOpen)
         {
             ImGui::Checkbox("Enabled", &comp->enabled);
-
             for (const auto &field : meta.fields)
             {
                 DrawField(comp, field);
@@ -233,7 +427,6 @@ namespace AEEditor
         {
             auto *val = static_cast<Engine::Vector2 *>(rawAddress);
             float vec[2] = {val->x, val->y};
-
             if (ImGui::DragFloat2("##", vec, 0.1f))
             {
                 val->x = vec[0];
@@ -245,7 +438,6 @@ namespace AEEditor
         {
             auto *val = static_cast<Engine::Vector3 *>(rawAddress);
             float vec[3] = {val->x, val->y, val->z};
-
             if (ImGui::DragFloat3("##", vec, 0.1f))
             {
                 val->x = vec[0];
@@ -258,7 +450,6 @@ namespace AEEditor
         {
             auto *val = static_cast<Engine::Color *>(rawAddress);
             float col[4] = {val->r, val->g, val->b, val->a};
-
             if (ImGui::ColorEdit4("##", col))
             {
                 val->r = col[0];
@@ -299,7 +490,6 @@ namespace AEEditor
                                     sr->SetSprite(Engine::AssetManager::GetSprite(*path));
                                 }
                             }
-
                             if (isSelected)
                                 ImGui::SetItemDefaultFocus();
                         }
@@ -340,6 +530,10 @@ namespace AEEditor
         ImGui::PopID();
     }
 
+    // =========================================================================
+    // FILE I/O
+    // =========================================================================
+
     void ObjectManager::SaveSceneToJson(const char *filepath)
     {
         Json::Value root;
@@ -350,77 +544,7 @@ namespace AEEditor
             if (!go || go->isPendingDestruction)
                 continue;
 
-            Json::Value goJson;
-            goJson["Name"] = go->name;
-            goJson["Active"] = go->active;
-
-            Json::Value &compArray = goJson["Components"];
-            for (const auto &compPtr : go->GetComponents())
-            {
-                Engine::Component *comp = compPtr.get();
-                if (!comp)
-                    continue;
-
-                auto it = Registry::types.find(std::type_index(typeid(*comp)));
-                if (it == Registry::types.end())
-                    continue;
-
-                Json::Value compJson;
-                compJson["Type"] = it->second.name;
-
-                for (const auto &field : it->second.fields)
-                {
-                    void *addr = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
-                    switch (field.type)
-                    {
-                    case DataType::Int:
-                        compJson[field.name] = *static_cast<int *>(addr);
-                        break;
-                    case DataType::Float:
-                        compJson[field.name] = *static_cast<float *>(addr);
-                        break;
-                    case DataType::Bool:
-                        compJson[field.name] = *static_cast<bool *>(addr);
-                        break;
-                    case DataType::Vector2:
-                    {
-                        auto *v = static_cast<Engine::Vector2 *>(addr);
-                        compJson[field.name]["x"] = v->x;
-                        compJson[field.name]["y"] = v->y;
-                        break;
-                    }
-                    case DataType::Vector3:
-                    {
-                        auto *v = static_cast<Engine::Vector3 *>(addr);
-                        compJson[field.name]["x"] = v->x;
-                        compJson[field.name]["y"] = v->y;
-                        compJson[field.name]["z"] = v->z;
-                        break;
-                    }
-                    case DataType::Color:
-                    {
-                        auto *c = static_cast<Engine::Color *>(addr);
-                        compJson[field.name]["r"] = c->r;
-                        compJson[field.name]["g"] = c->g;
-                        compJson[field.name]["b"] = c->b;
-                        compJson[field.name]["a"] = c->a;
-                        break;
-                    }
-                    case DataType::Sprite:
-                    {
-                        compJson[field.name] = *static_cast<std::string *>(addr);
-                        break;
-                    }
-                    case DataType::String:
-                    {
-                        compJson[field.name] = *static_cast<std::string *>(addr);
-                        break;
-                    }
-                    }
-                }
-                compArray.append(compJson);
-            }
-            goArray.append(goJson);
+            goArray.append(SerializeGameObject(go));
         }
 
         std::filesystem::path pathObj(filepath);
@@ -453,94 +577,7 @@ namespace AEEditor
         const Json::Value &goArray = root["GameObjects"];
         for (const auto &goJson : goArray)
         {
-            auto *go = Engine::SceneManager::GetActiveScene()->CreateGameObject(goJson["Name"].asString());
-            go->active = goJson["Active"].asBool();
-
-            loadedObjects.push_back(go);
-
-            const Json::Value &compArray = goJson["Components"];
-            for (const auto &compJson : compArray)
-            {
-                std::string typeName = compJson["Type"].asString();
-
-                auto it = Registry::nameToType.find(typeName);
-                if (it == Registry::nameToType.end())
-                    continue;
-
-                const TypeDescriptor &meta = Registry::types[it->second];
-
-                Engine::Component *comp = nullptr;
-                if (typeName == "Transform")
-                {
-                    comp = go->transform;
-                }
-                else
-                {
-                    comp = meta.instantiate(go);
-                }
-
-                for (const auto &field : meta.fields)
-                {
-                    if (!compJson.isMember(field.name))
-                        continue;
-
-                    void *addr = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
-                    const Json::Value &val = compJson[field.name];
-
-                    switch (field.type)
-                    {
-                    case DataType::Int:
-                        *static_cast<int *>(addr) = val.asInt();
-                        break;
-                    case DataType::Float:
-                        *static_cast<float *>(addr) = val.asFloat();
-                        break;
-                    case DataType::Bool:
-                        *static_cast<bool *>(addr) = val.asBool();
-                        break;
-                    case DataType::Vector2:
-                    {
-                        auto *v = static_cast<Engine::Vector2 *>(addr);
-                        v->x = val["x"].asFloat();
-                        v->y = val["y"].asFloat();
-                        break;
-                    }
-                    case DataType::Vector3:
-                    {
-                        auto *v = static_cast<Engine::Vector3 *>(addr);
-                        v->x = val["x"].asFloat();
-                        v->y = val["y"].asFloat();
-                        v->z = val["z"].asFloat();
-                        break;
-                    }
-                    case DataType::Color:
-                    {
-                        auto *c = static_cast<Engine::Color *>(addr);
-                        c->r = val["r"].asFloat();
-                        c->g = val["g"].asFloat();
-                        c->b = val["b"].asFloat();
-                        c->a = val["a"].asFloat();
-                        break;
-                    }
-                    case DataType::Sprite:
-                    {
-                        std::string path = val.asString();
-                        *static_cast<std::string *>(addr) = path;
-
-                        if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
-                        {
-                            sr->SetSprite(Engine::AssetManager::GetSprite(path));
-                        }
-                        break;
-                    }
-                    case DataType::String:
-                    {
-                        *static_cast<std::string *>(addr) = val.asString();
-                        break;
-                    }
-                    }
-                }
-            }
+            loadedObjects.push_back(DeserializeGameObject(goJson));
         }
     }
 }

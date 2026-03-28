@@ -78,17 +78,78 @@ namespace Game
 
     void NPC::Update()
     {
-        if (!tileMap) return;
+        if (!tileMap)
+            return;
 
         float dt = Engine::Time::deltaTime;
-        if (dt <= 0.0f) dt = GetNPCConfig().dtFallback;
+        if (dt <= 0.0f)
+            dt = GetNPCConfig().dtFallback;
+
+        if (isDistracted)
+        {
+            repathTimer -= dt;
+            if (repathTimer <= 0.0f)
+            {
+                BuildPathBFS_ToGoal((int)distractionPos.x, (int)distractionPos.y);
+                repathTimer = 0.5f;
+            }
+
+            if (path.empty() || pathIndex >= (int)path.size())
+            {
+                float dx = distractionPos.x - transform->position.x;
+                float dy = distractionPos.y - transform->position.y;
+                float distSq = dx * dx + dy * dy;
+
+                if (distSq > 0.05f)
+                {
+                    float len = std::sqrt(distSq);
+                    if (m_rb)
+                        m_rb->velocity = Engine::Vector2((dx / len) * speed, (dy / len) * speed);
+                }
+                else
+                {
+                    if (m_rb)
+                        m_rb->velocity = Engine::Vector2(0.0f, 0.0f);
+                }
+            }
+            else
+            {
+                FollowPath(dt);
+            }
+            return;
+        }
 
         switch (type)
         {
-        case NPCType::Annoying: UpdateAnnoying(dt); break;
-        case NPCType::Cleaner:  UpdateCleaner(dt);  break;
-        case NPCType::Bully:    UpdateBully(dt);    break;
+        case NPCType::Annoying:
+            UpdateAnnoying(dt);
+            break;
+        case NPCType::Cleaner:
+            UpdateCleaner(dt);
+            break;
+        case NPCType::Bully:
+            UpdateBully(dt);
+            break;
         }
+    }
+
+    void NPC::OnDistracted(const Engine::Vector2 &noisePos)
+    {
+        activeTimer = 0.0f;
+        isDistracted = true;
+        distractionPos = noisePos;
+        repathTimer = 0.0f;
+
+        int targetX = static_cast<int>(noisePos.x);
+        int targetY = static_cast<int>(noisePos.y);
+        BuildPathBFS_ToGoal(targetX, targetY);
+
+    }
+
+    void NPC::ClearDistraction()
+    {
+        isDistracted = false;
+        repathTimer = 0.0f;
     }
 
     void NPC::UpdateAnnoying(float dt)

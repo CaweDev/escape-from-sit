@@ -5,28 +5,38 @@
 #include "Engine/Core/Time.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Audio/SoundManager.hpp"
+#include "Game/NPC/NPC.hpp"
 
 namespace Game
 {
+    void LaptopItem::Initialize()
+    {
+        Item::Initialize();
+        rigidbody2D = gameObject->GetComponent<Engine::Rigidbody2D>();
+    }
 
     void LaptopItem::Use(Engine::GameObject *user)
     {
         gameObject->active = true;
-        gameObject->transform->position = user->transform->position;
+        this->interactable->enabled = false;
+        transform->position = user->transform->position;
+        gameObject->transform->position.z = 0.5f;
+        rigidbody2D->bodyType = Engine::RigidbodyType2D::Dynamic;
+        rigidbody2D->drag = 3.0f;
+        rigidbody2D->gravityScale = 1.0f;
 
-        auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
-        if (!rb)
-        {
-            rb = gameObject->AddComponent<Engine::Rigidbody2D>();
-        }
-        rb->bodyType = Engine::RigidbodyType2D::Dynamic;
-        rb->drag = 2.0f;
+        rigidbody2D->currentHeight = 0.5f;
+        rigidbody2D->verticalVelocity = 2.0f;
+        rigidbody2D->isGrounded = false;
+        rigidbody2D->velocity = Engine::Vector2(0, 0);
 
-        Engine::Vector2 throwDir(1.0f, 0.0f);
-        rb->velocity = Engine::Vector2(0, 0);
-        rb->AddImpulse(throwDir * 15.0f);
+        float rot = AEDegToRad(user->transform->rotation);
+        Engine::Vector2 throwDir(cosf(rot), sinf(rot));
+        rigidbody2D->AddImpulse(throwDir * 10.0f);
 
         isThrown = true;
+        hasLanded = false;
+        timer = 1.5f;
     }
 
     void LaptopItem::Update()
@@ -34,25 +44,81 @@ namespace Game
         if (!isThrown)
             return;
 
-        fuseTimer -= Engine::Time::deltaTime;
-        if (fuseTimer <= 0.0f)
+        if (rigidbody2D && rigidbody2D->isGrounded && !hasLanded)
         {
-            Engine::SoundManager::PlaySFX("loud_noise");
+            hasLanded = true;
+        }
 
-            auto activeScene = Engine::SceneManager::GetActiveScene();
-            if (activeScene)
+        if (hasLanded)
+        {
+            timer -= Engine::Time::deltaTime;
+
+            if (timer >= 0.0f)
             {
-                for (auto &obj : activeScene->GetGameObjects())
+                Engine::SoundManager::PlaySFX("loud_noise");
+
+                Engine::Vector2 noisePos = gameObject->transform->position;
+                auto activeScene = Engine::SceneManager::GetActiveScene();
+
+                const float distractionRadius = 15.0f;
+                const float radiusSq = distractionRadius * distractionRadius;
+
+                if (activeScene)
                 {
-                    auto guard = obj->GetComponent<SecurityGuard>();
-                    if (guard)
+                    for (auto &obj : activeScene->GetGameObjects())
                     {
-                        guard->OnCCTVSpotted(gameObject->transform->position);
+                        if (!obj || !obj->active || !obj->transform)
+                            continue;
+
+                        float dx = obj->transform->position.x - noisePos.x;
+                        float dy = obj->transform->position.y - noisePos.y;
+                        if ((dx * dx + dy * dy) > radiusSq)
+                            continue;
+
+                        auto guard = obj->GetComponent<SecurityGuard>();
+                        if (guard)
+                        {
+                            guard->OnDistracted(noisePos);
+                            distractedEntities.push_back(obj.get());
+                            continue;
+                        }
+
+                        auto npc = obj->GetComponent<NPC>();
+                        if (npc)
+                        {
+                            npc->OnDistracted(noisePos);
+                            distractedEntities.push_back(obj.get());
+                        }
                     }
                 }
             }
-            Engine::GameObject::Destroy(gameObject);
+            else
+            {
+                Engine::GameObject::Destroy(gameObject);
+            }
         }
     }
 
+    void LaptopItem::OnDestroy()
+    {
+        for (auto *obj : distractedEntities)
+        {
+            if (!obj || obj->isPendingDestruction)
+                continue;
+
+            auto guard = obj->GetComponent<SecurityGuard>();
+            if (guard)
+            {
+                guard->ClearDistraction();
+                continue;
+            }
+
+            auto npc = obj->GetComponent<NPC>();
+            if (npc)
+            {
+                npc->ClearDistraction();
+            }
+        }
+        distractedEntities.clear();
+    }
 }

@@ -57,6 +57,8 @@ void Rigidbody2D::FixedUpdate() {
             verticalVelocity = 0;
             isGrounded = true;
         }
+
+        transform->position.z = currentHeight;
     }
     
     // Movement is handled by Physics2D::FixedUpdate() which processes collisions

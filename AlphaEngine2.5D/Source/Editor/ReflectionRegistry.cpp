@@ -61,7 +61,7 @@ namespace AEEditor
 
         Registry::RegisterClassType<Game::LaptopItem>("LaptopItem");
         Registry::RegisterFieldType<Game::LaptopItem>("itemName", offsetof(Game::LaptopItem, itemName), DataType::String);
-        Registry::RegisterFieldType<Game::LaptopItem>("fuseTimer", offsetof(Game::LaptopItem, fuseTimer), DataType::Float);
+        Registry::RegisterFieldType<Game::LaptopItem>("timer", offsetof(Game::LaptopItem, timer), DataType::Float);
     }
 
     void RegisterAccessCard()
