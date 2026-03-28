@@ -260,6 +260,7 @@
     <None Include="Assets\Config\Engine\minimap.json" />
     <None Include="Assets\Config\Engine\physics.json" />
     <None Include="Assets\Config\Engine\rendering.json" />
+    <None Include="Assets\Config\Game\fps_scene.json" />
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>

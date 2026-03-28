@@ -66,9 +66,6 @@ namespace Game
     public:
         FPSScene() : Scene("FPSScene") {}
 
-        // =====================
-        // Core refs
-        // =====================
         bool gameEnded = false;
 
         FPSController *playerController = nullptr;
@@ -78,7 +75,6 @@ namespace Game
         PlayerHUD *playerHUD = nullptr;
         PlayerPowerUpController *powerUpController = nullptr;
 
-        // Guards / CCTV
         std::vector<Game::SecurityGuard *> guards;
         std::vector<Game::CCTVCamera *> cctvSensors;
         std::vector<Game::CCTVTerminal *> cctvTerminals;
@@ -90,7 +86,6 @@ namespace Game
         Vector3 playerViewPos{};
         float playerViewRot = 0.0f;
 
-        // Exit
         Vector2 exitPos;
         float winRadius = 0.6f;
         bool printedWin = false;
@@ -98,26 +93,19 @@ namespace Game
         std::vector<GameObject *> powerUps;
         std::vector<float> powerUpBaseZ;
         float powerUpTime = 0.0f;
+
         struct CCTVInfo
         {
             Vector3 pos;
             float rotDeg;
         };
+
         PauseMenu *pauseMenu = nullptr;
         Game::LoseScreen *loseScreen = nullptr;
         Game::WinScreen *winScreen = nullptr;
         Game::ControlsMenu *controlsMenu = nullptr;
         bool showControlsAtStart = false;
 
-        // UI::Canvas* modalCanvas = nullptr;
-        // UI::Panel* modalPanel = nullptr;
-        // UI::Text* modalTitle = nullptr;
-        // UI::Button* modalButton = nullptr;
-        // bool endPanelShown = false;
-
-        // =====================
-        // Zones (4 quadrants)
-        // =====================
         struct Zone
         {
             int id;
@@ -133,7 +121,7 @@ namespace Game
                 if (tx >= z.minX && tx <= z.maxX &&
                     ty >= z.minY && ty <= z.maxY)
                 {
-                    return z.id; // 1..4
+                    return z.id;
                 }
             }
             return -1;
@@ -153,65 +141,72 @@ namespace Game
             return Vector2(0.0f, 0.0f);
         }
 
-        // =====================
-        // ML owner
-        // =====================
         Game::ZoneManager zoneMgr;
-        Game::Heatmap     heatmap;
-        Game::UCB1Bandit  bandit{ 4, 2.0f };
+        Game::Heatmap heatmap;
+        Game::UCB1Bandit bandit{4, 2.0f};
 
-        std::vector<int> zoneGrid; // w*h, values 0..4
+        std::vector<int> zoneGrid;
 
         float banditTimer = 0.0f;
         float banditInterval = 2.0f;
+        int prevChosenZoneId = 1;
 
-        int prevChosenZoneId = 1; // 1..4
-
-        // Reward tuning
         float wHeat = 0.55f;
         float wCCTV = 0.45f;
-        float heatRef = 50.0f; // tune based on testing
-        float cctvRef = 6.0f;  // tune based on testing
+        float heatRef = 50.0f;
+        float cctvRef = 6.0f;
 
         float heatAddPerSec = 1.0f;
         float heatDecayPerSec = 0.985f;
 
-        // CCTV score with cooldown (prevents huge spikes)
-        float cctvScore[5] = {0, 0, 0, 0, 0}; // use 1..4
-        std::vector<float> cctvCooldown;      // per camera
-        float cctvSpikeCooldown = 1.0f;       // seconds
+        float banditSwitchStrongEvidenceThreshold = 0.5f;
+        float banditSwitchCooldownStrongSec = 25.0f;
+        float banditSwitchCooldownNormalSec = 8.0f;
+        float cctvScoreDecayFactor = 0.85f;
+
+        float cctvScore[5] = {0, 0, 0, 0, 0};
+        std::vector<float> cctvCooldown;
+        float cctvSpikeCooldown = 1.0f;
         float cctvSpikeAmount = 1.0f;
 
-        // "Nearest assist" behaviour
         int priorityZoneId = 1;
 
-        // Progressive escalation
         float priorityZoneHotTimer = 0.0f;
         float fullEscalationThreshold = 30.0f;
         bool fullEscalationActive = false;
 
-        // Debug (no flood)
         bool debugML = false;
         float mlSummaryTimer = 0.0f;
 
-        // NPCs (Bully + Annoying classmates)
         std::vector<Game::NPC *> npcs;
 
-        // Annoying-classmate loop channel key
         bool m_annoyingLoopPlaying = false;
-        // One-shot SFX trigger guard for very-close annoying NPCs
         bool m_annoyingSfxTriggered = false;
         float m_annoyingLoopLastDistance = 999999.0f;
 
-        // Level Editor
         LevelEditor levelEditor;
-        Game::BanditVisualizer* banditVisualizer = nullptr;
-        
-        // Map dimensions (for debugging)
+        Game::BanditVisualizer *banditVisualizer = nullptr;
+
         int mapWidth = 0;
         int mapHeight = 0;
 
     private:
+        float spawnExcludeX = 2.5f;
+        float spawnExcludeY = 2.5f;
+        float spawnExcludeRadius = 7.0f;
+
+        int spawnPickAttempts = 100;
+        int spawnFallbackMaxRadius = 20;
+
+        float bullyNPCSpeed = 2.0f;
+        float bullyNPCTriggerRadius = 3.0f;
+        float annoyingNPCSpeed = 1.2f;
+        float annoyingNPCTriggerRadius = 2.5f;
+        float annoyingNPCBlockTime = 1.5f;
+
+        float spawnedNPCColliderRadius = 0.25f;
+        float spawnedGuardColliderRadius = 0.3f;
+
         static float Clamp01(float v)
         {
             if (v < 0.0f)
@@ -243,7 +238,6 @@ namespace Game
                       << cctvScore[3] << " "
                       << cctvScore[4] << "\n";
 
-            // Show heatmap per zone
             for (int z = 1; z <= 4; ++z)
             {
                 float heatSum = heatmap.SumZone(zoneMgr.GetGrid(), z);
@@ -272,81 +266,9 @@ namespace Game
             playerTf->rotation = cctvViewRot[idx];
         }
 
-        /* void CreateEndPanel() {
-             if (!UI::UIManager::GetInstance()) return;
-
-             modalCanvas = UI::UIManager::GetInstance()->CreateCanvas();
-             modalCanvas->SetSortOrder(1000);
-             modalCanvas->SetReferenceResolution(1280.f, 720.f);
-             modalCanvas->SetScaleMode(UI::CanvasScaleMode::ScaleWithScreenSize);
-
-             modalPanel = modalCanvas->CreateChild<UI::Panel>();
-             modalPanel->name = "EndPanel";
-             modalPanel->rectTransform.SetCentered(1000.0f, 560.0f);
-             modalPanel->SetBackgroundColor(Engine::Color(0, 0, 0, 1));
-             modalPanel->visible = false;
-
-             modalTitle = modalPanel->CreateChild<UI::Text>();
-             modalTitle->name = "EndTitle";
-             modalTitle->SetAnchors({ 0.0f, 1.0f }, { 1.0f, 1.0f });
-             modalTitle->SetPivot({ 0.5f, 1.0f });
-             modalTitle->SetAnchoredPosition({ 0.0f, -24.0f });
-             modalTitle->SetSizeDelta({ 0.0f, 64.0f });
-             modalTitle->SetText("");
-             modalTitle->SetFontSize(3.0f);
-             modalTitle->SetColor(Engine::Color::white());
-             modalTitle->SetAnchor(UI::TextAnchor::MiddleCenter);
-
-             modalButton = modalPanel->CreateChild<UI::Button>();
-             modalButton->name = "EndButton";
-             modalButton->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
-             modalButton->SetPivot({ 0.5f, 0.0f });
-             modalButton->SetAnchoredPosition({ 0.0f, 20.0f });
-             modalButton->SetSizeDelta({ 240.0f, 56.0f });
-             modalButton->SetText("Restart");
-             modalButton->SetBackgroundColor(Engine::Color(0.25f, 0.5f, 0.25f, 1.0f));
-
-             modalButton->onClick = [this]() {
-                 Application::UnregisterPause("Endpanel");
-                 SceneManager::LoadScene("FPSScene");
-                 };
-         }
-
-         void ShowEndPanel(const std::string& titleText, const std::string& buttonText, std::function<void()> onButton) {
-             if (!modalPanel || !modalTitle || !modalButton) return;
-
-             modalTitle->SetText(titleText.c_str());
-             modalButton->SetText(buttonText.c_str());
-             modalPanel->visible = true;
-             endPanelShown = true;
-
-             Input::RegisterCursorUnlock("EndPanel");
-
-             Application::RegisterPause("Endpanel");
-
-             modalButton->onClick = [onButton, this]() {
-                 SoundManager::PlaySFX("ui_click");
-                 Input::UnregisterCursorUnlock("EndPanel");
-                 Application::UnregisterPause("Endpanel");
-                 if (onButton) onButton();
-                 modalPanel->visible = false;
-                 endPanelShown = false;
-                 Application::Quit();
-                 };
-
-             gameEnded = true;
-         }*/
-
-        // ===== Spawn one NPC helper =====
-        // Player spawn position - NPCs must not spawn near here
-        static constexpr float spawnExcludeX = 2.5f;
-        static constexpr float spawnExcludeY = 2.5f;
-        static constexpr float spawnExcludeRadius = 7.0f; // increase to keep guards/NPCs farther from player spawn
-
         Game::NPC *SpawnNPCInZone(int zoneId, NPCType npcType, TileMap *map, const char *spritePath)
         {
             int gx = 0, gy = 0;
-            // helper: check if a tile coordinate corresponds to a door/exit/control-room door
             auto IsDoorTile = [&](int tx, int ty) {
                 if (!map) return false;
                 for (auto &p : map->GetSpawnedDoorPositionsPublic()) {
@@ -362,8 +284,7 @@ namespace Game
             };
 
             bool found = false;
-            // Try multiple times to find a position away from the player spawn area and not on doors
-            for (int attempt = 0; attempt < 100; ++attempt)
+            for (int attempt = 0; attempt < spawnPickAttempts; ++attempt)
             {
                 if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy))
                     break;
@@ -377,11 +298,10 @@ namespace Game
 
             if (!found)
             {
-                // fallback: search outward from zone center for a valid tile
                 Vector2 c = GetZoneCenter(zoneId);
                 int cx = (int)std::floor(c.x);
                 int cy = (int)std::floor(c.y);
-                const int MAXR = 20;
+                const int MAXR = spawnFallbackMaxRadius;
                 bool placed = false;
                 for (int r = 0; r <= MAXR && !placed; ++r) {
                     for (int dy = -r; dy <= r && !placed; ++dy) {
@@ -395,18 +315,19 @@ namespace Game
                             if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
                             if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
                             if (IsDoorTile(nx, ny)) continue;
-                            gx = nx; gy = ny; placed = true; break;
+                            gx = nx;
+                            gy = ny;
+                            placed = true;
+                            break;
                         }
                     }
                 }
                 if (!placed)
                 {
                     bool foundAny = false;
-                    // Try scanning outward from the zone center
                     Vector2 zoneCenter = GetZoneCenter(zoneId);
                     int zx = (int)std::floor(zoneCenter.x);
                     int zy = (int)std::floor(zoneCenter.y);
-                    // Expand outward from center of zone
                     int SCAN_MAX = (map->width > map->height) ? map->width : map->height;
                     for (int r = 0; r <= SCAN_MAX && !foundAny; ++r) {
                         for (int dy = -r; dy <= r && !foundAny; ++dy) {
@@ -415,14 +336,15 @@ namespace Game
                                 int nx = zx + dx;
                                 int ny = zy + dy;
                                 if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
-                                // skip spawn area
                                 float sdx = (float)nx + 0.5f - spawnExcludeX;
                                 float sdy = (float)ny + 0.5f - spawnExcludeY;
                                 if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
                                 if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
-                                // also skip tiles that are doors or exits
                                 if (IsDoorTile(nx, ny)) continue;
-                                gx = nx; gy = ny; foundAny = true; break;
+                                gx = nx;
+                                gy = ny;
+                                foundAny = true;
+                                break;
                             }
                         }
                     }
@@ -445,7 +367,6 @@ namespace Game
             npc->type = npcType;
             npc->zoneId = zoneId;
 
-            //    // Get CameraShake from player camera for bully push effect
             if (playerCam)
             {
                 auto shake = playerCam->gameObject->GetComponent<CameraShake>();
@@ -457,21 +378,19 @@ namespace Game
                 npc->camShake = shake;
             }
 
-            //    // Let NPC pick random walkable goals inside its zone via ZoneManager
             npc->SetPickGoalInZone([this](int zId, int &outX, int &outY) -> bool
                                    { return zoneMgr.PickRandomWalkableInZone(zId, outX, outY); });
 
-            //    // Tuning per type
             if (npcType == NPCType::Bully)
             {
-                npc->speed = 2.0f;
-                npc->triggerRadius = 3.0f;
+                npc->speed = bullyNPCSpeed;
+                npc->triggerRadius = bullyNPCTriggerRadius;
             }
             else
             {
-                npc->speed = 1.2f;
-                npc->triggerRadius = 2.5f;
-                npc->blockTime = 1.5f;
+                npc->speed = annoyingNPCSpeed;
+                npc->triggerRadius = annoyingNPCTriggerRadius;
+                npc->blockTime = annoyingNPCBlockTime;
             }
 
             auto npcRb = go->AddComponent<Rigidbody2D>();
@@ -480,7 +399,7 @@ namespace Game
             npcRb->drag = 0.0f;
 
             auto npcCol = go->AddComponent<CircleCollider2D>();
-            npcCol->radius = 0.25f;
+            npcCol->radius = spawnedNPCColliderRadius;
             npcCol->minHeight = 0.0f;
             npcCol->maxHeight = 2.0f;
 
@@ -498,11 +417,9 @@ namespace Game
             return npc;
         }
 
-        // ===== Spawn one guard helper =====
         Game::SecurityGuard *SpawnGuardInZone(int zoneId, TileMap *map, PlayerHUD *hud, const char *spritePath)
         {
             int gx = 0, gy = 0;
-            // helper: check if a tile coordinate corresponds to a door/exit/control-room door
             auto IsDoorTile = [&](int tx, int ty) {
                 if (!map) return false;
                 for (auto &p : map->GetSpawnedDoorPositionsPublic()) {
@@ -518,48 +435,45 @@ namespace Game
             };
 
             bool found = false;
-            // Try multiple times to find a position that is walkable, not inside player spawn area and not a door
-            for (int attempt = 0; attempt < 100; ++attempt) {
+            for (int attempt = 0; attempt < spawnPickAttempts; ++attempt) {
                 if (!zoneMgr.PickRandomWalkableInZone(zoneId, gx, gy)) break;
-                // exclude player spawn area
                 float dx = (float)gx + 0.5f - spawnExcludeX;
                 float dy = (float)gy + 0.5f - spawnExcludeY;
                 if (dx * dx + dy * dy < spawnExcludeRadius * spawnExcludeRadius) continue;
-                // exclude door tiles
                 if (IsDoorTile(gx, gy)) continue;
                 found = true;
                 break;
             }
 
             if (!found) {
-                // fallback: try zone center then search outward for a valid tile
                 Vector2 c = GetZoneCenter(zoneId);
                 int cx = (int)std::floor(c.x);
                 int cy = (int)std::floor(c.y);
-                const int MAXR = 20;
+                const int MAXR = spawnFallbackMaxRadius;
                 bool placed = false;
                 for (int r = 0; r <= MAXR && !placed; ++r) {
                     for (int dy = -r; dy <= r && !placed; ++dy) {
                         for (int dx = -r; dx <= r && !placed; ++dx) {
-                            // check perimeter only for efficiency
                             if (std::abs(dx) != r && std::abs(dy) != r) continue;
                             int nx = cx + dx;
                             int ny = cy + dy;
                             if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
-                            // skip spawn area
                             float sdx = (float)nx + 0.5f - spawnExcludeX;
                             float sdy = (float)ny + 0.5f - spawnExcludeY;
                             if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
-                            // must be walkable and not a door
                             if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
                             if (IsDoorTile(nx, ny)) continue;
-                            gx = nx; gy = ny; placed = true; break;
+                            gx = nx;
+                            gy = ny;
+                            placed = true;
+                            break;
                         }
                     }
                 }
                 if (!placed) {
                     bool foundAny = false;
-                    int zx2 = cx; int zy2 = cy;
+                    int zx2 = cx;
+                    int zy2 = cy;
                     int SCAN_MAX2 = (map->width > map->height) ? map->width : map->height;
                     for (int r2 = 0; r2 <= SCAN_MAX2 && !foundAny; ++r2) {
                         for (int dy2 = -r2; dy2 <= r2 && !foundAny; ++dy2) {
@@ -573,13 +487,16 @@ namespace Game
                                 if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
                                 if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
                                 if (IsDoorTile(nx, ny)) continue;
-                                gx = nx; gy = ny; foundAny = true; break;
+                                gx = nx;
+                                gy = ny;
+                                foundAny = true;
+                                break;
                             }
                         }
                     }
                     if (!foundAny) {
-                        // last resort fallback to center
-                        gx = cx; gy = cy;
+                        gx = cx;
+                        gy = cy;
                     }
                 }
             }
@@ -595,7 +512,7 @@ namespace Game
             guard->heatmap = &heatmap;
 
             guard->homeZoneId = zoneId;
-            guard->SetPatrolZoneOverride(zoneId); // starts in its own zone
+            guard->SetPatrolZoneOverride(zoneId);
 
             auto rb = go->AddComponent<Rigidbody2D>();
             rb->bodyType = RigidbodyType2D::Dynamic;
@@ -603,7 +520,7 @@ namespace Game
             rb->drag = 0.0f;
 
             auto col = go->AddComponent<CircleCollider2D>();
-            col->radius = 0.3f;
+            col->radius = spawnedGuardColliderRadius;
             col->minHeight = 0.0f;
             col->maxHeight = 2.0f;
 
@@ -620,13 +537,10 @@ namespace Game
             return guard;
         }
 
-        // ===== Progressive Escalation: nearest guard assists  full convergence =====
         void ApplyPriorityZone_AssistNearest(int pZone)
         {
             priorityZoneId = pZone;
 
-            // Check if any guard in priority zone is chasing/searching
-            // EXCLUDE guards investigating sabotage from escalation triggers
             bool anyGuardEngaged = false;
             for (auto *g : guards)
             {
@@ -634,7 +548,6 @@ namespace Game
                     continue;
                 if (g->homeZoneId == pZone || g->GetPatrolZoneOverride() == pZone)
                 {
-                    // Don't count sabotage investigation as engagement
                     if (g->investigatingSabotage)
                         continue;
 
@@ -646,19 +559,16 @@ namespace Game
                 }
             }
 
-            // If guard engaged  trigger full escalation immediately
             if (anyGuardEngaged)
             {
                 priorityZoneHotTimer = fullEscalationThreshold;
             }
 
-            // Check if we should activate full escalation
             if (priorityZoneHotTimer >= fullEscalationThreshold && !fullEscalationActive)
             {
                 fullEscalationActive = true;
                 std::cout << "\n[ALERT] FULL ESCALATION! All guards converging on Zone " << pZone << "\n";
 
-                // ALL guards shift to priority zone
                 for (auto *g : guards)
                 {
                     if (!g)
@@ -671,7 +581,6 @@ namespace Game
             }
             else if (!fullEscalationActive)
             {
-                // Normal assist mode: only nearest guard helps
                 for (auto *g : guards)
                 {
                     if (!g)
@@ -712,11 +621,11 @@ namespace Game
                 }
             }
         }
+
         void BanditTick()
         {
-            float zoneReward[5] = { 0,0,0,0,0 };
+            float zoneReward[5] = {0, 0, 0, 0, 0};
 
-            // Compute current reward signal for ALL zones
             for (int z = 1; z <= 4; ++z)
             {
                 float heatSum = heatmap.SumZone(zoneMgr.GetGrid(), z);
@@ -736,64 +645,59 @@ namespace Game
 
             int nextZone = nextArm + 1;
 
-            // Stay committed to current priority while cooldown is active
             if (switchCooldown > 0.0f) {
                 nextZone = priorityZoneId;
                 nextArm = nextZone - 1;
             }
             else {
                 if (nextZone != priorityZoneId) {
-                    // Strong CCTV evidence -> stay longer
-                    if (cctvScore[nextZone] > 0.5f) {
-                        switchCooldown = 25.0f;
+                    if (cctvScore[nextZone] > banditSwitchStrongEvidenceThreshold) {
+                        switchCooldown = banditSwitchCooldownStrongSec;
                     }
                     else {
-                        switchCooldown = 8.0f;
+                        switchCooldown = banditSwitchCooldownNormalSec;
                     }
                 }
             }
 
-            // Update chosen arm using that zone's current reward
             bandit.Update(nextArm, zoneReward[nextZone]);
 
-            // Debug print
             static int lastDebugZone = -1;
             if (nextZone != lastDebugZone) {
                 std::cout << "[BANDIT] ML Priority -> Zone "
-                    << Game::ZoneIdToLetter(nextZone)
-                    << " (" << nextZone << ")\n";
+                          << Game::ZoneIdToLetter(nextZone)
+                          << " (" << nextZone << ")\n";
 
                 std::cout << "  Reward: Z1=" << zoneReward[1]
-                    << " Z2=" << zoneReward[2]
-                    << " Z3=" << zoneReward[3]
-                    << " Z4=" << zoneReward[4] << "\n";
+                          << " Z2=" << zoneReward[2]
+                          << " Z3=" << zoneReward[3]
+                          << " Z4=" << zoneReward[4] << "\n";
 
                 std::cout << "  Heat: Z1=" << heatmap.SumZone(zoneMgr.GetGrid(), 1)
-                    << " Z2=" << heatmap.SumZone(zoneMgr.GetGrid(), 2)
-                    << " Z3=" << heatmap.SumZone(zoneMgr.GetGrid(), 3)
-                    << " Z4=" << heatmap.SumZone(zoneMgr.GetGrid(), 4) << "\n";
+                          << " Z2=" << heatmap.SumZone(zoneMgr.GetGrid(), 2)
+                          << " Z3=" << heatmap.SumZone(zoneMgr.GetGrid(), 3)
+                          << " Z4=" << heatmap.SumZone(zoneMgr.GetGrid(), 4) << "\n";
 
                 std::cout << "  CCTV: Z1=" << cctvScore[1]
-                    << " Z2=" << cctvScore[2]
-                    << " Z3=" << cctvScore[3]
-                    << " Z4=" << cctvScore[4] << "\n";
+                          << " Z2=" << cctvScore[2]
+                          << " Z3=" << cctvScore[3]
+                          << " Z4=" << cctvScore[4] << "\n";
 
                 std::cout << "  Pulls: Arm0=" << bandit.Pulls(0)
-                    << " Arm1=" << bandit.Pulls(1)
-                    << " Arm2=" << bandit.Pulls(2)
-                    << " Arm3=" << bandit.Pulls(3) << "\n";
+                          << " Arm1=" << bandit.Pulls(1)
+                          << " Arm2=" << bandit.Pulls(2)
+                          << " Arm3=" << bandit.Pulls(3) << "\n";
 
                 std::cout << "  Means: Arm0=" << bandit.Value(0)
-                    << " Arm1=" << bandit.Value(1)
-                    << " Arm2=" << bandit.Value(2)
-                    << " Arm3=" << bandit.Value(3) << "\n";
+                          << " Arm1=" << bandit.Value(1)
+                          << " Arm2=" << bandit.Value(2)
+                          << " Arm3=" << bandit.Value(3) << "\n";
 
                 std::cout << "  Commit cooldown: " << switchCooldown << "s\n";
 
                 lastDebugZone = nextZone;
             }
 
-            // Track how long chosen zone stays priority
             if (nextZone == priorityZoneId) {
                 priorityZoneHotTimer += banditInterval;
             }
@@ -806,9 +710,8 @@ namespace Game
             priorityZoneId = nextZone;
             ApplyPriorityZone_AssistNearest(nextZone);
 
-            // Decay CCTV score less aggressively
             for (int z = 1; z <= 4; ++z)
-                cctvScore[z] *= 0.85f;
+                cctvScore[z] *= cctvScoreDecayFactor;
         }
 
     public:

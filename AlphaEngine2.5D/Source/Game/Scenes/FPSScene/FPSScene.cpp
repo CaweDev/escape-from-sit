@@ -1,11 +1,253 @@
 #define FPS_SCENE_CPP_COMPILATION_UNIT
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
+#include "Engine/Core/ConfigManager.hpp"
+
+namespace
+{
+    struct FPSSceneConfig : public Engine::IConfig
+    {
+        float winRadius = 0.6f;
+        float banditInterval = 2.0f;
+        float wHeat = 0.55f;
+        float wCCTV = 0.45f;
+        float heatRef = 50.0f;
+        float cctvRef = 6.0f;
+        float heatAddPerSec = 1.0f;
+        float heatDecayPerSec = 0.985f;
+        float cctvSpikeCooldown = 1.0f;
+        float cctvSpikeAmount = 1.0f;
+        float fullEscalationThreshold = 30.0f;
+
+        float spawnExcludeX = 2.5f;
+        float spawnExcludeY = 2.5f;
+        float spawnExcludeRadius = 7.0f;
+        int spawnPickAttempts = 100;
+        int spawnFallbackMaxRadius = 20;
+
+        float bullyNPCSpeed = 2.0f;
+        float bullyNPCTriggerRadius = 3.0f;
+        float annoyingNPCSpeed = 1.2f;
+        float annoyingNPCTriggerRadius = 2.5f;
+        float annoyingNPCBlockTime = 1.5f;
+        float spawnedNPCColliderRadius = 0.25f;
+        float spawnedGuardColliderRadius = 0.3f;
+
+        float playerFogDistance = 2.0f;
+        float playerFogMinVisibility = -0.1f;
+        float playerFogMaxVisibility = 0.6f;
+        float playerGravityScale = 1.0f;
+        float playerDrag = 5.0f;
+        float playerColliderRadius = 0.2f;
+        float playerColliderMinHeight = 0.0f;
+        float playerColliderMaxHeight = 1.8f;
+        float playerSpawnX = 2.5f;
+        float playerSpawnY = 2.5f;
+        float playerSpawnZ = 0.0f;
+        float playerSpawnRot = 0.0f;
+
+        int cctvPerZone = 10;
+        int cctvPlacementStep = 1;
+        float cctvPlacementMinDist = 3.5f;
+        float cctvPlacementZ = 0.85f;
+        float cctvPlacementEpsilon = 0.02f;
+
+        float cctvViewZ = 1.6f;
+        float cctvScaleX = 0.25f;
+        float cctvScaleY = 0.25f;
+        int cctvSortingOrder = 300;
+        float cctvDetectRadius = 3.0f;
+        float cctvMaxRange = 6.0f;
+        float cctvConeWidth = 70.0f;
+
+        float terminalPosZ = 0.5f;
+        float terminalScaleX = 0.5f;
+        float terminalScaleY = 0.5f;
+        int terminalSortingOrder = 250;
+
+        float doorInteractMaxDistance = 2.5f;
+        float accessCardInteractMaxDistance = 2.5f;
+
+        bool debugForceSpawnAtPlayer = false;
+        float debugForcedCardSpawnRadius = 1.2f;
+        float accessCardScaleX = 0.4f;
+        float accessCardScaleY = 0.4f;
+        float accessCardPosZ = 0.15f;
+        int accessCardSortingOrder = 200;
+
+        float npcNoticeRadius = 6.0f;
+        float guardShakeDistance = 6.0f;
+        float guardShakeDuration = 0.1f;
+        float guardShakeIntensityScale = 0.08f;
+        float mlSummaryInterval = 5.0f;
+
+        float tileMapColliderMinHeight = 0.0f;
+        float tileMapColliderMaxHeight = 3.0f;
+        float controlRoomDoorPosZ = 0.0f;
+        float doorColliderMinHeight = 0.0f;
+        float doorColliderMaxHeight = 2.0f;
+        float cardSpawnDedupThreshold = 0.1f;
+        float debugCirclePi = 3.14159265f;
+        float distanceSentinel = 999999.0f;
+        float escalationStage2Ratio = 0.33f;
+        float escalationStage3Ratio = 0.66f;
+
+        Engine::Color wallColorNS = Engine::Color(0.8f, 0.2f, 0.2f, 1.0f);
+        Engine::Color wallColorEW = Engine::Color(0.6f, 0.15f, 0.15f, 1.0f);
+        Engine::Color ceilingColor = Engine::Color(0.1f, 0.1f, 0.2f, 1.0f);
+        Engine::Color floorColor = Engine::Color(0.3f, 0.25f, 0.2f, 1.0f);
+
+        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
+        {
+            if (!j.isMember(key) || !j[key].isObject()) return fallback;
+            const auto& c = j[key];
+            return Engine::Color(
+                c.get("r", fallback.r).asFloat(),
+                c.get("g", fallback.g).asFloat(),
+                c.get("b", fallback.b).asFloat(),
+                c.get("a", fallback.a).asFloat());
+        }
+
+        void FromJson(const Json::Value& j) override
+        {
+            winRadius = j.get("winRadius", winRadius).asFloat();
+            banditInterval = j.get("banditInterval", banditInterval).asFloat();
+            wHeat = j.get("wHeat", wHeat).asFloat();
+            wCCTV = j.get("wCCTV", wCCTV).asFloat();
+            heatRef = j.get("heatRef", heatRef).asFloat();
+            cctvRef = j.get("cctvRef", cctvRef).asFloat();
+            heatAddPerSec = j.get("heatAddPerSec", heatAddPerSec).asFloat();
+            heatDecayPerSec = j.get("heatDecayPerSec", heatDecayPerSec).asFloat();
+            cctvSpikeCooldown = j.get("cctvSpikeCooldown", cctvSpikeCooldown).asFloat();
+            cctvSpikeAmount = j.get("cctvSpikeAmount", cctvSpikeAmount).asFloat();
+            fullEscalationThreshold = j.get("fullEscalationThreshold", fullEscalationThreshold).asFloat();
+
+            spawnExcludeX = j.get("spawnExcludeX", spawnExcludeX).asFloat();
+            spawnExcludeY = j.get("spawnExcludeY", spawnExcludeY).asFloat();
+            spawnExcludeRadius = j.get("spawnExcludeRadius", spawnExcludeRadius).asFloat();
+            spawnPickAttempts = j.get("spawnPickAttempts", spawnPickAttempts).asInt();
+            spawnFallbackMaxRadius = j.get("spawnFallbackMaxRadius", spawnFallbackMaxRadius).asInt();
+
+            bullyNPCSpeed = j.get("bullyNPCSpeed", bullyNPCSpeed).asFloat();
+            bullyNPCTriggerRadius = j.get("bullyNPCTriggerRadius", bullyNPCTriggerRadius).asFloat();
+            annoyingNPCSpeed = j.get("annoyingNPCSpeed", annoyingNPCSpeed).asFloat();
+            annoyingNPCTriggerRadius = j.get("annoyingNPCTriggerRadius", annoyingNPCTriggerRadius).asFloat();
+            annoyingNPCBlockTime = j.get("annoyingNPCBlockTime", annoyingNPCBlockTime).asFloat();
+            spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
+            spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
+
+            playerFogDistance = j.get("playerFogDistance", playerFogDistance).asFloat();
+            playerFogMinVisibility = j.get("playerFogMinVisibility", playerFogMinVisibility).asFloat();
+            playerFogMaxVisibility = j.get("playerFogMaxVisibility", playerFogMaxVisibility).asFloat();
+            playerGravityScale = j.get("playerGravityScale", playerGravityScale).asFloat();
+            playerDrag = j.get("playerDrag", playerDrag).asFloat();
+            playerColliderRadius = j.get("playerColliderRadius", playerColliderRadius).asFloat();
+            playerColliderMinHeight = j.get("playerColliderMinHeight", playerColliderMinHeight).asFloat();
+            playerColliderMaxHeight = j.get("playerColliderMaxHeight", playerColliderMaxHeight).asFloat();
+            playerSpawnX = j.get("playerSpawnX", playerSpawnX).asFloat();
+            playerSpawnY = j.get("playerSpawnY", playerSpawnY).asFloat();
+            playerSpawnZ = j.get("playerSpawnZ", playerSpawnZ).asFloat();
+            playerSpawnRot = j.get("playerSpawnRot", playerSpawnRot).asFloat();
+
+            cctvPerZone = j.get("cctvPerZone", cctvPerZone).asInt();
+            cctvPlacementStep = j.get("cctvPlacementStep", cctvPlacementStep).asInt();
+            cctvPlacementMinDist = j.get("cctvPlacementMinDist", cctvPlacementMinDist).asFloat();
+            cctvPlacementZ = j.get("cctvPlacementZ", cctvPlacementZ).asFloat();
+            cctvPlacementEpsilon = j.get("cctvPlacementEpsilon", cctvPlacementEpsilon).asFloat();
+
+            cctvViewZ = j.get("cctvViewZ", cctvViewZ).asFloat();
+            cctvScaleX = j.get("cctvScaleX", cctvScaleX).asFloat();
+            cctvScaleY = j.get("cctvScaleY", cctvScaleY).asFloat();
+            cctvSortingOrder = j.get("cctvSortingOrder", cctvSortingOrder).asInt();
+            cctvDetectRadius = j.get("cctvDetectRadius", cctvDetectRadius).asFloat();
+            cctvMaxRange = j.get("cctvMaxRange", cctvMaxRange).asFloat();
+            cctvConeWidth = j.get("cctvConeWidth", cctvConeWidth).asFloat();
+
+            terminalPosZ = j.get("terminalPosZ", terminalPosZ).asFloat();
+            terminalScaleX = j.get("terminalScaleX", terminalScaleX).asFloat();
+            terminalScaleY = j.get("terminalScaleY", terminalScaleY).asFloat();
+            terminalSortingOrder = j.get("terminalSortingOrder", terminalSortingOrder).asInt();
+
+            doorInteractMaxDistance = j.get("doorInteractMaxDistance", doorInteractMaxDistance).asFloat();
+            accessCardInteractMaxDistance = j.get("accessCardInteractMaxDistance", accessCardInteractMaxDistance).asFloat();
+
+            debugForceSpawnAtPlayer = j.get("debugForceSpawnAtPlayer", debugForceSpawnAtPlayer).asBool();
+            debugForcedCardSpawnRadius = j.get("debugForcedCardSpawnRadius", debugForcedCardSpawnRadius).asFloat();
+            accessCardScaleX = j.get("accessCardScaleX", accessCardScaleX).asFloat();
+            accessCardScaleY = j.get("accessCardScaleY", accessCardScaleY).asFloat();
+            accessCardPosZ = j.get("accessCardPosZ", accessCardPosZ).asFloat();
+            accessCardSortingOrder = j.get("accessCardSortingOrder", accessCardSortingOrder).asInt();
+
+            npcNoticeRadius = j.get("npcNoticeRadius", npcNoticeRadius).asFloat();
+            guardShakeDistance = j.get("guardShakeDistance", guardShakeDistance).asFloat();
+            guardShakeDuration = j.get("guardShakeDuration", guardShakeDuration).asFloat();
+            guardShakeIntensityScale = j.get("guardShakeIntensityScale", guardShakeIntensityScale).asFloat();
+            mlSummaryInterval = j.get("mlSummaryInterval", mlSummaryInterval).asFloat();
+
+            tileMapColliderMinHeight = j.get("tileMapColliderMinHeight", tileMapColliderMinHeight).asFloat();
+            tileMapColliderMaxHeight = j.get("tileMapColliderMaxHeight", tileMapColliderMaxHeight).asFloat();
+            controlRoomDoorPosZ = j.get("controlRoomDoorPosZ", controlRoomDoorPosZ).asFloat();
+            doorColliderMinHeight = j.get("doorColliderMinHeight", doorColliderMinHeight).asFloat();
+            doorColliderMaxHeight = j.get("doorColliderMaxHeight", doorColliderMaxHeight).asFloat();
+            cardSpawnDedupThreshold = j.get("cardSpawnDedupThreshold", cardSpawnDedupThreshold).asFloat();
+            debugCirclePi = j.get("debugCirclePi", debugCirclePi).asFloat();
+            distanceSentinel = j.get("distanceSentinel", distanceSentinel).asFloat();
+            escalationStage2Ratio = j.get("escalationStage2Ratio", escalationStage2Ratio).asFloat();
+            escalationStage3Ratio = j.get("escalationStage3Ratio", escalationStage3Ratio).asFloat();
+
+            wallColorNS = ParseColor(j, "wallColorNS", wallColorNS);
+            wallColorEW = ParseColor(j, "wallColorEW", wallColorEW);
+            ceilingColor = ParseColor(j, "ceilingColor", ceilingColor);
+            floorColor = ParseColor(j, "floorColor", floorColor);
+        }
+    };
+
+    FPSSceneConfig g_fpsSceneConfig;
+    bool g_fpsSceneConfigLoaded = false;
+
+    const FPSSceneConfig& GetFPSSceneConfig()
+    {
+        if (!g_fpsSceneConfigLoaded)
+        {
+            Engine::ConfigManager::ReadConfig("Assets/Config/Game/fps_scene.json", g_fpsSceneConfig);
+            g_fpsSceneConfigLoaded = true;
+        }
+        return g_fpsSceneConfig;
+    }
+}
 
 namespace Game
 {
 
     inline void FPSScene::OnLoad()
     {
+        const auto& cfg = GetFPSSceneConfig();
+
+        winRadius = cfg.winRadius;
+        banditInterval = cfg.banditInterval;
+        wHeat = cfg.wHeat;
+        wCCTV = cfg.wCCTV;
+        heatRef = cfg.heatRef;
+        cctvRef = cfg.cctvRef;
+        heatAddPerSec = cfg.heatAddPerSec;
+        heatDecayPerSec = cfg.heatDecayPerSec;
+        cctvSpikeCooldown = cfg.cctvSpikeCooldown;
+        cctvSpikeAmount = cfg.cctvSpikeAmount;
+        fullEscalationThreshold = cfg.fullEscalationThreshold;
+
+        spawnExcludeX = cfg.spawnExcludeX;
+        spawnExcludeY = cfg.spawnExcludeY;
+        spawnExcludeRadius = cfg.spawnExcludeRadius;
+        spawnPickAttempts = cfg.spawnPickAttempts;
+        spawnFallbackMaxRadius = cfg.spawnFallbackMaxRadius;
+
+        bullyNPCSpeed = cfg.bullyNPCSpeed;
+        bullyNPCTriggerRadius = cfg.bullyNPCTriggerRadius;
+        annoyingNPCSpeed = cfg.annoyingNPCSpeed;
+        annoyingNPCTriggerRadius = cfg.annoyingNPCTriggerRadius;
+        annoyingNPCBlockTime = cfg.annoyingNPCBlockTime;
+        spawnedNPCColliderRadius = cfg.spawnedNPCColliderRadius;
+        spawnedGuardColliderRadius = cfg.spawnedGuardColliderRadius;
+
         gameEnded = false;
         printedWin = false;
         SoundManager::PlayBGM("fps_gameplay", true);
@@ -109,10 +351,10 @@ namespace Game
         map->LoadFromArray(worldMap.data(), loadedMapWidth, loadedMapHeight);
 
         auto renderer = world->AddComponent<TileMapRenderer>();
-        renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
-        renderer->wallColorEW = Color(0.6f, 0.15f, 0.15f, 1.0f);
-        renderer->ceilingColor = Color(0.1f, 0.1f, 0.2f, 1.0f);
-        renderer->floorColor = Color(0.3f, 0.25f, 0.2f, 1.0f);
+        renderer->wallColorNS = cfg.wallColorNS;
+        renderer->wallColorEW = cfg.wallColorEW;
+        renderer->ceilingColor = cfg.ceilingColor;
+        renderer->floorColor = cfg.floorColor;
 
         renderer->SetCeilingSprite(AssetManager::GetSprite("Assets/Tilemap/Wallpaper_02_White_1.png"));
         renderer->SetFloorSprite(AssetManager::GetSprite("Assets/Tilemap/s2 Concrete Squares 2 Grey.png"));
@@ -120,26 +362,26 @@ namespace Game
         renderer->SetDoorSprite(AssetManager::GetSprite("Assets/Tilemap/school_sliding_door.png"));
 
         auto tileMapCollider = world->AddComponent<TileMapCollider2D>();
-        tileMapCollider->minHeight = 0.0f;
-        tileMapCollider->maxHeight = 3.0f;
+        tileMapCollider->minHeight = cfg.tileMapColliderMinHeight;
+        tileMapCollider->maxHeight = cfg.tileMapColliderMaxHeight;
 
         // ===== player =====
         auto player = CreateGameObject("Player");
         playerCam = player->AddComponent<Camera>();
         playerCam->backgroundColor = Color(0, 0, 0, 1);
         playerCam->fogEnabled = true;
-        playerCam->fogDistance = 2.f;
-        playerCam->fogMinVisibility = -0.1f;
-        playerCam->fogMaxVisibility = 0.6f;
+        playerCam->fogDistance = cfg.playerFogDistance;
+        playerCam->fogMinVisibility = cfg.playerFogMinVisibility;
+        playerCam->fogMaxVisibility = cfg.playerFogMaxVisibility;
 
         auto rb = player->AddComponent<Rigidbody2D>();
-        rb->gravityScale = 1.0f;
-        rb->drag = 5.0f;
+        rb->gravityScale = cfg.playerGravityScale;
+        rb->drag = cfg.playerDrag;
 
         auto col = player->AddComponent<CircleCollider2D>();
-        col->radius = 0.2f;
-        col->minHeight = 0.0f;
-        col->maxHeight = 1.8f;
+        col->radius = cfg.playerColliderRadius;
+        col->minHeight = cfg.playerColliderMinHeight;
+        col->maxHeight = cfg.playerColliderMaxHeight;
 
         playerController = player->AddComponent<FPSController>();
         playerData = player->AddComponent<Player>();
@@ -162,8 +404,8 @@ namespace Game
         controlsMenu = player->AddComponent<ControlsMenu>();
         showControlsAtStart = true;
 
-        playerTf->position = Vector3(2.5f, 2.5f, 0.0f);
-        playerTf->rotation = 0.0f;
+        playerTf->position = Vector3(cfg.playerSpawnX, cfg.playerSpawnY, cfg.playerSpawnZ);
+        playerTf->rotation = cfg.playerSpawnRot;
         playerViewPos = playerTf->position;
         playerViewRot = playerTf->rotation;
 
@@ -209,36 +451,33 @@ namespace Game
 
         // ===== CCTV placement =====
         Sprite *cctvSprite = AssetManager::GetSprite("Assets/cctv.png");
-        const float CCTV_Z = 0.85f;
-        const float EPS = 0.02f;
 
-        // Place 8-12 cameras per zone for substantial corridor coverage
-        // Reduced minDist to 3.5f to allow denser placement
         auto placements = Game::GenerateCCTVsPerZone(
             map, zoneGrid, loadedMapWidth, loadedMapHeight,
-            10,   // perZone: 10 cameras per zone (40 total)
-            1,    // step: check every tile (not used anymore with new algorithm)
-            3.5f, // minDist: minimum 3.5 tiles apart within same zone
-            CCTV_Z, EPS);
+            cfg.cctvPerZone,
+            cfg.cctvPlacementStep,
+            cfg.cctvPlacementMinDist,
+            cfg.cctvPlacementZ,
+            cfg.cctvPlacementEpsilon);
 
         for (int i = 0; i < (int)placements.size(); ++i)
         {
             auto &p = placements[i];
 
             Vector3 view = p.pos;
-            view.z = 1.6f;
+            view.z = cfg.cctvViewZ;
             cctvViewPos.push_back(view);
             cctvViewRot.push_back(p.rot);
 
             auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
             camObj->transform->position = p.pos;
             camObj->transform->rotation = p.rot;
-            camObj->transform->localScale = Vector2(0.25f, 0.25f);
+            camObj->transform->localScale = Vector2(cfg.cctvScaleX, cfg.cctvScaleY);
 
             auto sr = camObj->AddComponent<SpriteRenderer>();
             sr->SetSprite(cctvSprite);
             sr->billboard = true;
-            sr->sortingOrder = 300;
+            sr->sortingOrder = cfg.cctvSortingOrder;
 
             playerHUD->AddCCTVTransform(camObj->transform);
 
@@ -247,12 +486,12 @@ namespace Game
             sensor->tile = map;
             sensor->tf = playerTf;
             sensor->hud = playerHUD;
-            sensor->minimap = playerHUD->GetMinimap(); // Connect to minimap for vision cones
-            sensor->detectRadius = 3.0f;
-            sensor->maxRange = 6.0f;
-            sensor->coneWidth = 70.0f;
+            sensor->minimap = playerHUD->GetMinimap();
+            sensor->detectRadius = cfg.cctvDetectRadius;
+            sensor->maxRange = cfg.cctvMaxRange;
+            sensor->coneWidth = cfg.cctvConeWidth;
             sensor->needLOS = true;
-            sensor->spriteRenderer = sr; // Store sprite renderer for color changes
+            sensor->spriteRenderer = sr;
 
             printf("[CCTV Setup] Camera %d at (%.1f, %.1f) rotation=%.1f cone=%.1f range=%.1f\n",
                    i + 1, p.pos.x, p.pos.y, p.rot, sensor->coneWidth, sensor->maxRange);
@@ -295,14 +534,13 @@ namespace Game
 
             // Create terminal GameObject
             auto terminalObj = CreateGameObject("CCTVTerminal_Zone" + std::to_string(zoneId));
-            terminalObj->transform->position = Vector3(pos.x, pos.y, 0.5f);
-            terminalObj->transform->localScale = Vector2(0.5f, 0.5f);
+            terminalObj->transform->position = Vector3(pos.x, pos.y, cfg.terminalPosZ);
+            terminalObj->transform->localScale = Vector2(cfg.terminalScaleX, cfg.terminalScaleY);
 
             auto sr = terminalObj->AddComponent<SpriteRenderer>();
             sr->SetSprite(terminalSprite);
             sr->billboard = true;
-            sr->sortingOrder = 250;
-            sr->highlightColor = Engine::Color(0.3f, 0.3f, 0.0f, 0.0f); // Yellow glow
+            sr->sortingOrder = cfg.terminalSortingOrder;
 
             auto terminal = terminalObj->AddComponent<CCTVTerminal>();
             terminal->controlledZone = zoneId;
@@ -388,7 +626,7 @@ namespace Game
             // Create door GameObject
             std::string doorName = "ControlRoomDoor_Zone" + std::to_string(zoneId);
             auto doorGO = CreateGameObject(doorName);
-            doorGO->transform->position = Vector3(pos.x, pos.y, 0.0f);
+            doorGO->transform->position = Vector3(pos.x, pos.y, cfg.controlRoomDoorPosZ);
 
             // Determine door facing based on surrounding walls
             bool wallNorth = map->IsWall(tileX, tileY + 1);
@@ -397,8 +635,8 @@ namespace Game
 
             // Add BoxCollider2D
             auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
-            doorCollider->minHeight = 0.0f;
-            doorCollider->maxHeight = 2.0f;
+            doorCollider->minHeight = cfg.doorColliderMinHeight;
+            doorCollider->maxHeight = cfg.doorColliderMaxHeight;
             doorCollider->isTrigger = false;
 
             // Add Door component
@@ -418,7 +656,7 @@ namespace Game
             // Add Interactable
             auto interactable = doorGO->AddComponent<Engine::Interactable>();
             interactable->actionText = "LOCKED - Access Cards Required (0/4)";
-            interactable->maxDistance = 2.5f;
+            interactable->maxDistance = cfg.doorInteractMaxDistance;
 
             // Add ControlRoomDoor component
             auto controlDoor = doorGO->AddComponent<Game::ControlRoomDoor>();
@@ -440,7 +678,7 @@ namespace Game
             "Assets/color_yellow_empty.png"};
 
         // DEBUG: set true to force access cards to spawn at player spawn for debugging
-        bool debugForceSpawnAtPlayer = false;
+        bool debugForceSpawnAtPlayer = cfg.debugForceSpawnAtPlayer;
 
         std::vector<Engine::Vector2> usedCardLocations;
 
@@ -486,7 +724,7 @@ namespace Game
                             bool alreadyUsed = false;
                             for (const auto &used : usedCardLocations)
                             {
-                                if (std::abs(used.x - candidate.x) < 0.1f && std::abs(used.y - candidate.y) < 0.1f)
+                                if (std::abs(used.x - candidate.x) < cfg.cardSpawnDedupThreshold && std::abs(used.y - candidate.y) < cfg.cardSpawnDedupThreshold)
                                 {
                                     alreadyUsed = true;
                                     break;
@@ -509,8 +747,8 @@ namespace Game
                 int total = (int)accessCardPositions.size();
                 if (total <= 0)
                     total = 1;
-                float angle = (2.0f * 3.14159265f) * ((float)i / (float)total);
-                float radius = 1.2f; // 1.2 tiles from spawn center
+                float angle = (2.0f * cfg.debugCirclePi) * ((float)i / (float)total);
+                float radius = cfg.debugForcedCardSpawnRadius;
                 Engine::Vector2 candidate(spawnExcludeX + std::cos(angle) * radius,
                                           spawnExcludeY + std::sin(angle) * radius);
                 // if the candidate isn't walkable, fallback to nearest valid
@@ -541,8 +779,8 @@ namespace Game
             // Create card GameObject
             std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
             auto cardGO = CreateGameObject(cardName);
-            cardGO->transform->position = Vector3(pos.x, pos.y, 0.15f);
-            cardGO->transform->localScale = Vector2(0.4f, 0.4f);
+            cardGO->transform->position = Vector3(pos.x, pos.y, cfg.accessCardPosZ);
+            cardGO->transform->localScale = Vector2(cfg.accessCardScaleX, cfg.accessCardScaleY);
 
             std::cout << "[FPSScene]   GameObject created: " << cardGO->name << "\n";
 
@@ -550,14 +788,14 @@ namespace Game
             auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
             sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
             sr->billboard = true;
-            sr->sortingOrder = 200;
+            sr->sortingOrder = cfg.accessCardSortingOrder;
 
             std::cout << "[FPSScene]   SpriteRenderer added (billboard=" << sr->billboard << ", sortingOrder=" << sr->sortingOrder << ")\n";
 
             // Add Interactable
             auto interactable = cardGO->AddComponent<Engine::Interactable>();
             interactable->actionText = "Collect Access Card";
-            interactable->maxDistance = 2.5f;
+            interactable->maxDistance = cfg.accessCardInteractMaxDistance;
 
             std::cout << "[FPSScene]   Interactable added\n";
 
@@ -657,6 +895,8 @@ namespace Game
 
     inline void FPSScene::OnUpdate()
     {
+        const auto& cfg = GetFPSSceneConfig();
+
         // Toggle Level Editor
         if (Input::GetKeyDown(KeyCode::F1))
         {
@@ -787,7 +1027,7 @@ namespace Game
             playerHUD->UpdateHighScore(playerData->GetHighScore());
 
             // Find nearest guard for proximity warning and camera shake
-            float nearestGuardDistance = 999999.0f;
+            float nearestGuardDistance = cfg.distanceSentinel;
             for (auto *guard : guards)
             {
                 if (!guard || !guard->transform)
@@ -808,7 +1048,7 @@ namespace Game
 
             // guard proximity handled by UpdateGuardProximityLoop (looped sound)
 
-            float nearestCCTVDistance = 999999.0f;
+            float nearestCCTVDistance = cfg.distanceSentinel;
             for (auto *cctv : cctvSensors)
             {
                 if (!cctv || !cctv->transform)
@@ -827,7 +1067,7 @@ namespace Game
                 }
             }
 
-            float nearestTerminalDistance = 999999.0f;
+            float nearestTerminalDistance = cfg.distanceSentinel;
             for (auto *terminal : cctvTerminals)
             {
                 if (!terminal || !terminal->transform)
@@ -847,11 +1087,11 @@ namespace Game
             }
 
             // NPC proximity: separate Bully vs Annoying
-            float nearestAnnoyingDistance = 999999.0f;
+            float nearestAnnoyingDistance = cfg.distanceSentinel;
             int annoyingCountNearby = 0;
-            float nearestBullyDistance = 999999.0f;
+            float nearestBullyDistance = cfg.distanceSentinel;
             int bullyCountNearby = 0;
-            const float npcNoticeRadius = 6.0f; // within this range we count them as 'nearby'
+            const float npcNoticeRadius = cfg.npcNoticeRadius; // within this range we count them as 'nearby'
             for (auto *npc : npcs)
             {
                 if (!npc || !npc->transform)
@@ -890,7 +1130,7 @@ namespace Game
             // annoying-classmate audio channels from the scene.
 
             // Apply camera shake based on guard proximity
-            const float shakeDistance = 6.0f;
+            const float shakeDistance = cfg.guardShakeDistance;
             if (nearestGuardDistance < shakeDistance && playerCam)
             {
                 auto cameraShake = playerCam->gameObject->GetComponent<CameraShake>();
@@ -901,8 +1141,8 @@ namespace Game
                 }
 
                 // Intensity increases as guard gets closer
-                float intensity = (1.0f - (nearestGuardDistance / shakeDistance)) * 0.08f;
-                cameraShake->Shake(0.1f, intensity);
+                float intensity = (1.0f - (nearestGuardDistance / shakeDistance)) * cfg.guardShakeIntensityScale;
+                cameraShake->Shake(cfg.guardShakeDuration, intensity);
             }
 
             // Update alert level display
@@ -919,9 +1159,9 @@ namespace Game
             int alertStage = 1;
             if (fullEscalationActive)
                 alertStage = 4;
-            else if (priorityZoneHotTimer > fullEscalationThreshold * 0.66f)
+            else if (priorityZoneHotTimer > fullEscalationThreshold * cfg.escalationStage3Ratio)
                 alertStage = 3;
-            else if (priorityZoneHotTimer > fullEscalationThreshold * 0.33f)
+            else if (priorityZoneHotTimer > fullEscalationThreshold * cfg.escalationStage2Ratio)
                 alertStage = 2;
             // Play full escalation SFX immediately when escalation triggers
             static bool escalationSfxPlayed = false;
@@ -1015,7 +1255,7 @@ namespace Game
         if (debugML)
         {
             mlSummaryTimer += Engine::Time::deltaTime;
-            if (mlSummaryTimer >= 5.0f)
+            if (mlSummaryTimer >= cfg.mlSummaryInterval)
             {
                 mlSummaryTimer = 0.0f;
                 PrintMLSummary();

@@ -746,6 +746,7 @@
     <None Include="Assets\Config\Engine\door.json" />
     <None Include="Assets\Config\Engine\camera.json" />
     <None Include="Assets\Config\Engine\game.json" />
+    <None Include="Assets\Config\Game\fps_scene.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />
