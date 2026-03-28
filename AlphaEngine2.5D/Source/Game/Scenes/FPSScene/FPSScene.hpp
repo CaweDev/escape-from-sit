@@ -197,6 +197,12 @@ namespace Game
         // NPCs (Bully + Annoying classmates)
         std::vector<Game::NPC *> npcs;
 
+        // Annoying-classmate loop channel key
+        bool m_annoyingLoopPlaying = false;
+        // One-shot SFX trigger guard for very-close annoying NPCs
+        bool m_annoyingSfxTriggered = false;
+        float m_annoyingLoopLastDistance = 999999.0f;
+
         // Level Editor
         LevelEditor levelEditor;
         Game::BanditVisualizer* banditVisualizer = nullptr;
@@ -1490,6 +1496,8 @@ namespace Game
                 {
                     loseScreen->Show();
                 }
+                // Ensure guard chase loop is silenced when player is caught
+                Engine::SoundManager::StopLoop("guard_chasing");
                 return;
             }
 
@@ -1627,9 +1635,12 @@ namespace Game
                 playerHUD->UpdateGuardProximity(nearestGuardDistance);
                 // Update NPC approach indicators (Annoying + Bully)
                 playerHUD->UpdateNPCApproach(annoyingCountNearby, nearestAnnoyingDistance, bullyCountNearby, nearestBullyDistance);
+                // Annoying classmate audio disabled: no one-shot SFX played here.
                 SoundManager::UpdateGuardProximityLoop(nearestGuardDistance);
                 SoundManager::UpdateCCTVHumLoop(nearestCCTVDistance);
                 SoundManager::UpdateTerminalBuzzLoop(nearestTerminalDistance);
+                // NPC annoying-classmate audio disabled: do not start or stop any
+                // annoying-classmate audio channels from the scene.
 
                 // Apply camera shake based on guard proximity
                 const float shakeDistance = 6.0f;
@@ -1769,6 +1780,8 @@ namespace Game
             {
                 printedWin = true;
                 gameEnded = true;
+                // Stop any chase loops when player wins/escapes
+                SoundManager::StopLoop("guard_chasing");
                 SoundManager::PlaySFX("win");
 
                 // Update high score if this is a new record

@@ -269,7 +269,14 @@ namespace Game {
             }
             // Play CCTV detected SFX
             // Use PlayLoop for sustained alert (ensure it stops when player out of sight)
-            Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
+            // Do not start guard chase audio if game is paused or player already caught
+            if (!Engine::Application::IsPaused()) {
+                auto* playerComp = tf && tf->gameObject ? tf->gameObject->GetComponent<Game::Player>() : nullptr;
+                const bool playerCaught = playerComp ? playerComp->IsCaught() : false;
+                if (!playerCaught) {
+                    Engine::SoundManager::PlayLoop("guard_chasing", 1.0f);
+                }
+            }
         }
 
         // Update sight state

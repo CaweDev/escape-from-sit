@@ -161,7 +161,7 @@ namespace Game
             m_bullyApproachText->SetText(buf);
             m_bullyApproachText->visible = true;
             m_bullyApproachTimer = m_approachDisplayDuration;
-            Engine::SoundManager::PlaySFX("npc_alert", 0.9f);
+            // No audio for NPC approach alerts (handled elsewhere or intentionally silent)
         }
 
         // Annoying classmates: softer notification
@@ -897,6 +897,8 @@ namespace Game
             m_bullyApproachTimer -= Engine::Time::deltaTime;
             if (m_bullyApproachTimer <= 0.0f && m_bullyApproachText) {
                 m_bullyApproachText->visible = false;
+                // Reset SFX flag when approach message ends so it can play on next approach
+             
             } else if (m_bullyApproachText) {
                 // subtle pulsing alpha for urgency
                 float pulse = 0.6f + 0.4f * std::abs(std::sin(Engine::Time::time * cfg.bullyPulseSpeed));

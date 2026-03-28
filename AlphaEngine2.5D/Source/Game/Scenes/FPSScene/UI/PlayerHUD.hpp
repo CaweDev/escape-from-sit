@@ -74,6 +74,7 @@ namespace Game
         float m_annoyingApproachTimer = 0.0f;
         float m_bullyApproachTimer = 0.0f;
         float m_approachDisplayDuration = 3.0f; // seconds to show approach messages
+        // (no SFX for NPC approach)
         
         // Hack status
         UI::Text* m_hackStatusText = nullptr;

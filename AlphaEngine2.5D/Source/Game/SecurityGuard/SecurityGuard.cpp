@@ -140,7 +140,14 @@ namespace Game {
 
         // Start/stop looping chasing SFX when entering/exiting Chase
         if (newState == GuardState::Chase && old != GuardState::Chase) {
-            Engine::SoundManager::PlayLoop("guard_chasing", GetSecurityGuardConfig().chaseLoopVolume);
+            // Avoid starting chase audio while the game is paused or player already caught
+            if (!Engine::Application::IsPaused()) {
+                if (playerData && playerData->IsCaught()) {
+                    // Player already caught; do not start chase audio
+                } else {
+                    Engine::SoundManager::PlayLoop("guard_chasing", GetSecurityGuardConfig().chaseLoopVolume);
+                }
+            }
         }
         else if (old == GuardState::Chase && newState != GuardState::Chase) {
             Engine::SoundManager::StopLoop("guard_chasing");

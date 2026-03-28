@@ -319,7 +319,8 @@ namespace Game
 
         // Unlock cursor so the player can click buttons
         Engine::Input::RegisterCursorUnlock("PauseMenu");
-
+        // Stop any ongoing guard chase loop while paused
+        Engine::SoundManager::StopLoop("guard_chasing");
         Engine::SoundManager::PlaySFX("ui_toggle", cfg.uiToggleSfxVolume);
         UpdateMenuVisuals();
     }
@@ -551,6 +552,8 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
+                // Ensure chase loop is stopped before reloading
+                Engine::SoundManager::StopLoop("guard_chasing");
                 //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("FPS");
             }
@@ -564,6 +567,8 @@ namespace Game
             "Confirm", "Cancel",
             [this]()
             {
+                // Ensure chase loop is stopped before leaving to main menu
+                Engine::SoundManager::StopLoop("guard_chasing");
                 //Engine::Input::UnregisterCursorUnlock("PauseMenu"); // moved to OnDestroy()
                 Engine::SceneManager::LoadWithLoadingScreen("MainMenu");
             }
