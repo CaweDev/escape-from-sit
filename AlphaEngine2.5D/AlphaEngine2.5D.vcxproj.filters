@@ -65,6 +65,9 @@
     <Filter Include="Source\Game\SecurityGuard" />
     <Filter Include="Source\Game\UCB1Bandit" />
     <Filter Include="Source\Game\ZoneManager" />
+    <Filter Include="Assets\Config\Engine" />
+    <Filter Include="Assets\Config\Game" />
+    <Filter Include="Source\Game\Items" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp">
@@ -85,9 +88,15 @@
     <ClCompile Include="..\Extern\imgui\imgui_widgets.cpp">
       <Filter>Extern\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\UCB1Bandit\BanditVisualizer.cpp" />
-    <ClCompile Include="Source\Game\Items\Item.cpp" />
-    <ClCompile Include="Source\Game\Scenes\FPSScene\FPSScene.cpp" />
+    <ClCompile Include="Source\Game\UCB1Bandit\BanditVisualizer.cpp">
+      <Filter>Source\Game\UCB1Bandit</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Items\Item.cpp">
+      <Filter>Source\Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scenes\FPSScene\FPSScene.cpp">
+      <Filter>Source\Game\Scenes\FPSScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp">
@@ -642,8 +651,6 @@
     <ClInclude Include="Source\Game\Player\Player.hpp">
       <Filter>Source\Game\Player</Filter>
     </ClInclude>
-
-
     <ClInclude Include="Source\Editor\ObjectManager.hpp">
       <Filter>Source\Editor</Filter>
     </ClInclude>
@@ -653,7 +660,6 @@
     <ClInclude Include="Source\Editor\ReflectionRegistry.hpp">
       <Filter>Source\Editor</Filter>
     </ClInclude>
-
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp">
       <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
     </ClInclude>
@@ -669,19 +675,30 @@
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\WinScreen.hpp">
       <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\UCB1Bandit\BanditVisualizer.hpp" />
-    <ClInclude Include="Source\Game\Items\Item.hpp" />
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.hpp" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUp.hpp" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp" />
+    <ClInclude Include="Source\Game\UCB1Bandit\BanditVisualizer.hpp">
+      <Filter>Source\Game\UCB1Bandit</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Items\Item.hpp">
+      <Filter>Source\Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.hpp">
+      <Filter>Source\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.hpp">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.hpp">
+      <Filter>Source\Game\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.hpp">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp">
+      <Filter>Source\Game\Puzzle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
-    <None Include="Assets\Config\audio_config_custom.json">
-      <Filter>Assets\Config</Filter>
-    </None>
     <ClInclude Include="Source\Game\Scenes\InteractionDemoScene\InteractionDemoScene.hpp">
       <Filter>Source\Game\Scenes\InteractionDemoScene</Filter>
     </ClInclude>
@@ -727,14 +744,6 @@
     <ClInclude Include="Source\Engine\Graphics\RendererSettings.hpp">
       <Filter>Source\Engine\Graphics</Filter>
     </ClInclude>
-    <None Include="Assets\Config\Engine\rendering.json" />
-    <None Include="Assets\Config\Engine\minimap.json" />
-    <None Include="Assets\Config\Engine\physics.json" />
-    <None Include="Assets\Config\Engine\application.json" />
-    <None Include="Assets\Config\Engine\door.json" />
-    <None Include="Assets\Config\Engine\camera.json" />
-    <None Include="Assets\Config\Engine\game.json" />
-    <None Include="Assets\Config\Game\fps_scene.json" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AlphaEngine2.5D.rc" />
@@ -744,11 +753,4 @@
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Config\audio_config_custom.json">
-      <Filter>Assets\Config</Filter>
-    </None>
-    <None Include="cpp.hint" />
-  </ItemGroup>
 </Project>
-
