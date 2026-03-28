@@ -401,9 +401,36 @@ namespace Game
                 }
                 if (!placed)
                 {
-                    Vector2 c2 = GetZoneCenter(zoneId);
-                    gx = (int)c2.x;
-                    gy = (int)c2.y;
+                    bool foundAny = false;
+                    // Try scanning outward from the zone center
+                    Vector2 zoneCenter = GetZoneCenter(zoneId);
+                    int zx = (int)std::floor(zoneCenter.x);
+                    int zy = (int)std::floor(zoneCenter.y);
+                    // Expand outward from center of zone
+                    int SCAN_MAX = (map->width > map->height) ? map->width : map->height;
+                    for (int r = 0; r <= SCAN_MAX && !foundAny; ++r) {
+                        for (int dy = -r; dy <= r && !foundAny; ++dy) {
+                            for (int dx = -r; dx <= r && !foundAny; ++dx) {
+                                if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                                int nx = zx + dx;
+                                int ny = zy + dy;
+                                if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                                // skip spawn area
+                                float sdx = (float)nx + 0.5f - spawnExcludeX;
+                                float sdy = (float)ny + 0.5f - spawnExcludeY;
+                                if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                                // also skip tiles that are doors or exits
+                                if (IsDoorTile(nx, ny)) continue;
+                                gx = nx; gy = ny; foundAny = true; break;
+                            }
+                        }
+                    }
+                    if (!foundAny) {
+                        Vector2 c2 = GetZoneCenter(zoneId);
+                        gx = (int)c2.x;
+                        gy = (int)c2.y;
+                    }
                 }
             }
 
@@ -531,8 +558,29 @@ namespace Game
                     }
                 }
                 if (!placed) {
-                    // last resort: use center clamped
-                    gx = cx; gy = cy;
+                    bool foundAny = false;
+                    int zx2 = cx; int zy2 = cy;
+                    int SCAN_MAX2 = (map->width > map->height) ? map->width : map->height;
+                    for (int r2 = 0; r2 <= SCAN_MAX2 && !foundAny; ++r2) {
+                        for (int dy2 = -r2; dy2 <= r2 && !foundAny; ++dy2) {
+                            for (int dx2 = -r2; dx2 <= r2 && !foundAny; ++dx2) {
+                                if (std::abs(dx2) != r2 && std::abs(dy2) != r2) continue;
+                                int nx = zx2 + dx2;
+                                int ny = zy2 + dy2;
+                                if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                                float sdx = (float)nx + 0.5f - spawnExcludeX;
+                                float sdy = (float)ny + 0.5f - spawnExcludeY;
+                                if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
+                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
+                                if (IsDoorTile(nx, ny)) continue;
+                                gx = nx; gy = ny; foundAny = true; break;
+                            }
+                        }
+                    }
+                    if (!foundAny) {
+                        // last resort fallback to center
+                        gx = cx; gy = cy;
+                    }
                 }
             }
 

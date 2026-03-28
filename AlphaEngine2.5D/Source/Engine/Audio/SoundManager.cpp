@@ -469,9 +469,7 @@ namespace Engine {
         s_loopLastVolume.clear();
         s_distanceLoopLastVolume.clear();
     }
-    return out;
 
-// Try to find a file under Assets/Audio whose filename (without extension) loosely
 
     void SoundManager::SetBGMVolume(f32 volume)
     {

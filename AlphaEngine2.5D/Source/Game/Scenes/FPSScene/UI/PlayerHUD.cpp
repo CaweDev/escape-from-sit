@@ -175,6 +175,10 @@ namespace Game
             m_annoyingApproachText->SetText(buf);
             m_annoyingApproachText->visible = true;
             m_annoyingApproachTimer = m_approachDisplayDuration;
+            // Ensure starting alpha is fully visible so pulsing is noticeable
+            Engine::Color col = m_annoyingApproachText->GetColor();
+            col.a = 1.0f;
+            m_annoyingApproachText->SetColor(col);
         }
     }
 
@@ -1069,7 +1073,10 @@ namespace Game
             {
                 const int secs = (int)std::ceil(it->second);
                 m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 1));
-                m_powerUpTimers[i]->SetText((std::to_string(secs) + "s").c_str());
+                // avoid passing a temporary c_str() directly to SetText to prevent
+                // any compiler warnings about temporaries: store in a local string first
+                std::string secsTxt = std::to_string(secs) + "s";
+                m_powerUpTimers[i]->SetText(secsTxt.c_str());
             }
             else
             {
