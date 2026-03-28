@@ -101,9 +101,9 @@ namespace Game
         UI::Text* m_bookCountText = nullptr;
 
         //Title
-        UI::Panel* m_bookPopupPanel;
-        UI::Text* m_bookTitleText;
-        UI::Text* m_bookLoreText;
+        UI::Panel* m_bookPopupPanel = nullptr;
+        UI::Text* m_bookTitleText = nullptr;
+        UI::Text* m_bookLoreText = nullptr;
 
         //Question Answers
         UI::Text* m_option1Text = nullptr;

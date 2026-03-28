@@ -8,6 +8,7 @@
 #include "../Core/ConfigManager.hpp"
 #include "../Physics/BoxCollider2D.hpp"
 #include "../Interaction/Interactable.hpp"
+#include "Engine/Scene/SceneManager.hpp"
 #include "AEEngine.h"
 #include "Engine/Audio/SoundManager.hpp"
 #include "Engine/Graphics/Camera.hpp"
@@ -258,6 +259,36 @@ void Door::Initialize(const std::string& configPath)
     s_colliderChangeThreshold = config.colliderChangeThreshold;
     // animationSpeed is a per-instance member; the config default can be applied
     // to new doors by reading DoorConfig::animationSpeed wherever doors are spawned.
+}
+
+Door* Door::FindAtTile(int tileX, int tileY)
+{
+    Scene* scene = SceneManager::GetActiveScene();
+    if (!scene)
+    {
+        return nullptr;
+    }
+
+    for (auto& obj : scene->GetGameObjects())
+    {
+        if (!obj || !obj->active)
+        {
+            continue;
+        }
+
+        Door* door = obj->GetComponent<Door>();
+        if (!door)
+        {
+            continue;
+        }
+
+        if (door->tileX == tileX && door->tileY == tileY)
+        {
+            return door;
+        }
+    }
+
+    return nullptr;
 }
 
 } // namespace Engine

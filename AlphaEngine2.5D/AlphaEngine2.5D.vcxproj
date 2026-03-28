@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -219,15 +219,10 @@
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
     <ClInclude Include="Source\Game\Player\Player.hpp" />
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h" />
     <ClInclude Include="Source\Game\Player\PlayerPowerUpController.hpp" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUp.hpp" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h" />
     <ClInclude Include="Source\Game\PowerUp\PowerUpManager.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleManager.hpp" />
-    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h" />
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp" />
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\PlayerHUD.hpp" />
@@ -364,3 +359,4 @@ xcopy "$(SolutionDir)Extern\AlphaEngine\lib\fmod.dll" "$(OutDir)" /s /r /y /q</C
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
+

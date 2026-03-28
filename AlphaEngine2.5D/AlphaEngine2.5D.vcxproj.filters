@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Assets" />
@@ -642,15 +642,8 @@
     <ClInclude Include="Source\Game\Player\Player.hpp">
       <Filter>Source\Game\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Player\PlayerPowerUpController.h">
-      <Filter>Source\Game\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\PowerUp\PowerUp.h">
-      <Filter>Source\Game\PowerUp</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\PowerUp\PowerUpManager.h">
-      <Filter>Source\Game\PowerUp</Filter>
-    </ClInclude>
+
+
     <ClInclude Include="Source\Editor\ObjectManager.hpp">
       <Filter>Source\Editor</Filter>
     </ClInclude>
@@ -660,12 +653,7 @@
     <ClInclude Include="Source\Editor\ReflectionRegistry.hpp">
       <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Puzzle\PuzzleManager.h">
-      <Filter>Source\Game\Puzzle</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\Puzzle\PuzzleObject.h">
-      <Filter>Source\Game\Puzzle</Filter>
-    </ClInclude>
+
     <ClInclude Include="Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp">
       <Filter>Source\Game\Scenes\FPSScene\UI</Filter>
     </ClInclude>
@@ -763,3 +751,4 @@
     <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
+
