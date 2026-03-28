@@ -218,32 +218,6 @@ namespace Game
 
         void PrintMLSummary()
         {
-            std::cout << "\n========== ML Summary ==========\n";
-            std::cout << "Priority Zone: " << priorityZoneId << "\n";
-            std::cout << "Hot Timer: " << priorityZoneHotTimer << " sec\n";
-            std::cout << "Full Escalation: " << (fullEscalationActive ? "YES" : "NO") << "\n";
-            std::cout << "Pulls: "
-                      << bandit.Pulls(0) << " "
-                      << bandit.Pulls(1) << " "
-                      << bandit.Pulls(2) << " "
-                      << bandit.Pulls(3) << "\n";
-            std::cout << "Means: "
-                      << bandit.Value(0) << " "
-                      << bandit.Value(1) << " "
-                      << bandit.Value(2) << " "
-                      << bandit.Value(3) << "\n";
-            std::cout << "CCTV Score: "
-                      << cctvScore[1] << " "
-                      << cctvScore[2] << " "
-                      << cctvScore[3] << " "
-                      << cctvScore[4] << "\n";
-
-            for (int z = 1; z <= 4; ++z)
-            {
-                float heatSum = heatmap.SumZone(zoneMgr.GetGrid(), z);
-                std::cout << "Zone " << z << " heat: " << heatSum << "\n";
-            }
-            std::cout << "================================\n";
         }
 
         void SwitchToPlayerCam()
@@ -411,9 +385,6 @@ namespace Game
 
             npcs.push_back(npc);
 
-            std::cout << "[FPSScene] Spawned " << typeName << " NPC in Zone " << zoneId
-                      << " at (" << gx << ", " << gy << ")\n";
-
             return npc;
         }
 
@@ -567,7 +538,6 @@ namespace Game
             if (priorityZoneHotTimer >= fullEscalationThreshold && !fullEscalationActive)
             {
                 fullEscalationActive = true;
-                std::cout << "\n[ALERT] FULL ESCALATION! All guards converging on Zone " << pZone << "\n";
 
                 for (auto *g : guards)
                 {
@@ -661,42 +631,6 @@ namespace Game
             }
 
             bandit.Update(nextArm, zoneReward[nextZone]);
-
-            static int lastDebugZone = -1;
-            if (nextZone != lastDebugZone) {
-                std::cout << "[BANDIT] ML Priority -> Zone "
-                          << Game::ZoneIdToLetter(nextZone)
-                          << " (" << nextZone << ")\n";
-
-                std::cout << "  Reward: Z1=" << zoneReward[1]
-                          << " Z2=" << zoneReward[2]
-                          << " Z3=" << zoneReward[3]
-                          << " Z4=" << zoneReward[4] << "\n";
-
-                std::cout << "  Heat: Z1=" << heatmap.SumZone(zoneMgr.GetGrid(), 1)
-                          << " Z2=" << heatmap.SumZone(zoneMgr.GetGrid(), 2)
-                          << " Z3=" << heatmap.SumZone(zoneMgr.GetGrid(), 3)
-                          << " Z4=" << heatmap.SumZone(zoneMgr.GetGrid(), 4) << "\n";
-
-                std::cout << "  CCTV: Z1=" << cctvScore[1]
-                          << " Z2=" << cctvScore[2]
-                          << " Z3=" << cctvScore[3]
-                          << " Z4=" << cctvScore[4] << "\n";
-
-                std::cout << "  Pulls: Arm0=" << bandit.Pulls(0)
-                          << " Arm1=" << bandit.Pulls(1)
-                          << " Arm2=" << bandit.Pulls(2)
-                          << " Arm3=" << bandit.Pulls(3) << "\n";
-
-                std::cout << "  Means: Arm0=" << bandit.Value(0)
-                          << " Arm1=" << bandit.Value(1)
-                          << " Arm2=" << bandit.Value(2)
-                          << " Arm3=" << bandit.Value(3) << "\n";
-
-                std::cout << "  Commit cooldown: " << switchCooldown << "s\n";
-
-                lastDebugZone = nextZone;
-            }
 
             if (nextZone == priorityZoneId) {
                 priorityZoneHotTimer += banditInterval;

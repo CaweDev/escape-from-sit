@@ -60,8 +60,8 @@ void PlayerPowerUpController::AddPowerUp(PowerUpType type, float duration) {
     if (!player) return;
     activeTimers[type] = duration;
     UpdatePlayerFlags(type, true);
-    if (GetPlayerPowerUpControllerConfig().logEnabled)
-        std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";
+    /*if (GetPlayerPowerUpControllerConfig().logEnabled)
+        std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";*/
 }
 
 void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive) {
@@ -80,10 +80,10 @@ void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive)
         break;
     }
 
-    if (!isActive) {
+    /*if (!isActive) {
         if (GetPlayerPowerUpControllerConfig().logEnabled)
             std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " has worn off.\n";
-    }
+    }*/
 }
 
 void PlayerPowerUpController::RemovePowerUp(PowerUpType type) {
@@ -91,8 +91,8 @@ void PlayerPowerUpController::RemovePowerUp(PowerUpType type) {
     if (it != activeTimers.end()) {
         UpdatePlayerFlags(type, false);
         activeTimers.erase(it);
-        if (GetPlayerPowerUpControllerConfig().logEnabled)
-            std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " was removed prematurely.\n";
+        /*if (GetPlayerPowerUpControllerConfig().logEnabled)
+            std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " was removed prematurely.\n";*/
     }
 }
 

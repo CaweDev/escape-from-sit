@@ -394,8 +394,8 @@ namespace Game
         const int spawnExcludeBottom = cfg.spawnExcludeBottom;
         const int spawnExcludeTop = cfg.spawnExcludeTop;
 
-        std::cout << "[CCTV Placement] Spawn exclusion zone: (" << spawnExcludeLeft << "," << spawnExcludeBottom 
-                  << ") to (" << spawnExcludeRight << "," << spawnExcludeTop << ") - Player spawns at (2, 2)\n";
+        //std::cout << "[CCTV Placement] Spawn exclusion zone: (" << spawnExcludeLeft << "," << spawnExcludeBottom 
+        //         << ") to (" << spawnExcludeRight << "," << spawnExcludeTop << ") - Player spawns at (2, 2)\n";
 
         // Lambda to check if position is in spawn exclusion zone
         auto IsInSpawnZone = [&](int x, int y) -> bool {
@@ -428,10 +428,10 @@ namespace Game
             }
         }
 
-        std::cout << "[CCTV Placement] Corridor candidates found per zone (excluding spawn area):\n";
+        //std::cout << "[CCTV Placement] Corridor candidates found per zone (excluding spawn area):\n";
         for (int zid = 1; zid <= 4; ++zid)
         {
-            std::cout << "  Zone " << zid << ": " << candidates[zid].size() << " candidates\n";
+            //std::cout << "  Zone " << zid << ": " << candidates[zid].size() << " candidates\n";
         }
         // For each zone, pick up to `perZone` corridor CCTV positions, distributed and spaced
         for (int zid = 1; zid <= 4; ++zid) {
@@ -448,7 +448,7 @@ namespace Game
             }
 
             if (flat.empty()) {
-                std::cout << "[CCTV Placement] Zone " << zid << ": no corridor candidates after filtering\n";
+                //std::cout << "[CCTV Placement] Zone " << zid << ": no corridor candidates after filtering\n";
                 continue;
             }
 
@@ -497,10 +497,10 @@ namespace Game
                 cams.push_back(info); placedZone++;
             }
 
-            std::cout << "[CCTV Placement] Zone " << zid << ": Placed " << placedZone << "/" << perZone << " cameras\n";
+            //std::cout << "[CCTV Placement] Zone " << zid << ": Placed " << placedZone << "/" << perZone << " cameras\n";
         }
 
-        std::cout << "[CCTV Placement] Total cameras placed: " << cams.size() << "\n";
+        //std::cout << "[CCTV Placement] Total cameras placed: " << cams.size() << "\n";
         return cams;
     }
 

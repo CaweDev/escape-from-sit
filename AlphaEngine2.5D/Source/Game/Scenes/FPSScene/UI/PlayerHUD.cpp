@@ -15,7 +15,6 @@
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"
 #include "Engine/Core/ConfigManager.hpp"
-#include <iostream>
 #include <cmath>
 #include "Game/Puzzle/PuzzleManager.hpp"
 #include "Engine/Audio/SoundManager.hpp"
@@ -779,7 +778,6 @@ namespace Game
 
         if (Engine::Input::GetKeyDown(Engine::KeyCode::O)) {
             Engine::SoundManager::PlaySFX("ui_click", cfg.audioDebugClickVolume);
-            std::cout << "[Audio Debug] Forced One-Shot of book_nearby!\n";
         }
         // ==========================================
         // BOOK PROXIMITY AUDIO (DEBUG VERSION)
@@ -808,12 +806,6 @@ namespace Game
                 }
             }
 
-            // --- SPAM THE CONSOLE (Only when you are close) ---
-            if (closestBookDist < cfg.nearestBookDebugDistance) {
-                std::cout << "[Audio Debug] Closest Book: " << closestBookDist
-                    << " units away. Sending to SoundManager...\n";
-            }
-
             Engine::SoundManager::UpdateDistanceLoop(
                 "puzzle_nearby",
                 closestBookDist,
@@ -821,9 +813,6 @@ namespace Game
                 cfg.bookFarDistance,
                 cfg.bookLoopVolume
             );
-        }
-        else {
-            std::cout << "[Audio Debug] ERROR: Cannot find Player Transform!\n";
         }
         // ==========================================
 
@@ -1464,7 +1453,6 @@ namespace Game
                 m_banditVisualizer->SetSelectedZone(zoneId);
             }
 
-            std::cout << "[PlayerHUD] Initial zone set to " << zoneId << "\n";
             return;
         }
 
@@ -1494,8 +1482,6 @@ namespace Game
         m_zoneEntryPanel->visible = true;
         m_zoneEntryTimer = m_zoneEntryDuration;
         Engine::SoundManager::PlaySFX("zone_enter", 0.6f);
-        
-        std::cout << "[PlayerHUD] Showing zone entry notification: Zone " << zoneLetter << "\n";
     }
     
     void PlayerHUD::CollectAccessCard(int cardId, [[maybe_unused]] const Engine::Vector2& collectionPos)
@@ -1541,9 +1527,6 @@ namespace Game
             
             std::string pathMessage = std::string("Press '") + keyName + "' to toggle path to Zone " + zoneLetter + " Terminal";
             ShowHackStatus(pathMessage, 5.0f);
-            
-            std::cout << "[PlayerHUD] Card collected. Press '" << keyName 
-                      << "' to toggle path to Zone " << zoneLetter << " terminal\n";
         }
         
         if (m_totalCardsCollected >= 4) {
@@ -1581,8 +1564,6 @@ namespace Game
     {
         if (zoneId < 1 || zoneId > 4) return;
         m_terminalPositions[zoneId - 1] = position;
-        std::cout << "[PlayerHUD] Set Zone " << Game::ZoneIdToLetter(zoneId) 
-                  << " terminal position to (" << position.x << ", " << position.y << ")\n";
     }
     
     Engine::Vector2 PlayerHUD::GetTerminalPosition(int zoneId) const
@@ -1595,8 +1576,6 @@ namespace Game
     {
         if (zoneId < 1 || zoneId > 4) return;
         m_controlRoomPositions[zoneId - 1] = position;
-        std::cout << "[PlayerHUD] Set Zone " << Game::ZoneIdToLetter(zoneId) 
-                  << " control room position to (" << position.x << ", " << position.y << ")\n";
     }
     
     Engine::Vector2 PlayerHUD::GetControlRoomPosition(int zoneId) const
@@ -1660,7 +1639,7 @@ namespace Game
             
             if (targetZoneId >= 1 && targetZoneId <= 4) {
                 char zoneLetter = Game::ZoneIdToLetter(targetZoneId);
-                std::string message = std::string("Path to Zone ") + zoneLetter + " Terminal shown";
+                std::string message = std::string("Press '") + zoneLetter + "' to toggle path to Zone " + zoneLetter + " Terminal";
                 ShowHackStatus(message, 2.0f);
             }
         }
@@ -1708,8 +1687,6 @@ namespace Game
         
         // Check if terminal position is valid (not at origin)
         if (terminalPos.x == 0.0f && terminalPos.y == 0.0f) {
-            std::cout << "[PlayerHUD] ERROR: No terminal position set for Zone " << Game::ZoneIdToLetter(targetZoneId) 
-                      << "! Please add 'T' marker in that zone using Level Editor.\n";
             m_pathVisible = false;
             m_activePathCardId = -1;
             ShowHackStatus("ERROR: No terminal in that zone!", 3.0f);

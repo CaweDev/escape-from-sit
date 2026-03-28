@@ -65,9 +65,9 @@ namespace Game {
 
 void PathRenderer::Awake() {
     // Component will be initialized when SetPath is called
-    std::cout << "[PathRenderer] Awake() called - Component created successfully!" << std::endl;
+    /* std::cout << "[PathRenderer] Awake() called - Component created successfully!" << std::endl;
     std::cout << "[PathRenderer] GameObject: " << (gameObject ? gameObject->name.c_str() : "NULL") << std::endl;
-    std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;
+    std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;*/
 }
 
 void PathRenderer::Update() {
@@ -104,7 +104,7 @@ void PathRenderer::Render() {
     
     if (!HasPath()) {
         if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) { // Log once per second at 60fps
-            std::cout << "[PathRenderer::Render] No path (waypoints empty)" << std::endl;
+            //std::cout << "[PathRenderer::Render] No path (waypoints empty)" << std::endl;
         }
         renderCallCount++;
         return;
@@ -112,7 +112,7 @@ void PathRenderer::Render() {
     
     if (currentAlpha <= 0.0f) {
         if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) {
-            std::cout << "[PathRenderer::Render] Path exists but alpha=0" << std::endl;
+            //std::cout << "[PathRenderer::Render] Path exists but alpha=0" << std::endl;
         }
         renderCallCount++;
         return;
@@ -120,7 +120,7 @@ void PathRenderer::Render() {
     
     if (!Engine::Camera::main) {
         if (GetPathRendererConfig().verboseLogging && renderCallCount % 60 == 0) {
-            std::cout << "[PathRenderer::Render] No Camera::main!" << std::endl;
+            //std::cout << "[PathRenderer::Render] No Camera::main!" << std::endl;
         }
         renderCallCount++;
         return;
@@ -128,8 +128,8 @@ void PathRenderer::Render() {
     
     // Only log first few renders to avoid spam
     if (GetPathRendererConfig().verboseLogging && renderCallCount < 5) {
-        std::cout << "[PathRenderer::Render] Rendering " << pathWaypoints.size() 
-                  << " markers with alpha=" << currentAlpha << std::endl;
+        /*std::cout << "[PathRenderer::Render] Rendering " << pathWaypoints.size() 
+                  << " markers with alpha=" << currentAlpha << std::endl;*/
     }
     renderCallCount++;
     
@@ -151,27 +151,27 @@ void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& 
     markerColor = color;
     pathWaypoints = FindPath(start, dest);
     
-    if (pathWaypoints.empty()) {
-        std::cout << "[PathRenderer] No path found from (" << start.x << ", " << start.y 
-                  << ") to (" << dest.x << ", " << dest.y << ")\n";
-    } else {
-        const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
-        std::cout << "[PathRenderer] ===== PATH SET SUCCESSFULLY =====" << std::endl;
-        std::cout << "[PathRenderer] Card: " << (cardID >= 0 && cardID <= 3 ? cardNames[cardID] : "Unknown") << " (ID=" << cardID << ")" << std::endl;
-        std::cout << "[PathRenderer] Path computed with " << pathWaypoints.size() << " waypoints\n";
-        std::cout << "[PathRenderer] Start: (" << start.x << ", " << start.y << ")" << std::endl;
-        std::cout << "[PathRenderer] Dest: (" << dest.x << ", " << dest.y << ")" << std::endl;
-        std::cout << "[PathRenderer] Color: (" << color.r << ", " << color.g << ", " << color.b << ")" << std::endl;
-        std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;
-        std::cout << "[PathRenderer] Component ready to render!" << std::endl;
-    }
+    //if (pathWaypoints.empty()) {
+    //    //std::cout << "[PathRenderer] No path found from (" << start.x << ", " << start.y 
+    //    //          << ") to (" << dest.x << ", " << dest.y << ")\n";
+    //} else {
+    //    //const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+    //    //std::cout << "[PathRenderer] ===== PATH SET SUCCESSFULLY =====" << std::endl;
+    //    //std::cout << "[PathRenderer] Card: " << (cardID >= 0 && cardID <= 3 ? cardNames[cardID] : "Unknown") << " (ID=" << cardID << ")" << std::endl;
+    //    //std::cout << "[PathRenderer] Path computed with " << pathWaypoints.size() << " waypoints\n";
+    //    //std::cout << "[PathRenderer] Start: (" << start.x << ", " << start.y << ")" << std::endl;
+    //    //std::cout << "[PathRenderer] Dest: (" << dest.x << ", " << dest.y << ")" << std::endl;
+    //    //std::cout << "[PathRenderer] Color: (" << color.r << ", " << color.g << ", " << color.b << ")" << std::endl;
+    //    //std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;
+    //    //std::cout << "[PathRenderer] Component ready to render!" << std::endl;
+    //}
 }
 
 void PathRenderer::ClearPath() {
     pathWaypoints.clear();
     currentAlpha = 1.0f;
     cardId = -1;
-    std::cout << "[PathRenderer] Path cleared" << std::endl;
+    //std::cout << "[PathRenderer] Path cleared" << std::endl;
 }
 
 void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, float glowMod) {
@@ -311,7 +311,7 @@ std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start
     std::vector<Engine::Vector2> path;
     
     if (!tileMap) {
-        std::cout << "[PathRenderer] No TileMap reference for pathfinding\n";
+        //std::cout << "[PathRenderer] No TileMap reference for pathfinding\n";
         return path;
     }
     
@@ -323,7 +323,7 @@ std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start
     
     // Check if start and goal are walkable
     if (tileMap->IsWall(startX, startY) || tileMap->IsWall(goalX, goalY)) {
-        std::cout << "[PathRenderer] Start or goal is blocked\n";
+        //std::cout << "[PathRenderer] Start or goal is blocked\n";
         return path;
     }
     
@@ -467,10 +467,10 @@ std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start
         }
     }
     
-    if (!foundPath) {
+  /*  if (!foundPath) {
         if (GetPathRendererConfig().verboseLogging)
             std::cout << "[PathRenderer] No path found after " << iterations << " iterations\n";
-    }
+    }*/
     
     return path;
 }

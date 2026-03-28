@@ -112,7 +112,7 @@ void ControlRoomDoor::Update() {
                 // Unlock achieved!
                 door->Toggle();
                 Engine::SoundManager::PlaySFX("door_unlock", unlockSfxVolume);
-                std::cout << "[CONTROL ROOM] Door unlocked! Welcome to Zone " << char('A' + zoneId - 1) << " Control Room.\n";
+                //std::cout << "[CONTROL ROOM] Door unlocked! Welcome to Zone " << char('A' + zoneId - 1) << " Control Room.\n";
                 holdProgress = 0.0f;
                 isHolding = false;
             }
@@ -167,8 +167,8 @@ void ControlRoomDoor::OnInteract() {
         // Show locked message
         int collected = GetCollectedCards();
         Engine::SoundManager::PlaySFX("door_locked", lockedSfxVolume);
-        std::cout << "[CONTROL ROOM] Door is LOCKED. Access cards collected: " << collected << "/" << requiredCards << "\n";
-        std::cout << "[CONTROL ROOM] Find all " << requiredCards << " access cards to unlock this door.\n";
+        //std::cout << "[CONTROL ROOM] Door is LOCKED. Access cards collected: " << collected << "/" << requiredCards << "\n";
+        //std::cout << "[CONTROL ROOM] Find all " << requiredCards << " access cards to unlock this door.\n";
         return;
     }
     

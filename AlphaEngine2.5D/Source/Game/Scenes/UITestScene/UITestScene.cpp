@@ -3,7 +3,6 @@
  * @brief Implementation of the UI test scene
  */
 
-#include <iostream>
 #include "Engine.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 
@@ -133,8 +132,7 @@ void UITestScene::OnLoad() {
         btn->SetText(buttonNames[i]);
         btn->SetBackgroundColor(cfg.menuButtonColor);
         
-        btn->onClick = [i, buttonNames]() {
-            std::cout << "DEBUG: " << buttonNames[i] << " clicked!" << std::endl;
+        btn->onClick = []() {
         };
     }
 
@@ -155,14 +153,11 @@ void UITestScene::OnLoad() {
         badge->SetSizeDelta({ cfg.badgeSize, cfg.badgeSize });
         badge->SetColor(badgeColors[i]);
     }
-    
-    std::cout << "UITestScene Loaded: Canvas and Hierarchy initialized." << std::endl;
 }
 
 void UITestScene::OnUnload() {
     Input::UnregisterCursorUnlock("UITestScene");
     // UI System shutdown is now handled globally in Main.cpp
-    std::cout << "UITestScene Unloaded." << std::endl;
 }
 
 void UITestScene::OnUpdate() {

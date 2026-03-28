@@ -1,6 +1,5 @@
 #include "MainMenuScene.hpp"
 #include "Engine/Core/ConfigManager.hpp"
-#include <iostream>
 #include <cmath>
 #include <cstdlib>
 
@@ -682,7 +681,6 @@ namespace Game {
         transitionLocked = true;
 
         SoundManager::PlaySFX("ui_click");
-        std::cout << "Play clicked - Loading game scene..." << std::endl;
         SceneManager::LoadWithLoadingScreen("FPS");
     }
 
@@ -699,7 +697,6 @@ namespace Game {
         transitionLocked = true;
 
         SoundManager::PlaySFX("ui_click");
-        std::cout << "Credits clicked - Loading credit scene..." << std::endl;
         SceneManager::LoadWithFade("Credits");
     }
 
@@ -709,7 +706,6 @@ namespace Game {
             "Are you sure you want to quit?",
             "Quit", "Cancel",
             []() {
-                std::cout << "Quit confirmed - Exiting game..." << std::endl;
                 Application::Quit();
             }
         );

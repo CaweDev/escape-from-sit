@@ -112,7 +112,7 @@ void CCTVTerminal::Awake() {
     cooldownDuration = cfg.cooldownDuration;
     interactionTime = cfg.holdDuration;
 
-    std::cout << "[CCTVTerminal::Awake] Terminal spawned for Zone " << controlledZone << "\n";
+    //std::cout << "[CCTVTerminal::Awake] Terminal spawned for Zone " << controlledZone << "\n";
     
 
     UpdateVisualState();
@@ -120,16 +120,16 @@ void CCTVTerminal::Awake() {
 }
 
 void CCTVTerminal::SetupInteraction() {
-    std::cout << "[CCTVTerminal::SetupInteraction] Setting up interaction for Zone " << controlledZone << "\n";
+    //std::cout << "[CCTVTerminal::SetupInteraction] Setting up interaction for Zone " << controlledZone << "\n";
     const auto& cfg = GetCCTVTerminalConfig();
     
     // Add Interactable component
     auto interactable = gameObject->GetComponent<Engine::Interactable>();
     if (!interactable) {
         interactable = gameObject->AddComponent<Engine::Interactable>();
-        std::cout << "[CCTVTerminal::SetupInteraction] Created new Interactable component\n";
+        //std::cout << "[CCTVTerminal::SetupInteraction] Created new Interactable component\n";
     } else {
-        std::cout << "[CCTVTerminal::SetupInteraction] Using existing Interactable component\n";
+        //std::cout << "[CCTVTerminal::SetupInteraction] Using existing Interactable component\n";
     }
     
     interactable->actionText = cfg.interactText;
@@ -138,18 +138,18 @@ void CCTVTerminal::SetupInteraction() {
     interactable->holdDuration = cfg.holdDuration;
     interactable->onInteract = [this]() { OnTerminalInteract(); };
     
-    std::cout << "[CCTVTerminal::SetupInteraction] Interaction setup complete!\n";
+    //std::cout << "[CCTVTerminal::SetupInteraction] Interaction setup complete!\n";
 }
 
 void CCTVTerminal::OnTerminalInteract() {
     const auto& cfg = GetCCTVTerminalConfig();
-    std::cout << "[CCTVTerminal] OnTerminalInteract called! Zone=" << controlledZone 
+    /*std::cout << "[CCTVTerminal] OnTerminalInteract called! Zone=" << controlledZone 
               << " (" << ZoneIdToLetter(controlledZone) << ")"
               << " isDisabled=" << isDisabled << " cooldown=" << cooldownTimer 
-              << " playerHUD=" << (playerHUD ? "YES" : "NULL") << "\n";
+              << " playerHUD=" << (playerHUD ? "YES" : "NULL") << "\n";*/
               
     if (!CanHack()) {
-        std::cout << "[CCTVTerminal] CanHack returned false!\n";
+        //std::cout << "[CCTVTerminal] CanHack returned false!\n";
         return;
     }
     
@@ -164,10 +164,10 @@ void CCTVTerminal::OnTerminalInteract() {
     if (playerHUD) {
         char zoneLetter = ZoneIdToLetter(controlledZone);
         std::string message = std::string("ZONE ") + zoneLetter + cfg.hackStatusPrefix;
-        std::cout << "[CCTVTerminal] Showing HUD message: " << message << "\n";
+        //std::cout << "[CCTVTerminal] Showing HUD message: " << message << "\n";
         playerHUD->ShowHackStatus(message, cfg.hackStatusDuration);
     } else {
-        std::cout << "[CCTVTerminal] playerHUD is NULL! Message not shown!\n";
+        //std::cout << "[CCTVTerminal] playerHUD is NULL! Message not shown!\n";
     }
 }
 
@@ -204,11 +204,11 @@ if (interactable) {
     // Log only when interaction state changes
     static bool lastInteractState = true;
     if (canInteract != lastInteractState) {
-        std::cout << "[CCTVTerminal] Zone " << controlledZone 
+        /*std::cout << "[CCTVTerminal] Zone " << controlledZone 
                   << " interaction " << (canInteract ? "ENABLED" : "DISABLED")
                   << " (isDisabled=" << isDisabled 
                   << " cooldown=" << cooldownTimer 
-                  << " repairing=" << guardIsRepairing << ")\n";
+                  << " repairing=" << guardIsRepairing << ")\n";*/
         lastInteractState = canInteract;
     }
     
@@ -242,7 +242,7 @@ if (interactable) {
 }
 
 void CCTVTerminal::DisableCameras() {
-    std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras DISABLED for " << disabledDuration << " seconds\n";
+    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras DISABLED for " << disabledDuration << " seconds\n";
     
     isDisabled = true;
     disabledTimer = disabledDuration;
@@ -256,18 +256,18 @@ void CCTVTerminal::DisableCameras() {
             camera->isDisabled = true;
             camera->disabledTimeRemaining = disabledDuration;
             disabledCount++;
-            std::cout << "[CCTVTerminal] Disabled camera ID " << camera->id << "\n";
+            //std::cout << "[CCTVTerminal] Disabled camera ID " << camera->id << "\n";
         }
     }
-    std::cout << "[CCTVTerminal] Disabled " << disabledCount << "/" << controlledCameras.size() << " cameras\n";
+    //std::cout << "[CCTVTerminal] Disabled " << disabledCount << "/" << controlledCameras.size() << " cameras\n";
     
     // Notify guards
-    std::cout << "[CCTVTerminal] Notifying " << allGuards.size() << " guards of sabotage\n";
+    //std::cout << "[CCTVTerminal] Notifying " << allGuards.size() << " guards of sabotage\n";
     NotifyGuardsOfSabotage();
 }
 
 void CCTVTerminal::RestoreCameras() {
-    std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras RESTORED\n";
+    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras RESTORED\n";
     
     isDisabled = false;
     disabledTimer = 0.0f;
@@ -293,7 +293,7 @@ void CCTVTerminal::StartRepair(SecurityGuard* guard) {
     repairProgress = 0.0f;
     state = TerminalState::REPAIRING;
     
-    std::cout << "[CCTVTerminal] Guard started repairing Zone " << controlledZone << " terminal\n";
+    //std::cout << "[CCTVTerminal] Guard started repairing Zone " << controlledZone << " terminal\n";
 }
 
 void CCTVTerminal::CancelRepair() {
@@ -302,7 +302,7 @@ void CCTVTerminal::CancelRepair() {
     repairProgress = 0.0f;
     state = TerminalState::DISABLED;
     
-    std::cout << "[CCTVTerminal] Repair cancelled\n";
+    //std::cout << "[CCTVTerminal] Repair cancelled\n";
 }
 
 void CCTVTerminal::UpdateRepair(float deltaTime) {
@@ -336,8 +336,8 @@ void CCTVTerminal::UpdateRepair(float deltaTime) {
 void CCTVTerminal::NotifyGuardsOfSabotage() {
     Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
     
-    std::cout << "[CCTVTerminal] Zone " << controlledZone << " sabotaged at (" 
-              << terminalPos.x << ", " << terminalPos.y << ")\n";
+    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " sabotaged at (" 
+    //          << terminalPos.x << ", " << terminalPos.y << ")\n";
     
     // ONLY notify the guard from this zone's home
     int notified = 0;
@@ -346,20 +346,20 @@ void CCTVTerminal::NotifyGuardsOfSabotage() {
         
         // Only the home zone guard should respond
         if (guard->homeZoneId == controlledZone) {
-            std::cout << "[CCTVTerminal] Notifying home guard from Zone " 
-                      << controlledZone << "\n";
+            /*std::cout << "[CCTVTerminal] Notifying home guard from Zone " 
+                      << controlledZone << "\n";*/
             guard->OnCCTVSystemSabotaged(terminalPos, controlledZone);
             notified++;
             break; // Only one guard needed
         }
     }
     
-    if (notified == 0) {
+   /* if (notified == 0) {
         std::cout << "[CCTVTerminal] WARNING: No home zone guard found for Zone " 
                   << controlledZone << "!\n";
     } else {
         std::cout << "[CCTVTerminal] Notified " << notified << " guard (home zone only)\n";
-    }
+    }*/
 }
 
 void CCTVTerminal::UpdateDisabledState(float deltaTime) {

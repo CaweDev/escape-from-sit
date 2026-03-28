@@ -82,21 +82,21 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                 terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace terminal marker with floor
                 // tiles[index] = TileType::Empty;
-                printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
+                //printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
             }
             else if (IsExitMarker(tileValue)) {
                 // Store exit position (center of tile)
                 exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace exit marker with floor
                 // tiles[index] = TileType::Empty;
-                printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
+                //printf("[TileMap] Found exit marker at (%d, %d)\n", x, y);
             }
             else if (IsControlRoomDoorMarker(tileValue)) {
                 // Store control room door position (center of tile)
                 controlRoomDoorPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace marker with floor (door will be spawned by FPSScene)
                 // tiles[index] = TileType::Empty;
-                printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
+                //printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
             }
             else {
                 // Check for access card markers
@@ -109,23 +109,23 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                     ));
                     // Replace marker with floor (card will be spawned by FPSScene)
                     // tiles[index] = TileType::Empty;
-                    const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
-                    printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);
+                    /* const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
+                    printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);*/
                 }
             }
         }
     }
     
-    printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits, %d control room doors, %d access cards\n", 
+    /*printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits, %d control room doors, %d access cards\n", 
            w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size(),
-           (int)controlRoomDoorPositions.size(), (int)accessCardPositions.size());
+           (int)controlRoomDoorPositions.size(), (int)accessCardPositions.size());*/
 
 	if (initialized) {
 		SpawnDoors();
 	}
 
-	printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits\n",
-		w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());
+	/*printf("[TileMap] Loaded %dx%d map: %d doors, %d terminals, %d exits\n",
+		w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());*/
 }
 
 void TileMap::SpawnDoors() {
@@ -262,7 +262,7 @@ void TileMap::SpawnDoor(int x, int y, int doorType) {
                 // 3. Trigger your global win state and UI
                 Game::PuzzleManager::OpenExitDoor();
 
-                printf("[TileMap] Exit door opened (all books collected)\n");
+                //printf("[TileMap] Exit door opened (all books collected)\n");
             }
             else {
                 int collected = Game::PuzzleManager::booksCollected;
@@ -272,7 +272,7 @@ void TileMap::SpawnDoor(int x, int y, int doorType) {
                 Game::PuzzleManager::activeBookText = std::to_string(collected) + "/" + std::to_string(totalBooks) + " books collected";
                 Game::PuzzleManager::popupTimer = 3.0f;
 
-                printf("[TileMap] Exit is locked. %d/%d books collected.\n", collected, totalBooks);
+                //printf("[TileMap] Exit is locked. %d/%d books collected.\n", collected, totalBooks);
             }
         };
 	}

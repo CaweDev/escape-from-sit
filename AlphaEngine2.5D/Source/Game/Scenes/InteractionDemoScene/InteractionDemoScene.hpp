@@ -49,13 +49,6 @@ public:
     bool chestLooted = false;
 
     void OnLoad() override {
-        std::cout << "\n=== INTERACTION DEMO SCENE ===\n";
-        std::cout << "Controls:\n";
-        std::cout << "  WASD - Move\n";
-        std::cout << "  Mouse - Look\n";
-        std::cout << "  E - Interact (when looking at object)\n";
-        std::cout << "==============================\n\n";
-
         // Simple map: 10x10 with a small room
         const int mapData[] = {
             1,1,1,1,1,1,1,1,1,1,
@@ -145,7 +138,6 @@ public:
             if (!hasKey) {
                 hasKey = true;
                 keyObj->active = false; // Hide the key
-                std::cout << "[INTERACTION] You picked up the KEY!\n";
             }
         };
 
@@ -164,16 +156,13 @@ public:
         doorInteract->maxDistance = 2.0f;
         doorInteract->onInteract = [this, doorInteract, doorObj]() {
             if (doorOpen) {
-                std::cout << "[INTERACTION] Door is already open.\n";
                 return;
             }
             if (!hasKey) {
-                std::cout << "[INTERACTION] The door is locked. You need a key.\n";
                 doorInteract->actionText = "Locked (need key)";
             } else {
                 doorOpen = true;
                 doorObj->active = false; // Remove door
-                std::cout << "[INTERACTION] You unlocked the door!\n";
             }
         };
         doorInteract->actionText = "Open Door";
@@ -196,15 +185,8 @@ public:
             if (!chestLooted) {
                 chestLooted = true;
                 chestInteract->actionText = "Empty";
-                std::cout << "[INTERACTION] You found treasure inside the chest!\n";
-                std::cout << "=== DEMO COMPLETE! ===\n";
-            } else {
-                std::cout << "[INTERACTION] The chest is empty.\n";
             }
         };
-
-        std::cout << "Scene loaded. Look at objects and press E to interact!\n";
-        std::cout << "Objective: Find the key, open the door, loot the chest.\n\n";
     }
 
     void OnUpdate() override {

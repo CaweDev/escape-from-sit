@@ -116,7 +116,7 @@ void AccessCard::SetupInteraction() {
     interactable->onInteract = [this]() {
         // ignore interactions during short spawn-safe period to avoid instant pickup
         if (spawnSafeTimer < spawnSafeDelay) {
-            std::cout << "[ACCESS CARD] Interaction ignored: spawn safe timer (" << spawnSafeTimer << ")\n";
+            //std::cout << "[ACCESS CARD] Interaction ignored: spawn safe timer (" << spawnSafeTimer << ")\n";
             return;
         }
         this->OnCollect();
@@ -124,7 +124,7 @@ void AccessCard::SetupInteraction() {
 }
 
 void AccessCard::OnCollect() {
-    std::cout << "[ACCESS CARD] Collected " << GetColorName() << " access card!\n";
+    //std::cout << "[ACCESS CARD] Collected " << GetColorName() << " access card!\n";
     
     // Find player and notify HUD
     auto player = Engine::GameObject::Find("Player");

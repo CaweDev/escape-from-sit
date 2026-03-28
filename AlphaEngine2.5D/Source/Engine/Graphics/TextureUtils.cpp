@@ -72,7 +72,7 @@ namespace Engine
 
         if (FAILED(hr)) { out.pixels.clear(); out.width = out.height = 0; return false; }
 
-        printf("[TextureUtils] Loaded CPU texture: %s (%dx%d)\n", path.c_str(), out.width, out.height);
+        //printf("[TextureUtils] Loaded CPU texture: %s (%dx%d)\n", path.c_str(), out.width, out.height);
         return true;
     }
 

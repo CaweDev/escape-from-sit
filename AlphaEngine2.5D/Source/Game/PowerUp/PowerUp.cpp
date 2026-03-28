@@ -127,7 +127,7 @@ namespace Game {
 
         Engine::SoundManager::PlaySFX("powerup_collect");
 
-        std::cout << "[POWERUP] Got " << reference.name << "!\n";
+        //std::cout << "[POWERUP] Got " << reference.name << "!\n";
         controller->AddPowerUp(reference.type, reference.duration);
 
         isCollected = true;
@@ -159,7 +159,7 @@ namespace Game {
             baseZ = gameObject->transform->position.z;
         }
 
-        std::cout << "[POWERUP] Respawned " << reference.name << ".\n";
+        //std::cout << "[POWERUP] Respawned " << reference.name << ".\n";
     }
 
     Engine::Color PowerUpObject::GetHighlightColor() const {

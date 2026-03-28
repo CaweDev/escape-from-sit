@@ -1,5 +1,4 @@
 #include "SoundManager.hpp"
-#include <cstdio>
 #include <filesystem>
 #include <algorithm>
 #include <cctype>
@@ -164,8 +163,6 @@ namespace Engine {
 
         AudioConfig config;
         if (!ConfigManager::ReadConfig(configPath, config)) {
-            std::printf("[Warning] SoundManager: Failed to read audio config: %s\n", configPath.c_str());
-            std::printf("[Warning] SoundManager: Falling back to built-in default audio config\n");
 
             config.bgm.clear();
             config.sfx.clear();
@@ -235,7 +232,6 @@ namespace Engine {
                 s_bgmClips[key] = clip;
             }
             else {
-                std::printf("[Warning] SoundManager: Failed to load BGM '%s' from %s\n", key.c_str(), path.c_str());
                 delete clip;
             }
         }
@@ -245,7 +241,6 @@ namespace Engine {
             if (!(clip && clip->IsLoaded())) {
                 std::string resolved = FindLooseAudioFile(key);
                 if (!resolved.empty()) {
-                    std::printf("[Info] SoundManager: Attempting to load SFX '%s' via resolved path: %s\n", key.c_str(), resolved.c_str());
                     delete clip;
                     clip = LoadSoundClip(resolved);
                 }
@@ -255,7 +250,6 @@ namespace Engine {
                 s_sfxClips[key] = clip;
             }
             else {
-                std::printf("[Warning] SoundManager: Failed to load SFX '%s' from %s\n", key.c_str(), path.c_str());
                 delete clip;
             }
         }
@@ -347,7 +341,6 @@ namespace Engine {
 
                 auto it = s_bgmClips.find(s_pendingBGMKey);
                 if (it == s_bgmClips.end() || !it->second || !it->second->IsLoaded()) {
-                    std::printf("[Warning] SoundManager: Pending BGM key not found/loaded: %s\n", s_pendingBGMKey.c_str());
                     s_pendingBGMKey.clear();
                     s_bgmFadeState = BGMFadeState::None;
                     s_bgmSource->SetVolume(s_bgmBaseVolume);
@@ -384,7 +377,6 @@ namespace Engine {
 
         auto it = s_bgmClips.find(key);
         if (it == s_bgmClips.end()) {
-            std::printf("[Warning] SoundManager: BGM key not found: %s\n", key.c_str());
             return;
         }
 
@@ -437,7 +429,6 @@ namespace Engine {
 
         auto it = s_sfxClips.find(key);
         if (it == s_sfxClips.end()) {
-            std::printf("[Warning] SoundManager: SFX key not found: %s\n", key.c_str());
             return;
         }
 
@@ -715,7 +706,6 @@ namespace Engine {
             it->second.playing = false;
             s_distanceLoopLastVolume.erase(key);
             s_distanceLoops.erase(it);
-            std::printf("[SoundManager] StopDistanceLoop: removed distance loop '%s'\n", key.c_str());
         }
 
         auto lit = s_loopChannels.find(key);
@@ -727,7 +717,6 @@ namespace Engine {
             s_loopChannels.erase(lit);
             s_loopRefCount.erase(key);
             s_loopLastVolume.erase(key);
-            std::printf("[SoundManager] StopDistanceLoop: removed generic loop channel '%s'\n", key.c_str());
         }
 
         AudioClip* targetClip = nullptr;
@@ -747,7 +736,6 @@ namespace Engine {
                 s_loopChannels.erase(k);
                 s_loopRefCount.erase(k);
                 s_loopLastVolume.erase(k);
-                std::printf("[SoundManager] StopDistanceLoop: removed generic loop channel by clip match '%s'\n", k.c_str());
             }
         }
     }
@@ -788,7 +776,6 @@ namespace Engine {
         // Loose filename resolution first
         std::string loose = FindLooseAudioFile(fs::path(path).filename().string());
         if (!loose.empty()) {
-            std::printf("[Info] SoundManager: Resolved loose music path '%s' -> '%s'\n", path.c_str(), loose.c_str());
             if (auto* clip = tryLoad(loose)) return clip;
         }
 
@@ -845,12 +832,10 @@ namespace Engine {
 
         for (const auto& cpath : candidates) {
             if (auto* clip = tryLoad(cpath)) {
-                std::printf("[Info] SoundManager: Loaded music via fallback path: %s\n", cpath.c_str());
                 return clip;
             }
         }
 
-        std::printf("[Warning] SoundManager: LoadMusic failed for '%s' and all fallback candidates\n", path.c_str());
         return nullptr;
     }
 
@@ -914,12 +899,10 @@ namespace Engine {
 
         for (const auto& cpath : candidates) {
             if (auto* clip = tryLoad(cpath)) {
-                std::printf("[Info] SoundManager: Loaded SFX via fallback path: %s\n", cpath.c_str());
                 return clip;
             }
         }
 
-        std::printf("[Warning] SoundManager: LoadSound failed for '%s' and all fallback candidates\n", path.c_str());
         return nullptr;
     }
 

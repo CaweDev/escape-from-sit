@@ -9,7 +9,6 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 #include <algorithm>
 #include <queue>
 #include "Game/Player/PlayerPowerUpController.hpp"
@@ -128,7 +127,6 @@ namespace Game {
             break;
 
         case GuardState::Catch:
-            std::cout << "\nYOU GOT CAUGHT. GAME OVER\n";
             break;
         }
     }
@@ -338,8 +336,6 @@ namespace Game {
                     {
                         terminal->StartRepair(this);
                         foundTerminal = true;
-                        std::cout << "[Guard] Starting repair on terminal at (" 
-                                  << termPos.x << ", " << termPos.y << ")\n";
                         break;
                     }
                 }
@@ -365,7 +361,6 @@ namespace Game {
                 sabotageInvestigateTimer = 0.0f;
                 BuildPathBFS_PatrolExplore();
                 SetState(GuardState::Patrol);
-                std::cout << "[Guard] Investigation timeout, returning to patrol\n";
                 return;
             }
         }
@@ -744,19 +739,12 @@ namespace Game {
 
     void SecurityGuard::OnCCTVSystemSabotaged(const Engine::Vector2& controlRoomPos, int sabotagedZoneId)
     {
-        std::cout << "[Guard Zone " << homeZoneId << "] OnCCTVSystemSabotaged called!\n";
-        std::cout << "  Current state: " << StateToString(state) << "\n";
-        std::cout << "  Sabotage location: (" << controlRoomPos.x << ", " << controlRoomPos.y << ")\n";
-        std::cout << "  Sabotaged zone: " << sabotagedZoneId << "\n";
-        
         // Do not respond if actively catching the player
         if (state == GuardState::Catch) {
-            std::cout << "[Guard] Ignoring sabotage - currently catching player\n";
             return;
         }
 
         // Allow response from Patrol, Chase, Search � interrupt other behaviors to investigate
-        std::cout << "[Guard] Responding to sabotage (interrupting state " << StateToString(state) << ")\n";
 
         // Trigger investigation behavior:
         memory.hasLastSeen = true;
@@ -788,17 +776,11 @@ namespace Game {
             foundWalkable:;
         }
         
-        std::cout << "[Guard] Building path to terminal at (" << targetX << ", " << targetY << ")\n";
         BuildPathBFS_ToGoal(targetX, targetY);
-        std::cout << "[Guard] Path has " << path.size() << " waypoints\n";
 
         // Switch to Search state to investigate (will use SearchUpdate to start repair when arrived)
         SetState(GuardState::Search);
         searchTimer = 0.0f;
-
-        std::cout << "[Guard Zone " << homeZoneId 
-                  << "] INVESTIGATING sabotaged terminal in zone " << sabotagedZoneId 
-                  << " at (" << controlRoomPos.x << ", " << controlRoomPos.y << ")\n";
     }
 
 } // namespace Game

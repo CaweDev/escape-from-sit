@@ -67,8 +67,8 @@ namespace Game {
 
 			invulnerabilityTimer = shieldBreakIFrameDuration; // Start invulnerability frames
 			immune = true;
-			if (GetPlayerConfig().logShieldAbsorb)
-				std::cout << "[PLAYER] Shield absorbed the catch! Player is now invulnerable for " << shieldBreakIFrameDuration << " seconds.\n";
+			/*if (GetPlayerConfig().logShieldAbsorb)
+				std::cout << "[PLAYER] Shield absorbed the catch! Player is now invulnerable for " << shieldBreakIFrameDuration << " seconds.\n";*/
 		}
 		if (cheatCatchImmune) {
 			immune = true;
@@ -153,8 +153,8 @@ namespace Game {
 		if (invulnerabilityTimer > 0.0f) {
 			invulnerabilityTimer -= dt;
 			if (invulnerabilityTimer <= 0.0f) {
-				if (GetPlayerConfig().logInvulnerabilityEnd)
-					std::cout << "[PLAYER] Invulnerability wore off!\n";
+				/*if (GetPlayerConfig().logInvulnerabilityEnd)
+					std::cout << "[PLAYER] Invulnerability wore off!\n";*/
 			}
 		}
 	}

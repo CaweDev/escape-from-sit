@@ -431,11 +431,6 @@ namespace Game
         if (!mapExitPositions.empty())
         {
             exitPos = mapExitPositions[0];
-            std::cout << "[FPSScene] Exit position from map: (" << exitPos.x << ", " << exitPos.y << ")\n";
-        }
-        else
-        {
-            std::cout << "[FPSScene] No exit marker in map, using default: (" << exitPos.x << ", " << exitPos.y << ")\n";
         }
 
         // ===== spawn 4 guards (1 per zone) =====
@@ -493,9 +488,6 @@ namespace Game
             sensor->needLOS = true;
             sensor->spriteRenderer = sr;
 
-            printf("[CCTV Setup] Camera %d at (%.1f, %.1f) rotation=%.1f cone=%.1f range=%.1f\n",
-                   i + 1, p.pos.x, p.pos.y, p.rot, sensor->coneWidth, sensor->maxRange);
-
             cctvSensors.push_back(sensor);
         }
 
@@ -509,7 +501,6 @@ namespace Game
 
         if (terminalPositions.empty())
         {
-            std::cout << "[FPSScene] No terminal markers found in map. Terminals should be placed using the level editor.\n";
         }
 
         // Spawn terminals at marked positions
@@ -524,13 +515,8 @@ namespace Game
             int zoneId = GetZoneId(tileX, tileY);
             if (zoneId < 1 || zoneId > 4)
             {
-                std::cout << "[FPSScene] Warning: Terminal at (" << pos.x << ", " << pos.y
-                          << ") [tile " << tileX << "," << tileY << "] is outside valid zones. Skipping.\n";
                 continue;
             }
-
-            std::cout << "[FPSScene] Terminal at (" << pos.x << ", " << pos.y
-                      << ") [tile " << tileX << "," << tileY << "] assigned to Zone " << zoneId << "\n";
 
             // Create terminal GameObject
             auto terminalObj = CreateGameObject("CCTVTerminal_Zone" + std::to_string(zoneId));
@@ -570,10 +556,6 @@ namespace Game
             }
 
             cctvTerminals.push_back(terminal);
-
-            std::cout << "[FPSScene] Spawned terminal at (" << pos.x << ", " << pos.y
-                      << ") in Zone " << zoneId << " controlling "
-                      << terminal->controlledCameras.size() << " cameras\n";
         }
 
         // Register terminal positions with PlayerHUD for pathfinding
@@ -615,13 +597,8 @@ namespace Game
             int zoneId = GetZoneId(tileX, tileY);
             if (zoneId < 1 || zoneId > 4)
             {
-                std::cout << "[FPSScene] Warning: Control room door at (" << pos.x << ", " << pos.y
-                          << ") is outside valid zones. Skipping.\n";
                 continue;
             }
-
-            std::cout << "[FPSScene] Spawning control room door at (" << pos.x << ", " << pos.y
-                      << ") for Zone " << Game::ZoneIdToLetter(zoneId) << "\n";
 
             // Create door GameObject
             std::string doorName = "ControlRoomDoor_Zone" + std::to_string(zoneId);
@@ -667,9 +644,6 @@ namespace Game
 
         // ===== Spawn Access Cards from map markers (tiles 15-18) =====
         auto accessCardPositions = map->GetAccessCardPositions();
-
-        std::cout << "[FPSScene] ===== ACCESS CARD SPAWNING DEBUG =====\n";
-        std::cout << "[FPSScene] Found " << accessCardPositions.size() << " access card markers in map\n";
 
         const char *cardSpritePaths[] = {
             "Assets/color_green_empty.png",
@@ -757,7 +731,6 @@ namespace Game
                     candidate = findValidSpawn(candidate);
                 }
                 pos = candidate;
-                std::cout << "[FPSScene][DEBUG] Forcing access card spawn near player spawn (" << pos.x << ", " << pos.y << ")\n";
             }
             else
             {
@@ -766,7 +739,6 @@ namespace Game
                 float ddy = pos.y - spawnExcludeY;
                 if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius)
                 {
-                    std::cout << "[FPSScene] Access card at spawn area detected, searching for nearby valid spawn\n";
                     Engine::Vector2 newPos = findValidSpawn(pos);
                     pos = newPos;
                 }
@@ -774,15 +746,11 @@ namespace Game
 
             usedCardLocations.push_back(pos);
 
-            std::cout << "[FPSScene] Spawning " << cardNames[cardId] << " card at (" << pos.x << ", " << pos.y << ")\n";
-
             // Create card GameObject
             std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
             auto cardGO = CreateGameObject(cardName);
             cardGO->transform->position = Vector3(pos.x, pos.y, cfg.accessCardPosZ);
             cardGO->transform->localScale = Vector2(cfg.accessCardScaleX, cfg.accessCardScaleY);
-
-            std::cout << "[FPSScene]   GameObject created: " << cardGO->name << "\n";
 
             // Add SpriteRenderer
             auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
@@ -790,14 +758,10 @@ namespace Game
             sr->billboard = true;
             sr->sortingOrder = cfg.accessCardSortingOrder;
 
-            std::cout << "[FPSScene]   SpriteRenderer added (billboard=" << sr->billboard << ", sortingOrder=" << sr->sortingOrder << ")\n";
-
             // Add Interactable
             auto interactable = cardGO->AddComponent<Engine::Interactable>();
             interactable->actionText = "Collect Access Card";
             interactable->maxDistance = cfg.accessCardInteractMaxDistance;
-
-            std::cout << "[FPSScene]   Interactable added\n";
 
             // Add AccessCard component
             auto card = cardGO->AddComponent<Game::AccessCard>();
@@ -807,21 +771,11 @@ namespace Game
             card->interactable = interactable;
             // Ensure card is active and visible after creation
             cardGO->active = true;
-            std::cout << "[FPSScene]   AccessCard component added (cardId=" << cardId << ")\n";
-            std::cout << "[FPSScene]   Card position: (" << cardGO->transform->position.x << ", "
-                      << cardGO->transform->position.y << ", " << cardGO->transform->position.z << ")\n";
             if (!cardGO->active)
             {
-                std::cout << "[FPSScene][WARN] Card GameObject inactive after creation - forcing active=true\n";
                 cardGO->active = true;
             }
-            std::cout << "[FPSScene]   Card active: " << (cardGO->active ? "YES" : "NO") << "\n";
         }
-
-        std::cout << "[FPSScene] Access card system initialized: "
-                  << controlRoomDoorPositions.size() << " doors, "
-                  << accessCardPositions.size() << " cards\n";
-        std::cout << "[FPSScene] ===== ACCESS CARD SPAWNING COMPLETE =====\n";
 
         // Connect terminals to guards
         for (auto *guard : guards)
@@ -840,7 +794,6 @@ namespace Game
             SpawnNPCInZone(z, NPCType::Bully, map, "Assets/bully.png");
             SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/annoying_classmate.png");
         }
-        std::cout << "[FPSScene] Spawned " << npcs.size() << " NPCs (4 per zone)\n";
 
         // Add terminal icons to minimap
         if (playerHUD && playerHUD->GetMinimap())
@@ -1003,17 +956,6 @@ namespace Game
             int tx = (int)std::floor(playerTf->position.x);
             int ty = (int)std::floor(playerTf->position.y);
             int currentZone = GetZoneId(tx, ty);
-
-            // Debug: Print player position and zone (only on zone change)
-            static int lastPrintedZone = -1;
-            if (currentZone != lastPrintedZone)
-            {
-                std::cout << "[FPSScene] Player at (" << tx << ", " << ty << ") ? Zone " << currentZone
-                          << " (" << Game::ZoneIdToLetter(currentZone) << ")"
-                          << " | Map size: " << mapWidth << "x" << mapHeight
-                          << " | Mid: " << (mapWidth / 2) << "," << (mapHeight / 2) << "\n";
-                lastPrintedZone = currentZone;
-            }
 
             playerHUD->CheckZoneChange(currentZone);
 
@@ -1280,12 +1222,9 @@ namespace Game
             if (currentTime < playerData->GetHighScore())
             {
                 playerData->SetHighScore(currentTime);
-                std::cout << "NEW HIGH SCORE: " << (int)(currentTime / 60) << ":"
-                          << std::setfill('0') << std::setw(2) << ((int)currentTime % 60) << "!\n";
             }
 
             playerData->Win();
-            std::cout << "YOU ESCAPED. WIN!\n";
             if (winScreen)
             {
                 winScreen->Show();
