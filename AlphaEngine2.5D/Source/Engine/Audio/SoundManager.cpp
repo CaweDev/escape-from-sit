@@ -5,6 +5,7 @@
 #include <cctype>
 #include <unordered_map>
 #include <vector>
+#include <cmath>
 #include "Engine/Math/Mathf.hpp"
 
 namespace Engine {
@@ -587,6 +588,10 @@ namespace Engine {
         if (maxVolume < 0.0f) maxVolume = 0.0f;
         if (maxVolume > 1.0f) maxVolume = 1.0f;
 
+        if (!std::isfinite(distance) || distance < 0.0f) {
+            distance = farDistance + 1.0f;
+        }
+
         auto clipIt = s_sfxClips.find(key);
         if (clipIt == s_sfxClips.end() || !clipIt->second || !clipIt->second->IsLoaded()) {
             AudioClip* dynamicClip = LoadSoundClip(key);
@@ -609,7 +614,7 @@ namespace Engine {
         if (distance <= nearDistance) {
             t = 1.0f;
         }
-        else if (distance >= farDistance || distance < 0.0f) {
+        else if (distance >= farDistance) {
             t = 0.0f;
         }
         else {
@@ -618,10 +623,13 @@ namespace Engine {
             if (t > 1.0f) t = 1.0f;
         }
 
+        // Smoothstep attenuation for less abrupt perceived transitions.
+        t = t * t * (3.0f - 2.0f * t);
+
         f32 masterSfx = s_sfxSource ? s_sfxSource->volume : 1.0f;
         f32 finalVol = maxVolume * t * masterSfx;
 
-        const f32 STOP_THRESHOLD = 0.005f;
+        const f32 STOP_THRESHOLD = 0.001f;
         if (finalVol <= STOP_THRESHOLD) {
             auto it = s_distanceLoops.find(key);
             if (it != s_distanceLoops.end()) {
@@ -649,24 +657,35 @@ namespace Engine {
             channel.source = new AudioSource();
             channel.source->loop = true;
             channel.source->clip = clipIt->second;
-            channel.source->SetVolume(finalVol);
+            channel.playing = false;
         }
 
-        if (!channel.playing) {
-            channel.source->clip = clipIt->second;
-            channel.source->loop = true;
-            channel.source->Play();
-            channel.playing = true;
-        }
-
-        const f32 EPS = 0.01f;
         f32 prev = 0.0f;
         auto itv = s_distanceLoopLastVolume.find(key);
         if (itv != s_distanceLoopLastVolume.end()) prev = itv->second;
+
+        // Robust restart: when re-entering audible range from (near) silence,
+        // force a restart so the loop reliably resumes.
+        const f32 RESTART_THRESHOLD = STOP_THRESHOLD * 4.0f;
+        const bool reenteringAudibleRange = (prev <= STOP_THRESHOLD && finalVol > RESTART_THRESHOLD);
+        if (!channel.playing || reenteringAudibleRange) {
+            channel.source->clip = clipIt->second;
+            channel.source->loop = true;
+            if (reenteringAudibleRange) {
+                channel.source->Stop();
+            }
+            channel.source->Play();
+            channel.playing = true;
+            channel.source->SetVolume(finalVol);
+        }
+
+        const f32 EPS = 0.001f;
         if (std::fabs(finalVol - prev) >= EPS) {
             channel.source->SetVolume(finalVol);
-            s_distanceLoopLastVolume[key] = finalVol;
         }
+
+        // Keep this updated every frame so restart detection remains accurate.
+        s_distanceLoopLastVolume[key] = finalVol;
     }
 
     void SoundManager::UpdateGuardProximityLoop(f32 nearestDistance)

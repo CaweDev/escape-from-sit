@@ -117,7 +117,7 @@ namespace UI
         /**
          * @brief Set the button colors
          */
-        void SetColors(const ColorBlock& colors) { m_colors = colors; }
+        void SetColors(const ColorBlock& colors);
         const ColorBlock& GetColors() const { return m_colors; }
 
         /**

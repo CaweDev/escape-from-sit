@@ -515,7 +515,7 @@ namespace Game {
             const float lerpedDistance = Mathf::Lerp(soundCfg.farDistance, soundCfg.nearDistance, clampedAlpha);
             SoundManager::UpdateTerminalBuzzLoop(lerpedDistance);
         } else {
-			SoundManager::UpdateTerminalBuzzLoop(-1.0f); // Force silence when not visible
+            SoundManager::UpdateTerminalBuzzLoop(-1.0f); // Force silence when not visible
         }
 
         // Apply dark silhouette effect (darkened sprite with alpha)
@@ -541,7 +541,7 @@ namespace Game {
 
         transitionLocked = false;
 
-        SoundManager::UpdateTerminalBuzzLoop(-1.0f);  // Force silence the guard proximity loop when leaving the main menu
+        SoundManager::UpdateGuardProximityLoop(-1.0f);  // Force silence the guard proximity loop when leaving the main menu
 
         if (menuCanvas) {
             UIManager::GetInstance()->DestroyCanvas(menuCanvas);

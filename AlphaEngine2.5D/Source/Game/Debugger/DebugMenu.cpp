@@ -109,6 +109,61 @@ namespace
         }
         return g_debugMenuConfig;
     }
+
+    void ApplyToggleButtonVisual(UI::Button* button, bool isOn, const char* onText, const char* offText)
+    {
+        if (!button) return;
+
+        const auto& cfg = GetDebugMenuConfig();
+        button->SetText(isOn ? onText : offText);
+        button->SetBackgroundColor(isOn ? cfg.buttonOn : cfg.buttonNormal);
+
+        UI::ColorBlock colors;
+        if (isOn)
+        {
+            colors.normalColor = cfg.buttonOnNormal;
+            colors.highlightedColor = cfg.buttonOnHighlight;
+            colors.pressedColor = cfg.buttonOnPressed;
+        }
+        else
+        {
+            colors.normalColor = cfg.buttonNormal;
+            colors.highlightedColor = cfg.buttonHighlight;
+            colors.pressedColor = cfg.buttonPressed;
+        }
+        button->SetColors(colors);
+    }
+
+    bool AreAllAccessCardsCollected()
+    {
+        auto* playerObj = Engine::GameObject::Find("Player");
+        auto* hud = playerObj ? playerObj->GetComponent<Game::PlayerHUD>() : nullptr;
+        if (!hud) return false;
+
+        for (int cardId = 0; cardId < 4; ++cardId)
+        {
+            if (!hud->HasAccessCard(cardId)) return false;
+        }
+        return true;
+    }
+
+    bool AreAllPuzzlesCollected()
+    {
+        if (Game::PuzzleManager::allBooks.empty()) return false;
+        if (Game::PuzzleManager::booksCollected >= static_cast<int>(Game::PuzzleManager::allBooks.size())) return true;
+
+        for (const auto& book : Game::PuzzleManager::allBooks)
+        {
+            if (!book.bookCollected) return false;
+        }
+        return true;
+    }
+
+    void ApplyActionButtonText(UI::Button* button, bool isDone, const char* doneText, const char* defaultText)
+    {
+        if (!button) return;
+        button->SetText(isDone ? doneText : defaultText);
+    }
 }
 
 namespace Game
@@ -136,25 +191,25 @@ namespace Game
         }
 
         // Reset cheat flags when leaving FPSScene so they don't persist
+        Engine::Scene* active = Engine::SceneManager::GetActiveScene();
+        const bool inFPSScene = active && active->name == "FPS";
+        if (!inFPSScene)
         {
-            Engine::Scene* active = Engine::SceneManager::GetActiveScene();
-            bool inFPSScene = active && active->name == "FPS";
-            if (!inFPSScene)
-            {
-                Game::Player::cheatInfiniteSpeed = false;
-                Game::Player::cheatCatchImmune   = false;
-            }
+            Game::Player::cheatInfiniteSpeed = false;
+            Game::Player::cheatCatchImmune   = false;
         }
+
+        // Keep cheat button visuals/text in sync with actual game state.
+        ApplyToggleButtonVisual(m_infiniteSpeedBtn, Game::Player::cheatInfiniteSpeed, "Infinite Speed: ON", "Infinite Speed: OFF");
+        ApplyToggleButtonVisual(m_catchImmuneBtn, Game::Player::cheatCatchImmune, "Catch Immune: ON", "Catch Immune: OFF");
+        ApplyActionButtonText(m_getAllAccessCardsBtn, inFPSScene && AreAllAccessCardsCollected(), "Get All Access Cards (Done)", "Get All Access Cards");
+        ApplyActionButtonText(m_collectAllPuzzlesBtn, inFPSScene && AreAllPuzzlesCollected(), "Collect All Puzzles (Done)", "Collect All Puzzles");
 
         if (!m_isVisible) return;
 
         // Sync cheat panel visibility while the menu is open (scene may change at runtime)
-        {
-            Engine::Scene* active = Engine::SceneManager::GetActiveScene();
-            bool inFPSScene = active && active->name == "FPS";
-            if (m_cheatPanel) 
-                m_cheatPanel->visible = inFPSScene;
-        }
+        if (m_cheatPanel)
+            m_cheatPanel->visible = inFPSScene;
 
         // Handle Ctrl-key to unlock cursor while menu is visible
         bool isCtrlHeld = Engine::Input::GetKey(Engine::KeyCode::LeftControl) || Engine::Input::GetKey(Engine::KeyCode::RightControl);
@@ -232,9 +287,15 @@ namespace Game
         bool inFPSScene = false;
         {
             Engine::Scene* active = Engine::SceneManager::GetActiveScene();
-            if (active && active->name == "FPSScene") inFPSScene = true;
+            if (active && active->name == "FPS") inFPSScene = true;
         }
         if (m_cheatPanel) m_cheatPanel->visible = inFPSScene;
+
+        // Refresh current states when opening
+        ApplyToggleButtonVisual(m_infiniteSpeedBtn, Game::Player::cheatInfiniteSpeed, "Infinite Speed: ON", "Infinite Speed: OFF");
+        ApplyToggleButtonVisual(m_catchImmuneBtn, Game::Player::cheatCatchImmune, "Catch Immune: ON", "Catch Immune: OFF");
+        ApplyActionButtonText(m_getAllAccessCardsBtn, inFPSScene && AreAllAccessCardsCollected(), "Get All Access Cards (Done)", "Get All Access Cards");
+        ApplyActionButtonText(m_collectAllPuzzlesBtn, inFPSScene && AreAllPuzzlesCollected(), "Collect All Puzzles (Done)", "Collect All Puzzles");
     }
 
     void DebugMenu::Hide()
@@ -452,27 +513,13 @@ namespace Game
 
         // ---- Cheat button callbacks ----
         m_infiniteSpeedBtn->onClick = [this]() {
-            const auto& cfg = GetDebugMenuConfig();
             Game::Player::cheatInfiniteSpeed = !Game::Player::cheatInfiniteSpeed;
-            bool isON = Game::Player::cheatInfiniteSpeed;
-            m_infiniteSpeedBtn->SetText(isON ? "Infinite Speed: ON" : "Infinite Speed: OFF");
-            m_infiniteSpeedBtn->SetBackgroundColor(isON ? cfg.buttonOn : cfg.buttonNormal);
-            UI::ColorBlock c;
-            if (isON) { c.normalColor = cfg.buttonOnNormal; c.highlightedColor = cfg.buttonOnHighlight; c.pressedColor = cfg.buttonOnPressed; }
-            else      { c.normalColor = cfg.buttonNormal; c.highlightedColor = cfg.buttonHighlight; c.pressedColor = cfg.buttonPressed; }
-            m_infiniteSpeedBtn->SetColors(c);
+            ApplyToggleButtonVisual(m_infiniteSpeedBtn, Game::Player::cheatInfiniteSpeed, "Infinite Speed: ON", "Infinite Speed: OFF");
         };
 
         m_catchImmuneBtn->onClick = [this]() {
-            const auto& cfg = GetDebugMenuConfig();
             Game::Player::cheatCatchImmune = !Game::Player::cheatCatchImmune;
-            bool isON = Game::Player::cheatCatchImmune;
-            m_catchImmuneBtn->SetText(isON ? "Catch Immune: ON" : "Catch Immune: OFF");
-            m_catchImmuneBtn->SetBackgroundColor(isON ? cfg.buttonOn : cfg.buttonNormal);
-            UI::ColorBlock c;
-            if (isON) { c.normalColor = cfg.buttonOnNormal; c.highlightedColor = cfg.buttonOnHighlight; c.pressedColor = cfg.buttonOnPressed; }
-            else      { c.normalColor = cfg.buttonNormal; c.highlightedColor = cfg.buttonHighlight; c.pressedColor = cfg.buttonPressed; }
-            m_catchImmuneBtn->SetColors(c);
+            ApplyToggleButtonVisual(m_catchImmuneBtn, Game::Player::cheatCatchImmune, "Catch Immune: ON", "Catch Immune: OFF");
         };
 
         m_getAllAccessCardsBtn->onClick = [this]() {

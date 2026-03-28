@@ -149,7 +149,20 @@ namespace UI
         return m_label ? m_label->GetText() : "";
     }
 
+    void Button::SetColors(const ColorBlock& colors)
+    {
+        m_colors = colors;
 
+        // Force refresh even if state did not change (e.g., programmatic toggle OFF while state remains Normal)
+        m_colorTransitionTime = 0.0f;
+        UpdateTargetColor();
+
+        if (m_targetGraphic)
+        {
+            m_targetGraphic->SetColor(m_targetColor);
+        }
+        m_currentColor = m_targetColor;
+    }
 
     void Button::SetBackgroundColor(const Engine::Color& color)
     {
@@ -177,7 +190,14 @@ namespace UI
             color.a * kDisabledAlphaMultiplier
         );
         
+        m_colorTransitionTime = 0.0f;
         UpdateTargetColor();
+
+        if (m_targetGraphic)
+        {
+            m_targetGraphic->SetColor(m_targetColor);
+        }
+        m_currentColor = m_targetColor;
     }
 
     void Button::SetBackgroundSprite(Engine::Texture2D* texture, bool sliced)
