@@ -5,6 +5,7 @@
 #include <fstream>
 #include <filesystem>
 #include <algorithm>
+#include <cctype>
 
 #include "Reflection.hpp"
 #include "Engine/Core/GameObject.hpp"
@@ -501,7 +502,7 @@ namespace AEEditor
                             continue;
 
                         std::string ext = entry.path().extension().string();
-                        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+                        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) -> char { return static_cast<char>(std::tolower(c)); });
 
                         if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                         {
@@ -556,7 +557,7 @@ namespace AEEditor
                             continue;
 
                         std::string ext = entry.path().extension().string();
-                        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+                        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) -> char { return static_cast<char>(std::tolower(c)); });
 
                         // Assuming your spritesheets are defined by images or json configs
                         if (ext == ".png" || ext == ".json")
