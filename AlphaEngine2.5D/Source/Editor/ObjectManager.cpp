@@ -16,6 +16,13 @@
 #include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Input/KeyCode.hpp"
 
+/*!
+ * \file ObjectManager.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Editor utilities to serialize/inspect and manage GameObjects
+ */
+
 namespace AEEditor
 {
     Engine::GameObject *ObjectManager::selectedObject = nullptr;
@@ -29,6 +36,7 @@ namespace AEEditor
     // CORE SERIALIZATION HELPERS
     // =========================================================================
 
+    /*! \brief Serialize a GameObject and its components to JSON. \param go [in] GameObject pointer \return Json::Value representation */
     Json::Value ObjectManager::SerializeGameObject(Engine::GameObject *go)
     {
         Json::Value goJson;
@@ -100,6 +108,7 @@ namespace AEEditor
         return goJson;
     }
 
+    /*! \brief Recreate a GameObject from JSON. \param goJson [in] JSON data \return Newly created GameObject pointer */
     Engine::GameObject *ObjectManager::DeserializeGameObject(const Json::Value &goJson)
     {
         auto *go = Engine::SceneManager::GetActiveScene()->CreateGameObject(goJson["Name"].asString());
@@ -210,6 +219,7 @@ namespace AEEditor
     // EDITOR UI
     // =========================================================================
 
+    /*! \brief Draw the hierarchy panel using ImGui. */
     void ObjectManager::DrawHierarchy()
     {
         ImGui::Begin("Hierarchy");
@@ -315,6 +325,7 @@ namespace AEEditor
         ImGui::End();
     }
 
+    /*! \brief Draw the inspector panel for the selected object. */
     void ObjectManager::DrawInspector()
     {
         ImGui::Begin("Inspector");
@@ -355,6 +366,7 @@ namespace AEEditor
         ImGui::End();
     }
 
+    /*! \brief Draw editable header fields (name, tag, active) for the selected object. */
     void ObjectManager::DrawGameObjectHeader()
     {
         ImGui::Checkbox("Active", &selectedObject->active);
@@ -394,6 +406,7 @@ namespace AEEditor
         }
     }
 
+    /*! \brief Draw an individual component's UI fields. \param comp [in] Component pointer \param meta [in] Type metadata \param componentToRemove [out] Set to remove component */
     void ObjectManager::DrawComponent(Engine::Component *comp, const TypeDescriptor &meta, Engine::Component *&componentToRemove)
     {
         ImGui::PushID(comp);
@@ -424,6 +437,7 @@ namespace AEEditor
         ImGui::PopID();
     }
 
+    /*! \brief Draw a single reflected field editor. \param comp [in] Component containing field \param field [in] Field metadata */
     void ObjectManager::DrawField(Engine::Component *comp, const FieldDescriptor &field)
     {
         void *rawAddress = reinterpret_cast<void *>(reinterpret_cast<char *>(comp) + field.offset);
@@ -624,6 +638,7 @@ namespace AEEditor
     // FILE I/O
     // =========================================================================
 
+    /*! \brief Save the current loadedObjects list to a JSON scene file. \param filepath [in] Path to write */
     void ObjectManager::SaveSceneToJson(const char *filepath)
     {
         Json::Value root;
@@ -651,6 +666,7 @@ namespace AEEditor
         }
     }
 
+    /*! \brief Load a scene JSON and instantiate its GameObjects. \param filepath [in] Path to read */
     void ObjectManager::LoadSceneFromJson(const char *filepath)
     {
         std::ifstream file(filepath);

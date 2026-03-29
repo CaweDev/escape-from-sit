@@ -1,4 +1,10 @@
 #pragma once
+/*!
+ * \file BanditVisualizer.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief UI component for visualizing UCB1 bandit decisions and CCTV logs
+ */
 #include "Engine/Core/Component.hpp"
 #include "Engine/UI/UI.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
@@ -13,6 +19,10 @@ namespace Game {
     using namespace Engine;
     using namespace UI;
 
+    /*!
+     * \struct CCTVRecord
+     * \brief Record of CCTV events for the visualizer log
+     */
     struct CCTVRecord {
         float  timestamp = 0.0f;
         float  posX = 0.0f;
@@ -22,6 +32,10 @@ namespace Game {
         bool   reDetected = false;
     };
 
+    /*!
+     * \struct ZoneBreakdown
+     * \brief Summarized contributions to zone selection scores
+     */
     struct ZoneBreakdown {
         float exploitation = 0.0f;
         float exploration = 0.0f;
@@ -36,11 +50,16 @@ namespace Game {
         std::vector<Game::SecurityGuard*>* guards = nullptr;
         float                             updateInterval = 0.25f;
 
+        /*! \brief Construct a BanditVisualizer component. */
         BanditVisualizer();
+        /*! \brief Destructor and cleanup. */
         ~BanditVisualizer() override;
 
+        /*! \brief Initialize UI and internal state. */
         void Initialize() override;
+        /*! \brief Periodically refresh visualization from bandit data. */
         void Update()     override;
+        /*! \brief Destroy UI and release references. */
         void OnDestroy()  override;
 
         void SetGuardsPointer(std::vector<Game::SecurityGuard*>* g) { guards = g; }

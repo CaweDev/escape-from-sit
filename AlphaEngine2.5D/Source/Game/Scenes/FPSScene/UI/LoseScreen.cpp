@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "LoseScreen.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 

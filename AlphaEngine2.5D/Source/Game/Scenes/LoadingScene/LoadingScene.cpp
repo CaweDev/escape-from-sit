@@ -106,6 +106,9 @@ namespace Game {
         }
     };
 
+    /*!
+     * \brief [AUTO] OnLoad
+     */
     void LoadingScene::OnLoad() {
         const auto& cfg = GetLoadingSceneConfig();
         Input::RegisterCursorUnlock("LoadingScene");
@@ -196,6 +199,9 @@ namespace Game {
         UI::FadeService::FadeOut(SceneManager::GetLoadWithScreenFadeInDuration());
     }
 
+    /*!
+     * \brief [AUTO] OnUpdate
+     */
     void LoadingScene::OnUpdate() {
         const auto& cfg = GetLoadingSceneConfig();
         float dt = Time::unscaledDeltaTime;
@@ -228,6 +234,12 @@ namespace Game {
             if (m_progressBarFill)m_progressBarFill->visible = false;
             if (m_tipText)        m_tipText->visible = false;
 
+          /*!
+           * \brief [AUTO] FadeIn
+           * \param 0.0f [in]
+           * \param [target [in]
+           * \param fadeOutDuration]( [in]
+           */
             FadeService::FadeIn(0.0f, [target, fadeOutDuration]() {
                 SceneManager::RequestFadeOutAfterNextSceneLoad(fadeOutDuration);
                 SceneManager::LoadScene(target);
@@ -235,6 +247,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] OnUnload
+     */
     void LoadingScene::OnUnload() {
         Input::UnregisterCursorUnlock("LoadingScene");
         if (m_canvas) {

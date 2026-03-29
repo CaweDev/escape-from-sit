@@ -1,26 +1,31 @@
-/**
- * @file UCB1Bandit.hpp
- * @description Header for the UCB1 Multi-Armed Bandit algorithm implementation.
+/*!
+ * \file UCB1Bandit.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Header for a simple UCB1 multi-armed bandit implementation
  */
+
 #pragma once
 #include <vector>
 
 namespace Game {
 
-    /**
-     * @class UCB1Bandit
-     * @description Implementation of the UCB1 (Upper Confidence Bound) algorithm for spatial optimization.
+    /*!
+     * \class UCB1Bandit
+     * \brief Implementation of the UCB1 algorithm for exploration/exploitation.
      */
     class UCB1Bandit {
     public:
+        /*! \brief Construct bandit with given number of arms and exploration factor c. */
         UCB1Bandit(int arms = 0, float c = 1.0f);
 
+        /*! \brief Reset internal state to given arms and c. */
         void Reset(int arms, float c);
 
-        // returns arm index in [0..arms-1], or -1 if no arms
+        /*! \brief Select an arm index [0..arms-1] according to UCB1. \return chosen arm or -1 if none */
         int  SelectArm();
 
-        // reward is clamped to [0,1]
+        /*! \brief Update statistics for a given arm with reward in [0,1]. */
         void Update(int arm, float reward);
 
         int  GetArms() const { return (int)m_pulls.size(); }

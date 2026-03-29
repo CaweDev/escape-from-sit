@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\PowerUp\PowerUp.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "PowerUp.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
@@ -68,6 +75,9 @@ namespace
 
 namespace Game {
 
+    /*!
+     * \brief [AUTO] Initialize
+     */
     void PowerUpObject::Initialize() {
         const auto& cfg = GetPowerUpObjectConfig();
         floatHeight = cfg.floatHeight;
@@ -86,6 +96,9 @@ namespace Game {
         SetPickupEnabled(true);
     }
 
+    /*!
+     * \brief [AUTO] Update
+     */
     void PowerUpObject::Update() {
         const auto& cfg = GetPowerUpObjectConfig();
         if (isCollected) {
@@ -105,6 +118,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] SetupInteraction
+     */
     void PowerUpObject::SetupInteraction() {
         if (!interactable) return;
 
@@ -116,6 +132,9 @@ namespace Game {
         };
     }
 
+    /*!
+     * \brief [AUTO] OnCollect
+     */
     void PowerUpObject::OnCollect() {
         if (isCollected) return;
 
@@ -135,6 +154,10 @@ namespace Game {
         SetPickupEnabled(false);
     }
 
+    /*!
+     * \brief [AUTO] SetPickupEnabled
+     * \param isEnabled [in]
+     */
     void PowerUpObject::SetPickupEnabled(bool isEnabled) {
         if (spriteRenderer) {
             spriteRenderer->enabled = isEnabled;
@@ -148,6 +171,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] Respawn
+     */
     void PowerUpObject::Respawn() {
         isCollected = false;
         respawnTimer = 0.0f;
@@ -162,6 +188,10 @@ namespace Game {
         //std::cout << "[POWERUP] Respawned " << reference.name << ".\n";
     }
 
+    /*!
+     * \brief [AUTO] GetHighlightColor
+     * \return 
+     */
     Engine::Color PowerUpObject::GetHighlightColor() const {
         const auto& cfg = GetPowerUpObjectConfig();
         switch (reference.type) {

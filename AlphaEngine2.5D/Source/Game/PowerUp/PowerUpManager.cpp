@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\PowerUp\PowerUpManager.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "PowerUpManager.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Scene/SceneManager.hpp"
@@ -96,6 +103,10 @@ namespace Game {
 
     std::vector<PowerUpData> PowerUpManager::allPowerUps = {};
 
+    /*!
+     * \brief [AUTO] CreatePowerUpObject
+     * \param data [in]
+     */
     void PowerUpManager::CreatePowerUpObject(PowerUpData data) {
         const auto& cfg = GetPowerUpManagerConfig();
         auto scene = Engine::SceneManager::GetActiveScene();
@@ -123,6 +134,9 @@ namespace Game {
         logicComp->reference = data;
     }
 
+    /*!
+     * \brief [AUTO] PowerUpDataInit
+     */
     void PowerUpManager::PowerUpDataInit() {
         allPowerUps.clear();
         const auto& cfg = GetPowerUpManagerConfig();
@@ -156,6 +170,9 @@ namespace Game {
         allPowerUps.push_back({ 14, {110.5f, 35.5f, cfg.defaultSpawnZ}, PowerUpType::Invisibility,   "Invisibility",      8.0f });
     }
 
+    /*!
+     * \brief [AUTO] Init
+     */
     void PowerUpManager::Init() {
         PowerUpDataInit();
         for (const auto& data : allPowerUps) {
@@ -163,6 +180,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] FreeManager
+     */
     void PowerUpManager::FreeManager() {
         allPowerUps.clear();
     }

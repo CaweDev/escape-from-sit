@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Puzzle\PuzzleManager.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "PuzzleManager.hpp"
 #include "Engine.hpp"
 #include "Engine/Audio/ProximityAudio.hpp"

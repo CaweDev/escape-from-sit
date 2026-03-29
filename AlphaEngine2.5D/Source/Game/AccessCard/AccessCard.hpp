@@ -1,6 +1,8 @@
-/**
- * @file AccessCard.hpp
- * @brief Access card collectible that unlocks control room doors
+/*!
+ * \file AccessCard.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Access card collectible that unlocks control room doors
  */
 #pragma once
 
@@ -14,9 +16,9 @@ namespace Engine {
 
 namespace Game {
 
-    /**
-     * @enum AccessCardColor
-     * @brief Color/type of access card (matches zone assignment)
+    /*!
+     * \enum AccessCardColor
+     * \brief Color/type of access card (matches zone assignment)
      */
     enum class AccessCardColor {
         Green = 0,   // Zone B
@@ -25,9 +27,9 @@ namespace Game {
         Yellow = 3   // Zone A
     };
 
-    /**
-     * @class AccessCard
-     * @brief Collectible access card that unlocks control room doors
+    /*!
+     * \class AccessCard
+     * \brief Collectible access card that unlocks control room doors
      */
     class AccessCard : public Engine::Component {
     public:
@@ -51,19 +53,21 @@ namespace Game {
         Engine::Interactable* interactable = nullptr;
         
         // Lifecycle
+        /*! \brief Component initialization. */
         void Initialize() override;
+        /*! \brief Per-frame update for float/rotation and timers. */
         void Update() override;
         
-        /** Setup interaction for player pickup */
+        /*! \brief Configure Interactable callback for pickup. */
         void SetupInteraction();
         
-        /** Handle card collection */
+        /*! \brief Handle card collection logic (HUD notify, hide, SFX). */
         void OnCollect();
         
-        /** Get color name as string */
+        /*! \brief Get human-readable color name. \return C-string of color name */
         const char* GetColorName() const;
         
-        /** Get highlight color for this card type */
+        /*! \brief Get configured highlight tint for this card. \return Color */
         Engine::Color GetHighlightColor() const;
     };
 

@@ -1,3 +1,9 @@
+/*!
+ * \file Inventory.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of a small item inventory component
+ */
 #include "Inventory.hpp"
 #include "Game/Items/Item.hpp"
 #include "Engine/Core/GameObject.hpp"
@@ -6,6 +12,7 @@
 namespace Game
 {
 
+    /*! \brief Handle input to switch active slot or use item. */
     void Inventory::Update()
     {
         if (Engine::Input::GetKeyDown(Engine::KeyCode::Alpha1))
@@ -21,6 +28,7 @@ namespace Game
         }
     }
 
+    /*! \brief Add an item to the first free slot. \param itemObj [in] Item GameObject \return true if added */
     bool Inventory::AddItem(Engine::GameObject *itemObj)
     {
         for (int i = 0; i < MAX_SLOTS; ++i)
@@ -35,6 +43,7 @@ namespace Game
         return false;
     }
 
+    /*! \brief Use the currently active item and clear its slot. */
     void Inventory::UseActiveItem()
     {
         Engine::GameObject *itemObj = slots[activeSlot];

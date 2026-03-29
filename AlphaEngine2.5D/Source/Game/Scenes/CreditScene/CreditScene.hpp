@@ -1,8 +1,11 @@
-#pragma once
-/**
- * @file CreditScene.hpp
- * @brief Scene showing panning credits
+/*! 
+ * \file CreditScene.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Scene showing panning credits
  */
+
+#pragma once
 
 #include "Engine.hpp"
 
@@ -11,12 +14,22 @@ namespace Game {
 using namespace Engine;
 using namespace UI;
 
+/*!
+ * \class CreditScene
+ * \brief Scene that displays scrolling/panning credits with skip support
+ */
 class CreditScene : public Scene {
 public:
+    /*! \brief Construct credit scene. */
     CreditScene();
 
+    /*! \brief Initialize UI and start credit scroll. */
     void OnLoad() override;
+
+    /*! \brief Cleanup created UI on unload. */
     void OnUnload() override;
+
+    /*! \brief Per-frame update to advance scrolling and handle skip. */
     void OnUpdate() override;
 
 private:
@@ -34,7 +47,10 @@ private:
     static float CANVAS_REF_HEIGHT;
     static const char* CREDITS_TEXTURE_PATH;
 
+    /*! \brief Immediately skip to the end and transition. */
     void SkipToEnd();
+
+    /*! \brief Check if skip input was pressed. \return true if skip requested */
     bool IsSkipPressed() const;
 };
 

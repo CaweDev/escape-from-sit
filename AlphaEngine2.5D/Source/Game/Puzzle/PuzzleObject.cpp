@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Puzzle\PuzzleObject.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "PuzzleObject.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Time.hpp"

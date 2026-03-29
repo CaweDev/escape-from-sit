@@ -1,4 +1,10 @@
 #pragma once
+/*!
+ * \file FPSScene.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Main FPS gameplay scene declaration and helpers
+ */
 
 #include "Engine/Scene/Scene.hpp"
 #include "Engine/TileMap/TileMap.hpp"
@@ -62,6 +68,9 @@ namespace Game
 
     using namespace Engine;
 
+    /*! \class FPSScene
+     *  \brief Core gameplay scene for FPS-style gameplay and AI systems
+     */
     class FPSScene : public Scene
     {
     public:

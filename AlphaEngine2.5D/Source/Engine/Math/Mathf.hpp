@@ -1,6 +1,8 @@
-/**
- * @file Mathf.hpp
- * @brief Static math utility class with Unity-like API
+/*!
+ * \file Mathf.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Static math utility class with Unity-like API
  */
 #pragma once
 
@@ -10,9 +12,9 @@
 
 namespace Engine {
 
-/**
- * @class Mathf
- * @brief Static class containing common math functions
+/*!
+ * \class Mathf
+ * \brief Static class containing common math functions
  */
 class Mathf {
 public:

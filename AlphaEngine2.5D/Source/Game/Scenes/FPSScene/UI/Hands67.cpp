@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\Hands67.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "Hands67.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/AssetManager.hpp"
@@ -5,8 +12,18 @@
 #include "Engine/UI/Core/UIManager.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 
+/*!
+ * \file Hands67.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief UI helper that toggles hands overlay when 6+7 pressed
+ */
+
 namespace
 {
+    /*! \struct Hands67Config
+     *  \brief Configuration for Hands67 overlay
+     */
     struct Hands67Config : public Engine::IConfig
     {
         int canvasSortOrder = 50;
@@ -19,6 +36,7 @@ namespace
         int toggleKeyA = static_cast<int>(Engine::KeyCode::Alpha6);
         int toggleKeyB = static_cast<int>(Engine::KeyCode::Alpha7);
 
+        /*! \brief Load configuration values from JSON. */
         void FromJson(const Json::Value& j) override
         {
             canvasSortOrder = j.get("canvasSortOrder", canvasSortOrder).asInt();
@@ -48,6 +66,7 @@ namespace
 
 namespace Game {
 
+    /*! \brief Awake lifecycle: create UI canvas and sprite sheet image. */
     void Hands67::Awake() {
         const auto& cfg = GetHands67Config();
         if (!UI::UIManager::GetInstance()) return;
@@ -85,6 +104,7 @@ namespace Game {
         m_isVisible = false;
     }
 
+    /*! \brief Update: toggle overlay visibility on key overlap detection. */
     void Hands67::Update() {
         const auto& cfg = GetHands67Config();
         // Toggle logic: If holding 6 and pressing 7, or holding 7 and pressing 6, or hitting both

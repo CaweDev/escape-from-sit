@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\NPC\CameraShake.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "CameraShake.hpp"
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Core/GameObject.hpp"

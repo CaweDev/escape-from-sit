@@ -84,6 +84,9 @@ namespace Game {
 UITestScene::UITestScene() : Scene("UITest") {}
 UITestScene::~UITestScene() {}
 
+/*!
+ * \brief [AUTO] OnLoad
+ */
 void UITestScene::OnLoad() {
     const auto& cfg = GetUITestSceneConfig();
     Input::RegisterCursorUnlock("UITestScene");
@@ -155,11 +158,17 @@ void UITestScene::OnLoad() {
     }
 }
 
+/*!
+ * \brief [AUTO] OnUnload
+ */
 void UITestScene::OnUnload() {
     Input::UnregisterCursorUnlock("UITestScene");
     // UI System shutdown is now handled globally in Main.cpp
 }
 
+/*!
+ * \brief [AUTO] OnUpdate
+ */
 void UITestScene::OnUpdate() {
     const auto& cfg = GetUITestSceneConfig();
     panel->SetAnchoredPosition({ panel->GetAnchoredPosition().x, panel->GetAnchoredPosition().y + cfg.panelDriftPerFrame});

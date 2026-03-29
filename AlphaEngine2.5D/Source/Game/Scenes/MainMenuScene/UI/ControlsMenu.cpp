@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "ControlsMenu.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <iostream>

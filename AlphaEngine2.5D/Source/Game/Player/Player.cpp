@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Player\Player.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "Player.hpp"
 #include "Game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "Game/Player/PlayerPowerUpController.hpp"
@@ -146,6 +153,10 @@ namespace Game {
 		return out;
 	}
 
+	/*!
+	 * \brief [AUTO] UpdateGameTime
+	 * \param dt [in]
+	 */
 	void Player::UpdateGameTime(float dt) {
 		gameTime += dt;
 

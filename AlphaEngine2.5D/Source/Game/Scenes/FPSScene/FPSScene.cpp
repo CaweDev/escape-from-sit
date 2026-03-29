@@ -4,8 +4,19 @@
 #include <fstream>
 #include <json/json.h>
 
+/*!
+ * \file FPSScene.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of the FPSScene including map loading and game logic
+ */
+
 namespace
 {
+    /*!
+     * \struct FPSSceneConfig
+     * \brief JSON-backed configuration for gameplay tuning and spawn rules
+     */
     struct FPSSceneConfig : public Engine::IConfig
     {
         float winRadius = 0.6f;
@@ -98,6 +109,13 @@ namespace
         Engine::Color ceilingColor = Engine::Color(0.1f, 0.1f, 0.2f, 1.0f);
         Engine::Color floorColor = Engine::Color(0.3f, 0.25f, 0.2f, 1.0f);
 
+        /*!
+         * \brief Parse a color from JSON with a fallback
+         * \param j [in] JSON root
+         * \param key [in] Key name for color object
+         * \param fallback [in] Fallback color
+         * \return Parsed color or fallback
+         */
         static Engine::Color ParseColor(const Json::Value &j, const char *key, const Engine::Color &fallback)
         {
             if (!j.isMember(key) || !j[key].isObject())
@@ -110,6 +128,10 @@ namespace
                 c.get("a", fallback.a).asFloat());
         }
 
+        /*!
+         * \brief Populate config from JSON node
+         * \param j [in] JSON node
+         */
         void FromJson(const Json::Value &j) override
         {
             winRadius = j.get("winRadius", winRadius).asFloat();
@@ -207,6 +229,10 @@ namespace
     FPSSceneConfig g_fpsSceneConfig;
     bool g_fpsSceneConfigLoaded = false;
 
+    /*!
+     * \brief Get singleton FPSSceneConfig, reading JSON on first call
+     * \return Reference to FPSSceneConfig
+     */
     const FPSSceneConfig &GetFPSSceneConfig()
     {
         if (!g_fpsSceneConfigLoaded)
@@ -221,6 +247,7 @@ namespace
 namespace Game
 {
 
+    /*! \brief Load and initialize FPS scene: map, actors, HUD and systems. */
     inline void FPSScene::OnLoad()
     {
         AEEditor::ObjectManager::LoadSceneFromJson("Assets/Config/Scenes/EditorScene.json");
@@ -860,12 +887,14 @@ namespace Game
 
     }
 
+    /*! \brief Called after rendering to draw editor overlays. */
     inline void FPSScene::OnAfterRender()
     {
         // Render level editor overlay on top of everything
         levelEditor.Render();
     }
 
+    /*! \brief Main per-frame update handling game logic, AI and HUD updates. */
     inline void FPSScene::OnUpdate()
     {
         const auto &cfg = GetFPSSceneConfig();
@@ -1266,6 +1295,7 @@ namespace Game
         }
     }
 
+    /*! \brief Cleanup scene state and release pointers before unload. */
     inline void FPSScene::OnUnload()
     {
         // Disconnect guards from terminal list to avoid dangling pointers

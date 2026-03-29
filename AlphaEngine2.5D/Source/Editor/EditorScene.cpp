@@ -1,6 +1,8 @@
-/**
- * @file EditorScene.cpp
- * @brief EditorScene implementation
+/*!
+ * \file EditorScene.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief EditorScene implementation and helper spawners for editor mode
  */
 #include "imgui.h"
 #include "EditorScene.hpp"
@@ -39,8 +41,10 @@ namespace Game
     static constexpr float spawnExcludeY = 2.5f;
     static constexpr float spawnExcludeRadius = 5.0f;
 
+    /*! \brief Construct an EditorScene used for in-engine editing. */
     EditorScene::EditorScene() : Scene("EditorScene"), editorCamera(nullptr), cameraTf(nullptr), mapWidth(0), mapHeight(0) {}
 
+    /*! \brief Determine zone id for a given tile coord. \param tx [in] Tile X \param ty [in] Tile Y \return zone id or -1 */
     int EditorScene::GetZoneId(int tx, int ty) const
     {
         for (auto const &z : zones)
@@ -54,6 +58,7 @@ namespace Game
         return -1;
     }
 
+    /*! \brief Load editor scene map, spawn existing objects for editing. */
     void EditorScene::OnLoad()
     {
         std::vector<std::string> mapRows;
@@ -180,6 +185,7 @@ namespace Game
         // }
     }
 
+    /*! \brief Per-frame update handling editor camera controls. */
     void EditorScene::OnUpdate()
     {
         {
@@ -265,8 +271,10 @@ namespace Game
         }
     }
 
+    /*! \brief Unload editor scene (no-op). */
     void EditorScene::OnUnload() {}
 
+    /*! \brief Spawn door GameObjects for existing door markers in the map. */
     void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
     {
         auto controlRoomDoorPositions = map->GetSpawnedDoorPositionsPublic();
@@ -306,6 +314,7 @@ namespace Game
         }
     }
 
+    /*! \brief Spawn terminal GameObjects for existing terminal markers. */
     void EditorScene::SpawnExistingTerminals(TileMap *map)
     {
         Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
@@ -327,6 +336,7 @@ namespace Game
         }
     }
 
+    /*! \brief Spawn access card GameObjects for existing card markers. */
     void EditorScene::SpawnExistingCards(TileMap *map)
     {
         auto accessCardPositions = map->GetAccessCardPositions();
@@ -402,6 +412,7 @@ namespace Game
         }
     }
 
+    /*! \brief Spawn CCTV GameObjects for placement preview in editor. */
     void EditorScene::SpawnExistingCCTVs(TileMap *map)
     {
         std::vector<int> zoneGrid(mapWidth * mapHeight, 0);

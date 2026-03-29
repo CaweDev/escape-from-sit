@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVPlacement.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "CCTVPlacement.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
@@ -7,8 +14,18 @@
 #include <queue>
 #include <unordered_set>
 
+/*!
+ * \file CCTVPlacement.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of CCTV placement heuristics and helpers
+ */
+
 namespace
 {
+    /*! \struct CCTVPlacementConfig
+     *  \brief JSON-backed tuning parameters for CCTV placement
+     */
     struct CCTVPlacementConfig : public Engine::IConfig
     {
         int roomOpenThreshold5x5 = 15;
@@ -27,6 +44,7 @@ namespace
 
         float placementClampMargin = 0.05f;
 
+        /*! \brief Load placement tuning values from JSON. \param j [in] JSON node */
         void FromJson(const Json::Value& j) override
         {
             roomOpenThreshold5x5 = j.get("roomOpenThreshold5x5", roomOpenThreshold5x5).asInt();
@@ -66,22 +84,26 @@ namespace
 
 namespace Game
 {
+    /*! \brief Check if coordinates are within map bounds. */
     static bool InBounds(int w, int h, int x, int y)
     {
         return (x >= 0 && y >= 0 && x < w && y < h);
     }
 
+    /*! \brief Index helper into flat grid array. */
     static int Idx(int w, int x, int y)
     {
         return y * w + x;
     }
 
+    /*! \brief True if tile at x,y is walkable floor. */
     static bool IsFloor(Engine::TileMap* map, int x, int y)
     {
         if (!map) return false;
         return map->IsWalkable((float)x + 0.5f, (float)y + 0.5f);
     }
 
+    /*! \brief True if tile at x,y is a wall (non-walkable). */
     static bool IsWall(Engine::TileMap* map, int x, int y, int w, int h)
     {
         if (!map) return false;
@@ -89,6 +111,7 @@ namespace Game
         return !map->IsWalkable((float)x + 0.5f, (float)y + 0.5f);
     }
 
+    /*! \brief Count floor neighbors (4-way) around tile. */
     static int OpenNeighborCount(Engine::TileMap* map, int x, int y)
     {
         int c = 0;
@@ -99,6 +122,7 @@ namespace Game
         return c;
     }
 
+    /*! \brief Squared distance between two 2D positions (ignores z). */
     static float DistSq2D(const Engine::Vector3& a, const Engine::Vector3& b)
     {
         float dx = a.x - b.x;
@@ -107,6 +131,7 @@ namespace Game
     }
 
     // corridor-ish: 2-open (straight) or 3-open (junction). avoid dead-ends (1-open).
+    /*! \brief Heuristic: is this tile corridor-like (2 or 3+ open neighbors). */
     static bool IsCorridorTile(Engine::TileMap* map, int x, int y)
     {
         if (!IsFloor(map, x, y)) return false;
@@ -116,6 +141,7 @@ namespace Game
 
     // Determine if this tile is in a large open room (classroom) vs corridor
     // Rooms have more surrounding open space
+    /*! \brief Estimate whether a tile lies in a room (open area) vs corridor. */
     static bool IsLikelyRoom(Engine::TileMap* map, int x, int y, int w, int h)
     {
         if (!IsFloor(map, x, y)) return false;
@@ -142,6 +168,7 @@ namespace Game
 
     // Determine if the floor region containing (sx,sy) is enclosed by walls/doors/markers
     // Do a bounded flood-fill; if the area is large (>AREA_LIMIT) consider it not enclosed
+    /*! \brief Flood-fill to determine if region is enclosed by walls/markers. */
     static bool IsEnclosedByWallsAndMarkers(Engine::TileMap* map, int sx, int sy, int w, int h)
     {
         if (!IsFloor(map, sx, sy)) return false;
@@ -210,6 +237,7 @@ namespace Game
 
     // Determine if the floor region containing (sx,sy) has any doors on its perimeter
     // If so, treat it as guarded (rooms with doors) so we can avoid placing CCTVs there.
+    /*! \brief Flood-fill to determine if region perimeter contains doors (guarded). */
     static bool RegionGuardedByDoor(Engine::TileMap* map, int sx, int sy, int w, int h)
     {
         if (!IsFloor(map, sx, sy)) return false;
@@ -270,6 +298,7 @@ namespace Game
 
     // Check if this is a good corridor surveillance point
     // Prioritize: junctions, turns, long straight corridors
+    /*! \brief Compute a priority score for placing a camera on a corridor tile. */
     static int GetCorridorPriority(Engine::TileMap* map, int x, int y, int w, int h)
     {
         if (!IsFloor(map, x, y)) return 0;
@@ -304,6 +333,7 @@ namespace Game
         return 0;
     }
 
+    /*! \brief Convert grid direction to rotation degrees. */
     static float RotFromDir(int dx, int dy)
     {
         // convert grid direction to rotation (degrees)
@@ -315,6 +345,7 @@ namespace Game
     }
 
     // decide what direction the camera should face based on corridor shape
+    /*! \brief Choose a facing direction for camera based on corridor geometry. */
     static void ChooseFacingDir(Engine::TileMap* map, int x, int y, int& outDx, int& outDy)
     {
         // check which neighbors are open
@@ -336,6 +367,7 @@ namespace Game
     }
 
     // place camera inside floor tile, pushed slightly toward any adjacent wall
+    /*! \brief Place camera slightly toward adjacent wall inside floor tile. */
     static bool PlaceOnWallInsideFloor(Engine::TileMap* map, int w, int h, int tx, int ty,
         float z, float eps, Engine::Vector3& outPos)
     {
@@ -370,6 +402,7 @@ namespace Game
         return true;
     }
 
+    /*! \brief Generate CCTVInfo placements across zones using heuristics. */
     std::vector<CCTVInfo> GenerateCCTVsPerZone(
         Engine::TileMap* map,
         const std::vector<int>& zoneGrid,

@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Scenes\CreditScene\CreditScene.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "CreditScene.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/UI/Core/UIManager.hpp"
@@ -101,6 +108,9 @@ const char* CreditScene::CREDITS_TEXTURE_PATH = "Assets/UI/CreditScene.png";
 
 CreditScene::CreditScene() : Scene("CreditScene") {}
 
+/*!
+ * \brief [AUTO] OnLoad
+ */
 void CreditScene::OnLoad() {
     const auto& cfg = GetCreditSceneConfig();
     Input::RegisterCursorUnlock("CreditScene");
@@ -161,6 +171,9 @@ void CreditScene::OnLoad() {
     FadeService::FadeOut(cfg.fadeOutDuration);
 }
 
+/*!
+ * \brief [AUTO] OnUpdate
+ */
 void CreditScene::OnUpdate() {
     float dt = Time::unscaledDeltaTime;
 
@@ -180,12 +193,19 @@ void CreditScene::OnUpdate() {
     }
 }
 
+/*!
+ * \brief [AUTO] SkipToEnd
+ */
 void CreditScene::SkipToEnd() {
     if (m_transitioning) return;
     m_transitioning = true;
     SceneManager::LoadWithFade("MainMenu");
 }
 
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
 bool CreditScene::IsSkipPressed() const {
     if (Input::GetKeyDown(KeyCode::Return) ||
         Input::GetKeyDown(KeyCode::Escape) ||
@@ -197,6 +217,9 @@ bool CreditScene::IsSkipPressed() const {
     return false;
 }
 
+/*!
+ * \brief [AUTO] OnUnload
+ */
 void CreditScene::OnUnload() {
     Input::UnregisterCursorUnlock("CreditScene");
     if (m_canvas) {

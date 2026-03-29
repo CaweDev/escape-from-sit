@@ -1,6 +1,8 @@
-/**
- * @file SplashScene.cpp
- * @brief Implementation of horror-themed DigiPen splash screen
+/*!
+ * \file SplashScene.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of horror-themed DigiPen splash screen
  */
 #include "SplashScene.hpp"
 #include "Engine/Scene/SceneManager.hpp"
@@ -15,6 +17,13 @@
 
 namespace
 {
+    /*!
+     * \brief Try to read a 2D vector from JSON node
+     * \param node [in] JSON node to read from
+     * \param key [in] Key name to lookup in node
+     * \param out [out] Output vector written on success
+     * \return true if a valid object was read, false otherwise
+     */
     bool TryReadVec2(const Json::Value& node, const char* key, AEVec2& out)
     {
         if (!node.isMember(key) || !node[key].isObject()) return false;
@@ -24,6 +33,11 @@ namespace
         return true;
     }
 
+    /*!
+     * \brief Apply saved layout values from JSON to a UI element
+     * \param e [in/out] UI element to configure
+     * \param layout [in] JSON layout object containing overrides
+     */
     void ApplyLayoutNode(UI::UIElement* e, const Json::Value& layout)
     {
         if (!e || e->name.empty() || !layout.isObject()) return;
@@ -41,6 +55,10 @@ namespace
         if (n.isMember("renderOrder")) e->SetRenderOrder(n["renderOrder"].asInt());
     }
 
+    /*!
+     * \struct SplashSceneConfig
+     * \brief Configuration for the splash scene loaded from JSON
+     */
     struct SplashSceneConfig : public Engine::IConfig
     {
         Json::Value layout;
@@ -80,6 +98,13 @@ namespace
 
         std::string nextSceneName = "MainMenu";
 
+        /*!
+         * \brief Parse a color object from JSON
+         * \param j [in] JSON value
+         * \param key [in] Key containing color object
+         * \param fallback [in] Fallback color if key missing
+         * \return Parsed color or fallback
+         */
         static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
         {
             if (!j.isMember(key) || !j[key].isObject()) return fallback;
@@ -91,6 +116,10 @@ namespace
                 c.get("a", fallback.a).asFloat());
         }
 
+        /*!
+         * \brief Populate config fields from JSON
+         * \param j [in] JSON node containing configuration
+         */
         void FromJson(const Json::Value& j) override
         {
             layout = j["layout"];
@@ -135,6 +164,10 @@ namespace
     SplashSceneConfig g_splashSceneConfig;
     bool g_splashSceneConfigLoaded = false;
 
+    /*!
+     * \brief Get singleton splash scene configuration (loads on first call)
+     * \return Reference to loaded SplashSceneConfig
+     */
     const SplashSceneConfig& GetSplashSceneConfig()
     {
         if (!g_splashSceneConfigLoaded)
@@ -192,8 +225,14 @@ float SplashScene::FLICKER_DEPTH          = 1.f;
 float SplashScene::FLICKER_DURATION       = 0.2f;
 float SplashScene::FINAL_FLICKER_DURATION = 0.2f;
 
+/*!
+ * \brief Construct a SplashScene
+ */
 SplashScene::SplashScene() : Scene("SplashScene") {}
 
+/*!
+ * \brief Called when the scene is loaded; sets up UI and initial state
+ */
 void SplashScene::OnLoad() {
     const auto& cfg = GetSplashSceneConfig();
     FADE_IN_DURATION = cfg.fadeInDuration;
@@ -302,6 +341,9 @@ void SplashScene::OnLoad() {
     FadeService::FadeOut(FADE_IN_DURATION);
 }
 
+/*!
+ * \brief Per-frame update handling splash phases and input
+ */
 void SplashScene::OnUpdate() {
     float dt = Time::unscaledDeltaTime;
     m_phaseTimer += dt;
@@ -418,6 +460,9 @@ void SplashScene::OnUpdate() {
     }
 }
 
+/*!
+ * \brief Advance the splash scene to the next phase
+ */
 void SplashScene::AdvancePhase() {
     m_phaseTimer = 0.0f;
 
@@ -451,6 +496,9 @@ void SplashScene::AdvancePhase() {
     }
 }
 
+/*!
+ * \brief Immediately start transition to the next scene (skip splash)
+ */
 void SplashScene::SkipToEnd() {
     if (m_transitioning) return;
     m_transitioning = true;
@@ -458,6 +506,14 @@ void SplashScene::SkipToEnd() {
     SceneManager::LoadWithFade(GetSplashSceneConfig().nextSceneName);
 }
 
+/*!
+ * \brief Query common inputs to determine if user requested skip
+ * \return True if a skip key or mouse button was pressed
+ */
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
 bool SplashScene::IsSkipPressed() const {
     // Check any common keys
     if (Input::GetKeyDown(KeyCode::Return) ||
@@ -469,6 +525,9 @@ bool SplashScene::IsSkipPressed() const {
     return false;
 }
 
+/*!
+ * \brief Clean up UI and unregister input hooks when scene unloads
+ */
 void SplashScene::OnUnload() {
     Input::UnregisterCursorUnlock("SplashScene");
     if (m_canvas) {

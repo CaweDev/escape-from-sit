@@ -1,3 +1,10 @@
+/*!
+ * \file CCTVTerminal.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Component that represents an interactive CCTV terminal in the world
+ */
+
 #pragma once
 #include "Engine/Core/Component.hpp"
 #include "Engine/Interaction/Interactable.hpp"
@@ -11,13 +18,10 @@ namespace Game {
     class SecurityGuard;
     class PlayerHUD;
     
-    /**
-     * @brief Convert zone ID (1-4) to zone letter (A-D)
-     * Zone layout:
-     *   Top-Left: 2 ? B
-     *   Top-Right: 3 ? C
-     *   Bottom-Left: 1 ? A
-     *   Bottom-Right: 4 ? D
+    /*!
+     * \brief Convert zone ID (1-4) to zone letter (A-D)
+     * \param zoneId [in] Zone numeric id
+     * \return Letter representing zone
      */
     inline char ZoneIdToLetter(int zoneId) {
         switch (zoneId) {
@@ -29,13 +33,17 @@ namespace Game {
         }
     }
     
-    /**
-     * @brief Get zone name as string (e.g., "Zone A")
+    /*!
+     * \brief Get zone name as string (e.g., "Zone A")
      */
     inline std::string GetZoneName(int zoneId) {
         return std::string("ZONE ") + ZoneIdToLetter(zoneId);
     }
 
+    /*!
+     * \enum TerminalState
+     * \brief Visual and interaction state of a terminal
+     */
     enum class TerminalState {
         ACTIVE,      // Blue/green glow - cameras online
         HACKING,     // Yellow pulsing - player interacting
@@ -43,6 +51,10 @@ namespace Game {
         REPAIRING    // Orange pulsing - guard fixing
     };
 
+    /*!
+     * \class CCTVTerminal
+     * \brief Terminal component that can disable/restore camera networks and be repaired
+     */
     class CCTVTerminal : public Engine::Component {
     public:
         // Configuration
@@ -78,26 +90,39 @@ namespace Game {
         float floatAnimTime = 0.0f;
         
         // Component lifecycle
+        /*! \brief Initialize terminal (create interactable, icon). */
         void Awake() override;
+        /*! \brief Per-frame update handling timers and visuals. */
         void Update() override;
         
         // Interaction handling
+        /*! \brief Setup Interactable callback for hacking. */
         void SetupInteraction();
+        /*! \brief Called when player interacts with terminal. */
         void OnTerminalInteract();
+        /*! \brief Whether player can start hacking now. \return true if hackable */
         bool CanHack() const;
         
         // Terminal actions
+        /*! \brief Disable all controlled cameras immediately. */
         void DisableCameras();
+        /*! \brief Restore controlled cameras to active state. */
         void RestoreCameras();
+        /*! \brief Start guard repair process. \param guard [in] Guard performing repair */
         void StartRepair(SecurityGuard* guard);
+        /*! \brief Cancel active repair. */
         void CancelRepair();
+        /*! \brief Progress repair by deltaTime. \param deltaTime [in] Time step */
         void UpdateRepair(float deltaTime);
         
         // Notification
+        /*! \brief Notify nearby guards about a sabotage event. */
         void NotifyGuardsOfSabotage();
         
         // Visual
+        /*! \brief Update sprite color/animation based on terminal state. */
         void UpdateVisualState();
+        /*! \brief Get color representing current state. \return Color */
         Engine::Color GetStateColor() const;
         
     private:

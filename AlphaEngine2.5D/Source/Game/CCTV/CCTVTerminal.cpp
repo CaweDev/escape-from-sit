@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVTerminal.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "CCTVTerminal.hpp"
 #include "CCTVCamera.hpp"
 #include "Game/SecurityGuard/SecurityGuard.hpp"
@@ -105,6 +112,9 @@ namespace
 
 namespace Game {
 
+/*!
+ * \brief [AUTO] Awake
+ */
 void CCTVTerminal::Awake() {
     const auto& cfg = GetCCTVTerminalConfig();
     disabledDuration = cfg.disabledDuration;
@@ -119,6 +129,9 @@ void CCTVTerminal::Awake() {
     SetupInteraction();
 }
 
+/*!
+ * \brief [AUTO] SetupInteraction
+ */
 void CCTVTerminal::SetupInteraction() {
     //std::cout << "[CCTVTerminal::SetupInteraction] Setting up interaction for Zone " << controlledZone << "\n";
     const auto& cfg = GetCCTVTerminalConfig();
@@ -141,6 +154,9 @@ void CCTVTerminal::SetupInteraction() {
     //std::cout << "[CCTVTerminal::SetupInteraction] Interaction setup complete!\n";
 }
 
+/*!
+ * \brief [AUTO] OnTerminalInteract
+ */
 void CCTVTerminal::OnTerminalInteract() {
     const auto& cfg = GetCCTVTerminalConfig();
     /*std::cout << "[CCTVTerminal] OnTerminalInteract called! Zone=" << controlledZone 
@@ -171,6 +187,10 @@ void CCTVTerminal::OnTerminalInteract() {
     }
 }
 
+/*!
+ * \brief [AUTO] CanHack
+ * \return 
+ */
 bool CCTVTerminal::CanHack() const {
     if (isDisabled) return false;
     if (cooldownTimer > 0.0f) return false;
@@ -178,6 +198,9 @@ bool CCTVTerminal::CanHack() const {
     return true;
 }
 
+/*!
+ * \brief [AUTO] Update
+ */
 void CCTVTerminal::Update() {
 const auto& cfg = GetCCTVTerminalConfig();
 // Update floating icon animation
@@ -241,6 +264,9 @@ if (interactable) {
     UpdateVisualState();
 }
 
+/*!
+ * \brief [AUTO] DisableCameras
+ */
 void CCTVTerminal::DisableCameras() {
     //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras DISABLED for " << disabledDuration << " seconds\n";
     
@@ -266,6 +292,9 @@ void CCTVTerminal::DisableCameras() {
     NotifyGuardsOfSabotage();
 }
 
+/*!
+ * \brief [AUTO] RestoreCameras
+ */
 void CCTVTerminal::RestoreCameras() {
     //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras RESTORED\n";
     
@@ -285,6 +314,10 @@ void CCTVTerminal::RestoreCameras() {
     }
 }
 
+/*!
+ * \brief [AUTO] StartRepair
+ * \param guard [in]
+ */
 void CCTVTerminal::StartRepair(SecurityGuard* guard) {
     if (!isDisabled) return;
     
@@ -296,6 +329,9 @@ void CCTVTerminal::StartRepair(SecurityGuard* guard) {
     //std::cout << "[CCTVTerminal] Guard started repairing Zone " << controlledZone << " terminal\n";
 }
 
+/*!
+ * \brief [AUTO] CancelRepair
+ */
 void CCTVTerminal::CancelRepair() {
     guardIsRepairing = false;
     repairingGuard = nullptr;
@@ -305,6 +341,10 @@ void CCTVTerminal::CancelRepair() {
     //std::cout << "[CCTVTerminal] Repair cancelled\n";
 }
 
+/*!
+ * \brief [AUTO] UpdateRepair
+ * \param deltaTime [in]
+ */
 void CCTVTerminal::UpdateRepair(float deltaTime) {
     const auto& cfg = GetCCTVTerminalConfig();
     if (!guardIsRepairing || !repairingGuard) {
@@ -333,6 +373,9 @@ void CCTVTerminal::UpdateRepair(float deltaTime) {
     }
 }
 
+/*!
+ * \brief [AUTO] NotifyGuardsOfSabotage
+ */
 void CCTVTerminal::NotifyGuardsOfSabotage() {
     Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
     
@@ -362,6 +405,10 @@ void CCTVTerminal::NotifyGuardsOfSabotage() {
     }*/
 }
 
+/*!
+ * \brief [AUTO] UpdateDisabledState
+ * \param deltaTime [in]
+ */
 void CCTVTerminal::UpdateDisabledState(float deltaTime) {
     disabledTimer -= deltaTime;
     
@@ -371,6 +418,10 @@ void CCTVTerminal::UpdateDisabledState(float deltaTime) {
     }
 }
 
+/*!
+ * \brief [AUTO] UpdateCooldown
+ * \param deltaTime [in]
+ */
 void CCTVTerminal::UpdateCooldown(float deltaTime) {
     cooldownTimer -= deltaTime;
     if (cooldownTimer < 0.0f) {
@@ -378,6 +429,9 @@ void CCTVTerminal::UpdateCooldown(float deltaTime) {
     }
 }
 
+/*!
+ * \brief [AUTO] UpdateVisualState
+ */
 void CCTVTerminal::UpdateVisualState() {
     if (!spriteRenderer) return;
     const auto& cfg = GetCCTVTerminalConfig();
@@ -393,6 +447,10 @@ void CCTVTerminal::UpdateVisualState() {
     spriteRenderer->SetColor(color);
 }
 
+/*!
+ * \brief [AUTO] GetStateColor
+ * \return 
+ */
 Engine::Color CCTVTerminal::GetStateColor() const {
     const auto& cfg = GetCCTVTerminalConfig();
     switch (state) {

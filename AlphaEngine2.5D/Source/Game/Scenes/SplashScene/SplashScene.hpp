@@ -1,7 +1,9 @@
 #pragma once
-/**
- * @file SplashScene.hpp
- * @brief Horror-themed DigiPen splash screen displayed on launch
+/*!
+ * \file SplashScene.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Horror-themed DigiPen splash screen displayed on launch
  */
 
 #include "Engine.hpp"
@@ -11,19 +13,26 @@ namespace Game {
 using namespace Engine;
 using namespace UI;
 
-/**
- * @class SplashScene
- * @brief Splash screen that shows the DigiPen logo with horror effects
+/*!
+ * \class SplashScene
+ * \brief Splash screen that shows the DigiPen logo with horror effects
  *
  * Timeline: FadeIn -> HoldAndExpand -> Flicker (1 dip, swap to logo2) -> FinalFlicker (1 dip, swap to white) -> FinalHold -> FadeOut
  * Transitions automatically to MainMenu. Skippable via key/click.
  */
 class SplashScene : public Scene {
 public:
+   
+    /*! \brief Constructor. */
     SplashScene();
 
+    /*! \brief Called when the scene is loaded. */
     void OnLoad() override;
+
+    /*! \brief Called when the scene is unloaded. */
     void OnUnload() override;
+
+    /*! \brief Per-frame update for the splash animation. */
     void OnUpdate() override;
 
 private:

@@ -1,6 +1,8 @@
-/**
- * @file ControlRoomDoor.hpp
- * @brief Special door that requires access cards to unlock
+/*!
+ * \file ControlRoomDoor.hpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Special door that requires access cards to unlock
  */
 #pragma once
 
@@ -13,26 +15,25 @@ namespace Engine {
 
 namespace Game {
 
-    /**
-     * @class ControlRoomDoor
-     * @brief Door that requires all 4 access cards to unlock
-     * 
-     * This door leads to a control room with a CCTV terminal.
-     * It remains locked until the player collects all 4 access cards.
+    /*!
+     * \class ControlRoomDoor
+     * \brief Door that requires a set of access cards to unlock the control room
+     *
+     * The door exposes an interactable which the player holds to attempt unlock.
      */
     class ControlRoomDoor : public Engine::Component {
     public:
-        /** Zone ID this door belongs to (1-4) */
+        /*! \brief Zone ID this door belongs to (1-4) */
         int zoneId = 1;
         
-        /** Required number of cards to unlock */
+        /*! \brief Required number of cards to unlock */
         int requiredCards = 4;
         
-        /** References */
+        /*! \brief References to door component and interactable */
         Engine::Door* door = nullptr;
         Engine::Interactable* interactable = nullptr;
         
-        /** Hold-to-unlock mechanic */
+        // Hold-to-unlock mechanic
         float holdProgress = 0.0f;
         float holdTimeRequired = 2.0f;
         float holdDecayMultiplier = 2.0f;
@@ -42,19 +43,21 @@ namespace Game {
         bool isHolding = false;
         
         // Lifecycle
+        /*! \brief Called when component is created to set up interactable. */
         void Awake() override;
+        /*! \brief Per-frame update to handle hold/unlock progression. */
         void Update() override;
         
-        /** Setup interaction */
+        /*! \brief Configure interaction callback. */
         void SetupInteraction();
         
-        /** Handle interaction (locked/unlock) */
+        /*! \brief Handle player interaction attempt. */
         void OnInteract();
         
-        /** Check if player has all required cards */
+        /*! \brief Query whether player has collected all required cards. \return true if collected */
         bool HasAllCards() const;
         
-        /** Get number of cards collected */
+        /*! \brief Return number of collected cards. */
         int GetCollectedCards() const;
     };
 

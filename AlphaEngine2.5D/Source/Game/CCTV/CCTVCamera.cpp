@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVCamera.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Player/Player.hpp"
@@ -9,8 +16,18 @@
 #include  "Engine/Core/GameObject.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 
+/*!
+ * \file CCTVCamera.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of CCTV camera detection and visualization
+ */
+
 namespace {
 
+    /*! \struct CCTVCameraConfig
+     *  \brief JSON-driven configuration for CCTVCamera
+     */
     struct CCTVCameraConfig : public Engine::IConfig
     {
         float degToRad = 3.14159265f / 180.0f;
@@ -19,6 +36,7 @@ namespace {
         Engine::Color detectingColor = Engine::Color(1.0f, 0.3f, 0.3f, 1.0f);
         Engine::Color idleColor = Engine::Color(1.0f, 1.0f, 1.0f, 1.0f);
 
+        /*! \brief Parse color object from JSON with fallback. */
         static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
         {
             if (!j.isMember(key) || !j[key].isObject()) return fallback;
@@ -30,6 +48,7 @@ namespace {
                 c.get("a", fallback.a).asFloat());
         }
 
+        /*! \brief Populate config fields from JSON. */
         void FromJson(const Json::Value& j) override
         {
             degToRad = j.get("degToRad", degToRad).asFloat();
@@ -54,12 +73,14 @@ namespace {
         return g_cctvCamConfig;
     }
 
+    /*! \brief Convert degrees to radians using configured multiplier. */
     static float DegToRad(float deg) { return deg * GetCCTVCameraConfig().degToRad; }
 
 }
 
 namespace Game {
 
+    /*! \brief Test whether a direction vector falls inside the camera cone. \param dx [in] X delta \param dy [in] Y delta \return true if inside FOV */
     bool CCTVCamera::InFov(float dx, float dy) const
     {
         // Defensive: ensure transform exists
@@ -81,6 +102,7 @@ namespace Game {
         return dot >= cosHalf;
     }
 
+    /*! \brief Raycast against tilemap to check line-of-sight between two points. \param from [in] Ray origin \param to [in] Ray target \return true if LOS is clear */
     bool CCTVCamera::RaycastTileLOS(Vector2 from, Vector2 to) const
     {
         if (!tile) return false;
@@ -112,6 +134,7 @@ namespace Game {
         return true;
     }
 
+    /*! \brief Wrapper to test LOS to the tracked player transform. \return true if LOS exists or LOS not required */
     bool CCTVCamera::HasLineOfSighttoPlayer() const
     {
         if (!tile || !tf) return false;
@@ -124,6 +147,7 @@ namespace Game {
         return RaycastTileLOS(from, to);
     }
 
+    /*! \brief Record player's world/tile position as last seen. */
     void CCTVCamera::RecordLastSeen()
     {
         if (!tf) return;
@@ -133,6 +157,7 @@ namespace Game {
         hasLastSeen = true;
     }
 
+    /*! \brief Test if a given tile is visible by this camera. \param tx [in] Tile X \param ty [in] Tile Y \return true if tile visible */
     bool CCTVCamera::IsTileVisible(int tx, int ty) const
     {
         // basic check: treat tile center as point
@@ -152,6 +177,7 @@ namespace Game {
         return true;
     }
 
+    /*! \brief Raycast in a direction until a wall is hit or maxDist reached. \param from [in] Origin \param dir [in] Unit direction \param maxDist [in] Maximum distance \return Impact position */
     Engine::Vector2 CCTVCamera::RaycastToWall(Vector2 from, Vector2 dir, float maxDist) const
     {
         if (!tile) return Vector2(from.x + dir.x * maxDist, from.y + dir.y * maxDist);
@@ -173,6 +199,7 @@ namespace Game {
         return Vector2(from.x + dir.x * maxDist, from.y + dir.y * maxDist);
     }
 
+    /*! \brief Build polygon points representing visible region (for minimap). */
     void CCTVCamera::BuildVisionPolygon()
     {
         m_visionPoly.clear();
@@ -196,6 +223,7 @@ namespace Game {
         }
     }
 
+    /*! \brief Main per-frame update: detection, sounds, minimap and sprite color. */
     void CCTVCamera::Update()
     {
        

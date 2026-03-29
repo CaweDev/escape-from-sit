@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "MainMenuScene.hpp"
 #include "Engine/Core/ConfigManager.hpp"
 #include <cmath>
@@ -183,10 +190,19 @@ namespace Game {
 
     MainMenuScene::MainMenuScene() : Scene("MainMenuScene") {}
 
+    /*!
+     * \brief [AUTO] RandomFloat
+     * \param min [in]
+     * \param max [in]
+     * \return 
+     */
     float MainMenuScene::RandomFloat(float min, float max) {
         return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
     }
 
+    /*!
+     * \brief [AUTO] OnLoad
+     */
     void MainMenuScene::OnLoad() {
         const auto& cfg = GetMainMenuSceneConfig();
 
@@ -420,6 +436,9 @@ namespace Game {
         menuAnimComplete = false;
     }
 
+    /*!
+     * \brief [AUTO] UpdateMenuVisuals
+     */
     void MainMenuScene::UpdateMenuVisuals() {
         const auto& cfg = GetMainMenuSceneConfig();
         for (int i = 0; i < static_cast<int>(menuItems.size()); ++i) {
@@ -439,6 +458,10 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] UpdateMenuAnimations
+     * \param dt [in]
+     */
     void MainMenuScene::UpdateMenuAnimations(float dt) {
         const auto& cfg = GetMainMenuSceneConfig();
         menuAnimTime += dt;
@@ -460,6 +483,10 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] UpdateEnemySighting
+     * \param dt [in]
+     */
     void MainMenuScene::UpdateEnemySighting(float dt) {
         const auto& cfg = GetMainMenuSceneConfig();
         if (!enemyShadow) return;
@@ -527,6 +554,10 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] SelectMenuItem
+     * \param index [in]
+     */
     void MainMenuScene::SelectMenuItem(int index) {
         if (index >= 0 && index < static_cast<int>(menuItems.size())) {
             if (menuItems[index].onClick) {
@@ -535,6 +566,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] OnUnload
+     */
     void MainMenuScene::OnUnload() {
         Input::UnregisterCursorUnlock("MainMenuScene");
 
@@ -558,6 +592,9 @@ namespace Game {
        
     }
 
+    /*!
+     * \brief [AUTO] OnUpdate
+     */
     void MainMenuScene::OnUpdate() {
         const auto& cfg = GetMainMenuSceneConfig();
         if (!cameraTf) return;
@@ -676,6 +713,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] OnPlayClicked
+     */
     void MainMenuScene::OnPlayClicked() {
         if (transitionLocked) return;
         transitionLocked = true;
@@ -684,6 +724,9 @@ namespace Game {
         SceneManager::LoadWithLoadingScreen("FPS");
     }
 
+    /*!
+     * \brief [AUTO] OnControlsClicked
+     */
     void MainMenuScene::OnControlsClicked() {
         SoundManager::PlaySFX("ui_click");
         if (controlsMenu)
@@ -692,6 +735,9 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] OnCreditsClicked
+     */
     void MainMenuScene::OnCreditsClicked() {
         if (transitionLocked) return;
         transitionLocked = true;
@@ -700,6 +746,9 @@ namespace Game {
         SceneManager::LoadWithFade("Credits");
     }
 
+    /*!
+     * \brief [AUTO] OnQuitClicked
+     */
     void MainMenuScene::OnQuitClicked() {
         SoundManager::PlaySFX("ui_click");
         DialogService::ShowConfirmation(

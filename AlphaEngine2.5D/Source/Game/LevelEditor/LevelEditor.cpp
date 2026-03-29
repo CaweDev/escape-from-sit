@@ -1,4 +1,10 @@
 #include "LevelEditor.hpp"
+/*!
+ * \file LevelEditor.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of the top-down level editor used in-game
+ */
 #include "Engine/Core/Application.hpp"
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Core/AssetManager.hpp"
@@ -22,6 +28,9 @@
 
 namespace
 {
+    /*! \struct LevelEditorConfig
+     *  \brief JSON-backed configuration for the level editor UI and limits
+     */
     struct LevelEditorConfig : public Engine::IConfig
     {
         float zoomInFactor = 1.2f;
@@ -30,6 +39,7 @@ namespace
         float zoomMax = 4.0f;
         std::string defaultSavePath = "Assets/map.txt";
 
+        /*! \brief Load configuration values from JSON. \param j [in] JSON node */
         void FromJson(const Json::Value& j) override
         {
             zoomInFactor = j.get("zoomInFactor", zoomInFactor).asFloat();
@@ -43,6 +53,7 @@ namespace
     LevelEditorConfig g_levelEditorConfig;
     bool g_levelEditorConfigLoaded = false;
 
+    /*! \brief Access singleton LevelEditorConfig, loads on first call. \return Reference to config */
     const LevelEditorConfig& GetLevelEditorConfig()
     {
         if (!g_levelEditorConfigLoaded)
@@ -60,8 +71,14 @@ namespace
 
 namespace Game {
 
+/*!
+ * \brief Construct a LevelEditor instance.
+ */
 LevelEditor::LevelEditor() {}
 
+/*!
+ * \brief Destructor; free created mesh resources.
+ */
 LevelEditor::~LevelEditor() {
     if (tileMesh) {
         AEGfxMeshFree(tileMesh);
@@ -71,6 +88,20 @@ LevelEditor::~LevelEditor() {
     }
 }
 
+/*!
+ * \brief Initialize the editor for a scene and tilemap.
+ * \param scn [in] Scene pointer
+ * \param map [in] TileMap pointer
+ * \param cam [in] Camera pointer
+ * \param playerTf [in] Player transform pointer
+ */
+/*!
+ * \brief [AUTO] Initialize
+ * \param scn [in]
+ * \param map [in]
+ * \param cam [in]
+ * \param playerTf [in]
+ */
 void LevelEditor::Initialize(Scene* scn, TileMap* map, Camera* cam, Transform* playerTf) {
     // Re-initialize safety for scene reloads (FPS can be loaded multiple times)
     if (isActive) {
@@ -130,6 +161,9 @@ void LevelEditor::Initialize(Scene* scn, TileMap* map, Camera* cam, Transform* p
     tileMesh = AEGfxMeshEnd();
 }
 
+/*!
+ * \brief Create UI elements for the editor (buttons, panels, help text).
+ */
 void LevelEditor::CreateUI() {
     if (!UI::UIManager::GetInstance()) return;
 
@@ -285,6 +319,9 @@ void LevelEditor::CreateUI() {
     helpText->visible = false;
 }
 
+/*!
+ * \brief Per-frame update for the editor when active.
+ */
 void LevelEditor::Update() {
     if (!isActive) return;
     
@@ -292,6 +329,9 @@ void LevelEditor::Update() {
     UpdateUI();
 }
 
+/*!
+ * \brief Handle keyboard and mouse input for editor controls.
+ */
 void LevelEditor::HandleInput() {
 // Mode selection
 if (Input::GetKeyDown(KeyCode::Alpha1)) SetMode(EditorMode::Wall);
@@ -358,6 +398,9 @@ if (Input::GetKeyDown(KeyCode::K)) SetMode(EditorMode::ControlRoom);
     }
 }
 
+/*!
+ * \brief Apply the current editor action to the hovered tile when clicked.
+ */
 void LevelEditor::HandleMapClick() {
     if (hoveredTileX < 0 || hoveredTileX >= mapWidth) return;
     if (hoveredTileY < 0 || hoveredTileY >= mapHeight) return;
@@ -455,6 +498,18 @@ void LevelEditor::HandleMapClick() {
     // Close editor (F1) to see changes in-game
 }
 
+/*!
+ * \brief Convert screen coordinates to map tile-space coordinates.
+ * \param screenX [in] Screen X in pixels
+ * \param screenY [in] Screen Y in pixels
+ * \return Map coordinates as a Vector2
+ */
+/*!
+ * \brief [AUTO] ScreenToMapCoords
+ * \param screenX [in]
+ * \param screenY [in]
+ * \return 
+ */
 Vector2 LevelEditor::ScreenToMapCoords(float screenX, float screenY) {
     int screenWidth = AEGfxGetWindowWidth();
     int screenHeight = AEGfxGetWindowHeight();
@@ -481,18 +536,41 @@ Vector2 LevelEditor::ScreenToMapCoords(float screenX, float screenY) {
     return Vector2(mapX, mapY);
 }
 
+/*!
+ * \brief Test whether a tile is floor (editable placement target).
+ * \param x [in] Tile X
+ * \param y [in] Tile Y
+ * \return true when tile is floor and within bounds
+ */
+/*!
+ * \brief [AUTO] IsFloorTile
+ * \param x [in]
+ * \param y [in]
+ * \return 
+ */
 bool LevelEditor::IsFloorTile(int x, int y) {
     if (!tileMap) return false;
     if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return false;
     return (int)tileMap->GetTile(x, y) == 0;
 }
 
+/*!
+ * \brief Set the editor placement mode.
+ * \param mode [in] Desired EditorMode
+ */
+/*!
+ * \brief [AUTO] SetMode
+ * \param mode [in]
+ */
 void LevelEditor::SetMode(EditorMode mode) {
     currentMode = mode;
     const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "ControlRoom", "GreenCard", "PurpleCard", "RedCard", "YellowCard", "Delete"};
     std::cout << "[LevelEditor] Mode: " << modeNames[(int)mode] << "\n";
 }
 
+/*!
+ * \brief Refresh UI text and button highlights based on current state.
+ */
 void LevelEditor::UpdateUI() {
 if (!statusText) return;
 
@@ -544,6 +622,9 @@ int zoomPercent = (int)(viewZoom * 100.0f);
         Engine::Color(1.0f, 0.5f, 0.5f, 1.0f) : Engine::Color(0.8f, 0.3f, 0.3f, 1.0f));
 }
 
+/*!
+ * \brief [AUTO] ToggleEditor
+ */
 void LevelEditor::ToggleEditor() {
     isActive = !isActive;
     
@@ -572,12 +653,18 @@ void LevelEditor::ToggleEditor() {
     }
 }
 
+/*!
+ * \brief [AUTO] Render
+ */
 void LevelEditor::Render() {
     if (!isActive || !tileMap || !tileMesh) return;
     
     RenderMap();
 }
 
+/*!
+ * \brief [AUTO] RenderMap
+ */
 void LevelEditor::RenderMap() {
     AEGfxSetRenderMode(AE_GFX_RM_COLOR);
     AEGfxSetBlendMode(AE_GFX_BM_BLEND);
@@ -651,11 +738,18 @@ void LevelEditor::RenderMap() {
     RenderMapGrid();
 }
 
+/*!
+ * \brief [AUTO] RenderMapGrid
+ */
 void LevelEditor::RenderMapGrid() {
     // Grid rendering disabled for performance with large map (128x43)
     // Can be enabled for smaller maps if needed
 }
 
+/*!
+ * \brief [AUTO] SaveMapTxt
+ * \param filename [in]
+ */
 void LevelEditor::SaveMapTxt(const std::string& filename) {
     if (!tileMap) {
         std::cout << "[LevelEditor] No tilemap to save!\n";
@@ -756,6 +850,11 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
     std::cout << "\n=================\n";
 }
 
+/*!
+ * \brief [AUTO] SpawnDoorAt
+ * \param x [in]
+ * \param y [in]
+ */
 void LevelEditor::SpawnDoorAt(int x, int y) {
     if (!scene || !tileMap) {
         std::cout << "[LevelEditor] ERROR: No scene/tilemap available for spawning!\n";
@@ -824,6 +923,16 @@ void LevelEditor::SpawnDoorAt(int x, int y) {
     std::cout << "[LevelEditor] Door spawned! It will auto-close 3 seconds after opening.\n";
 }
 
+/*! 
+ * \brief Spawn a simple interactive door GameObject at tile coordinates (x,y).
+ * \param x [in] Tile X coordinate
+ * \param y [in] Tile Y coordinate
+ */
+/*!
+ * \brief [AUTO] SpawnTerminalAt
+ * \param x [in]
+ * \param y [in]
+ */
 void LevelEditor::SpawnTerminalAt(int x, int y) {
     if (!scene) {
         std::cout << "[LevelEditor] ERROR: No scene available for spawning!\n";

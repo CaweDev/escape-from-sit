@@ -63,6 +63,9 @@ namespace
 
 namespace Game {
 
+/*!
+ * \brief [AUTO] Awake
+ */
 void PathRenderer::Awake() {
     // Component will be initialized when SetPath is called
     /* std::cout << "[PathRenderer] Awake() called - Component created successfully!" << std::endl;
@@ -70,6 +73,9 @@ void PathRenderer::Awake() {
     std::cout << "[PathRenderer] Enabled: " << (enabled ? "YES" : "NO") << std::endl;*/
 }
 
+/*!
+ * \brief [AUTO] Update
+ */
 void PathRenderer::Update() {
     if (!HasPath()) return;
     
@@ -96,6 +102,9 @@ void PathRenderer::Update() {
     }
 }
 
+/*!
+ * \brief [AUTO] Render
+ */
 void PathRenderer::Render() {
     // DISABLED by default: 3D path markers can be enabled via config
     if (!GetPathRendererConfig().renderEnabled) return;
@@ -145,6 +154,13 @@ void PathRenderer::Render() {
     }
 }
 
+/*!
+ * \brief [AUTO] SetPath
+ * \param start [in]
+ * \param dest [in]
+ * \param cardID [in]
+ * \param color [in]
+ */
 void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& dest, int cardID, const Engine::Color& color) {
     destination = dest;
     cardId = cardID;
@@ -167,6 +183,9 @@ void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& 
     //}
 }
 
+/*!
+ * \brief [AUTO] ClearPath
+ */
 void PathRenderer::ClearPath() {
     pathWaypoints.clear();
     currentAlpha = 1.0f;
@@ -174,6 +193,12 @@ void PathRenderer::ClearPath() {
     //std::cout << "[PathRenderer] Path cleared" << std::endl;
 }
 
+/*!
+ * \brief [AUTO] RenderMarker
+ * \param position [in]
+ * \param alpha [in]
+ * \param glowMod [in]
+ */
 void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, float glowMod) {
     if (!Engine::Camera::main || !Engine::Camera::main->transform) return;
     
@@ -307,6 +332,12 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
 }
 
 // A* pathfinding implementation
+/*!
+ * \brief [AUTO] FindPath
+ * \param start [in]
+ * \param goal [in]
+ * \return 
+ */
 std::vector<Engine::Vector2> PathRenderer::FindPath(const Engine::Vector2& start, const Engine::Vector2& goal) {
     std::vector<Engine::Vector2> path;
     

@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\UCB1Bandit\BanditVisualizer.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "BanditVisualizer.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Core/Time.hpp"
@@ -9,6 +16,13 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
+
+/*!
+ * \file BanditVisualizer.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief Implementation of BanditVisualizer UI component
+ */
 
 namespace
 {
@@ -56,6 +70,7 @@ namespace
 
 namespace Game {
 
+    /*! \brief Format a float to string with specified decimals. */
     std::string BanditVisualizer::FmtFloat(float v, int decimals) {
         char buf[64];
         const char* fmt = (decimals == 3) ? "%.3f" : (decimals == 1) ? "%.1f" : "%.2f";
@@ -63,19 +78,24 @@ namespace Game {
         return std::string(buf);
     }
 
+    /*! \brief Return display name for a zone id. */
     std::string BanditVisualizer::ZoneName(int id) {
         if (id < 1 || id > 4) return "Zone ?";
         return std::string("ZONE ") + std::to_string(id);
     }
 
+    /*! \brief Return short letter label for a zone id. */
     std::string BanditVisualizer::ZoneLetter(int id) {
         if (id < 1 || id > 4) return "N/A";
         return std::string("Z") + std::to_string(id);
     }
 
+    /*! \brief Default constructor. */
     BanditVisualizer::BanditVisualizer() {}
+    /*! \brief Default destructor. */
     BanditVisualizer::~BanditVisualizer() {}
 
+    /*! \brief Create UI canvases and build panels for visualization. */
     void BanditVisualizer::Initialize() {
         const auto& cfg = GetBanditVisualizerConfig();
         m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
@@ -122,6 +142,7 @@ namespace Game {
         RefreshUI();
     }
 
+    /*! \brief Build the header portion of the UI. */
     void BanditVisualizer::BuildHeader(UI::Panel* parent) {
         UI::Panel* hdr = parent->CreateChild<UI::Panel>();
         hdr->name = "Header";
@@ -189,6 +210,7 @@ namespace Game {
         m_priorityText = m_selectedZoneText;
     }
 
+    /*! \brief Build the breakdown panel showing numeric contributions. */
     void BanditVisualizer::BuildBreakdownPanel(UI::Panel* parent) {
         UI::Panel* bp = parent->CreateChild<UI::Panel>();
         bp->name = "BreakdownPanel";
@@ -250,6 +272,7 @@ namespace Game {
             m_detailLines[i] = line;
         }
     }
+    /*! \brief Build the 2x2 zone cards grid UI. */
     void BanditVisualizer::BuildZoneGrid(UI::Panel* parent) {
         UI::Panel* grid = parent->CreateChild<UI::Panel>();
         grid->name = "ZoneGrid";
@@ -371,6 +394,7 @@ namespace Game {
     }
 
 
+    /*! \brief Build the CCTV history panel. */
     void BanditVisualizer::BuildCCTVPanel(UI::Panel* parent) {
         UI::Panel* cp = parent->CreateChild<UI::Panel>();
         cp->name = "CCTVPanel";
@@ -454,6 +478,7 @@ namespace Game {
         m_cctvCurrentStatus->SetAnchor(UI::TextAnchor::UpperLeft);
     }
 
+    /*! \brief Periodic update to refresh ML summary and logs. */
     void BanditVisualizer::Update() {
         const auto& cfg = GetBanditVisualizerConfig();
         float dt = Time::deltaTime;
@@ -522,16 +547,19 @@ namespace Game {
         SetMLSummary(selectedZone, 0.0f, false, pulls, means, cctv, heatZones, &bd, reason.c_str());
     }
 
+    /*! \brief Toggle the visibility of the main panel. */
     void BanditVisualizer::ToggleVisibility() {
         if (!m_panel) return;
         SetVisible(!m_panel->visible);
     }
 
+    /*! \brief Set visibility state for the panel. \param v [in] Visible flag */
     void BanditVisualizer::SetVisible(bool v) {
         if (!m_panel) return;
         m_panel->visible = v;
     }
 
+    /*! \brief Set which zone is selected for detailed view. \param zid [in] Zone id (1-4) */
     void BanditVisualizer::SetSelectedZone(int zid)
     {
         if (zid < 1 || zid > 4) return;
@@ -545,6 +573,17 @@ namespace Game {
         RefreshBreakdown();
     }
 
+    /*! \brief Update the ML summary and refresh UI fields.
+     *  \param priorityZone [in] The currently prioritized zone id
+     *  \param hotTimer [in] Hot timer value
+     *  \param fullEscalation [in] Whether full escalation is active
+     *  \param pulls [in] Pull counts per arm
+     *  \param means [in] Mean values per arm
+     *  \param cctv [in] CCTV scores (indexed by zone)
+     *  \param heatZones [in] Heatmap sums per zone
+     *  \param breakdown [in] Optional breakdown structure
+     *  \param reason [in] Optional reason string
+     */
     void BanditVisualizer::SetMLSummary(int priorityZone, float hotTimer, bool fullEscalation,
         const int pulls[4],
         const float means[4],
@@ -612,13 +651,19 @@ namespace Game {
         RefreshCCTVLog();
     }
 
+    /*!
+     * \brief [AUTO] PushCCTVRecord
+     * \param rec [in]
+     */
     void BanditVisualizer::PushCCTVRecord(const CCTVRecord& rec) {
+    /*! \brief Push a CCTV record into the scrolling history log. \param rec [in] Record to push */
         m_cctvHistory.push_front(rec);
         while ((int)m_cctvHistory.size() > kMaxCCTVEntries)
             m_cctvHistory.pop_back();
         RefreshCCTVLog();
     }
 
+    /*! \brief Update CCTV visibility state and optionally log transitions. */
     void BanditVisualizer::SetCCTVStatus(int zone, float posX, float posY, bool visible)
     {
         m_elapsedTime += Time::deltaTime;
@@ -665,12 +710,14 @@ namespace Game {
     }
 
 
+    /*! \brief Refresh the whole UI (cards, breakdown, CCTV log). */
     void BanditVisualizer::RefreshUI() {
         RefreshZoneCards();
         RefreshBreakdown();
         RefreshCCTVLog();
     }
 
+    /*! \brief Update zone card summaries from bandit data. */
     void BanditVisualizer::RefreshZoneCards() {
         if (!bandit) {
             for (int i = 0; i < 4; ++i) {
@@ -690,6 +737,7 @@ namespace Game {
         }
     }
 
+    /*! \brief Update textual breakdown for the selected zone. */
     void BanditVisualizer::RefreshBreakdown() {
         if (!m_breakdownZoneLabel) return;
 
@@ -727,6 +775,7 @@ namespace Game {
         }
     }
 
+    /*! \brief Refresh the displayed CCTV event log entries. */
     void BanditVisualizer::RefreshCCTVLog()
     {
         for (int i = 0; i < kMaxCCTVEntries; ++i) {
@@ -770,6 +819,11 @@ namespace Game {
             m_cctvCurrentStatus->SetText(std::string("Status: ") + (m_lastCCTVVisible ? "Visible" : "Lost"));
     }
 
+    /*! \brief Set a bar panel width proportional to value/maxValue.
+     *  \param bar [in/out] Panel to update
+     *  \param value [in] Current value
+     *  \param maxValue [in] Maximum reference value
+     */
     void BanditVisualizer::UpdateBarFill(UI::Panel* bar, float value, float maxValue)
     {
         if (!bar) return;
@@ -788,6 +842,9 @@ namespace Game {
         bar->SetAnchoredPosition({ 0.0f, 0.0f });
         bar->SetSizeDelta({ kBarWidth * t, 10.0f });
     }
+    /*!
+     * \brief [AUTO] OnDestroy
+     */
     void BanditVisualizer::OnDestroy() {
         if (m_canvas && UI::UIManager::GetInstance()) {
             UI::UIManager::GetInstance()->DestroyCanvas(m_canvas);

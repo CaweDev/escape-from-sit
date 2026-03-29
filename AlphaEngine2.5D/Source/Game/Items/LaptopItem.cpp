@@ -1,3 +1,10 @@
+/*!
+ * \file AlphaEngine2.5D\Source\Game\Items\LaptopItem.cpp
+ * \author DigiPen Student
+ * \date 2026-03-29
+ * \brief [AUTO] Added Doxygen file header
+ */
+
 #include "LaptopItem.hpp"
 #include "Game/SecurityGuard/SecurityGuard.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
