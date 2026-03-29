@@ -375,7 +375,6 @@ namespace Game
         playerTf = player->transform;
         playerViewPos = playerTf->position;
         playerViewRot = playerTf->rotation;
-        std::cout << playerTf->position.x << "y: " << playerTf->position.y;
 
         playerCam = player->GetComponent<Camera>();
         playerController = player->GetComponent<FPSController>();

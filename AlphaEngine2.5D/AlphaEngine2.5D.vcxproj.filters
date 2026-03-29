@@ -68,6 +68,7 @@
     <Filter Include="Assets\Config\Engine" />
     <Filter Include="Assets\Config\Game" />
     <Filter Include="Source\Game\Items" />
+    <Filter Include="Source\Game\Inventory" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Extern\imgui\backends\imgui_impl_opengl3.cpp">
@@ -97,8 +98,23 @@
     <ClCompile Include="Source\Game\Scenes\FPSScene\FPSScene.cpp">
       <Filter>Source\Game\Scenes\FPSScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Inventory\Inventory.cpp" >
+          <Filter>Source\Game\Inventory\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Items\LaptopItem.cpp" >
+          <Filter>Source\Game\Items\LaptopItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Items\SodaCanItem.cpp" >
+          <Filter>Source\Game\Items\SodaCanItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+      <ClCompile Include="Source\Engine\Math\Vector2.cpp" >
+            <Filter>Source\Engine\Math\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Math\Vector3.cpp" >
+          <Filter>Source\Engine\Math\Vector3</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Engine\Audio\ProximityAudio.cpp">
       <Filter>Source\Engine\Audio</Filter>
     </ClCompile>
@@ -695,6 +711,15 @@
     </ClInclude>
     <ClInclude Include="Source\Game\Puzzle\PuzzleObject.hpp">
       <Filter>Source\Game\Puzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Inventory\Inventory.hpp" >
+          <Filter>Source\Game\Inventory\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Items\LaptopItem.hpp" >
+          <Filter>Source\Game\Items\LaptopItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Items\SodaCanItem.hpp" >
+          <Filter>Source\Game\Items\SodaCanItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
