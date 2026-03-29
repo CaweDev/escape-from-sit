@@ -16,7 +16,15 @@ namespace Engine
      * \brief [AUTO] zero
      * \return 
      */
+    /*!
+     * \brief [AUTO] zero
+     * \return 
+     */
     Vector2 Vector2::zero() { return Vector2(0, 0); }
+    /*!
+     * \brief [AUTO] one
+     * \return 
+     */
     /*!
      * \brief [AUTO] one
      * \return 
@@ -26,7 +34,15 @@ namespace Engine
      * \brief [AUTO] up
      * \return 
      */
+    /*!
+     * \brief [AUTO] up
+     * \return 
+     */
     Vector2 Vector2::up() { return Vector2(0, 1); }
+    /*!
+     * \brief [AUTO] down
+     * \return 
+     */
     /*!
      * \brief [AUTO] down
      * \return 
@@ -36,7 +52,15 @@ namespace Engine
      * \brief [AUTO] left
      * \return 
      */
+    /*!
+     * \brief [AUTO] left
+     * \return 
+     */
     Vector2 Vector2::left() { return Vector2(-1, 0); }
+    /*!
+     * \brief [AUTO] right
+     * \return 
+     */
     /*!
      * \brief [AUTO] right
      * \return 
@@ -84,7 +108,15 @@ namespace Engine
      * \brief [AUTO] Magnitude
      * \return 
      */
+    /*!
+     * \brief [AUTO] Magnitude
+     * \return 
+     */
     f32 Vector2::Magnitude() const { return std::sqrt(x * x + y * y); }
+    /*!
+     * \brief [AUTO] SqrMagnitude
+     * \return 
+     */
     /*!
      * \brief [AUTO] SqrMagnitude
      * \return 

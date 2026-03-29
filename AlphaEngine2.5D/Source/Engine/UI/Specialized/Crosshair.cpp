@@ -69,6 +69,10 @@ Crosshair::Crosshair() {
  * \brief [AUTO] SetDefaultTexture
  * \param texture [in]
  */
+/*!
+ * \brief [AUTO] SetDefaultTexture
+ * \param texture [in]
+ */
 void Crosshair::SetDefaultTexture(Engine::Texture2D* texture) {
     m_defaultTexture = texture;
     UpdateTexture();
@@ -78,11 +82,19 @@ void Crosshair::SetDefaultTexture(Engine::Texture2D* texture) {
  * \brief [AUTO] SetHighlightTexture
  * \param texture [in]
  */
+/*!
+ * \brief [AUTO] SetHighlightTexture
+ * \param texture [in]
+ */
 void Crosshair::SetHighlightTexture(Engine::Texture2D* texture) {
     m_highlightTexture = texture;
     UpdateTexture();
 }
 
+/*!
+ * \brief [AUTO] SetHighlighted
+ * \param highlighted [in]
+ */
 /*!
  * \brief [AUTO] SetHighlighted
  * \param highlighted [in]

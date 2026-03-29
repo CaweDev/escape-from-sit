@@ -23,6 +23,10 @@ SpriteSheetRenderer::~SpriteSheetRenderer() {
  * \brief [AUTO] SetSpriteSheet
  * \param sheet [in]
  */
+/*!
+ * \brief [AUTO] SetSpriteSheet
+ * \param sheet [in]
+ */
 void SpriteSheetRenderer::SetSpriteSheet(SpriteSheet* sheet) {
     spriteSheet = sheet;
     currentClip = nullptr;
@@ -36,6 +40,10 @@ void SpriteSheetRenderer::SetSpriteSheet(SpriteSheet* sheet) {
     }
 }
 
+/*!
+ * \brief [AUTO] Play
+ * \param animationName [in]
+ */
 /*!
  * \brief [AUTO] Play
  * \param animationName [in]
@@ -84,6 +92,10 @@ void SpriteSheetRenderer::Resume() {
  * \brief [AUTO] GetCurrentAnimation
  * \return 
  */
+/*!
+ * \brief [AUTO] GetCurrentAnimation
+ * \return 
+ */
 const std::string& SpriteSheetRenderer::GetCurrentAnimation() const {
     if (currentClip) {
         return currentClip->name;
@@ -91,6 +103,10 @@ const std::string& SpriteSheetRenderer::GetCurrentAnimation() const {
     return s_emptyString;
 }
 
+/*!
+ * \brief [AUTO] SetFrame
+ * \param frame [in]
+ */
 /*!
  * \brief [AUTO] SetFrame
  * \param frame [in]
@@ -392,6 +408,10 @@ void SpriteSheetRenderer::AddStripToMesh(int x1, int x2, f32 spriteStart, f32 sp
     );
 }
 
+/*!
+ * \brief [AUTO] GetSortingKey
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetSortingKey
  * \return 

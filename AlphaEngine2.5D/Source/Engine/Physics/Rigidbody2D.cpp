@@ -77,11 +77,19 @@ void Rigidbody2D::FixedUpdate() {
  * \brief [AUTO] AddForce
  * \param force [in]
  */
+/*!
+ * \brief [AUTO] AddForce
+ * \param force [in]
+ */
 void Rigidbody2D::AddForce(const Vector2& force) {
     if (bodyType != RigidbodyType2D::Dynamic) return;
     accumulatedForce += force;
 }
 
+/*!
+ * \brief [AUTO] AddImpulse
+ * \param impulse [in]
+ */
 /*!
  * \brief [AUTO] AddImpulse
  * \param impulse [in]
@@ -95,10 +103,20 @@ void Rigidbody2D::AddImpulse(const Vector2& impulse) {
  * \brief [AUTO] SetVelocity
  * \param vel [in]
  */
+/*!
+ * \brief [AUTO] SetVelocity
+ * \param vel [in]
+ */
 void Rigidbody2D::SetVelocity(const Vector2& vel) {
     velocity = vel;
 }
 
+/*!
+ * \brief [AUTO] SetVelocity
+ * \param x [in]
+ * \param y [in]
+ * \param vertical [in]
+ */
 /*!
  * \brief [AUTO] SetVelocity
  * \param x [in]
@@ -115,12 +133,20 @@ void Rigidbody2D::SetVelocity(f32 x, f32 y, f32 vertical) {
  * \brief [AUTO] MovePosition
  * \param position [in]
  */
+/*!
+ * \brief [AUTO] MovePosition
+ * \param position [in]
+ */
 void Rigidbody2D::MovePosition(const Vector2& position) {
     if (!transform) return;
     transform->position.x = position.x;
     transform->position.y = position.y;
 }
 
+/*!
+ * \brief [AUTO] Jump
+ * \param jumpForce [in]
+ */
 /*!
  * \brief [AUTO] Jump
  * \param jumpForce [in]
@@ -167,10 +193,18 @@ void Rigidbody2D::ToggleCrouch() {
  * \brief [AUTO] GetSpeed
  * \return 
  */
+/*!
+ * \brief [AUTO] GetSpeed
+ * \return 
+ */
 f32 Rigidbody2D::GetSpeed() const {
     return velocity.Magnitude();
 }
 
+/*!
+ * \brief [AUTO] GetCollider
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetCollider
  * \return 

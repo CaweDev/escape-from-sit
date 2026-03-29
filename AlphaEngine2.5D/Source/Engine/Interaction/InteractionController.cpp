@@ -159,10 +159,18 @@ void InteractionController::OnDestroy() {
  * \brief [AUTO] IsActiveCamera
  * \return 
  */
+/*!
+ * \brief [AUTO] IsActiveCamera
+ * \return 
+ */
 bool InteractionController::IsActiveCamera() const {
     return Camera::main && Camera::main->gameObject == gameObject;
 }
 
+/*!
+ * \brief [AUTO] FindTargetAtScreenCenter
+ * \return 
+ */
 /*!
  * \brief [AUTO] FindTargetAtScreenCenter
  * \return 
@@ -352,6 +360,10 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
     return closestTarget;
 }
 
+/*!
+ * \brief [AUTO] SetTarget
+ * \param target [in]
+ */
 /*!
  * \brief [AUTO] SetTarget
  * \param target [in]

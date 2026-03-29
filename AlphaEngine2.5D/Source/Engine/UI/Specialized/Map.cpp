@@ -164,6 +164,10 @@ namespace UI
      * \brief [AUTO] SetCCTVSprites
      * \param sprite [in]
      */
+    /*!
+     * \brief [AUTO] SetCCTVSprites
+     * \param sprite [in]
+     */
     void Map::SetCCTVSprites(Engine::Sprite* sprite) { m_cctvSprite = sprite; }
     void Map::DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color)
     {

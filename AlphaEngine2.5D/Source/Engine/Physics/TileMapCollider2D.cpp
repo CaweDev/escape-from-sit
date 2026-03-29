@@ -29,6 +29,10 @@ void TileMapCollider2D::Awake() {
  * \brief [AUTO] GetBounds
  * \return 
  */
+/*!
+ * \brief [AUTO] GetBounds
+ * \return 
+ */
 Bounds2D TileMapCollider2D::GetBounds() const {
     Bounds2D bounds;
     if (tileMap) {
@@ -38,6 +42,12 @@ Bounds2D TileMapCollider2D::GetBounds() const {
     return bounds;
 }
 
+/*!
+ * \brief [AUTO] PointInWall
+ * \param x [in]
+ * \param y [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] PointInWall
  * \param x [in]
@@ -57,11 +67,23 @@ bool TileMapCollider2D::PointInWall(f32 x, f32 y) const {
  * \param y [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] IsWalkable
+ * \param x [in]
+ * \param y [in]
+ * \return 
+ */
 bool TileMapCollider2D::IsWalkable(f32 x, f32 y) const {
     if (!tileMap) return true;
     return tileMap->IsWalkable(x, y);
 }
 
+/*!
+ * \brief [AUTO] OverlapsCircle
+ * \param center [in]
+ * \param radius [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] OverlapsCircle
  * \param center [in]
@@ -109,6 +131,12 @@ bool TileMapCollider2D::OverlapsCircle(const Vector2& center, f32 radius) const 
  * \param size [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] OverlapsBox
+ * \param center [in]
+ * \param size [in]
+ * \return 
+ */
 bool TileMapCollider2D::OverlapsBox(const Vector2& center, const Vector2& size) const {
     if (!tileMap) return false;
     
@@ -131,6 +159,11 @@ bool TileMapCollider2D::OverlapsBox(const Vector2& center, const Vector2& size) 
     return false;
 }
 
+/*!
+ * \brief [AUTO] Overlaps
+ * \param other [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] Overlaps
  * \param other [in]
@@ -162,6 +195,13 @@ bool TileMapCollider2D::Overlaps(const Collider2D* other) const {
            PointInWall(otherBounds.max.x, otherBounds.max.y);
 }
 
+/*!
+ * \brief [AUTO] ResolveMovement
+ * \param position [in]
+ * \param delta [in]
+ * \param radius [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] ResolveMovement
  * \param position [in]

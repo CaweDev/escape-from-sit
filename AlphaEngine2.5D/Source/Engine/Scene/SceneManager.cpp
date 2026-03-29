@@ -47,6 +47,10 @@ void SceneManager::Initialize(const std::string& configPath)
  * \brief [AUTO] LoadScene
  * \param sceneName [in]
  */
+/*!
+ * \brief [AUTO] LoadScene
+ * \param sceneName [in]
+ */
 void SceneManager::LoadScene(const std::string& sceneName) {
     auto it = s_sceneRegistry.find(sceneName);
     if (it != s_sceneRegistry.end()) {
@@ -54,6 +58,10 @@ void SceneManager::LoadScene(const std::string& sceneName) {
     }
 }
 
+/*!
+ * \brief [AUTO] LoadScene
+ * \param buildIndex [in]
+ */
 /*!
  * \brief [AUTO] LoadScene
  * \param buildIndex [in]
@@ -71,10 +79,19 @@ void SceneManager::LoadScene(int buildIndex) {
  * \brief [AUTO] GetActiveScene
  * \return 
  */
+/*!
+ * \brief [AUTO] GetActiveScene
+ * \return 
+ */
 Scene* SceneManager::GetActiveScene() {
     return s_activeScene;
 }
 
+/*!
+ * \brief [AUTO] RegisterScene
+ * \param name [in]
+ * \param scene [in]
+ */
 /*!
  * \brief [AUTO] RegisterScene
  * \param name [in]
@@ -86,6 +103,10 @@ void SceneManager::RegisterScene(const std::string& name, Scene* scene) {
     s_sceneRegistry[name] = scene;
 }
 
+/*!
+ * \brief [AUTO] GetSceneCount
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetSceneCount
  * \return 
@@ -115,6 +136,10 @@ void SceneManager::UpdateActiveScene() {
  * \brief [AUTO] LoadSceneDeferred
  * \param sceneName [in]
  */
+/*!
+ * \brief [AUTO] LoadSceneDeferred
+ * \param sceneName [in]
+ */
 void SceneManager::LoadSceneDeferred(const std::string& sceneName) {
     s_pendingScene = sceneName;
     s_hasPendingScene = true;
@@ -124,10 +149,20 @@ void SceneManager::LoadSceneDeferred(const std::string& sceneName) {
  * \brief [AUTO] LoadWithLoadingScreen
  * \param sceneName [in]
  */
+/*!
+ * \brief [AUTO] LoadWithLoadingScreen
+ * \param sceneName [in]
+ */
 void SceneManager::LoadWithLoadingScreen(const std::string& sceneName) {
     LoadWithLoadingScreen(sceneName, s_defaultLoadScreenFadeInDuration, s_defaultLoadScreenFadeOutDuration);
 }
 
+/*!
+ * \brief [AUTO] LoadWithLoadingScreen
+ * \param sceneName [in]
+ * \param fadeInDuration [in]
+ * \param fadeOutDuration [in]
+ */
 /*!
  * \brief [AUTO] LoadWithLoadingScreen
  * \param sceneName [in]
@@ -146,11 +181,20 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
    * \param fadeInDuration [in]
    * \param []( [in]
    */
+  /*!
+   * \brief [AUTO] FadeIn
+   * \param fadeInDuration [in]
+   * \param []( [in]
+   */
     UI::FadeService::FadeIn(fadeInDuration, []() {
         LoadScene("Loading");
     });
 }
 
+/*!
+ * \brief [AUTO] LoadWithFade
+ * \param sceneName [in]
+ */
 /*!
  * \brief [AUTO] LoadWithFade
  * \param sceneName [in]
@@ -165,7 +209,19 @@ void SceneManager::LoadWithFade(const std::string& sceneName) {
  * \param fadeInDuration [in]
  * \param fadeOutDuration [in]
  */
+/*!
+ * \brief [AUTO] LoadWithFade
+ * \param sceneName [in]
+ * \param fadeInDuration [in]
+ * \param fadeOutDuration [in]
+ */
 void SceneManager::LoadWithFade(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
+  /*!
+   * \brief [AUTO] FadeIn
+   * \param fadeInDuration [in]
+   * \param [sceneName [in]
+   * \param fadeOutDuration]( [in]
+   */
   /*!
    * \brief [AUTO] FadeIn
    * \param fadeInDuration [in]
@@ -219,11 +275,19 @@ void SceneManager::UnloadActiveScene() {
  * \brief [AUTO] RequestFadeOutAfterNextSceneLoad
  * \param duration [in]
  */
+/*!
+ * \brief [AUTO] RequestFadeOutAfterNextSceneLoad
+ * \param duration [in]
+ */
 void SceneManager::RequestFadeOutAfterNextSceneLoad(f32 duration) {
     s_hasPendingPostLoadFadeOut = true;
     s_pendingPostLoadFadeOutDuration = duration;
 }
 
+/*!
+ * \brief [AUTO] LoadSceneInternal
+ * \param newScene [in]
+ */
 /*!
  * \brief [AUTO] LoadSceneInternal
  * \param newScene [in]

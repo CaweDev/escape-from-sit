@@ -56,6 +56,11 @@ void AudioSource::Play() {
  * \param oneShot [in]
  * \param volumeScale [in]
  */
+/*!
+ * \brief [AUTO] PlayOneShot
+ * \param oneShot [in]
+ * \param volumeScale [in]
+ */
 void AudioSource::PlayOneShot(AudioClip* oneShot, f32 volumeScale) {
     if (!oneShot || !oneShot->IsLoaded()) return;
     
@@ -99,11 +104,19 @@ void AudioSource::Resume() {
  * \brief [AUTO] SetVolume
  * \param newVolume [in]
  */
+/*!
+ * \brief [AUTO] SetVolume
+ * \param newVolume [in]
+ */
 void AudioSource::SetVolume(f32 newVolume) {
     volume = newVolume;
     AEAudioSetGroupVolume(group, volume);
 }
 
+/*!
+ * \brief [AUTO] SetPitch
+ * \param newPitch [in]
+ */
 /*!
  * \brief [AUTO] SetPitch
  * \param newPitch [in]

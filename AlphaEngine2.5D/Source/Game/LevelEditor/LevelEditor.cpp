@@ -123,6 +123,13 @@ LevelEditor::~LevelEditor() {
  * \param cam [in]
  * \param playerTf [in]
  */
+/*!
+ * \brief [AUTO] Initialize
+ * \param scn [in]
+ * \param map [in]
+ * \param cam [in]
+ * \param playerTf [in]
+ */
 void LevelEditor::Initialize(Scene* scn, TileMap* map, Camera* cam, Transform* playerTf) {
     // Re-initialize safety for scene reloads (FPS can be loaded multiple times)
     if (isActive) {
@@ -549,6 +556,12 @@ void LevelEditor::HandleMapClick() {
  * \param screenY [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] ScreenToMapCoords
+ * \param screenX [in]
+ * \param screenY [in]
+ * \return 
+ */
 Vector2 LevelEditor::ScreenToMapCoords(float screenX, float screenY) {
     int screenWidth = AEGfxGetWindowWidth();
     int screenHeight = AEGfxGetWindowHeight();
@@ -605,6 +618,12 @@ Vector2 LevelEditor::ScreenToMapCoords(float screenX, float screenY) {
  * \param y [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] IsFloorTile
+ * \param x [in]
+ * \param y [in]
+ * \return 
+ */
 bool LevelEditor::IsFloorTile(int x, int y) {
     if (!tileMap) return false;
     if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return false;
@@ -614,6 +633,10 @@ bool LevelEditor::IsFloorTile(int x, int y) {
 /*!
  * \brief Set the editor placement mode.
  * \param mode [in] Desired EditorMode
+ */
+/*!
+ * \brief [AUTO] SetMode
+ * \param mode [in]
  */
 /*!
  * \brief [AUTO] SetMode
@@ -831,6 +854,10 @@ void LevelEditor::RenderMapGrid() {
  * \brief [AUTO] SaveMapTxt
  * \param filename [in]
  */
+/*!
+ * \brief [AUTO] SaveMapTxt
+ * \param filename [in]
+ */
 void LevelEditor::SaveMapTxt(const std::string& filename) {
     if (!tileMap) {
         std::cout << "[LevelEditor] No tilemap to save!\n";
@@ -951,6 +978,11 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
  * \param x [in]
  * \param y [in]
  */
+/*!
+ * \brief [AUTO] SpawnDoorAt
+ * \param x [in]
+ * \param y [in]
+ */
 void LevelEditor::SpawnDoorAt(int x, int y) {
     if (!scene || !tileMap) {
         std::cout << "[LevelEditor] ERROR: No scene/tilemap available for spawning!\n";
@@ -1023,6 +1055,11 @@ void LevelEditor::SpawnDoorAt(int x, int y) {
  * \brief Spawn a simple interactive door GameObject at tile coordinates (x,y).
  * \param x [in] Tile X coordinate
  * \param y [in] Tile Y coordinate
+ */
+/*!
+ * \brief [AUTO] SpawnTerminalAt
+ * \param x [in]
+ * \param y [in]
  */
 /*!
  * \brief [AUTO] SpawnTerminalAt

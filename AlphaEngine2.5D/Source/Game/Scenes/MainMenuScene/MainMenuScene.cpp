@@ -214,6 +214,12 @@ namespace Game {
      * \param max [in]
      * \return 
      */
+    /*!
+     * \brief [AUTO] RandomFloat
+     * \param min [in]
+     * \param max [in]
+     * \return 
+     */
     float MainMenuScene::RandomFloat(float min, float max) {
         return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
     }
@@ -492,6 +498,10 @@ namespace Game {
      * \brief [AUTO] UpdateMenuAnimations
      * \param dt [in]
      */
+    /*!
+     * \brief [AUTO] UpdateMenuAnimations
+     * \param dt [in]
+     */
     void MainMenuScene::UpdateMenuAnimations(float dt) {
         const auto& cfg = GetMainMenuSceneConfig();
         menuAnimTime += dt;
@@ -513,6 +523,10 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] UpdateEnemySighting
+     * \param dt [in]
+     */
     /*!
      * \brief [AUTO] UpdateEnemySighting
      * \param dt [in]
@@ -596,6 +610,10 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] SelectMenuItem
+     * \param index [in]
+     */
     /*!
      * \brief [AUTO] SelectMenuItem
      * \param index [in]

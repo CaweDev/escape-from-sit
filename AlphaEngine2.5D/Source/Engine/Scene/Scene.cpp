@@ -21,6 +21,11 @@ Scene::~Scene() {
  * \param objectName [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] CreateGameObject
+ * \param objectName [in]
+ * \return 
+ */
 GameObject* Scene::CreateGameObject(const std::string& objectName) {
     auto obj = std::make_unique<GameObject>(objectName);
     GameObject* ptr = obj.get();
@@ -38,6 +43,11 @@ GameObject* Scene::CreateGameObject(const std::string& objectName) {
  * \param objectName [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] Find
+ * \param objectName [in]
+ * \return 
+ */
 GameObject* Scene::Find(const std::string& objectName) const {
     for (const auto& obj : gameObjects) {
         if (obj->name == objectName) return obj.get();
@@ -45,6 +55,10 @@ GameObject* Scene::Find(const std::string& objectName) const {
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] GetGameObjects
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetGameObjects
  * \return 
@@ -162,6 +176,10 @@ void Scene::RenderInternal() {
     Physics2D::DrawDebugView();
 }
 
+/*!
+ * \brief [AUTO] IsLoaded
+ * \return 
+ */
 /*!
  * \brief [AUTO] IsLoaded
  * \return 

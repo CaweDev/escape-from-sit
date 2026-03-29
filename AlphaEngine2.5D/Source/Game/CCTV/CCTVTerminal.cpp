@@ -203,6 +203,10 @@ void CCTVTerminal::OnTerminalInteract() {
  * \brief [AUTO] CanHack
  * \return 
  */
+/*!
+ * \brief [AUTO] CanHack
+ * \return 
+ */
 bool CCTVTerminal::CanHack() const {
     if (isDisabled) return false;
     if (cooldownTimer > 0.0f) return false;
@@ -342,6 +346,10 @@ void CCTVTerminal::RestoreCameras() {
  * \brief [AUTO] StartRepair
  * \param guard [in]
  */
+/*!
+ * \brief [AUTO] StartRepair
+ * \param guard [in]
+ */
 void CCTVTerminal::StartRepair(SecurityGuard* guard) {
     if (!isDisabled) return;
     
@@ -365,6 +373,10 @@ void CCTVTerminal::CancelRepair() {
     //std::cout << "[CCTVTerminal] Repair cancelled\n";
 }
 
+/*!
+ * \brief [AUTO] UpdateRepair
+ * \param deltaTime [in]
+ */
 /*!
  * \brief [AUTO] UpdateRepair
  * \param deltaTime [in]
@@ -457,6 +469,10 @@ void CCTVTerminal::NotifyGuardsOfSabotage() {
  * \brief [AUTO] UpdateDisabledState
  * \param deltaTime [in]
  */
+/*!
+ * \brief [AUTO] UpdateDisabledState
+ * \param deltaTime [in]
+ */
 void CCTVTerminal::UpdateDisabledState(float deltaTime) {
     disabledTimer -= deltaTime;
     
@@ -466,6 +482,10 @@ void CCTVTerminal::UpdateDisabledState(float deltaTime) {
     }
 }
 
+/*!
+ * \brief [AUTO] UpdateCooldown
+ * \param deltaTime [in]
+ */
 /*!
  * \brief [AUTO] UpdateCooldown
  * \param deltaTime [in]
@@ -507,6 +527,10 @@ void CCTVTerminal::UpdateVisualState() {
     spriteRenderer->SetColor(color);
 }
 
+/*!
+ * \brief [AUTO] GetStateColor
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetStateColor
  * \return 

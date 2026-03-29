@@ -26,11 +26,20 @@ void Collider2D::OnDestroy() {
  * \brief [AUTO] GetCenter
  * \return 
  */
+/*!
+ * \brief [AUTO] GetCenter
+ * \return 
+ */
 Vector2 Collider2D::GetCenter() const {
     if (!transform) return offset;
     return Vector2(transform->position.x, transform->position.y) + offset;
 }
 
+/*!
+ * \brief [AUTO] Overlaps
+ * \param other [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] Overlaps
  * \param other [in]
@@ -51,11 +60,22 @@ bool Collider2D::Overlaps(const Collider2D* other) const {
  * \param other [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] HeightOverlaps
+ * \param other [in]
+ * \return 
+ */
 bool Collider2D::HeightOverlaps(const Collider2D* other) const {
     if (!other) return false;
     return !(maxHeight <= other->minHeight || minHeight >= other->maxHeight);
 }
 
+/*!
+ * \brief [AUTO] HeightContains
+ * \param height [in]
+ * \param objectHeight [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] HeightContains
  * \param height [in]

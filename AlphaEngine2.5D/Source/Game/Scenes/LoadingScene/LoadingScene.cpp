@@ -258,6 +258,12 @@ namespace Game {
            * \param [target [in]
            * \param fadeOutDuration]( [in]
            */
+          /*!
+           * \brief [AUTO] FadeIn
+           * \param 0.0f [in]
+           * \param [target [in]
+           * \param fadeOutDuration]( [in]
+           */
             FadeService::FadeIn(0.0f, [target, fadeOutDuration]() {
                 SceneManager::RequestFadeOutAfterNextSceneLoad(fadeOutDuration);
                 SceneManager::LoadScene(target);

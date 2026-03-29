@@ -207,10 +207,18 @@ void ControlRoomDoor::OnInteract() {
  * \brief [AUTO] HasAllCards
  * \return 
  */
+/*!
+ * \brief [AUTO] HasAllCards
+ * \return 
+ */
 bool ControlRoomDoor::HasAllCards() const {
     return GetCollectedCards() >= requiredCards;
 }
 
+/*!
+ * \brief [AUTO] GetCollectedCards
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetCollectedCards
  * \return 

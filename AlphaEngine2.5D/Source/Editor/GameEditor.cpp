@@ -1,3 +1,18 @@
+/* Start Header ************************************************************************/
+/*!
+\file		GameEditor.cpp
+\author 	
+\par	
+\date	March, 29, 2026
+\brief		[AUTO] GameEditor
+
+Copyright (C) 2026 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
+
 #include "GameEditor.hpp"
 #include "ObjectManager.hpp"
 #include <fstream>
@@ -34,6 +49,10 @@ namespace AEEditor
     int GameEditor::hoveredX = -1;
     int GameEditor::hoveredY = -1;
 
+    /*!
+     * \brief [AUTO] Is3DMode
+     * \return 
+     */
     bool GameEditor::Is3DMode() { return is3DMode; }
 
     void GameEditor::Initialize(Engine::Scene *s, Engine::TileMap *tileMap)

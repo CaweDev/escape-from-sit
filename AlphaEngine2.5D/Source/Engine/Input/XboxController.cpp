@@ -17,6 +17,11 @@ bool XboxController::connected[XUSER_MAX_COUNT] = {};
  * \param controllerIndex [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] IsConnected
+ * \param controllerIndex [in]
+ * \return 
+ */
 bool XboxController::IsConnected(int controllerIndex) {
     if (controllerIndex < 0 || controllerIndex >= XUSER_MAX_COUNT) return false;
     return connected[controllerIndex];
@@ -28,11 +33,23 @@ bool XboxController::IsConnected(int controllerIndex) {
  * \param controllerIndex [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] GetButton
+ * \param button [in]
+ * \param controllerIndex [in]
+ * \return 
+ */
 bool XboxController::GetButton(XboxButton button, int controllerIndex) {
     if (!IsConnected(controllerIndex)) return false;
     return IsButtonPressed(currentState[controllerIndex], button);
 }
 
+/*!
+ * \brief [AUTO] GetButtonDown
+ * \param button [in]
+ * \param controllerIndex [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetButtonDown
  * \param button [in]
@@ -52,6 +69,12 @@ bool XboxController::GetButtonDown(XboxButton button, int controllerIndex) {
  * \param controllerIndex [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] GetButtonUp
+ * \param button [in]
+ * \param controllerIndex [in]
+ * \return 
+ */
 bool XboxController::GetButtonUp(XboxButton button, int controllerIndex) {
     if (!IsConnected(controllerIndex)) return false;
     bool current = IsButtonPressed(currentState[controllerIndex], button);
@@ -59,6 +82,11 @@ bool XboxController::GetButtonUp(XboxButton button, int controllerIndex) {
     return !current && previous;
 }
 
+/*!
+ * \brief [AUTO] GetLeftStick
+ * \param controllerIndex [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetLeftStick
  * \param controllerIndex [in]
@@ -78,6 +106,11 @@ Vector2 XboxController::GetLeftStick(int controllerIndex) {
  * \param controllerIndex [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] GetRightStick
+ * \param controllerIndex [in]
+ * \return 
+ */
 Vector2 XboxController::GetRightStick(int controllerIndex) {
     if (!IsConnected(controllerIndex)) return Vector2::zero();
     
@@ -87,6 +120,11 @@ Vector2 XboxController::GetRightStick(int controllerIndex) {
     return Vector2(x, y);
 }
 
+/*!
+ * \brief [AUTO] GetLeftTrigger
+ * \param controllerIndex [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetLeftTrigger
  * \param controllerIndex [in]
@@ -106,6 +144,11 @@ f32 XboxController::GetLeftTrigger(int controllerIndex) {
  * \param controllerIndex [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] GetRightTrigger
+ * \param controllerIndex [in]
+ * \return 
+ */
 f32 XboxController::GetRightTrigger(int controllerIndex) {
     if (!IsConnected(controllerIndex)) return 0.0f;
     
@@ -115,6 +158,12 @@ f32 XboxController::GetRightTrigger(int controllerIndex) {
     return static_cast<f32>(value) / 255.0f;
 }
 
+/*!
+ * \brief [AUTO] SetVibration
+ * \param leftMotor [in]
+ * \param rightMotor [in]
+ * \param controllerIndex [in]
+ */
 /*!
  * \brief [AUTO] SetVibration
  * \param leftMotor [in]
@@ -150,6 +199,10 @@ void XboxController::Update() {
  * \brief [AUTO] GetFirstConnectedController
  * \return 
  */
+/*!
+ * \brief [AUTO] GetFirstConnectedController
+ * \return 
+ */
 int XboxController::GetFirstConnectedController() {
     for (int i = 0; i < XUSER_MAX_COUNT; ++i) {
         if (connected[i]) return i;
@@ -157,6 +210,12 @@ int XboxController::GetFirstConnectedController() {
     return -1;
 }
 
+/*!
+ * \brief [AUTO] ApplyDeadzone
+ * \param value [in]
+ * \param deadzone [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] ApplyDeadzone
  * \param value [in]
@@ -180,6 +239,12 @@ f32 XboxController::ApplyDeadzone(SHORT value, SHORT deadzone) {
     }
 }
 
+/*!
+ * \brief [AUTO] IsButtonPressed
+ * \param state [in]
+ * \param button [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] IsButtonPressed
  * \param state [in]

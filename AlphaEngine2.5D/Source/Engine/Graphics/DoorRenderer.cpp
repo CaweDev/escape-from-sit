@@ -59,6 +59,10 @@ void DoorRenderer::CreateMesh() {
  * \brief [AUTO] CalculatePerpDistance
  * \return 
  */
+/*!
+ * \brief [AUTO] CalculatePerpDistance
+ * \return 
+ */
 f32 DoorRenderer::CalculatePerpDistance() const {
     if (!door || !Camera::main || !Camera::main->transform) {
         return 1e30f;
@@ -81,6 +85,10 @@ f32 DoorRenderer::CalculatePerpDistance() const {
     return perpDist;
 }
 
+/*!
+ * \brief [AUTO] GetSortingKey
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetSortingKey
  * \return 
@@ -276,6 +284,11 @@ void DoorRenderer::Render() {
     }
 }
 
+/*!
+ * \brief [AUTO] RenderMesh
+ * \param mesh [in]
+ * \param fogFactor [in]
+ */
 /*!
  * \brief [AUTO] RenderMesh
  * \param mesh [in]

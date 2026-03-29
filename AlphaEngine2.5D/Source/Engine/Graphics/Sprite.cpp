@@ -53,6 +53,11 @@ Sprite& Sprite::operator=(const Sprite& other) {
  * \param filepath [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] Load
+ * \param filepath [in]
+ * \return 
+ */
 bool Sprite::Load(const std::string& filepath) {
     Unload();
     
@@ -89,10 +94,18 @@ void Sprite::Unload() {
  * \brief [AUTO] IsLoaded
  * \return 
  */
+/*!
+ * \brief [AUTO] IsLoaded
+ * \return 
+ */
 bool Sprite::IsLoaded() const {
     return texture != nullptr && texture->IsLoaded() && mesh != nullptr;
 }
 
+/*!
+ * \brief [AUTO] GetTexture
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetTexture
  * \return 
@@ -102,6 +115,10 @@ AEGfxTexture* Sprite::GetTexture() const {
 }
 
 
+/*!
+ * \brief [AUTO] GetMesh
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetMesh
  * \return 
@@ -142,6 +159,10 @@ void Sprite::CreateQuadMesh() {
 
 
 
+/*!
+ * \brief [AUTO] IsReady
+ * \return 
+ */
 /*!
  * \brief [AUTO] IsReady
  * \return 

@@ -14,6 +14,13 @@ namespace Engine {
  * \param numCols [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] Load
+ * \param filepath [in]
+ * \param numRows [in]
+ * \param numCols [in]
+ * \return 
+ */
 bool SpriteSheet::Load(const std::string& filepath, int numRows, int numCols) {
     if (numRows <= 0 || numCols <= 0) {
         printf("[Error] SpriteSheet: Invalid grid dimensions (%d x %d)\n", numRows, numCols);
@@ -43,6 +50,11 @@ void SpriteSheet::AddAnimation(const std::string& name, int startFrame, int fram
  * \param name [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] GetAnimation
+ * \param name [in]
+ * \return 
+ */
 const AnimationClip* SpriteSheet::GetAnimation(const std::string& name) const {
     auto it = animations.find(name);
     if (it != animations.end()) {
@@ -51,6 +63,10 @@ const AnimationClip* SpriteSheet::GetAnimation(const std::string& name) const {
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] IsReady
+ * \return 
+ */
 /*!
  * \brief [AUTO] IsReady
  * \return 

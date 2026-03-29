@@ -165,6 +165,10 @@ void Door::Toggle() {
  * \brief [AUTO] IsPassable
  * \return 
  */
+/*!
+ * \brief [AUTO] IsPassable
+ * \return 
+ */
 bool Door::IsPassable() const {
     // Door is passable when open beyond the configured threshold
     return openAmount > s_passableThreshold;
@@ -199,10 +203,20 @@ void Door::UpdateCollider() {
  * \brief [AUTO] GetWorldPosition
  * \return 
  */
+/*!
+ * \brief [AUTO] GetWorldPosition
+ * \return 
+ */
 Vector2 Door::GetWorldPosition() const {
     return Vector2(static_cast<f32>(tileX) + 0.5f, static_cast<f32>(tileY) + 0.5f);
 }
 
+/*!
+ * \brief [AUTO] SetupInteractable
+ * \param interactable [in]
+ * \param openText [in]
+ * \param closeText [in]
+ */
 /*!
  * \brief [AUTO] SetupInteractable
  * \param interactable [in]

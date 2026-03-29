@@ -90,6 +90,10 @@ InteractionPrompt::InteractionPrompt() {
  * \brief [AUTO] Show
  * \param actionText [in]
  */
+/*!
+ * \brief [AUTO] Show
+ * \param actionText [in]
+ */
 void InteractionPrompt::Show(const std::string& actionText) {
     m_currentActionText = actionText;
     UpdateText();
@@ -107,11 +111,19 @@ void InteractionPrompt::Hide() {
  * \brief [AUTO] SetKeyText
  * \param keyText [in]
  */
+/*!
+ * \brief [AUTO] SetKeyText
+ * \param keyText [in]
+ */
 void InteractionPrompt::SetKeyText(const std::string& keyText) {
     m_keyText = keyText;
     UpdateText();
 }
 
+/*!
+ * \brief [AUTO] SetTextColor
+ * \param color [in]
+ */
 /*!
  * \brief [AUTO] SetTextColor
  * \param color [in]
@@ -122,6 +134,10 @@ void InteractionPrompt::SetTextColor(const Engine::Color& color) {
     }
 }
 
+/*!
+ * \brief [AUTO] SetFontSize
+ * \param size [in]
+ */
 /*!
  * \brief [AUTO] SetFontSize
  * \param size [in]

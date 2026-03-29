@@ -24,6 +24,10 @@ namespace Engine {
      * \brief [AUTO] Resize
      * \param width [in]
      */
+    /*!
+     * \brief [AUTO] Resize
+     * \param width [in]
+     */
     void ZBuffer::Resize(int width) {
         if (width < 0) width = 0;
         if (buffer.size() != (size_t)width) {
@@ -35,10 +39,19 @@ namespace Engine {
      * \brief [AUTO] Clear
      * \param defaultDepth [in]
      */
+    /*!
+     * \brief [AUTO] Clear
+     * \param defaultDepth [in]
+     */
     void ZBuffer::Clear(float defaultDepth) {
         std::fill(buffer.begin(), buffer.end(), defaultDepth);
     }
 
+    /*!
+     * \brief [AUTO] SetDepth
+     * \param x [in]
+     * \param depth [in]
+     */
     /*!
      * \brief [AUTO] SetDepth
      * \param x [in]
@@ -55,6 +68,11 @@ namespace Engine {
      * \param x [in]
      * \return 
      */
+    /*!
+     * \brief [AUTO] GetDepth
+     * \param x [in]
+     * \return 
+     */
     float ZBuffer::GetDepth(int x) {
         if (x >= 0 && x < (int)buffer.size()) {
             return buffer[x];
@@ -62,6 +80,10 @@ namespace Engine {
         return 1e30f;
     }
 
+    /*!
+     * \brief [AUTO] GetWidth
+     * \return 
+     */
     /*!
      * \brief [AUTO] GetWidth
      * \return 

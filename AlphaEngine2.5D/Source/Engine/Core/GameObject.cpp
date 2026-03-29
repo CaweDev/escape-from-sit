@@ -37,6 +37,11 @@ GameObject::~GameObject() {
  * \param name [in]
  * \return 
  */
+/*!
+ * \brief [AUTO] Find
+ * \param name [in]
+ * \return 
+ */
 GameObject* GameObject::Find(const std::string& name) {
     for (auto* obj : allGameObjects) {
         if (obj->name == name) return obj;
@@ -44,6 +49,11 @@ GameObject* GameObject::Find(const std::string& name) {
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] FindGameObjectsWithTag
+ * \param tag [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] FindGameObjectsWithTag
  * \param tag [in]
@@ -57,6 +67,10 @@ std::vector<GameObject*> GameObject::FindGameObjectsWithTag(const std::string& t
     return result;
 }
 
+/*!
+ * \brief [AUTO] Destroy
+ * \param obj [in]
+ */
 /*!
  * \brief [AUTO] Destroy
  * \param obj [in]
@@ -77,6 +91,10 @@ void GameObject::ProcessDestroyQueue() {
     objectsToDestroy.clear();
 }
 
+/*!
+ * \brief [AUTO] GetAllGameObjects
+ * \return 
+ */
 /*!
  * \brief [AUTO] GetAllGameObjects
  * \return 

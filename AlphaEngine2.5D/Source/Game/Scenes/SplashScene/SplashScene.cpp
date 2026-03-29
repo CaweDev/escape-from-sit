@@ -526,6 +526,10 @@ void SplashScene::SkipToEnd() {
  * \brief [AUTO] IsSkipPressed
  * \return 
  */
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
 bool SplashScene::IsSkipPressed() const {
     // Check any common keys
     if (Input::GetKeyDown(KeyCode::Return) ||

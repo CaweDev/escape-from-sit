@@ -56,6 +56,14 @@ namespace Engine {
 	 * \param floor [in]
 	 * \param door [in]
 	 */
+	/*!
+	 * \brief [AUTO] SetTileSprites
+	 * \param tileType [in]
+	 * \param wall [in]
+	 * \param ceiling [in]
+	 * \param floor [in]
+	 * \param door [in]
+	 */
 	void TileMapRenderer::SetTileSprites(int tileType, Sprite* wall, Sprite* ceiling, Sprite* floor, Sprite* door) {
 		tileSprites[tileType] = { wall, ceiling, floor, door };
 		
@@ -76,6 +84,10 @@ namespace Engine {
 	 * \brief [AUTO] SetFloorSprite
 	 * \param sprite [in]
 	 */
+	/*!
+	 * \brief [AUTO] SetFloorSprite
+	 * \param sprite [in]
+	 */
 	void TileMapRenderer::SetFloorSprite(Sprite* sprite) {
 		tileSprites[1].floor = sprite;
 		if (sprite && sprite->GetTexture2D()) {
@@ -83,6 +95,10 @@ namespace Engine {
 		}
 	}
 
+	/*!
+	 * \brief [AUTO] SetCeilingSprite
+	 * \param sprite [in]
+	 */
 	/*!
 	 * \brief [AUTO] SetCeilingSprite
 	 * \param sprite [in]
@@ -705,6 +721,12 @@ namespace Engine {
 	 * \param screenHeight [in]
 	 * \param columns [in]
 	 */
+	/*!
+	 * \brief [AUTO] RenderWalls
+	 * \param horizon [in]
+	 * \param screenHeight [in]
+	 * \param columns [in]
+	 */
 	void TileMapRenderer::RenderWalls([[maybe_unused]] int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return; // Nothing to draw.
 
@@ -871,6 +893,15 @@ namespace Engine {
 	 * \param sw [in]
 	 * \param sh [in]
 	 */
+	/*!
+	 * \brief [AUTO] DrawColumn
+	 * \param x [in]
+	 * \param y [in]
+	 * \param h [in]
+	 * \param color [in]
+	 * \param sw [in]
+	 * \param sh [in]
+	 */
 	void TileMapRenderer::DrawColumn(f32 x, f32 y, f32 h, const Color& color, int sw, int sh) {
 		AEGfxSetRenderMode(AE_GFX_RM_COLOR);                        // No texture — flat colour.
 		AEGfxSetBlendMode(AE_GFX_BM_NONE);                          // Opaque draw.
@@ -891,6 +922,10 @@ namespace Engine {
 	// Pre-computes fogLUT[i] = exp(-i * 0.01 / fogDistance) for i in [0, 9999].
 	// This avoids calling expf() per-pixel during rendering.
 	// fogLUT covers world distances 0–100 at 0.01-unit precision (10 000 entries).
+	/*!
+	 * \brief [AUTO] UpdateFogLUT
+	 * \param fogDistance [in]
+	 */
 	/*!
 	 * \brief [AUTO] UpdateFogLUT
 	 * \param fogDistance [in]

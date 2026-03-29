@@ -16,8 +16,9 @@ import os
 ROOT = Path(__file__).resolve().parents[1]
 # Process both Game and Engine source trees
 SRC_DIRS = [
-    
-    ROOT / 'AlphaEngine2.5D' / 'Source' / 'Engine'
+    ROOT / 'AlphaEngine2.5D' / 'Source' / 'Game',
+    ROOT / 'AlphaEngine2.5D' / 'Source' / 'Engine',
+    ROOT / 'AlphaEngine2.5D' / 'Source' / 'Editor'
 ]
 
 HEADER_TMPL = '''/* Start Header ************************************************************************/\n/*!\n\\file\t\t{filename}\n\\author \t\n\\par\t\n\\date\tMarch, 29, 2026\n\\brief\t\t[AUTO] {brief}\n\nCopyright (C) 2026 DigiPen Institute of Technology.\nReproduction or disclosure of this file or its contents\nwithout the prior written consent of DigiPen Institute of\nTechnology is prohibited.\n*/\n/* End Header **************************************************************************/\n\n'''

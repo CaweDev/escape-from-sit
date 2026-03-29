@@ -170,6 +170,10 @@ namespace Game {
      * \brief [AUTO] SetPickupEnabled
      * \param isEnabled [in]
      */
+    /*!
+     * \brief [AUTO] SetPickupEnabled
+     * \param isEnabled [in]
+     */
     void PowerUpObject::SetPickupEnabled(bool isEnabled) {
         if (spriteRenderer) {
             spriteRenderer->enabled = isEnabled;
@@ -200,6 +204,10 @@ namespace Game {
         //std::cout << "[POWERUP] Respawned " << reference.name << ".\n";
     }
 
+    /*!
+     * \brief [AUTO] GetHighlightColor
+     * \return 
+     */
     /*!
      * \brief [AUTO] GetHighlightColor
      * \return 
