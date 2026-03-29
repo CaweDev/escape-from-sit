@@ -9,12 +9,20 @@
 
 namespace Engine {
 
+/*!
+ * \brief [AUTO] GetScaledRadius
+ * \return 
+ */
 f32 CircleCollider2D::GetScaledRadius() const {
     if (!transform) return radius;
     // Use the larger scale axis for uniform circle scaling
     return radius * Mathf::Max(transform->localScale.x, transform->localScale.y);
 }
 
+/*!
+ * \brief [AUTO] GetBounds
+ * \return 
+ */
 Bounds2D CircleCollider2D::GetBounds() const {
     Vector2 center = GetCenter();
     f32 r = GetScaledRadius();
@@ -25,12 +33,22 @@ Bounds2D CircleCollider2D::GetBounds() const {
     return bounds;
 }
 
+/*!
+ * \brief [AUTO] ContainsPoint
+ * \param point [in]
+ * \return 
+ */
 bool CircleCollider2D::ContainsPoint(const Vector2& point) const {
     Vector2 center = GetCenter();
     f32 r = GetScaledRadius();
     return Vector2::Distance(point, center) <= r;
 }
 
+/*!
+ * \brief [AUTO] Overlaps
+ * \param other [in]
+ * \return 
+ */
 bool CircleCollider2D::Overlaps(const Collider2D* other) const {
     if (!other) return false;
     

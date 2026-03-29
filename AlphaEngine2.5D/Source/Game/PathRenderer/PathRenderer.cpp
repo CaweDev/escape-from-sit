@@ -161,6 +161,27 @@ void PathRenderer::Render() {
  * \param cardID [in]
  * \param color [in]
  */
+/*!
+ * \brief [AUTO] SetPath
+ * \param start [in]
+ * \param dest [in]
+ * \param cardID [in]
+ * \param color [in]
+ */
+/*!
+ * \brief [AUTO] SetPath
+ * \param start [in]
+ * \param dest [in]
+ * \param cardID [in]
+ * \param color [in]
+ */
+/*!
+ * \brief [AUTO] SetPath
+ * \param start [in]
+ * \param dest [in]
+ * \param cardID [in]
+ * \param color [in]
+ */
 void PathRenderer::SetPath(const Engine::Vector2& start, const Engine::Vector2& dest, int cardID, const Engine::Color& color) {
     destination = dest;
     cardId = cardID;
@@ -193,6 +214,24 @@ void PathRenderer::ClearPath() {
     //std::cout << "[PathRenderer] Path cleared" << std::endl;
 }
 
+/*!
+ * \brief [AUTO] RenderMarker
+ * \param position [in]
+ * \param alpha [in]
+ * \param glowMod [in]
+ */
+/*!
+ * \brief [AUTO] RenderMarker
+ * \param position [in]
+ * \param alpha [in]
+ * \param glowMod [in]
+ */
+/*!
+ * \brief [AUTO] RenderMarker
+ * \param position [in]
+ * \param alpha [in]
+ * \param glowMod [in]
+ */
 /*!
  * \brief [AUTO] RenderMarker
  * \param position [in]
@@ -332,6 +371,24 @@ void PathRenderer::RenderMarker(const Engine::Vector2& position, float alpha, fl
 }
 
 // A* pathfinding implementation
+/*!
+ * \brief [AUTO] FindPath
+ * \param start [in]
+ * \param goal [in]
+ * \return 
+ */
+/*!
+ * \brief [AUTO] FindPath
+ * \param start [in]
+ * \param goal [in]
+ * \return 
+ */
+/*!
+ * \brief [AUTO] FindPath
+ * \param start [in]
+ * \param goal [in]
+ * \return 
+ */
 /*!
  * \brief [AUTO] FindPath
  * \param start [in]

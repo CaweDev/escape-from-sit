@@ -184,6 +184,18 @@ void AccessCard::OnCollect() {
  * \brief [AUTO] GetColorName
  * \return 
  */
+/*!
+ * \brief [AUTO] GetColorName
+ * \return 
+ */
+/*!
+ * \brief [AUTO] GetColorName
+ * \return 
+ */
+/*!
+ * \brief [AUTO] GetColorName
+ * \return 
+ */
 const char* AccessCard::GetColorName() const {
     switch (cardColor) {
         case AccessCardColor::Green:  return "Green";
@@ -197,6 +209,18 @@ const char* AccessCard::GetColorName() const {
 /*!
  * \brief Get the configured highlight color for this card type
  * \return Engine::Color value
+ */
+/*!
+ * \brief [AUTO] GetHighlightColor
+ * \return 
+ */
+/*!
+ * \brief [AUTO] GetHighlightColor
+ * \return 
+ */
+/*!
+ * \brief [AUTO] GetHighlightColor
+ * \return 
  */
 /*!
  * \brief [AUTO] GetHighlightColor

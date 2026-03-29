@@ -14,7 +14,11 @@ from pathlib import Path
 import os
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC_DIR = ROOT / 'AlphaEngine2.5D' / 'Source' / 'Game'
+# Process both Game and Engine source trees
+SRC_DIRS = [
+    
+    ROOT / 'AlphaEngine2.5D' / 'Source' / 'Engine'
+]
 
 HEADER_TMPL = '''/* Start Header ************************************************************************/\n/*!\n\\file\t\t{filename}\n\\author \t\n\\par\t\n\\date\tMarch, 29, 2026\n\\brief\t\t[AUTO] {brief}\n\nCopyright (C) 2026 DigiPen Institute of Technology.\nReproduction or disclosure of this file or its contents\nwithout the prior written consent of DigiPen Institute of\nTechnology is prohibited.\n*/\n/* End Header **************************************************************************/\n\n'''
 
@@ -34,8 +38,10 @@ def process_file(p: Path) -> bool:
 
     # Add file-level header if missing
     if not has_file_tag(txt):
-        rel = p.relative_to(ROOT)
-        header = HEADER_TMPL.format(relpath=str(rel).replace('\\\\', '/'))
+        # Use filename and stem to populate the DigiPen header template
+        filename = p.name
+        brief = p.stem
+        header = HEADER_TMPL.format(filename=filename, brief=brief)
         txt = header + txt
         changed = True
 
@@ -104,18 +110,19 @@ def process_file(p: Path) -> bool:
 
 
 def main():
-    if not SRC_DIR.exists():
-        print('Source/Game directory not found:', SRC_DIR)
-        return
-
     exts = ('.cpp', '.hpp', '.h')
     modified = []
-    for dirpath, dirnames, filenames in os.walk(SRC_DIR):
-        for fn in filenames:
-            if fn.lower().endswith(exts):
-                p = Path(dirpath) / fn
-                if process_file(p):
-                    modified.append(p)
+    for SRC_DIR in SRC_DIRS:
+        if not SRC_DIR.exists():
+            print('Source directory not found:', SRC_DIR)
+            continue
+
+        for dirpath, dirnames, filenames in os.walk(SRC_DIR):
+            for fn in filenames:
+                if fn.lower().endswith(exts):
+                    p = Path(dirpath) / fn
+                    if process_file(p):
+                        modified.append(p)
 
     print('Files modified:', len(modified))
     for m in modified:

@@ -39,6 +39,9 @@ namespace {
     }
 }
 
+/*!
+ * \brief [AUTO] Awake
+ */
 void Door::Awake() {
     // Cache collider reference only if not already set by spawning logic
     if (!collider && gameObject) {
@@ -54,6 +57,9 @@ void Door::Awake() {
     UpdateCollider();
 }
 
+/*!
+ * \brief [AUTO] Update
+ */
 void Door::Update() {
 	f32 dt = Time::deltaTime;
     
@@ -106,6 +112,9 @@ void Door::Update() {
     }
 }
 
+/*!
+ * \brief [AUTO] Open
+ */
 void Door::Open() {
     if (state == DoorState::Closed) {
         state = DoorState::Opening;
@@ -122,6 +131,9 @@ void Door::Open() {
     autoCloseTimer = 0.0f;
 }
 
+/*!
+ * \brief [AUTO] Close
+ */
 void Door::Close() {
     if (state == DoorState::Open || state == DoorState::Opening) {
         state = DoorState::Closing;
@@ -133,6 +145,9 @@ void Door::Close() {
     }
 }
 
+/*!
+ * \brief [AUTO] Toggle
+ */
 void Door::Toggle() {
     switch (state) {
         case DoorState::Closed:
@@ -146,11 +161,18 @@ void Door::Toggle() {
     }
 }
 
+/*!
+ * \brief [AUTO] IsPassable
+ * \return 
+ */
 bool Door::IsPassable() const {
     // Door is passable when open beyond the configured threshold
     return openAmount > s_passableThreshold;
 }
 
+/*!
+ * \brief [AUTO] UpdateCollider
+ */
 void Door::UpdateCollider() {
     if (!collider && gameObject) {
         collider = gameObject->GetComponent<BoxCollider2D>();
@@ -173,10 +195,20 @@ void Door::UpdateCollider() {
     }
 }
 
+/*!
+ * \brief [AUTO] GetWorldPosition
+ * \return 
+ */
 Vector2 Door::GetWorldPosition() const {
     return Vector2(static_cast<f32>(tileX) + 0.5f, static_cast<f32>(tileY) + 0.5f);
 }
 
+/*!
+ * \brief [AUTO] SetupInteractable
+ * \param interactable [in]
+ * \param openText [in]
+ * \param closeText [in]
+ */
 void Door::SetupInteractable(Interactable* interactable, const char* openText, const char* closeText) {
     if (!interactable) return;
     
@@ -193,6 +225,9 @@ void Door::SetupInteractable(Interactable* interactable, const char* openText, c
     };
 }
 
+/*!
+ * \brief [AUTO] DisableInteraction
+ */
 void Door::DisableInteraction() {
     // Clear the interaction callback so Door doesn't respond to interactions
     // This allows other components (like ControlRoomDoor) to take full control

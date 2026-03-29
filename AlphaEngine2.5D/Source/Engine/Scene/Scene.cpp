@@ -16,6 +16,11 @@ Scene::~Scene() {
     UnloadInternal();
 }
 
+/*!
+ * \brief [AUTO] CreateGameObject
+ * \param objectName [in]
+ * \return 
+ */
 GameObject* Scene::CreateGameObject(const std::string& objectName) {
     auto obj = std::make_unique<GameObject>(objectName);
     GameObject* ptr = obj.get();
@@ -28,6 +33,11 @@ GameObject* Scene::CreateGameObject(const std::string& objectName) {
     return ptr;
 }
 
+/*!
+ * \brief [AUTO] Find
+ * \param objectName [in]
+ * \return 
+ */
 GameObject* Scene::Find(const std::string& objectName) const {
     for (const auto& obj : gameObjects) {
         if (obj->name == objectName) return obj.get();
@@ -35,15 +45,25 @@ GameObject* Scene::Find(const std::string& objectName) const {
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] GetGameObjects
+ * \return 
+ */
 const std::vector<std::unique_ptr<GameObject>>& Scene::GetGameObjects() const {
     return gameObjects;
 }
 
+/*!
+ * \brief [AUTO] LoadInternal
+ */
 void Scene::LoadInternal() {
     isLoaded = true;
     OnLoad();
 }
 
+/*!
+ * \brief [AUTO] UnloadInternal
+ */
 void Scene::UnloadInternal() {
     if (isLoaded) {
         OnUnload();
@@ -53,6 +73,9 @@ void Scene::UnloadInternal() {
     }
 }
 
+/*!
+ * \brief [AUTO] UpdateInternal
+ */
 void Scene::UpdateInternal() {
     // Run physics simulation first
     Physics2D::FixedUpdate();
@@ -97,6 +120,9 @@ void Scene::UpdateInternal() {
     );
 }
 
+/*!
+ * \brief [AUTO] RenderInternal
+ */
 void Scene::RenderInternal() {
     if (!isLoaded) return;
 	OnPreRender();
@@ -136,6 +162,10 @@ void Scene::RenderInternal() {
     Physics2D::DrawDebugView();
 }
 
+/*!
+ * \brief [AUTO] IsLoaded
+ * \return 
+ */
 bool Scene::IsLoaded() const {
     return isLoaded;
 }

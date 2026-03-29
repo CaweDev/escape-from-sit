@@ -43,6 +43,10 @@ void SceneManager::Initialize(const std::string& configPath)
     s_loadWithScreenFadeOutDuration    = config.fadeOut;
 }
 
+/*!
+ * \brief [AUTO] LoadScene
+ * \param sceneName [in]
+ */
 void SceneManager::LoadScene(const std::string& sceneName) {
     auto it = s_sceneRegistry.find(sceneName);
     if (it != s_sceneRegistry.end()) {
@@ -50,6 +54,10 @@ void SceneManager::LoadScene(const std::string& sceneName) {
     }
 }
 
+/*!
+ * \brief [AUTO] LoadScene
+ * \param buildIndex [in]
+ */
 void SceneManager::LoadScene(int buildIndex) {
     for (auto& pair : s_sceneRegistry) {
         if (pair.second->buildIndex == buildIndex) {
@@ -59,20 +67,36 @@ void SceneManager::LoadScene(int buildIndex) {
     }
 }
 
+/*!
+ * \brief [AUTO] GetActiveScene
+ * \return 
+ */
 Scene* SceneManager::GetActiveScene() {
     return s_activeScene;
 }
 
+/*!
+ * \brief [AUTO] RegisterScene
+ * \param name [in]
+ * \param scene [in]
+ */
 void SceneManager::RegisterScene(const std::string& name, Scene* scene) {
     scene->name = name;
     scene->buildIndex = static_cast<int>(s_sceneRegistry.size());
     s_sceneRegistry[name] = scene;
 }
 
+/*!
+ * \brief [AUTO] GetSceneCount
+ * \return 
+ */
 int SceneManager::GetSceneCount() {
     return static_cast<int>(s_sceneRegistry.size());
 }
 
+/*!
+ * \brief [AUTO] UpdateActiveScene
+ */
 void SceneManager::UpdateActiveScene() {
     if (s_activeScene && s_activeScene->IsLoaded()) {
         s_activeScene->UpdateInternal();
@@ -87,15 +111,29 @@ void SceneManager::UpdateActiveScene() {
     }
 }
 
+/*!
+ * \brief [AUTO] LoadSceneDeferred
+ * \param sceneName [in]
+ */
 void SceneManager::LoadSceneDeferred(const std::string& sceneName) {
     s_pendingScene = sceneName;
     s_hasPendingScene = true;
 }
 
+/*!
+ * \brief [AUTO] LoadWithLoadingScreen
+ * \param sceneName [in]
+ */
 void SceneManager::LoadWithLoadingScreen(const std::string& sceneName) {
     LoadWithLoadingScreen(sceneName, s_defaultLoadScreenFadeInDuration, s_defaultLoadScreenFadeOutDuration);
 }
 
+/*!
+ * \brief [AUTO] LoadWithLoadingScreen
+ * \param sceneName [in]
+ * \param fadeInDuration [in]
+ * \param fadeOutDuration [in]
+ */
 void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
     s_loadWithScreenTarget = sceneName;
     s_loadWithScreenFadeInDuration = fadeInDuration;
@@ -103,28 +141,55 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
 
     SoundManager::StopBGM(); // stops bgm everytime loading screen appears
 
+  /*!
+   * \brief [AUTO] FadeIn
+   * \param fadeInDuration [in]
+   * \param []( [in]
+   */
     UI::FadeService::FadeIn(fadeInDuration, []() {
         LoadScene("Loading");
     });
 }
 
+/*!
+ * \brief [AUTO] LoadWithFade
+ * \param sceneName [in]
+ */
 void SceneManager::LoadWithFade(const std::string& sceneName) {
     LoadWithFade(sceneName, s_defaultLoadScreenFadeInDuration, s_defaultLoadScreenFadeOutDuration);
 }
 
+/*!
+ * \brief [AUTO] LoadWithFade
+ * \param sceneName [in]
+ * \param fadeInDuration [in]
+ * \param fadeOutDuration [in]
+ */
 void SceneManager::LoadWithFade(const std::string& sceneName, f32 fadeInDuration, f32 fadeOutDuration) {
+  /*!
+   * \brief [AUTO] FadeIn
+   * \param fadeInDuration [in]
+   * \param [sceneName [in]
+   * \param fadeOutDuration]( [in]
+   */
     UI::FadeService::FadeIn(fadeInDuration, [sceneName, fadeOutDuration]() {
         LoadScene(sceneName);
         UI::FadeService::FadeOut(fadeOutDuration);
     });
 }
 
+/*!
+ * \brief [AUTO] RenderActiveScene
+ */
 void SceneManager::RenderActiveScene() {
     if (s_activeScene && s_activeScene->IsLoaded()) {
         s_activeScene->RenderInternal();
     }
 }
 
+/*!
+ * \brief [AUTO] LoadFirstScene
+ */
 void SceneManager::LoadFirstScene() {
     if (!s_sceneRegistry.empty()) {
         Scene* first = nullptr;
@@ -139,6 +204,9 @@ void SceneManager::LoadFirstScene() {
     }
 }
 
+/*!
+ * \brief [AUTO] UnloadActiveScene
+ */
 void SceneManager::UnloadActiveScene() {
     if (s_activeScene) {
         SoundManager::StopAllSFX();
@@ -147,11 +215,19 @@ void SceneManager::UnloadActiveScene() {
     }
 }
 
+/*!
+ * \brief [AUTO] RequestFadeOutAfterNextSceneLoad
+ * \param duration [in]
+ */
 void SceneManager::RequestFadeOutAfterNextSceneLoad(f32 duration) {
     s_hasPendingPostLoadFadeOut = true;
     s_pendingPostLoadFadeOutDuration = duration;
 }
 
+/*!
+ * \brief [AUTO] LoadSceneInternal
+ * \param newScene [in]
+ */
 void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     

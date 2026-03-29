@@ -1,3 +1,18 @@
+/* Start Header ************************************************************************/
+/*!
+\file		ProximityAudio.cpp
+\author 	
+\par	
+\date	March, 29, 2026
+\brief		[AUTO] ProximityAudio
+
+Copyright (C) 2026 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+*/
+/* End Header **************************************************************************/
+
 #include "ProximityAudio.hpp"
 #include "Engine/Core/GameObject.hpp"
 #include "Engine/Core/Transform.hpp"

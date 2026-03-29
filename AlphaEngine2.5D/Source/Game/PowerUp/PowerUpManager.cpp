@@ -107,6 +107,18 @@ namespace Game {
      * \brief [AUTO] CreatePowerUpObject
      * \param data [in]
      */
+    /*!
+     * \brief [AUTO] CreatePowerUpObject
+     * \param data [in]
+     */
+    /*!
+     * \brief [AUTO] CreatePowerUpObject
+     * \param data [in]
+     */
+    /*!
+     * \brief [AUTO] CreatePowerUpObject
+     * \param data [in]
+     */
     void PowerUpManager::CreatePowerUpObject(PowerUpData data) {
         const auto& cfg = GetPowerUpManagerConfig();
         auto scene = Engine::SceneManager::GetActiveScene();

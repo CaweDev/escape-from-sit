@@ -655,6 +655,18 @@ namespace Game {
      * \brief [AUTO] PushCCTVRecord
      * \param rec [in]
      */
+    /*!
+     * \brief [AUTO] PushCCTVRecord
+     * \param rec [in]
+     */
+    /*!
+     * \brief [AUTO] PushCCTVRecord
+     * \param rec [in]
+     */
+    /*!
+     * \brief [AUTO] PushCCTVRecord
+     * \param rec [in]
+     */
     void BanditVisualizer::PushCCTVRecord(const CCTVRecord& rec) {
     /*! \brief Push a CCTV record into the scrolling history log. \param rec [in] Record to push */
         m_cctvHistory.push_front(rec);

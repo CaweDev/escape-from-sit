@@ -28,6 +28,9 @@ void Time::SetGameSpeed(f32 newGameSpeed)
     fixedDeltaTime = 0.02f * newGameSpeed;
 }
 
+/*!
+ * \brief [AUTO] Update
+ */
 void Time::Update() {
     unscaledDeltaTime = static_cast<f32>(AEFrameRateControllerGetFrameTime());
     time += unscaledDeltaTime;
@@ -36,6 +39,9 @@ void Time::Update() {
 	fps = static_cast<f32>(AEFrameRateControllerGetFrameRate());
 }
 
+/*!
+ * \brief [AUTO] Reset
+ */
 void Time::Reset() {
     deltaTime = 0;
     time = 0;

@@ -87,6 +87,18 @@ namespace Game {
      * \brief [AUTO] OnCCTVSpotted
      * \param worldPos [in]
      */
+    /*!
+     * \brief [AUTO] OnCCTVSpotted
+     * \param worldPos [in]
+     */
+    /*!
+     * \brief [AUTO] OnCCTVSpotted
+     * \param worldPos [in]
+     */
+    /*!
+     * \brief [AUTO] OnCCTVSpotted
+     * \param worldPos [in]
+     */
     void SecurityGuard::OnCCTVSpotted(const Engine::Vector2& worldPos) {
         if (state != GuardState::Patrol) return;
 
@@ -175,6 +187,18 @@ namespace Game {
      * \brief [AUTO] SetState
      * \param newState [in]
      */
+    /*!
+     * \brief [AUTO] SetState
+     * \param newState [in]
+     */
+    /*!
+     * \brief [AUTO] SetState
+     * \param newState [in]
+     */
+    /*!
+     * \brief [AUTO] SetState
+     * \param newState [in]
+     */
     void SecurityGuard::SetState(GuardState newState) {
         if (state == newState) return;
         GuardState old = state;
@@ -196,6 +220,21 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] StateToString
+     * \param s [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] StateToString
+     * \param s [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] StateToString
+     * \param s [in]
+     * \return 
+     */
     /*!
      * \brief [AUTO] StateToString
      * \param s [in]
@@ -474,6 +513,18 @@ namespace Game {
      * \brief [AUTO] CanSeePlayer
      * \return 
      */
+    /*!
+     * \brief [AUTO] CanSeePlayer
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] CanSeePlayer
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] CanSeePlayer
+     * \return 
+     */
     bool SecurityGuard::CanSeePlayer() const {
 
         if (playerTf) {
@@ -488,6 +539,18 @@ namespace Game {
         return (dx * dx + dy * dy) <= detectRadius * detectRadius;
     }
 
+    /*!
+     * \brief [AUTO] IsCaught
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] IsCaught
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] IsCaught
+     * \return 
+     */
     /*!
      * \brief [AUTO] IsCaught
      * \return 
@@ -509,12 +572,45 @@ namespace Game {
      * \param y [in]
      * \return 
      */
+    /*!
+     * \brief [AUTO] DistSqTo
+     * \param x [in]
+     * \param y [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] DistSqTo
+     * \param x [in]
+     * \param y [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] DistSqTo
+     * \param x [in]
+     * \param y [in]
+     * \return 
+     */
     float SecurityGuard::DistSqTo(float x, float y) const {
         float dx = x - gameObject->transform->position.x;
         float dy = y - gameObject->transform->position.y;
         return dx * dx + dy * dy;
     }
 
+    /*!
+     * \brief [AUTO] GetCurrentTile
+     * \param tx [in]
+     * \param ty [in]
+     */
+    /*!
+     * \brief [AUTO] GetCurrentTile
+     * \param tx [in]
+     * \param ty [in]
+     */
+    /*!
+     * \brief [AUTO] GetCurrentTile
+     * \param tx [in]
+     * \param ty [in]
+     */
     /*!
      * \brief [AUTO] GetCurrentTile
      * \param tx [in]
@@ -527,6 +623,24 @@ namespace Game {
         ty = std::clamp(ty, 0, tileMap->height - 1);
     }
 
+    /*!
+     * \brief [AUTO] FindDoorAtTile
+     * \param tx [in]
+     * \param ty [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] FindDoorAtTile
+     * \param tx [in]
+     * \param ty [in]
+     * \return 
+     */
+    /*!
+     * \brief [AUTO] FindDoorAtTile
+     * \param tx [in]
+     * \param ty [in]
+     * \return 
+     */
     /*!
      * \brief [AUTO] FindDoorAtTile
      * \param tx [in]
@@ -680,6 +794,18 @@ namespace Game {
      * \brief [AUTO] FollowPath
      * \param speed [in]
      */
+    /*!
+     * \brief [AUTO] FollowPath
+     * \param speed [in]
+     */
+    /*!
+     * \brief [AUTO] FollowPath
+     * \param speed [in]
+     */
+    /*!
+     * \brief [AUTO] FollowPath
+     * \param speed [in]
+     */
     void SecurityGuard::FollowPath(float speed) {
         auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
 
@@ -729,6 +855,21 @@ namespace Game {
         }
     }
 
+    /*!
+     * \brief [AUTO] BuildPathBFS_ToGoal
+     * \param gx [in]
+     * \param gy [in]
+     */
+    /*!
+     * \brief [AUTO] BuildPathBFS_ToGoal
+     * \param gx [in]
+     * \param gy [in]
+     */
+    /*!
+     * \brief [AUTO] BuildPathBFS_ToGoal
+     * \param gx [in]
+     * \param gy [in]
+     */
     /*!
      * \brief [AUTO] BuildPathBFS_ToGoal
      * \param gx [in]

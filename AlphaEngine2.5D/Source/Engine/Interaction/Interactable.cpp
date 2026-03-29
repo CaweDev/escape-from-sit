@@ -6,6 +6,9 @@
 
 namespace Engine {
 
+/*!
+ * \brief [AUTO] Interact
+ */
 void Interactable::Interact() {
     if (onInteract) {
         onInteract();

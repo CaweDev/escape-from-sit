@@ -20,6 +20,11 @@ void TileMap::Initialize()
 	SpawnDoors();
 }
 
+/*!
+ * \brief [AUTO] AddExitAt
+ * \param x [in]
+ * \param y [in]
+ */
 void TileMap::AddExitAt(int x, int y) {
     if (x < 0 || x >= width || y < 0 || y >= height) return;
     Vector2 pos(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f);
@@ -34,6 +39,11 @@ void TileMap::AddExitAt(int x, int y) {
     }
 }
 
+/*!
+ * \brief [AUTO] RemoveExitAt
+ * \param x [in]
+ * \param y [in]
+ */
 void TileMap::RemoveExitAt(int x, int y) {
     if (x < 0 || x >= width || y < 0 || y >= height) return;
     exitPositions.erase(std::remove_if(exitPositions.begin(), exitPositions.end(), [x,y](const Vector2& p){
@@ -54,6 +64,12 @@ void TileMap::RemoveExitAt(int x, int y) {
     }
 }
 
+/*!
+ * \brief [AUTO] LoadFromArray
+ * \param data [in]
+ * \param w [in]
+ * \param h [in]
+ */
 void TileMap::LoadFromArray(const int* data, int w, int h) {
     width = w;
     height = h;
@@ -128,6 +144,9 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
 		w, h, (int)spawnedDoors.size(), (int)terminalPositions.size(), (int)exitPositions.size());*/
 }
 
+/*!
+ * \brief [AUTO] SpawnDoors
+ */
 void TileMap::SpawnDoors() {
 	// Destroy existing door GameObjects
 	for (Door* door : spawnedDoors) {
@@ -171,6 +190,12 @@ void TileMap::SpawnDoors() {
 
 }
 
+/*!
+ * \brief [AUTO] SpawnDoor
+ * \param x [in]
+ * \param y [in]
+ * \param doorType [in]
+ */
 void TileMap::SpawnDoor(int x, int y, int doorType) {
 	if (!gameObject) return;
 

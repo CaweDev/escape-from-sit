@@ -206,6 +206,18 @@ void CreditScene::SkipToEnd() {
  * \brief [AUTO] IsSkipPressed
  * \return 
  */
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
+/*!
+ * \brief [AUTO] IsSkipPressed
+ * \return 
+ */
 bool CreditScene::IsSkipPressed() const {
     if (Input::GetKeyDown(KeyCode::Return) ||
         Input::GetKeyDown(KeyCode::Escape) ||

@@ -49,6 +49,9 @@ void Physics2D::Initialize(const std::string& configPath)
     s_pushDirSqrThreshold  = config.pushDirSqrThreshold;
 }
 
+/*!
+ * \brief [AUTO] FixedUpdate
+ */
 void Physics2D::FixedUpdate() {
     f32 dt = Time::fixedDeltaTime;
     // Clamp deltaTime to avoid abrupt fades during large frame drops (e.g., scene loading)
@@ -211,6 +214,10 @@ void Physics2D::FixedUpdate() {
     }
 }
 
+/*!
+ * \brief [AUTO] RegisterCollider
+ * \param collider [in]
+ */
 void Physics2D::RegisterCollider(Collider2D* collider) {
     if (!collider) return;
     auto it = std::find(colliders.begin(), colliders.end(), collider);
@@ -219,10 +226,18 @@ void Physics2D::RegisterCollider(Collider2D* collider) {
     }
 }
 
+/*!
+ * \brief [AUTO] UnregisterCollider
+ * \param collider [in]
+ */
 void Physics2D::UnregisterCollider(Collider2D* collider) {
     colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
 }
 
+/*!
+ * \brief [AUTO] RegisterRigidbody
+ * \param rb [in]
+ */
 void Physics2D::RegisterRigidbody(Rigidbody2D* rb) {
     if (!rb) return;
     auto it = std::find(rigidbodies.begin(), rigidbodies.end(), rb);
@@ -231,15 +246,32 @@ void Physics2D::RegisterRigidbody(Rigidbody2D* rb) {
     }
 }
 
+/*!
+ * \brief [AUTO] UnregisterRigidbody
+ * \param rb [in]
+ */
 void Physics2D::UnregisterRigidbody(Rigidbody2D* rb) {
     rigidbodies.erase(std::remove(rigidbodies.begin(), rigidbodies.end(), rb), rigidbodies.end());
 }
 
+/*!
+ * \brief [AUTO] IsWalkable
+ * \param x [in]
+ * \param y [in]
+ * \return 
+ */
 bool Physics2D::IsWalkable(f32 x, f32 y) {
     if (!tileMap) return true;
     return tileMap->IsWalkable(x, y);
 }
 
+/*!
+ * \brief [AUTO] TileMapCollision
+ * \param position [in]
+ * \param movement [in]
+ * \param radius [in]
+ * \return 
+ */
 Vector2 Physics2D::TileMapCollision(const Vector2& position, const Vector2& movement, f32 radius) {
     if (!tileMap) {
         return position + movement;
@@ -268,6 +300,11 @@ Vector2 Physics2D::TileMapCollision(const Vector2& position, const Vector2& move
     return newPos;
 }
 
+/*!
+ * \brief [AUTO] ResolveCollision
+ * \param rb [in]
+ * \param other [in]
+ */
 void Physics2D::ResolveCollision(Rigidbody2D* rb, Collider2D* other) {
 if (!rb || !other || !rb->transform) return;
     
@@ -320,6 +357,13 @@ if (!rbCollider) return;
     rbCollider->OnCollisionStay2D(collision);
 }
 
+/*!
+ * \brief [AUTO] Raycast
+ * \param origin [in]
+ * \param direction [in]
+ * \param maxDistance [in]
+ * \return 
+ */
 RaycastHit2D Physics2D::Raycast(const Vector2& origin, const Vector2& direction, f32 maxDistance) {
     RaycastHit2D hit;
     f32 closestDist = maxDistance;
@@ -377,6 +421,13 @@ RaycastHit2D Physics2D::Raycast(const Vector2& origin, const Vector2& direction,
     return hit;
 }
 
+/*!
+ * \brief [AUTO] RaycastAll
+ * \param origin [in]
+ * \param direction [in]
+ * \param maxDistance [in]
+ * \return 
+ */
 std::vector<RaycastHit2D> Physics2D::RaycastAll(const Vector2& origin, const Vector2& direction, f32 maxDistance) {
     std::vector<RaycastHit2D> hits;
     // Simplified: just return single hit for now
@@ -385,6 +436,14 @@ std::vector<RaycastHit2D> Physics2D::RaycastAll(const Vector2& origin, const Vec
     return hits;
 }
 
+/*!
+ * \brief [AUTO] OverlapCircle
+ * \param center [in]
+ * \param radius [in]
+ * \param height [in]
+ * \param heightPos [in]
+ * \return 
+ */
 Collider2D* Physics2D::OverlapCircle(const Vector2& center, f32 radius, f32 height, f32 heightPos) {
     for (Collider2D* collider : colliders) {
         if (!collider || !collider->enabled) continue;
@@ -405,6 +464,14 @@ Collider2D* Physics2D::OverlapCircle(const Vector2& center, f32 radius, f32 heig
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] OverlapCircleAll
+ * \param center [in]
+ * \param radius [in]
+ * \param height [in]
+ * \param heightPos [in]
+ * \return 
+ */
 std::vector<Collider2D*> Physics2D::OverlapCircleAll(const Vector2& center, f32 radius, f32 height, f32 heightPos) {
     std::vector<Collider2D*> result;
     for (Collider2D* collider : colliders) {
@@ -424,6 +491,14 @@ std::vector<Collider2D*> Physics2D::OverlapCircleAll(const Vector2& center, f32 
     return result;
 }
 
+/*!
+ * \brief [AUTO] OverlapBox
+ * \param center [in]
+ * \param size [in]
+ * \param height [in]
+ * \param heightPos [in]
+ * \return 
+ */
 Collider2D* Physics2D::OverlapBox(const Vector2& center, const Vector2& size, f32 height, f32 heightPos) {
     Bounds2D queryBounds;
     queryBounds.min = center - size * 0.5f;
@@ -441,6 +516,14 @@ Collider2D* Physics2D::OverlapBox(const Vector2& center, const Vector2& size, f3
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] OverlapBoxAll
+ * \param center [in]
+ * \param size [in]
+ * \param height [in]
+ * \param heightPos [in]
+ * \return 
+ */
 std::vector<Collider2D*> Physics2D::OverlapBoxAll(const Vector2& center, const Vector2& size, f32 height, f32 heightPos) {
     std::vector<Collider2D*> result;
     Bounds2D queryBounds;
@@ -459,6 +542,12 @@ std::vector<Collider2D*> Physics2D::OverlapBoxAll(const Vector2& center, const V
     return result;
 }
 
+/*!
+ * \brief [AUTO] MoveWithCollision
+ * \param rb [in]
+ * \param movement [in]
+ * \return 
+ */
 Vector2 Physics2D::MoveWithCollision(Rigidbody2D* rb, const Vector2& movement) {
     if (!rb || !rb->transform) return movement;
     
@@ -476,6 +565,9 @@ Vector2 Physics2D::MoveWithCollision(Rigidbody2D* rb, const Vector2& movement) {
     return TileMapCollision(currentPos, movement, radius);
 }
 
+/*!
+ * \brief [AUTO] DrawDebugView
+ */
 void Physics2D::DrawDebugView() {
     if (!debugDrawEnabled) return;
     if (colliders.empty()) return;

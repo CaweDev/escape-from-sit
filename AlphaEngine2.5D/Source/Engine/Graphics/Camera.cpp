@@ -23,6 +23,9 @@ void Camera::Initialize(const std::string& configPath)
     }
 }
 
+/*!
+ * \brief [AUTO] Awake
+ */
 void Camera::Awake() {
     // Set as main camera if none exists
     if (!main) {
@@ -41,12 +44,18 @@ void Camera::Awake() {
     }
 }
 
+/*!
+ * \brief [AUTO] OnDestroy
+ */
 void Camera::OnDestroy() {
     if (main == this) {
         main = nullptr;
     }
 }
 
+/*!
+ * \brief [AUTO] Apply
+ */
 void Camera::Apply() {
     if (!transform) return;
     
@@ -57,6 +66,11 @@ void Camera::Apply() {
     AEGfxSetCamPosition(transform->position.x, transform->position.y);
 }
 
+/*!
+ * \brief [AUTO] ScreenToWorldPoint
+ * \param screenPos [in]
+ * \return 
+ */
 Vector2 Camera::ScreenToWorldPoint(const Vector2& screenPos) {
     f32 winWidth = static_cast<f32>(AEGfxGetWindowWidth());
     f32 winHeight = static_cast<f32>(AEGfxGetWindowHeight());
@@ -74,6 +88,11 @@ Vector2 Camera::ScreenToWorldPoint(const Vector2& screenPos) {
     return Vector2(worldX, worldY);
 }
 
+/*!
+ * \brief [AUTO] WorldToScreenPoint
+ * \param worldPos [in]
+ * \return 
+ */
 Vector2 Camera::WorldToScreenPoint(const Vector2& worldPos) {
     f32 winWidth = static_cast<f32>(AEGfxGetWindowWidth());
     f32 winHeight = static_cast<f32>(AEGfxGetWindowHeight());
@@ -87,12 +106,20 @@ Vector2 Camera::WorldToScreenPoint(const Vector2& worldPos) {
     return Vector2(screenX, screenY);
 }
 
+/*!
+ * \brief [AUTO] GetViewportWidth
+ * \return 
+ */
 f32 Camera::GetViewportWidth() const {
     f32 aspect = static_cast<f32>(AEGfxGetWindowWidth()) / 
                    static_cast<f32>(AEGfxGetWindowHeight());
     return orthographicSize * 2.0f * aspect;
 }
 
+/*!
+ * \brief [AUTO] GetViewportHeight
+ * \return 
+ */
 f32 Camera::GetViewportHeight() const {
     return orthographicSize * 2.0f;
 }

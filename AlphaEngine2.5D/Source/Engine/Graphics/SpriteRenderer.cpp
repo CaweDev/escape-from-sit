@@ -15,6 +15,10 @@ namespace Engine {
 	{
 	}
 
+	/*!
+	 * \brief [AUTO] SetSprite
+	 * \param newSprite [in]
+	 */
 	void SpriteRenderer::SetSprite(std::shared_ptr<Sprite> newSprite) {
 		printf("Warning: SpriteRenderer::SetSprite(std::shared_ptr<Sprite>) is deprecated. Use raw pointer version instead.\n");
 		if (newSprite) {
@@ -30,6 +34,9 @@ namespace Engine {
 		sprite = newSprite;
 	}
 
+	/*!
+	 * \brief [AUTO] Render
+	 */
 	void SpriteRenderer::Render() {
 		if (!enabled || !transform) return;
 		if (!sprite || !sprite->IsReady()) return;
@@ -209,6 +216,15 @@ namespace Engine {
 		}
 	}
 
+	/*!
+	 * \brief [AUTO] AddStripToMesh
+	 * \param x1 [in]
+	 * \param x2 [in]
+	 * \param spriteStart [in]
+	 * \param spriteWidth [in]
+	 * \param yTop [in]
+	 * \param yBottom [in]
+	 */
 	void SpriteRenderer::AddStripToMesh(int x1, int x2, f32 spriteStart, f32 spriteWidth, f32 yTop, f32 yBottom) {
 		int sw = Application::GetWindowWidth();
 
@@ -257,6 +273,10 @@ namespace Engine {
 		);
 	}
 
+	/*!
+	 * \brief [AUTO] GetSortingKey
+	 * \return 
+	 */
 	f32 SpriteRenderer::GetSortingKey() const {
 		if (!transform) return static_cast<f32>(sortingOrder);
 

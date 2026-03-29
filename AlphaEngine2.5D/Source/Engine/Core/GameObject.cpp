@@ -32,6 +32,11 @@ GameObject::~GameObject() {
     components.clear();
 }
 
+/*!
+ * \brief [AUTO] Find
+ * \param name [in]
+ * \return 
+ */
 GameObject* GameObject::Find(const std::string& name) {
     for (auto* obj : allGameObjects) {
         if (obj->name == name) return obj;
@@ -39,6 +44,11 @@ GameObject* GameObject::Find(const std::string& name) {
     return nullptr;
 }
 
+/*!
+ * \brief [AUTO] FindGameObjectsWithTag
+ * \param tag [in]
+ * \return 
+ */
 std::vector<GameObject*> GameObject::FindGameObjectsWithTag(const std::string& tag) {
     std::vector<GameObject*> result;
     for (auto* obj : allGameObjects) {
@@ -47,6 +57,10 @@ std::vector<GameObject*> GameObject::FindGameObjectsWithTag(const std::string& t
     return result;
 }
 
+/*!
+ * \brief [AUTO] Destroy
+ * \param obj [in]
+ */
 void GameObject::Destroy(GameObject* obj) {
     if (obj) {
         obj->isPendingDestruction = true;
@@ -54,16 +68,26 @@ void GameObject::Destroy(GameObject* obj) {
     }
 }
 
+/*!
+ * \brief [AUTO] ProcessDestroyQueue
+ */
 void GameObject::ProcessDestroyQueue() {
     // We no longer delete here. 
     // The Scene will remove the object from its list, which triggers unique_ptr cleanup.
     objectsToDestroy.clear();
 }
 
+/*!
+ * \brief [AUTO] GetAllGameObjects
+ * \return 
+ */
 const std::vector<GameObject*>& GameObject::GetAllGameObjects() {
     return allGameObjects;
 }
 
+/*!
+ * \brief [AUTO] InternalUpdate
+ */
 void GameObject::InternalUpdate() {
     if (!active || isPendingDestruction) return;
     
@@ -85,6 +109,9 @@ void GameObject::InternalUpdate() {
     }
 }
 
+/*!
+ * \brief [AUTO] InternalLateUpdate
+ */
 void GameObject::InternalLateUpdate() {
     if (!active || isPendingDestruction) return;
     
@@ -100,6 +127,9 @@ void GameObject::InternalLateUpdate() {
     }
 }
 
+/*!
+ * \brief [AUTO] InternalFixedUpdate
+ */
 void GameObject::InternalFixedUpdate() {
     if (!active || isPendingDestruction) return;
     
@@ -115,6 +145,9 @@ void GameObject::InternalFixedUpdate() {
     }
 }
 
+/*!
+ * \brief [AUTO] InternalRender
+ */
 void GameObject::InternalRender() {
 if (!active || isPendingDestruction) return;
     
