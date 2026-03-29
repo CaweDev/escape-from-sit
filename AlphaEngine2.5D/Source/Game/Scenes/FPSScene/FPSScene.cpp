@@ -1,6 +1,8 @@
 #define FPS_SCENE_CPP_COMPILATION_UNIT
 #include "Game/Scenes/FPSScene/FPSScene.hpp"
 #include "Engine/Core/ConfigManager.hpp"
+#include <fstream>
+#include <json/json.h>
 
 namespace
 {
@@ -379,6 +381,24 @@ namespace Game
         playerCam = player->GetComponent<Camera>();
         playerController = player->GetComponent<FPSController>();
         playerData = player->GetComponent<Player>();
+        // Load persisted high score (if present)
+        if (playerData)
+        {
+            std::ifstream hsFile("Assets/Config/Game/highscore.json");
+            if (hsFile.is_open())
+            {
+                Json::Value root;
+                Json::CharReaderBuilder builder;
+                JSONCPP_STRING errs;
+                if (parseFromStream(builder, hsFile, &root, &errs))
+                {
+                    float saved = playerData->GetHighScore();
+                    saved = root.get("highScore", saved).asFloat();
+                    playerData->SetHighScore(saved);
+                }
+                hsFile.close();
+            }
+        }
         playerHUD = player->GetComponent<PlayerHUD>();
         playerHUD->SetTileMap(map);
         playerHUD->SetPlayerTransform(playerTf);
@@ -1222,6 +1242,20 @@ namespace Game
             if (currentTime < playerData->GetHighScore())
             {
                 playerData->SetHighScore(currentTime);
+            }
+
+            // Persist high score to disk
+            if (playerData)
+            {
+                Json::Value root;
+                root["highScore"] = playerData->GetHighScore();
+                std::ofstream ofs("Assets/Config/Game/highscore.json");
+                if (ofs.is_open())
+                {
+                    Json::StreamWriterBuilder writer;
+                    ofs << Json::writeString(writer, root);
+                    ofs.close();
+                }
             }
 
             playerData->Win();
