@@ -12,6 +12,7 @@
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Core/AssetManager.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Input/KeyCode.hpp"
 
 namespace AEEditor
@@ -31,6 +32,7 @@ namespace AEEditor
     {
         Json::Value goJson;
         goJson["Name"] = go->name;
+        goJson["Tag"] = go->tag;
         goJson["Active"] = go->active;
 
         Json::Value &compArray = goJson["Components"];
@@ -86,6 +88,7 @@ namespace AEEditor
                     break;
                 }
                 case DataType::Sprite:
+                case DataType::SpriteSheet:
                 case DataType::String:
                     compJson[field.name] = *static_cast<std::string *>(addr);
                     break;
@@ -100,6 +103,7 @@ namespace AEEditor
     {
         auto *go = Engine::SceneManager::GetActiveScene()->CreateGameObject(goJson["Name"].asString());
         go->active = goJson["Active"].asBool();
+        go->tag = goJson.get("Tag", "Untagged").asString();
 
         const Json::Value &compArray = goJson["Components"];
         for (const auto &compJson : compArray)
@@ -172,6 +176,16 @@ namespace AEEditor
                     if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
                     {
                         sr->SetSprite(Engine::AssetManager::GetSprite(path));
+                    }
+                    break;
+                }
+                case DataType::SpriteSheet:
+                {
+                    std::string path = val.asString();
+                    *static_cast<std::string *>(addr) = path;
+                    if (auto *ssr = dynamic_cast<Engine::SpriteSheetRenderer *>(comp))
+                    {
+                        ssr->SetSpriteSheet(Engine::AssetManager::GetSpriteSheet(path));
                     }
                     break;
                 }
@@ -351,6 +365,13 @@ namespace AEEditor
         if (ImGui::InputText("##Name", nameBuf, sizeof(nameBuf)))
             selectedObject->name = nameBuf;
 
+        char tagBuf[256];
+        strncpy_s(tagBuf, selectedObject->tag.c_str(), sizeof(tagBuf));
+        tagBuf[sizeof(tagBuf) - 1] = '\0';
+        ImGui::Text("Tag");
+        if (ImGui::InputText("##Tag", tagBuf, sizeof(tagBuf)))
+            selectedObject->tag = tagBuf;
+
         ImGui::Separator();
 
         if (ImGui::Button("Add Component", ImVec2(-1, 30)))
@@ -513,6 +534,62 @@ namespace AEEditor
                     if (auto *sr = dynamic_cast<Engine::SpriteRenderer *>(comp))
                     {
                         sr->SetSprite(Engine::AssetManager::GetSprite(*path));
+                    }
+                }
+                ImGui::EndDragDropTarget();
+            }
+            break;
+        }
+
+        case DataType::SpriteSheet:
+        {
+            std::string *path = static_cast<std::string *>(rawAddress);
+            std::string displayLabel = path->empty() ? "Select SpriteSheet..." : *path;
+
+            if (ImGui::BeginCombo("##SpriteSheetCombo", displayLabel.c_str()))
+            {
+                if (std::filesystem::exists("Assets"))
+                {
+                    for (const auto &entry : std::filesystem::recursive_directory_iterator("Assets"))
+                    {
+                        if (!entry.is_regular_file())
+                            continue;
+
+                        std::string ext = entry.path().extension().string();
+                        std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+                        // Assuming your spritesheets are defined by images or json configs
+                        if (ext == ".png" || ext == ".json")
+                        {
+                            std::string filePath = entry.path().string();
+                            std::replace(filePath.begin(), filePath.end(), '\\', '/');
+
+                            bool isSelected = (*path == filePath);
+                            if (ImGui::Selectable(filePath.c_str(), isSelected))
+                            {
+                                *path = filePath;
+                                if (auto *ssr = dynamic_cast<Engine::SpriteSheetRenderer *>(comp))
+                                {
+                                    ssr->SetSpriteSheet(Engine::AssetManager::GetSpriteSheet(*path));
+                                }
+                            }
+                            if (isSelected)
+                                ImGui::SetItemDefaultFocus();
+                        }
+                    }
+                }
+                ImGui::EndCombo();
+            }
+
+            if (ImGui::BeginDragDropTarget())
+            {
+                if (const ImGuiPayload *payload = ImGui::AcceptDragDropPayload("DND_ASSET_SPRITESHEET"))
+                {
+                    const char *droppedPath = (const char *)payload->Data;
+                    *path = droppedPath;
+                    if (auto *ssr = dynamic_cast<Engine::SpriteSheetRenderer *>(comp))
+                    {
+                        ssr->SetSpriteSheet(Engine::AssetManager::GetSpriteSheet(*path));
                     }
                 }
                 ImGui::EndDragDropTarget();

@@ -2,6 +2,8 @@
   "GameObjects": [
     {
       "Active": true,
+      "Name": "Laptop 1",
+      "Tag": "Item",
       "Components": [
         {
           "Position": {
@@ -56,11 +58,12 @@
           "itemName": "Laptop",
           "timer": 1.5
         }
-      ],
-      "Name": "Laptop 1"
+      ]
     },
     {
       "Active": true,
+      "Name": "Laptop 1 (Copy)",
+      "Tag": "Item",
       "Components": [
         {
           "Position": {
@@ -115,11 +118,12 @@
           "itemName": "Laptop",
           "timer": 1.5
         }
-      ],
-      "Name": "Laptop 1 (Copy)"
+      ]
     },
     {
       "Active": true,
+      "Name": "Player",
+      "Tag": "Player",
       "Components": [
         {
           "Position": {
@@ -187,7 +191,8 @@
           "isSprinting": false
         },
         {
-          "Type": "InteractionController"
+          "Type": "InteractionController",
+          "interactKey": 69
         },
         {
           "Type": "PlayerHUD"
@@ -211,10 +216,234 @@
           "Type": "PlayerPowerUpController"
         },
         {
-          "Type": "Inventory"
+          "Type": "Inventory",
+          "activeSlot": 0
         }
-      ],
-      "Name": "Player"
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Guard_Z1",
+      "Tag": "Guard",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 10.5, "y": 10.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "SpriteSheetRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 100,
+          "spriteSheetPath": "Assets/Sprites/guard.png",
+          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.3,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 0.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": { "x": 0.0, "y": 0.0 },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "CircleCollider2D",
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "radius": 0.3
+        },
+        {
+          "Type": "SecurityGuard",
+          "arriveDistance": 0.1,
+          "catchRadius": 0.7,
+          "chaseSpeed": 2.4,
+          "detectRadius": 4.0,
+          "homeZoneId": 1,
+          "maxLostSightTime": 2.5,
+          "patrolSpeed": 1.5,
+          "searchDuration": 4.0,
+          "searchSpeed": 0.8
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Guard_Z2",
+      "Tag": "Guard",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 10.5, "y": 30.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "SpriteSheetRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 100,
+          "spriteSheetPath": "Assets/Sprites/guard.png",
+          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.3,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 0.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": { "x": 0.0, "y": 0.0 },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "CircleCollider2D",
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "radius": 0.3
+        },
+        {
+          "Type": "SecurityGuard",
+          "arriveDistance": 0.1,
+          "catchRadius": 0.7,
+          "chaseSpeed": 2.4,
+          "detectRadius": 4.0,
+          "homeZoneId": 2,
+          "maxLostSightTime": 2.5,
+          "patrolSpeed": 1.5,
+          "searchDuration": 4.0,
+          "searchSpeed": 0.8
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Guard_Z3",
+      "Tag": "Guard",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 30.5, "y": 30.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "SpriteSheetRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 100,
+          "spriteSheetPath": "Assets/Sprites/guard.png",
+          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.3,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 0.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": { "x": 0.0, "y": 0.0 },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "CircleCollider2D",
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "radius": 0.3
+        },
+        {
+          "Type": "SecurityGuard",
+          "arriveDistance": 0.1,
+          "catchRadius": 0.7,
+          "chaseSpeed": 2.4,
+          "detectRadius": 4.0,
+          "homeZoneId": 3,
+          "maxLostSightTime": 2.5,
+          "patrolSpeed": 1.5,
+          "searchDuration": 4.0,
+          "searchSpeed": 0.8
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Guard_Z4",
+      "Tag": "Guard",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 30.5, "y": 10.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "SpriteSheetRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 100,
+          "spriteSheetPath": "Assets/Sprites/guard.png",
+          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+        },
+        {
+          "Type": "Rigidbody2D",
+          "bodyType": 0,
+          "collisionHeight": 0.75,
+          "crouchHeight": 0.3,
+          "currentHeight": 0.0,
+          "drag": 0.0,
+          "freezeRotation": true,
+          "gravityScale": 0.0,
+          "isCrouching": false,
+          "isGrounded": true,
+          "mass": 1.0,
+          "standingHeight": 0.75,
+          "velocity": { "x": 0.0, "y": 0.0 },
+          "verticalVelocity": 0.0
+        },
+        {
+          "Type": "CircleCollider2D",
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "radius": 0.3
+        },
+        {
+          "Type": "SecurityGuard",
+          "arriveDistance": 0.1,
+          "catchRadius": 0.7,
+          "chaseSpeed": 2.4,
+          "detectRadius": 4.0,
+          "homeZoneId": 4,
+          "maxLostSightTime": 2.5,
+          "patrolSpeed": 1.5,
+          "searchDuration": 4.0,
+          "searchSpeed": 0.8
+        }
+      ]
     }
   ]
 }

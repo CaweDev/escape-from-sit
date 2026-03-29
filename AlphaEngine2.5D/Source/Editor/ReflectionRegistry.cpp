@@ -3,6 +3,7 @@
 #include "Reflection.hpp"
 #include "Engine/Core/Transform.hpp"
 #include "Engine/Graphics/SpriteRenderer.hpp"
+#include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
 
@@ -25,6 +26,7 @@
 #include "game/Scenes/FPSScene/UI/Hands67.hpp"
 #include "game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
 #include "game/Player/PlayerPowerUpController.hpp"
+#include "game/SecurityGuard/SecurityGuard.hpp"
 
 namespace AEEditor
 {
@@ -46,6 +48,18 @@ namespace AEEditor
         AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("flipX", offsetof(Engine::SpriteRenderer, flipX), AEEditor::DataType::Bool);
         AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("flipY", offsetof(Engine::SpriteRenderer, flipY), AEEditor::DataType::Bool);
         AEEditor::Registry::RegisterFieldType<Engine::SpriteRenderer>("billboard", offsetof(Engine::SpriteRenderer, billboard), AEEditor::DataType::Bool);
+    }
+
+    void RegisterSpriteSheetRenderer()
+    {
+        Registry::RegisterClassType<Engine::SpriteSheetRenderer>("SpriteSheetRenderer");
+
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("spriteSheetPath", offsetof(Engine::SpriteSheetRenderer, spriteSheetPath), DataType::SpriteSheet);
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("color", offsetof(Engine::SpriteSheetRenderer, color), DataType::Color);
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("sortingOrder", offsetof(Engine::SpriteSheetRenderer, sortingOrder), DataType::Int);
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipX", offsetof(Engine::SpriteSheetRenderer, flipX), DataType::Bool);
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipY", offsetof(Engine::SpriteSheetRenderer, flipY), DataType::Bool);
+        Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("billboard", offsetof(Engine::SpriteSheetRenderer, billboard), DataType::Bool);
     }
 
     void RegisterInteractable()
@@ -232,6 +246,21 @@ namespace AEEditor
         Registry::RegisterClassType<Game::PlayerPowerUpController>("PlayerPowerUpController");
     }
 
+    void RegisterSecurityGuard()
+    {
+        Registry::RegisterClassType<Game::SecurityGuard>("SecurityGuard");
+
+        Registry::RegisterFieldType<Game::SecurityGuard>("homeZoneId", offsetof(Game::SecurityGuard, homeZoneId), DataType::Int);
+        Registry::RegisterFieldType<Game::SecurityGuard>("patrolSpeed", offsetof(Game::SecurityGuard, patrolSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("chaseSpeed", offsetof(Game::SecurityGuard, chaseSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("searchSpeed", offsetof(Game::SecurityGuard, searchSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("arriveDistance", offsetof(Game::SecurityGuard, arriveDistance), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("detectRadius", offsetof(Game::SecurityGuard, detectRadius), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("catchRadius", offsetof(Game::SecurityGuard, catchRadius), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("maxLostSightTime", offsetof(Game::SecurityGuard, maxLostSightTime), DataType::Float);
+        Registry::RegisterFieldType<Game::SecurityGuard>("searchDuration", offsetof(Game::SecurityGuard, searchDuration), DataType::Float);
+    }
+
     void ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
@@ -239,6 +268,7 @@ namespace AEEditor
 
         RegisterTransform();
         RegisterSpriteRenderer();
+        RegisterSpriteSheetRenderer();
         RegisterRigidbody2D();
 
         RegisterInteractable();
@@ -257,6 +287,8 @@ namespace AEEditor
         RegisterFPSController();
         RegisterInteractionController();
         RegisterPlayerUIComponents();
+        RegisterSecurityGuard();
+
     }
 
 

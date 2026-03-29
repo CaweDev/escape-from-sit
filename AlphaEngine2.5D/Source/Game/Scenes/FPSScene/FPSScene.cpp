@@ -416,10 +416,30 @@ namespace Game
 
         // ===== spawn 4 guards (1 per zone) =====
         guards.clear();
-        SpawnGuardInZone(1, map, playerHUD, "Assets/Sprites/guard.png");
-        SpawnGuardInZone(2, map, playerHUD, "Assets/Sprites/guard.png");
-        SpawnGuardInZone(3, map, playerHUD, "Assets/Sprites/guard.png");
-        SpawnGuardInZone(4, map, playerHUD, "Assets/Sprites/guard.png");
+        // SpawnGuardInZone(1, map, playerHUD, "Assets/Sprites/guard.png");
+        // SpawnGuardInZone(2, map, playerHUD, "Assets/Sprites/guard.png");
+        // SpawnGuardInZone(3, map, playerHUD, "Assets/Sprites/guard.png");
+        // SpawnGuardInZone(4, map, playerHUD, "Assets/Sprites/guard.png");
+
+
+        auto guardObjects = GameObject::FindGameObjectsWithTag("Guard");
+        for (auto &g : guardObjects)
+        {
+            auto guard = g->GetComponent<SecurityGuard>();
+            guard->tileMap = map;
+            guard->playerTf = playerTf;
+            guard->playerData = playerData;
+            guard->zoneMgr = &zoneMgr;
+            guard->heatmap = &heatmap;
+            guard->SetPatrolZoneOverride(guard->homeZoneId);
+
+            g->GetComponent<SpriteSheetRenderer>()->Play("Patrol");
+
+            if (playerHUD)
+                playerHUD->AddEnemyTransform(g->transform);
+
+            guards.push_back(guard);
+        }
 
         // start with zone 1 priority
         prevChosenZoneId = 1;

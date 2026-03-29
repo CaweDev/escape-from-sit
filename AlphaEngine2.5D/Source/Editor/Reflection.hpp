@@ -21,7 +21,8 @@ namespace AEEditor
         Vector3,
         Color,
         Sprite,
-        String,
+        SpriteSheet,
+            String,
         KeyCode
     };
 

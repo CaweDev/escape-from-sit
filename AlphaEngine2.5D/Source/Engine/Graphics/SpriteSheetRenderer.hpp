@@ -28,6 +28,9 @@ class SpriteSheetRenderer : public IRenderer {
 public:
     /** Color tint multiplier */
     Color color = Color::white();
+    SpriteSheet *spriteSheet = nullptr;
+    /** path to sprite sheet */
+    std::string spriteSheetPath;
 
     /** Sorting order for z-depth (higher = rendered later/on top) */
     int sortingOrder = 0;
@@ -103,7 +106,6 @@ public:
     f32 GetSortingKey() const override;
 
 private:
-    SpriteSheet* spriteSheet = nullptr;
     AEGfxVertexList* mesh = nullptr;
 
     const AnimationClip* currentClip = nullptr;
