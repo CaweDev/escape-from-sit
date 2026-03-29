@@ -423,7 +423,7 @@ namespace Game
         // Wrapping buttons in their own panel so visible toggling works in the hierarchy.
         m_cheatPanel = m_panel->CreateChild<UI::Panel>();
         m_cheatPanel->name = "CheatPanel";
-        m_cheatPanel->SetAnchors({ 0.0f, 0.20f }, { 1.0f, 0.5f });
+        m_cheatPanel->SetAnchors({ 0.0f, 0.10f }, { 1.0f, 0.50f });
         m_cheatPanel->SetAnchoredPosition({ 0.0f, 0.0f });
         m_cheatPanel->SetSizeDelta({ 0.0f, 0.0f });
         m_cheatPanel->SetBackgroundColor({ 0.0f, 0.0f, 0.0f, 0.0f }); // transparent
@@ -433,7 +433,7 @@ namespace Game
         // ---- Cheat panel title ----
         UI::Text* cheatTitle = m_cheatPanel->CreateChild<UI::Text>();
         cheatTitle->name = "CheatPanelTitle";
-        cheatTitle->SetAnchors({ 0.1f, 0.84f }, { 0.9f, 0.98f });
+        cheatTitle->SetAnchors({ 0.1f, 0.85f }, { 0.9f, 0.98f });
         cheatTitle->SetAnchoredPosition({ 0.0f, 0.0f });
         cheatTitle->SetSizeDelta({ 0.0f, 0.0f });
         cheatTitle->SetText("Game Scene");
@@ -445,7 +445,7 @@ namespace Game
         // ---- Cheat buttons are children of m_cheatPanel ----
         m_infiniteSpeedBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_infiniteSpeedBtn->name = "InfiniteSpeedBtn";
-        m_infiniteSpeedBtn->SetAnchors({ 0.1f, 0.60f }, { 0.9f, 0.80f });
+        m_infiniteSpeedBtn->SetAnchors({ 0.1f, 0.65f }, { 0.9f, 0.80f });
         m_infiniteSpeedBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_infiniteSpeedBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_infiniteSpeedBtn->SetBackgroundColor(cfg.buttonNormal);
@@ -462,7 +462,7 @@ namespace Game
 
         m_catchImmuneBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_catchImmuneBtn->name = "CatchImmuneBtn";
-        m_catchImmuneBtn->SetAnchors({ 0.1f, 0.38f }, { 0.9f, 0.58f });
+        m_catchImmuneBtn->SetAnchors({ 0.1f, 0.45f }, { 0.9f, 0.60f });
         m_catchImmuneBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_catchImmuneBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_catchImmuneBtn->SetBackgroundColor(cfg.buttonNormal);
@@ -479,7 +479,7 @@ namespace Game
 
         m_getAllAccessCardsBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_getAllAccessCardsBtn->name = "GetAllAccessCardsBtn";
-        m_getAllAccessCardsBtn->SetAnchors({ 0.1f, 0.16f }, { 0.9f, 0.36f });
+        m_getAllAccessCardsBtn->SetAnchors({ 0.1f, 0.25f }, { 0.9f, 0.40f });
         m_getAllAccessCardsBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_getAllAccessCardsBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_getAllAccessCardsBtn->SetBackgroundColor(cfg.buttonNormal);
@@ -496,7 +496,7 @@ namespace Game
 
         m_collectAllPuzzlesBtn = m_cheatPanel->CreateChild<UI::Button>();
         m_collectAllPuzzlesBtn->name = "CollectAllPuzzlesBtn";
-        m_collectAllPuzzlesBtn->SetAnchors({ 0.1f, 0.00f }, { 0.9f, 0.14f });
+        m_collectAllPuzzlesBtn->SetAnchors({ 0.1f, 0.05f }, { 0.9f, 0.20f });
         m_collectAllPuzzlesBtn->SetAnchoredPosition({ 0.0f, 0.0f });
         m_collectAllPuzzlesBtn->SetSizeDelta({ 0.0f, 0.0f });
         m_collectAllPuzzlesBtn->SetBackgroundColor(cfg.buttonNormal);
