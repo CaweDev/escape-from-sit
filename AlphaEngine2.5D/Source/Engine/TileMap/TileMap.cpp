@@ -96,7 +96,6 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
     terminalPositions.clear();
     exitPositions.clear();
     controlRoomDoorPositions.clear();
-    accessCardPositions.clear();
     
     // First pass: load all tiles (direct copy - no inversion)
     for (int i = 0; i < w * h; ++i) {
@@ -129,21 +128,6 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
                 // Replace marker with floor (door will be spawned by FPSScene)
                 // tiles[index] = TileType::Empty;
                 //printf("[TileMap] Found control room door marker at (%d, %d)\n", x, y);
-            }
-            else {
-                // Check for access card markers
-                int cardId = -1;
-                if (IsAccessCardMarker(tileValue, cardId)) {
-                    // Store access card spawn position with card ID
-                    accessCardPositions.push_back(std::make_pair(
-                        Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f),
-                        cardId
-                    ));
-                    // Replace marker with floor (card will be spawned by FPSScene)
-                    // tiles[index] = TileType::Empty;
-                    /* const char* cardNames[] = {"Green", "Purple", "Red", "Yellow"};
-                    printf("[TileMap] Found %s access card marker at (%d, %d)\n", cardNames[cardId], x, y);*/
-                }
             }
         }
     }

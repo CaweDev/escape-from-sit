@@ -45,19 +45,6 @@ namespace
         float spawnedNPCColliderRadius = 0.25f;
         float spawnedGuardColliderRadius = 0.3f;
 
-        float playerFogDistance = 2.0f;
-        float playerFogMinVisibility = -0.1f;
-        float playerFogMaxVisibility = 0.6f;
-        float playerGravityScale = 1.0f;
-        float playerDrag = 5.0f;
-        float playerColliderRadius = 0.2f;
-        float playerColliderMinHeight = 0.0f;
-        float playerColliderMaxHeight = 1.8f;
-        float playerSpawnX = 2.5f;
-        float playerSpawnY = 2.5f;
-        float playerSpawnZ = 0.0f;
-        float playerSpawnRot = 0.0f;
-
         int cctvPerZone = 10;
         int cctvPlacementStep = 1;
         float cctvPlacementMinDist = 3.5f;
@@ -80,12 +67,6 @@ namespace
         float doorInteractMaxDistance = 2.5f;
         float accessCardInteractMaxDistance = 2.5f;
 
-        bool debugForceSpawnAtPlayer = false;
-        float debugForcedCardSpawnRadius = 1.2f;
-        float accessCardScaleX = 0.4f;
-        float accessCardScaleY = 0.4f;
-        float accessCardPosZ = 0.15f;
-        int accessCardSortingOrder = 200;
 
         float npcNoticeRadius = 6.0f;
         float guardShakeDistance = 6.0f;
@@ -160,18 +141,6 @@ namespace
             spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
             spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
 
-            playerFogDistance = j.get("playerFogDistance", playerFogDistance).asFloat();
-            playerFogMinVisibility = j.get("playerFogMinVisibility", playerFogMinVisibility).asFloat();
-            playerFogMaxVisibility = j.get("playerFogMaxVisibility", playerFogMaxVisibility).asFloat();
-            playerGravityScale = j.get("playerGravityScale", playerGravityScale).asFloat();
-            playerDrag = j.get("playerDrag", playerDrag).asFloat();
-            playerColliderRadius = j.get("playerColliderRadius", playerColliderRadius).asFloat();
-            playerColliderMinHeight = j.get("playerColliderMinHeight", playerColliderMinHeight).asFloat();
-            playerColliderMaxHeight = j.get("playerColliderMaxHeight", playerColliderMaxHeight).asFloat();
-            playerSpawnX = j.get("playerSpawnX", playerSpawnX).asFloat();
-            playerSpawnY = j.get("playerSpawnY", playerSpawnY).asFloat();
-            playerSpawnZ = j.get("playerSpawnZ", playerSpawnZ).asFloat();
-            playerSpawnRot = j.get("playerSpawnRot", playerSpawnRot).asFloat();
 
             cctvPerZone = j.get("cctvPerZone", cctvPerZone).asInt();
             cctvPlacementStep = j.get("cctvPlacementStep", cctvPlacementStep).asInt();
@@ -195,13 +164,6 @@ namespace
             doorInteractMaxDistance = j.get("doorInteractMaxDistance", doorInteractMaxDistance).asFloat();
             accessCardInteractMaxDistance = j.get("accessCardInteractMaxDistance", accessCardInteractMaxDistance).asFloat();
 
-            debugForceSpawnAtPlayer = j.get("debugForceSpawnAtPlayer", debugForceSpawnAtPlayer).asBool();
-            debugForcedCardSpawnRadius = j.get("debugForcedCardSpawnRadius", debugForcedCardSpawnRadius).asFloat();
-            accessCardScaleX = j.get("accessCardScaleX", accessCardScaleX).asFloat();
-            accessCardScaleY = j.get("accessCardScaleY", accessCardScaleY).asFloat();
-            accessCardPosZ = j.get("accessCardPosZ", accessCardPosZ).asFloat();
-            accessCardSortingOrder = j.get("accessCardSortingOrder", accessCardSortingOrder).asInt();
-
             npcNoticeRadius = j.get("npcNoticeRadius", npcNoticeRadius).asFloat();
             guardShakeDistance = j.get("guardShakeDistance", guardShakeDistance).asFloat();
             guardShakeDuration = j.get("guardShakeDuration", guardShakeDuration).asFloat();
@@ -211,7 +173,7 @@ namespace
             tileMapColliderMinHeight = j.get("tileMapColliderMinHeight", tileMapColliderMinHeight).asFloat();
             tileMapColliderMaxHeight = j.get("tileMapColliderMaxHeight", tileMapColliderMaxHeight).asFloat();
             controlRoomDoorPosZ = j.get("controlRoomDoorPosZ", controlRoomDoorPosZ).asFloat();
-            doorColliderMinHeight = j.get("doorColliderMinHeight", doorColliderMinHeight).asFloat();
+            doorColliderMinHeight = j.get(" doorColliderMinHeight", doorColliderMinHeight).asFloat();
             doorColliderMaxHeight = j.get("doorColliderMaxHeight", doorColliderMaxHeight).asFloat();
             cardSpawnDedupThreshold = j.get("cardSpawnDedupThreshold", cardSpawnDedupThreshold).asFloat();
             debugCirclePi = j.get("debugCirclePi", debugCirclePi).asFloat();
@@ -399,7 +361,6 @@ namespace Game
 
         // ===== player =====
 
-
         auto player = GameObject::Find("Player");
         playerTf = player->transform;
         playerViewPos = playerTf->position;
@@ -430,14 +391,14 @@ namespace Game
         playerHUD->SetTileMap(map);
         playerHUD->SetPlayerTransform(playerTf);
         playerHUD->SetZoneGetter([this](int tx, int ty)
-        { return this->GetZoneId(tx, ty); });
+                                 { return this->GetZoneId(tx, ty); });
         playerHUD->SetHeatmap(&heatmap); // Connect heatmap data
-        pauseMenu  = player->GetComponent<PauseMenu>();
+        pauseMenu = player->GetComponent<PauseMenu>();
         loseScreen = player->GetComponent<LoseScreen>();
-        winScreen= player->GetComponent<WinScreen>();
+        winScreen = player->GetComponent<WinScreen>();
         controlsMenu = player->GetComponent<ControlsMenu>();
         powerUpController = player->GetComponent<PlayerPowerUpController>();
-        
+
         showControlsAtStart = true;
         // ===== ML init =====
         zoneMgr.Init(map, loadedMapWidth, loadedMapHeight);
@@ -463,11 +424,6 @@ namespace Game
 
         // ===== spawn 4 guards (1 per zone) =====
         guards.clear();
-        // SpawnGuardInZone(1, map, playerHUD, "Assets/Sprites/guard.png");
-        // SpawnGuardInZone(2, map, playerHUD, "Assets/Sprites/guard.png");
-        // SpawnGuardInZone(3, map, playerHUD, "Assets/Sprites/guard.png");
-        // SpawnGuardInZone(4, map, playerHUD, "Assets/Sprites/guard.png");
-
 
         auto guardObjects = GameObject::FindGameObjectsWithTag("Guard");
         for (auto &g : guardObjects)
@@ -690,141 +646,6 @@ namespace Game
             controlDoor->interactable = interactable;
         }
 
-        // ===== Spawn Access Cards from map markers (tiles 15-18) =====
-        auto accessCardPositions = map->GetAccessCardPositions();
-
-        const char *cardSpritePaths[] = {
-            "Assets/Sprites/color_green_empty.png",
-            "Assets/Sprites/color_purple_empty.png",
-            "Assets/Sprites/color_red_empty.png",
-            "Assets/Sprites/color_yellow_empty.png"};
-
-        // DEBUG: set true to force access cards to spawn at player spawn for debugging
-        bool debugForceSpawnAtPlayer = cfg.debugForceSpawnAtPlayer;
-
-        std::vector<Engine::Vector2> usedCardLocations;
-
-        for (size_t i = 0; i < accessCardPositions.size(); ++i)
-        {
-            Vector2 pos = accessCardPositions[i].first;
-            int cardId = accessCardPositions[i].second;
-
-            if (cardId < 0 || cardId > 3)
-                continue;
-
-            const char *cardNames[] = {"Green", "Purple", "Red", "Yellow"};
-
-            // If card marker lies within the player spawn exclusion area, find nearest valid tile
-            auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2
-            {
-                int ox = (int)std::floor(orig.x);
-                int oy = (int)std::floor(orig.y);
-                const int MAXR = 12;
-                for (int r = 0; r <= MAXR; ++r)
-                {
-                    for (int dy = -r; dy <= r; ++dy)
-                    {
-                        for (int dx = -r; dx <= r; ++dx)
-                        {
-                            // only check perimeter of the square to keep it efficient
-                            if (std::abs(dx) != r && std::abs(dy) != r)
-                                continue;
-                            int nx = ox + dx;
-                            int ny = oy + dy;
-                            if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
-                                continue;
-                            // skip tiles inside player spawn radius
-                            float cdx = ((float)nx + 0.5f) - spawnExcludeX;
-                            float cdy = ((float)ny + 0.5f) - spawnExcludeY;
-                            if (cdx * cdx + cdy * cdy < spawnExcludeRadius * spawnExcludeRadius)
-                                continue;
-                            // require walkable center of tile
-                            if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
-                                continue;
-
-                            Engine::Vector2 candidate((float)nx + 0.5f, (float)ny + 0.5f);
-                            bool alreadyUsed = false;
-                            for (const auto &used : usedCardLocations)
-                            {
-                                if (std::abs(used.x - candidate.x) < cfg.cardSpawnDedupThreshold && std::abs(used.y - candidate.y) < cfg.cardSpawnDedupThreshold)
-                                {
-                                    alreadyUsed = true;
-                                    break;
-                                }
-                            }
-                            if (alreadyUsed)
-                                continue;
-
-                            return candidate;
-                        }
-                    }
-                }
-                // fallback to original
-                return orig;
-            };
-
-            if (debugForceSpawnAtPlayer)
-            {
-                // Spread forced-spawned cards around player spawn in a small circle
-                int total = (int)accessCardPositions.size();
-                if (total <= 0)
-                    total = 1;
-                float angle = (2.0f * cfg.debugCirclePi) * ((float)i / (float)total);
-                float radius = cfg.debugForcedCardSpawnRadius;
-                Engine::Vector2 candidate(spawnExcludeX + std::cos(angle) * radius,
-                                          spawnExcludeY + std::sin(angle) * radius);
-                // if the candidate isn't walkable, fallback to nearest valid
-                if (map && !map->IsWalkable(candidate.x, candidate.y))
-                {
-                    candidate = findValidSpawn(candidate);
-                }
-                pos = candidate;
-            }
-            else
-            {
-                // if marker inside spawn radius, relocate
-                float ddx = pos.x - spawnExcludeX;
-                float ddy = pos.y - spawnExcludeY;
-                if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius)
-                {
-                    Engine::Vector2 newPos = findValidSpawn(pos);
-                    pos = newPos;
-                }
-            }
-
-            usedCardLocations.push_back(pos);
-
-            // Create card GameObject
-            std::string cardName = std::string(cardNames[cardId]) + "AccessCard";
-            auto cardGO = CreateGameObject(cardName);
-            cardGO->transform->position = Vector3(pos.x, pos.y, cfg.accessCardPosZ);
-            cardGO->transform->localScale = Vector2(cfg.accessCardScaleX, cfg.accessCardScaleY);
-
-            // Add SpriteRenderer
-            auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
-            sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
-            sr->billboard = true;
-            sr->sortingOrder = cfg.accessCardSortingOrder;
-
-            // Add Interactable
-            auto interactable = cardGO->AddComponent<Engine::Interactable>();
-            interactable->actionText = "Collect Access Card";
-            interactable->maxDistance = cfg.accessCardInteractMaxDistance;
-
-            // Add AccessCard component
-            auto card = cardGO->AddComponent<Game::AccessCard>();
-            card->cardId = cardId;
-            card->cardColor = static_cast<Game::AccessCardColor>(cardId);
-            card->spriteRenderer = sr;
-            card->interactable = interactable;
-            // Ensure card is active and visible after creation
-            cardGO->active = true;
-            if (!cardGO->active)
-            {
-                cardGO->active = true;
-            }
-        }
-
         // Connect terminals to guards
         for (auto *guard : guards)
         {
@@ -884,7 +705,6 @@ namespace Game
                 }
             }
         }
-
     }
 
     /*! \brief Called after rendering to draw editor overlays. */

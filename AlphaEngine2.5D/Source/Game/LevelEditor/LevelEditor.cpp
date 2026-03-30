@@ -908,13 +908,13 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
     }
 
     // Access card positions (tiles 15-18 ? 'F','G','H','J')
-    const char cardChars[] = { 'F', 'G', 'H', 'J' };
-    for (auto& [pos, cardId] : tileMap->GetAccessCardPositions()) {
-        int tx = (int)std::floor(pos.x);
-        int ty = (int)std::floor(pos.y);
-        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight && cardId >= 0 && cardId <= 3)
-            overlay[ty * mapWidth + tx] = cardChars[cardId];
-    }
+    // const char cardChars[] = { 'F', 'G', 'H', 'J' };
+    // for (auto& [pos, cardId] : tileMap->GetAccessCardPositions()) {
+    //     int tx = (int)std::floor(pos.x);
+    //     int ty = (int)std::floor(pos.y);
+    //     if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight && cardId >= 0 && cardId <= 3)
+    //         overlay[ty * mapWidth + tx] = cardChars[cardId];
+    // }
 
     // Write the map row by row
     for (int y = 0; y < mapHeight; ++y) {

@@ -159,9 +159,6 @@ namespace Engine
         /** Get all control room door positions from map */
         const std::vector<Vector2> &GetControlRoomDoorPositions() const { return controlRoomDoorPositions; }
 
-        /** Get all access card spawn positions from map (4 entries, one per card type) */
-        const std::vector<std::pair<Vector2, int>> &GetAccessCardPositions() const { return accessCardPositions; }
-
     private:
         bool initialized = false;
         std::vector<TileType> tiles;
@@ -179,9 +176,6 @@ namespace Engine
 
         /** Control room door positions found in map (tile 13) */
         std::vector<Vector2> controlRoomDoorPositions;
-
-        /** Access card spawn positions found in map (tiles 15-18), paired with card ID (0-3) */
-        std::vector<std::pair<Vector2, int>> accessCardPositions;
 
         /** Spawn all doors present in the tile map array */
         void SpawnDoors();

@@ -2,8 +2,6 @@
   "GameObjects": [
     {
       "Active": true,
-      "Name": "Laptop 1",
-      "Tag": "Item",
       "Components": [
         {
           "Position": {
@@ -58,12 +56,12 @@
           "itemName": "Laptop",
           "timer": 1.5
         }
-      ]
+      ],
+      "Name": "Laptop 1",
+      "Tag": "Item"
     },
     {
       "Active": true,
-      "Name": "Laptop 1 (Copy)",
-      "Tag": "Item",
       "Components": [
         {
           "Position": {
@@ -118,12 +116,12 @@
           "itemName": "Laptop",
           "timer": 1.5
         }
-      ]
+      ],
+      "Name": "Laptop 1 (Copy)",
+      "Tag": "Item"
     },
     {
       "Active": true,
-      "Name": "Player",
-      "Tag": "Player",
       "Components": [
         {
           "Position": {
@@ -191,8 +189,7 @@
           "isSprinting": false
         },
         {
-          "Type": "InteractionController",
-          "interactKey": 69
+          "Type": "InteractionController"
         },
         {
           "Type": "PlayerHUD"
@@ -216,36 +213,47 @@
           "Type": "PlayerPowerUpController"
         },
         {
-          "Type": "Inventory",
-          "activeSlot": 0
+          "Type": "Inventory"
         }
-      ]
+      ],
+      "Name": "Player",
+      "Tag": "Player"
     },
     {
       "Active": true,
-      "Name": "Guard_Z1",
-      "Tag": "Guard",
       "Components": [
         {
-          "Type": "Transform",
-          "Position": { "x": 10.5, "y": 10.5, "z": 0.0 },
+          "Position": {
+            "x": 10.5,
+            "y": 10.5,
+            "z": 0.0
+          },
           "Rotation": 0.0,
-          "Scale": { "x": 1.0, "y": 1.0 }
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
         },
         {
           "Type": "SpriteSheetRenderer",
           "billboard": true,
+          "color": {
+            "a": 1.0,
+            "b": 1.0,
+            "g": 1.0,
+            "r": 1.0
+          },
           "flipX": false,
           "flipY": false,
           "sortingOrder": 100,
-          "spriteSheetPath": "Assets/Sprites/guard.png",
-          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+          "spriteSheetPath": "Assets/Sprites/guard.png"
         },
         {
           "Type": "Rigidbody2D",
           "bodyType": 0,
           "collisionHeight": 0.75,
-          "crouchHeight": 0.3,
+          "crouchHeight": 0.30000001192092896,
           "currentHeight": 0.0,
           "drag": 0.0,
           "freezeRotation": true,
@@ -254,54 +262,69 @@
           "isGrounded": true,
           "mass": 1.0,
           "standingHeight": 0.75,
-          "velocity": { "x": 0.0, "y": 0.0 },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "verticalVelocity": 0.0
         },
         {
           "Type": "CircleCollider2D",
           "maxHeight": 2.0,
           "minHeight": 0.0,
-          "radius": 0.3
+          "radius": 0.30000001192092896
         },
         {
           "Type": "SecurityGuard",
-          "arriveDistance": 0.1,
-          "catchRadius": 0.7,
-          "chaseSpeed": 2.4,
+          "arriveDistance": 0.10000000149011612,
+          "catchRadius": 0.69999998807907104,
+          "chaseSpeed": 2.4000000953674316,
           "detectRadius": 4.0,
           "homeZoneId": 1,
           "maxLostSightTime": 2.5,
           "patrolSpeed": 1.5,
           "searchDuration": 4.0,
-          "searchSpeed": 0.8
+          "searchSpeed": 0.80000001192092896
         }
-      ]
+      ],
+      "Name": "Guard_Z1",
+      "Tag": "Guard"
     },
     {
       "Active": true,
-      "Name": "Guard_Z2",
-      "Tag": "Guard",
       "Components": [
         {
-          "Type": "Transform",
-          "Position": { "x": 10.5, "y": 30.5, "z": 0.0 },
+          "Position": {
+            "x": 10.5,
+            "y": 30.5,
+            "z": 0.0
+          },
           "Rotation": 0.0,
-          "Scale": { "x": 1.0, "y": 1.0 }
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
         },
         {
           "Type": "SpriteSheetRenderer",
           "billboard": true,
+          "color": {
+            "a": 1.0,
+            "b": 1.0,
+            "g": 1.0,
+            "r": 1.0
+          },
           "flipX": false,
           "flipY": false,
           "sortingOrder": 100,
-          "spriteSheetPath": "Assets/Sprites/guard.png",
-          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+          "spriteSheetPath": "Assets/Sprites/guard.png"
         },
         {
           "Type": "Rigidbody2D",
           "bodyType": 0,
           "collisionHeight": 0.75,
-          "crouchHeight": 0.3,
+          "crouchHeight": 0.30000001192092896,
           "currentHeight": 0.0,
           "drag": 0.0,
           "freezeRotation": true,
@@ -310,54 +333,69 @@
           "isGrounded": true,
           "mass": 1.0,
           "standingHeight": 0.75,
-          "velocity": { "x": 0.0, "y": 0.0 },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "verticalVelocity": 0.0
         },
         {
           "Type": "CircleCollider2D",
           "maxHeight": 2.0,
           "minHeight": 0.0,
-          "radius": 0.3
+          "radius": 0.30000001192092896
         },
         {
           "Type": "SecurityGuard",
-          "arriveDistance": 0.1,
-          "catchRadius": 0.7,
-          "chaseSpeed": 2.4,
+          "arriveDistance": 0.10000000149011612,
+          "catchRadius": 0.69999998807907104,
+          "chaseSpeed": 2.4000000953674316,
           "detectRadius": 4.0,
           "homeZoneId": 2,
           "maxLostSightTime": 2.5,
           "patrolSpeed": 1.5,
           "searchDuration": 4.0,
-          "searchSpeed": 0.8
+          "searchSpeed": 0.80000001192092896
         }
-      ]
+      ],
+      "Name": "Guard_Z2",
+      "Tag": "Guard"
     },
     {
       "Active": true,
-      "Name": "Guard_Z3",
-      "Tag": "Guard",
       "Components": [
         {
-          "Type": "Transform",
-          "Position": { "x": 30.5, "y": 30.5, "z": 0.0 },
+          "Position": {
+            "x": 30.5,
+            "y": 30.5,
+            "z": 0.0
+          },
           "Rotation": 0.0,
-          "Scale": { "x": 1.0, "y": 1.0 }
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
         },
         {
           "Type": "SpriteSheetRenderer",
           "billboard": true,
+          "color": {
+            "a": 1.0,
+            "b": 1.0,
+            "g": 1.0,
+            "r": 1.0
+          },
           "flipX": false,
           "flipY": false,
           "sortingOrder": 100,
-          "spriteSheetPath": "Assets/Sprites/guard.png",
-          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+          "spriteSheetPath": "Assets/Sprites/guard.png"
         },
         {
           "Type": "Rigidbody2D",
           "bodyType": 0,
           "collisionHeight": 0.75,
-          "crouchHeight": 0.3,
+          "crouchHeight": 0.30000001192092896,
           "currentHeight": 0.0,
           "drag": 0.0,
           "freezeRotation": true,
@@ -366,54 +404,69 @@
           "isGrounded": true,
           "mass": 1.0,
           "standingHeight": 0.75,
-          "velocity": { "x": 0.0, "y": 0.0 },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "verticalVelocity": 0.0
         },
         {
           "Type": "CircleCollider2D",
           "maxHeight": 2.0,
           "minHeight": 0.0,
-          "radius": 0.3
+          "radius": 0.30000001192092896
         },
         {
           "Type": "SecurityGuard",
-          "arriveDistance": 0.1,
-          "catchRadius": 0.7,
-          "chaseSpeed": 2.4,
+          "arriveDistance": 0.10000000149011612,
+          "catchRadius": 0.69999998807907104,
+          "chaseSpeed": 2.4000000953674316,
           "detectRadius": 4.0,
           "homeZoneId": 3,
           "maxLostSightTime": 2.5,
           "patrolSpeed": 1.5,
           "searchDuration": 4.0,
-          "searchSpeed": 0.8
+          "searchSpeed": 0.80000001192092896
         }
-      ]
+      ],
+      "Name": "Guard_Z3",
+      "Tag": "Guard"
     },
     {
       "Active": true,
-      "Name": "Guard_Z4",
-      "Tag": "Guard",
       "Components": [
         {
-          "Type": "Transform",
-          "Position": { "x": 30.5, "y": 10.5, "z": 0.0 },
+          "Position": {
+            "x": 30.5,
+            "y": 10.5,
+            "z": 0.0
+          },
           "Rotation": 0.0,
-          "Scale": { "x": 1.0, "y": 1.0 }
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "Type": "Transform"
         },
         {
           "Type": "SpriteSheetRenderer",
           "billboard": true,
+          "color": {
+            "a": 1.0,
+            "b": 1.0,
+            "g": 1.0,
+            "r": 1.0
+          },
           "flipX": false,
           "flipY": false,
           "sortingOrder": 100,
-          "spriteSheetPath": "Assets/Sprites/guard.png",
-          "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
+          "spriteSheetPath": "Assets/Sprites/guard.png"
         },
         {
           "Type": "Rigidbody2D",
           "bodyType": 0,
           "collisionHeight": 0.75,
-          "crouchHeight": 0.3,
+          "crouchHeight": 0.30000001192092896,
           "currentHeight": 0.0,
           "drag": 0.0,
           "freezeRotation": true,
@@ -422,28 +475,241 @@
           "isGrounded": true,
           "mass": 1.0,
           "standingHeight": 0.75,
-          "velocity": { "x": 0.0, "y": 0.0 },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "verticalVelocity": 0.0
         },
         {
           "Type": "CircleCollider2D",
           "maxHeight": 2.0,
           "minHeight": 0.0,
-          "radius": 0.3
+          "radius": 0.30000001192092896
         },
         {
           "Type": "SecurityGuard",
-          "arriveDistance": 0.1,
-          "catchRadius": 0.7,
-          "chaseSpeed": 2.4,
+          "arriveDistance": 0.10000000149011612,
+          "catchRadius": 0.69999998807907104,
+          "chaseSpeed": 2.4000000953674316,
           "detectRadius": 4.0,
           "homeZoneId": 4,
           "maxLostSightTime": 2.5,
           "patrolSpeed": 1.5,
           "searchDuration": 4.0,
-          "searchSpeed": 0.8
+          "searchSpeed": 0.80000001192092896
         }
-      ]
+      ],
+      "Name": "Guard_Z4",
+      "Tag": "Guard"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 12.21875,
+            "y": 8.0,
+            "z": 0.15000000596046448
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.40000000596046448,
+            "y": 0.40000000596046448
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/color_green_empty.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Collect Access Card",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        {
+          "BaseZ": 0.15000000596046448,
+          "CardColor": {
+            "a": 0.15000000596046448,
+            "b": 0.0,
+            "g": 0.0,
+            "r": 0.0
+          },
+          "CardId": 0,
+          "FloatHeight": 0.10000000149011612,
+          "FloatSpeed": 2.0,
+          "FloatTime": 0.0,
+          "SpawnSafeDelay": 0.0,
+          "SpawnSafeTimer": 0.0,
+          "Type": "AccessCard"
+        }
+      ],
+      "Name": "GreenAccessCard",
+      "Tag": "Item"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 5.78125,
+            "y": 8.625,
+            "z": 0.15000000596046448
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.40000000596046448,
+            "y": 0.40000000596046448
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/color_purple_empty.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Collect Access Card",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        {
+          "BaseZ": 0.15000000596046448,
+          "CardColor": {
+            "a": 0.15000000596046448,
+            "b": 0.0,
+            "g": 1.4012984643248171e-45,
+            "r": 0.5
+          },
+          "CardId": 1,
+          "FloatHeight": 0.10000000149011612,
+          "FloatSpeed": 2.0,
+          "FloatTime": 0.0,
+          "SpawnSafeDelay": 0.0,
+          "SpawnSafeTimer": 0.0,
+          "Type": "AccessCard"
+        }
+      ],
+      "Name": "PurpleAccessCard",
+      "Tag": "Item"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 10.28125,
+            "y": 6.96875,
+            "z": 0.15000000596046448
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.40000000596046448,
+            "y": 0.40000000596046448
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/color_red_empty.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Collect Access Card",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        {
+          "BaseZ": 0.15000000596046448,
+          "CardColor": {
+            "a": 0.15000000596046448,
+            "b": 0.0,
+            "g": 2.8025969286496341e-45,
+            "r": 1.0
+          },
+          "CardId": 2,
+          "FloatHeight": 0.10000000149011612,
+          "FloatSpeed": 2.0,
+          "FloatTime": 0.0,
+          "SpawnSafeDelay": 0.0,
+          "SpawnSafeTimer": 0.0,
+          "Type": "AccessCard"
+        }
+      ],
+      "Name": "RedAccessCard",
+      "Tag": "Item"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 7.6875,
+            "y": 7.1875,
+            "z": 0.15000000596046448
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.40000000596046448,
+            "y": 0.40000000596046448
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/color_yellow_empty.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Collect Access Card",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        {
+          "BaseZ": 0.15000000596046448,
+          "CardColor": {
+            "a": 0.15000000596046448,
+            "b": 0.0,
+            "g": 4.2038953929744512e-45,
+            "r": 1.0
+          },
+          "CardId": 3,
+          "FloatHeight": 0.10000000149011612,
+          "FloatSpeed": 2.0,
+          "FloatTime": 0.0,
+          "SpawnSafeDelay": 0.0,
+          "SpawnSafeTimer": 0.0,
+          "Type": "AccessCard"
+        }
+      ],
+      "Name": "YellowAccessCard",
+      "Tag": "Item"
     }
   ]
 }

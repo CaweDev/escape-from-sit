@@ -180,7 +180,6 @@ namespace Game
         // {
         SpawnExistingDoors(map, renderer);
         SpawnExistingTerminals(map);
-        SpawnExistingCards(map);
         SpawnExistingCCTVs(map);
         // }
     }
@@ -333,82 +332,6 @@ namespace Game
             sr->billboard = true;
             sr->sortingOrder = 250;
             sr->highlightColor = Engine::Color(0.3f, 0.3f, 0.0f, 0.0f);
-        }
-    }
-
-    /*! \brief Spawn access card GameObjects for existing card markers. */
-    void EditorScene::SpawnExistingCards(TileMap *map)
-    {
-        auto accessCardPositions = map->GetAccessCardPositions();
-        const char *cardSpritePaths[] = {
-            "Assets/Sprites/color_green_empty.png",
-            "Assets/Sprites/color_purple_empty.png",
-            "Assets/Sprites/color_red_empty.png",
-            "Assets/Sprites/color_yellow_empty.png"};
-
-        auto findValidSpawn = [&](Engine::Vector2 orig) -> Engine::Vector2
-        {
-            int ox = (int)std::floor(orig.x);
-            int oy = (int)std::floor(orig.y);
-            const int MAXR = 12;
-            for (int r = 0; r <= MAXR; ++r)
-            {
-                for (int dy = -r; dy <= r; ++dy)
-                {
-                    for (int dx = -r; dx <= r; ++dx)
-                    {
-                        if (std::abs(dx) != r && std::abs(dy) != r)
-                            continue;
-                        int nx = ox + dx;
-                        int ny = oy + dy;
-                        if (nx < 0 || nx >= mapWidth || ny < 0 || ny >= mapHeight)
-                            continue;
-                        float cdx = ((float)nx + 0.5f) - spawnExcludeX;
-                        float cdy = ((float)ny + 0.5f) - spawnExcludeY;
-                        if (cdx * cdx + cdy * cdy < spawnExcludeRadius * spawnExcludeRadius)
-                            continue;
-                        if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
-                            continue;
-                        return Engine::Vector2((float)nx + 0.5f, (float)ny + 0.5f);
-                    }
-                }
-            }
-            return orig;
-        };
-
-        for (size_t i = 0; i < accessCardPositions.size(); ++i)
-        {
-            Vector2 pos = accessCardPositions[i].first;
-            int cardId = accessCardPositions[i].second;
-
-            if (cardId < 0 || cardId > 3)
-                continue;
-
-            float ddx = pos.x - spawnExcludeX;
-            float ddy = pos.y - spawnExcludeY;
-            if (ddx * ddx + ddy * ddy < spawnExcludeRadius * spawnExcludeRadius)
-            {
-                pos = findValidSpawn(pos);
-            }
-
-            auto cardGO = CreateGameObject("Editor_AccessCard_" + std::to_string(i));
-            cardGO->transform->position = Vector3(pos.x, pos.y, 0.15f);
-            cardGO->transform->localScale = Vector2(0.4f, 0.4f);
-
-            auto sr = cardGO->AddComponent<Engine::SpriteRenderer>();
-            sr->SetSprite(Engine::AssetManager::GetSprite(cardSpritePaths[cardId]));
-            sr->billboard = true;
-            sr->sortingOrder = 200;
-
-            auto interactable = cardGO->AddComponent<Engine::Interactable>();
-            interactable->maxDistance = 2.5f;
-
-            auto card = cardGO->AddComponent<Game::AccessCard>();
-            card->cardId = cardId;
-            card->cardColor = static_cast<Game::AccessCardColor>(cardId);
-            card->spriteRenderer = sr;
-            card->interactable = interactable;
-            cardGO->active = true;
         }
     }
 
