@@ -710,6 +710,2087 @@
       ],
       "Name": "YellowAccessCard",
       "Tag": "Item"
+    },
+
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 16.5,
+            "y": 5.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 1,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_1",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 61.5,
+            "y": 20.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 2,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_2",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 41.5,
+            "y": 5.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 3,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_3",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 4.5199999809265137,
+            "y": 20.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 4,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_4",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 27.520000457763672,
+            "y": 20.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 5,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_5",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 45.5,
+            "y": 20.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 6,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_6",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 53.5,
+            "y": 10.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 7,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_7",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 28.5,
+            "y": 6.4800000190734863,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 8,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_8",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 35.5,
+            "y": 12.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 9,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_9",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 12.479999542236328,
+            "y": 16.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 180.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 10,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_10",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 4.5199999809265137,
+            "y": 21.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 11,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_11",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 61.520000457763672,
+            "y": 41.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 12,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_12",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 29.520000457763672,
+            "y": 41.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 13,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_13",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 45.5,
+            "y": 24.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 14,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_14",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 8.5,
+            "y": 41.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 15,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_15",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 27.520000457763672,
+            "y": 21.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 16,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_16",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 61.5,
+            "y": 24.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 17,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_17",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 44.479999542236328,
+            "y": 40.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 18,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_18",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 16.5,
+            "y": 29.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 19,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_19",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 53.5,
+            "y": 33.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 20,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_20",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 88.519996643066406,
+            "y": 21.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 21,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_21",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 122.48000335693359,
+            "y": 41.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 180.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 22,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_22",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 62.5,
+            "y": 41.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 23,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_23",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 99.5,
+            "y": 41.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 24,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_24",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 117.51999664306641,
+            "y": 21.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 25,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_25",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 69.5,
+            "y": 24.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 26,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_26",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 80.5,
+            "y": 41.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 27,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_27",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 105.51999664306641,
+            "y": 28.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 28,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_28",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 89.5,
+            "y": 33.520000457763672,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 29,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_29",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 110.51999664306641,
+            "y": 40.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 30,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_30",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 87.5,
+            "y": 4.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 31,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_31",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 122.48000335693359,
+            "y": 20.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 32,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_32",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 62.5,
+            "y": 20.479999542236328,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 33,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_33",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 108.5,
+            "y": 4.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 34,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_34",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 69.5,
+            "y": 4.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 35,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_35",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 93.480003356933594,
+            "y": 20.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 36,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_36",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 77.480003356933594,
+            "y": 18.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 37,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_37",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 122.48000335693359,
+            "y": 5.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 90.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 38,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_38",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 105.51999664306641,
+            "y": 17.5,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 39,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_39",
+      "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 97.5,
+            "y": 4.5199999809265137,
+            "z": 0.85000002384185791
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 300,
+          "spritePath": "Assets/Sprites/cctv.png"
+        },
+        {
+          "Type": "CCTVCamera",
+          "coneWidth": 70.0,
+          "detectRadius": 3.0,
+          "disabledTimeRemaining": 0.0,
+          "hasLastSeen": false,
+          "id": 40,
+          "isDisabled": false,
+          "isSeeingPlayer": false,
+          "justSpotted": false,
+          "lastSeenTile": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "lastSeenWorld": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "maxRange": 6.0,
+          "needLOS": true,
+          "rayCount": 60,
+          "rayStepPerUnit": 12.0,
+          "showVision": true
+        }
+      ],
+      "Name": "CCTV_40",
+      "Tag": "Sensor"
     }
   ]
 }

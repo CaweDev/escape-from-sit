@@ -67,7 +67,6 @@ namespace
         float doorInteractMaxDistance = 2.5f;
         float accessCardInteractMaxDistance = 2.5f;
 
-
         float npcNoticeRadius = 6.0f;
         float guardShakeDistance = 6.0f;
         float guardShakeDuration = 0.1f;
@@ -140,7 +139,6 @@ namespace
             annoyingNPCBlockTime = j.get("annoyingNPCBlockTime", annoyingNPCBlockTime).asFloat();
             spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
             spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
-
 
             cctvPerZone = j.get("cctvPerZone", cctvPerZone).asInt();
             cctvPlacementStep = j.get("cctvPlacementStep", cctvPlacementStep).asInt();
@@ -449,52 +447,19 @@ namespace Game
         ApplyPriorityZone_AssistNearest(prevChosenZoneId);
 
         // ===== CCTV placement =====
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
 
-        auto placements = Game::GenerateCCTVsPerZone(
-            map, zoneGrid, loadedMapWidth, loadedMapHeight,
-            cfg.cctvPerZone,
-            cfg.cctvPlacementStep,
-            cfg.cctvPlacementMinDist,
-            cfg.cctvPlacementZ,
-            cfg.cctvPlacementEpsilon);
-
-        for (int i = 0; i < (int)placements.size(); ++i)
+        auto cctvs = GameObject::FindGameObjectsWithTag("Sensor");
+        for (auto &cctv : cctvs)
         {
-            auto &p = placements[i];
-
-            Vector3 view = p.pos;
-            view.z = cfg.cctvViewZ;
-            cctvViewPos.push_back(view);
-            cctvViewRot.push_back(p.rot);
-
-            auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
-            camObj->transform->position = p.pos;
-            camObj->transform->rotation = p.rot;
-            camObj->transform->localScale = Vector2(cfg.cctvScaleX, cfg.cctvScaleY);
-
-            auto sr = camObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(cctvSprite);
-            sr->billboard = true;
-            sr->sortingOrder = cfg.cctvSortingOrder;
-
-            playerHUD->AddCCTVTransform(camObj->transform);
-
-            auto sensor = camObj->AddComponent<CCTVCamera>();
-            sensor->id = i + 1;
+            auto sensor = cctv->GetComponent<CCTVCamera>();
             sensor->tile = map;
             sensor->tf = playerTf;
             sensor->hud = playerHUD;
+            sensor->spriteRenderer = cctv->GetComponent<SpriteRenderer>();
             sensor->minimap = playerHUD->GetMinimap();
-            sensor->detectRadius = cfg.cctvDetectRadius;
-            sensor->maxRange = cfg.cctvMaxRange;
-            sensor->coneWidth = cfg.cctvConeWidth;
-            sensor->needLOS = true;
-            sensor->spriteRenderer = sr;
-
             cctvSensors.push_back(sensor);
+            playerHUD->AddCCTVTransform(cctv->transform);
         }
-
         cctvCooldown.assign(cctvSensors.size(), 0.0f);
 
         // ===== CCTV Terminals - Spawn from map markers ('T' in map.txt) =====

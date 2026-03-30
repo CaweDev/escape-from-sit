@@ -178,9 +178,9 @@ namespace Game
         // }
         // else
         // {
-        SpawnExistingDoors(map, renderer);
-        SpawnExistingTerminals(map);
-        SpawnExistingCCTVs(map);
+        // SpawnExistingDoors(map, renderer);
+        // SpawnExistingTerminals(map);
+        // SpawnExistingCCTVs(map);
         // }
     }
 
