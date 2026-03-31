@@ -251,7 +251,7 @@ namespace Game {
                 {
                     isDisabled = false;
                     disabledTimeRemaining = 0.0f;
-                    printf("[CCTV %d] Auto-restored after timeout\n", id);
+                   /* printf("[CCTV %d] Auto-restored after timeout\n", id);*/
                 }
             }
             
@@ -262,7 +262,7 @@ namespace Game {
             }
             else
             {
-                printf("[CCTV %d] WARNING: spriteRenderer is NULL!\n", id);
+               /* printf("[CCTV %d] WARNING: spriteRenderer is NULL!\n", id);*/
             }
             
             return; // Don't run detection logic when disabled
