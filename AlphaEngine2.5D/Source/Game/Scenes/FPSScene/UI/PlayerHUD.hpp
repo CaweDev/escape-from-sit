@@ -12,6 +12,8 @@
 #include "Engine/UI/Components/Panel.hpp"
 #include "Engine/UI/Components/Text.hpp"
 #include "Engine/TileMap/TileMap.hpp"
+#include "Engine/TileMap/Door.hpp"
+
 #include <vector>
 #include <functional>
 #include "Game/ucb1bandit/BanditVisualizer.hpp"
@@ -94,6 +96,7 @@ namespace Game
         bool m_heatmapVisible = false; // Track heatmap overlay visibility
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
+        std::vector<Engine::Door*> m_doors;
         std::function<int(int, int)> m_zoneGetter;
 
         //BookCount
@@ -179,7 +182,7 @@ namespace Game
 
         void AddCCTVTransform(Engine::Transform* cctvTransform);
         void ClearCCTVs();
-
+        void AddDoor(Engine::Door *door);
 
         /**
          * @brief Toggle the full map visibility

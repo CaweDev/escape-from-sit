@@ -24,7 +24,10 @@ DoorRenderer::~DoorRenderer() {
         doorMesh = nullptr;
     }
 }
-
+void DoorRenderer::SetSprite(Sprite *newSprite)
+{
+    sprite = newSprite;
+}
 // Config defaults, populated by DoorRenderer::Initialize()
 static DoorRendererConfig s_doorRendererConfig;
 

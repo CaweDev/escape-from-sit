@@ -3043,6 +3043,2606 @@
           "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 }
         }
       ]
+    },
+    {
+      "Active": true,
+      "Name": "ExitDoor",
+      "Tag": "ExitDoor",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 39.5, "y": 19.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 12,
+          "facing": 0,
+          "tileX": 39,
+          "tileY": 19
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "EXIT LOCKED: Collect all books",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "ControlRoomDoor_Zone1",
+      "Tag": "ControlDoor",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 20.5, "y": 10.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 20,
+          "tileY": 10
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "LOCKED - Access Cards Required (0/4)",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        { "Type": "ControlRoomDoor", "zoneId": 1 }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "ControlRoomDoor_Zone4",
+      "Tag": "ControlDoor",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 69.5, "y": 19.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 69,
+          "tileY": 19
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "LOCKED - Access Cards Required (0/4)",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        { "Type": "ControlRoomDoor", "zoneId": 4 }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "ControlRoomDoor_Zone2",
+      "Tag": "ControlDoor",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 3.5, "y": 41.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 3,
+          "tileY": 41
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "LOCKED - Access Cards Required (0/4)",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        { "Type": "ControlRoomDoor", "zoneId": 2 }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "ControlRoomDoor_Zone3",
+      "Tag": "ControlDoor",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 109.5, "y": 41.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 109,
+          "tileY": 41
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "LOCKED - Access Cards Required (0/4)",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        },
+        { "Type": "ControlRoomDoor", "zoneId": 3 }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_10_4",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 10.5, "y": 4.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 10,
+          "tileY": 4
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_49_6",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 49.5, "y": 6.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 49,
+          "tileY": 6
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_26_7",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 26.5, "y": 7.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 26,
+          "tileY": 7
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_36_10",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 36.5, "y": 10.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 36,
+          "tileY": 10
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_87_10",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 87.5, "y": 10.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 87,
+          "tileY": 10
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_99_11",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 99.5, "y": 11.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 99,
+          "tileY": 11
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_94_13",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 94.5, "y": 13.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 94,
+          "tileY": 13
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_104_14",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 104.5, "y": 14.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 104,
+          "tileY": 14
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_121_16",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 121.5, "y": 16.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 121,
+          "tileY": 16
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_109_19",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 109.5, "y": 19.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 109,
+          "tileY": 19
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_119_19",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 119.5, "y": 19.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 119,
+          "tileY": 19
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_117_21",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 117.5, "y": 21.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 117,
+          "tileY": 21
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_119_22",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 119.5, "y": 22.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 119,
+          "tileY": 22
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_115_24",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 115.5, "y": 24.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 115,
+          "tileY": 24
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_121_24",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 121.5, "y": 24.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 121,
+          "tileY": 24
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_94_25",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 94.5, "y": 25.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 94,
+          "tileY": 25
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_26_26",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 26.5, "y": 26.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 26,
+          "tileY": 26
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_109_26",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 109.5, "y": 26.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 109,
+          "tileY": 26
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_29_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 29.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 29,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_35_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 35.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 35,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_46_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 46.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 46,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_63_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 63.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 63,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_66_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 66.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 66,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_82_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 82.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 82,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_119_27",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 119.5, "y": 27.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 119,
+          "tileY": 27
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_33_28",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 33.5, "y": 28.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 33,
+          "tileY": 28
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_64_28",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 64.5, "y": 28.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 64,
+          "tileY": 28
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_109_30",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 109.5, "y": 30.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 109,
+          "tileY": 30
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_119_32",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 119.5, "y": 32.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 119,
+          "tileY": 32
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_3_34",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 3.5, "y": 34.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 3,
+          "tileY": 34
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_83_34",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 83.5, "y": 34.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 83,
+          "tileY": 34
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_18_35",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 18.5, "y": 35.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 18,
+          "tileY": 35
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_32_35",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 32.5, "y": 35.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 32,
+          "tileY": 35
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_48_35",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 48.5, "y": 35.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 48,
+          "tileY": 35
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_63_35",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 63.5, "y": 35.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 63,
+          "tileY": 35
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_115_35",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 115.5, "y": 35.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 115,
+          "tileY": 35
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_3_36",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 3.5, "y": 36.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 3,
+          "tileY": 36
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_99_36",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 99.5, "y": 36.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 99,
+          "tileY": 36
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_111_38",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 111.5, "y": 38.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 111,
+          "tileY": 38
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_8_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 8.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 8,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_13_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 13.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 13,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_20_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 20.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 20,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_26_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 26.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 26,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_31_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 31.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 31,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_41_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 41.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 41,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_47_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 47.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 47,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_55_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 55.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 55,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_64_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 64.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 64,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_71_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 71.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 71,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_115_39",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 115.5, "y": 39.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 115,
+          "tileY": 39
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_82_40",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 82.5, "y": 40.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 82,
+          "tileY": 40
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_86_40",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 86.5, "y": 40.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 86,
+          "tileY": 40
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_92_40",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 92.5, "y": 40.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 92,
+          "tileY": 40
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "Door_107_40",
+      "Tag": "Door",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 107.5, "y": 40.5, "z": 0.0 },
+          "Rotation": 0.0,
+          "Scale": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "BoxCollider2D",
+          "isTrigger": false,
+          "maxHeight": 2.0,
+          "minHeight": 0.0,
+          "size": { "x": 1.0, "y": 1.0 }
+        },
+        {
+          "Type": "Door",
+          "animationSpeed": 4.0,
+          "autoCloseDelay": 0.0,
+          "doorType": 10,
+          "facing": 0,
+          "tileX": 107,
+          "tileY": 40
+        },
+        {
+        "Type": "DoorRenderer",
+        "spritePath": "Assets/Tilemap/school_sliding_door.png",
+        "fov": 75.0,
+        "colorNS": { "r": 0.8, "g": 0.2, "b": 0.2, "a": 1.0 },
+        "colorEW": { "r": 0.6, "g": 0.15, "b": 0.15, "a": 1.0 }
+      },
+        {
+          "Type": "Interactable",
+          "actionText": "Open",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 2.5,
+          "requireHold": false
+        }
+      ]
     }
   ]
 }

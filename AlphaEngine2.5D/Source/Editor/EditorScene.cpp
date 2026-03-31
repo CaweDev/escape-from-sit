@@ -136,7 +136,7 @@ namespace Game
 
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
-        map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);
+
 
         auto renderer = world->AddComponent<TileMapRenderer>();
         renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);
@@ -271,46 +271,6 @@ namespace Game
 
     /*! \brief Unload editor scene (no-op). */
     void EditorScene::OnUnload() {}
-
-    /*! \brief Spawn door GameObjects for existing door markers in the map. */
-    void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
-    {
-        auto controlRoomDoorPositions = map->GetSpawnedDoorPositionsPublic();
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
-        {
-            Vector2 pos = controlRoomDoorPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-
-            if (zoneId < 1 || zoneId > 4)
-                continue;
-
-            std::string doorName = "Editor_ControlRoomDoor_Zone" + std::to_string(zoneId);
-            auto doorGO = CreateGameObject(doorName);
-            doorGO->transform->position = Vector3(pos.x, pos.y, 0.0f);
-
-            bool wallNorth = map->IsWall(tileX, tileY + 1);
-            bool wallSouth = map->IsWall(tileX, tileY - 1);
-
-            auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
-            doorCollider->minHeight = 0.0f;
-            doorCollider->maxHeight = 2.0f;
-            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
-
-            auto door = doorGO->AddComponent<Engine::Door>();
-            door->tileX = tileX;
-            door->tileY = tileY;
-            door->doorType = 10;
-            door->facing = facing;
-            door->collider = doorCollider;
-            door->state = Engine::DoorState::Closed;
-
-            auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
-            doorRenderer->fov = renderer->fov;
-            doorRenderer->sprite = renderer->GetDoorSprite();
-        }
-    }
 
 
 

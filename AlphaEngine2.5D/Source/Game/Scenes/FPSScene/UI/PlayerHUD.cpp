@@ -1188,6 +1188,15 @@ namespace Game
         if (m_map)     m_map->ClearCCTVs();
     }
 
+    void PlayerHUD::AddDoor(Engine::Door *door)
+    {
+        if (!door)
+            return;
+        m_doors.push_back(door);
+        if (m_minimap)
+            m_minimap->AddDoor(door);
+    }
+
     void PlayerHUD::ToggleMap()
     {
         m_mapVisible = !m_mapVisible;

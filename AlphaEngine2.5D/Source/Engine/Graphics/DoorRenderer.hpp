@@ -56,11 +56,14 @@ struct DoorRendererConfig : public IConfig
  */
 class DoorRenderer : public IRenderer {
 public:
-    REQUIRE_COMPONENT(Door)
+    // REQUIRE_COMPONENT(Door)
     
     /** Sprite for the door texture (optional) */
     Sprite* sprite;
-    
+
+    /** Asset path for the sprite to be serialized by the editor */
+    std::string spritePath = ""; 
+
     /** Fallback color for North/South facing doors */
     Color colorNS = Color(0.6f, 0.4f, 0.2f, 1.0f);
     
@@ -84,7 +87,10 @@ public:
     
     /** Get sorting key (distance from camera, for depth sorting) */
     f32 GetSortingKey() const override;
-    
+
+    /** Set sprite from shared pointer */
+    void SetSprite(Sprite *newSprite);
+
 private:
     /** Cached reference to Door component */
     Door* door = nullptr;

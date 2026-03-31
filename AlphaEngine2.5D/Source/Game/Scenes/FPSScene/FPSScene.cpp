@@ -341,7 +341,6 @@ namespace Game
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
         map->LoadFromArray(worldMap.data(), loadedMapWidth, loadedMapHeight);
-
         auto renderer = world->AddComponent<TileMapRenderer>();
         renderer->wallColorNS = cfg.wallColorNS;
         renderer->wallColorEW = cfg.wallColorEW;
@@ -413,13 +412,6 @@ namespace Game
         }
         zoneMgr.SetZoneGrid(zoneGrid);
 
-        // ===== Read exit position from map (fallback to default) =====
-        auto mapExitPositions = map->GetExitPositions();
-        if (!mapExitPositions.empty())
-        {
-            exitPos = mapExitPositions[0];
-        }
-
         // ===== spawn 4 guards (1 per zone) =====
         guards.clear();
 
@@ -459,7 +451,6 @@ namespace Game
 
             playerHUD->SetTerminalPosition(terminal->controlledZone, tObj->transform->position);
             cctvTerminals.push_back(terminal);
-
         }
 
         auto cctvs = GameObject::FindGameObjectsWithTag("Sensor");
@@ -488,76 +479,117 @@ namespace Game
         }
         cctvCooldown.assign(cctvSensors.size(), 0.0f);
 
-
         // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
-        auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
 
-        // Register control room door positions with PlayerHUD for pathfinding
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
+        // 1. Initialize All Doors (Calculate Facing & FOV)
+        auto doorObjs = GameObject::FindGameObjectsWithTag("Door");
+        for (auto *doorGO : doorObjs)
         {
-            Vector2 pos = controlRoomDoorPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId >= 1 && zoneId <= 4)
+            auto *door = doorGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
+            auto *doorRenderer = doorGO->GetComponent<Engine::DoorRenderer>();
+
+            // Connect the dynamic FOV from the TileMapRenderer
+            if (doorRenderer && renderer)
             {
-                playerHUD->SetControlRoomPosition(zoneId, pos);
+                doorRenderer->fov = renderer->fov;
             }
+
+            // Calculate facing dynamically based on the TileMap walls
+            if (door && map)
+            {
+                bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                door->state = Engine::DoorState::Closed;
+            }
+
+            playerHUD->AddDoor(door);
         }
 
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
+        // 2. Initialize Exit Door (Custom Interaction Lambda)
+        auto exitDoors = Engine::GameObject::FindGameObjectsWithTag("ExitDoor");
+        for (auto *exitGO : exitDoors)
         {
-            Vector2 pos = controlRoomDoorPositions[i];
+            auto *door = exitGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
 
-            // Determine zone from position
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId < 1 || zoneId > 4)
+            auto *interactable = exitGO->GetComponent<Engine::Interactable>();
+
+            if (door && interactable)
             {
-                continue;
+                int totalBooks = (int)Game::PuzzleManager::allBooks.size();
+
+                if (Game::PuzzleManager::booksCollected < totalBooks)
+                {
+                    interactable->actionText = "EXIT LOCKED: Collect all books";
+                }
+
+                interactable->onInteract = [door, totalBooks, interactable]()
+                {
+                    if (Game::PuzzleManager::booksCollected >= totalBooks)
+                    {
+                        door->Toggle();
+                        interactable->actionText = "Close";
+                        Game::PuzzleManager::OpenExitDoor();
+                    }
+                    else
+                    {
+                        int collected = Game::PuzzleManager::booksCollected;
+                        Game::PuzzleManager::activeBookTitle = "DOOR LOCKED";
+                        Game::PuzzleManager::activeBookText = std::to_string(collected) + "/" + std::to_string(totalBooks) + " books collected";
+                        Game::PuzzleManager::popupTimer = 3.0f;
+                    }
+                };
+
+                if (door && map)
+                {
+                    bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                    bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                    door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                    door->state = Engine::DoorState::Closed;
+                }
+                door->state = Engine::DoorState::Closed;
             }
 
-            // Create door GameObject
-            std::string doorName = "ControlRoomDoor_Zone" + std::to_string(zoneId);
-            auto doorGO = CreateGameObject(doorName);
-            doorGO->transform->position = Vector3(pos.x, pos.y, cfg.controlRoomDoorPosZ);
+            playerHUD->AddDoor(door);
+        }
 
-            // Determine door facing based on surrounding walls
-            bool wallNorth = map->IsWall(tileX, tileY + 1);
-            bool wallSouth = map->IsWall(tileX, tileY - 1);
-            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+        exitPos = exitDoors[0]->transform->position;
 
-            // Add BoxCollider2D
-            auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
-            doorCollider->minHeight = cfg.doorColliderMinHeight;
-            doorCollider->maxHeight = cfg.doorColliderMaxHeight;
-            doorCollider->isTrigger = false;
+        // 3. Initialize Control Room Doors (Link Components & HUD)
+        auto controlDoors = Engine::GameObject::FindGameObjectsWithTag("ControlDoor");
+        for (auto *cdGO : controlDoors)
+        {
+            auto *controlDoor = cdGO->GetComponent<Game::ControlRoomDoor>();
+            auto *door = cdGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
 
-            // Add Door component
-            auto door = doorGO->AddComponent<Engine::Door>();
-            door->tileX = tileX;
-            door->tileY = tileY;
-            door->doorType = 10;
-            door->facing = facing;
-            door->collider = doorCollider;
-            door->state = Engine::DoorState::Closed;
+            auto *interactable = cdGO->GetComponent<Engine::Interactable>();
 
-            // Add DoorRenderer
-            auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
-            doorRenderer->fov = renderer->fov;
-            doorRenderer->sprite = renderer->GetDoorSprite();
+            if (controlDoor && door && interactable)
+            {
+                // Link pointers internally
+                controlDoor->door = door;
+                controlDoor->interactable = interactable;
 
-            // Add Interactable
-            auto interactable = doorGO->AddComponent<Engine::Interactable>();
-            interactable->actionText = "LOCKED - Access Cards Required (0/4)";
-            interactable->maxDistance = cfg.doorInteractMaxDistance;
+                // Register with Player HUD for pathfinding
+                if (playerHUD)
+                {
+                    playerHUD->SetControlRoomPosition(controlDoor->zoneId, Vector2(cdGO->transform->position.x, cdGO->transform->position.y));
+                }
 
-            // Add ControlRoomDoor component
-            auto controlDoor = doorGO->AddComponent<Game::ControlRoomDoor>();
-            controlDoor->zoneId = zoneId;
-            controlDoor->door = door;
-            controlDoor->interactable = interactable;
+                if (door && map)
+                {
+                    bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                    bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                    door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                    door->state = Engine::DoorState::Closed;
+                }
+                door->state = Engine::DoorState::Closed;
+            }
+
+            playerHUD->AddDoor(door);
         }
 
         // Connect terminals to guards
@@ -594,7 +626,7 @@ namespace Game
         SwitchToPlayerCam();
 
         // Initialize Level Editor
-        levelEditor.Initialize(this, map, playerCam, playerTf);
+        // AddDoorTransform(Engine::Transform * doorTransform).Initialize(this, map, playerCam, playerTf);
 
         Game::PuzzleManager::BookDataInit();
         Game::PuzzleManager::Init();
@@ -626,7 +658,7 @@ namespace Game
     inline void FPSScene::OnAfterRender()
     {
         // Render level editor overlay on top of everything
-        levelEditor.Render();
+        // AddDoorTransform(Engine::Transform * doorTransform).Render();
     }
 
     /*! \brief Main per-frame update handling game logic, AI and HUD updates. */
@@ -635,19 +667,19 @@ namespace Game
         const auto &cfg = GetFPSSceneConfig();
 
         // Toggle Level Editor
-        if (Input::GetKeyDown(KeyCode::F1))
-        {
-            levelEditor.ToggleEditor();
-        }
+        // if (Input::GetKeyDown(KeyCode::F1))
+        // {
+        //     AddDoorTransform(Engine::Transform * doorTransform).ToggleEditor();
+        // }
 
         // Update editor (only if active)
-        levelEditor.Update();
+        // AddDoorTransform(Engine::Transform * doorTransform).Update();
 
         // If editor is active, skip game logic
-        if (levelEditor.IsActive())
-        {
-            return;
-        }
+        // if (AddDoorTransform(Engine::Transform * doorTransform).IsActive())
+        // {
+        //     return;
+        // }
 
         if (showControlsAtStart && controlsMenu)
         {

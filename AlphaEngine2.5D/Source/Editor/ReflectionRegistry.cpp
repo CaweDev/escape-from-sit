@@ -21,6 +21,10 @@ Technology is prohibited.
 #include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
+#include "Engine/Physics/CircleCollider2D.hpp"
+#include "Engine/Physics/BoxCollider2D.hpp"
+#include "Engine/Graphics/DoorRenderer.hpp"
+#include "Engine/Tilemap/Door.hpp"
 
 #include "game/Items/SodaCanItem.hpp"
 #include "game/Items/LaptopItem.hpp"
@@ -76,6 +80,34 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipX", offsetof(Engine::SpriteSheetRenderer, flipX), DataType::Bool);
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipY", offsetof(Engine::SpriteSheetRenderer, flipY), DataType::Bool);
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("billboard", offsetof(Engine::SpriteSheetRenderer, billboard), DataType::Bool);
+    }
+
+    void RegisterDoorRenderer()
+    {
+        Registry::RegisterClassType<Engine::DoorRenderer>("DoorRenderer");
+
+        Registry::RegisterFieldType<Engine::DoorRenderer>("spritePath", offsetof(Engine::DoorRenderer, spritePath), DataType::Sprite);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("colorNS", offsetof(Engine::DoorRenderer, colorNS), DataType::Color);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("colorEW", offsetof(Engine::DoorRenderer, colorEW), DataType::Color);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("fov", offsetof(Engine::DoorRenderer, fov), DataType::Float);
+    }
+
+    void RegisterDoor()
+    {
+        Registry::RegisterClassType<Engine::Door>("Door");
+
+        Registry::RegisterFieldType<Engine::Door>("tileX", offsetof(Engine::Door, tileX), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("tileY", offsetof(Engine::Door, tileY), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("doorType", offsetof(Engine::Door, doorType), DataType::Int);
+
+        // Note: DoorFacing and DoorState are enums. If your reflection system uses DataType::Int
+        // for enums, cast it. Otherwise, you may need a custom DataType::Enum handler.
+        Registry::RegisterFieldType<Engine::Door>("facing", offsetof(Engine::Door, facing), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("state", offsetof(Engine::Door, state), DataType::Int);
+
+        Registry::RegisterFieldType<Engine::Door>("openAmount", offsetof(Engine::Door, openAmount), DataType::Float);
+        Registry::RegisterFieldType<Engine::Door>("animationSpeed", offsetof(Engine::Door, animationSpeed), DataType::Float);
+        Registry::RegisterFieldType<Engine::Door>("autoCloseDelay", offsetof(Engine::Door, autoCloseDelay), DataType::Float);
     }
 
     void RegisterInteractable()
@@ -225,6 +257,14 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::Camera>("fogMaxVisibility", offsetof(Engine::Camera, fogMaxVisibility), DataType::Float);
     }
 
+    void RegisterBoxCollider2D()
+    {
+        Registry::RegisterClassType<Engine::BoxCollider2D>("BoxCollider2D");
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("size", offsetof(Engine::BoxCollider2D, size), DataType::Vector2);
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("minHeight", offsetof(Engine::BoxCollider2D, minHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("maxHeight", offsetof(Engine::BoxCollider2D, maxHeight), DataType::Float);
+    }
+
     void RegisterCircleCollider2D()
     {
         Registry::RegisterClassType<Engine::CircleCollider2D>("CircleCollider2D");
@@ -344,6 +384,7 @@ namespace AEEditor
         RegisterAccessCard();
         RegisterCCTVCamera();
         RegisterControlRoomDoor();
+        RegisterDoor();
         RegisterNPC();
         RegisterPlayer();
         RegisterPowerUpObject();
@@ -356,7 +397,8 @@ namespace AEEditor
         RegisterPlayerUIComponents();
         RegisterSecurityGuard();
         RegisterCCTVTerminal();
-
+        RegisterDoorRenderer();
+        RegisterBoxCollider2D();
     }
 
 

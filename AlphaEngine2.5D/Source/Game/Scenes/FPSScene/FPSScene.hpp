@@ -42,7 +42,7 @@
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
 #include "Game/UCB1Bandit/BanditVisualizer.hpp"
-#include "Game/LevelEditor/LevelEditor.hpp"
+// #include "Game/LevelEditor/LevelEditor.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/ControlRoomDoor/ControlRoomDoor.hpp"
 #include "Game/PathRenderer/PathRenderer.hpp"
@@ -87,7 +87,7 @@ namespace Game
         std::vector<Game::SecurityGuard *> guards;
         std::vector<Game::CCTVCamera *> cctvSensors;
         std::vector<Game::CCTVTerminal *> cctvTerminals;
-
+        std::vector<Game::Door *> doors;
         int activeCCTV = -1;
 
         Vector3 playerViewPos{};
@@ -191,7 +191,7 @@ namespace Game
         bool m_annoyingSfxTriggered = false;
         float m_annoyingLoopLastDistance = 999999.0f;
 
-        LevelEditor levelEditor;
+        // LevelEditor levelEditor;
         Game::BanditVisualizer *banditVisualizer = nullptr;
 
         int mapWidth = 0;
@@ -236,23 +236,9 @@ namespace Game
             playerTf->rotation = playerViewRot;
         }
 
-
         Game::NPC *SpawnNPCInZone(int zoneId, NPCType npcType, TileMap *map, const char *spritePath)
         {
             int gx = 0, gy = 0;
-            auto IsDoorTile = [&](int tx, int ty) {
-                if (!map) return false;
-                for (auto &p : map->GetSpawnedDoorPositionsPublic()) {
-                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
-                }
-                for (auto &p : map->GetControlRoomDoorPositions()) {
-                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
-                }
-                for (auto &p : map->GetExitPositions()) {
-                    if ((int)std::floor(p.x) == tx && (int)std::floor(p.y) == ty) return true;
-                }
-                return false;
-            };
 
             bool found = false;
             for (int attempt = 0; attempt < spawnPickAttempts; ++attempt)
@@ -261,8 +247,9 @@ namespace Game
                     break;
                 float dx = (float)gx + 0.5f - spawnExcludeX;
                 float dy = (float)gy + 0.5f - spawnExcludeY;
-                if (dx * dx + dy * dy <= spawnExcludeRadius * spawnExcludeRadius) continue;
-                if (IsDoorTile(gx, gy)) continue;
+                if (dx * dx + dy * dy <= spawnExcludeRadius * spawnExcludeRadius)
+                    continue;
+                // if (IsDoorTile(gx, gy)) continue;
                 found = true;
                 break;
             }
@@ -274,18 +261,26 @@ namespace Game
                 int cy = (int)std::floor(c.y);
                 const int MAXR = spawnFallbackMaxRadius;
                 bool placed = false;
-                for (int r = 0; r <= MAXR && !placed; ++r) {
-                    for (int dy = -r; dy <= r && !placed; ++dy) {
-                        for (int dx = -r; dx <= r && !placed; ++dx) {
-                            if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                for (int r = 0; r <= MAXR && !placed; ++r)
+                {
+                    for (int dy = -r; dy <= r && !placed; ++dy)
+                    {
+                        for (int dx = -r; dx <= r && !placed; ++dx)
+                        {
+                            if (std::abs(dx) != r && std::abs(dy) != r)
+                                continue;
                             int nx = cx + dx;
                             int ny = cy + dy;
-                            if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                            if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height)
+                                continue;
                             float sdx = (float)nx + 0.5f - spawnExcludeX;
                             float sdy = (float)ny + 0.5f - spawnExcludeY;
-                            if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
-                            if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
-                            if (IsDoorTile(nx, ny)) continue;
+                            if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius)
+                                continue;
+                            if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
+                                continue;
+                            // if (IsDoorTile(nx, ny))
+                            //     continue;
                             gx = nx;
                             gy = ny;
                             placed = true;
@@ -300,18 +295,26 @@ namespace Game
                     int zx = (int)std::floor(zoneCenter.x);
                     int zy = (int)std::floor(zoneCenter.y);
                     int SCAN_MAX = (map->width > map->height) ? map->width : map->height;
-                    for (int r = 0; r <= SCAN_MAX && !foundAny; ++r) {
-                        for (int dy = -r; dy <= r && !foundAny; ++dy) {
-                            for (int dx = -r; dx <= r && !foundAny; ++dx) {
-                                if (std::abs(dx) != r && std::abs(dy) != r) continue;
+                    for (int r = 0; r <= SCAN_MAX && !foundAny; ++r)
+                    {
+                        for (int dy = -r; dy <= r && !foundAny; ++dy)
+                        {
+                            for (int dx = -r; dx <= r && !foundAny; ++dx)
+                            {
+                                if (std::abs(dx) != r && std::abs(dy) != r)
+                                    continue;
                                 int nx = zx + dx;
                                 int ny = zy + dy;
-                                if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height) continue;
+                                if (nx < 0 || nx >= map->width || ny < 0 || ny >= map->height)
+                                    continue;
                                 float sdx = (float)nx + 0.5f - spawnExcludeX;
                                 float sdy = (float)ny + 0.5f - spawnExcludeY;
-                                if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius) continue;
-                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f)) continue;
-                                if (IsDoorTile(nx, ny)) continue;
+                                if (sdx * sdx + sdy * sdy < spawnExcludeRadius * spawnExcludeRadius)
+                                    continue;
+                                if (!map->IsWalkable((float)nx + 0.5f, (float)ny + 0.5f))
+                                    continue;
+                                // if (IsDoorTile(nx, ny))
+                                //     continue;
                                 gx = nx;
                                 gy = ny;
                                 foundAny = true;
@@ -319,7 +322,8 @@ namespace Game
                             }
                         }
                     }
-                    if (!foundAny) {
+                    if (!foundAny)
+                    {
                         Vector2 c2 = GetZoneCenter(zoneId);
                         gx = (int)c2.x;
                         gy = (int)c2.y;
@@ -384,7 +388,6 @@ namespace Game
 
             return npc;
         }
-
 
         void ApplyPriorityZone_AssistNearest(int pZone)
         {
@@ -486,23 +489,30 @@ namespace Game
 
             static float switchCooldown = 0.0f;
             switchCooldown -= banditInterval;
-            if (switchCooldown < 0.0f) switchCooldown = 0.0f;
+            if (switchCooldown < 0.0f)
+                switchCooldown = 0.0f;
 
             int nextArm = bandit.SelectArm();
-            if (nextArm < 0) return;
+            if (nextArm < 0)
+                return;
 
             int nextZone = nextArm + 1;
 
-            if (switchCooldown > 0.0f) {
+            if (switchCooldown > 0.0f)
+            {
                 nextZone = priorityZoneId;
                 nextArm = nextZone - 1;
             }
-            else {
-                if (nextZone != priorityZoneId) {
-                    if (cctvScore[nextZone] > banditSwitchStrongEvidenceThreshold) {
+            else
+            {
+                if (nextZone != priorityZoneId)
+                {
+                    if (cctvScore[nextZone] > banditSwitchStrongEvidenceThreshold)
+                    {
                         switchCooldown = banditSwitchCooldownStrongSec;
                     }
-                    else {
+                    else
+                    {
                         switchCooldown = banditSwitchCooldownNormalSec;
                     }
                 }
@@ -510,10 +520,12 @@ namespace Game
 
             bandit.Update(nextArm, zoneReward[nextZone]);
 
-            if (nextZone == priorityZoneId) {
+            if (nextZone == priorityZoneId)
+            {
                 priorityZoneHotTimer += banditInterval;
             }
-            else {
+            else
+            {
                 priorityZoneHotTimer = 0.0f;
                 fullEscalationActive = false;
             }
