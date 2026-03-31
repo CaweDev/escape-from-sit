@@ -32,7 +32,6 @@
     <ClCompile Include="Source\Engine\UI\Specialized\HeatmapOverlay.cpp" />
     <ClCompile Include="Source\Game\AccessCard\AccessCard.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp" />
-    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp" />
     <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp" />
     <ClCompile Include="Source\Game\ControlRoomDoor\ControlRoomDoor.cpp" />
     <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
-    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp" />
     <ClInclude Include="Source\Game\NPC\NPC.hpp" />
     <ClInclude Include="Source\Game\PathRenderer\PathRenderer.hpp" />
     <ClInclude Include="Source\Game\Player\Player.hpp" />

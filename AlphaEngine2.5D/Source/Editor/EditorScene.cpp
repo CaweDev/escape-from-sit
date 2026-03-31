@@ -25,7 +25,6 @@
 #include "Engine/Core/Time.hpp"
 
 #include "Editor/GameEditor.hpp"
-#include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/CCTV/CCTVCamera.hpp"
 
@@ -178,9 +177,9 @@ namespace Game
         // }
         // else
         // {
-        SpawnExistingDoors(map, renderer);
-        SpawnExistingTerminals(map);
-        SpawnExistingCCTVs(map);
+        // SpawnExistingDoors(map, renderer);
+        // SpawnExistingTerminals(map);
+        // SpawnExistingCCTVs(map);
         // }
     }
 
@@ -335,51 +334,5 @@ namespace Game
         }
     }
 
-    /*! \brief Spawn CCTV GameObjects for placement preview in editor. */
-    void EditorScene::SpawnExistingCCTVs(TileMap *map)
-    {
-        std::vector<int> zoneGrid(mapWidth * mapHeight, 0);
-        for (int y = 0; y < mapHeight; ++y)
-        {
-            for (int x = 0; x < mapWidth; ++x)
-            {
-                int zid = GetZoneId(x, y);
-                zoneGrid[y * mapWidth + x] = (zid > 0) ? zid : 0;
-            }
-        }
-
-        const float CCTV_Z = 0.85f;
-        const float EPS = 0.02f;
-        auto placements = Game::GenerateCCTVsPerZone(
-            map, zoneGrid, mapWidth, mapHeight,
-            10, 1, 3.5f, CCTV_Z, EPS);
-
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
-        for (size_t i = 0; i < placements.size(); ++i)
-        {
-            auto &p = placements[i];
-            auto camObj = CreateGameObject("Editor_CCTV_" + std::to_string(i + 1));
-            camObj->transform->position = p.pos;
-            camObj->transform->rotation = p.rot;
-            camObj->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto sr = camObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(cctvSprite);
-            sr->billboard = true;
-            sr->sortingOrder = 300;
-
-            auto sensor = camObj->AddComponent<CCTVCamera>();
-            sensor->id = static_cast<int>(i) + 1;
-            sensor->tile = map;
-            sensor->tf = nullptr;
-            sensor->hud = nullptr;
-            sensor->minimap =  nullptr; // Connect to minimap for vision cones
-            sensor->detectRadius = 3.0f;
-            sensor->maxRange = 6.0f;
-            sensor->coneWidth = 70.0f;
-            sensor->needLOS = true;
-            sensor->spriteRenderer = sr; // Store sprite renderer for color changes
-        }
-    }
 
 } // namespace Game

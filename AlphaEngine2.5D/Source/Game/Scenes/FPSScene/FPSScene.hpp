@@ -42,7 +42,6 @@
 #include "Game/Heatmap/Heatmap.hpp"
 #include "Game/UCB1Bandit/UCB1Bandit.hpp"
 #include "Game/UCB1Bandit/BanditVisualizer.hpp"
-#include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/LevelEditor/LevelEditor.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/ControlRoomDoor/ControlRoomDoor.hpp"
@@ -90,8 +89,6 @@ namespace Game
         std::vector<Game::CCTVTerminal *> cctvTerminals;
 
         int activeCCTV = -1;
-        std::vector<Vector3> cctvViewPos;
-        std::vector<float> cctvViewRot;
 
         Vector3 playerViewPos{};
         float playerViewRot = 0.0f;
@@ -239,16 +236,6 @@ namespace Game
             playerTf->rotation = playerViewRot;
         }
 
-        void SwitchToCCTV(int idx)
-        {
-            if (!playerTf)
-                return;
-            if (idx < 0 || idx >= (int)cctvViewPos.size())
-                return;
-            activeCCTV = idx;
-            playerTf->position = cctvViewPos[idx];
-            playerTf->rotation = cctvViewRot[idx];
-        }
 
         Game::NPC *SpawnNPCInZone(int zoneId, NPCType npcType, TileMap *map, const char *spritePath)
         {
