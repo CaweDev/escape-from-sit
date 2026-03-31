@@ -312,27 +312,7 @@ namespace Game
         }
     }
 
-    /*! \brief Spawn terminal GameObjects for existing terminal markers. */
-    void EditorScene::SpawnExistingTerminals(TileMap *map)
-    {
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
-        auto terminalPositions = map->GetTerminalPositions();
 
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-
-            auto terminalObj = CreateGameObject("Editor_CCTVTerminal_" + std::to_string(i));
-            terminalObj->transform->position = Vector3(pos.x, pos.y, 0.5f);
-            terminalObj->transform->localScale = Vector2(0.5f, 0.5f);
-
-            auto sr = terminalObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(terminalSprite);
-            sr->billboard = true;
-            sr->sortingOrder = 250;
-            sr->highlightColor = Engine::Color(0.3f, 0.3f, 0.0f, 0.0f);
-        }
-    }
 
 
 } // namespace Game

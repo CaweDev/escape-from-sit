@@ -42,6 +42,7 @@ Technology is prohibited.
 #include "game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
 #include "game/Player/PlayerPowerUpController.hpp"
 #include "game/SecurityGuard/SecurityGuard.hpp"
+#include "game/CCTV/CCTVTerminal.hpp"
 
 namespace AEEditor
 {
@@ -276,7 +277,58 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::SecurityGuard>("searchDuration", offsetof(Game::SecurityGuard, searchDuration), DataType::Float);
     }
 
-    void ReflectionRegistry::InitializeMetaRegistry()
+    void RegisterCCTVTerminal()
+    {
+        Registry::RegisterClassType<Game::CCTVTerminal>("CCTVTerminal");
+
+        // Configuration
+        Registry::RegisterFieldType<Game::CCTVTerminal>("controlledZone", offsetof(Game::CCTVTerminal, controlledZone), DataType::Int);
+
+        // State
+        Registry::RegisterFieldType<Game::CCTVTerminal>("isDisabled", offsetof(Game::CCTVTerminal, isDisabled), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledTimer", offsetof(Game::CCTVTerminal, disabledTimer), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledDuration", offsetof(Game::CCTVTerminal, disabledDuration), DataType::Float);
+
+        // Repair system
+        Registry::RegisterFieldType<Game::CCTVTerminal>("guardIsRepairing", offsetof(Game::CCTVTerminal, guardIsRepairing), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairProgress", offsetof(Game::CCTVTerminal, repairProgress), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairTime", offsetof(Game::CCTVTerminal, repairTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairMaxDistance", offsetof(Game::CCTVTerminal, repairMaxDistance), DataType::Float);
+
+        // Interaction
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactionTime", offsetof(Game::CCTVTerminal, interactionTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactionProgress", offsetof(Game::CCTVTerminal, interactionProgress), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("playerIsInteracting", offsetof(Game::CCTVTerminal, playerIsInteracting), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownTimer", offsetof(Game::CCTVTerminal, cooldownTimer), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownDuration", offsetof(Game::CCTVTerminal, cooldownDuration), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactMaxDistance", offsetof(Game::CCTVTerminal, interactMaxDistance), DataType::Float);
+
+        // Floating icon & Visuals
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatAnimTime", offsetof(Game::CCTVTerminal, floatAnimTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatSpeed", offsetof(Game::CCTVTerminal, floatSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatAmplitude", offsetof(Game::CCTVTerminal, floatAmplitude), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatBaseHeightOffset", offsetof(Game::CCTVTerminal, floatBaseHeightOffset), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("pulseSpeed", offsetof(Game::CCTVTerminal, pulseSpeed), DataType::Float);
+
+        // Text configuration
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactText", offsetof(Game::CCTVTerminal, interactText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("zoneHackTextPrefix", offsetof(Game::CCTVTerminal, zoneHackTextPrefix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("zoneHackTextSuffix", offsetof(Game::CCTVTerminal, zoneHackTextSuffix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledTextSuffix", offsetof(Game::CCTVTerminal, disabledTextSuffix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownText", offsetof(Game::CCTVTerminal, cooldownText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairingText", offsetof(Game::CCTVTerminal, repairingText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackStatusPrefix", offsetof(Game::CCTVTerminal, hackStatusPrefix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackStatusDuration", offsetof(Game::CCTVTerminal, hackStatusDuration), DataType::Float);
+
+        // Colors
+        Registry::RegisterFieldType<Game::CCTVTerminal>("activeColor", offsetof(Game::CCTVTerminal, activeColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackingColor", offsetof(Game::CCTVTerminal, hackingColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledColor", offsetof(Game::CCTVTerminal, disabledColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairingColor", offsetof(Game::CCTVTerminal, repairingColor), DataType::Color);
+    }
+
+        void
+        ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
         Registry::nameToType.clear();
@@ -303,6 +355,7 @@ namespace AEEditor
         RegisterInteractionController();
         RegisterPlayerUIComponents();
         RegisterSecurityGuard();
+        RegisterCCTVTerminal();
 
     }
 

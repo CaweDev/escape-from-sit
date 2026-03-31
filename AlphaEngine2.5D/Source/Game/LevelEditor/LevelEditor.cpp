@@ -884,12 +884,12 @@ void LevelEditor::SaveMapTxt(const std::string& filename) {
     }
 
     // Terminal positions (tile 11 ? 'T')
-    for (auto& pos : tileMap->GetTerminalPositions()) {
-        int tx = (int)std::floor(pos.x);
-        int ty = (int)std::floor(pos.y);
-        if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight)
-            overlay[ty * mapWidth + tx] = 'T';
-    }
+    // for (auto& pos : tileMap->GetTerminalPositions()) {
+    //     int tx = (int)std::floor(pos.x);
+    //     int ty = (int)std::floor(pos.y);
+    //     if (tx >= 0 && tx < mapWidth && ty >= 0 && ty < mapHeight)
+    //         overlay[ty * mapWidth + tx] = 'T';
+    // }
 
     // Exit positions (tile 12 ? 'E')
     for (auto& pos : tileMap->GetExitPositions()) {

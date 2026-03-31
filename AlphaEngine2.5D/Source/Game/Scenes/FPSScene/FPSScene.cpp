@@ -446,7 +446,21 @@ namespace Game
         prevChosenZoneId = 1;
         ApplyPriorityZone_AssistNearest(prevChosenZoneId);
 
-        // ===== CCTV placement =====
+        // ===== CCTV  =====
+
+        auto terminals = GameObject::FindGameObjectsWithTag("Terminal");
+
+        for (auto &tObj : terminals)
+        {
+            auto terminal = tObj->GetComponent<CCTVTerminal>();
+            terminal->playerHUD = playerHUD;
+            terminal->spriteRenderer = tObj->GetComponent<SpriteRenderer>();
+            terminal->allGuards = guards;
+
+            playerHUD->SetTerminalPosition(terminal->controlledZone, tObj->transform->position);
+            cctvTerminals.push_back(terminal);
+
+        }
 
         auto cctvs = GameObject::FindGameObjectsWithTag("Sensor");
         for (auto &cctv : cctvs)
@@ -459,86 +473,21 @@ namespace Game
             sensor->minimap = playerHUD->GetMinimap();
             cctvSensors.push_back(sensor);
             playerHUD->AddCCTVTransform(cctv->transform);
+
+            int camTx = (int)cctv->transform->position.x;
+            int camTy = (int)cctv->transform->position.y;
+            int camZone = GetZoneId(camTx, camTy);
+
+            for (auto &terminal : cctvTerminals)
+            {
+                if (camZone == terminal->controlledZone)
+                {
+                    terminal->controlledCameras.push_back(sensor);
+                }
+            }
         }
         cctvCooldown.assign(cctvSensors.size(), 0.0f);
 
-        // ===== CCTV Terminals - Spawn from map markers ('T' in map.txt) =====
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
-
-        // Get terminal positions from map
-        auto terminalPositions = map->GetTerminalPositions();
-
-        if (terminalPositions.empty())
-        {
-        }
-
-        // Spawn terminals at marked positions
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-
-            // Determine zone from position (use floor to get tile coordinates)
-            // Terminal positions are at tile center (x.5, y.5), so floor gives the tile
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId < 1 || zoneId > 4)
-            {
-                continue;
-            }
-
-            // Create terminal GameObject
-            auto terminalObj = CreateGameObject("CCTVTerminal_Zone" + std::to_string(zoneId));
-            terminalObj->transform->position = Vector3(pos.x, pos.y, cfg.terminalPosZ);
-            terminalObj->transform->localScale = Vector2(cfg.terminalScaleX, cfg.terminalScaleY);
-
-            auto sr = terminalObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(terminalSprite);
-            sr->billboard = true;
-            sr->sortingOrder = cfg.terminalSortingOrder;
-
-            auto terminal = terminalObj->AddComponent<CCTVTerminal>();
-            terminal->controlledZone = zoneId;
-            terminal->playerHUD = playerHUD;
-            terminal->spriteRenderer = sr;
-            terminal->allGuards = guards;
-
-            // CCTVTerminal's SetupInteraction() is called in Awake()
-            // It will automatically create and configure the Interactable component
-
-            // Assign cameras to terminals based on zone
-            for (size_t j = 0; j < cctvSensors.size(); ++j)
-            {
-                auto *cam = cctvSensors[j];
-                if (!cam)
-                    continue;
-
-                // Determine camera's zone
-                int camTx = (int)cam->transform->position.x;
-                int camTy = (int)cam->transform->position.y;
-                int camZone = GetZoneId(camTx, camTy);
-
-                if (camZone == zoneId)
-                {
-                    terminal->controlledCameras.push_back(cam);
-                }
-            }
-
-            cctvTerminals.push_back(terminal);
-        }
-
-        // Register terminal positions with PlayerHUD for pathfinding
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId >= 1 && zoneId <= 4)
-            {
-                playerHUD->SetTerminalPosition(zoneId, pos);
-            }
-        }
 
         // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
         auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
@@ -632,8 +581,9 @@ namespace Game
         // Add terminal icons to minimap
         if (playerHUD && playerHUD->GetMinimap())
         {
-            for (auto &pos : terminalPositions)
+            for (auto &tObj : terminals)
             {
+                auto pos = tObj->transform->position;
                 playerHUD->GetMinimap()->AddTerminalIcon(
                     pos,
                     AssetManager::GetSprite("Assets/Sprites/hill_top_smile.png"));

@@ -2791,6 +2791,258 @@
       ],
       "Name": "CCTV_40",
       "Tag": "Sensor"
+    },
+    {
+      "Active": true,
+      "Name": "CCTVTerminal_Zone1",
+      "Tag": "Terminal",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 20.5, "y": 12.5, "z": 0.5 },
+          "Rotation": 0.0,
+          "Scale": { "x": 0.5, "y": 0.5 }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 250,
+          "spritePath": "Assets/Sprites/powerup3.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Hold E to Hack Terminal",
+          "hitShape": 0,
+          "holdDuration": 3.0,
+          "maxDistance": 2.5,
+          "requireHold": true
+        },
+        {
+          "Type": "CCTVTerminal",
+          "controlledZone": 1,
+          "isDisabled": false,
+          "disabledTimer": 0.0,
+          "disabledDuration": 30.0,
+          "guardIsRepairing": false,
+          "repairProgress": 0.0,
+          "repairTime": 5.0,
+          "repairMaxDistance": 2.0,
+          "interactionTime": 3.0,
+          "interactionProgress": 0.0,
+          "playerIsInteracting": false,
+          "cooldownTimer": 0.0,
+          "cooldownDuration": 10.0,
+          "interactMaxDistance": 2.5,
+          "floatAnimTime": 0.0,
+          "floatSpeed": 2.0,
+          "floatAmplitude": 0.15,
+          "floatBaseHeightOffset": 0.8,
+          "pulseSpeed": 3.0,
+          "interactText": "Hold E to Hack Terminal",
+          "zoneHackTextPrefix": "Hold E to Hack ",
+          "zoneHackTextSuffix": " Cameras",
+          "disabledTextSuffix": " CAMERAS OFFLINE",
+          "cooldownText": "TERMINAL COOLING DOWN",
+          "repairingText": "GUARD REPAIRING SYSTEM",
+          "hackStatusPrefix": " CAMERAS DISABLED FOR 30s",
+          "hackStatusDuration": 3.0,
+          "activeColor": { "r": 0.2, "g": 0.8, "b": 1.0, "a": 1.0 },
+          "hackingColor": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+          "disabledColor": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 1.0 },
+          "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 }
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "CCTVTerminal_Zone4",
+      "Tag": "Terminal",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 73.5, "y": 19.5, "z": 0.5 },
+          "Rotation": 0.0,
+          "Scale": { "x": 0.5, "y": 0.5 }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 250,
+          "spritePath": "Assets/Sprites/powerup3.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Hold E to Hack Terminal",
+          "hitShape": 0,
+          "holdDuration": 3.0,
+          "maxDistance": 2.5,
+          "requireHold": true
+        },
+        {
+          "Type": "CCTVTerminal",
+          "controlledZone": 4,
+          "isDisabled": false,
+          "disabledTimer": 0.0,
+          "disabledDuration": 30.0,
+          "guardIsRepairing": false,
+          "repairProgress": 0.0,
+          "repairTime": 5.0,
+          "repairMaxDistance": 2.0,
+          "interactionTime": 3.0,
+          "interactionProgress": 0.0,
+          "playerIsInteracting": false,
+          "cooldownTimer": 0.0,
+          "cooldownDuration": 10.0,
+          "interactMaxDistance": 2.5,
+          "floatAnimTime": 0.0,
+          "floatSpeed": 2.0,
+          "floatAmplitude": 0.15,
+          "floatBaseHeightOffset": 0.8,
+          "pulseSpeed": 3.0,
+          "interactText": "Hold E to Hack Terminal",
+          "zoneHackTextPrefix": "Hold E to Hack ",
+          "zoneHackTextSuffix": " Cameras",
+          "disabledTextSuffix": " CAMERAS OFFLINE",
+          "cooldownText": "TERMINAL COOLING DOWN",
+          "repairingText": "GUARD REPAIRING SYSTEM",
+          "hackStatusPrefix": " CAMERAS DISABLED FOR 30s",
+          "hackStatusDuration": 3.0,
+          "activeColor": { "r": 0.2, "g": 0.8, "b": 1.0, "a": 1.0 },
+          "hackingColor": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+          "disabledColor": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 1.0 },
+          "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 }
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "CCTVTerminal_Zone2",
+      "Tag": "Terminal",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 4.5, "y": 40.5, "z": 0.5 },
+          "Rotation": 0.0,
+          "Scale": { "x": 0.5, "y": 0.5 }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 250,
+          "spritePath": "Assets/Sprites/powerup3.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Hold E to Hack Terminal",
+          "hitShape": 0,
+          "holdDuration": 3.0,
+          "maxDistance": 2.5,
+          "requireHold": true
+        },
+        {
+          "Type": "CCTVTerminal",
+          "controlledZone": 2,
+          "isDisabled": false,
+          "disabledTimer": 0.0,
+          "disabledDuration": 30.0,
+          "guardIsRepairing": false,
+          "repairProgress": 0.0,
+          "repairTime": 5.0,
+          "repairMaxDistance": 2.0,
+          "interactionTime": 3.0,
+          "interactionProgress": 0.0,
+          "playerIsInteracting": false,
+          "cooldownTimer": 0.0,
+          "cooldownDuration": 10.0,
+          "interactMaxDistance": 2.5,
+          "floatAnimTime": 0.0,
+          "floatSpeed": 2.0,
+          "floatAmplitude": 0.15,
+          "floatBaseHeightOffset": 0.8,
+          "pulseSpeed": 3.0,
+          "interactText": "Hold E to Hack Terminal",
+          "zoneHackTextPrefix": "Hold E to Hack ",
+          "zoneHackTextSuffix": " Cameras",
+          "disabledTextSuffix": " CAMERAS OFFLINE",
+          "cooldownText": "TERMINAL COOLING DOWN",
+          "repairingText": "GUARD REPAIRING SYSTEM",
+          "hackStatusPrefix": " CAMERAS DISABLED FOR 30s",
+          "hackStatusDuration": 3.0,
+          "activeColor": { "r": 0.2, "g": 0.8, "b": 1.0, "a": 1.0 },
+          "hackingColor": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+          "disabledColor": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 1.0 },
+          "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 }
+        }
+      ]
+    },
+    {
+      "Active": true,
+      "Name": "CCTVTerminal_Zone3",
+      "Tag": "Terminal",
+      "Components": [
+        {
+          "Type": "Transform",
+          "Position": { "x": 110.5, "y": 40.5, "z": 0.5 },
+          "Rotation": 0.0,
+          "Scale": { "x": 0.5, "y": 0.5 }
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 250,
+          "spritePath": "Assets/Sprites/powerup3.png"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Hold E to Hack Terminal",
+          "hitShape": 0,
+          "holdDuration": 3.0,
+          "maxDistance": 2.5,
+          "requireHold": true
+        },
+        {
+          "Type": "CCTVTerminal",
+          "controlledZone": 3,
+          "isDisabled": false,
+          "disabledTimer": 0.0,
+          "disabledDuration": 30.0,
+          "guardIsRepairing": false,
+          "repairProgress": 0.0,
+          "repairTime": 5.0,
+          "repairMaxDistance": 2.0,
+          "interactionTime": 3.0,
+          "interactionProgress": 0.0,
+          "playerIsInteracting": false,
+          "cooldownTimer": 0.0,
+          "cooldownDuration": 10.0,
+          "interactMaxDistance": 2.5,
+          "floatAnimTime": 0.0,
+          "floatSpeed": 2.0,
+          "floatAmplitude": 0.15,
+          "floatBaseHeightOffset": 0.8,
+          "pulseSpeed": 3.0,
+          "interactText": "Hold E to Hack Terminal",
+          "zoneHackTextPrefix": "Hold E to Hack ",
+          "zoneHackTextSuffix": " Cameras",
+          "disabledTextSuffix": " CAMERAS OFFLINE",
+          "cooldownText": "TERMINAL COOLING DOWN",
+          "repairingText": "GUARD REPAIRING SYSTEM",
+          "hackStatusPrefix": " CAMERAS DISABLED FOR 30s",
+          "hackStatusDuration": 3.0,
+          "activeColor": { "r": 0.2, "g": 0.8, "b": 1.0, "a": 1.0 },
+          "hackingColor": { "r": 1.0, "g": 1.0, "b": 0.0, "a": 1.0 },
+          "disabledColor": { "r": 0.5, "g": 0.0, "b": 0.0, "a": 1.0 },
+          "repairingColor": { "r": 1.0, "g": 0.5, "b": 0.0, "a": 1.0 }
+        }
+      ]
     }
   ]
 }

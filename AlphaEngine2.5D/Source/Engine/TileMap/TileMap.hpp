@@ -110,11 +110,7 @@ namespace Engine
             return type >= static_cast<int>(TileType::Door) && type < static_cast<int>(TileType::NUM_DOOR);
         }
 
-        /** Check if a tile type is a terminal marker */
-        static bool IsTerminalMarker(int type)
-        {
-            return type == 11; // 'T' in map.txt
-        }
+
 
         /** Check if a tile type is an exit marker */
         static bool IsExitMarker(int type)
@@ -143,8 +139,6 @@ namespace Engine
         const std::vector<Door *> &GetDoors() const { return spawnedDoors; }
         const std::vector<Vector2> &GetSpawnedDoorPositionsPublic() const { return spawnedDoorPositions; }
 
-        /** Get all terminal positions from map */
-        const std::vector<Vector2> &GetTerminalPositions() const { return terminalPositions; }
 
         /** Get all exit positions from map */
         const std::vector<Vector2> &GetExitPositions() const { return exitPositions; }
@@ -168,8 +162,6 @@ namespace Engine
         /** Positions (center) of spawned doors for quick queries */
         std::vector<Vector2> spawnedDoorPositions;
 
-        /** Terminal positions found in map (tile 11) */
-        std::vector<Vector2> terminalPositions;
 
         /** Exit positions found in map (tile 12) */
         std::vector<Vector2> exitPositions;

@@ -598,7 +598,6 @@ namespace UI
                     // Default all in-bounds tiles to floor unless explicitly wall/door.
                     tileColor = m_floorColor;
 
-                    int cardId = -1;
                     const bool isDoorMarker = Engine::TileMap::IsDoorType(tileValue) ||
                                               Engine::TileMap::IsExitMarker(tileValue) ||
                                               Engine::TileMap::IsControlRoomDoorMarker(tileValue);
@@ -607,9 +606,6 @@ namespace UI
                         tileColor = m_wallColor;
                     } else if (isDoorMarker) {
                         tileColor = m_doorColor;
-                    } else if (Engine::TileMap::IsTerminalMarker(tileValue) ||
-                               Engine::TileMap::IsAccessCardMarker(tileValue, cardId)) {
-                        tileColor = m_floorColor;
                     }
                 }
 

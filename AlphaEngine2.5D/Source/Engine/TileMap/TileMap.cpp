@@ -93,7 +93,6 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
     
     // Clear any previously spawned doors and markers
     spawnedDoors.clear();
-    terminalPositions.clear();
     exitPositions.clear();
     controlRoomDoorPositions.clear();
     
@@ -107,15 +106,8 @@ void TileMap::LoadFromArray(const int* data, int w, int h) {
         for (int x = 0; x < w; ++x) {
             int index = y * w + x;  // Direct indexing - no Y inversion
             int tileValue = static_cast<int>(tiles[index]);
-            
-          	if (IsTerminalMarker(tileValue)) {
-                // Store terminal position (center of tile)
-                terminalPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
-                // Replace terminal marker with floor
-                // tiles[index] = TileType::Empty;
-                //printf("[TileMap] Found terminal marker at (%d, %d)\n", x, y);
-            }
-            else if (IsExitMarker(tileValue)) {
+
+             if (IsExitMarker(tileValue)) {
                 // Store exit position (center of tile)
                 exitPositions.push_back(Vector2(static_cast<f32>(x) + 0.5f, static_cast<f32>(y) + 0.5f));
                 // Replace exit marker with floor
