@@ -226,6 +226,7 @@ namespace Game {
      */
     Engine::Color PowerUpObject::GetHighlightColor() const {
         const auto& cfg = GetPowerUpObjectConfig();
+		// set highlight color based on power-up type, with a default fallback
         switch (reference.type) {
         case PowerUpType::SpeedBoost:      return cfg.speedBoostHighlight;
         case PowerUpType::InfiniteStamina: return cfg.infiniteStaminaHighlight;

@@ -21,57 +21,49 @@ namespace
 {
     struct PowerUpManagerConfig : public Engine::IConfig
     {
-        float spawnScale = 0.6f;
+		// General spawn settings (can be overridden in config, but defaults to these)
+        float spawnScale = 0.6f;    
         float spawnRotation = 0.0f;
         int sortingOrder = 100;
         float defaultSpawnZ = 0.1f;
         float minSpawnDistance = 6.0f;
         int spawnIdStart = 1;
 
+		// asset paths for sprites (can be overridden in config, but defaults to these)
         std::string speedBoostSpritePath = "Assets/Sprites/Speed.png";
         std::string infiniteStaminaSpritePath = "Assets/Sprites/InfStamina.png";
         std::string shieldSpritePath = "Assets/Sprites/Shield.png";
         std::string invisibilitySpritePath = "Assets/Sprites/Invis.png";
 
-        // Legacy explicit entries (still supported as fallback)
-        struct Entry
-        {
-            int id = 0;
-            float x = 0.0f;
-            float y = 0.0f;
-            float z = 0.1f;
-            int type = 0;
-            std::string name;
-            float duration = 0.0f;
-        };
-        std::vector<Entry> entries;
-
-        // New model: powerup definitions + spawn counts
+		// Power-up definitions (can be overridden in config, but defaults to these)
         struct PowerUpDef
         {
-            int type = 0;
+            Game::PowerUpType type = Game::PowerUpType::SpeedBoost;
             std::string name;
             float duration = 0.0f;
-            int count = 0; // optional inline count
         };
+
+		// Spawn count overrides for specific power-up types (can be overridden in config)
         struct SpawnCount
         {
-            int type = 0;
+            Game::PowerUpType type = Game::PowerUpType::SpeedBoost;
             int count = 0;
         };
 
         std::vector<PowerUpDef> powerups;
         std::vector<SpawnCount> spawnCounts;
 
-        int FindSpawnCountOverride(int type) const
+		// search spawn count for a specific power-up type, returns 0 if not found
+        int GetSpawnCount(Game::PowerUpType type) const
         {
             for (const auto& sc : spawnCounts)
             {
                 if (sc.type == type) return sc.count;
             }
-            return -1;
+            return 0;
         }
 
+		// Load configuration from JSON
         void FromJson(const Json::Value& j) override
         {
             spawnScale = j.get("spawnScale", spawnScale).asFloat();
@@ -86,26 +78,6 @@ namespace
             shieldSpritePath = j.get("shieldSpritePath", shieldSpritePath).asString();
             invisibilitySpritePath = j.get("invisibilitySpritePath", invisibilitySpritePath).asString();
 
-            // Legacy entries
-            entries.clear();
-            const Json::Value& arr = j["entries"];
-            if (arr.isArray())
-            {
-                for (const auto& it : arr)
-                {
-                    Entry e;
-                    e.id = it.get("id", e.id).asInt();
-                    e.x = it.get("x", e.x).asFloat();
-                    e.y = it.get("y", e.y).asFloat();
-                    e.z = it.get("z", defaultSpawnZ).asFloat();
-                    e.type = it.get("type", e.type).asInt();
-                    e.name = it.get("name", "PowerUp").asString();
-                    e.duration = it.get("duration", e.duration).asFloat();
-                    entries.push_back(e);
-                }
-            }
-
-            // New powerup definitions
             powerups.clear();
             const Json::Value& defs = j["powerups"];
             if (defs.isArray())
@@ -113,15 +85,13 @@ namespace
                 for (const auto& it : defs)
                 {
                     PowerUpDef d;
-                    d.type = it.get("type", d.type).asInt();
+                    d.type = static_cast<Game::PowerUpType>(it.get("type", static_cast<int>(d.type)).asInt());
                     d.name = it.get("name", "PowerUp").asString();
                     d.duration = it.get("duration", d.duration).asFloat();
-                    d.count = it.get("count", d.count).asInt();
                     powerups.push_back(d);
                 }
             }
 
-            // New spawn_counts object: { "0": 4, "1": 2, ... }
             spawnCounts.clear();
             const Json::Value& scObj = j["spawn_counts"];
             if (scObj.isObject())
@@ -129,7 +99,7 @@ namespace
                 for (Json::ValueConstIterator it = scObj.begin(); it != scObj.end(); ++it)
                 {
                     SpawnCount sc;
-                    sc.type = std::atoi(it.name().c_str());
+                    sc.type = static_cast<Game::PowerUpType>(std::atoi(it.name().c_str()));
                     sc.count = (*it).asInt();
                     spawnCounts.push_back(sc);
                 }
@@ -162,6 +132,7 @@ namespace
         }
     }
 
+	// struct to hold initial power-up data from config before spawning instances (position will be assigned later)
     struct PowerUpSeed
     {
         int id;
@@ -170,6 +141,7 @@ namespace
         float duration;
     };
 
+	// Helper functions for collecting potential spawn points on the map
     static int CountOpenNeighbors(Engine::TileMap* map, int x, int y)
     {
         int open = 0;
@@ -180,11 +152,13 @@ namespace
         return open;
     }
 
+	// Check if the tile at (x, y) has at least one adjacent wall tile (for better spawn placement)
     static bool HasAdjacentWall(Engine::TileMap* map, int x, int y)
     {
         return map->IsWall(x + 1, y) || map->IsWall(x - 1, y) || map->IsWall(x, y + 1) || map->IsWall(x, y - 1);
     }
 
+	// Determine if a tile is a good candidate for hallway spawning (not a wall, has 2-3 open neighbors, and at least one adjacent wall)
     static bool IsHallwayTile(Engine::TileMap* map, int x, int y)
     {
         if (!map || map->IsWall(x, y))
@@ -193,6 +167,8 @@ namespace
         return (open >= 2 && open <= 3) && HasAdjacentWall(map, x, y);
     }
 
+	// Collect potential spawn points in hallways (tiles that are not walls, have 2-3 open neighbors, and at least one adjacent wall)
+    // and return their world positions
     static std::vector<Engine::Vector3> CollectHallwayPoints(Engine::TileMap* map, float z)
     {
         std::vector<Engine::Vector3> points;
@@ -211,6 +187,7 @@ namespace
         return points;
     }
 
+	// Calculate squared distance between two points (ignoring Z) for efficient distance checks
     static float DistSq(const Engine::Vector3& a, const Engine::Vector3& b)
     {
         const float dx = a.x - b.x;
@@ -218,6 +195,8 @@ namespace
         return dx * dx + dy * dy;
     }
 
+
+	// Check if a candidate spawn point is at least minDist away from all already selected points (to prevent clustering)
     static bool IsFarEnough(const Engine::Vector3& candidate, const std::vector<Engine::Vector3>& selected, float minDist)
     {
         const float minDistSq = minDist * minDist;
@@ -229,7 +208,8 @@ namespace
         return true;
     }
 
-    static int RandIndexAERandFloat(int maxExclusive)
+	// Get a random index in the range [0, maxExclusive) using AERandFloat, with clamping to ensure it's within bounds
+    static int RandIndex(int maxExclusive)
     {
         if (maxExclusive <= 1) return 0;
         int idx = static_cast<int>(AERandFloat() * static_cast<float>(maxExclusive));
@@ -238,6 +218,8 @@ namespace
         return idx;
     }
 
+	// Collect potential spawn points in hallways (tiles that are not walls, have 2-3 open neighbors, and at least one adjacent wall)
+    // and return their world positions
     static std::vector<Engine::Vector3> CollectWalkablePoints(Engine::TileMap* map, float z)
     {
         std::vector<Engine::Vector3> points;
@@ -266,71 +248,65 @@ namespace Game {
         auto scene = Engine::SceneManager::GetActiveScene();
         if (!scene) return;
 
+		// Create a new GameObject for the power-up and set its transform based on the provided data and config
         auto powerUpObj = scene->CreateGameObject("PowerUp_" + data.name);
         powerUpObj->transform->position = data.position;
         powerUpObj->transform->rotation = cfg.spawnRotation;
         powerUpObj->transform->localScale = Engine::Vector2(cfg.spawnScale, cfg.spawnScale);
 
+		// Add a static Rigidbody2D to the power-up object (not affected by physics, just for potential collision detection)
         auto rb = powerUpObj->AddComponent<Engine::Rigidbody2D>();
         rb->bodyType = Engine::RigidbodyType2D::Static;
 
+		// Add a SpriteRenderer component and set its sprite based on the power-up type, using the asset manager to load the sprite from the configured path
         auto sr = powerUpObj->AddComponent<Engine::SpriteRenderer>();
         sr->SetSprite(Engine::AssetManager::GetSprite(GetSpritePathForType(data.type).c_str()));
 
+		// Set rendering properties for the sprite (billboard for 2.5D effect, sorting order from config)
         sr->billboard = true;
         sr->enabled = true;
         sr->sortingOrder = cfg.sortingOrder;
 
+		// Add an Interactable component to allow the player to interact with the power-up (e.g., pick it up)
         powerUpObj->AddComponent<Engine::Interactable>();
 
+		// Add the PowerUpObject component which contains the logic for floating animation, interaction, and respawning, 
+        // and set its reference data to the provided power-up data
         auto logicComp = powerUpObj->AddComponent<PowerUpObject>();
         logicComp->reference = data;
     }
 
     void PowerUpManager::PowerUpDataInit() {
+		// Clear any existing power-up data before initializing new ones
         allPowerUps.clear();
         const auto& cfg = GetPowerUpManagerConfig();
 
+		// Create initial seeds based on config definitions, where each seed represents a power-up to be spawned
+        // (with type, name, duration, and a unique ID)
         std::vector<PowerUpSeed> seeds;
 
-        // 1) NEW JSON MODEL (powerups + spawn_counts)
+        // (powerups + spawn_counts) 
         if (!cfg.powerups.empty())
         {
             int nextId = cfg.spawnIdStart;
             for (const auto& d : cfg.powerups)
             {
-                int count = d.count;
-                const int overrideCount = cfg.FindSpawnCountOverride(d.type);
-                if (overrideCount >= 0) count = overrideCount;
-
+                const int count = cfg.GetSpawnCount(d.type);
                 if (count <= 0) continue;
 
                 for (int i = 0; i < count; ++i)
                 {
                     PowerUpSeed s;
                     s.id = nextId++;
-                    s.type = static_cast<PowerUpType>(d.type);
+                    s.type = d.type;
                     s.name = d.name.empty() ? "PowerUp" : d.name.c_str();
                     s.duration = d.duration;
                     seeds.push_back(s);
                 }
             }
         }
-        // 2) LEGACY entries model (id/type/name/duration from entries)
-        else if (!cfg.entries.empty())
-        {
-            seeds.reserve(cfg.entries.size());
-            for (const auto& e : cfg.entries)
-            {
-                PowerUpSeed s;
-                s.id = e.id;
-                s.type = static_cast<PowerUpType>(e.type);
-                s.name = e.name.empty() ? "PowerUp" : e.name.c_str();
-                s.duration = e.duration;
-                seeds.push_back(s);
-            }
-        }
-        // 3) hard fallback seeds
+
+        // hard fallback seeds
         else
         {
             seeds = {
@@ -348,6 +324,8 @@ namespace Game {
             };
         }
 
+		// fetch the tilemap to determine valid spawn locations for the power-ups, prioritizing hallway tiles for better placement, 
+        // and falling back to any walkable tile if no hallway tiles are available
         Engine::TileMap* map = nullptr;
         if (auto* world = Engine::GameObject::Find("World"))
         {
@@ -363,14 +341,6 @@ namespace Game {
             spawnPoints = CollectWalkablePoints(map, cfg.defaultSpawnZ);
         }
 
-        // Last fallback random pool: legacy entry positions (randomized, not fixed order)
-        if (spawnPoints.empty() && !cfg.entries.empty())
-        {
-            for (const auto& e : cfg.entries)
-            {
-                spawnPoints.push_back({ e.x, e.y, e.z });
-            }
-        }
 
         // No valid random pool at all
         if (spawnPoints.empty())
@@ -378,6 +348,8 @@ namespace Game {
             return;
         }
 
+		// For each seed, attempt to find a spawn point that is at least initialMinSpawnDistance away from all 
+        // previously selected points to prevent clustering.
         constexpr float initialMinSpawnDistance = 6.0f;
         std::vector<Engine::Vector3> selectedPositions;
         selectedPositions.reserve(seeds.size());
@@ -395,7 +367,7 @@ namespace Game {
                 const int maxTries = static_cast<int>(pool.size()) * 3;
                 for (int t = 0; t < maxTries; ++t)
                 {
-                    const int idx = RandIndexAERandFloat(static_cast<int>(pool.size()));
+                    const int idx = RandIndex(static_cast<int>(pool.size()));
                     const Engine::Vector3 candidate = pool[idx];
 
                     if (IsFarEnough(candidate, selectedPositions, requiredDist))
@@ -411,7 +383,7 @@ namespace Game {
 
             if (!found)
             {
-                const int idx = RandIndexAERandFloat(static_cast<int>(pool.size()));
+                const int idx = RandIndex(static_cast<int>(pool.size()));
                 chosen = pool[idx];
                 pool.erase(pool.begin() + idx);
             }
@@ -427,6 +399,7 @@ namespace Game {
     }
 
     void PowerUpManager::Init() {
+		// Initialize power-up data and spawn objects in the scene based on that data
         PowerUpDataInit();
         for (const auto& data : allPowerUps) {
             CreatePowerUpObject(data);
@@ -434,6 +407,7 @@ namespace Game {
     }
 
     void PowerUpManager::FreeManager() {
+		// Clean up resources if needed (currently just clears the power-up data list, but could be expanded to destroy spawned objects if necessary)
         allPowerUps.clear();
     }
 
