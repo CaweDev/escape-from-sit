@@ -45,28 +45,6 @@ namespace
         float spawnedNPCColliderRadius = 0.25f;
         float spawnedGuardColliderRadius = 0.3f;
 
-        int cctvPerZone = 10;
-        int cctvPlacementStep = 1;
-        float cctvPlacementMinDist = 3.5f;
-        float cctvPlacementZ = 0.85f;
-        float cctvPlacementEpsilon = 0.02f;
-
-        float cctvViewZ = 1.6f;
-        float cctvScaleX = 0.25f;
-        float cctvScaleY = 0.25f;
-        int cctvSortingOrder = 300;
-        float cctvDetectRadius = 3.0f;
-        float cctvMaxRange = 6.0f;
-        float cctvConeWidth = 70.0f;
-
-        float terminalPosZ = 0.5f;
-        float terminalScaleX = 0.5f;
-        float terminalScaleY = 0.5f;
-        int terminalSortingOrder = 250;
-
-        float doorInteractMaxDistance = 2.5f;
-        float accessCardInteractMaxDistance = 2.5f;
-
         float npcNoticeRadius = 6.0f;
         float guardShakeDistance = 6.0f;
         float guardShakeDuration = 0.1f;
@@ -75,10 +53,7 @@ namespace
 
         float tileMapColliderMinHeight = 0.0f;
         float tileMapColliderMaxHeight = 3.0f;
-        float controlRoomDoorPosZ = 0.0f;
-        float doorColliderMinHeight = 0.0f;
-        float doorColliderMaxHeight = 2.0f;
-        float cardSpawnDedupThreshold = 0.1f;
+
         float debugCirclePi = 3.14159265f;
         float distanceSentinel = 999999.0f;
         float escalationStage2Ratio = 0.33f;
@@ -140,28 +115,6 @@ namespace
             spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
             spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
 
-            cctvPerZone = j.get("cctvPerZone", cctvPerZone).asInt();
-            cctvPlacementStep = j.get("cctvPlacementStep", cctvPlacementStep).asInt();
-            cctvPlacementMinDist = j.get("cctvPlacementMinDist", cctvPlacementMinDist).asFloat();
-            cctvPlacementZ = j.get("cctvPlacementZ", cctvPlacementZ).asFloat();
-            cctvPlacementEpsilon = j.get("cctvPlacementEpsilon", cctvPlacementEpsilon).asFloat();
-
-            cctvViewZ = j.get("cctvViewZ", cctvViewZ).asFloat();
-            cctvScaleX = j.get("cctvScaleX", cctvScaleX).asFloat();
-            cctvScaleY = j.get("cctvScaleY", cctvScaleY).asFloat();
-            cctvSortingOrder = j.get("cctvSortingOrder", cctvSortingOrder).asInt();
-            cctvDetectRadius = j.get("cctvDetectRadius", cctvDetectRadius).asFloat();
-            cctvMaxRange = j.get("cctvMaxRange", cctvMaxRange).asFloat();
-            cctvConeWidth = j.get("cctvConeWidth", cctvConeWidth).asFloat();
-
-            terminalPosZ = j.get("terminalPosZ", terminalPosZ).asFloat();
-            terminalScaleX = j.get("terminalScaleX", terminalScaleX).asFloat();
-            terminalScaleY = j.get("terminalScaleY", terminalScaleY).asFloat();
-            terminalSortingOrder = j.get("terminalSortingOrder", terminalSortingOrder).asInt();
-
-            doorInteractMaxDistance = j.get("doorInteractMaxDistance", doorInteractMaxDistance).asFloat();
-            accessCardInteractMaxDistance = j.get("accessCardInteractMaxDistance", accessCardInteractMaxDistance).asFloat();
-
             npcNoticeRadius = j.get("npcNoticeRadius", npcNoticeRadius).asFloat();
             guardShakeDistance = j.get("guardShakeDistance", guardShakeDistance).asFloat();
             guardShakeDuration = j.get("guardShakeDuration", guardShakeDuration).asFloat();
@@ -170,10 +123,6 @@ namespace
 
             tileMapColliderMinHeight = j.get("tileMapColliderMinHeight", tileMapColliderMinHeight).asFloat();
             tileMapColliderMaxHeight = j.get("tileMapColliderMaxHeight", tileMapColliderMaxHeight).asFloat();
-            controlRoomDoorPosZ = j.get("controlRoomDoorPosZ", controlRoomDoorPosZ).asFloat();
-            doorColliderMinHeight = j.get(" doorColliderMinHeight", doorColliderMinHeight).asFloat();
-            doorColliderMaxHeight = j.get("doorColliderMaxHeight", doorColliderMaxHeight).asFloat();
-            cardSpawnDedupThreshold = j.get("cardSpawnDedupThreshold", cardSpawnDedupThreshold).asFloat();
             debugCirclePi = j.get("debugCirclePi", debugCirclePi).asFloat();
             distanceSentinel = j.get("distanceSentinel", distanceSentinel).asFloat();
             escalationStage2Ratio = j.get("escalationStage2Ratio", escalationStage2Ratio).asFloat();

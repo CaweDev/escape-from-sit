@@ -136,7 +136,7 @@ namespace Game
 
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
-
+        map->LoadFromArray(worldMap.data(), mapWidth, mapHeight);
 
         auto renderer = world->AddComponent<TileMapRenderer>();
         renderer->wallColorNS = Color(0.8f, 0.2f, 0.2f, 1.0f);

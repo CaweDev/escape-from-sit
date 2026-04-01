@@ -198,6 +198,8 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::NPC>("blockTime", offsetof(Game::NPC, blockTime), DataType::Float);
 
         Registry::RegisterFieldType<Game::NPC>("patrolRepathTime", offsetof(Game::NPC, patrolRepathTime), DataType::Float);
+        Registry::RegisterFieldType<Game::NPC>("isDistracted", offsetof(Game::NPC, isDistracted), DataType::Bool);
+        Registry::RegisterFieldType<Game::NPC>("distractionPos", offsetof(Game::NPC, distractionPos), DataType::Vector2);
     }
 
     void RegisterPlayer()

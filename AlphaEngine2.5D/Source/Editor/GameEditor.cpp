@@ -1,10 +1,10 @@
 /* Start Header ************************************************************************/
 /*!
-\file		GameEditor.cpp
-\author 	
-\par	
-\date	March, 29, 2026
-\brief		[AUTO] GameEditor
+\file       GameEditor.cpp
+\author
+\par
+\date   March, 29, 2026
+\brief      [AUTO] GameEditor
 
 Copyright (C) 2026 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -51,7 +51,7 @@ namespace AEEditor
 
     /*!
      * \brief [AUTO] Is3DMode
-     * \return 
+     * \return
      */
     bool GameEditor::Is3DMode() { return is3DMode; }
 
@@ -96,9 +96,9 @@ namespace AEEditor
             int value;
         };
         ModeDef modes[] = {
-            {"Wall (1)", 1}, {"Door (2)", 10}, {"Terminal (3)", 11}, {"Exit (4)", 12}, {"Ctrl Room (5)", 20}, {"Green Card (6)", 15}, {"Purple Card (7)", 16}, {"Red Card (8)", 17}, {"Yellow Card (9)", 18}, {"Erase (0)", 0}};
+            {"Wall (1)", 1}, {"Erase (0)", 0}};
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 2; i++)
         {
             bool isSelected = (currentTileValue == modes[i].value);
             if (isSelected)
@@ -159,24 +159,6 @@ namespace AEEditor
             return IM_COL32(90, 90, 90, 255);
         case 1:
             return IM_COL32(220, 220, 220, 255);
-        case 10:
-            return IM_COL32(100, 200, 255, 255);
-        case 11:
-            return IM_COL32(255, 200, 100, 255);
-        case 12:
-            return IM_COL32(100, 255, 100, 255);
-        case 13:
-            return IM_COL32(255, 100, 255, 255);
-        case 20:
-            return IM_COL32(255, 50, 255, 255);
-        case 15:
-            return IM_COL32(50, 255, 50, 255);
-        case 16:
-            return IM_COL32(200, 50, 255, 255);
-        case 17:
-            return IM_COL32(255, 50, 50, 255);
-        case 18:
-            return IM_COL32(255, 255, 50, 255);
         default:
             return IM_COL32(255, 100, 255, 255);
         }
@@ -405,33 +387,6 @@ namespace AEEditor
                     break;
                 case 1:
                     c = '1';
-                    break;
-                case 10:
-                    c = 'D';
-                    break;
-                case 11:
-                    c = 'T';
-                    break;
-                case 12:
-                    c = 'E';
-                    break;
-                case 13:
-                    c = 'C';
-                    break;
-                case 20:
-                    c = 'K';
-                    break;
-                case 15:
-                    c = 'F';
-                    break;
-                case 16:
-                    c = 'G';
-                    break;
-                case 17:
-                    c = 'H';
-                    break;
-                case 18:
-                    c = 'J';
                     break;
                 default:
                     c = '0';
