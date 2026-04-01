@@ -1,47 +1,31 @@
+// Inside PuzzleObject.hpp
 #pragma once
-/**
- * @file PuzzleObject.hpp
- * @brief Data structures and component for the book-puzzle collectibles
- */
-
-#include "AEEngine.h"
 #include "Engine/Core/Component.hpp"
 #include "Engine/Math/Vector3.hpp"
 #include <string>
-#include <vector>
 
 namespace Game {
 
-/**
- * @struct Book
- * @brief Data for a single quiz / collectible book in the puzzle system
- */
-struct Book {
-    int bookId;
-    Engine::Vector3 bookPosition;
-    bool bookCollected;
-    std::string bookName;
-    std::string bookLore;
-    std::string opt1;
-    std::string opt2;
-    std::string opt3;
-    int correctAnswer;
-};
+    struct Book {
+        int bookId = 0;
+        Engine::Vector3 bookPosition = { 0.0f, 0.0f, 0.0f };
+        bool bookCollected = false; // Must be lowercase 'b'!
+        std::string bookName = "";
+        std::string bookLore = "";
+        std::string opt1 = "";
+        std::string opt2 = "";
+        std::string opt3 = "";
+        int correctAnswer = 1;
+    };
 
-/**
- * @class PuzzleObject
- * @brief Component attached to an in-world book collectible
- */
-class PuzzleObject : public Engine::Component
-{
-public:
-    bool puzzleCompleted;
-    Book reference;
-    void Update() override;
-    bool isReading;
+    class PuzzleObject : public Engine::Component {
+    public:
+        bool isReading = false;
+        bool puzzleCompleted = false;
+        float baseZ = 0.0f; // The anchor for our floating animation
 
-    float baseZ = 0.0f;
-    void Initialize() override;
-};
+        void Initialize() override;
+        void Update() override;
+    };
 
 } // namespace Game

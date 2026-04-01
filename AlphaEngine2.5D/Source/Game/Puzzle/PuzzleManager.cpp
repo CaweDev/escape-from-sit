@@ -1,16 +1,16 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Puzzle\PuzzleManager.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
  */
 
 #include "PuzzleManager.hpp"
 #include "Engine.hpp"
-#include "Engine/Audio/ProximityAudio.hpp"
 #include "Engine/Core/ConfigManager.hpp"
-#include <array>
+#include <fstream>
+#include <json/json.h>
 
+ // ==========================================
+ // CONFIGURATIONS
+ // ==========================================
 namespace
 {
     struct PuzzleManagerConfig : public Engine::IConfig
@@ -59,121 +59,184 @@ namespace
 
 namespace Game {
 
-using namespace Engine;
+    using namespace Engine;
 
-std::vector<Book> PuzzleManager::allBooks = {};
-int PuzzleManager::booksCollected = 0;
+    // ==========================================
+    // STATIC VARIABLE INITIALIZATION
+    // ==========================================
+    std::vector<Book> PuzzleManager::allBooks = {};
+    std::vector<Book> PuzzleManager::Books = {};
+    std::vector<GradeTier> PuzzleManager::gradeTiers = {};
 
-std::string PuzzleManager::activeBookText = "";
-std::string PuzzleManager::activeBookTitle = "";
-float PuzzleManager::popupTimer = 0.0f;
+    int PuzzleManager::booksCollected = 0;
+    int PuzzleManager::totalWrongAnswers = 0;
 
-bool PuzzleManager::isQuizActive = false;
-int PuzzleManager::currentCorrectAnswer = 0;
-Engine::GameObject* PuzzleManager::currentBookObj = nullptr;
-int PuzzleManager::currentBookId = 0;
+    std::string PuzzleManager::activeBookText = "";
+    std::string PuzzleManager::activeBookTitle = "";
+    float PuzzleManager::popupTimer = 0.0f;
 
-std::string PuzzleManager::activeOpt1 = "";
-std::string PuzzleManager::activeOpt2 = "";
-std::string PuzzleManager::activeOpt3 = "";
+    bool PuzzleManager::isQuizActive = false;
+    int PuzzleManager::currentCorrectAnswer = 0;
+    Engine::GameObject* PuzzleManager::currentBookObj = nullptr;
+    int PuzzleManager::currentBookId = 0;
 
-void PuzzleManager::CreatePuzzleObject(Book book)
-{
-    const auto& cfg = GetPuzzleManagerConfig();
+    std::string PuzzleManager::activeOpt1 = "";
+    std::string PuzzleManager::activeOpt2 = "";
+    std::string PuzzleManager::activeOpt3 = "";
+    std::string PuzzleManager::activeGrade = "";
 
-    auto bookObj = SceneManager::GetActiveScene()->CreateGameObject("Book");
-    bookObj->transform->position = book.bookPosition;
-    bookObj->transform->rotation = 0.0f;
-    bookObj->transform->localScale = Vector2(cfg.bookScale, cfg.bookScale);
 
-    auto bookPuzzleObj = bookObj->AddComponent<PuzzleObject>();
-
-    auto bookSR = bookObj->AddComponent<SpriteRenderer>();
-    bookSR->SetSprite(AssetManager::GetSprite(cfg.bookSpritePath.c_str()));
-    bookSR->billboard = true;
-    bookSR->enabled = true;
-    bookSR->sortingOrder = cfg.spriteSortOrder;
-
-    auto bookInteract = bookObj->AddComponent<Interactable>();
-    bookInteract->actionText = cfg.interactText;
-    bookInteract->maxDistance = cfg.interactDistance;
- 
-    bookInteract->onInteract = [bookPuzzleObj, bookObj, book]() {
+    // ==========================================
+    // SPAWN LOGIC
+    // ==========================================
+    void PuzzleManager::CreatePuzzleObject(Book book)
+    {
         const auto& cfg = GetPuzzleManagerConfig();
-        if (!bookPuzzleObj->isReading && !PuzzleManager::isQuizActive) {
-            bookPuzzleObj->isReading = true;
-            PuzzleManager::isQuizActive = true;
-            PuzzleManager::currentBookObj = bookObj;
-            PuzzleManager::currentBookId = book.bookId;
-            PuzzleManager::currentCorrectAnswer = book.correctAnswer;
-            PuzzleManager::activeBookTitle = book.bookName;
-            PuzzleManager::activeBookText = book.bookLore;
-            PuzzleManager::activeOpt1 = book.opt1;
-            PuzzleManager::activeOpt2 = book.opt2;
-            PuzzleManager::activeOpt3 = book.opt3;
-            PuzzleManager::popupTimer = cfg.quizPopupHoldDuration;
+
+        auto bookObj = SceneManager::GetActiveScene()->CreateGameObject("Book");
+        bookObj->transform->position = book.bookPosition;
+        bookObj->transform->rotation = 0.0f;
+        bookObj->transform->localScale = Vector2(cfg.bookScale, cfg.bookScale);
+
+        auto bookPuzzleObj = bookObj->AddComponent<PuzzleObject>();
+
+        auto bookSR = bookObj->AddComponent<SpriteRenderer>();
+        bookSR->SetSprite(AssetManager::GetSprite(cfg.bookSpritePath.c_str()));
+        bookSR->billboard = true;
+        bookSR->enabled = true;
+        bookSR->sortingOrder = cfg.spriteSortOrder;
+
+        auto bookInteract = bookObj->AddComponent<Interactable>();
+        bookInteract->actionText = cfg.interactText;
+        bookInteract->maxDistance = cfg.interactDistance;
+
+        bookInteract->onInteract = [bookPuzzleObj, bookObj, book]() {
+            const auto& cfg = GetPuzzleManagerConfig();
+            if (!bookPuzzleObj->isReading && !PuzzleManager::isQuizActive) {
+                bookPuzzleObj->isReading = true;
+                PuzzleManager::isQuizActive = true;
+                PuzzleManager::currentBookObj = bookObj;
+                PuzzleManager::currentBookId = book.bookId;
+                PuzzleManager::currentCorrectAnswer = book.correctAnswer;
+                PuzzleManager::activeBookTitle = book.bookName;
+                PuzzleManager::activeBookText = book.bookLore;
+                PuzzleManager::activeOpt1 = book.opt1;
+                PuzzleManager::activeOpt2 = book.opt2;
+                PuzzleManager::activeOpt3 = book.opt3;
+                PuzzleManager::popupTimer = cfg.quizPopupHoldDuration;
+            }
+            };
+    }
+
+
+    // ==========================================
+    // JSON DATA LOADER
+    // ==========================================
+    void PuzzleManager::BookDataInit(const std::string& filepath)
+    {
+        allBooks.clear();
+        gradeTiers.clear();
+            
+        std::ifstream file(filepath);
+        if (!file.is_open()) {
+            std::printf("[PuzzleManager] ERROR: Could not open JSON file at %s!\n", filepath.c_str());
+            return;
         }
-    };
-}
 
-void PuzzleManager::BookDataInit()
-{
-    std::array<std::string, 6> bookNames = { "POP QUIZ 1", "POP QUIZ 2", "POP QUIZ 3", "POP QUIZ 4", "POP QUIZ 5", "POP QUIZ 6" };
+        Json::Value root;
+        try {
+            file >> root;
+        }
+        catch (...) {
+            std::printf("[PuzzleManager] ERROR: Failed to parse JSON formatting in %s!\n", filepath.c_str());
+            return;
+        }
 
-    std::array<std::string, 6> bookLore = {
-        "What does 'int*' represent?",
-        "What is a memory leak?",
-        "Which of these is a Loop?",
-        "|Cinema|",
-        "Question 5?",
-        "Question 6?"
-    };
+        // 1. Load the Grades
+        const Json::Value& gradesNode = root["grades"];
+        if (gradesNode.isArray()) {
+            for (int i = 0; i < (int)gradesNode.size(); ++i) {
+                const Json::Value& g = gradesNode[i];
+                GradeTier tier;
+                tier.letter = g.get("letter", "F").asString();
+                tier.maxMistakes = g.get("maxMistakes", 999).asInt();
+                tier.text = g.get("text", "Missing text").asString();
+                gradeTiers.push_back(tier);
+            }
+        }
 
-    std::array<std::string, 6> opt1 = { "1. A memory address", "1. Spilled RAM", "1. if()", "1. Absolute Cinema", "1. A", "1. A" };
-    std::array<std::string, 6> opt2 = { "2. A decimal number", "2. Unfreed memory", "2. switch()", "2. ???", "2. B", "2. B" };
-    std::array<std::string, 6> opt3 = { "3. A boolean", "3. A fast CPU", "3. while()", "3. Cinema?", "3. C", "3. C" };
+        // 2. Load the Books
+        const Json::Value& booksNode = root["books"];
+        if (booksNode.isArray()) {
+            for (int i = 0; i < (int)booksNode.size(); ++i) {
+                const Json::Value& b = booksNode[i];
 
-    int correctAnswers[6] = { 1, 2, 3, 1, 1, 3 };
+                Book newBook;
+                newBook.bookId = b.get("id", i).asInt();
+                newBook.bookName = b.get("name", "Unknown Book").asString();
+                newBook.bookLore = b.get("lore", "Missing text.").asString();
+                newBook.opt1 = b.get("opt1", "1. ").asString();
+                newBook.opt2 = b.get("opt2", "2. ").asString();
+                newBook.opt3 = b.get("opt3", "3. ").asString();
+                newBook.correctAnswer = b.get("correctAnswer", 1).asInt();
+                newBook.bookCollected = false;
 
-    Engine::Vector3 bookCoords[6] = { {8.0f, 17.0f, 0.12f} ,{9.0f, 41.0f, 0.12f},{90.f, 40.f, 0.12f},{121.0f, 19.f, 0.12f},{83.0f, 12.0f, 0.12f},{73.0f, 19.0f, 0.12f} };
+                const Json::Value& posNode = b["position"];
+                newBook.bookPosition = Engine::Vector3(
+                    posNode.get("x", 0.0f).asFloat(),
+                    posNode.get("y", 0.0f).asFloat(),
+                    posNode.get("z", 0.12f).asFloat()
+                );
 
-    for (int i{}; i < 6; ++i) {
-        allBooks.push_back({
-        i,
-        bookCoords[i],
-        false,
-        bookNames[i],
-        bookLore[i],
-        opt1[i],
-        opt2[i],
-        opt3[i],
-        correctAnswers[i]
-            });
+                allBooks.push_back(newBook);
+            }
+        }
+
+        std::printf("[PuzzleManager] Successfully loaded %zu books and %zu grades from %s\n", allBooks.size(), gradeTiers.size(), filepath.c_str());
     }
-}
 
-void PuzzleManager::Init()
-{
-    for (int i{}; i < allBooks.size(); ++i) {
-        CreatePuzzleObject(allBooks[i]);
+    void PuzzleManager::Init()
+    {
+        for (int i{}; i < allBooks.size(); ++i) {
+            CreatePuzzleObject(allBooks[i]);
+        }
     }
-}
 
-void PuzzleManager::FreeManager()
-{
-    allBooks.clear();
-    booksCollected = 0;
-    activeBookText.clear();
-    activeBookTitle.clear();
-    popupTimer = 0.0f;
-}
-   
-void PuzzleManager::OpenExitDoor()
-{
-    const auto& cfg = GetPuzzleManagerConfig();
-    PuzzleManager::activeBookTitle = cfg.exitPopupTitle;
-    PuzzleManager::activeBookText = cfg.exitPopupBody;
-    PuzzleManager::popupTimer = cfg.exitPopupDuration;
-}
+    void PuzzleManager::FreeManager()
+    {
+        allBooks.clear();
+        booksCollected = 0;
+        activeBookText.clear();
+        activeBookTitle.clear();
+        popupTimer = 0.0f;
+
+        totalWrongAnswers = 0;
+        activeGrade = "";
+    }
+
+    // ==========================================
+    // EXIT DOOR LOGIC & GRADING
+    // ==========================================
+    void PuzzleManager::OpenExitDoor()
+    {
+        PuzzleManager::activeBookTitle = "FINAL RESULT";
+
+        // Set a default fail state just in case the JSON is missing
+        PuzzleManager::activeGrade = "F";
+        PuzzleManager::activeBookText = "Missing Grade Data";
+
+        // Loop through the grades we loaded from the JSON
+        for (const auto& tier : gradeTiers) {
+
+            // Stops at the first grade tier the player qualifies for
+            if (PuzzleManager::totalWrongAnswers <= tier.maxMistakes) {
+                PuzzleManager::activeGrade = tier.letter;
+                PuzzleManager::activeBookText = tier.text;
+                break;
+            }
+        }
+
+        PuzzleManager::popupTimer = 6.0f;
+    }
 
 } // namespace Game

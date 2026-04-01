@@ -1,0 +1,110 @@
+{
+  "grades": [
+    {
+      "letter": "S",
+      "maxMistakes": 0,
+      "text": "Flawless! Straight to university.\nFaster go home lah."
+    },
+    {
+      "letter": "A",
+      "maxMistakes": 2,
+      "text": "Great job, but room for improvement.\nGo home and rest."
+    },
+    {
+      "letter": "B",
+      "maxMistakes": 5,
+      "text": "You barely passed.\nFaster go home lah."
+    },
+    {
+      "letter": "F",
+      "maxMistakes": 999,
+      "text": "GG... See you in summer school.\nJust go home."
+    }
+  ],
+  "books": [
+    {
+      "id": 0,
+      "name": "POP QUIZ 1",
+      "lore": "What does 'int*' represent?",
+      "opt1": "1. A memory address",
+      "opt2": "2. A decimal number",
+      "opt3": "3. A boolean",
+      "correctAnswer": 1,
+      "position": {
+        "x": 8.0,
+        "y": 17.0,
+        "z": 0.12
+      }
+    },
+    {
+      "id": 1,
+      "name": "POP QUIZ 2",
+      "lore": "What is a memory leak?",
+      "opt1": "1. Spilled RAM",
+      "opt2": "2. Unfreed memory",
+      "opt3": "3. A fast CPU",
+      "correctAnswer": 2,
+      "position": {
+        "x": 9.0,
+        "y": 41.0,
+        "z": 0.12
+      }
+    },
+    {
+      "id": 2,
+      "name": "POP QUIZ 3",
+      "lore": "Which of these is a Loop?",
+      "opt1": "1. if()",
+      "opt2": "2. switch()",
+      "opt3": "3. while()",
+      "correctAnswer": 3,
+      "position": {
+        "x": 90.0,
+        "y": 40.0,
+        "z": 0.12
+      }
+    },
+    {
+      "id": 3,
+      "name": "POP QUIZ 4",
+      "lore": "Which data type is used to store a True or False value?",
+      "opt1": "1. int",
+      "opt2": "2. bool",
+      "opt3": "3. float",
+      "correctAnswer": 2,
+      "position": {
+        "x": 121.0,
+        "y": 19.0,
+        "z": 0.12
+      }
+    },
+    {
+      "id": 4,
+      "name": "POP QUIZ 5",
+      "lore": "How do you print text to the screen in standard C++?",
+      "opt1": "1. std::cout",
+      "opt2": "2. console.log",
+      "opt3": "3. print()",
+      "correctAnswer": 1,
+      "position": {
+        "x": 83.0,
+        "y": 12.0,
+        "z": 0.12
+      }
+    },
+    {
+      "id": 5,
+      "name": "POP QUIZ 6",
+      "lore": "Can you get an internship?",
+      "opt1": "1. Yes",
+      "opt2": "2. No",
+      "opt3": "3. Maybe",
+      "correctAnswer": 1,
+      "position": {
+        "x": 73.0,
+        "y": 19.0,
+        "z": 0.12
+      }
+    }
+  ]
+}

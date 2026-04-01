@@ -681,7 +681,7 @@ namespace Game
         // Initialize Level Editor
         levelEditor.Initialize(this, map, playerCam, playerTf);
 
-        Game::PuzzleManager::BookDataInit();
+        Game::PuzzleManager::BookDataInit("Assets/Config/Game/books.json");
         Game::PuzzleManager::Init();
 
         Game::PowerUpManager::Init();

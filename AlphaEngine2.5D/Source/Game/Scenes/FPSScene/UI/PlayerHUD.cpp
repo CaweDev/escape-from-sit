@@ -1012,7 +1012,7 @@ namespace Game
 
                     // --- WRONG ANSWER ---
                     Engine::SoundManager::PlaySFX("terminal_hack"); // Reusing your "Access Denied" sound!
-
+                    Game::PuzzleManager::totalWrongAnswers++;
                     // Reset the interactable so they can try again
                     if (Game::PuzzleManager::currentBookObj) {
                         auto pObj = Game::PuzzleManager::currentBookObj->GetComponent<PuzzleObject>();

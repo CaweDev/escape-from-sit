@@ -110,6 +110,9 @@ namespace Game
         UI::Text* m_option2Text = nullptr;
         UI::Text* m_option3Text = nullptr;
         
+        //Final Grade Text
+        UI::Text* m_bookGradeText = nullptr;
+
         // Access Card tracking
         UI::Panel* m_cardPanel = nullptr;
         UI::Text* m_cardText = nullptr;
