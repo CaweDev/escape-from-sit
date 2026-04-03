@@ -1,0 +1,60 @@
+\doxysection{Heatmap\+Overlay.\+hpp}
+\hypertarget{_heatmap_overlay_8hpp_source}{}\label{_heatmap_overlay_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Specialized/HeatmapOverlay.hpp@{AlphaEngine2.5D/Source/Engine/UI/Specialized/HeatmapOverlay.hpp}}
+\doxymbox{\hyperlink{_heatmap_overlay_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_map_8hpp}{Engine/UI/Specialized/Map.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_heatmap_8hpp}{Game/Heatmap/Heatmap.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a2a6435b30819952fe80a66f3bdc54489}{HeatmapOverlay}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_map_a6c975835aa50207046bf2d77bbed3a01}{Map}}}
+\DoxyCodeLine{00023\ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Heatmap\ Data\ -\/-\/-\/}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::Heatmap}}*\ m\_heatmap\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Gradient\ Colors\ -\/-\/-\/}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_coldColor;\ \ \ \textcolor{comment}{//\ Color\ for\ low\ heat\ (e.g.,\ blue)}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_warmColor;\ \ \ \textcolor{comment}{//\ Color\ for\ medium\ heat\ (e.g.,\ yellow)}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_hotColor;\ \ \ \ \textcolor{comment}{//\ Color\ for\ high\ heat\ (e.g.,\ red)}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Display\ Settings\ -\/-\/-\/}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_minThreshold\ =\ 0.5f;\ \ \textcolor{comment}{//\ Minimum\ heat\ value\ to\ display}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_maxValue\ =\ 100.0f;\ \ \ \ \textcolor{comment}{//\ Maximum\ heat\ value\ for\ color\ scaling}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_opacity\ =\ 0.7f;\ \ \ \ \ \ \ \textcolor{comment}{//\ Opacity\ of\ heatmap\ overlay\ (0-\/1)}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a2a6435b30819952fe80a66f3bdc54489}{HeatmapOverlay}}();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a511933251d5a52c4ecbd21229d132924}{\string~HeatmapOverlay}}();}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a65cbbdc9cac3bdd99f906227bdedce53}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a412421998f3f28eeeee55cb1945a110a}{SetHeatmap}}(\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::Heatmap}}*\ heatmap)\ \{\ m\_heatmap\ =\ heatmap;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::Heatmap}}*\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_ad6eb5a53e6244d43e2b5e26b40529fda}{GetHeatmap}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_heatmap;\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a291d87a6343bc74ec5f219bafa0daf28}{SetHeatGradient}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ cold,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ warm,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ hot);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_afe4a6addc7bdf6758970463a9c3da83e}{SetMinThreshold}}(\textcolor{keywordtype}{float}\ threshold)\ \{\ m\_minThreshold\ =\ threshold;\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_aab3dca12277e1c2e1c5bd524398dfbde}{GetMinThreshold}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_minThreshold;\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a622270ef0897ded350a144e11f1ad98f}{SetMaxValue}}(\textcolor{keywordtype}{float}\ maxValue)\ \{\ m\_maxValue\ =\ maxValue;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a1e11632c23926dac3850e50e2be09a72}{GetMaxValue}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_maxValue;\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a15e148ab5c40927df8cf44a0adb31171}{SetOpacity}}(\textcolor{keywordtype}{float}\ opacity)\ \{\ m\_opacity\ =\ opacity\ >\ 1.0f\ ?\ 1.0f\ :\ (opacity\ <\ 0.0f\ ?\ 0.0f\ :\ opacity);\ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_ab1c94bff113e25c978acf700919de356}{GetOpacity}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_opacity;\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ GetHeatColor(\textcolor{keywordtype}{float}\ heatValue)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ LerpColor(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ b,\ \textcolor{keywordtype}{float}\ t)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00095\ \ \ \ \ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

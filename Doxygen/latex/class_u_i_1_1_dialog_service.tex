@@ -1,0 +1,120 @@
+\doxysection{UI::\+Dialog\+Service Class Reference}
+\hypertarget{class_u_i_1_1_dialog_service}{}\label{class_u_i_1_1_dialog_service}\index{UI::DialogService@{UI::DialogService}}
+
+
+Static service for modal \doxylink{namespace_u_i}{UI} dialogs.  
+
+
+
+
+{\ttfamily \+\#include $<$Dialog\+Service.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_afe02fb66ef8fd03b578e3f2e26e367cf}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the dialog service (called once at engine startup). \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_ad295610c776740c76336d8110fc4756f}{Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Shut down the dialog service and free resources. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_a891395f574db33eec21abe39d3061c60}{Show\+Confirmation}} (const std::\+string \&message, const std::\+string \&confirm\+Text, const std::\+string \&cancel\+Text, std::\+function$<$ void()$>$ on\+Confirm, std::\+function$<$ void()$>$ on\+Cancel=nullptr)
+\begin{DoxyCompactList}\small\item\em Show a modal confirmation dialog. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_af428b70cfb24c0f2c394be9c0b1a13dc}{Hide\+Confirmation}} ()
+\begin{DoxyCompactList}\small\item\em Hide the confirmation dialog. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_aaa08a0fb81302d6d91cc72ebb22974f8}{Is\+Confirmation\+Visible}} ()
+\begin{DoxyCompactList}\small\item\em Check if the confirmation dialog is visible. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_dialog_service_a4bf19b40af6d8b200ff23f71df4b8108}{Set\+Confirmation\+Background}} (\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}texture)
+\begin{DoxyCompactList}\small\item\em Set a 9-\/slice background texture for the confirmation dialog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static service for modal \doxylink{namespace_u_i}{UI} dialogs. 
+
+Provides a global entry point for showing/\+hiding confirmation dialogs without coupling to \doxylink{class_u_i_1_1_u_i_manager}{UIManager}. 
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_dialog_service_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_dialog_service_af428b70cfb24c0f2c394be9c0b1a13dc}\index{UI::DialogService@{UI::DialogService}!HideConfirmation@{HideConfirmation}}
+\index{HideConfirmation@{HideConfirmation}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{HideConfirmation()}{HideConfirmation()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_af428b70cfb24c0f2c394be9c0b1a13dc} 
+void UI::\+\+Dialog\+Service::\+\+Hide\+Confirmation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Hide the confirmation dialog. 
+
+\Hypertarget{class_u_i_1_1_dialog_service_afe02fb66ef8fd03b578e3f2e26e367cf}\index{UI::DialogService@{UI::DialogService}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_afe02fb66ef8fd03b578e3f2e26e367cf} 
+void UI::\+\+Dialog\+Service::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initialize the dialog service (called once at engine startup). 
+
+\Hypertarget{class_u_i_1_1_dialog_service_aaa08a0fb81302d6d91cc72ebb22974f8}\index{UI::DialogService@{UI::DialogService}!IsConfirmationVisible@{IsConfirmationVisible}}
+\index{IsConfirmationVisible@{IsConfirmationVisible}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{IsConfirmationVisible()}{IsConfirmationVisible()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_aaa08a0fb81302d6d91cc72ebb22974f8} 
+bool UI::\+\+Dialog\+Service::\+\+Is\+Confirmation\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if the confirmation dialog is visible. 
+
+\Hypertarget{class_u_i_1_1_dialog_service_a4bf19b40af6d8b200ff23f71df4b8108}\index{UI::DialogService@{UI::DialogService}!SetConfirmationBackground@{SetConfirmationBackground}}
+\index{SetConfirmationBackground@{SetConfirmationBackground}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{SetConfirmationBackground()}{SetConfirmationBackground()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_a4bf19b40af6d8b200ff23f71df4b8108} 
+void UI::\+\+Dialog\+Service::\+\+Set\+Confirmation\+Background (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}}]{texture}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set a 9-\/slice background texture for the confirmation dialog. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & Texture with Nine\+Slice\+Border already configured \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_dialog_service_a891395f574db33eec21abe39d3061c60}\index{UI::DialogService@{UI::DialogService}!ShowConfirmation@{ShowConfirmation}}
+\index{ShowConfirmation@{ShowConfirmation}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{ShowConfirmation()}{ShowConfirmation()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_a891395f574db33eec21abe39d3061c60} 
+void UI::\+\+Dialog\+Service::\+\+Show\+Confirmation (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{message}{, }\item[{const std::\+string \&}]{confirm\+Text}{, }\item[{const std::\+string \&}]{cancel\+Text}{, }\item[{std::\+function$<$ void()$>$}]{on\+Confirm}{, }\item[{std::\+function$<$ void()$>$}]{on\+Cancel}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Show a modal confirmation dialog. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message text to display \\
+\hline
+{\em confirm\+Text} & Confirm button label \\
+\hline
+{\em cancel\+Text} & Cancel button label \\
+\hline
+{\em on\+Confirm} & Callback on confirm \\
+\hline
+{\em on\+Cancel} & Callback on cancel (optional) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_dialog_service_ad295610c776740c76336d8110fc4756f}\index{UI::DialogService@{UI::DialogService}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!UI::DialogService@{UI::DialogService}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_dialog_service_ad295610c776740c76336d8110fc4756f} 
+void UI::\+\+Dialog\+Service::\+\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Shut down the dialog service and free resources. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_dialog_service_8hpp}{Dialog\+Service.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_dialog_service_8cpp}{Dialog\+Service.\+cpp}}\end{DoxyCompactItemize}

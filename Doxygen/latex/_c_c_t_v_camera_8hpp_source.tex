@@ -1,0 +1,79 @@
+\doxysection{CCTVCamera.\+hpp}
+\hypertarget{_c_c_t_v_camera_8hpp_source}{}\label{_c_c_t_v_camera_8hpp_source}\index{AlphaEngine2.5D/Source/Game/CCTV/CCTVCamera.hpp@{AlphaEngine2.5D/Source/Game/CCTV/CCTVCamera.hpp}}
+\doxymbox{\hyperlink{_c_c_t_v_camera_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{Engine/Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_minimap}{Minimap}};}
+\DoxyCodeLine{00017\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}};}
+\DoxyCodeLine{00021\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{PlayerHUD}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_ad763ee01a5872f65fb3a254fc301ff9a}{tile}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a50ebf9b3e5eb1157d7714895d1472784}{tf}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ player\ transform}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{PlayerHUD}}*\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_ab552a2caecd6912ca12d0dca807d171e}{hud}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ player\ HUD\ for\ warnings}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::Minimap}}*\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a65c0375738d372fed9c80f90df5d6d07}{minimap}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ minimap\ for\ vision\ cones}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::SpriteRenderer}}*\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a5fa62a32d8ea4e7af009773f53a7df1e}{spriteRenderer}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ for\ color\ feedback}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a10d73bdbc366a3b31ab25c0b1cb23715}{hasLastSeen}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a5cc1b6a0a564a281f5b9083540297a8b}{lastSeenTile}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}(-\/1,\ -\/1);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a01746242be66a91151f21972cabf155f}{lastSeenWorld}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}(0,\ 0);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a8a1ca87fd2db1469b82de2a9f09b0b8d}{detectRadius}}\ =\ 3.0f;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_afe302f054ba6c92046ec2fb4c5ed9618}{coneWidth}}\ =\ 170.0f;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a8d6db8e6175338d83fc9f42640b5322b}{maxRange}}\ =\ 10.0f;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aa5410c20536932416585359333f34629}{needLOS}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a0bbc586fa48059bed3378c06e37cc19c}{showVision}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aae96538b0da83da021f14fa57ef590bd}{rayCount}}\ =\ 60;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a740478031529228ea68fda0dc6e8da9d}{rayStepPerUnit}}\ =\ 12.0f;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NEW:\ used\ by\ FPSScene\ for\ spikes\ (edge-\/trigger)}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aedf83b465bafeceaee212741a81aafab}{isSeeingPlayer}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a788015841e6072bb7f993e7d8153e43d}{justSpotted}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Terminal\ control\ system}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a1aed6ff2f2685ed3b803d9246493de0d}{isDisabled}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a9b245c1cec82d283c3fc38e48964af17}{disabledTimeRemaining}}\ =\ 0.0f;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Engine::Vector2>\&\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a31638d9e5d8674ecacfe83b258e7ee98}{GetVisionPolygon}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_visionPoly;\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_afbf4dca2c3572a0c414e719df0806fc4}{IsTileVisible}}(\textcolor{keywordtype}{int}\ tx,\ \textcolor{keywordtype}{int}\ ty)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a7b039f27d2a4184a42433d546125d9af}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aa49973e491db15598c623278499b179d}{RaycastToWall}}(\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ from,\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ dir,\ \textcolor{keywordtype}{float}\ maxDist)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RecordLastSeen();}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ InFov(\textcolor{keywordtype}{float}\ dx,\ \textcolor{keywordtype}{float}\ dy)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ HasLineOfSighttoPlayer()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ RaycastTileLOS(\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ from,\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ to)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ BuildVisionPolygon();}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ m\_visionPoly;}
+\DoxyCodeLine{00074\ \ \ \ \ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \}}
+
+\end{DoxyCode}

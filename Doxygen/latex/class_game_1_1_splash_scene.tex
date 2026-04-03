@@ -1,0 +1,145 @@
+\doxysection{Game::\+Splash\+Scene Class Reference}
+\hypertarget{class_game_1_1_splash_scene}{}\label{class_game_1_1_splash_scene}\index{Game::SplashScene@{Game::SplashScene}}
+
+
+Splash screen that shows the Digi\+Pen logo with horror effects.  
+
+
+
+
+{\ttfamily \+\#include $<$Splash\+Scene.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_splash_scene_a989b85e222e5e06937ba94bc2f6fc3bc}{Splash\+Scene}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_splash_scene_acbe361241b1705f74b45b86c9f5f854b}{On\+Load}} () override
+\begin{DoxyCompactList}\small\item\em Called when the scene is loaded. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_splash_scene_ae786d8ef811bae1f1a13611d2350e96f}{On\+Unload}} () override
+\begin{DoxyCompactList}\small\item\em Called when the scene is unloaded. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_splash_scene_a2baca3bad05bfcd9f82e8582804a0765}{On\+Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update for the splash animation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{On\+After\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Splash screen that shows the Digi\+Pen logo with horror effects. 
+
+Timeline:\+ Fade\+In -\/\texorpdfstring{$>$}{>} Hold\+And\+Expand -\/\texorpdfstring{$>$}{>} Flicker (1 dip, swap to logo2) -\/\texorpdfstring{$>$}{>} Final\+Flicker (1 dip, swap to white) -\/\texorpdfstring{$>$}{>} Final\+Hold -\/\texorpdfstring{$>$}{>} Fade\+Out Transitions automatically to Main\+Menu. Skippable via key/\+click. 
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_splash_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_splash_scene_a989b85e222e5e06937ba94bc2f6fc3bc}\index{Game::SplashScene@{Game::SplashScene}!SplashScene@{SplashScene}}
+\index{SplashScene@{SplashScene}!Game::SplashScene@{Game::SplashScene}}
+\doxysubsubsection{\texorpdfstring{SplashScene()}{SplashScene()}}
+{\footnotesize\ttfamily \label{class_game_1_1_splash_scene_a989b85e222e5e06937ba94bc2f6fc3bc} 
+Game::\+\+Splash\+Scene::\+\+Splash\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Construct a \doxylink{class_game_1_1_splash_scene}{Splash\+Scene}. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_splash_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_splash_scene_acbe361241b1705f74b45b86c9f5f854b}\index{Game::SplashScene@{Game::SplashScene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Game::SplashScene@{Game::SplashScene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_game_1_1_splash_scene_acbe361241b1705f74b45b86c9f5f854b} 
+void Game::\+\+Splash\+Scene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called when the scene is loaded. 
+
+Called when the scene is loaded; sets up \doxylink{namespace_u_i}{UI} and initial state. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_splash_scene_ae786d8ef811bae1f1a13611d2350e96f}\index{Game::SplashScene@{Game::SplashScene}!OnUnload@{OnUnload}}
+\index{OnUnload@{OnUnload}!Game::SplashScene@{Game::SplashScene}}
+\doxysubsubsection{\texorpdfstring{OnUnload()}{OnUnload()}}
+{\footnotesize\ttfamily \label{class_game_1_1_splash_scene_ae786d8ef811bae1f1a13611d2350e96f} 
+void Game::\+\+Splash\+Scene::\+\+On\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called when the scene is unloaded. 
+
+Clean up \doxylink{namespace_u_i}{UI} and unregister input hooks when scene unloads. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_splash_scene_a2baca3bad05bfcd9f82e8582804a0765}\index{Game::SplashScene@{Game::SplashScene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Game::SplashScene@{Game::SplashScene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_splash_scene_a2baca3bad05bfcd9f82e8582804a0765} 
+void Game::\+\+Splash\+Scene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update for the splash animation. 
+
+Per-\/frame update handling splash phases and input. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{Engine::\+\+Scene}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+Splash\+Scene/\+\doxymbox{\hyperlink{_splash_scene_8hpp}{Splash\+Scene.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+Splash\+Scene/\+\doxymbox{\hyperlink{_splash_scene_8cpp}{Splash\+Scene.\+cpp}}\end{DoxyCompactItemize}

@@ -58,9 +58,7 @@ namespace
 
 namespace Game {
 
-/*!
- * \brief [AUTO] Awake
- */
+
 void ControlRoomDoor::Initialize()
 {
     const auto& cfg = GetControlRoomDoorConfig();
@@ -89,9 +87,7 @@ void ControlRoomDoor::Initialize()
     SetupInteraction();
 }
 
-/*!
- * \brief [AUTO] Update
- */
+
 void ControlRoomDoor::Update() {
     // Update interaction text based on card collection status
     if (!interactable) return;
@@ -151,9 +147,7 @@ void ControlRoomDoor::Update() {
     }
 }
 
-/*!
- * \brief [AUTO] SetupInteraction
- */
+
 void ControlRoomDoor::SetupInteraction() {
     if (!interactable) return;
     
@@ -170,9 +164,7 @@ void ControlRoomDoor::SetupInteraction() {
     };
 }
 
-/*!
- * \brief [AUTO] OnInteract
- */
+
 void ControlRoomDoor::OnInteract() {
     if (!door) return;
     
@@ -192,50 +184,20 @@ void ControlRoomDoor::OnInteract() {
     // Door opening is handled by hold mechanic in Update()
 }
 
-/*!
- * \brief [AUTO] HasAllCards
- * \return 
- */
-/*!
- * \brief [AUTO] HasAllCards
- * \return 
- */
-/*!
- * \brief [AUTO] HasAllCards
- * \return 
- */
-/*!
- * \brief [AUTO] HasAllCards
- * \return 
- */
-/*!
- * \brief [AUTO] HasAllCards
- * \return 
- */
+
+
+
+
+
 bool ControlRoomDoor::HasAllCards() const {
     return GetCollectedCards() >= requiredCards;
 }
 
-/*!
- * \brief [AUTO] GetCollectedCards
- * \return 
- */
-/*!
- * \brief [AUTO] GetCollectedCards
- * \return 
- */
-/*!
- * \brief [AUTO] GetCollectedCards
- * \return 
- */
-/*!
- * \brief [AUTO] GetCollectedCards
- * \return 
- */
-/*!
- * \brief [AUTO] GetCollectedCards
- * \return 
- */
+
+
+
+
+
 int ControlRoomDoor::GetCollectedCards() const {
     // Find player and check HUD for card collection status
     auto player = Engine::GameObject::Find("Player");

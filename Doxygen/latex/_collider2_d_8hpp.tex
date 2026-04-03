@@ -1,0 +1,46 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Physics/\+\+Collider2D.hpp File Reference}
+\hypertarget{_collider2_d_8hpp}{}\label{_collider2_d_8hpp}\index{AlphaEngine2.5D/Source/Engine/Physics/Collider2D.hpp@{AlphaEngine2.5D/Source/Engine/Physics/Collider2D.hpp}}
+
+
+Base class for all 2D colliders with height support.  
+
+
+{\ttfamily \+\#include "{}../\+\+Core/\+\+Component.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}../\+\+Math/\+\+Vector2.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Collision2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}AEEngine.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_bounds2_d}{Engine::\+\+Bounds2D}}
+\begin{DoxyCompactList}\small\item\em Axis-\/aligned bounding box for collision detection. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Engine::\+\+Collider2D}}
+\begin{DoxyCompactList}\small\item\em Base class for 2D colliders with height support for 2.\+5D games. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Engine::\+\+Collision\+Layer}} :\+ u32 \{ \newline
+\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a7a1920d61156abc05a60135aefe8bc67}{Engine::\+\+Default}} = 0
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c}{Engine::\+\+Tile\+Map}} = 1
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046af698f67f5666aff10729d8a1cb1c14d2}{Engine::\+\+Trigger}} = 2
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046aae7968d26b598ce434958b0825b7a4ac}{Engine::\+\+Projectile}} = 3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a636da1d35e805b00eae0fcd8333f9234}{Engine::\+\+Player}} = 4
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a8c6d21187fb58b7a079d70030686b33e}{Engine::\+\+Enemy}} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Layers for filtering collisions between colliders. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+u32 \doxymbox{\hyperlink{namespace_engine_a79ab16953ee56518a4c76f10920a3a47}{Engine::\+\+Layer\+To\+Mask}} (\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Collision\+Layer}} layer)
+\begin{DoxyCompactList}\small\item\em Convert layer to bitmask value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all 2D colliders with height support. 
+

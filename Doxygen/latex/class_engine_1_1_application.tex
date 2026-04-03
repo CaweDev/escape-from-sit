@@ -1,0 +1,133 @@
+\doxysection{Engine::\+Application Class Reference}
+\hypertarget{class_engine_1_1_application}{}\label{class_engine_1_1_application}\index{Engine::Application@{Engine::Application}}
+
+
+Static class for application-\/level operations.  
+
+
+
+
+{\ttfamily \+\#include $<$Application.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_application_ae548a99d830926af83f59cc266ebe079}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+application.\+json"{})
+\begin{DoxyCompactList}\small\item\em Load application configuration from a JSON file. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_application_aee45a58d10d244d28480748077942792}{Quit}} ()
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_application_a61a2c2aae67a2f0370b03e7f86ab2414}{Get\+Window\+Width}} ()
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_application_ac19434b5f4fe88a6406777132b1e1863}{Get\+Window\+Height}} ()
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_application_ac81e9a722cbbbff5e85cc29030128d26}{Window\+Exists}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_application_a51568322a256a84f001f1e1b6cfce3bb}{Register\+Pause}} (const std::\+string \&key)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_application_a77d312cc993e1d4232b6754e7ebe7d1d}{Unregister\+Pause}} (const std::\+string \&key)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_application_a168bd0972e4ba9bf00af0dd5f9264b4b}{Is\+Paused}} ()
+\item 
+static size\+\_\+t \doxymbox{\hyperlink{class_engine_1_1_application_a22d686d4bfabe04a752cea0619aeb872}{Get\+Pause\+Count}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_application_a2976fdc5735e2c5f6d307932ffc31b46}{target\+Frame\+Rate}} = 60
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_application_a13faf09c968ccc82282df01e0a7b37f4}{is\+Running}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for application-\/level operations. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_application_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_application_a22d686d4bfabe04a752cea0619aeb872}\index{Engine::Application@{Engine::Application}!GetPauseCount@{GetPauseCount}}
+\index{GetPauseCount@{GetPauseCount}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{GetPauseCount()}{GetPauseCount()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a22d686d4bfabe04a752cea0619aeb872} 
+size\+\_\+t Engine::\+\+Application::\+\+Get\+Pause\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get count of active pause requests (for debugging) \Hypertarget{class_engine_1_1_application_ac19434b5f4fe88a6406777132b1e1863}\index{Engine::Application@{Engine::Application}!GetWindowHeight@{GetWindowHeight}}
+\index{GetWindowHeight@{GetWindowHeight}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{GetWindowHeight()}{GetWindowHeight()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_ac19434b5f4fe88a6406777132b1e1863} 
+int Engine::\+\+Application::\+\+Get\+Window\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get window height \Hypertarget{class_engine_1_1_application_a61a2c2aae67a2f0370b03e7f86ab2414}\index{Engine::Application@{Engine::Application}!GetWindowWidth@{GetWindowWidth}}
+\index{GetWindowWidth@{GetWindowWidth}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{GetWindowWidth()}{GetWindowWidth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a61a2c2aae67a2f0370b03e7f86ab2414} 
+int Engine::\+\+Application::\+\+Get\+Window\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get window width \Hypertarget{class_engine_1_1_application_ae548a99d830926af83f59cc266ebe079}\index{Engine::Application@{Engine::Application}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_ae548a99d830926af83f59cc266ebe079} 
+void Engine::\+\+Application::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+application.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load application configuration from a JSON file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config\+Path} & Path to application.\+json. Defaults to the engine config location. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_application_a168bd0972e4ba9bf00af0dd5f9264b4b}\index{Engine::Application@{Engine::Application}!IsPaused@{IsPaused}}
+\index{IsPaused@{IsPaused}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{IsPaused()}{IsPaused()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a168bd0972e4ba9bf00af0dd5f9264b4b} 
+bool Engine::\+\+Application::\+\+Is\+Paused (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if game is currently paused \Hypertarget{class_engine_1_1_application_aee45a58d10d244d28480748077942792}\index{Engine::Application@{Engine::Application}!Quit@{Quit}}
+\index{Quit@{Quit}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{Quit()}{Quit()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_aee45a58d10d244d28480748077942792} 
+void Engine::\+\+Application::\+\+Quit (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Request application quit \Hypertarget{class_engine_1_1_application_a51568322a256a84f001f1e1b6cfce3bb}\index{Engine::Application@{Engine::Application}!RegisterPause@{RegisterPause}}
+\index{RegisterPause@{RegisterPause}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{RegisterPause()}{RegisterPause()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a51568322a256a84f001f1e1b6cfce3bb} 
+void Engine::\+\+Application::\+\+Register\+Pause (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Register a pause request (game pauses while any request is active) \Hypertarget{class_engine_1_1_application_a77d312cc993e1d4232b6754e7ebe7d1d}\index{Engine::Application@{Engine::Application}!UnregisterPause@{UnregisterPause}}
+\index{UnregisterPause@{UnregisterPause}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{UnregisterPause()}{UnregisterPause()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a77d312cc993e1d4232b6754e7ebe7d1d} 
+void Engine::\+\+Application::\+\+Unregister\+Pause (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Unregister a pause request \Hypertarget{class_engine_1_1_application_ac81e9a722cbbbff5e85cc29030128d26}\index{Engine::Application@{Engine::Application}!WindowExists@{WindowExists}}
+\index{WindowExists@{WindowExists}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{WindowExists()}{WindowExists()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_ac81e9a722cbbbff5e85cc29030128d26} 
+bool Engine::\+\+Application::\+\+Window\+Exists (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if window exists 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_application_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_application_a13faf09c968ccc82282df01e0a7b37f4}\index{Engine::Application@{Engine::Application}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{isRunning}{isRunning}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a13faf09c968ccc82282df01e0a7b37f4} 
+bool Engine::\+\+Application::\+is\+Running = true\hspace{0.3cm}{\ttfamily [static]}}
+
+Whether the application is running \Hypertarget{class_engine_1_1_application_a2976fdc5735e2c5f6d307932ffc31b46}\index{Engine::Application@{Engine::Application}!targetFrameRate@{targetFrameRate}}
+\index{targetFrameRate@{targetFrameRate}!Engine::Application@{Engine::Application}}
+\doxysubsubsection{\texorpdfstring{targetFrameRate}{targetFrameRate}}
+{\footnotesize\ttfamily \label{class_engine_1_1_application_a2976fdc5735e2c5f6d307932ffc31b46} 
+int Engine::\+\+Application::\+target\+Frame\+Rate = 60\hspace{0.3cm}{\ttfamily [static]}}
+
+Target frame rate (0 = unlimited) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_application_8hpp}{Application.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_application_8cpp}{Application.\+cpp}}\end{DoxyCompactItemize}

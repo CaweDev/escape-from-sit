@@ -1,0 +1,75 @@
+\doxysection{Layout\+Group.\+hpp}
+\hypertarget{_layout_group_8hpp_source}{}\label{_layout_group_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Layout/LayoutGroup.hpp@{AlphaEngine2.5D/Source/Engine/UI/Layout/LayoutGroup.hpp}}
+\doxymbox{\hyperlink{_layout_group_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{ChildAlignment}}}
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4}{UpperLeft}},}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361ad04aa2ea3d1e9deb66236247893cc603}{UpperCenter}},}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a894d4b94cedce8501ff5165b6863ea3a}{UpperRight}},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a1d536cb49605c6a39292c33cfc5e872a}{MiddleLeft}},}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81}{MiddleCenter}},}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a3b9c2b3657981eb77a10390aa0e8c156}{MiddleRight}},}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361aa8594fd8be60c94e1a2607fa0fa50fae}{LowerLeft}},}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a4dc6391f310bea83cdf5d7675e0cc5f0}{LowerCenter}},}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a5ef0d4d135d5f2814b07feaf13fda653}{LowerRight}}}
+\DoxyCodeLine{00026\ \ \ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_u_i_1_1_padding_a1b1a31f8df91cb917c960dd883b98ac4}{Padding}}}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_aa465c8c940b859e8afef0883b7acb584}{left}}\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a9eef4d7473222324e975b4f5762accdc}{right}}\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a2c88f333caac148edb0078842d18f23e}{top}}\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a349b9149aed99b148111465bc6a1e553}{bottom}}\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a1b1a31f8df91cb917c960dd883b98ac4}{Padding}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a8249f4f82611c8520579e69dcdc67fd5}{Padding}}(f32\ all)\ :\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_aa465c8c940b859e8afef0883b7acb584}{left}}(all),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a9eef4d7473222324e975b4f5762accdc}{right}}(all),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a2c88f333caac148edb0078842d18f23e}{top}}(all),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a349b9149aed99b148111465bc6a1e553}{bottom}}(all)\ \{\}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a280455ae3b63880406aedce6ee94bfcd}{Padding}}(f32\ horizontal,\ f32\ vertical)\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_aa465c8c940b859e8afef0883b7acb584}{left}}(horizontal),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a9eef4d7473222324e975b4f5762accdc}{right}}(horizontal),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a2c88f333caac148edb0078842d18f23e}{top}}(vertical),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a349b9149aed99b148111465bc6a1e553}{bottom}}(vertical)\ \{\}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_padding_adb8ecefdbf470bc69ebac3a2d97f3fa8}{Padding}}(f32\ l,\ f32\ r,\ f32\ t,\ f32\ b)\ :\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_aa465c8c940b859e8afef0883b7acb584}{left}}(l),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a9eef4d7473222324e975b4f5762accdc}{right}}(r),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a2c88f333caac148edb0078842d18f23e}{top}}(t),\ \doxymbox{\hyperlink{struct_u_i_1_1_padding_a349b9149aed99b148111465bc6a1e553}{bottom}}(b)\ \{\}}
+\DoxyCodeLine{00044\ \ \ \ \ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_layout_group_abc684eb0b49ddfe178b462acd3fcd18e}{LayoutGroup}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a8b828e8e33ad1cf528a3760d19e8df04}{m\_padding}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a3a8c2c61de5b591d4e96b19bc3367a62}{m\_spacing}}\ =\ 0;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{ChildAlignment}}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a9e65e098552eb52048b2db76c388f5a0}{m\_childAlignment}}\ =\ \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a6f43ca0793e0c68184761673278f4ca4}{ChildAlignment::UpperLeft}};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a930e3ed041766d0c19f43131f3a3b117}{m\_layoutDirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_abc684eb0b49ddfe178b462acd3fcd18e}{LayoutGroup}}();}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_aece7117db89bc9912becd76ebbce35d5}{\string~LayoutGroup}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a84b48e62f343f74613ed839d9dbcecf4}{Update}}(f32\ dt)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a01c3b2493840ff00245598568cb9279d}{SetPadding}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}}\&\ padding);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_ae4fea5fdc04e6fbe0fb96a7c9069a05e}{GetPadding}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a8b828e8e33ad1cf528a3760d19e8df04}{m\_padding}};\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_af10e1377588b3d417735e77fb966a944}{SetSpacing}}(f32\ spacing);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a3d0639fba89d39b75ce4e4ca687f4fba}{GetSpacing}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a3a8c2c61de5b591d4e96b19bc3367a62}{m\_spacing}};\ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a141baa810150e006fadfa66c96177a93}{SetChildAlignment}}(\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{ChildAlignment}}\ alignment);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{ChildAlignment}}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a72ab5796c1487258e90ced5e78d7a9c8}{GetChildAlignment}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a9e65e098552eb52048b2db76c388f5a0}{m\_childAlignment}};\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_aec4e5995f6c2500ea6b7f5183d73d4f6}{SetLayoutDirty}}()\ \{\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a930e3ed041766d0c19f43131f3a3b117}{m\_layoutDirty}}\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_ae7b9e4cd829401e3ca0a3af7d10e473c}{AddChild}}(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ child);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a6a3b0a78351bb63a12ee5f6ac6a82104}{RemoveChild}}(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ child);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_acec9a87566797b8a95aa0d7e0dcc23d9}{CalculateLayout}}()\ =\ 0;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}\ \doxymbox{\hyperlink{class_u_i_1_1_layout_group_acf43ce05f0cdad8afb768c1304b16c3c}{GetContentRect}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00113\ \ \ \ \ \};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

@@ -1,0 +1,664 @@
+\doxysection{Game::\+FPSScene Class Reference}
+\hypertarget{class_game_1_1_f_p_s_scene}{}\label{class_game_1_1_f_p_s_scene}\index{Game::FPSScene@{Game::FPSScene}}
+
+
+Core gameplay scene for FPS-\/style gameplay and AI systems.  
+
+
+
+
+{\ttfamily \+\#include $<$FPSScene.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}.
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_c_c_t_v_info}{CCTVInfo}}
+\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_zone}{Zone}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3f34f9b2c1287f75989bf679e5f76aac}{FPSScene}} ()
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{Get\+Zone\+Id}} (int tx, int ty) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a7934b1f1d4772eade5a5b7000fce2cba}{Get\+Zone\+Center}} (int zone\+Id) const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aaba794f32f554a6064034f5e7bf3423f}{On\+Load}} () override
+\begin{DoxyCompactList}\small\item\em Load and initialize FPS scene:\+ map, actors, HUD and systems. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a36733f42ad5917ea990b5052f70bd022}{On\+After\+Render}} () override
+\begin{DoxyCompactList}\small\item\em Called after rendering to draw editor overlays. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a298fedbe024858ab5f39efd8460af9ad}{On\+Update}} () override
+\begin{DoxyCompactList}\small\item\em Main per-\/frame update handling game logic, AI and HUD updates. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2cc4926886de2f4cab4979652e129654}{On\+Unload}} () override
+\begin{DoxyCompactList}\small\item\em Cleanup scene state and release pointers before unload. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}{game\+Ended}} = false
+\item 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2c91734e1d3dc57413b8aac70450c45b}{player\+Controller}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player}{Player}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{player\+Data}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{player\+Tf}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{player\+Cam}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{player\+HUD}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player_power_up_controller}{Player\+Power\+Up\+Controller}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a49bc01ba8f7de1e7860c480db66cf0a2}{power\+Up\+Controller}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{Game::\+\+CCTVCamera}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctv\+Sensors}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{Game::\+\+CCTVTerminal}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctv\+Terminals}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_door}{Game::\+\+Door}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6}{doors}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_add1f2ae45df715a3e236227f626ee174}{active\+CCTV}} = -\/1
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aeddcb32fa80562b21181fda52f9f3c6f}{player\+View\+Pos}} \{\}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a7b631fbd5b7246c2330bbb9e3fed6a01}{player\+View\+Rot}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d}{exit\+Pos}}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557}{win\+Radius}} = 0.\+6f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470}{printed\+Win}} = false
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5ed8d8d92baf3eab85af3806beac7dff}{power\+Ups}}
+\item 
+std::\+vector$<$ float $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af8be86897f738979dd5e075c8290db8c}{power\+Up\+BaseZ}}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a144fc9ff3fe648424382f1b69a6f1211}{power\+Up\+Time}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{class_game_1_1_pause_menu}{Pause\+Menu}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a010fc2114b59d58dd1010c80686f8a89}{pause\+Menu}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_lose_screen}{Game::\+\+Lose\+Screen}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}{lose\+Screen}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_win_screen}{Game::\+\+Win\+Screen}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}{win\+Screen}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_controls_menu}{Game::\+\+Controls\+Menu}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controls\+Menu}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}{show\+Controls\+At\+Start}} = false
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_zone}{Zone}} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_zone_manager}{Game::\+\+Zone\+Manager}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}{zone\+Mgr}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{Game::\+\+UCB1\+Bandit}} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8bdfce4fc9dfedbf0d7df5f603dd8e4a}{bandit}} \{4, 2.\+0f\}
+\item 
+std::\+vector$<$ int $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}{zone\+Grid}}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b}{bandit\+Timer}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a46fedf81de7078d5b6bf2fa143bdcc39}{bandit\+Interval}} = 2.\+0f
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}{prev\+Chosen\+Zone\+Id}} = 1
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ab10ea529b583919609e36701568e172e}{w\+Heat}} = 0.\+55f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa68c482ac06633cfa912b61db09b3ec4}{w\+CCTV}} = 0.\+45f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a577804bb4d7cd26df9c86ff0541cbe96}{heat\+Ref}} = 50.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a1ced2646b6bfa0802e1418b3800402be}{cctv\+Ref}} = 6.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2e3f7d064ae659af8297eb6097f1a8c3}{heat\+Add\+Per\+Sec}} = 1.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3e74374c89db1c246ce53f7a77bd1595}{heat\+Decay\+Per\+Sec}} = 0.\+985f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ab0f92bbe8c61c02f44aa002139d9fde4}{bandit\+Switch\+Strong\+Evidence\+Threshold}} = 0.\+5f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4c5c90e62e0c86fd53cbc7fbfbcc03d8}{bandit\+Switch\+Cooldown\+Strong\+Sec}} = 25.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a75ed90bdeda573b546bcb593df15d4f9}{bandit\+Switch\+Cooldown\+Normal\+Sec}} = 8.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aeb9ea151f3ba53bb152f5bb687e5155d}{cctv\+Score\+Decay\+Factor}} = 0.\+85f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a34464bff2b5fe785a201584749fb88af}{cctv\+Score}} \+[5]\+ = \{0, 0, 0, 0, 0\}
+\item 
+std::\+vector$<$ float $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctv\+Cooldown}}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a73ee81c12677e44b17364b87673b67d3}{cctv\+Spike\+Cooldown}} = 1.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6a5233b0a32a537183f2ffe5a50da538}{cctv\+Spike\+Amount}} = 1.\+0f
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a50d528dc07ef2dc087cfe35fe07f68ec}{priority\+Zone\+Id}} = 1
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a84a5b7ebeb06e85882298ac7608ef072}{priority\+Zone\+Hot\+Timer}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f}{full\+Escalation\+Threshold}} = 30.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5}{full\+Escalation\+Active}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364}{debug\+ML}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}{ml\+Summary\+Timer}} = 0.\+0f
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_n_p_c}{Game::\+\+NPC}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a}{npcs}}
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aef612b962a3deae48488f7f222940acb}{m\+\_\+annoying\+Loop\+Playing}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f8f3dff497ac16a9ba42bff2e8eb4c8}{m\+\_\+annoying\+Sfx\+Triggered}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a7c0a64af73d6b1ba510e000222b145af}{m\+\_\+annoying\+Loop\+Last\+Distance}} = 999999.\+0f
+\item 
+\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::\+\+Bandit\+Visualizer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{bandit\+Visualizer}} = nullptr
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a683f3061cfcb3078aae9f6e972ed98b8}{map\+Width}} = 0
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a47b2d5aa6b6b4c0017715e4322de4e87}{map\+Height}} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Core gameplay scene for FPS-\/style gameplay and AI systems. 
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_f_p_s_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_f_p_s_scene_a3f34f9b2c1287f75989bf679e5f76aac}\index{Game::FPSScene@{Game::FPSScene}!FPSScene@{FPSScene}}
+\index{FPSScene@{FPSScene}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{FPSScene()}{FPSScene()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a3f34f9b2c1287f75989bf679e5f76aac} 
+Game::\+\+FPSScene::\+\+FPSScene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_f_p_s_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_f_p_s_scene_a7934b1f1d4772eade5a5b7000fce2cba}\index{Game::FPSScene@{Game::FPSScene}!GetZoneCenter@{GetZoneCenter}}
+\index{GetZoneCenter@{GetZoneCenter}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{GetZoneCenter()}{GetZoneCenter()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a7934b1f1d4772eade5a5b7000fce2cba} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Game::\+\+FPSScene::\+\+Get\+Zone\+Center (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}\index{Game::FPSScene@{Game::FPSScene}!GetZoneId@{GetZoneId}}
+\index{GetZoneId@{GetZoneId}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{GetZoneId()}{GetZoneId()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1} 
+int Game::\+\+FPSScene::\+\+Get\+Zone\+Id (\begin{DoxyParamCaption}\item[{int}]{tx}{, }\item[{int}]{ty}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a36733f42ad5917ea990b5052f70bd022}\index{Game::FPSScene@{Game::FPSScene}!OnAfterRender@{OnAfterRender}}
+\index{OnAfterRender@{OnAfterRender}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{OnAfterRender()}{OnAfterRender()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a36733f42ad5917ea990b5052f70bd022} 
+void Game::\+\+FPSScene::\+\+On\+After\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called after rendering to draw editor overlays. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aaba794f32f554a6064034f5e7bf3423f}\index{Game::FPSScene@{Game::FPSScene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aaba794f32f554a6064034f5e7bf3423f} 
+void Game::\+\+FPSScene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Load and initialize FPS scene:\+ map, actors, HUD and systems. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a2cc4926886de2f4cab4979652e129654}\index{Game::FPSScene@{Game::FPSScene}!OnUnload@{OnUnload}}
+\index{OnUnload@{OnUnload}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{OnUnload()}{OnUnload()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a2cc4926886de2f4cab4979652e129654} 
+void Game::\+\+FPSScene::\+\+On\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Cleanup scene state and release pointers before unload. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a298fedbe024858ab5f39efd8460af9ad}\index{Game::FPSScene@{Game::FPSScene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a298fedbe024858ab5f39efd8460af9ad} 
+void Game::\+\+FPSScene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Main per-\/frame update handling game logic, AI and HUD updates. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{Engine::\+\+Scene}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_f_p_s_scene_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_f_p_s_scene_add1f2ae45df715a3e236227f626ee174}\index{Game::FPSScene@{Game::FPSScene}!activeCCTV@{activeCCTV}}
+\index{activeCCTV@{activeCCTV}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{activeCCTV}{activeCCTV}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_add1f2ae45df715a3e236227f626ee174} 
+int Game::\+\+FPSScene::\+active\+CCTV = -\/1}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a8bdfce4fc9dfedbf0d7df5f603dd8e4a}\index{Game::FPSScene@{Game::FPSScene}!bandit@{bandit}}
+\index{bandit@{bandit}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{bandit}{bandit}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a8bdfce4fc9dfedbf0d7df5f603dd8e4a} 
+\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{Game::\+\+UCB1\+Bandit}} Game::\+\+FPSScene::\+bandit \{4, 2.\+0f\}}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a46fedf81de7078d5b6bf2fa143bdcc39}\index{Game::FPSScene@{Game::FPSScene}!banditInterval@{banditInterval}}
+\index{banditInterval@{banditInterval}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditInterval}{banditInterval}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a46fedf81de7078d5b6bf2fa143bdcc39} 
+float Game::\+\+FPSScene::\+bandit\+Interval = 2.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a75ed90bdeda573b546bcb593df15d4f9}\index{Game::FPSScene@{Game::FPSScene}!banditSwitchCooldownNormalSec@{banditSwitchCooldownNormalSec}}
+\index{banditSwitchCooldownNormalSec@{banditSwitchCooldownNormalSec}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditSwitchCooldownNormalSec}{banditSwitchCooldownNormalSec}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a75ed90bdeda573b546bcb593df15d4f9} 
+float Game::\+\+FPSScene::\+bandit\+Switch\+Cooldown\+Normal\+Sec = 8.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a4c5c90e62e0c86fd53cbc7fbfbcc03d8}\index{Game::FPSScene@{Game::FPSScene}!banditSwitchCooldownStrongSec@{banditSwitchCooldownStrongSec}}
+\index{banditSwitchCooldownStrongSec@{banditSwitchCooldownStrongSec}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditSwitchCooldownStrongSec}{banditSwitchCooldownStrongSec}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a4c5c90e62e0c86fd53cbc7fbfbcc03d8} 
+float Game::\+\+FPSScene::\+bandit\+Switch\+Cooldown\+Strong\+Sec = 25.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_ab0f92bbe8c61c02f44aa002139d9fde4}\index{Game::FPSScene@{Game::FPSScene}!banditSwitchStrongEvidenceThreshold@{banditSwitchStrongEvidenceThreshold}}
+\index{banditSwitchStrongEvidenceThreshold@{banditSwitchStrongEvidenceThreshold}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditSwitchStrongEvidenceThreshold}{banditSwitchStrongEvidenceThreshold}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_ab0f92bbe8c61c02f44aa002139d9fde4} 
+float Game::\+\+FPSScene::\+bandit\+Switch\+Strong\+Evidence\+Threshold = 0.\+5f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b}\index{Game::FPSScene@{Game::FPSScene}!banditTimer@{banditTimer}}
+\index{banditTimer@{banditTimer}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditTimer}{banditTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b} 
+float Game::\+\+FPSScene::\+bandit\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}\index{Game::FPSScene@{Game::FPSScene}!banditVisualizer@{banditVisualizer}}
+\index{banditVisualizer@{banditVisualizer}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{banditVisualizer}{banditVisualizer}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e} 
+\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::\+\+Bandit\+Visualizer}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+bandit\+Visualizer = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}\index{Game::FPSScene@{Game::FPSScene}!cctvCooldown@{cctvCooldown}}
+\index{cctvCooldown@{cctvCooldown}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvCooldown}{cctvCooldown}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62} 
+std::\+vector$<$float$>$ Game::\+\+FPSScene::\+cctv\+Cooldown}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a1ced2646b6bfa0802e1418b3800402be}\index{Game::FPSScene@{Game::FPSScene}!cctvRef@{cctvRef}}
+\index{cctvRef@{cctvRef}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvRef}{cctvRef}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a1ced2646b6bfa0802e1418b3800402be} 
+float Game::\+\+FPSScene::\+cctv\+Ref = 6.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a34464bff2b5fe785a201584749fb88af}\index{Game::FPSScene@{Game::FPSScene}!cctvScore@{cctvScore}}
+\index{cctvScore@{cctvScore}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvScore}{cctvScore}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a34464bff2b5fe785a201584749fb88af} 
+float Game::\+\+FPSScene::\+cctv\+Score\+[5]\+ = \{0, 0, 0, 0, 0\}}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aeb9ea151f3ba53bb152f5bb687e5155d}\index{Game::FPSScene@{Game::FPSScene}!cctvScoreDecayFactor@{cctvScoreDecayFactor}}
+\index{cctvScoreDecayFactor@{cctvScoreDecayFactor}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvScoreDecayFactor}{cctvScoreDecayFactor}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aeb9ea151f3ba53bb152f5bb687e5155d} 
+float Game::\+\+FPSScene::\+cctv\+Score\+Decay\+Factor = 0.\+85f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}\index{Game::FPSScene@{Game::FPSScene}!cctvSensors@{cctvSensors}}
+\index{cctvSensors@{cctvSensors}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvSensors}{cctvSensors}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{Game::\+\+CCTVCamera}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+cctv\+Sensors}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a6a5233b0a32a537183f2ffe5a50da538}\index{Game::FPSScene@{Game::FPSScene}!cctvSpikeAmount@{cctvSpikeAmount}}
+\index{cctvSpikeAmount@{cctvSpikeAmount}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvSpikeAmount}{cctvSpikeAmount}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a6a5233b0a32a537183f2ffe5a50da538} 
+float Game::\+\+FPSScene::\+cctv\+Spike\+Amount = 1.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a73ee81c12677e44b17364b87673b67d3}\index{Game::FPSScene@{Game::FPSScene}!cctvSpikeCooldown@{cctvSpikeCooldown}}
+\index{cctvSpikeCooldown@{cctvSpikeCooldown}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvSpikeCooldown}{cctvSpikeCooldown}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a73ee81c12677e44b17364b87673b67d3} 
+float Game::\+\+FPSScene::\+cctv\+Spike\+Cooldown = 1.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}\index{Game::FPSScene@{Game::FPSScene}!cctvTerminals@{cctvTerminals}}
+\index{cctvTerminals@{cctvTerminals}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{cctvTerminals}{cctvTerminals}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{Game::\+\+CCTVTerminal}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+cctv\+Terminals}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}\index{Game::FPSScene@{Game::FPSScene}!controlsMenu@{controlsMenu}}
+\index{controlsMenu@{controlsMenu}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{controlsMenu}{controlsMenu}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa} 
+\doxymbox{\hyperlink{class_game_1_1_controls_menu}{Game::\+\+Controls\+Menu}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+controls\+Menu = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364}\index{Game::FPSScene@{Game::FPSScene}!debugML@{debugML}}
+\index{debugML@{debugML}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{debugML}{debugML}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364} 
+bool Game::\+\+FPSScene::\+debug\+ML = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6}\index{Game::FPSScene@{Game::FPSScene}!doors@{doors}}
+\index{doors@{doors}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{doors}{doors}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6} 
+std::\+vector$<$\doxymbox{\hyperlink{class_engine_1_1_door}{Game::\+\+Door}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+doors}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d}\index{Game::FPSScene@{Game::FPSScene}!exitPos@{exitPos}}
+\index{exitPos@{exitPos}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{exitPos}{exitPos}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Game::\+\+FPSScene::\+exit\+Pos}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5}\index{Game::FPSScene@{Game::FPSScene}!fullEscalationActive@{fullEscalationActive}}
+\index{fullEscalationActive@{fullEscalationActive}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{fullEscalationActive}{fullEscalationActive}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5} 
+bool Game::\+\+FPSScene::\+full\+Escalation\+Active = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f}\index{Game::FPSScene@{Game::FPSScene}!fullEscalationThreshold@{fullEscalationThreshold}}
+\index{fullEscalationThreshold@{fullEscalationThreshold}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{fullEscalationThreshold}{fullEscalationThreshold}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f} 
+float Game::\+\+FPSScene::\+full\+Escalation\+Threshold = 30.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}\index{Game::FPSScene@{Game::FPSScene}!gameEnded@{gameEnded}}
+\index{gameEnded@{gameEnded}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{gameEnded}{gameEnded}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38} 
+bool Game::\+\+FPSScene::\+game\+Ended = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}\index{Game::FPSScene@{Game::FPSScene}!guards@{guards}}
+\index{guards@{guards}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{guards}{guards}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+guards}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a2e3f7d064ae659af8297eb6097f1a8c3}\index{Game::FPSScene@{Game::FPSScene}!heatAddPerSec@{heatAddPerSec}}
+\index{heatAddPerSec@{heatAddPerSec}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{heatAddPerSec}{heatAddPerSec}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a2e3f7d064ae659af8297eb6097f1a8c3} 
+float Game::\+\+FPSScene::\+heat\+Add\+Per\+Sec = 1.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a3e74374c89db1c246ce53f7a77bd1595}\index{Game::FPSScene@{Game::FPSScene}!heatDecayPerSec@{heatDecayPerSec}}
+\index{heatDecayPerSec@{heatDecayPerSec}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{heatDecayPerSec}{heatDecayPerSec}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a3e74374c89db1c246ce53f7a77bd1595} 
+float Game::\+\+FPSScene::\+heat\+Decay\+Per\+Sec = 0.\+985f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}\index{Game::FPSScene@{Game::FPSScene}!heatmap@{heatmap}}
+\index{heatmap@{heatmap}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{heatmap}{heatmap}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e} 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} Game::\+\+FPSScene::\+heatmap}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a577804bb4d7cd26df9c86ff0541cbe96}\index{Game::FPSScene@{Game::FPSScene}!heatRef@{heatRef}}
+\index{heatRef@{heatRef}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{heatRef}{heatRef}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a577804bb4d7cd26df9c86ff0541cbe96} 
+float Game::\+\+FPSScene::\+heat\+Ref = 50.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}\index{Game::FPSScene@{Game::FPSScene}!loseScreen@{loseScreen}}
+\index{loseScreen@{loseScreen}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{loseScreen}{loseScreen}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267} 
+\doxymbox{\hyperlink{class_game_1_1_lose_screen}{Game::\+\+Lose\+Screen}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+lose\+Screen = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a7c0a64af73d6b1ba510e000222b145af}\index{Game::FPSScene@{Game::FPSScene}!m\_annoyingLoopLastDistance@{m\_annoyingLoopLastDistance}}
+\index{m\_annoyingLoopLastDistance@{m\_annoyingLoopLastDistance}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{m\_annoyingLoopLastDistance}{m\_annoyingLoopLastDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a7c0a64af73d6b1ba510e000222b145af} 
+float Game::\+\+FPSScene::\+m\+\_\+annoying\+Loop\+Last\+Distance = 999999.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aef612b962a3deae48488f7f222940acb}\index{Game::FPSScene@{Game::FPSScene}!m\_annoyingLoopPlaying@{m\_annoyingLoopPlaying}}
+\index{m\_annoyingLoopPlaying@{m\_annoyingLoopPlaying}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{m\_annoyingLoopPlaying}{m\_annoyingLoopPlaying}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aef612b962a3deae48488f7f222940acb} 
+bool Game::\+\+FPSScene::\+m\+\_\+annoying\+Loop\+Playing = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a4f8f3dff497ac16a9ba42bff2e8eb4c8}\index{Game::FPSScene@{Game::FPSScene}!m\_annoyingSfxTriggered@{m\_annoyingSfxTriggered}}
+\index{m\_annoyingSfxTriggered@{m\_annoyingSfxTriggered}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{m\_annoyingSfxTriggered}{m\_annoyingSfxTriggered}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a4f8f3dff497ac16a9ba42bff2e8eb4c8} 
+bool Game::\+\+FPSScene::\+m\+\_\+annoying\+Sfx\+Triggered = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a47b2d5aa6b6b4c0017715e4322de4e87}\index{Game::FPSScene@{Game::FPSScene}!mapHeight@{mapHeight}}
+\index{mapHeight@{mapHeight}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{mapHeight}{mapHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a47b2d5aa6b6b4c0017715e4322de4e87} 
+int Game::\+\+FPSScene::\+map\+Height = 0}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a683f3061cfcb3078aae9f6e972ed98b8}\index{Game::FPSScene@{Game::FPSScene}!mapWidth@{mapWidth}}
+\index{mapWidth@{mapWidth}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{mapWidth}{mapWidth}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a683f3061cfcb3078aae9f6e972ed98b8} 
+int Game::\+\+FPSScene::\+map\+Width = 0}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}\index{Game::FPSScene@{Game::FPSScene}!mlSummaryTimer@{mlSummaryTimer}}
+\index{mlSummaryTimer@{mlSummaryTimer}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{mlSummaryTimer}{mlSummaryTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234} 
+float Game::\+\+FPSScene::\+ml\+Summary\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a}\index{Game::FPSScene@{Game::FPSScene}!npcs@{npcs}}
+\index{npcs@{npcs}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{npcs}{npcs}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_n_p_c}{Game::\+\+NPC}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+npcs}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a010fc2114b59d58dd1010c80686f8a89}\index{Game::FPSScene@{Game::FPSScene}!pauseMenu@{pauseMenu}}
+\index{pauseMenu@{pauseMenu}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{pauseMenu}{pauseMenu}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a010fc2114b59d58dd1010c80686f8a89} 
+\doxymbox{\hyperlink{class_game_1_1_pause_menu}{Pause\+Menu}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+pause\+Menu = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}\index{Game::FPSScene@{Game::FPSScene}!playerCam@{playerCam}}
+\index{playerCam@{playerCam}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerCam}{playerCam}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e} 
+\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+player\+Cam = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a2c91734e1d3dc57413b8aac70450c45b}\index{Game::FPSScene@{Game::FPSScene}!playerController@{playerController}}
+\index{playerController@{playerController}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerController}{playerController}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a2c91734e1d3dc57413b8aac70450c45b} 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+player\+Controller = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}\index{Game::FPSScene@{Game::FPSScene}!playerData@{playerData}}
+\index{playerData@{playerData}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerData}{playerData}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1} 
+\doxymbox{\hyperlink{class_game_1_1_player}{Player}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+player\+Data = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}\index{Game::FPSScene@{Game::FPSScene}!playerHUD@{playerHUD}}
+\index{playerHUD@{playerHUD}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerHUD}{playerHUD}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96} 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+player\+HUD = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}\index{Game::FPSScene@{Game::FPSScene}!playerTf@{playerTf}}
+\index{playerTf@{playerTf}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerTf}{playerTf}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+player\+Tf = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aeddcb32fa80562b21181fda52f9f3c6f}\index{Game::FPSScene@{Game::FPSScene}!playerViewPos@{playerViewPos}}
+\index{playerViewPos@{playerViewPos}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerViewPos}{playerViewPos}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aeddcb32fa80562b21181fda52f9f3c6f} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} Game::\+\+FPSScene::\+player\+View\+Pos \{\}}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a7b631fbd5b7246c2330bbb9e3fed6a01}\index{Game::FPSScene@{Game::FPSScene}!playerViewRot@{playerViewRot}}
+\index{playerViewRot@{playerViewRot}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{playerViewRot}{playerViewRot}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a7b631fbd5b7246c2330bbb9e3fed6a01} 
+float Game::\+\+FPSScene::\+player\+View\+Rot = 0.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_af8be86897f738979dd5e075c8290db8c}\index{Game::FPSScene@{Game::FPSScene}!powerUpBaseZ@{powerUpBaseZ}}
+\index{powerUpBaseZ@{powerUpBaseZ}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{powerUpBaseZ}{powerUpBaseZ}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_af8be86897f738979dd5e075c8290db8c} 
+std::\+vector$<$float$>$ Game::\+\+FPSScene::\+power\+Up\+BaseZ}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a49bc01ba8f7de1e7860c480db66cf0a2}\index{Game::FPSScene@{Game::FPSScene}!powerUpController@{powerUpController}}
+\index{powerUpController@{powerUpController}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{powerUpController}{powerUpController}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a49bc01ba8f7de1e7860c480db66cf0a2} 
+\doxymbox{\hyperlink{class_game_1_1_player_power_up_controller}{Player\+Power\+Up\+Controller}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+power\+Up\+Controller = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a5ed8d8d92baf3eab85af3806beac7dff}\index{Game::FPSScene@{Game::FPSScene}!powerUps@{powerUps}}
+\index{powerUps@{powerUps}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{powerUps}{powerUps}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a5ed8d8d92baf3eab85af3806beac7dff} 
+std::\+vector$<$\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+FPSScene::\+power\+Ups}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a144fc9ff3fe648424382f1b69a6f1211}\index{Game::FPSScene@{Game::FPSScene}!powerUpTime@{powerUpTime}}
+\index{powerUpTime@{powerUpTime}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{powerUpTime}{powerUpTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a144fc9ff3fe648424382f1b69a6f1211} 
+float Game::\+\+FPSScene::\+power\+Up\+Time = 0.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}\index{Game::FPSScene@{Game::FPSScene}!prevChosenZoneId@{prevChosenZoneId}}
+\index{prevChosenZoneId@{prevChosenZoneId}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{prevChosenZoneId}{prevChosenZoneId}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216} 
+int Game::\+\+FPSScene::\+prev\+Chosen\+Zone\+Id = 1}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470}\index{Game::FPSScene@{Game::FPSScene}!printedWin@{printedWin}}
+\index{printedWin@{printedWin}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{printedWin}{printedWin}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470} 
+bool Game::\+\+FPSScene::\+printed\+Win = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a84a5b7ebeb06e85882298ac7608ef072}\index{Game::FPSScene@{Game::FPSScene}!priorityZoneHotTimer@{priorityZoneHotTimer}}
+\index{priorityZoneHotTimer@{priorityZoneHotTimer}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{priorityZoneHotTimer}{priorityZoneHotTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a84a5b7ebeb06e85882298ac7608ef072} 
+float Game::\+\+FPSScene::\+priority\+Zone\+Hot\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a50d528dc07ef2dc087cfe35fe07f68ec}\index{Game::FPSScene@{Game::FPSScene}!priorityZoneId@{priorityZoneId}}
+\index{priorityZoneId@{priorityZoneId}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{priorityZoneId}{priorityZoneId}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a50d528dc07ef2dc087cfe35fe07f68ec} 
+int Game::\+\+FPSScene::\+priority\+Zone\+Id = 1}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}\index{Game::FPSScene@{Game::FPSScene}!showControlsAtStart@{showControlsAtStart}}
+\index{showControlsAtStart@{showControlsAtStart}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{showControlsAtStart}{showControlsAtStart}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d} 
+bool Game::\+\+FPSScene::\+show\+Controls\+At\+Start = false}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_aa68c482ac06633cfa912b61db09b3ec4}\index{Game::FPSScene@{Game::FPSScene}!wCCTV@{wCCTV}}
+\index{wCCTV@{wCCTV}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{wCCTV}{wCCTV}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_aa68c482ac06633cfa912b61db09b3ec4} 
+float Game::\+\+FPSScene::\+w\+CCTV = 0.\+45f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_ab10ea529b583919609e36701568e172e}\index{Game::FPSScene@{Game::FPSScene}!wHeat@{wHeat}}
+\index{wHeat@{wHeat}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{wHeat}{wHeat}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_ab10ea529b583919609e36701568e172e} 
+float Game::\+\+FPSScene::\+w\+Heat = 0.\+55f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557}\index{Game::FPSScene@{Game::FPSScene}!winRadius@{winRadius}}
+\index{winRadius@{winRadius}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{winRadius}{winRadius}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557} 
+float Game::\+\+FPSScene::\+win\+Radius = 0.\+6f}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}\index{Game::FPSScene@{Game::FPSScene}!winScreen@{winScreen}}
+\index{winScreen@{winScreen}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{winScreen}{winScreen}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf} 
+\doxymbox{\hyperlink{class_game_1_1_win_screen}{Game::\+\+Win\+Screen}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSScene::\+win\+Screen = nullptr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}\index{Game::FPSScene@{Game::FPSScene}!zoneGrid@{zoneGrid}}
+\index{zoneGrid@{zoneGrid}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{zoneGrid}{zoneGrid}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003} 
+std::\+vector$<$int$>$ Game::\+\+FPSScene::\+zone\+Grid}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}\index{Game::FPSScene@{Game::FPSScene}!zoneMgr@{zoneMgr}}
+\index{zoneMgr@{zoneMgr}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{zoneMgr}{zoneMgr}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4} 
+\doxymbox{\hyperlink{class_game_1_1_zone_manager}{Game::\+\+Zone\+Manager}} Game::\+\+FPSScene::\+zone\+Mgr}
+
+\Hypertarget{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}\index{Game::FPSScene@{Game::FPSScene}!zones@{zones}}
+\index{zones@{zones}!Game::FPSScene@{Game::FPSScene}}
+\doxysubsubsection{\texorpdfstring{zones}{zones}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349} 
+std::\+vector$<$\doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_zone}{Zone}}$>$ Game::\+\+FPSScene::\+zones}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+FPSScene/\+\doxymbox{\hyperlink{_f_p_s_scene_8hpp}{FPSScene.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+FPSScene/\+\doxymbox{\hyperlink{_f_p_s_scene_8cpp}{FPSScene.\+cpp}}\end{DoxyCompactItemize}

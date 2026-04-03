@@ -1,0 +1,44 @@
+\doxysection{UCB1\+Bandit.\+hpp}
+\hypertarget{_u_c_b1_bandit_8hpp_source}{}\label{_u_c_b1_bandit_8hpp_source}\index{AlphaEngine2.5D/Source/Game/UCB1Bandit/UCB1Bandit.hpp@{AlphaEngine2.5D/Source/Game/UCB1Bandit/UCB1Bandit.hpp}}
+\doxymbox{\hyperlink{_u_c_b1_bandit_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a7ab42f2482bd2d97c601e06dfc297cae}{UCB1Bandit}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a7ab42f2482bd2d97c601e06dfc297cae}{UCB1Bandit}}(\textcolor{keywordtype}{int}\ arms\ =\ 0,\ \textcolor{keywordtype}{float}\ c\ =\ 1.0f);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a7c0c48c7f3e7462bedb78da5256ae8d8}{Reset}}(\textcolor{keywordtype}{int}\ arms,\ \textcolor{keywordtype}{float}\ c);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a72464697a444d0b9145957865ce2f6f6}{SelectArm}}();}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a1c72b4fc35069b2af8e311be5aa709f2}{Update}}(\textcolor{keywordtype}{int}\ arm,\ \textcolor{keywordtype}{float}\ reward);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_abad602108aaec566652f66cba38c560e}{GetArms}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{int})m\_pulls.size();\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_ad1280061a835c304c32659d168e79892}{GetTotalPulls}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_totalPulls;\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Debug\ accessors}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_afc52641aa83e453c93777b94716dd1a8}{Pulls}}(\textcolor{keywordtype}{int}\ arm)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arm\ <\ 0\ ||\ arm\ >=\ (\textcolor{keywordtype}{int})m\_pulls.size())\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_pulls[arm];}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a95fdcf3ac36a61912ff1368a3dbc0899}{Value}}(\textcolor{keywordtype}{int}\ arm)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (arm\ <\ 0\ ||\ arm\ >=\ (\textcolor{keywordtype}{int})m\_values.size())\ \textcolor{keywordflow}{return}\ 0.0f;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_values[arm];}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_c\ =\ 1.0f;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ m\_totalPulls\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ std::vector<int>\ \ \ m\_pulls;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::vector<float>\ m\_values;\ \textcolor{comment}{//\ mean\ reward\ per\ arm}}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

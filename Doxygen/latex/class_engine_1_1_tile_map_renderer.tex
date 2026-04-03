@@ -1,0 +1,477 @@
+\doxysection{Engine::\+Tile\+Map\+Renderer Class Reference}
+\hypertarget{class_engine_1_1_tile_map_renderer}{}\label{class_engine_1_1_tile_map_renderer}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+
+
+First-\/person 3D renderer that raycasts against a \doxylink{class_engine_1_1_tile_map}{Tile\+Map}.  
+
+
+
+
+{\ttfamily \+\#include $<$Tile\+Map\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}.
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{Tile\+Sprites}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a0855b0244825898346002c5dedc2c8f8}{REQUIRE\+\_\+\+COMPONENT}} (\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_aa45c8d81f08a020939adc511d1a20cff}{Tile\+Map\+Renderer}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a007e7e0854e49921e80289ea5e263f16}{\texorpdfstring{$\sim$}{\string~}\+Tile\+Map\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a5007f79f14a5897b48274a5cac73a043}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Performs the full raycasting render pass for this frame. \end{DoxyCompactList}\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a040e6420f4daca74df094e2b688a603e}{Get\+Sorting\+Key}} () const override
+\begin{DoxyCompactList}\small\item\em Returns FLT\+\_\+\+MAX so \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} always sorts first. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a4a17084d50dbeff84e0334b79a2445be}{Set\+Tile\+Sprites}} (int tile\+Type, \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}wall, \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}ceiling, \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}floor, \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}door=nullptr)
+\begin{DoxyCompactList}\small\item\em Assign all sprites for a specific tile type ID. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a944b9d620efed4c134a3c26469d2df1e}{Set\+Wall\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}sprite)
+\begin{DoxyCompactList}\small\item\em Convenience:\+ sets the default (type 1) wall sprite. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a0560ca5ed67a2cfcafc16c3af0bbcbb4}{Set\+Ceiling\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}sprite)
+\begin{DoxyCompactList}\small\item\em Convenience:\+ sets the default (type 1) ceiling sprite. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a65a487efdf3be83baff6e2e922a2024c}{Set\+Floor\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}sprite)
+\begin{DoxyCompactList}\small\item\em Convenience:\+ sets the default (type 1) floor sprite. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a487feba637a525cbe5a92c18b15b5dc2}{Set\+Door\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}sprite)
+\begin{DoxyCompactList}\small\item\em Convenience:\+ sets the default (type 1) door sprite. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{Tile\+Sprites}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ae89dbdd0732274440eb8359203093542}{Get\+Tile\+Sprites}} (int tile\+Type) const
+\begin{DoxyCompactList}\small\item\em Returns all sprites assigned to {\ttfamily tile\+Type}. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a98c56cfce6c697093443828ccaf0b17a}{Get\+Wall\+Sprite}} (int tile\+Type) const
+\begin{DoxyCompactList}\small\item\em Returns the wall sprite assigned to {\ttfamily tile\+Type}, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a1aa752fb3288b418fe14ecc59c557e99}{Get\+Ceiling\+Sprite}} (int tile\+Type) const
+\begin{DoxyCompactList}\small\item\em Returns the ceiling sprite assigned to {\ttfamily tile\+Type}, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_afcf76db81bb712d831c12799830cc4b6}{Get\+Floor\+Sprite}} (int tile\+Type) const
+\begin{DoxyCompactList}\small\item\em Returns the floor sprite assigned to {\ttfamily tile\+Type}, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ad002207d6f814780fcc25c7648f6bc91}{Get\+Door\+Sprite}} (int tile\+Type) const
+\begin{DoxyCompactList}\small\item\em Returns the door sprite assigned to {\ttfamily tile\+Type}, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_affa903b4f5d2d6b7c74773b22e2047bd}{Get\+Wall\+Sprite}} () const
+\begin{DoxyCompactList}\small\item\em Convenience:\+ returns the default (type 1) wall sprite, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a70520fe5da80f3e77edbfd72a1035304}{Get\+Ceiling\+Sprite}} () const
+\begin{DoxyCompactList}\small\item\em Convenience:\+ returns the default (type 1) ceiling sprite, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a148e6adc907c453e80bb50e62a8f6b57}{Get\+Floor\+Sprite}} () const
+\begin{DoxyCompactList}\small\item\em Convenience:\+ returns the default (type 1) floor sprite, or nullptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ad2c8daf45b3ba28a7be7847629c3235a}{Get\+Door\+Sprite}} () const
+\begin{DoxyCompactList}\small\item\em Convenience:\+ returns the default (type 1) door sprite, or nullptr. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a57744516d8379a05fc293d73c95bf9b7}{Set\+Path\+Tiles}} (const std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} $>$ \&waypoints)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a5bf44501038a27e559b36e87f458b1c3}{Clear\+Path\+Tiles}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a18af56640a46977a858fba9653529892}{Render\+Debug\+Colliders}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&pos, f32 camZ, int horizon, int screen\+Width, int screen\+Height)
+\begin{DoxyCompactList}\small\item\em Draws debug colliders in the world view when \doxylink{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56}{Physics2\+D::\+debug\+Draw\+Enabled} is true. Call this AFTER all other renderers have drawn (e.\+g. from \doxylink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{Scene::\+\+On\+After\+Render}) so the lines appear on top of everything. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\texorpdfstring{$\sim$}{\string~}\+IRenderer}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{Set\+Ignore\+Fog}} (bool value)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{Get\+Ignore\+Fog}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a8cb019b5820a2d957df488c9833db2a3}{fov}} = 75.\+0f
+\begin{DoxyCompactList}\small\item\em Horizontal field-\/of-\/view in degrees. Default 75. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}{wall\+Color\+NS}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+8f, 0.\+2f, 0.\+2f, 1.\+0f)
+\begin{DoxyCompactList}\small\item\em Wall tint for north/\+south facing walls (used if no wall sprite is set). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_adf364ef39f75e8e388884f316c98e06b}{wall\+Color\+EW}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+15f, 0.\+15f, 1.\+0f)
+\begin{DoxyCompactList}\small\item\em Wall tint for east/\+west facing walls (used if no wall sprite is set). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_aa8f19cb4e3e59fbeb4d941516040e7e3}{ceiling\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+4f, 1.\+0f)
+\begin{DoxyCompactList}\small\item\em Fallback ceiling color (used if no ceiling sprite is set). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a709cc92ee23a92bf0072e48530ec6b93}{floor\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+3f, 0.\+3f, 0.\+3f, 1.\+0f)
+\begin{DoxyCompactList}\small\item\em Fallback floor color (used if no floor sprite is set). \end{DoxyCompactList}\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a6d0a10d4bd43e2e26311ab948b187bcf}{visibility\+Cull\+Threshold}} = 0.\+01f
+\begin{DoxyCompactList}\small\item\em Minimum fog visibility threshold below which pixels/\+columns are culled for performance. \end{DoxyCompactList}\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a550102b420d0808fb49e598d4b2107d9}{wall\+Overlap\+Padding}} = 10.\+0f
+\begin{DoxyCompactList}\small\item\em Pixel overlap added to floor/\+ceiling boundaries to prevent 1px sub-\/pixel gaps against walls. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlight\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignore\+Fog}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+First-\/person 3D renderer that raycasts against a \doxylink{class_engine_1_1_tile_map}{Tile\+Map}. 
+
+Attach this component to any \doxylink{class_engine_1_1_game_object}{Game\+Object} that also has a \doxylink{class_engine_1_1_tile_map}{Tile\+Map} component. Assign floor, ceiling, and wall sprites by tile-\/type ID using the Set\texorpdfstring{$\ast$}{*}\+Sprite family of methods.
+
+\begin{DoxyParagraph}{Render order}
+Returns FLT\+\_\+\+MAX from \doxylink{class_engine_1_1_tile_map_renderer_a040e6420f4daca74df094e2b688a603e}{Get\+Sorting\+Key()} so the \doxylink{class_engine_1_1_i_renderer}{IRenderer} system always draws this renderer before all other renderers (sprites, \doxylink{namespace_u_i}{UI}, etc.).
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Floor/\+\+Ceiling rendering}
+Floor and ceiling are rendered into CPU-\/side RGBA framebuffers at (screen\+Width \texorpdfstring{$\ast$}{*} fb\+Scale) × (screen\+Height \texorpdfstring{$\ast$}{*} fb\+Scale) resolution, then uploaded to the GPU as a transient texture each frame and drawn as a single full-\/screen quad. Pixel data is loaded once from disk via Windows Imaging \doxylink{class_engine_1_1_component}{Component} (WIC) when Set\+Floor\+Sprite /\+ Set\+Ceiling\+Sprite is called.
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Wall rendering}
+Walls use the traditional Alpha\+Engine AEGfx\+Tri\+Add pipeline. Column strips are sorted by tile type and fog key so consecutive same-\/type columns can be batched into a single mesh, keeping GPU draw calls low. 
+\end{DoxyParagraph}
+
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_tile_map_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_tile_map_renderer_aa45c8d81f08a020939adc511d1a20cff}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!TileMapRenderer@{TileMapRenderer}}
+\index{TileMapRenderer@{TileMapRenderer}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{TileMapRenderer()}{TileMapRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_aa45c8d81f08a020939adc511d1a20cff} 
+Engine::\+\+Tile\+Map\+Renderer::\+\+Tile\+Map\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a007e7e0854e49921e80289ea5e263f16}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!````~TileMapRenderer@{\texorpdfstring{$\sim$}{\string~}TileMapRenderer}}
+\index{````~TileMapRenderer@{\texorpdfstring{$\sim$}{\string~}TileMapRenderer}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TileMapRenderer()}{\string~TileMapRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a007e7e0854e49921e80289ea5e263f16} 
+Engine::\+\+Tile\+Map\+Renderer::\+\texorpdfstring{$\sim$}{\string~}\+Tile\+Map\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_tile_map_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_tile_map_renderer_a5bf44501038a27e559b36e87f458b1c3}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!ClearPathTiles@{ClearPathTiles}}
+\index{ClearPathTiles@{ClearPathTiles}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{ClearPathTiles()}{ClearPathTiles()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a5bf44501038a27e559b36e87f458b1c3} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Clear\+Path\+Tiles (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a70520fe5da80f3e77edbfd72a1035304}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetCeilingSprite@{GetCeilingSprite}}
+\index{GetCeilingSprite@{GetCeilingSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetCeilingSprite()}{GetCeilingSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a70520fe5da80f3e77edbfd72a1035304} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Ceiling\+Sprite (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ returns the default (type 1) ceiling sprite, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a1aa752fb3288b418fe14ecc59c557e99}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetCeilingSprite@{GetCeilingSprite}}
+\index{GetCeilingSprite@{GetCeilingSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetCeilingSprite()}{GetCeilingSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a1aa752fb3288b418fe14ecc59c557e99} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Ceiling\+Sprite (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the ceiling sprite assigned to {\ttfamily tile\+Type}, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_ad2c8daf45b3ba28a7be7847629c3235a}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetDoorSprite@{GetDoorSprite}}
+\index{GetDoorSprite@{GetDoorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetDoorSprite()}{GetDoorSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_ad2c8daf45b3ba28a7be7847629c3235a} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Door\+Sprite (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ returns the default (type 1) door sprite, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_ad002207d6f814780fcc25c7648f6bc91}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetDoorSprite@{GetDoorSprite}}
+\index{GetDoorSprite@{GetDoorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetDoorSprite()}{GetDoorSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_ad002207d6f814780fcc25c7648f6bc91} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Door\+Sprite (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the door sprite assigned to {\ttfamily tile\+Type}, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a148e6adc907c453e80bb50e62a8f6b57}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetFloorSprite@{GetFloorSprite}}
+\index{GetFloorSprite@{GetFloorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetFloorSprite()}{GetFloorSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a148e6adc907c453e80bb50e62a8f6b57} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Floor\+Sprite (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ returns the default (type 1) floor sprite, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_afcf76db81bb712d831c12799830cc4b6}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetFloorSprite@{GetFloorSprite}}
+\index{GetFloorSprite@{GetFloorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetFloorSprite()}{GetFloorSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_afcf76db81bb712d831c12799830cc4b6} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Floor\+Sprite (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the floor sprite assigned to {\ttfamily tile\+Type}, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a040e6420f4daca74df094e2b688a603e}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetSortingKey@{GetSortingKey}}
+\index{GetSortingKey@{GetSortingKey}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSortingKey()}{GetSortingKey()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a040e6420f4daca74df094e2b688a603e} 
+f32 Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Sorting\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Returns FLT\+\_\+\+MAX so \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} always sorts first. 
+
+The raycasting pass must execute first because it populates the \doxylink{class_engine_1_1_z_buffer}{ZBuffer} that \doxylink{class_engine_1_1_sprite_renderer}{Sprite\+Renderer} reads to perform per-\/column occlusion culling. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_ae89dbdd0732274440eb8359203093542}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetTileSprites@{GetTileSprites}}
+\index{GetTileSprites@{GetTileSprites}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetTileSprites()}{GetTileSprites()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_ae89dbdd0732274440eb8359203093542} 
+\doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{Tile\+Sprites}} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Tile\+Sprites (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns all sprites assigned to {\ttfamily tile\+Type}. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_affa903b4f5d2d6b7c74773b22e2047bd}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetWallSprite@{GetWallSprite}}
+\index{GetWallSprite@{GetWallSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetWallSprite()}{GetWallSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_affa903b4f5d2d6b7c74773b22e2047bd} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Wall\+Sprite (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ returns the default (type 1) wall sprite, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a98c56cfce6c697093443828ccaf0b17a}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!GetWallSprite@{GetWallSprite}}
+\index{GetWallSprite@{GetWallSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{GetWallSprite()}{GetWallSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a98c56cfce6c697093443828ccaf0b17a} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Renderer::\+\+Get\+Wall\+Sprite (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the wall sprite assigned to {\ttfamily tile\+Type}, or nullptr. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a5007f79f14a5897b48274a5cac73a043}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!Render@{Render}}
+\index{Render@{Render}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a5007f79f14a5897b48274a5cac73a043} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Performs the full raycasting render pass for this frame. 
+
+
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a18af56640a46977a858fba9653529892}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!RenderDebugColliders@{RenderDebugColliders}}
+\index{RenderDebugColliders@{RenderDebugColliders}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{RenderDebugColliders()}{RenderDebugColliders()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a18af56640a46977a858fba9653529892} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Render\+Debug\+Colliders (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{pos}{, }\item[{f32}]{camZ}{, }\item[{int}]{horizon}{, }\item[{int}]{screen\+Width}{, }\item[{int}]{screen\+Height}{}\end{DoxyParamCaption})}
+
+
+
+Draws debug colliders in the world view when \doxylink{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56}{Physics2\+D::\+debug\+Draw\+Enabled} is true. Call this AFTER all other renderers have drawn (e.\+g. from \doxylink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{Scene::\+\+On\+After\+Render}) so the lines appear on top of everything. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a0855b0244825898346002c5dedc2c8f8}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!REQUIRE\_COMPONENT@{REQUIRE\_COMPONENT}}
+\index{REQUIRE\_COMPONENT@{REQUIRE\_COMPONENT}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{REQUIRE\_COMPONENT()}{REQUIRE\_COMPONENT()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a0855b0244825898346002c5dedc2c8f8} 
+Engine::\+\+Tile\+Map\+Renderer::\+\+REQUIRE\+\_\+\+COMPONENT (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}}}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a0560ca5ed67a2cfcafc16c3af0bbcbb4}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetCeilingSprite@{SetCeilingSprite}}
+\index{SetCeilingSprite@{SetCeilingSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetCeilingSprite()}{SetCeilingSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a0560ca5ed67a2cfcafc16c3af0bbcbb4} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Ceiling\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{sprite}{}\end{DoxyParamCaption})}
+
+
+
+Convenience:\+ sets the default (type 1) ceiling sprite. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a487feba637a525cbe5a92c18b15b5dc2}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetDoorSprite@{SetDoorSprite}}
+\index{SetDoorSprite@{SetDoorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetDoorSprite()}{SetDoorSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a487feba637a525cbe5a92c18b15b5dc2} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Door\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{sprite}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ sets the default (type 1) door sprite. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a65a487efdf3be83baff6e2e922a2024c}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetFloorSprite@{SetFloorSprite}}
+\index{SetFloorSprite@{SetFloorSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetFloorSprite()}{SetFloorSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a65a487efdf3be83baff6e2e922a2024c} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Floor\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{sprite}{}\end{DoxyParamCaption})}
+
+
+
+Convenience:\+ sets the default (type 1) floor sprite. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a57744516d8379a05fc293d73c95bf9b7}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetPathTiles@{SetPathTiles}}
+\index{SetPathTiles@{SetPathTiles}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetPathTiles()}{SetPathTiles()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a57744516d8379a05fc293d73c95bf9b7} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Path\+Tiles (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} $>$ \&}]{waypoints}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a4a17084d50dbeff84e0334b79a2445be}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetTileSprites@{SetTileSprites}}
+\index{SetTileSprites@{SetTileSprites}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetTileSprites()}{SetTileSprites()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a4a17084d50dbeff84e0334b79a2445be} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Tile\+Sprites (\begin{DoxyParamCaption}\item[{int}]{tile\+Type}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{wall}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{ceiling}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{floor}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{door}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Assign all sprites for a specific tile type ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Type} & Integer tile type returned by \doxylink{class_engine_1_1_tile_map_a7593151efcf4556ea26f8fdda34bd7d4}{Tile\+Map::\+\+Get\+Tile()}. \\
+\hline
+{\em wall} & Wall sprite used when this tile type is rendered as a wall. \\
+\hline
+{\em ceiling} & Ceiling sprite used for ceiling sampling (can be nullptr for color fallback). \\
+\hline
+{\em floor} & Floor sprite used for floor sampling (can be nullptr for color fallback). \\
+\hline
+{\em door} & Optional door sprite for this tile type. Defaults to nullptr. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_tile_map_renderer_a944b9d620efed4c134a3c26469d2df1e}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!SetWallSprite@{SetWallSprite}}
+\index{SetWallSprite@{SetWallSprite}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{SetWallSprite()}{SetWallSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a944b9d620efed4c134a3c26469d2df1e} 
+void Engine::\+\+Tile\+Map\+Renderer::\+\+Set\+Wall\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{sprite}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convenience:\+ sets the default (type 1) wall sprite. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_tile_map_renderer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_tile_map_renderer_aa8f19cb4e3e59fbeb4d941516040e7e3}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!ceilingColor@{ceilingColor}}
+\index{ceilingColor@{ceilingColor}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{ceilingColor}{ceilingColor}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_aa8f19cb4e3e59fbeb4d941516040e7e3} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Tile\+Map\+Renderer::\+ceiling\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+4f, 1.\+0f)}
+
+
+
+Fallback ceiling color (used if no ceiling sprite is set). 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a709cc92ee23a92bf0072e48530ec6b93}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!floorColor@{floorColor}}
+\index{floorColor@{floorColor}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{floorColor}{floorColor}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a709cc92ee23a92bf0072e48530ec6b93} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Tile\+Map\+Renderer::\+floor\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+3f, 0.\+3f, 0.\+3f, 1.\+0f)}
+
+
+
+Fallback floor color (used if no floor sprite is set). 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a8cb019b5820a2d957df488c9833db2a3}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!fov@{fov}}
+\index{fov@{fov}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a8cb019b5820a2d957df488c9833db2a3} 
+f32 Engine::\+\+Tile\+Map\+Renderer::\+fov = 75.\+0f}
+
+
+
+Horizontal field-\/of-\/view in degrees. Default 75. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a6d0a10d4bd43e2e26311ab948b187bcf}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!visibilityCullThreshold@{visibilityCullThreshold}}
+\index{visibilityCullThreshold@{visibilityCullThreshold}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{visibilityCullThreshold}{visibilityCullThreshold}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a6d0a10d4bd43e2e26311ab948b187bcf} 
+f32 Engine::\+\+Tile\+Map\+Renderer::\+visibility\+Cull\+Threshold = 0.\+01f}
+
+
+
+Minimum fog visibility threshold below which pixels/\+columns are culled for performance. 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_adf364ef39f75e8e388884f316c98e06b}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!wallColorEW@{wallColorEW}}
+\index{wallColorEW@{wallColorEW}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{wallColorEW}{wallColorEW}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_adf364ef39f75e8e388884f316c98e06b} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Tile\+Map\+Renderer::\+wall\+Color\+EW = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+15f, 0.\+15f, 1.\+0f)}
+
+
+
+Wall tint for east/\+west facing walls (used if no wall sprite is set). 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!wallColorNS@{wallColorNS}}
+\index{wallColorNS@{wallColorNS}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{wallColorNS}{wallColorNS}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Tile\+Map\+Renderer::\+wall\+Color\+NS = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+8f, 0.\+2f, 0.\+2f, 1.\+0f)}
+
+
+
+Wall tint for north/\+south facing walls (used if no wall sprite is set). 
+
+\Hypertarget{class_engine_1_1_tile_map_renderer_a550102b420d0808fb49e598d4b2107d9}\index{Engine::TileMapRenderer@{Engine::TileMapRenderer}!wallOverlapPadding@{wallOverlapPadding}}
+\index{wallOverlapPadding@{wallOverlapPadding}!Engine::TileMapRenderer@{Engine::TileMapRenderer}}
+\doxysubsubsection{\texorpdfstring{wallOverlapPadding}{wallOverlapPadding}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_renderer_a550102b420d0808fb49e598d4b2107d9} 
+f32 Engine::\+\+Tile\+Map\+Renderer::\+wall\+Overlap\+Padding = 10.\+0f}
+
+
+
+Pixel overlap added to floor/\+ceiling boundaries to prevent 1px sub-\/pixel gaps against walls. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_tile_map_renderer_8hpp}{Tile\+Map\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_tile_map_renderer_8cpp}{Tile\+Map\+Renderer.\+cpp}}\end{DoxyCompactItemize}

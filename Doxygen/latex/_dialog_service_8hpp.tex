@@ -1,0 +1,27 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\+Dialog\+Service.hpp File Reference}
+\hypertarget{_dialog_service_8hpp}{}\label{_dialog_service_8hpp}\index{AlphaEngine2.5D/Source/Engine/UI/Helpers/DialogService.hpp@{AlphaEngine2.5D/Source/Engine/UI/Helpers/DialogService.hpp}}
+
+
+Lightweight static service for modal dialog management.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$functional$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_dialog_service}{UI::\+\+Dialog\+Service}}
+\begin{DoxyCompactList}\small\item\em Static service for modal \doxylink{namespace_u_i}{UI} dialogs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\item 
+namespace \doxymbox{\hyperlink{namespace_u_i}{UI}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lightweight static service for modal dialog management. 
+
+Separated from UIManager to keep concerns narrow. Owns the Confirmation\+Dialog singleton and delegates calls to it. 

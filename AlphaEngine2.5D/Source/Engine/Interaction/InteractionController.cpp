@@ -26,9 +26,7 @@
 
 namespace Engine {
 
-/*!
- * \brief [AUTO] Initialize
- */
+
 void InteractionController::Initialize() {
     // Create UI canvas for interaction elements
     m_canvas = UI::UIManager::GetInstance()->CreateCanvas();
@@ -48,9 +46,7 @@ void InteractionController::Initialize() {
     m_prompt->Hide();
 }
 
-/*!
- * \brief [AUTO] Update
- */
+
 void InteractionController::Update() {
     // Only run if this is the main camera's gameObject
     if (!IsActiveCamera()) {
@@ -137,9 +133,7 @@ void InteractionController::Update() {
     }
 }
 
-/*!
- * \brief [AUTO] OnDestroy
- */
+
 void InteractionController::OnDestroy() {
     // Clear highlight on current target
     if (m_currentTargetRenderer) {
@@ -155,26 +149,14 @@ void InteractionController::OnDestroy() {
     m_prompt = nullptr;
 }
 
-/*!
- * \brief [AUTO] IsActiveCamera
- * \return 
- */
-/*!
- * \brief [AUTO] IsActiveCamera
- * \return 
- */
+
+
 bool InteractionController::IsActiveCamera() const {
     return Camera::main && Camera::main->gameObject == gameObject;
 }
 
-/*!
- * \brief [AUTO] FindTargetAtScreenCenter
- * \return 
- */
-/*!
- * \brief [AUTO] FindTargetAtScreenCenter
- * \return 
- */
+
+
 Interactable* InteractionController::FindTargetAtScreenCenter() {
     Scene* scene = SceneManager::GetActiveScene();
     if (!scene || !Camera::main) return nullptr;
@@ -360,14 +342,8 @@ Interactable* InteractionController::FindTargetAtScreenCenter() {
     return closestTarget;
 }
 
-/*!
- * \brief [AUTO] SetTarget
- * \param target [in]
- */
-/*!
- * \brief [AUTO] SetTarget
- * \param target [in]
- */
+
+
 void InteractionController::SetTarget(Interactable* target) {
 // Clear highlight on previous target
 if (m_currentTargetRenderer) {

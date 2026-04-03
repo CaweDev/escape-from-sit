@@ -1,0 +1,65 @@
+\doxysection{Engine::\+Config\+Manager Class Reference}
+\hypertarget{class_engine_1_1_config_manager}{}\label{class_engine_1_1_config_manager}\index{Engine::ConfigManager@{Engine::ConfigManager}}
+
+
+Static class for centralized configuration loading.  
+
+
+
+
+{\ttfamily \+\#include $<$Config\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T$>$ }\\static bool \doxymbox{\hyperlink{class_engine_1_1_config_manager_a16bf2dd1ec188cdf9969ea8557b81c9c}{Read\+Config}} (const std::\+string \&filepath, T \&out\+Config)
+\begin{DoxyCompactList}\small\item\em Reads a JSON file and parses it into a struct of type T. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_config_manager_a606989c1ecc78b25655198cf331f84c1}{Initialize\+All}} ()
+\begin{DoxyCompactList}\small\item\em Initialize ALL engine subsystems from their config files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for centralized configuration loading. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_config_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_config_manager_a606989c1ecc78b25655198cf331f84c1}\index{Engine::ConfigManager@{Engine::ConfigManager}!InitializeAll@{InitializeAll}}
+\index{InitializeAll@{InitializeAll}!Engine::ConfigManager@{Engine::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{InitializeAll()}{InitializeAll()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_config_manager_a606989c1ecc78b25655198cf331f84c1} 
+void Engine::\+\+Config\+Manager::\+\+Initialize\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initialize ALL engine subsystems from their config files. 
+
+Reads the following files under Assets/\+\+Config/\+\+Engine/\+:\+ application.\+json -\/ target\+Frame\+Rate camera.\+json -\/ camera defaults (background\+Color, fov, fog, ...) physics.\+json -\/ gravity, collision radius, delta\+Time cap, ... rendering.\+json -\/ perp\+Wall\+Dist\+Clamp, fog\+Lut\+Dist\+Scale, ... door.\+json -\/ door audio, animation, fallback colors, ... game.\+json -\/ scene fade durations
+
+Call this once in main() after the engine window is created, before any scenes are loaded. \Hypertarget{class_engine_1_1_config_manager_a16bf2dd1ec188cdf9969ea8557b81c9c}\index{Engine::ConfigManager@{Engine::ConfigManager}!ReadConfig@{ReadConfig}}
+\index{ReadConfig@{ReadConfig}!Engine::ConfigManager@{Engine::ConfigManager}}
+\doxysubsubsection{\texorpdfstring{ReadConfig()}{ReadConfig()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_config_manager_a16bf2dd1ec188cdf9969ea8557b81c9c} 
+template$<$typename T$>$ \\
+bool Engine::\+\+Config\+Manager::\+\+Read\+Config (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{, }\item[{T \&}]{out\+Config}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Reads a JSON file and parses it into a struct of type T. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to the JSON file \\
+\hline
+{\em out\+Config} & The configuration object to populate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if successful, false otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_config_manager_8hpp}{Config\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_config_manager_8cpp}{Config\+Manager.\+cpp}}\end{DoxyCompactItemize}

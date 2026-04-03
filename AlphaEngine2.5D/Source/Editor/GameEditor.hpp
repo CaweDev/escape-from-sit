@@ -1,5 +1,5 @@
 /**
- * @file Game Editor.hpp
+ * @file GameEditor.hpp
  * @brief Game editor
  */
 #pragma once

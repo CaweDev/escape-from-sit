@@ -1,6 +1,6 @@
 /**
- * @file AnimatedImage.cpp
- * @brief Implementation of AnimatedImage UI component
+ * @file SpriteSheetImage.cpp
+ * @brief Implementation of SpriteSheetImage UI component
  */
 
 #include "Engine/UI/Components/SpriteSheetImage.hpp"

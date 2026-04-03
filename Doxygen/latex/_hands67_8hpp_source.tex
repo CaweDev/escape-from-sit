@@ -1,0 +1,37 @@
+\doxysection{Hands67.\+hpp}
+\hypertarget{_hands67_8hpp_source}{}\label{_hands67_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/UI/Hands67.hpp@{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/UI/Hands67.hpp}}
+\doxymbox{\hyperlink{_hands67_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_canvas_8hpp}{Engine/UI/Core/Canvas.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_sheet_image_8hpp}{Engine/UI/Components/SpriteSheetImage.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_panel_8hpp}{Engine/UI/Components/Panel.hpp}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_hands67_a042727d4927e2d1fe629b85b18b0f275}{Hands67}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_hands67_a042727d4927e2d1fe629b85b18b0f275}{Hands67}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_hands67_a373fc6c2c926a6ab237382af778b0058}{\string~Hands67}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_hands67_ab1f359e7531a0abb2d7fadfc74e06212}{Awake}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_hands67_ae372ed958a45b48be369aaf5a034bf18}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_hands67_a569d196bc0c403056843ccd04bdda703}{IsVisible}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_isVisible;\ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::Canvas}}*\ m\_canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel}{UI::Panel}}*\ m\_panel\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image}{UI::SpriteSheetImage}}*\ m\_handsImage\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isVisible\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_sixPressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_sevenPressed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

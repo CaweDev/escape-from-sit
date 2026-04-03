@@ -1,0 +1,171 @@
+\doxysection{Game::\+Heatmap Class Reference}
+\hypertarget{class_game_1_1_heatmap}{}\label{class_game_1_1_heatmap}\index{Game::Heatmap@{Game::Heatmap}}
+
+
+Grid-\/based activity tracker used by AI and analytics.  
+
+
+
+
+{\ttfamily \+\#include $<$Heatmap.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_heatmap_affc14cd33aca96af0659d919122ca8c4}{Init}} (int w, int h)
+\begin{DoxyCompactList}\small\item\em Initialize heatmap with width and height. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_heatmap_aaf2ba4f409df222960ce83ddcceac551}{Clear}} ()
+\begin{DoxyCompactList}\small\item\em Set all cells to zero. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_heatmap_aae7635f118463756e645c96e0ee240a7}{Decay}} (float factor)
+\begin{DoxyCompactList}\small\item\em Apply multiplicative decay to all cells. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_heatmap_af9bba45ced9a77649169ffe8c945db46}{Add\+At}} (int x, int y, float amt)
+\begin{DoxyCompactList}\small\item\em Add amount to a cell. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_game_1_1_heatmap_a675b57b87675248aa9e56111c65a3e7d}{Get}} (int x, int y) const
+\begin{DoxyCompactList}\small\item\em Get cell value. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_game_1_1_heatmap_aaaece7a9b7990413896364dd2e9d956f}{Sum\+Zone}} (const std::\+vector$<$ int $>$ \&zone\+Grid, int zone\+Id) const
+\begin{DoxyCompactList}\small\item\em Sum values for a zone using zone\+Grid. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_game_1_1_heatmap_aaabc3b252a4e46b82def998324074088}{Max\+Value}} () const
+\begin{DoxyCompactList}\small\item\em Maximum cell value in heatmap. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_game_1_1_heatmap_a9e2594348a78b23fd4ccc38cccaee7e9}{Total}} () const
+\begin{DoxyCompactList}\small\item\em Total of all cells. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_heatmap_ac50832db0f95c6054c2fb7200cd352ba}{W}} () const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_heatmap_a877872abaaea6efe357fd3a948998d9f}{H}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grid-\/based activity tracker used by AI and analytics. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_heatmap_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_heatmap_af9bba45ced9a77649169ffe8c945db46}\index{Game::Heatmap@{Game::Heatmap}!AddAt@{AddAt}}
+\index{AddAt@{AddAt}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{AddAt()}{AddAt()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_af9bba45ced9a77649169ffe8c945db46} 
+void Game::\+\+Heatmap::\+\+Add\+At (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{float}]{amt}{}\end{DoxyParamCaption})}
+
+
+
+Add amount to a cell. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \+[in]\+ tile x\\
+\hline
+{\em y} & \+[in]\+ tile y\\
+\hline
+{\em amt} & \+[in]\+ amount \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_heatmap_aaf2ba4f409df222960ce83ddcceac551}\index{Game::Heatmap@{Game::Heatmap}!Clear@{Clear}}
+\index{Clear@{Clear}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_aaf2ba4f409df222960ce83ddcceac551} 
+void Game::\+\+Heatmap::\+\+Clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Set all cells to zero. 
+
+\Hypertarget{class_game_1_1_heatmap_aae7635f118463756e645c96e0ee240a7}\index{Game::Heatmap@{Game::Heatmap}!Decay@{Decay}}
+\index{Decay@{Decay}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{Decay()}{Decay()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_aae7635f118463756e645c96e0ee240a7} 
+void Game::\+\+Heatmap::\+\+Decay (\begin{DoxyParamCaption}\item[{float}]{factor}{}\end{DoxyParamCaption})}
+
+
+
+Apply multiplicative decay to all cells. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em factor} & \+[in]\+ decay factor in \+[0..1]\+ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_heatmap_a675b57b87675248aa9e56111c65a3e7d}\index{Game::Heatmap@{Game::Heatmap}!Get@{Get}}
+\index{Get@{Get}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{Get()}{Get()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_a675b57b87675248aa9e56111c65a3e7d} 
+float Game::\+\+Heatmap::\+\+Get (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption}) const}
+
+
+
+Get cell value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \+[in]\+ tile x\\
+\hline
+{\em y} & \+[in]\+ tile y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+value 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_heatmap_a877872abaaea6efe357fd3a948998d9f}\index{Game::Heatmap@{Game::Heatmap}!H@{H}}
+\index{H@{H}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{H()}{H()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_a877872abaaea6efe357fd3a948998d9f} 
+int Game::\+\+Heatmap::\+H (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_heatmap_affc14cd33aca96af0659d919122ca8c4}\index{Game::Heatmap@{Game::Heatmap}!Init@{Init}}
+\index{Init@{Init}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_affc14cd33aca96af0659d919122ca8c4} 
+void Game::\+\+Heatmap::\+\+Init (\begin{DoxyParamCaption}\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+
+
+Initialize heatmap with width and height. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & \+[in]\+ width\\
+\hline
+{\em h} & \+[in]\+ height \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_heatmap_aaabc3b252a4e46b82def998324074088}\index{Game::Heatmap@{Game::Heatmap}!MaxValue@{MaxValue}}
+\index{MaxValue@{MaxValue}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{MaxValue()}{MaxValue()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_aaabc3b252a4e46b82def998324074088} 
+float Game::\+\+Heatmap::\+\+Max\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Maximum cell value in heatmap. 
+
+\Hypertarget{class_game_1_1_heatmap_aaaece7a9b7990413896364dd2e9d956f}\index{Game::Heatmap@{Game::Heatmap}!SumZone@{SumZone}}
+\index{SumZone@{SumZone}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{SumZone()}{SumZone()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_aaaece7a9b7990413896364dd2e9d956f} 
+float Game::\+\+Heatmap::\+\+Sum\+Zone (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ int $>$ \&}]{zone\+Grid}{, }\item[{int}]{zone\+Id}{}\end{DoxyParamCaption}) const}
+
+
+
+Sum values for a zone using zone\+Grid. 
+
+\Hypertarget{class_game_1_1_heatmap_a9e2594348a78b23fd4ccc38cccaee7e9}\index{Game::Heatmap@{Game::Heatmap}!Total@{Total}}
+\index{Total@{Total}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{Total()}{Total()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_a9e2594348a78b23fd4ccc38cccaee7e9} 
+float Game::\+\+Heatmap::\+\+Total (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Total of all cells. 
+
+\Hypertarget{class_game_1_1_heatmap_ac50832db0f95c6054c2fb7200cd352ba}\index{Game::Heatmap@{Game::Heatmap}!W@{W}}
+\index{W@{W}!Game::Heatmap@{Game::Heatmap}}
+\doxysubsubsection{\texorpdfstring{W()}{W()}}
+{\footnotesize\ttfamily \label{class_game_1_1_heatmap_ac50832db0f95c6054c2fb7200cd352ba} 
+int Game::\+\+Heatmap::\+W (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Heatmap/\+\doxymbox{\hyperlink{_heatmap_8hpp}{Heatmap.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Heatmap/\+\doxymbox{\hyperlink{_heatmap_8cpp}{Heatmap.\+cpp}}\end{DoxyCompactItemize}

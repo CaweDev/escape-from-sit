@@ -1,0 +1,1016 @@
+\doxysection{FPSScene.\+cpp}
+\hypertarget{_f_p_s_scene_8cpp_source}{}\label{_f_p_s_scene_8cpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/FPSScene.cpp@{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/FPSScene.cpp}}
+\doxymbox{\hyperlink{_f_p_s_scene_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#define\ FPS\_SCENE\_CPP\_COMPILATION\_UNIT}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_f_p_s_scene_8hpp}{Game/Scenes/FPSScene/FPSScene.hpp}}"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{Engine/Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <json/json.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{struct\ }FPSSceneConfig\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::IConfig}}}
+\DoxyCodeLine{00019\ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ winRadius\ =\ 0.6f;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ banditInterval\ =\ 2.0f;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wHeat\ =\ 0.55f;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ wCCTV\ =\ 0.45f;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ heatRef\ =\ 50.0f;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cctvRef\ =\ 6.0f;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ heatAddPerSec\ =\ 1.0f;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ heatDecayPerSec\ =\ 0.985f;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cctvSpikeCooldown\ =\ 1.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cctvSpikeAmount\ =\ 1.0f;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fullEscalationThreshold\ =\ 30.0f;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ npcNoticeRadius\ =\ 6.0f;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ guardShakeDistance\ =\ 6.0f;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ guardShakeDuration\ =\ 0.1f;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ guardShakeIntensityScale\ =\ 0.08f;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ mlSummaryInterval\ =\ 5.0f;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ tileMapColliderMinHeight\ =\ 0.0f;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ tileMapColliderMaxHeight\ =\ 3.0f;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ debugCirclePi\ =\ 3.14159265f;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distanceSentinel\ =\ 999999.0f;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ escalationStage2Ratio\ =\ 0.33f;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ escalationStage3Ratio\ =\ 0.66f;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ wallColorNS\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.8f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ wallColorEW\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.6f,\ 0.15f,\ 0.15f,\ 1.0f);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ ceilingColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.1f,\ 0.1f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ floorColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.3f,\ 0.25f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ ParseColor(\textcolor{keyword}{const}\ Json::Value\ \&j,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *key,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \&fallback)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!j.isMember(key)\ ||\ !j[key].isObject())}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ fallback;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&c\ =\ j[key];}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}r"{}},\ fallback.\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}).asFloat(),}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}g"{}},\ fallback.\doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}).asFloat(),}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}b"{}},\ fallback.\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}).asFloat(),}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}a"{}},\ fallback.\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}).asFloat());}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FromJson(\textcolor{keyword}{const}\ Json::Value\ \&j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00077\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ winRadius\ =\ j.get(\textcolor{stringliteral}{"{}winRadius"{}},\ winRadius).asFloat();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ banditInterval\ =\ j.get(\textcolor{stringliteral}{"{}banditInterval"{}},\ banditInterval).asFloat();}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ wHeat\ =\ j.get(\textcolor{stringliteral}{"{}wHeat"{}},\ wHeat).asFloat();}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ wCCTV\ =\ j.get(\textcolor{stringliteral}{"{}wCCTV"{}},\ wCCTV).asFloat();}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ heatRef\ =\ j.get(\textcolor{stringliteral}{"{}heatRef"{}},\ heatRef).asFloat();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ cctvRef\ =\ j.get(\textcolor{stringliteral}{"{}cctvRef"{}},\ cctvRef).asFloat();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ heatAddPerSec\ =\ j.get(\textcolor{stringliteral}{"{}heatAddPerSec"{}},\ heatAddPerSec).asFloat();}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ heatDecayPerSec\ =\ j.get(\textcolor{stringliteral}{"{}heatDecayPerSec"{}},\ heatDecayPerSec).asFloat();}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ cctvSpikeCooldown\ =\ j.get(\textcolor{stringliteral}{"{}cctvSpikeCooldown"{}},\ cctvSpikeCooldown).asFloat();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ cctvSpikeAmount\ =\ j.get(\textcolor{stringliteral}{"{}cctvSpikeAmount"{}},\ cctvSpikeAmount).asFloat();}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ fullEscalationThreshold\ =\ j.get(\textcolor{stringliteral}{"{}fullEscalationThreshold"{}},\ fullEscalationThreshold).asFloat();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ npcNoticeRadius\ =\ j.get(\textcolor{stringliteral}{"{}npcNoticeRadius"{}},\ npcNoticeRadius).asFloat();}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ guardShakeDistance\ =\ j.get(\textcolor{stringliteral}{"{}guardShakeDistance"{}},\ guardShakeDistance).asFloat();}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ guardShakeDuration\ =\ j.get(\textcolor{stringliteral}{"{}guardShakeDuration"{}},\ guardShakeDuration).asFloat();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ guardShakeIntensityScale\ =\ j.get(\textcolor{stringliteral}{"{}guardShakeIntensityScale"{}},\ guardShakeIntensityScale).asFloat();}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ mlSummaryInterval\ =\ j.get(\textcolor{stringliteral}{"{}mlSummaryInterval"{}},\ mlSummaryInterval).asFloat();}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ tileMapColliderMinHeight\ =\ j.get(\textcolor{stringliteral}{"{}tileMapColliderMinHeight"{}},\ tileMapColliderMinHeight).asFloat();}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ tileMapColliderMaxHeight\ =\ j.get(\textcolor{stringliteral}{"{}tileMapColliderMaxHeight"{}},\ tileMapColliderMaxHeight).asFloat();}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ debugCirclePi\ =\ j.get(\textcolor{stringliteral}{"{}debugCirclePi"{}},\ debugCirclePi).asFloat();}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ distanceSentinel\ =\ j.get(\textcolor{stringliteral}{"{}distanceSentinel"{}},\ distanceSentinel).asFloat();}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ escalationStage2Ratio\ =\ j.get(\textcolor{stringliteral}{"{}escalationStage2Ratio"{}},\ escalationStage2Ratio).asFloat();}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ escalationStage3Ratio\ =\ j.get(\textcolor{stringliteral}{"{}escalationStage3Ratio"{}},\ escalationStage3Ratio).asFloat();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ wallColorNS\ =\ ParseColor(j,\ \textcolor{stringliteral}{"{}wallColorNS"{}},\ wallColorNS);}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ wallColorEW\ =\ ParseColor(j,\ \textcolor{stringliteral}{"{}wallColorEW"{}},\ wallColorEW);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ ceilingColor\ =\ ParseColor(j,\ \textcolor{stringliteral}{"{}ceilingColor"{}},\ ceilingColor);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ floorColor\ =\ ParseColor(j,\ \textcolor{stringliteral}{"{}floorColor"{}},\ floorColor);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ FPSSceneConfig\ g\_fpsSceneConfig;}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{bool}\ g\_fpsSceneConfigLoaded\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{const}\ FPSSceneConfig\ \&GetFPSSceneConfig()}
+\DoxyCodeLine{00119\ \ \ \ \ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!g\_fpsSceneConfigLoaded)}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_config_manager_a16bf2dd1ec188cdf9969ea8557b81c9c}{Engine::ConfigManager::ReadConfig}}(\textcolor{stringliteral}{"{}Assets/Config/Game/fps\_scene.json"{}},\ g\_fpsSceneConfig);}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ g\_fpsSceneConfigLoaded\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ g\_fpsSceneConfig;}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00130\ \{}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aaba794f32f554a6064034f5e7bf3423f}{FPSScene::OnLoad}}()}
+\DoxyCodeLine{00134\ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_adaf0f2169d67bc714e586874e88b6d7c}{AEEditor::ObjectManager::LoadSceneFromJson}}(\textcolor{stringliteral}{"{}Assets/Config/Scenes/EditorScene.json"{}});}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&cfg\ =\ GetFPSSceneConfig();}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557}{winRadius}}\ =\ cfg.winRadius;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a46fedf81de7078d5b6bf2fa143bdcc39}{banditInterval}}\ =\ cfg.banditInterval;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ab10ea529b583919609e36701568e172e}{wHeat}}\ =\ cfg.wHeat;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa68c482ac06633cfa912b61db09b3ec4}{wCCTV}}\ =\ cfg.wCCTV;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a577804bb4d7cd26df9c86ff0541cbe96}{heatRef}}\ =\ cfg.heatRef;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a1ced2646b6bfa0802e1418b3800402be}{cctvRef}}\ =\ cfg.cctvRef;}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2e3f7d064ae659af8297eb6097f1a8c3}{heatAddPerSec}}\ =\ cfg.heatAddPerSec;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3e74374c89db1c246ce53f7a77bd1595}{heatDecayPerSec}}\ =\ cfg.heatDecayPerSec;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a73ee81c12677e44b17364b87673b67d3}{cctvSpikeCooldown}}\ =\ cfg.cctvSpikeCooldown;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6a5233b0a32a537183f2ffe5a50da538}{cctvSpikeAmount}}\ =\ cfg.cctvSpikeAmount;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f}{fullEscalationThreshold}}\ =\ cfg.fullEscalationThreshold;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}{gameEnded}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470}{printedWin}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aafd52fde9e3e7128098bfd0a9ec8900b}{SoundManager::PlayBGM}}(\textcolor{stringliteral}{"{}fps\_gameplay"{}},\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ load\ map.txt\ =====}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ std::vector<std::string>\ mapRows;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ std::ifstream\ file(\textcolor{stringliteral}{"{}Assets/tmpMap.txt"{}});}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file.clear();}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file.open(\textcolor{stringliteral}{"{}Assets/map.txt"{}});}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(file,\ line))}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!line.empty()\ \&\&\ line.back()\ ==\ \textcolor{charliteral}{'\(\backslash\)r'})}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.pop\_back();}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!line.empty())}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mapRows.push\_back(line);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ file.close();}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mapRows.empty())}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ loadedMapHeight\ =\ (int)mapRows.size();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ loadedMapWidth\ =\ (int)mapRows[0].size();}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ for\ later\ use}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ this-\/>\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a683f3061cfcb3078aae9f6e972ed98b8}{mapWidth}}\ =\ loadedMapWidth;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ this-\/>\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a47b2d5aa6b6b4c0017715e4322de4e87}{mapHeight}}\ =\ loadedMapHeight;}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ loadedMapHeight;\ ++y)}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\textcolor{keywordtype}{int})mapRows[y].size()\ !=\ loadedMapWidth)}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ zones\ (quadrants)\ =====}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ IMPORTANT:\ Minimap\ Y-\/axis\ is\ INVERTED\ from\ game\ coordinates!}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Game\ coords:\ Y=0\ is\ TOP,\ Y=max\ is\ BOTTOM}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Minimap:\ \ \ \ \ Y=0\ is\ BOTTOM,\ Y=max\ is\ TOP}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Zone\ layout\ (matching\ minimap\ colors\ when\ Y\ is\ INVERTED):}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ Minimap\ Top-\/Left\ (Green):\ \ \ \ Zone\ B\ (Game\ coords:\ Y=21-\/42,\ bottom-\/left)}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ Minimap\ Top-\/Right\ (Magenta):\ Zone\ C\ (Game\ coords:\ Y=21-\/42,\ bottom-\/right)}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ Minimap\ Bot-\/Left\ (Blue):\ \ \ \ \ Zone\ A\ (Game\ coords:\ Y=0-\/20,\ top-\/left)}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ Minimap\ Bot-\/Right\ (Yellow):\ \ Zone\ D\ (Game\ coords:\ Y=0-\/20,\ top-\/right)}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}.clear();}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ midX\ =\ loadedMapWidth\ /\ 2;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ midY\ =\ loadedMapHeight\ /\ 2;}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}.push\_back(\{1,\ 0,\ midX\ -\/\ 1,\ 0,\ midY\ -\/\ 1\});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ A:\ Blue\ (Game\ top-\/left,\ Minimap\ bottom-\/left)}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}.push\_back(\{2,\ 0,\ midX\ -\/\ 1,\ midY,\ loadedMapHeight\ -\/\ 1\});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ B:\ Green\ (Game\ bottom-\/left,\ Minimap\ top-\/left)}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}.push\_back(\{3,\ midX,\ loadedMapWidth\ -\/\ 1,\ midY,\ loadedMapHeight\ -\/\ 1\});\ \textcolor{comment}{//\ C:\ Magenta\ (Game\ bottom-\/right,\ Minimap\ top-\/right)}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af49b2038e7542491672606f6bef0c349}{zones}}.push\_back(\{4,\ midX,\ loadedMapWidth\ -\/\ 1,\ 0,\ midY\ -\/\ 1\});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ D:\ Yellow\ (Game\ top-\/right,\ Minimap\ bottom-\/right)}}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ build\ tile\ array\ =====}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ std::vector<int>\ worldMap(loadedMapWidth\ *\ loadedMapHeight,\ 0);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ loadedMapHeight;\ ++y)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ loadedMapWidth;\ ++x)}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ c\ =\ mapRows[y][x];}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tileValue\ =\ 0;}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'0'})}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tileValue\ =\ 0;\ \textcolor{comment}{//\ Floor}}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'1'})}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tileValue\ =\ 1;\ \textcolor{comment}{//\ Wall}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tileValue\ =\ c\ -\/\ \textcolor{charliteral}{'0'};\ \textcolor{comment}{//\ Fallback\ numeric}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ worldMap[y\ *\ loadedMapWidth\ +\ x]\ =\ tileValue;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ world\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}World"{}});}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ map\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}}>();}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ map-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e}{LoadFromArray}}(worldMap.data(),\ loadedMapWidth,\ loadedMapHeight);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ renderer\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{TileMapRenderer}}>();}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ renderer-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}{wallColorNS}}\ =\ cfg.wallColorNS;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ renderer-\/>wallColorEW\ =\ cfg.wallColorEW;}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ renderer-\/>ceilingColor\ =\ cfg.ceilingColor;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ renderer-\/>floorColor\ =\ cfg.floorColor;}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ renderer-\/>SetCeilingSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/Wallpaper\_02\_White\_1.png"{}}));}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ renderer-\/>SetFloorSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/s2\ Concrete\ Squares\ 2\ Grey.png"{}}));}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ renderer-\/>SetWallSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/Concrete\_01\_White\_1.png"{}}));}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ renderer-\/>SetDoorSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/school\_sliding\_door.png"{}}));}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tileMapCollider\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d}{TileMapCollider2D}}>();}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ tileMapCollider-\/>\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a6f042d71a3cb23182c9829ce1f34d6e8}{minHeight}}\ =\ cfg.tileMapColliderMinHeight;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ tileMapCollider-\/>maxHeight\ =\ cfg.tileMapColliderMaxHeight;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ player\ =====}}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ player\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_a7ecdc5c2809ae3db6b713edad5a46fe6}{GameObject::Find}}(\textcolor{stringliteral}{"{}Player"{}});}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}\ =\ player-\/>transform;}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aeddcb32fa80562b21181fda52f9f3c6f}{playerViewPos}}\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a7b631fbd5b7246c2330bbb9e3fed6a01}{playerViewRot}}\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>rotation;}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}>();}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2c91734e1d3dc57413b8aac70450c45b}{playerController}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}>();}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_player}{Player}}>();}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ persisted\ high\ score\ (if\ present)}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}})}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ std::ifstream\ hsFile(\textcolor{stringliteral}{"{}Assets/Config/Game/highscore.json"{}});}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hsFile.is\_open())}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Json::Value\ root;}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Json::CharReaderBuilder\ builder;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JSONCPP\_STRING\ errs;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parseFromStream(builder,\ hsFile,\ \&root,\ \&errs))}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ saved\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetHighScore();}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ saved\ =\ root.get(\textcolor{stringliteral}{"{}highScore"{}},\ saved).asFloat();}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>SetHighScore(saved);}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ hsFile.close();}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{PlayerHUD}}>();}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetTileMap(map);}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetPlayerTransform(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}});}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetZoneGetter([\textcolor{keyword}{this}](\textcolor{keywordtype}{int}\ tx,\ \textcolor{keywordtype}{int}\ ty)}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ this-\/>\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{GetZoneId}}(tx,\ ty);\ \});}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetHeatmap(\&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}});\ \textcolor{comment}{//\ Connect\ heatmap\ data}}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a010fc2114b59d58dd1010c80686f8a89}{pauseMenu}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_pause_menu}{PauseMenu}}>();}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}{loseScreen}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_lose_screen}{LoseScreen}}>();}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}{winScreen}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_win_screen}{WinScreen}}>();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_controls_menu}{ControlsMenu}}>();}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a49bc01ba8f7de1e7860c480db66cf0a2}{powerUpController}}\ =\ player-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_player_power_up_controller}{PlayerPowerUpController}}>();}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}{showControlsAtStart}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ ML\ init\ =====}}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}{zoneMgr}}.Init(map,\ loadedMapWidth,\ loadedMapHeight);}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}}.Init(loadedMapWidth,\ loadedMapHeight);}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}{zoneGrid}}.assign(loadedMapWidth\ *\ loadedMapHeight,\ 0);}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ y\ =\ 0;\ y\ <\ loadedMapHeight;\ ++y)}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ x\ =\ 0;\ x\ <\ loadedMapWidth;\ ++x)}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ zid\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{GetZoneId}}(x,\ y);}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}{zoneGrid}}[y\ *\ loadedMapWidth\ +\ x]\ =\ (zid\ >\ 0)\ ?\ zid\ :\ 0;}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}{zoneMgr}}.SetZoneGrid(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}{zoneGrid}});}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ CCTV\ \ =====}}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ terminals\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}Terminal"{}});}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&tObj\ :\ terminals)}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ terminal\ =\ tObj-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}}>();}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ terminal-\/>\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5102a9e05c97d04c6635445ddffd9f80}{playerHUD}}\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}};}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ terminal-\/>spriteRenderer\ =\ tObj-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}}>();}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ terminal-\/>allGuards\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}};}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetTerminalPosition(terminal-\/>controlledZone,\ tObj-\/>transform-\/>position);}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}}.push\_back(terminal);}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cctvs\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}Sensor"{}});}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&cctv\ :\ cctvs)}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sensor\ =\ cctv-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}}>();}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ sensor-\/>\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_ad763ee01a5872f65fb3a254fc301ff9a}{tile}}\ =\ map;}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ sensor-\/>tf\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}};}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ sensor-\/>hud\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}};}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ sensor-\/>spriteRenderer\ =\ cctv-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}}>();}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ sensor-\/>minimap\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>GetMinimap();}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}}.push\_back(sensor);}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>AddCCTVTransform(cctv-\/>transform);}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ camTx\ =\ (int)cctv-\/>transform-\/>position.x;}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ camTy\ =\ (int)cctv-\/>transform-\/>position.y;}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ camZone\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{GetZoneId}}(camTx,\ camTy);}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&terminal\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}})}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (camZone\ ==\ terminal-\/>controlledZone)}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ terminal-\/>controlledCameras.push\_back(sensor);}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}.assign(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}}.size(),\ 0.0f);}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ Spawn\ Control\ Room\ Doors\ from\ map\ markers\ ('C'\ /\ tile\ 13)\ =====}}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Initialize\ All\ Doors\ (Calculate\ Facing\ \&\ FOV)}}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ doorObjs\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}Door"{}});}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *doorGO\ :\ doorObjs)}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *door\ =\ doorGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::Door}}>();}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6}{doors}}.push\_back(door);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *doorRenderer\ =\ doorGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_door_renderer}{Engine::DoorRenderer}}>();}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Connect\ the\ dynamic\ FOV\ from\ the\ TileMapRenderer}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (doorRenderer\ \&\&\ renderer)}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ doorRenderer-\/>fov\ =\ renderer-\/>fov;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ facing\ dynamically\ based\ on\ the\ TileMap\ walls}}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (door\ \&\&\ map)}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallNorth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ +\ 1);}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallSouth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ -\/\ 1);}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>facing\ =\ (wallNorth\ ||\ wallSouth)\ ?\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{Engine::DoorFacing::EastWest}}\ :\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Engine::DoorFacing::NorthSouth}};}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>state\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::DoorState::Closed}};}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>AddDoor(door);}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Initialize\ Exit\ Door\ (Custom\ Interaction\ Lambda)}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ exitDoors\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{Engine::GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}ExitDoor"{}});}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *exitGO\ :\ exitDoors)}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *door\ =\ exitGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::Door}}>();}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6}{doors}}.push\_back(door);}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *interactable\ =\ exitGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::Interactable}}>();}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (door\ \&\&\ interactable)}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ totalBooks\ =\ (int)\doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a0ebecd3823f9f2d01e6fc3037589c4a9}{Game::PuzzleManager::allBooks}}.size();}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}}\ <\ totalBooks)}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ interactable-\/>actionText\ =\ \textcolor{stringliteral}{"{}EXIT\ LOCKED:\ Collect\ all\ books"{}};}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ interactable-\/>onInteract\ =\ [door,\ totalBooks,\ interactable]()}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}}\ >=\ totalBooks)}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>Toggle();}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ interactable-\/>actionText\ =\ \textcolor{stringliteral}{"{}Close"{}};}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae26777692878695afd712684509d73f2}{Game::PuzzleManager::OpenExitDoor}}();}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ collected\ =\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}};}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a9ab2aa162cdec5c39062d2fcc072f488}{Game::PuzzleManager::activeBookTitle}}\ =\ \textcolor{stringliteral}{"{}DOOR\ LOCKED"{}};}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a300e4bc74676e3a290b770811148feaf}{Game::PuzzleManager::activeBookText}}\ =\ std::to\_string(collected)\ +\ \textcolor{stringliteral}{"{}/"{}}\ +\ std::to\_string(totalBooks)\ +\ \textcolor{stringliteral}{"{}\ books\ collected"{}};}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae2554e9605d43b5c22ec45c007749937}{Game::PuzzleManager::popupTimer}}\ =\ 3.0f;}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (door\ \&\&\ map)}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallNorth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ +\ 1);}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallSouth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ -\/\ 1);}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>facing\ =\ (wallNorth\ ||\ wallSouth)\ ?\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{Engine::DoorFacing::EastWest}}\ :\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Engine::DoorFacing::NorthSouth}};}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>state\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::DoorState::Closed}};}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>state\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::DoorState::Closed}};}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>AddDoor(door);}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d}{exitPos}}\ =\ exitDoors[0]-\/>transform-\/>position;}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Initialize\ Control\ Room\ Doors\ (Link\ Components\ \&\ HUD)}}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ controlDoors\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{Engine::GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}ControlDoor"{}});}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *cdGO\ :\ controlDoors)}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *controlDoor\ =\ cdGO-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_control_room_door}{Game::ControlRoomDoor}}>();}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *door\ =\ cdGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::Door}}>();}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3979d969190ff631c3fccb101f7ee5e6}{doors}}.push\_back(door);}
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *interactable\ =\ cdGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::Interactable}}>();}
+\DoxyCodeLine{00433\ }
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (controlDoor\ \&\&\ door\ \&\&\ interactable)}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Link\ pointers\ internally}}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ controlDoor-\/>door\ =\ door;}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ controlDoor-\/>\doxymbox{\hyperlink{class_game_1_1_control_room_door_a01d4225a16bedb477aa91d21e586e3cb}{interactable}}\ =\ interactable;}
+\DoxyCodeLine{00439\ }
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Register\ with\ Player\ HUD\ for\ pathfinding}}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}})}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>SetControlRoomPosition(controlDoor-\/>zoneId,\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(cdGO-\/>transform-\/>position.x,\ cdGO-\/>transform-\/>position.y));}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (door\ \&\&\ map)}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallNorth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ +\ 1);}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ wallSouth\ =\ map-\/>IsWall(door-\/>tileX,\ door-\/>tileY\ -\/\ 1);}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>facing\ =\ (wallNorth\ ||\ wallSouth)\ ?\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{Engine::DoorFacing::EastWest}}\ :\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Engine::DoorFacing::NorthSouth}};}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>state\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::DoorState::Closed}};}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ door-\/>state\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::DoorState::Closed}};}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00455\ }
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>AddDoor(door);}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ spawn\ 4\ guards\ (1\ per\ zone)\ =====}}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}}.clear();}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ guardObjects\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}Guard"{}});}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&g\ :\ guardObjects)}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ guard\ =\ g-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_security_guard}{SecurityGuard}}>();}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>\doxymbox{\hyperlink{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769}{tileMap}}\ =\ map;}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>playerTf\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}};}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>playerData\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}};}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>zoneMgr\ =\ \&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}{zoneMgr}};}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>heatmap\ =\ \&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}};}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>SetPatrolZoneOverride(guard-\/>homeZoneId);}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \ \ \ \ guard-\/>SetTerminals(\&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}});}
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ g-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer}{SpriteSheetRenderer}}>()-\/>Play(\textcolor{stringliteral}{"{}Patrol"{}});}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}})}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>AddEnemyTransform(g-\/>transform);}
+\DoxyCodeLine{00478\ }
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}}.push\_back(guard);}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ start\ with\ zone\ 1\ priority}}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}{prevChosenZoneId}}\ =\ 1;}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ ApplyPriorityZone\_AssistNearest(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}{prevChosenZoneId}});}
+\DoxyCodeLine{00485\ }
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ =====\ Spawn\ NPCs:\ 2\ Bully\ +\ 2\ Annoying\ per\ zone\ (16\ total)\ =====}}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a}{npcs}}.clear();}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ npcObjects\ =\ \doxymbox{\hyperlink{class_engine_1_1_game_object_af58f0d60e978e3845483c9bc141771c0}{Engine::GameObject::FindGameObjectsWithTag}}(\textcolor{stringliteral}{"{}NPC"{}});}
+\DoxyCodeLine{00490\ }
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&npcGO\ :\ npcObjects)}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ npc\ =\ npcGO-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_n_p_c}{Game::NPC}}>();}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!npc)}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \ \ \ \ npc-\/>\doxymbox{\hyperlink{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932}{tileMap}}\ =\ map;}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ npc-\/>playerTf\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}};}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ npc-\/>playerData\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}};}
+\DoxyCodeLine{00500\ }
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}})}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ shake\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}-\/>gameObject-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::CameraShake}}>();}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!shake)}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shake\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}-\/>gameObject-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::CameraShake}}>();}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shake-\/>\doxymbox{\hyperlink{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18}{Initialize}}();}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ npc-\/>camShake\ =\ shake;}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00511\ }
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \ \ \ \ npc-\/>SetPickGoalInZone([\textcolor{keyword}{this}](\textcolor{keywordtype}{int}\ zId,\ \textcolor{keywordtype}{int}\ \&outX,\ \textcolor{keywordtype}{int}\ \&outY)\ -\/>\ \textcolor{keywordtype}{bool}}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a22bb5c353c00d98210e250da12c353e4}{zoneMgr}}.PickRandomWalkableInZone(zId,\ outX,\ outY);\ \});}
+\DoxyCodeLine{00514\ }
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Start\ patrol\ animation}}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sr\ =\ npcGO-\/>GetComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer}{Engine::SpriteSheetRenderer}}>();}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sr)}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sr-\/>Play(\textcolor{stringliteral}{"{}Patrol"{}});}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00521\ }
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a}{npcs}}.push\_back(npc);}
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ terminal\ icons\ to\ minimap}}
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>GetMinimap())}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&tObj\ :\ terminals)}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pos\ =\ tObj-\/>transform-\/>position;}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>GetMinimap()-\/>AddTerminalIcon(}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pos,}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Sprites/hill\_top\_smile.png"{}}));}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00536\ }
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ CreateEndPanel();*/}}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ SwitchToPlayerCam();}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ Level\ Editor}}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AddDoorTransform(Engine::Transform\ *\ doorTransform).Initialize(this,\ map,\ playerCam,\ playerTf);}}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4}{Game::PuzzleManager::BookDataInit}}(\textcolor{stringliteral}{"{}Assets/Config/Game/books.json"{}});}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0}{Game::PuzzleManager::Init}}();}
+\DoxyCodeLine{00545\ }
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ Power-\/Up\ system}}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_power_up_manager_a7f231af70561c5974ad8355e5ba5373c}{Game::PowerUpManager::Init}}();}
+\DoxyCodeLine{00548\ }
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ Bandit\ visualizer\ (hidden\ by\ default)}}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ bvGO\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}BanditVisualizer"{}});}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bvGO)}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}\ =\ bvGO-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::BanditVisualizer}}>();}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}})}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>bandit\ =\ \&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8bdfce4fc9dfedbf0d7df5f603dd8e4a}{bandit}};}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetGuardsPointer(\&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}});}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ connect\ cctv\ scores\ +\ heatmap\ +\ zone\ grid\ so\ visualizer\ can\ display\ them}}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetCCTVScorePointer(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a34464bff2b5fe785a201584749fb88af}{cctvScore}});}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetHeatmapPointer(\&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}});}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetZoneGridPointer(\&\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af0f1e1c30eb146ea3f8273afb31c1003}{zoneGrid}});}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetSelectedZone(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}{prevChosenZoneId}});}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetVisible(\textcolor{keyword}{false});}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00568\ \ \ \ \ \}}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00571\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a36733f42ad5917ea990b5052f70bd022}{FPSScene::OnAfterRender}}()}
+\DoxyCodeLine{00572\ \ \ \ \ \{}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Render\ level\ editor\ overlay\ on\ top\ of\ everything}}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AddDoorTransform(Engine::Transform\ *\ doorTransform).Render();}}
+\DoxyCodeLine{00575\ \ \ \ \ \}}
+\DoxyCodeLine{00576\ }
+\DoxyCodeLine{00578\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a298fedbe024858ab5f39efd8460af9ad}{FPSScene::OnUpdate}}()}
+\DoxyCodeLine{00579\ \ \ \ \ \{}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&cfg\ =\ GetFPSSceneConfig();}
+\DoxyCodeLine{00581\ }
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Toggle\ Level\ Editor}}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (Input::GetKeyDown(KeyCode::F1))}}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ AddDoorTransform(Engine::Transform\ *\ doorTransform).ToggleEditor();}}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ editor\ (only\ if\ active)}}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ AddDoorTransform(Engine::Transform\ *\ doorTransform).Update();}}
+\DoxyCodeLine{00590\ }
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ editor\ is\ active,\ skip\ game\ logic}}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (AddDoorTransform(Engine::Transform\ *\ doorTransform).IsActive())}}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ return;}}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}{showControlsAtStart}}\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}})}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}}-\/>Show();}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}{showControlsAtStart}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00602\ }
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}}\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}}-\/>IsVisible())}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00607\ }
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Toggle\ ML\ debug\ summary\ (no\ flood)}}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}{Input::GetKeyDown}}(KeyCode::M))}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364}{debugML}}\ =\ !\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364}{debugML}};}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}{mlSummaryTimer}}\ =\ 0.0f;}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Toggle\ bandit\ visualizer\ with\ F3}}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}{Input::GetKeyDown}}(KeyCode::F3))}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}})}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>ToggleVisibility();}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ When\ showing\ visualizer,\ unlock\ cursor\ so\ user\ can\ interact}}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}})}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ panel\ visibility\ toggled\ inside\ ToggleVisibility();\ check\ panel\ state\ indirectly}}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ can't\ access\ m\_panel\ here,\ so\ simply\ toggle\ cursor\ registration\ based\ on\ panel\ visible\ state}}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Best-\/effort:\ register/unregister\ cursor\ using\ a\ simple\ toggle\ stored\ on\ banditVisualizer\ via\ visible\ state}}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00630\ }
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}{Input::GetKeyDown}}(KeyCode::Alpha0))}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ SwitchToPlayerCam();}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00635\ }
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lose\ panel}}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*if\ (!endPanelShown\ \&\&\ playerData)\ \{}}
+\DoxyCodeLine{00638\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (playerData-\/>IsCaught())\ \{}}
+\DoxyCodeLine{00639\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SoundManager::PlaySFX("{}lose"{});}}
+\DoxyCodeLine{00640\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ShowEndPanel("{}YOU\ GOT\ CAUGHT.\ GAME\ OVER"{},\ "{}Quit"{},\ []()\ \{}}
+\DoxyCodeLine{00641\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SceneManager::LoadScene("{}FPSScene"{});}}
+\DoxyCodeLine{00642\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}}
+\DoxyCodeLine{00643\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00644\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}*/}}
+\DoxyCodeLine{00645\ }
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ lose\ condition\ check\ -\/\ if\ player\ is\ caught\ by\ any\ guard,\ show\ lose\ screen\ and\ stop\ guard\ chase\ sound}}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}{gameEnded}}\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>IsCaught())}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}{gameEnded}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}{loseScreen}})}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}{loseScreen}}-\/>Show();}
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Ensure\ guard\ chase\ loop\ is\ silenced\ when\ player\ is\ caught}}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443}{Engine::SoundManager::StopLoop}}(\textcolor{stringliteral}{"{}guard\_chasing"{}});}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}\ ||\ !\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}})}
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00661\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetState()\ !=\ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a960b44c579bc2f6818d2daaf9e4c16f0}{PlayerState::Normal}})}
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ game\ timer}}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>UpdateGameTime(\doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}});}
+\DoxyCodeLine{00666\ }
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ HUD\ elements}}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}})}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ zone\ changes\ for\ entry\ notification}}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tx\ =\ (int)std::floor(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x);}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ty\ =\ (int)std::floor(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ currentZone\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{GetZoneId}}(tx,\ ty);}
+\DoxyCodeLine{00674\ }
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>CheckZoneChange(currentZone);}
+\DoxyCodeLine{00676\ }
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ stamina\ display}}
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateStamina(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetStamina(),\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetStaminaMax());}
+\DoxyCodeLine{00679\ }
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ current\ time\ display}}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateCurrentTime(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetGameTime());}
+\DoxyCodeLine{00682\ }
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ high\ score\ display}}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateHighScore(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetHighScore());}
+\DoxyCodeLine{00685\ }
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ nearest\ guard\ for\ proximity\ warning\ and\ camera\ shake}}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearestGuardDistance\ =\ cfg.distanceSentinel;}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *guard\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}})}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!guard\ ||\ !guard-\/>transform)}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00692\ }
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ guardPos(guard-\/>transform-\/>position.x,\ guard-\/>transform-\/>position.y);}
+\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ playerPos(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00695\ }
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ guardPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}};}
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ guardPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ std::sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{00699\ }
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ nearestGuardDistance)}
+\DoxyCodeLine{00701\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestGuardDistance\ =\ distance;}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00705\ }
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ guard\ proximity\ handled\ by\ UpdateGuardProximityLoop\ (looped\ sound)}}
+\DoxyCodeLine{00707\ }
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearestCCTVDistance\ =\ cfg.distanceSentinel;}
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *cctv\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}})}
+\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!cctv\ ||\ !cctv-\/>transform)}
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00713\ }
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ cctvPos(cctv-\/>transform-\/>position.x,\ cctv-\/>transform-\/>position.y);}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ playerPos(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00716\ }
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ cctvPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}};}
+\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ cctvPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00719\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ std::sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{00720\ }
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ nearestCCTVDistance)}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestCCTVDistance\ =\ distance;}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00726\ }
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearestTerminalDistance\ =\ cfg.distanceSentinel;}
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *terminal\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}})}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!terminal\ ||\ !terminal-\/>transform)}
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00732\ }
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ terminalPos(terminal-\/>transform-\/>position.x,\ terminal-\/>transform-\/>position.y);}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ playerPos(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00735\ }
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ terminalPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}};}
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ terminalPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ std::sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ nearestTerminalDistance)}
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestTerminalDistance\ =\ distance;}
+\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00745\ }
+\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NPC\ proximity:\ separate\ Bully\ vs\ Annoying}}
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearestAnnoyingDistance\ =\ cfg.distanceSentinel;}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ annoyingCountNearby\ =\ 0;}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nearestBullyDistance\ =\ cfg.distanceSentinel;}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ bullyCountNearby\ =\ 0;}
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ npcNoticeRadius\ =\ cfg.npcNoticeRadius;\ \textcolor{comment}{//\ within\ this\ range\ we\ count\ them\ as\ 'nearby'}}
+\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *npc\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_adfe480c3e943bc63e9e2e9fa841a516a}{npcs}})}
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!npc\ ||\ !npc-\/>transform)}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ npcPos(npc-\/>transform-\/>position.x,\ npc-\/>transform-\/>position.y);}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ playerPos(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ npcPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}};}
+\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ npcPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}}\ -\/\ playerPos.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance\ =\ std::sqrt(dx\ *\ dx\ +\ dy\ *\ dy);}
+\DoxyCodeLine{00761\ }
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (npc-\/>type\ ==\ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{NPCType::Annoying}})}
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ nearestAnnoyingDistance)}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestAnnoyingDistance\ =\ distance;}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <=\ npcNoticeRadius)}
+\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ annoyingCountNearby++;}
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00769\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (npc-\/>type\ ==\ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a275370ef329a53d78342d8b3d2992e3e}{NPCType::Bully}})}
+\DoxyCodeLine{00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ nearestBullyDistance)}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestBullyDistance\ =\ distance;}
+\DoxyCodeLine{00773\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <=\ npcNoticeRadius)}
+\DoxyCodeLine{00774\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bullyCountNearby++;}
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00776\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00777\ }
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ guard\ proximity\ warning}}
+\DoxyCodeLine{00779\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateGuardProximity(nearestGuardDistance);}
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ NPC\ approach\ indicators\ (Annoying\ +\ Bully)}}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateNPCApproach(annoyingCountNearby,\ nearestAnnoyingDistance,\ bullyCountNearby,\ nearestBullyDistance);}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Annoying\ classmate\ audio\ disabled:\ no\ one-\/shot\ SFX\ played\ here.}}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a61c7ac62b4b62d53c30dbc1d915f8f59}{SoundManager::UpdateGuardProximityLoop}}(nearestGuardDistance);}
+\DoxyCodeLine{00784\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aa1ef4154bdf1e1702af3f579f74d76df}{SoundManager::UpdateCCTVHumLoop}}(nearestCCTVDistance);}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a00e69a4404d7085b5b51514a1d005ac3}{SoundManager::UpdateTerminalBuzzLoop}}(nearestTerminalDistance);}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ NPC\ annoying-\/classmate\ audio\ disabled:\ do\ not\ start\ or\ stop\ any}}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ annoying-\/classmate\ audio\ channels\ from\ the\ scene.}}
+\DoxyCodeLine{00788\ }
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ camera\ shake\ based\ on\ guard\ proximity}}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ shakeDistance\ =\ cfg.guardShakeDistance;}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (nearestGuardDistance\ <\ shakeDistance\ \&\&\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}})}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00793\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cameraShake\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}-\/>gameObject-\/>GetComponent<\doxymbox{\hyperlink{class_game_1_1_camera_shake}{CameraShake}}>();}
+\DoxyCodeLine{00794\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!cameraShake)}
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00796\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cameraShake\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}-\/>gameObject-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_camera_shake}{CameraShake}}>();}
+\DoxyCodeLine{00797\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cameraShake-\/>\doxymbox{\hyperlink{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18}{Initialize}}();}
+\DoxyCodeLine{00798\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00799\ }
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Intensity\ increases\ as\ guard\ gets\ closer}}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ intensity\ =\ (1.0f\ -\/\ (nearestGuardDistance\ /\ shakeDistance))\ *\ cfg.guardShakeIntensityScale;}
+\DoxyCodeLine{00802\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cameraShake-\/>Shake(cfg.guardShakeDuration,\ intensity);}
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00804\ }
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ alert\ level\ display}}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ guardCount\ =\ 0;}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *g\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}})}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00809\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (g\ \&\&\ (g-\/>IsInChaseState()\ ||\ g-\/>IsInSearchState()))}
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ guardCount++;}
+\DoxyCodeLine{00812\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00813\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00814\ }
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ alert\ stage\ (1-\/4\ based\ on\ escalation)}}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ alertStage\ =\ 1;}
+\DoxyCodeLine{00817\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5}{fullEscalationActive}})}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alertStage\ =\ 4;}
+\DoxyCodeLine{00819\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a84a5b7ebeb06e85882298ac7608ef072}{priorityZoneHotTimer}}\ >\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f}{fullEscalationThreshold}}\ *\ cfg.escalationStage3Ratio)}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alertStage\ =\ 3;}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a84a5b7ebeb06e85882298ac7608ef072}{priorityZoneHotTimer}}\ >\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a09de484faf909bdd54ac5a87668d515f}{fullEscalationThreshold}}\ *\ cfg.escalationStage2Ratio)}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alertStage\ =\ 2;}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Play\ full\ escalation\ SFX\ immediately\ when\ escalation\ triggers}}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ escalationSfxPlayed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5}{fullEscalationActive}}\ \&\&\ !escalationSfxPlayed)}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9}{SoundManager::PlaySFX}}(\textcolor{stringliteral}{"{}full\_escalation"{}});}
+\DoxyCodeLine{00828\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ escalationSfxPlayed\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00829\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4385b5f07d33d0a6be32b16020807ed5}{fullEscalationActive}})}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ escalationSfxPlayed\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00832\ }
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}-\/>UpdateAlertLevel(alertStage,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a50d528dc07ef2dc087cfe35fe07f68ec}{priorityZoneId}},\ guardCount);}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00835\ }
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Heatmap\ update}}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tx\ =\ (int)\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x;}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ty\ =\ (int)\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y;}
+\DoxyCodeLine{00840\ }
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}}.AddAt(tx,\ ty,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2e3f7d064ae659af8297eb6097f1a8c3}{heatAddPerSec}}\ *\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}});}
+\DoxyCodeLine{00842\ }
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ f\ =\ std::pow(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a3e74374c89db1c246ce53f7a77bd1595}{heatDecayPerSec}},\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}});}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a416f3fa630e29d076dec5f888da8fb8e}{heatmap}}.Decay(f);}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00846\ }
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCTV\ spikes\ +\ notify\ guards\ (with\ cooldown)}}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}}.size();\ ++i)}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ *s\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}}[i];}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s)}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00853\ }
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}[i]\ >\ 0.0f)}
+\DoxyCodeLine{00855\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}[i]\ -\/=\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}};}
+\DoxyCodeLine{00856\ }
+\DoxyCodeLine{00857\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s-\/>hasLastSeen)}
+\DoxyCodeLine{00858\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00859\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tx\ =\ (int)s-\/>lastSeenWorld.x;}
+\DoxyCodeLine{00860\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ty\ =\ (int)s-\/>lastSeenWorld.y;}
+\DoxyCodeLine{00861\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ zid\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2b21c5705249268d5a8ca7c9f2b694b1}{GetZoneId}}(tx,\ ty);}
+\DoxyCodeLine{00862\ }
+\DoxyCodeLine{00863\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (zid\ >=\ 1\ \&\&\ zid\ <=\ 4)}
+\DoxyCodeLine{00864\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00865\ }
+\DoxyCodeLine{00866\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ALWAYS\ show\ in\ visualizer\ (real-\/time\ log)}}
+\DoxyCodeLine{00867\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}})}
+\DoxyCodeLine{00868\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00869\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetCCTVStatus(}
+\DoxyCodeLine{00870\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ zid,}
+\DoxyCodeLine{00871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>lastSeenWorld.x,}
+\DoxyCodeLine{00872\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>lastSeenWorld.y,}
+\DoxyCodeLine{00873\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{true});}
+\DoxyCodeLine{00874\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00875\ }
+\DoxyCodeLine{00876\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ONLY\ spike\ score\ if\ cooldown\ allows}}
+\DoxyCodeLine{00877\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}[i]\ <=\ 0.0f)}
+\DoxyCodeLine{00878\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a34464bff2b5fe785a201584749fb88af}{cctvScore}}[zid]\ +=\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6a5233b0a32a537183f2ffe5a50da538}{cctvSpikeAmount}};}
+\DoxyCodeLine{00880\ }
+\DoxyCodeLine{00881\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a50d528dc07ef2dc087cfe35fe07f68ec}{priorityZoneId}}\ =\ zid;}
+\DoxyCodeLine{00882\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ApplyPriorityZone\_AssistNearest(zid);}
+\DoxyCodeLine{00883\ }
+\DoxyCodeLine{00884\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *g\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}})}
+\DoxyCodeLine{00885\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (g)}
+\DoxyCodeLine{00886\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g-\/>OnCCTVSpotted(s-\/>lastSeenWorld);}
+\DoxyCodeLine{00887\ }
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}[i]\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a73ee81c12677e44b17364b87673b67d3}{cctvSpikeCooldown}};}
+\DoxyCodeLine{00889\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00890\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00891\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00892\ }
+\DoxyCodeLine{00893\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ clear\ every\ frame\ so\ it\ doesn't\ spam}}
+\DoxyCodeLine{00894\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>hasLastSeen\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00895\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00896\ }
+\DoxyCodeLine{00897\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bandit\ tick}}
+\DoxyCodeLine{00898\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b}{banditTimer}}\ +=\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}};}
+\DoxyCodeLine{00899\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b}{banditTimer}}\ >=\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a46fedf81de7078d5b6bf2fa143bdcc39}{banditInterval}})}
+\DoxyCodeLine{00900\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00901\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9dcd56a7e2d1a374d188e439917ceb8b}{banditTimer}}\ =\ 0.0f;}
+\DoxyCodeLine{00902\ \ \ \ \ \ \ \ \ \ \ \ \ BanditTick();}
+\DoxyCodeLine{00903\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00904\ }
+\DoxyCodeLine{00905\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ visualizer\ selected\ zone\ and\ summary\ when\ bandit\ changes}}
+\DoxyCodeLine{00906\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}})}
+\DoxyCodeLine{00907\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00908\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}-\/>SetSelectedZone(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a9c6eb8d9f2558243440fbf457ab2e216}{prevChosenZoneId}});}
+\DoxyCodeLine{00909\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00910\ }
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ML\ summary\ every\ 5\ sec\ only\ when\ debug\ on}}
+\DoxyCodeLine{00912\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af098cb89e4fceb87629ab16261f60364}{debugML}})}
+\DoxyCodeLine{00913\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00914\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}{mlSummaryTimer}}\ +=\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Engine::Time::deltaTime}};}
+\DoxyCodeLine{00915\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}{mlSummaryTimer}}\ >=\ cfg.mlSummaryInterval)}
+\DoxyCodeLine{00916\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00917\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ae3a8c0f639934d532c5054d10d120234}{mlSummaryTimer}}\ =\ 0.0f;}
+\DoxyCodeLine{00918\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PrintMLSummary();}
+\DoxyCodeLine{00919\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00920\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00921\ }
+\DoxyCodeLine{00922\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Win\ check}}
+\DoxyCodeLine{00923\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ p(\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.x,\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}-\/>position.y);}
+\DoxyCodeLine{00924\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dx\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d}{exitPos}}.x\ -\/\ p.\doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}};}
+\DoxyCodeLine{00925\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ dy\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a181420b3cb71447e99ef966f0840ce2d}{exitPos}}.y\ -\/\ p.\doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00926\ }
+\DoxyCodeLine{00927\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470}{printedWin}}\ \&\&\ (dx\ *\ dx\ +\ dy\ *\ dy)\ <=\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557}{winRadius}}\ *\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_ac4c0521a9a089b63d5ca6f5ceac7a557}{winRadius}})}
+\DoxyCodeLine{00928\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00929\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5e7ab7e8ed899a05616d3292aa045470}{printedWin}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00930\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aa1896707c1ae9e6c31d38b33d5087d38}{gameEnded}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00931\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stop\ any\ chase\ loops\ when\ player\ wins/escapes}}
+\DoxyCodeLine{00932\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443}{SoundManager::StopLoop}}(\textcolor{stringliteral}{"{}guard\_chasing"{}});}
+\DoxyCodeLine{00933\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9}{SoundManager::PlaySFX}}(\textcolor{stringliteral}{"{}win"{}});}
+\DoxyCodeLine{00934\ }
+\DoxyCodeLine{00935\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ high\ score\ if\ this\ is\ a\ new\ record}}
+\DoxyCodeLine{00936\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ currentTime\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetGameTime();}
+\DoxyCodeLine{00937\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentTime\ <\ playerData-\/>GetHighScore())}
+\DoxyCodeLine{00938\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00939\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>SetHighScore(currentTime);}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00941\ }
+\DoxyCodeLine{00942\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Persist\ high\ score\ to\ disk}}
+\DoxyCodeLine{00943\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}})}
+\DoxyCodeLine{00944\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Json::Value\ root;}
+\DoxyCodeLine{00946\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ root[\textcolor{stringliteral}{"{}highScore"{}}]\ =\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>GetHighScore();}
+\DoxyCodeLine{00947\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ ofs(\textcolor{stringliteral}{"{}Assets/Config/Game/highscore.json"{}});}
+\DoxyCodeLine{00948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ofs.is\_open())}
+\DoxyCodeLine{00949\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00950\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Json::StreamWriterBuilder\ writer;}
+\DoxyCodeLine{00951\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ofs\ <<\ Json::writeString(writer,\ root);}
+\DoxyCodeLine{00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ofs.close();}
+\DoxyCodeLine{00953\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00954\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00955\ }
+\DoxyCodeLine{00956\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Trigger\ win\ state\ and\ show\ win\ screen}}
+\DoxyCodeLine{00957\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}-\/>Win();}
+\DoxyCodeLine{00958\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}{winScreen}})}
+\DoxyCodeLine{00959\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00960\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}{winScreen}}-\/>Show();}
+\DoxyCodeLine{00961\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00962\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00963\ \ \ \ \ \}}
+\DoxyCodeLine{00964\ }
+\DoxyCodeLine{00966\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2cc4926886de2f4cab4979652e129654}{FPSScene::OnUnload}}()}
+\DoxyCodeLine{00967\ \ \ \ \ \{}
+\DoxyCodeLine{00968\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Disconnect\ guards\ from\ terminal\ list\ to\ avoid\ dangling\ pointers}}
+\DoxyCodeLine{00969\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *g\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}})}
+\DoxyCodeLine{00970\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00971\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (g)}
+\DoxyCodeLine{00972\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g-\/>SetTerminals(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00973\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00974\ }
+\DoxyCodeLine{00975\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ terminals:\ remove\ references\ to\ cameras,\ HUD\ and\ guards}}
+\DoxyCodeLine{00976\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *t\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}})}
+\DoxyCodeLine{00977\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00978\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!t)}
+\DoxyCodeLine{00979\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00980\ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>controlledCameras.clear();}
+\DoxyCodeLine{00981\ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>playerHUD\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00982\ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>spriteRenderer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00983\ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>allGuards.clear();}
+\DoxyCodeLine{00984\ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>floatingIcon\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00985\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00986\ }
+\DoxyCodeLine{00987\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ sensors:\ null\ out\ external\ pointers\ so\ Update()\ won't\ dereference\ them}}
+\DoxyCodeLine{00988\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ *s\ :\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}})}
+\DoxyCodeLine{00989\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00990\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!s)}
+\DoxyCodeLine{00991\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00992\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>tf\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00993\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>tile\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00994\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>hud\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00995\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>minimap\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00996\ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>spriteRenderer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00997\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00998\ }
+\DoxyCodeLine{00999\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ all\ scene-\/owned\ lists\ to\ avoid\ keeping\ stale\ pointers\ across\ reload}}
+\DoxyCodeLine{01000\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8e9568c0fc4d0bd2c0cea4949b319b27}{cctvSensors}}.clear();}
+\DoxyCodeLine{01001\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a4f4904a41c2d295aeeb16b51cf5357f5}{cctvTerminals}}.clear();}
+\DoxyCodeLine{01002\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af199a15062d99477721c79013c244f62}{cctvCooldown}}.clear();}
+\DoxyCodeLine{01003\ }
+\DoxyCodeLine{01004\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a6563f7b60b3e307113bc586587878907}{guards}}.clear();}
+\DoxyCodeLine{01005\ }
+\DoxyCodeLine{01006\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ other\ references}}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a5ed8d8d92baf3eab85af3806beac7dff}{powerUps}}.clear();}
+\DoxyCodeLine{01008\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_af8be86897f738979dd5e075c8290db8c}{powerUpBaseZ}}.clear();}
+\DoxyCodeLine{01009\ }
+\DoxyCodeLine{01010\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a87c1bd7c4e61fec659aa664d59f5fb96}{playerHUD}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01011\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a817825998896790cdac5ea29ca2300e1}{playerData}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01012\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2c91734e1d3dc57413b8aac70450c45b}{playerController}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01013\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a91decc60869cda593168f8778ddd0631}{playerTf}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01014\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a868ec66b31e52ca35c8923098153424e}{playerCam}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01015\ }
+\DoxyCodeLine{01016\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_af4a9ddf117f54f6ca1c07c427096bc9f}{PuzzleManager::FreeManager}}();}
+\DoxyCodeLine{01017\ }
+\DoxyCodeLine{01018\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a383f27367c3a19eb69834a28debb2267}{loseScreen}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01019\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a259054464770efae32a640f01ef616cf}{winScreen}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01020\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a562c94de55364d477006097871a6d6aa}{controlsMenu}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a33ef44501c529956cee143ee519c5a7d}{showControlsAtStart}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01022\ }
+\DoxyCodeLine{01023\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*if\ (modalCanvas)\ \{}}
+\DoxyCodeLine{01024\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ UI::UIManager::GetInstance()-\/>DestroyCanvas(modalCanvas);}}
+\DoxyCodeLine{01025\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ modalCanvas\ =\ nullptr;}}
+\DoxyCodeLine{01026\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{01027\ \textcolor{comment}{\ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{01028\ }
+\DoxyCodeLine{01029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clear\ bandit\ visualizer\ reference}}
+\DoxyCodeLine{01030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a8d587b2d7b731bfb8039a064e5e6a11e}{banditVisualizer}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01031\ }
+\DoxyCodeLine{01032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_afca9c516b6f82bbe6e4740649bbe60c1}{AEEditor::ObjectManager::loadedObjects}}.clear();}
+\DoxyCodeLine{01033\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_a2aee7eae7067ea9ad277d87bfd5c5112}{AEEditor::ObjectManager::selectedObject}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_ad3eeba734b5b73d5846603b22be741e2}{AEEditor::ObjectManager::draggingObject}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{01035\ \ \ \ \ \}}
+\DoxyCodeLine{01036\ }
+\DoxyCodeLine{01037\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

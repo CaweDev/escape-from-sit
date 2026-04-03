@@ -1,0 +1,269 @@
+\doxysection{UI::\+UIManager Class Reference}
+\hypertarget{class_u_i_1_1_u_i_manager}{}\label{class_u_i_1_1_u_i_manager}\index{UI::UIManager@{UI::UIManager}}
+
+
+Singleton that manages all \doxylink{namespace_u_i}{UI} managers, services, rendering and input.  
+
+
+
+
+{\ttfamily \+\#include $<$UIManager.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3f44afedeca3bea31a3fc6dfe4f84958}{UIManager}} (const UIManager \&)=delete
+\item 
+UIManager \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a5ec64462727e8589e802337bfd56993f}{operator=}} (const UIManager \&)=delete
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a7c924d2b57169d98478daa644cec7778}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update all \doxylink{namespace_u_i}{UI} (call once per frame). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ab3a3e606cc90324158f6cadacdf7c0c6}{Render}} ()
+\begin{DoxyCompactList}\small\item\em Render all \doxylink{namespace_u_i}{UI} (call once per frame, after game rendering). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ae2afa3f9453fc326a9a7764314987511}{Set\+Canvases\+Sort\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Notify \doxylink{class_u_i_1_1_u_i_manager}{UIManager} that canvases need to be sorted. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a476f7dd6678099fd5d4a7978ca94da1e}{Create\+Canvas}} ()
+\begin{DoxyCompactList}\small\item\em Create a new canvas. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_abc7e4fb49abb95d0be48ddf55daaebbe}{Destroy\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\begin{DoxyCompactList}\small\item\em Destroy a canvas. \end{DoxyCompactList}\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a2db10d62ea0e1c1d7e7390d14ed9fafe}{Get\+Canvases}} () const
+\begin{DoxyCompactList}\small\item\em Get all active canvases. \end{DoxyCompactList}\item 
+s8 \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a31d849daf4418395701bbd57fcdccdce}{Get\+Default\+Font}} () const
+\begin{DoxyCompactList}\small\item\em Get the default font handle. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ac1dd66bdd3d64e1b1a33eaffec134fe7}{Get\+Hovered\+Element}} () const
+\begin{DoxyCompactList}\small\item\em Get the currently hovered \doxylink{namespace_u_i}{UI} element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a8a5e41fa9a75e8c22c915a4e5cbf87c8}{On\+Element\+Destroyed}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}element)
+\begin{DoxyCompactList}\small\item\em Notify \doxylink{class_u_i_1_1_u_i_manager}{UIManager} that an element is being destroyed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3db3601fd96013e0433351ae53c29fdb}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{namespace_u_i}{UI} system. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a4870374e3aac421298d7a9f2030e0d29}{Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Shutdown the \doxylink{namespace_u_i}{UI} system and cleanup resources. \end{DoxyCompactList}\item 
+static UIManager \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a86747dbac01b7d605cec3d87ab752415}{Get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Get the singleton instance. \end{DoxyCompactList}\item 
+static AEGfx\+Vertex\+List \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3ac10c4389f9f4e0df1b3cec78fe0f12}{Get\+Quad\+Mesh}} ()
+\begin{DoxyCompactList}\small\item\em Get the shared quad mesh for \doxylink{namespace_u_i}{UI} rendering. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a92be404a5a031ddcee908989f23cf56f}{Screen\+To\+World}} (s32 screenX, s32 screenY, f32 \&out\+WorldX, f32 \&out\+WorldY)
+\begin{DoxyCompactList}\small\item\em Convert screen coordinates to world coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Singleton that manages all \doxylink{namespace_u_i}{UI} managers, services, rendering and input. 
+
+Responsibilities:\+
+\begin{DoxyItemize}
+\item Owns the shared quad mesh for all \doxylink{namespace_u_i}{UI} rendering
+\item Manages active \doxylink{class_u_i_1_1_canvas}{Canvas} objects
+\item Processes mouse input and dispatches to \doxylink{namespace_u_i}{UI} elements
+\item Provides coordinate conversion utilities 
+\end{DoxyItemize}
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_u_i_manager_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_u_i_manager_a3f44afedeca3bea31a3fc6dfe4f84958}\index{UI::UIManager@{UI::UIManager}!UIManager@{UIManager}}
+\index{UIManager@{UIManager}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{UIManager()}{UIManager()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a3f44afedeca3bea31a3fc6dfe4f84958} 
+UI::\+\+UIManager::\+\+UIManager (\begin{DoxyParamCaption}\item[{const UIManager \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_u_i_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_u_i_manager_a476f7dd6678099fd5d4a7978ca94da1e}\index{UI::UIManager@{UI::UIManager}!CreateCanvas@{CreateCanvas}}
+\index{CreateCanvas@{CreateCanvas}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{CreateCanvas()}{CreateCanvas()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a476f7dd6678099fd5d4a7978ca94da1e} 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} UI::\+\+UIManager::\+\+Create\+Canvas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Create a new canvas. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the created canvas 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_manager_abc7e4fb49abb95d0be48ddf55daaebbe}\index{UI::UIManager@{UI::UIManager}!DestroyCanvas@{DestroyCanvas}}
+\index{DestroyCanvas@{DestroyCanvas}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{DestroyCanvas()}{DestroyCanvas()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_abc7e4fb49abb95d0be48ddf55daaebbe} 
+void UI::\+\+UIManager::\+\+Destroy\+Canvas (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}}]{canvas}{}\end{DoxyParamCaption})}
+
+
+
+Destroy a canvas. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em canvas} & \doxylink{class_u_i_1_1_canvas}{Canvas} to destroy \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_u_i_manager_a2db10d62ea0e1c1d7e7390d14ed9fafe}\index{UI::UIManager@{UI::UIManager}!GetCanvases@{GetCanvases}}
+\index{GetCanvases@{GetCanvases}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{GetCanvases()}{GetCanvases()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a2db10d62ea0e1c1d7e7390d14ed9fafe} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} $>$ \& UI::\+\+UIManager::\+\+Get\+Canvases (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get all active canvases. 
+
+\Hypertarget{class_u_i_1_1_u_i_manager_a31d849daf4418395701bbd57fcdccdce}\index{UI::UIManager@{UI::UIManager}!GetDefaultFont@{GetDefaultFont}}
+\index{GetDefaultFont@{GetDefaultFont}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{GetDefaultFont()}{GetDefaultFont()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a31d849daf4418395701bbd57fcdccdce} 
+s8 UI::\+\+UIManager::\+\+Get\+Default\+Font (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the default font handle. 
+
+\begin{DoxyReturn}{Returns}
+Font handle, or -\/1 if not loaded 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_manager_ac1dd66bdd3d64e1b1a33eaffec134fe7}\index{UI::UIManager@{UI::UIManager}!GetHoveredElement@{GetHoveredElement}}
+\index{GetHoveredElement@{GetHoveredElement}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{GetHoveredElement()}{GetHoveredElement()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_ac1dd66bdd3d64e1b1a33eaffec134fe7} 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} UI::\+\+UIManager::\+\+Get\+Hovered\+Element (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the currently hovered \doxylink{namespace_u_i}{UI} element. 
+
+\Hypertarget{class_u_i_1_1_u_i_manager_a86747dbac01b7d605cec3d87ab752415}\index{UI::UIManager@{UI::UIManager}!GetInstance@{GetInstance}}
+\index{GetInstance@{GetInstance}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{GetInstance()}{GetInstance()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a86747dbac01b7d605cec3d87ab752415} 
+UIManager \texorpdfstring{$\ast$}{*} UI::\+\+UIManager::\+\+Get\+Instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get the singleton instance. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the \doxylink{class_u_i_1_1_u_i_manager}{UIManager} instance (nullptr if not initialized) 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_manager_a3ac10c4389f9f4e0df1b3cec78fe0f12}\index{UI::UIManager@{UI::UIManager}!GetQuadMesh@{GetQuadMesh}}
+\index{GetQuadMesh@{GetQuadMesh}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{GetQuadMesh()}{GetQuadMesh()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a3ac10c4389f9f4e0df1b3cec78fe0f12} 
+AEGfx\+Vertex\+List \texorpdfstring{$\ast$}{*} UI::\+\+UIManager::\+\+Get\+Quad\+Mesh (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get the shared quad mesh for \doxylink{namespace_u_i}{UI} rendering. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the 1x1 quad mesh 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_manager_a3db3601fd96013e0433351ae53c29fdb}\index{UI::UIManager@{UI::UIManager}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a3db3601fd96013e0433351ae53c29fdb} 
+bool UI::\+\+UIManager::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initialize the \doxylink{namespace_u_i}{UI} system. 
+
+\begin{DoxyReturn}{Returns}
+True if initialization succeeded 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_manager_a8a5e41fa9a75e8c22c915a4e5cbf87c8}\index{UI::UIManager@{UI::UIManager}!OnElementDestroyed@{OnElementDestroyed}}
+\index{OnElementDestroyed@{OnElementDestroyed}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{OnElementDestroyed()}{OnElementDestroyed()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a8a5e41fa9a75e8c22c915a4e5cbf87c8} 
+void UI::\+\+UIManager::\+\+On\+Element\+Destroyed (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Notify \doxylink{class_u_i_1_1_u_i_manager}{UIManager} that an element is being destroyed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em element} & Pointer to the element being destroyed \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_u_i_manager_a5ec64462727e8589e802337bfd56993f}\index{UI::UIManager@{UI::UIManager}!operator=@{operator=}}
+\index{operator=@{operator=}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a5ec64462727e8589e802337bfd56993f} 
+UIManager \& UI::\+\+UIManager::\+operator= (\begin{DoxyParamCaption}\item[{const UIManager \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_u_i_1_1_u_i_manager_ab3a3e606cc90324158f6cadacdf7c0c6}\index{UI::UIManager@{UI::UIManager}!Render@{Render}}
+\index{Render@{Render}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_ab3a3e606cc90324158f6cadacdf7c0c6} 
+void UI::\+\+UIManager::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Render all \doxylink{namespace_u_i}{UI} (call once per frame, after game rendering). 
+
+\Hypertarget{class_u_i_1_1_u_i_manager_a92be404a5a031ddcee908989f23cf56f}\index{UI::UIManager@{UI::UIManager}!ScreenToWorld@{ScreenToWorld}}
+\index{ScreenToWorld@{ScreenToWorld}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{ScreenToWorld()}{ScreenToWorld()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a92be404a5a031ddcee908989f23cf56f} 
+void UI::\+\+UIManager::\+\+Screen\+To\+World (\begin{DoxyParamCaption}\item[{s32}]{screenX}{, }\item[{s32}]{screenY}{, }\item[{f32 \&}]{out\+WorldX}{, }\item[{f32 \&}]{out\+WorldY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Convert screen coordinates to world coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screenX} & Screen X (from AEInput\+Get\+Cursor\+Position) \\
+\hline
+{\em screenY} & Screen Y (from AEInput\+Get\+Cursor\+Position) \\
+\hline
+{\em out\+WorldX} & Output world X \\
+\hline
+{\em out\+WorldY} & Output world Y \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_u_i_manager_ae2afa3f9453fc326a9a7764314987511}\index{UI::UIManager@{UI::UIManager}!SetCanvasesSortDirty@{SetCanvasesSortDirty}}
+\index{SetCanvasesSortDirty@{SetCanvasesSortDirty}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{SetCanvasesSortDirty()}{SetCanvasesSortDirty()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_ae2afa3f9453fc326a9a7764314987511} 
+void UI::\+\+UIManager::\+\+Set\+Canvases\+Sort\+Dirty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Notify \doxylink{class_u_i_1_1_u_i_manager}{UIManager} that canvases need to be sorted. 
+
+\Hypertarget{class_u_i_1_1_u_i_manager_a4870374e3aac421298d7a9f2030e0d29}\index{UI::UIManager@{UI::UIManager}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a4870374e3aac421298d7a9f2030e0d29} 
+void UI::\+\+UIManager::\+\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Shutdown the \doxylink{namespace_u_i}{UI} system and cleanup resources. 
+
+\Hypertarget{class_u_i_1_1_u_i_manager_a7c924d2b57169d98478daa644cec7778}\index{UI::UIManager@{UI::UIManager}!Update@{Update}}
+\index{Update@{Update}!UI::UIManager@{UI::UIManager}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_manager_a7c924d2b57169d98478daa644cec7778} 
+void UI::\+\+UIManager::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})}
+
+
+
+Update all \doxylink{namespace_u_i}{UI} (call once per frame). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & Delta time in seconds \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_u_i_manager_8hpp}{UIManager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_u_i_manager_8cpp}{UIManager.\+cpp}}\end{DoxyCompactItemize}

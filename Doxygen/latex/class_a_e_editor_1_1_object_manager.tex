@@ -1,0 +1,110 @@
+\doxysection{AEEditor::\+Object\+Manager Class Reference}
+\hypertarget{class_a_e_editor_1_1_object_manager}{}\label{class_a_e_editor_1_1_object_manager}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+
+
+{\ttfamily \+\#include $<$Object\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_aa9ab313137c2cd4613dde458a2407a79}{Draw\+Hierarchy}} ()
+\begin{DoxyCompactList}\small\item\em Draw the hierarchy panel using Im\+Gui. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_a731ace65e13e04b2f3775923738022ec}{Draw\+Inspector}} ()
+\begin{DoxyCompactList}\small\item\em Draw the inspector panel for the selected object. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_acf74d0984ec7ce74681f53cca8b38821}{Save\+Scene\+To\+Json}} (const char \texorpdfstring{$\ast$}{*}filepath)
+\begin{DoxyCompactList}\small\item\em Save the current loaded\+Objects list to a JSON scene file. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_adaf0f2169d67bc714e586874e88b6d7c}{Load\+Scene\+From\+Json}} (const char \texorpdfstring{$\ast$}{*}filepath)
+\begin{DoxyCompactList}\small\item\em Load a scene JSON and instantiate its Game\+Objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_a2aee7eae7067ea9ad277d87bfd5c5112}{selected\+Object}} = nullptr
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_ad3eeba734b5b73d5846603b22be741e2}{dragging\+Object}} = nullptr
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_afca9c516b6f82bbe6e4740649bbe60c1}{loaded\+Objects}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_e_editor_1_1_object_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_e_editor_1_1_object_manager_aa9ab313137c2cd4613dde458a2407a79}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!DrawHierarchy@{DrawHierarchy}}
+\index{DrawHierarchy@{DrawHierarchy}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{DrawHierarchy()}{DrawHierarchy()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_aa9ab313137c2cd4613dde458a2407a79} 
+void AEEditor::\+\+Object\+Manager::\+\+Draw\+Hierarchy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draw the hierarchy panel using Im\+Gui. 
+
+\Hypertarget{class_a_e_editor_1_1_object_manager_a731ace65e13e04b2f3775923738022ec}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!DrawInspector@{DrawInspector}}
+\index{DrawInspector@{DrawInspector}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{DrawInspector()}{DrawInspector()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_a731ace65e13e04b2f3775923738022ec} 
+void AEEditor::\+\+Object\+Manager::\+\+Draw\+Inspector (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draw the inspector panel for the selected object. 
+
+\Hypertarget{class_a_e_editor_1_1_object_manager_adaf0f2169d67bc714e586874e88b6d7c}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!LoadSceneFromJson@{LoadSceneFromJson}}
+\index{LoadSceneFromJson@{LoadSceneFromJson}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{LoadSceneFromJson()}{LoadSceneFromJson()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_adaf0f2169d67bc714e586874e88b6d7c} 
+void AEEditor::\+\+Object\+Manager::\+\+Load\+Scene\+From\+Json (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load a scene JSON and instantiate its Game\+Objects. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & \+[in]\+ Path to read \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_a_e_editor_1_1_object_manager_acf74d0984ec7ce74681f53cca8b38821}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!SaveSceneToJson@{SaveSceneToJson}}
+\index{SaveSceneToJson@{SaveSceneToJson}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{SaveSceneToJson()}{SaveSceneToJson()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_acf74d0984ec7ce74681f53cca8b38821} 
+void AEEditor::\+\+Object\+Manager::\+\+Save\+Scene\+To\+Json (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Save the current loaded\+Objects list to a JSON scene file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & \+[in]\+ Path to write \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_a_e_editor_1_1_object_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_e_editor_1_1_object_manager_ad3eeba734b5b73d5846603b22be741e2}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!draggingObject@{draggingObject}}
+\index{draggingObject@{draggingObject}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{draggingObject}{draggingObject}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_ad3eeba734b5b73d5846603b22be741e2} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} AEEditor::\+\+Object\+Manager::\+dragging\+Object = nullptr\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_e_editor_1_1_object_manager_afca9c516b6f82bbe6e4740649bbe60c1}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!loadedObjects@{loadedObjects}}
+\index{loadedObjects@{loadedObjects}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{loadedObjects}{loadedObjects}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_afca9c516b6f82bbe6e4740649bbe60c1} 
+std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} $>$ AEEditor::\+\+Object\+Manager::\+loaded\+Objects\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_e_editor_1_1_object_manager_a2aee7eae7067ea9ad277d87bfd5c5112}\index{AEEditor::ObjectManager@{AEEditor::ObjectManager}!selectedObject@{selectedObject}}
+\index{selectedObject@{selectedObject}!AEEditor::ObjectManager@{AEEditor::ObjectManager}}
+\doxysubsubsection{\texorpdfstring{selectedObject}{selectedObject}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_object_manager_a2aee7eae7067ea9ad277d87bfd5c5112} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} AEEditor::\+\+Object\+Manager::\+selected\+Object = nullptr\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_object_manager_8hpp}{Object\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_object_manager_8cpp}{Object\+Manager.\+cpp}}\end{DoxyCompactItemize}

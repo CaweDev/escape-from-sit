@@ -1,0 +1,59 @@
+\doxysection{Application.\+hpp}
+\hypertarget{_application_8hpp_source}{}\label{_application_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Core/Application.hpp@{AlphaEngine2.5D/Source/Engine/Core/Application.hpp}}
+\doxymbox{\hyperlink{_application_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_application_config}{ApplicationConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_application_config_a0c2693b4b808edf0cc237256b715bd58}{targetFrameRate}}\ =\ 60;\ }
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_application_config_aaff6d875fe44a77c0d7070aa93add60d}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_application_config_a0c2693b4b808edf0cc237256b715bd58}{targetFrameRate}}\ =\ j.get(\textcolor{stringliteral}{"{}targetFrameRate"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_application_config_a0c2693b4b808edf0cc237256b715bd58}{targetFrameRate}}).asInt();}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }Application\ \{}
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_application_a2976fdc5735e2c5f6d307932ffc31b46}{targetFrameRate}};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_application_ae548a99d830926af83f59cc266ebe079}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/application.json"{}});}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_application_a13faf09c968ccc82282df01e0a7b37f4}{isRunning}};}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_application_aee45a58d10d244d28480748077942792}{Quit}}();}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_application_a61a2c2aae67a2f0370b03e7f86ab2414}{GetWindowWidth}}();}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_application_ac19434b5f4fe88a6406777132b1e1863}{GetWindowHeight}}();}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_application_ac81e9a722cbbbff5e85cc29030128d26}{WindowExists}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Pause\ Registration\ System}}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_application_a51568322a256a84f001f1e1b6cfce3bb}{RegisterPause}}(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_application_a77d312cc993e1d4232b6754e7ebe7d1d}{UnregisterPause}}(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_application_a168bd0972e4ba9bf00af0dd5f9264b4b}{IsPaused}}();}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_engine_1_1_application_a22d686d4bfabe04a752cea0619aeb872}{GetPauseCount}}();}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00072\ \ \ \ \ Application()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_set<std::string>\ pauseRegistry;}
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

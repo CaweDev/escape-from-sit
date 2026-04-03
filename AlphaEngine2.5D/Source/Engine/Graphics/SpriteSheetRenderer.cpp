@@ -19,14 +19,8 @@ SpriteSheetRenderer::~SpriteSheetRenderer() {
     FreeMesh();
 }
 
-/*!
- * \brief [AUTO] SetSpriteSheet
- * \param sheet [in]
- */
-/*!
- * \brief [AUTO] SetSpriteSheet
- * \param sheet [in]
- */
+
+
 void SpriteSheetRenderer::SetSpriteSheet(SpriteSheet* sheet) {
     spriteSheet = sheet;
     currentClip = nullptr;
@@ -40,14 +34,8 @@ void SpriteSheetRenderer::SetSpriteSheet(SpriteSheet* sheet) {
     }
 }
 
-/*!
- * \brief [AUTO] Play
- * \param animationName [in]
- */
-/*!
- * \brief [AUTO] Play
- * \param animationName [in]
- */
+
+
 void SpriteSheetRenderer::Play(const std::string& animationName) {
     if (!spriteSheet) return;
 
@@ -63,39 +51,27 @@ void SpriteSheetRenderer::Play(const std::string& animationName) {
     playing = true;
 }
 
-/*!
- * \brief [AUTO] Stop
- */
+
 void SpriteSheetRenderer::Stop() {
     currentFrame = 0;
     elapsedTime = 0.0f;
     playing = false;
 }
 
-/*!
- * \brief [AUTO] Pause
- */
+
 void SpriteSheetRenderer::Pause() {
     playing = false;
 }
 
-/*!
- * \brief [AUTO] Resume
- */
+
 void SpriteSheetRenderer::Resume() {
     if (currentClip) {
         playing = true;
     }
 }
 
-/*!
- * \brief [AUTO] GetCurrentAnimation
- * \return 
- */
-/*!
- * \brief [AUTO] GetCurrentAnimation
- * \return 
- */
+
+
 const std::string& SpriteSheetRenderer::GetCurrentAnimation() const {
     if (currentClip) {
         return currentClip->name;
@@ -103,14 +79,8 @@ const std::string& SpriteSheetRenderer::GetCurrentAnimation() const {
     return s_emptyString;
 }
 
-/*!
- * \brief [AUTO] SetFrame
- * \param frame [in]
- */
-/*!
- * \brief [AUTO] SetFrame
- * \param frame [in]
- */
+
+
 void SpriteSheetRenderer::SetFrame(int frame) {
     if (currentClip && frame >= 0 && frame < currentClip->frameCount) {
         currentFrame = frame;
@@ -118,9 +88,7 @@ void SpriteSheetRenderer::SetFrame(int frame) {
     }
 }
 
-/*!
- * \brief [AUTO] CreateSpritesheetMesh
- */
+
 void SpriteSheetRenderer::CreateSpritesheetMesh() {
     FreeMesh();
     if (!spriteSheet) return;
@@ -152,9 +120,7 @@ void SpriteSheetRenderer::CreateSpritesheetMesh() {
     mesh = AEGfxMeshEnd();
 }
 
-/*!
- * \brief [AUTO] FreeMesh
- */
+
 void SpriteSheetRenderer::FreeMesh() {
     if (mesh) {
         AEGfxMeshFree(mesh);
@@ -162,9 +128,7 @@ void SpriteSheetRenderer::FreeMesh() {
     }
 }
 
-/*!
- * \brief [AUTO] Render
- */
+
 void SpriteSheetRenderer::Render() {
     if (!enabled || !transform) return;
     if (!spriteSheet || !spriteSheet->IsReady() || !mesh) return;
@@ -408,14 +372,8 @@ void SpriteSheetRenderer::AddStripToMesh(int x1, int x2, f32 spriteStart, f32 sp
     );
 }
 
-/*!
- * \brief [AUTO] GetSortingKey
- * \return 
- */
-/*!
- * \brief [AUTO] GetSortingKey
- * \return 
- */
+
+
 f32 SpriteSheetRenderer::GetSortingKey() const {
     if (!transform) return static_cast<f32>(sortingOrder);
 

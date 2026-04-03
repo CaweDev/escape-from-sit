@@ -1,0 +1,117 @@
+\doxysection{Physics2\+D.\+hpp}
+\hypertarget{_physics2_d_8hpp_source}{}\label{_physics2_d_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Physics/Physics2D.hpp@{AlphaEngine2.5D/Source/Engine/Physics/Physics2D.hpp}}
+\doxymbox{\hyperlink{_physics2_d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{../Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_collision2_d_8hpp}{Collision2D.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{../Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}};}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}};}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{RaycastHit2D}}\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d_a04cac99e77ba9ae318965492834c58a9}{collider}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d_a6ca88cf72c868e05fe007dce451a79a2}{point}};}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d_a3a097c7c9cc7d1b8b19faeac1da2343f}{normal}};}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d_a793da8f0facf9e8685f525e4574dbb09}{distance}}\ =\ 0.0f;}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{operator}\ bool()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d_a04cac99e77ba9ae318965492834c58a9}{collider}}\ !=\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_physics_config}{PhysicsConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908}{gravity}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 9.81f;\ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f}{defaultCollisionRadius}}\ =\ 0.2f;\ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986}{fixedDeltaTimeFallback}}\ =\ 0.02f;\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994}{deltaTimeCap}}\ \ \ \ \ \ \ \ \ \ =\ 0.1f;\ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf}{pushDirSqrThreshold}}\ \ \ =\ 0.0001f;\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a867970d9fbf48524f9402c06fecef0f5}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908}{gravity}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}gravity"{}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908}{gravity}}).asFloat();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f}{defaultCollisionRadius}}\ =\ j.get(\textcolor{stringliteral}{"{}defaultCollisionRadius"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f}{defaultCollisionRadius}}).asFloat();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986}{fixedDeltaTimeFallback}}\ =\ j.get(\textcolor{stringliteral}{"{}fixedDeltaTimeFallback"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986}{fixedDeltaTimeFallback}}).asFloat();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994}{deltaTimeCap}}\ \ \ \ \ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}deltaTimeCap"{}},\ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994}{deltaTimeCap}}).asFloat();}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf}{pushDirSqrThreshold}}\ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}pushDirSqrThreshold"{}},\ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf}{pushDirSqrThreshold}}).asFloat();}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{class\ }Physics2D\ \{}
+\DoxyCodeLine{00069\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ad11a9051db6fdb78003ebefca206581d}{gravity}};}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56}{debugDrawEnabled}};}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}}*\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a7a92a3af329851f97a64e53691c6e3a7}{tileMap}};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_abc72390d6c7a05e57c521e654fb792fe}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/physics.json"{}});}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Simulation}}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a30d426e319beacc1737686a5de6d1fa9}{FixedUpdate}}();}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a4f9b0bc979f6611634ebc36ce1385b16}{RegisterCollider}}(\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ collider);}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ab6210a763afd8df6fc9626f6fee95f38}{UnregisterCollider}}(\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ collider);}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa351ec67068f087527df4f83ceb6a310}{RegisterRigidbody}}(\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}*\ rb);}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a76044538bdf431f47d7d523ffe47c368}{UnregisterRigidbody}}(\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}*\ rb);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Queries}}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{RaycastHit2D}}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa070b0543ca1ca626fef269b0fba9968}{Raycast}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ origin,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ direction,\ f32\ maxDistance\ =\ 1000.0f);}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<RaycastHit2D>\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a312fc91c1e39d99ffde82f72875ec40d}{RaycastAll}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ origin,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ direction,\ f32\ maxDistance\ =\ 1000.0f);}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_acc2f8602d0f6ea4e77ab82c7e3410656}{OverlapCircle}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ f32\ radius,\ f32\ height\ =\ 1.0f,\ f32\ heightPos\ =\ 0.0f);}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Collider2D*>\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a2e73b97e12c300a49c721e2a04c220a8}{OverlapCircleAll}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ f32\ radius,\ f32\ height\ =\ 1.0f,\ f32\ heightPos\ =\ 0.0f);}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a476be1bfffdcd106535911a43d130aa9}{OverlapBox}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ size,\ f32\ height\ =\ 1.0f,\ f32\ heightPos\ =\ 0.0f);}
+\DoxyCodeLine{00118\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Collider2D*>\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a84310a95b84fd21e40c2b872b6153e72}{OverlapBoxAll}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ size,\ f32\ height\ =\ 1.0f,\ f32\ heightPos\ =\ 0.0f);}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Collision\ resolution}}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_abdc7ed4672825f2be470c105754275c4}{IsWalkable}}(f32\ x,\ f32\ y);}
+\DoxyCodeLine{00126\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a78e12d83b73f473f6161ef7d86c0fc13}{MoveWithCollision}}(\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}*\ rb,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ movement);}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::vector<Collider2D*>\&\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ab6c6f629a1c8ec99f069e9ceb04636f2}{GetColliders}}()\ \{\ \textcolor{keywordflow}{return}\ colliders;\ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a10d21b362784b7cd506988354cfb7476}{DrawDebugView}}();}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00140\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_physics2_d}{Physics2D}}()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00141\ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Collider2D*>\ colliders;}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Rigidbody2D*>\ rigidbodies;}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ Config-\/driven\ constants\ (set\ by\ Initialize())}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_defaultRadius;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_deltaTimeCap;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_pushDirSqrThreshold;\ \ }
+\DoxyCodeLine{00149\ \ \ \ \ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ResolveCollision(\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}*\ rb,\ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ other);}
+\DoxyCodeLine{00152\ \ \ \ \ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ TileMapCollision(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ position,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ movement,\ f32\ radius);}
+\DoxyCodeLine{00155\ \};}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

@@ -1,0 +1,209 @@
+\doxysection{Engine::\+Transform Class Reference}
+\hypertarget{class_engine_1_1_transform}{}\label{class_engine_1_1_transform}\index{Engine::Transform@{Engine::Transform}}
+
+
+\doxylink{class_engine_1_1_component}{Component} that holds position, rotation, and scale.  
+
+
+
+
+{\ttfamily \+\#include $<$Transform.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_aa658649596f81d3a50083c6540d26369}{Translate}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&delta)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_a5644c775abc3fe68d84281456dffeafc}{Translate}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&delta)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_ac2063c10b025add846c62e4dcc8e8741}{Translate}} (f32 x, f32 y)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_a66e579f88b81acd98f4076d40f8b6e56}{Rotate}} (f32 degrees)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_aa8ea080c1a323ab350bcb3435a1cda3b}{Look\+At}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&target)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_transform_a197064c30d2b669ee2451d98c2f17159}{Set\+Parent}} (\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} \texorpdfstring{$\ast$}{*}new\+Parent)
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_transform_a5a9636a2895ddf957162a99e2e3e0008}{Get\+Child\+Count}} () const
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_transform_ad79caaf8a4002f32cf4cc54ad07419b6}{Get\+Child}} (int index) const
+\item 
+AEMtx33 \doxymbox{\hyperlink{class_engine_1_1_transform_adbaecf0903d222ed2738bb528f828963}{Get\+Matrix}} () const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \doxymbox{\hyperlink{class_engine_1_1_transform_a16b87639a99285db96d783300339eb42}{Get\+World\+Position}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \doxymbox{\hyperlink{class_engine_1_1_transform_ac6cd83bd10aa186c10c64948e7a2d03b}{position}}
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_transform_a1f9255e00a984b33f0953e625b6fb998}{rotation}} = 0
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_transform_a807bce5efbab32e1d26993c94661bdde}{local\+Scale}} = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(1, 1)
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_transform_a3c19033f80464bebb860d381b6e5bd1b}{parent}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_component}{Component} that holds position, rotation, and scale. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_transform_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}\index{Engine::Transform@{Engine::Transform}!Transform@{Transform}}
+\index{Transform@{Transform}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{Transform()}{Transform()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a} 
+Engine::\+\+Transform::\+\+Transform (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_transform_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_transform_ad79caaf8a4002f32cf4cc54ad07419b6}\index{Engine::Transform@{Engine::Transform}!GetChild@{GetChild}}
+\index{GetChild@{GetChild}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{GetChild()}{GetChild()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_ad79caaf8a4002f32cf4cc54ad07419b6} 
+\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} \texorpdfstring{$\ast$}{*} Engine::\+\+Transform::\+\+Get\+Child (\begin{DoxyParamCaption}\item[{int}]{index}{}\end{DoxyParamCaption}) const}
+
+Get child by index \Hypertarget{class_engine_1_1_transform_a5a9636a2895ddf957162a99e2e3e0008}\index{Engine::Transform@{Engine::Transform}!GetChildCount@{GetChildCount}}
+\index{GetChildCount@{GetChildCount}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{GetChildCount()}{GetChildCount()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a5a9636a2895ddf957162a99e2e3e0008} 
+int Engine::\+\+Transform::\+\+Get\+Child\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get number of children \Hypertarget{class_engine_1_1_transform_adbaecf0903d222ed2738bb528f828963}\index{Engine::Transform@{Engine::Transform}!GetMatrix@{GetMatrix}}
+\index{GetMatrix@{GetMatrix}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{GetMatrix()}{GetMatrix()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_adbaecf0903d222ed2738bb528f828963} 
+AEMtx33 Engine::\+\+Transform::\+\+Get\+Matrix (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Generate transformation matrix for Alpha \doxylink{namespace_engine}{Engine} \Hypertarget{class_engine_1_1_transform_a16b87639a99285db96d783300339eb42}\index{Engine::Transform@{Engine::Transform}!GetWorldPosition@{GetWorldPosition}}
+\index{GetWorldPosition@{GetWorldPosition}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{GetWorldPosition()}{GetWorldPosition()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a16b87639a99285db96d783300339eb42} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} Engine::\+\+Transform::\+\+Get\+World\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get world position (including parent transforms) \Hypertarget{class_engine_1_1_transform_aa8ea080c1a323ab350bcb3435a1cda3b}\index{Engine::Transform@{Engine::Transform}!LookAt@{LookAt}}
+\index{LookAt@{LookAt}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{LookAt()}{LookAt()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_aa8ea080c1a323ab350bcb3435a1cda3b} 
+void Engine::\+\+Transform::\+\+Look\+At (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{target}{}\end{DoxyParamCaption})}
+
+Look at target position \Hypertarget{class_engine_1_1_transform_a66e579f88b81acd98f4076d40f8b6e56}\index{Engine::Transform@{Engine::Transform}!Rotate@{Rotate}}
+\index{Rotate@{Rotate}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{Rotate()}{Rotate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a66e579f88b81acd98f4076d40f8b6e56} 
+void Engine::\+\+Transform::\+\+Rotate (\begin{DoxyParamCaption}\item[{f32}]{degrees}{}\end{DoxyParamCaption})}
+
+Rotate by degrees \Hypertarget{class_engine_1_1_transform_a197064c30d2b669ee2451d98c2f17159}\index{Engine::Transform@{Engine::Transform}!SetParent@{SetParent}}
+\index{SetParent@{SetParent}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{SetParent()}{SetParent()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a197064c30d2b669ee2451d98c2f17159} 
+void Engine::\+\+Transform::\+\+Set\+Parent (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}} \texorpdfstring{$\ast$}{*}}]{new\+Parent}{}\end{DoxyParamCaption})}
+
+Set parent transform \Hypertarget{class_engine_1_1_transform_aa658649596f81d3a50083c6540d26369}\index{Engine::Transform@{Engine::Transform}!Translate@{Translate}}
+\index{Translate@{Translate}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{Translate()}{Translate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_aa658649596f81d3a50083c6540d26369} 
+void Engine::\+\+Transform::\+\+Translate (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{delta}{}\end{DoxyParamCaption})}
+
+Translate by delta in world space \Hypertarget{class_engine_1_1_transform_a5644c775abc3fe68d84281456dffeafc}\index{Engine::Transform@{Engine::Transform}!Translate@{Translate}}
+\index{Translate@{Translate}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{Translate()}{Translate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a5644c775abc3fe68d84281456dffeafc} 
+void Engine::\+\+Transform::\+\+Translate (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&}]{delta}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_transform_ac2063c10b025add846c62e4dcc8e8741}\index{Engine::Transform@{Engine::Transform}!Translate@{Translate}}
+\index{Translate@{Translate}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{Translate()}{Translate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_ac2063c10b025add846c62e4dcc8e8741} 
+void Engine::\+\+Transform::\+\+Translate (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_transform_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_transform_a807bce5efbab32e1d26993c94661bdde}\index{Engine::Transform@{Engine::Transform}!localScale@{localScale}}
+\index{localScale@{localScale}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{localScale}{localScale}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a807bce5efbab32e1d26993c94661bdde} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Transform::\+local\+Scale = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(1, 1)}
+
+Local scale \Hypertarget{class_engine_1_1_transform_a3c19033f80464bebb860d381b6e5bd1b}\index{Engine::Transform@{Engine::Transform}!parent@{parent}}
+\index{parent@{parent}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a3c19033f80464bebb860d381b6e5bd1b} 
+\doxymbox{\hyperlink{class_engine_1_1_transform_abad70d3eb3f56128226dc05ec3a0346a}{Transform}}\texorpdfstring{$\ast$}{*} Engine::\+\+Transform::\+parent = nullptr}
+
+Parent transform (nullptr if root) \Hypertarget{class_engine_1_1_transform_ac6cd83bd10aa186c10c64948e7a2d03b}\index{Engine::Transform@{Engine::Transform}!position@{position}}
+\index{position@{position}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_ac6cd83bd10aa186c10c64948e7a2d03b} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} Engine::\+\+Transform::\+position}
+
+Position in world space (z used for depth sorting) \Hypertarget{class_engine_1_1_transform_a1f9255e00a984b33f0953e625b6fb998}\index{Engine::Transform@{Engine::Transform}!rotation@{rotation}}
+\index{rotation@{rotation}!Engine::Transform@{Engine::Transform}}
+\doxysubsubsection{\texorpdfstring{rotation}{rotation}}
+{\footnotesize\ttfamily \label{class_engine_1_1_transform_a1f9255e00a984b33f0953e625b6fb998} 
+f32 Engine::\+\+Transform::\+rotation = 0}
+
+Rotation in degrees (around z-\/axis for 2D) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_transform_8hpp}{Transform.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_transform_8cpp}{Transform.\+cpp}}\end{DoxyCompactItemize}

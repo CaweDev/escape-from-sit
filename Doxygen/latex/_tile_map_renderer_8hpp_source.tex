@@ -1,0 +1,218 @@
+\doxysection{Tile\+Map\+Renderer.\+hpp}
+\hypertarget{_tile_map_renderer_8hpp_source}{}\label{_tile_map_renderer_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.hpp}}
+\doxymbox{\hyperlink{_tile_map_renderer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_renderer_8hpp}{Engine/Graphics/IRenderer.hpp}}"{}}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_8hpp}{Engine/Graphics/Sprite.hpp}}"{}}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture_utils_8hpp}{Engine/Graphics/TextureUtils.hpp}}"{}}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_game_object_8hpp}{Engine/Core/GameObject.hpp}}"{}}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_8hpp}{Engine/Graphics/Camera.hpp}}"{}}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_aa45c8d81f08a020939adc511d1a20cff}{TileMapRenderer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{TileSprites}}\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites_a69ceeb903b802a0f4bbcd5beb2e72458}{wall}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites_a7aa035c2934444b272259eda47cd858e}{ceiling}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites_a6ecc89b49f8330e46d383e6290bd8f29}{floor}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites_a7a4aa75128d729229ac6650d915cb196}{door}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Rendering\ resolution\ constants\ for\ WALLS\ only.}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Changing\ COLUMN\_STEP\ affects\ how\ many\ rays\ are\ cast\ per\ frame}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ and\ therefore\ the\ horizontal\ resolution\ of\ the\ wall\ pass.}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ columnStep\ =\ 10;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ maxTrianglesPerMesh\ =\ 8000;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Framebuffer\ quality\ setting\ (public,\ adjustable\ at\ runtime)}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ f32\ fbScale\ =\ 0.2f;}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a0855b0244825898346002c5dedc2c8f8}{REQUIRE\_COMPONENT}}(\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}});}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a8cb019b5820a2d957df488c9833db2a3}{fov}}\ =\ 75.0f;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}{wallColorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.8f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_adf364ef39f75e8e388884f316c98e06b}{wallColorEW}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.6f,\ 0.15f,\ 0.15f,\ 1.0f);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_aa8f19cb4e3e59fbeb4d941516040e7e3}{ceilingColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.2f,\ 0.2f,\ 0.4f,\ 1.0f);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a709cc92ee23a92bf0072e48530ec6b93}{floorColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.3f,\ 0.3f,\ 0.3f,\ 1.0f);}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a6d0a10d4bd43e2e26311ab948b187bcf}{visibilityCullThreshold}}\ =\ 0.01f;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a550102b420d0808fb49e598d4b2107d9}{wallOverlapPadding}}\ =\ 10.0f;}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_aa45c8d81f08a020939adc511d1a20cff}{TileMapRenderer}}();}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a007e7e0854e49921e80289ea5e263f16}{\string~TileMapRenderer}}();}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a5007f79f14a5897b48274a5cac73a043}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a040e6420f4daca74df094e2b688a603e}{GetSortingKey}}()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ FLT\_MAX;\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sprite\ assignment}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a4a17084d50dbeff84e0334b79a2445be}{SetTileSprites}}(\textcolor{keywordtype}{int}\ tileType,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ wall,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ ceiling,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ floor,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ door\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a944b9d620efed4c134a3c26469d2df1e}{SetWallSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ sprite)\ \{\ tileSprites[1].wall\ =\ sprite;\ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a0560ca5ed67a2cfcafc16c3af0bbcbb4}{SetCeilingSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ sprite);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a65a487efdf3be83baff6e2e922a2024c}{SetFloorSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ sprite);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a487feba637a525cbe5a92c18b15b5dc2}{SetDoorSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ sprite)\ \{\ tileSprites[1].door\ =\ sprite;\ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sprite\ retrieval}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{TileSprites}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ae89dbdd0732274440eb8359203093542}{GetTileSprites}}(\textcolor{keywordtype}{int}\ tileType)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ tileSprites.find(tileType);}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ tileSprites.end())\ ?\ it-\/>second\ :\ \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{TileSprites}}\{\};}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a98c56cfce6c697093443828ccaf0b17a}{GetWallSprite}}(\textcolor{keywordtype}{int}\ tileType)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ tileSprites.find(tileType);}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ tileSprites.end())\ ?\ it-\/>second.wall\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a1aa752fb3288b418fe14ecc59c557e99}{GetCeilingSprite}}(\textcolor{keywordtype}{int}\ tileType)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ tileSprites.find(tileType);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ tileSprites.end())\ ?\ it-\/>second.ceiling\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_afcf76db81bb712d831c12799830cc4b6}{GetFloorSprite}}(\textcolor{keywordtype}{int}\ tileType)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ tileSprites.find(tileType);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ tileSprites.end())\ ?\ it-\/>second.floor\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ad002207d6f814780fcc25c7648f6bc91}{GetDoorSprite}}(\textcolor{keywordtype}{int}\ tileType)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ tileSprites.find(tileType);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (it\ !=\ tileSprites.end())\ ?\ it-\/>second.door\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_affa903b4f5d2d6b7c74773b22e2047bd}{GetWallSprite}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_affa903b4f5d2d6b7c74773b22e2047bd}{GetWallSprite}}(1);\ \}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a70520fe5da80f3e77edbfd72a1035304}{GetCeilingSprite}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a70520fe5da80f3e77edbfd72a1035304}{GetCeilingSprite}}(1);\ \}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a148e6adc907c453e80bb50e62a8f6b57}{GetFloorSprite}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a148e6adc907c453e80bb50e62a8f6b57}{GetFloorSprite}}(1);\ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ad2c8daf45b3ba28a7be7847629c3235a}{GetDoorSprite}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_ad2c8daf45b3ba28a7be7847629c3235a}{GetDoorSprite}}(1);\ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ overlay\ support\ -\/\ highlights\ tiles\ on\ the\ floor}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a57744516d8379a05fc293d73c95bf9b7}{SetPathTiles}}(\textcolor{keyword}{const}\ std::vector<Vector2>\&\ waypoints)\ \{\ pathWaypoints\ =\ waypoints;\ \}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a5bf44501038a27e559b36e87f458b1c3}{ClearPathTiles}}()\ \{\ pathWaypoints.clear();\ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a18af56640a46977a858fba9653529892}{RenderDebugColliders}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ pos,\ f32\ camZ,\ \textcolor{keywordtype}{int}\ horizon,\ \textcolor{keywordtype}{int}\ screenWidth,\ \textcolor{keywordtype}{int}\ screenHeight);}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ GPU\ mesh\ handles}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ AEGfxVertexList*\ columnMesh\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ AEGfxVertexList*\ fullscreenMesh\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sprite\ map:\ tile\ type\ ID\ →\ TileSprites}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ TileSprites>\ tileSprites;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ DDA\ raycasting\ data\ structures}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }RaycastResult\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ perpWallDist;\ \ }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ wallX;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ side;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tileType;\ \ \ \ \ \ }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ drawStart;\ \ \ \ \ }
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ drawEnd;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }ColumnInfo\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ RaycastResult\ ray;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ rayDirX,\ \ rayDirY;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ rayDirX2,\ rayDirY2;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ screenX,\ \ screenX2;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ screenY,\ \ screenY2;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ vTop,\ \ \ \ \ vBottom;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ fogFactor;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fogKey;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Per-\/frame\ cached\ state\ (recomputed\ in\ Render()\ each\ frame)}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ f32\ cachedPlaneLength\ =\ 0.0f;}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }FogSettings\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}}\ \ \ \ \ \ =\ \textcolor{keyword}{false};\ \ \ }
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \ distance\ \ \ \ \ =\ 20.0f;\ \ \ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \ minVisibility\ =\ 0.2f;\ \ \ }
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \ maxVisibility\ =\ 1.0f;\ \ \ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \ precision\ \ \ \ =\ 200.0f;\ \ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \}\ fog;}
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ f32\ cachedFogDistance\ =\ -\/1.0f;}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ std::vector<f32>\ fogLUT;}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ std::vector<ColumnInfo>\ managedColumns;}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ AEMtx33\ identityMtx;}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Framebuffer\ rendering\ state\ (floor/ceiling\ CPU\ rasteriser)}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Uses\ Engine::CpuTexture\ from\ TextureUtils.hpp}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ CpuTexture\ floorCpuTex;\ \ }
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ CpuTexture\ ceilCpuTex;\ \ \ }
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ std::vector<u8>\ combinedFramebuffer;}
+\DoxyCodeLine{00318\ }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fbWidth\ \ =\ 0;}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fbHeight\ =\ 0;}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ waypoints\ for\ floor\ overlay}}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ std::vector<Vector2>\ pathWaypoints;}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Private\ methods}}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ CreateColumnMesh();}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ CreateFullscreenMesh();}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateFogLUT(f32\ fogDistance);}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ RaycastResult\ CastRay(\textcolor{keyword}{const}\ Vector2\&\ pos,\ f32\ rayDirX,\ f32\ rayDirY,\ f32\ camZ,}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ horizon,\ \textcolor{keywordtype}{int}\ screenWidth,\ \textcolor{keywordtype}{int}\ screenHeight,\ \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c}{TileMap}}*\ map);}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderCeiling(\textcolor{keyword}{const}\ Vector2\&\ pos,\ f32\ camZ,\ \textcolor{keywordtype}{int}\ horizon,\ \textcolor{keywordtype}{int}\ screenWidth,\ \textcolor{keywordtype}{int}\ screenHeight,}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<ColumnInfo>\&\ columns);}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderFloor(\textcolor{keyword}{const}\ Vector2\&\ pos,\ f32\ camZ,\ \textcolor{keywordtype}{int}\ horizon,\ \textcolor{keywordtype}{int}\ screenWidth,\ \textcolor{keywordtype}{int}\ screenHeight,}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<ColumnInfo>\&\ columns);}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderWalls(\textcolor{keywordtype}{int}\ horizon,\ \textcolor{keywordtype}{int}\ screenHeight,\ \textcolor{keyword}{const}\ std::vector<ColumnInfo>\&\ columns);}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ DrawColumn(f32\ x,\ f32\ y,\ f32\ h,\ \textcolor{keyword}{const}\ Color\&\ color,\ \textcolor{keywordtype}{int}\ sw,\ \textcolor{keywordtype}{int}\ sh);}
+\DoxyCodeLine{00427\ \ \ \ \ \};}
+\DoxyCodeLine{00428\ }
+\DoxyCodeLine{00429\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

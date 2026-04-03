@@ -1,0 +1,50 @@
+\doxysection{Loading\+Scene.\+hpp}
+\hypertarget{_loading_scene_8hpp_source}{}\label{_loading_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/LoadingScene/LoadingScene.hpp@{AlphaEngine2.5D/Source/Game/Scenes/LoadingScene/LoadingScene.hpp}}
+\doxymbox{\hyperlink{_loading_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_engine_8hpp}{Engine.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }UI;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_loading_scene_af5c8892c9366c576002684e3d814cf92}{LoadingScene}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_loading_scene_af5c8892c9366c576002684e3d814cf92}{LoadingScene}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_loading_scene_a62f045e8c32cb739c16a9c0c975dc29b}{OnLoad}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_loading_scene_a89d7fe57ef720ab46aa2bad57a836d63}{OnUnload}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_loading_scene_ac1b3a4a939739071a63883800f07e2f3}{OnUpdate}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UI\ elements}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}*\ m\_canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel}{Panel}}*\ \ m\_background\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{Text}}*\ \ \ m\_loadingText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \ m\_progressBarBg\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \ m\_progressBarFill\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{Text}}*\ \ \ m\_tipText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ std::vector<std::string>\ m\_tips;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Animation\ state}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_elapsed\ =\ 0.0f;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_dotTimer\ =\ 0.0f;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ m\_dotCount\ =\ 0;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_loadTriggered\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ MIN\_DISPLAY\_TIME\ =\ 1.2f;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ PROGRESS\_DURATION\ =\ 1.2f;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ DOT\_INTERVAL\ =\ 0.3f;}
+\DoxyCodeLine{00053\ \ \ \ \ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

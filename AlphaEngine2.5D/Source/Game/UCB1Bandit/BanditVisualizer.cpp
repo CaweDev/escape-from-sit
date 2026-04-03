@@ -642,26 +642,11 @@ namespace Game {
         RefreshCCTVLog();
     }
 
-    /*!
-     * \brief [AUTO] PushCCTVRecord
-     * \param rec [in]
-     */
-    /*!
-     * \brief [AUTO] PushCCTVRecord
-     * \param rec [in]
-     */
-    /*!
-     * \brief [AUTO] PushCCTVRecord
-     * \param rec [in]
-     */
-    /*!
-     * \brief [AUTO] PushCCTVRecord
-     * \param rec [in]
-     */
-    /*!
-     * \brief [AUTO] PushCCTVRecord
-     * \param rec [in]
-     */
+    
+    
+    
+    
+    
     void BanditVisualizer::PushCCTVRecord(const CCTVRecord& rec) {
     /*! \brief Push a CCTV record into the scrolling history log. \param rec [in] Record to push */
         m_cctvHistory.push_front(rec);
@@ -849,9 +834,7 @@ namespace Game {
         bar->SetAnchoredPosition({ 0.0f, 0.0f });
         bar->SetSizeDelta({ kBarWidth * t, 10.0f });
     }
-    /*!
-     * \brief [AUTO] OnDestroy
-     */
+    
     void BanditVisualizer::OnDestroy() {
         if (m_canvas && UI::UIManager::GetInstance()) {
             UI::UIManager::GetInstance()->DestroyCanvas(m_canvas);

@@ -1,0 +1,213 @@
+\doxysection{Interaction\+Demo\+Scene.\+hpp}
+\hypertarget{_interaction_demo_scene_8hpp_source}{}\label{_interaction_demo_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp@{AlphaEngine2.5D/Source/Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp}}
+\doxymbox{\hyperlink{_interaction_demo_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_8hpp}{Engine/Scene/Scene.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_renderer_8hpp}{Engine/Graphics/TileMapRenderer.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_8hpp}{Engine/Graphics/Camera.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Engine/Physics/Rigidbody2D.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_circle_collider2_d_8hpp}{Engine/Physics/CircleCollider2D.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_collider2_d_8hpp}{Engine/Physics/TileMapCollider2D.hpp}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_renderer_8hpp}{Engine/Graphics/SpriteRenderer.hpp}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interactable_8hpp}{Engine/Interaction/Interactable.hpp}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interaction_controller_8hpp}{Engine/Interaction/InteractionController.hpp}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_time_8hpp}{Engine/Core/Time.hpp}}"{}}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_f_p_s_controller_8hpp}{Game/FPSController.hpp}}"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_player_8hpp}{Game/Player/Player.hpp}}"{}}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ab2d5d73eebf40f6ded7fd6cdc80e22e6}{InteractionDemoScene}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}\ \{}
+\DoxyCodeLine{00038\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ab2d5d73eebf40f6ded7fd6cdc80e22e6}{InteractionDemoScene}}()\ :\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}(\textcolor{stringliteral}{"{}InteractionDemo"{}})\ \{\}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Sprites\ (kept\ alive\ for\ duration\ of\ scene)}}
+\DoxyCodeLine{00042\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}{doorSprite}};}
+\DoxyCodeLine{00043\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}{keySprite}};}
+\DoxyCodeLine{00044\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}{chestSprite}};}
+\DoxyCodeLine{00045\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a7eb97fe466801d0d26a6688f8398d635}{wallSprite}};}
+\DoxyCodeLine{00046\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_acc598a4cbc93cc513148313a86b3d003}{floorSprite}};}
+\DoxyCodeLine{00047\ \ \ \ \ std::shared\_ptr<Sprite>\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_acf89c32003ca342690ca38038d50c7b3}{ceilingSprite}};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{comment}{//\ References}}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}*\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ada9b60021b8fdf894fe3ba7f1170b100}{playerController}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}*\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}{playerTf}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Game\ state}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}{hasKey}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5}{doorOpen}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529}{chestLooted}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abfd6c4a337a9db194f9c11165626c321}{OnLoad}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Simple\ map:\ 10x10\ with\ a\ small\ room}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ mapData[]\ =\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ 1,1,1,1,1,1,1,1,1,1,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,1,1,0,0,0,1,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,1,0,0,0,0,1,}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ 1,1,1,1,1,1,1,1,1,1}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ world\ with\ tilemap}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ world\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}World"{}});}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ map\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}}>();}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ map-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e}{LoadFromArray}}(mapData,\ 10,\ 10);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ renderer\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{TileMapRenderer}}>();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ renderer-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}{wallColorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.5f,\ 0.5f,\ 0.6f,\ 1.0f);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ renderer-\/>wallColorEW\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.4f,\ 0.4f,\ 0.5f,\ 1.0f);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ renderer-\/>ceilingColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.2f,\ 0.2f,\ 0.3f,\ 1.0f);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ renderer-\/>floorColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.3f,\ 0.3f,\ 0.35f,\ 1.0f);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ sprites\ (using\ existing\ assets\ or\ fallback\ to\ colored\ sprites)}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ renderer-\/>SetWallSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_wall.png"{}}));}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ renderer-\/>SetFloorSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_floor.png"{}}));}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ renderer-\/>SetCeilingSprite(\doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{AssetManager::GetSprite}}(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_ceiling.png"{}}));}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tileMapCollider\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d}{TileMapCollider2D}}>();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ tileMapCollider-\/>\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a6f042d71a3cb23182c9829ce1f34d6e8}{minHeight}}\ =\ 0.0f;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ tileMapCollider-\/>maxHeight\ =\ 3.0f;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ player\ with\ camera}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ player\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}Player"{}});}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}>();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rb\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}>();}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ rb-\/>gravityScale\ =\ 1.0f;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ rb-\/>drag\ =\ 5.0f;}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ col\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_circle_collider2_d}{CircleCollider2D}}>();}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ col-\/>\doxymbox{\hyperlink{class_engine_1_1_circle_collider2_d_a5dd0f2bf7dde91ceaa30cb52037d6959}{radius}}\ =\ 0.2f;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ col-\/>minHeight\ =\ 0.0f;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ col-\/>maxHeight\ =\ 1.8f;}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ada9b60021b8fdf894fe3ba7f1170b100}{playerController}}\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}>();}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ player-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_player}{Player}}>();}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}{playerTf}}\ =\ player-\/>transform;}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}{playerTf}}-\/>position\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}(2.5f,\ 2.5f,\ 0.0f);}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}{playerTf}}-\/>rotation\ =\ 45.0f;}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ InteractionController\ to\ the\ player!}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ interactionCtrl\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_interaction_controller}{InteractionController}}>();}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ interactionCtrl-\/>\doxymbox{\hyperlink{class_engine_1_1_interaction_controller_acb42fe38b39886cde213a64f6e612596}{interactKey}}\ =\ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{KeyCode::E}};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ interactable\ object\ sprites}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Using\ existing\ powerup\ sprites\ as\ placeholders}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}{doorSprite}}\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}{doorSprite}}-\/>Load(\textcolor{stringliteral}{"{}Assets/powerup1.png"{}});}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}{keySprite}}\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}{keySprite}}-\/>Load(\textcolor{stringliteral}{"{}Assets/powerup2.png"{}});}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}{chestSprite}}\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}{chestSprite}}-\/>Load(\textcolor{stringliteral}{"{}Assets/Sprites/powerup3.png"{}});}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ===\ INTERACTABLE\ OBJECTS\ ===}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1.\ Key\ pickup}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ keyObj\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}Key"{}});}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ keyObj-\/>transform-\/>position\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}(7.5f,\ 2.5f,\ 0.25f);}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ keyObj-\/>transform-\/>localScale\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(0.4f,\ 0.4f);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ keySR\ =\ keyObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}}>();}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ keySR-\/>\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{SetSprite}}(\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}{keySprite}});}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ keySR-\/>billboard\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ keySR-\/>sortingOrder\ =\ 100;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ keySR-\/>highlightColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.3f,\ 0.3f,\ 0.0f,\ 0.0f);\ \textcolor{comment}{//\ Yellow\ glow}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ keyInteract\ =\ keyObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}>();}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ keyInteract-\/>\doxymbox{\hyperlink{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd}{actionText}}\ =\ \textcolor{stringliteral}{"{}Pick\ up\ Key"{}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ keyInteract-\/>maxDistance\ =\ 2.5f;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ keyInteract-\/>onInteract\ =\ [\textcolor{keyword}{this},\ keyObj]()\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}{hasKey}})\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}{hasKey}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ keyObj-\/>active\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Hide\ the\ key}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 2.\ Door\ (requires\ key)}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ doorObj\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}Door"{}});}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ doorObj-\/>transform-\/>position\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}(4.5f,\ 4.5f,\ 0.5f);}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ doorObj-\/>transform-\/>localScale\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(0.6f,\ 1.0f);}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ doorSR\ =\ doorObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}}>();}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ doorSR-\/>\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{SetSprite}}(\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}{doorSprite}});}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ doorSR-\/>billboard\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ doorSR-\/>sortingOrder\ =\ 100;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ doorSR-\/>highlightColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.0f,\ 0.3f,\ 0.3f,\ 0.0f);\ \textcolor{comment}{//\ Cyan\ glow}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ doorInteract\ =\ doorObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}>();}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ doorInteract-\/>\doxymbox{\hyperlink{class_engine_1_1_interactable_a087c0432f5f418a1891640cd91a05803}{maxDistance}}\ =\ 2.0f;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ doorInteract-\/>onInteract\ =\ [\textcolor{keyword}{this},\ doorInteract,\ doorObj]()\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5}{doorOpen}})\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}{hasKey}})\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ doorInteract-\/>actionText\ =\ \textcolor{stringliteral}{"{}Locked\ (need\ key)"{}};}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5}{doorOpen}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ doorObj-\/>active\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Remove\ door}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ doorInteract-\/>actionText\ =\ \textcolor{stringliteral}{"{}Open\ Door"{}};}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 3.\ Treasure\ chest}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chestObj\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}Chest"{}});}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ chestObj-\/>transform-\/>position\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}(7.5f,\ 7.5f,\ 0.2f);}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ chestObj-\/>transform-\/>localScale\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(0.5f,\ 0.5f);}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chestSR\ =\ chestObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}}>();}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ chestSR-\/>\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{SetSprite}}(\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}{chestSprite}});}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ chestSR-\/>billboard\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ chestSR-\/>sortingOrder\ =\ 100;}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ chestSR-\/>highlightColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.3f,\ 0.2f,\ 0.0f,\ 0.0f);\ \textcolor{comment}{//\ Gold\ glow}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chestInteract\ =\ chestObj-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}>();}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ chestInteract-\/>\doxymbox{\hyperlink{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd}{actionText}}\ =\ \textcolor{stringliteral}{"{}Open\ Chest"{}};}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ chestInteract-\/>maxDistance\ =\ 2.5f;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ chestInteract-\/>onInteract\ =\ [\textcolor{keyword}{this},\ chestInteract]()\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529}{chestLooted}})\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529}{chestLooted}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ chestInteract-\/>actionText\ =\ \textcolor{stringliteral}{"{}Empty"{}};}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00197\ \ \ \ \ \}}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a634ba36c4d8470cd2fe278b2637b9a8a}{OnUpdate}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Animate\ interactable\ objects\ (floating\ effect)}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ animTime\ =\ 0.0f;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ animTime\ +=\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{Time::deltaTime}};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ keyObj\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}}(\textcolor{stringliteral}{"{}Key"{}});}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (keyObj\ \&\&\ keyObj-\/>active)\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ keyObj-\/>transform-\/>position.z\ =\ 0.25f\ +\ std::sin(animTime\ *\ 2.0f)\ *\ 0.1f;}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ chestObj\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}}(\textcolor{stringliteral}{"{}Chest"{}});}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chestObj\ \&\&\ chestObj-\/>active)\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ chestObj-\/>transform-\/>position.z\ =\ 0.2f\ +\ std::sin(animTime\ *\ 1.5f\ +\ 1.0f)\ *\ 0.05f;}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \};}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

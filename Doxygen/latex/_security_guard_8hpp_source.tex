@@ -1,0 +1,168 @@
+\doxysection{Security\+Guard.\+hpp}
+\hypertarget{_security_guard_8hpp_source}{}\label{_security_guard_8hpp_source}\index{AlphaEngine2.5D/Source/Game/SecurityGuard/SecurityGuard.hpp@{AlphaEngine2.5D/Source/Game/SecurityGuard/SecurityGuard.hpp}}
+\doxymbox{\hyperlink{_security_guard_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ SecurityGuard.hpp}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ =======================}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{Engine/Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Engine/Physics/Rigidbody2D.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_manager_8hpp}{Engine/Scene/SceneManager.hpp}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_8hpp}{Engine/Scene/Scene.hpp}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_door_8hpp}{Engine/TileMap/Door.hpp}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_player_8hpp}{Game/Player/Player.hpp}}"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_c_b1_bandit_8hpp}{Game/UCB1Bandit/UCB1Bandit.hpp}}"{}}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_heatmap_8hpp}{Game/Heatmap/Heatmap.hpp}}"{}}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_zone_manager_8hpp}{Game/ZoneManager/ZoneManager.hpp}}"{}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00030\ \{}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_security_guard}{SecurityGuard}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}}
+\DoxyCodeLine{00035\ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769}{tileMap}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a3d3f29cccc2920b2b6ef569053d589b0}{playerTf}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_player}{Player}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a5a052b5c318e34d9add47c9243a684d6}{playerData}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_zone_manager}{Game::ZoneManager}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a76a77641d91017ab66b840fb898c7dd2}{zoneMgr}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::Heatmap}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a80796320d7e4d80b9936e7bd3708d2e9}{heatmap}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ std::vector<CCTVTerminal\ *>\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a8c89f378159c6388afdd9f58d98f7057}{cctvTerminals}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_adfd94d2f0d2147fe3368f2202fc33575}{patrolSpeed}}\ =\ 1.5f;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ad5c3ab376544011e2956456856b7f48d}{chaseSpeed}}\ =\ 2.4f;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ae50c2da88fbdc0dbc2e33f6ea8d29815}{searchSpeed}}\ =\ 0.8f;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_acde32910619a8baa2a2fc64ab9506dfd}{arriveDistance}}\ =\ 0.10f;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a177b889284114083f53e2ff26f2327d9}{detectRadius}}\ =\ 4.0f;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_af81b549c189f9bef62e162001cd4d483}{catchRadius}}\ =\ 0.7f;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_acfbeb569e9573d962695c29db5d7cf4a}{maxLostSightTime}}\ =\ 2.5f;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a911e8fd38cd28d072b219625c697769c}{searchDuration}}\ =\ 4.0f;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ad45ac6d2ff32d6190dec3f3fd404fdc7}{isDistracted}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_abbc5a0832770cf658fa33178a00c54b9}{distractionPos}};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_acd21b66a2528fbcc5cfb316ee5ccdb83}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a98da57a4114c5a510c96400c20cbf8d5}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ac98b446431254dbcd7cde3fc5ec94a6e}{UpdateStateColor}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ac61b5147fc056b887deff9aac2e3c7e6}{OnCCTVSpotted}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \&worldPos);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a3ab00b5c1713c8db82c51d61292c46c6}{OnCCTVSystemSabotaged}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \&controlRoomPos,\ [[maybe\_unused]]\ \textcolor{keywordtype}{int}\ sabotagedZoneId);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a21f42b4233036ad2e6a9e6c041dc72b4}{SetTerminals}}(std::vector<CCTVTerminal\ *>\ *terminals)\ \{\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a8c89f378159c6388afdd9f58d98f7057}{cctvTerminals}}\ =\ terminals;\ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ML\ Zone\ Control}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a9aba1e2218755c61440eb67ebc837fa6}{SetPatrolZoneOverride}}(\textcolor{keywordtype}{int}\ zoneId);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a563ff250d416691041573bbd86c5f6da}{GetPatrolZoneOverride}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_hasForcedZone\ ?\ m\_forcedZoneId\ :\ -\/1;\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a24cd82ff2f916fdbe949a62177fffd45}{homeZoneId}}\ =\ 1;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a6fc6a82f1eb0a4e6e3d1b365c1467b1a}{IsInPatrolState}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ GuardState::Patrol;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a2b57ea224d390e6115d938b2f05821a4}{IsInChaseState}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ GuardState::Chase;\ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a5655046b46ca4294a69dc12b1f11db62}{IsInSearchState}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ GuardState::Search;\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a888ffe41a1d0af28914580ea7057f8d1}{SetAssistZone}}(\textcolor{keywordtype}{int}\ zoneId);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a0576f901cddf70c47e0115b1e0016a8e}{ClearAssist}}();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_ad3a9e1754a0af1663b8fe2c7fcab74f6}{SetFullEscalation}}(\textcolor{keywordtype}{int}\ zoneId);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a7e882a927a3220f012cdd80fde1a8c18}{ClearFullEscalation}}();}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a914707b457bee44192c7dc374ce6e612}{OnDistracted}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \&noisePos);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a5f60bf242525d3c265937b6b28845c9d}{ClearDistraction}}();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}\ *\doxymbox{\hyperlink{class_game_1_1_security_guard_a12898acca30d52b91de31acc1fdd3625}{transform}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCTV\ sabotage\ response\ (public\ for\ ML\ system\ access)}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_security_guard_aa732d8f9116e55f88d5c35b59198f781}{investigatingSabotage}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ GuardState}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ Patrol\ =\ 0,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ Chase,}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ Search,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ Catch}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ GuardState\ state\ =\ GuardState::Patrol;}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ assisting\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ fullEscalation\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Sabotage\ tracking\ (moved\ from\ public\ section)}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ sabotageLocation\{\};}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sabotageInvestigateTimer\ =\ 0.0f;}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_hasForcedZone\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_forcedZoneId\ =\ 1;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zoneCommitTimer\ =\ 0.0f;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ zoneCommitDuration\ =\ 3.0f;}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cctvPursuitTimer\ =\ 0.0f;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ cctvPursuitDuration\ =\ 4.0f;}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }GuardMemory}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ lastSeenPos\{\};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasLastSeen\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ timeSinceSeen\ =\ 0.0f;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \}\ memory;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ path;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathIndex\ =\ 0;}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ repathTimer\ =\ 0.0f;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ searchTimer\ =\ 0.0f;}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1}{Engine::Door}}\ *heldDoor\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ doorHoldReleaseDist\ =\ 1.25f;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ std::unordered\_map<int,\ int>\ visitCount;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ lastTileId\ =\ -\/1;}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ patrolSampleCount\ =\ 40;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ patrolMinGoalDist\ =\ 6.0f;}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ learnRepathTimer\ =\ 0.0f;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ chooseInterval\ =\ 2.0f;}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ seeded;}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetState(GuardState\ newState);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *StateToString(GuardState\ s)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ PatrolUpdate();}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ChaseUpdate();}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SearchUpdate();}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ CanSeePlayer()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsCaught()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FollowPath(\textcolor{keywordtype}{float}\ speed);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateDoorAuto();}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1}{Engine::Door}}\ *FindDoorAtTile(\textcolor{keywordtype}{int}\ tx,\ \textcolor{keywordtype}{int}\ ty)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildPathBFS\_ToGoal(\textcolor{keywordtype}{int}\ gx,\ \textcolor{keywordtype}{int}\ gy);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildPathBFS\_PatrolExplore();}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iD(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ y\ *\ \doxymbox{\hyperlink{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769}{tileMap}}-\/>width\ +\ x;\ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ Engine::Vector2\ WorldFromTile(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ Engine::Vector2((\textcolor{keywordtype}{float})x\ +\ 0.5f,\ (\textcolor{keywordtype}{float})y\ +\ 0.5f);\ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ GetCurrentTile(\textcolor{keywordtype}{int}\ \&tx,\ \textcolor{keywordtype}{int}\ \&ty)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ DistSqTo(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00163\ \ \ \ \ \};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

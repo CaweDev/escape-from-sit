@@ -1,0 +1,32 @@
+\doxysection{ZBuffer.\+hpp}
+\hypertarget{_z_buffer_8hpp_source}{}\label{_z_buffer_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/ZBuffer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/ZBuffer.hpp}}
+\doxymbox{\hyperlink{_z_buffer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ Start\ Header\ ************************************************************************/}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ End\ Header\ **************************************************************************/}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_z_buffer}{ZBuffer}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_z_buffer_add7a5931e50200e5a747236dd14c500b}{Resize}}(\textcolor{keywordtype}{int}\ width);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a358b569d3c05475248186a38275eefc0}{Clear}}(\textcolor{keywordtype}{float}\ defaultDepth\ =\ 1e30f);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_z_buffer_ae3596e0d7745cf8e65d768941e2fbbeb}{SetDepth}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{float}\ depth);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a15ac02c77413e7a51e053b39dec5ad0a}{GetDepth}}(\textcolor{keywordtype}{int}\ x);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a7169210d584519cc820e7d27c70d12a9}{GetWidth}}();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<float>\ buffer;}
+\DoxyCodeLine{00061\ \ \ \ \ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

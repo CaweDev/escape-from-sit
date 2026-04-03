@@ -1,0 +1,84 @@
+\doxysection{Game::\+Zone\+Manager Class Reference}
+\hypertarget{class_game_1_1_zone_manager}{}\label{class_game_1_1_zone_manager}\index{Game::ZoneManager@{Game::ZoneManager}}
+
+
+Handles map zone logic and random position generation within zones.  
+
+
+
+
+{\ttfamily \+\#include $<$Zone\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_zone_manager_aa6c47a161e3e0e30e5e0c350ab46fdea}{Init}} (\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*}map, int w, int h)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_zone_manager_a2b623d2642846d42ae628a3410b828c9}{Set\+Zone\+Grid}} (const std::\+vector$<$ int $>$ \&grid)
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_zone_manager_ab05784fec6b07f2454638614fe558979}{Get\+Zone\+Id}} (int x, int y) const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_zone_manager_a20ad1b3567931576a60e87ca62364924}{Pick\+Random\+Walkable\+In\+Zone}} (int zone\+Id, int \&outX, int \&outY) const
+\item 
+const std::\+vector$<$ int $>$ \& \doxymbox{\hyperlink{class_game_1_1_zone_manager_aec1f4aea997751cacd5d921e9dca741a}{Get\+Grid}} () const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_zone_manager_af4ed6d6a360b0b7636e98ebb1119c6cb}{W}} () const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_zone_manager_a2584244b284c25e92a8d38dc57759f2f}{H}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles map zone logic and random position generation within zones. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_zone_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_zone_manager_aec1f4aea997751cacd5d921e9dca741a}\index{Game::ZoneManager@{Game::ZoneManager}!GetGrid@{GetGrid}}
+\index{GetGrid@{GetGrid}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{GetGrid()}{GetGrid()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_aec1f4aea997751cacd5d921e9dca741a} 
+const std::\+vector$<$ int $>$ \& Game::\+\+Zone\+Manager::\+\+Get\+Grid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_zone_manager_ab05784fec6b07f2454638614fe558979}\index{Game::ZoneManager@{Game::ZoneManager}!GetZoneId@{GetZoneId}}
+\index{GetZoneId@{GetZoneId}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{GetZoneId()}{GetZoneId()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_ab05784fec6b07f2454638614fe558979} 
+int Game::\+\+Zone\+Manager::\+\+Get\+Zone\+Id (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_zone_manager_a2584244b284c25e92a8d38dc57759f2f}\index{Game::ZoneManager@{Game::ZoneManager}!H@{H}}
+\index{H@{H}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{H()}{H()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_a2584244b284c25e92a8d38dc57759f2f} 
+int Game::\+\+Zone\+Manager::\+H (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_zone_manager_aa6c47a161e3e0e30e5e0c350ab46fdea}\index{Game::ZoneManager@{Game::ZoneManager}!Init@{Init}}
+\index{Init@{Init}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_aa6c47a161e3e0e30e5e0c350ab46fdea} 
+void Game::\+\+Zone\+Manager::\+\+Init (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*}}]{map}{, }\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_zone_manager_a20ad1b3567931576a60e87ca62364924}\index{Game::ZoneManager@{Game::ZoneManager}!PickRandomWalkableInZone@{PickRandomWalkableInZone}}
+\index{PickRandomWalkableInZone@{PickRandomWalkableInZone}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{PickRandomWalkableInZone()}{PickRandomWalkableInZone()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_a20ad1b3567931576a60e87ca62364924} 
+bool Game::\+\+Zone\+Manager::\+\+Pick\+Random\+Walkable\+In\+Zone (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{, }\item[{int \&}]{outX}{, }\item[{int \&}]{outY}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_zone_manager_a2b623d2642846d42ae628a3410b828c9}\index{Game::ZoneManager@{Game::ZoneManager}!SetZoneGrid@{SetZoneGrid}}
+\index{SetZoneGrid@{SetZoneGrid}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{SetZoneGrid()}{SetZoneGrid()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_a2b623d2642846d42ae628a3410b828c9} 
+void Game::\+\+Zone\+Manager::\+\+Set\+Zone\+Grid (\begin{DoxyParamCaption}\item[{const std::\+vector$<$ int $>$ \&}]{grid}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_zone_manager_af4ed6d6a360b0b7636e98ebb1119c6cb}\index{Game::ZoneManager@{Game::ZoneManager}!W@{W}}
+\index{W@{W}!Game::ZoneManager@{Game::ZoneManager}}
+\doxysubsubsection{\texorpdfstring{W()}{W()}}
+{\footnotesize\ttfamily \label{class_game_1_1_zone_manager_af4ed6d6a360b0b7636e98ebb1119c6cb} 
+int Game::\+\+Zone\+Manager::\+W (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Zone\+Manager/\+\doxymbox{\hyperlink{_zone_manager_8hpp}{Zone\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Zone\+Manager/\+\doxymbox{\hyperlink{_zone_manager_8cpp}{Zone\+Manager.\+cpp}}\end{DoxyCompactItemize}

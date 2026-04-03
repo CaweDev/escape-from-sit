@@ -1,0 +1,52 @@
+\doxysection{Engine::\+Texture\+Utils Class Reference}
+\hypertarget{class_engine_1_1_texture_utils}{}\label{class_engine_1_1_texture_utils}\index{Engine::TextureUtils@{Engine::TextureUtils}}
+
+
+Static utility class for texture operations.  
+
+
+
+
+{\ttfamily \+\#include $<$Texture\+Utils.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_texture_utils_a3de0200f73c940d23254ad8d947a194f}{Load\+Cpu\+Pixels}} (const std::\+string \&path, \doxymbox{\hyperlink{struct_engine_1_1_cpu_texture}{Cpu\+Texture}} \&out)
+\begin{DoxyCompactList}\small\item\em Loads a PNG from disk into a \doxylink{struct_engine_1_1_cpu_texture}{Cpu\+Texture} using Windows Imaging \doxylink{class_engine_1_1_component}{Component} (WIC). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static utility class for texture operations. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_texture_utils_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_texture_utils_a3de0200f73c940d23254ad8d947a194f}\index{Engine::TextureUtils@{Engine::TextureUtils}!LoadCpuPixels@{LoadCpuPixels}}
+\index{LoadCpuPixels@{LoadCpuPixels}!Engine::TextureUtils@{Engine::TextureUtils}}
+\doxysubsubsection{\texorpdfstring{LoadCpuPixels()}{LoadCpuPixels()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture_utils_a3de0200f73c940d23254ad8d947a194f} 
+bool Engine::\+\+Texture\+Utils::\+\+Load\+Cpu\+Pixels (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{path}{, }\item[{\doxymbox{\hyperlink{struct_engine_1_1_cpu_texture}{Cpu\+Texture}} \&}]{out}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Loads a PNG from disk into a \doxylink{struct_engine_1_1_cpu_texture}{Cpu\+Texture} using Windows Imaging \doxylink{class_engine_1_1_component}{Component} (WIC). 
+
+The result is a tightly-\/packed RGBA8 buffer. Initialises COM for the calling thread if needed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & File path to the PNG image (UTF-\/8). \\
+\hline
+{\em out} & Output \doxylink{struct_engine_1_1_cpu_texture}{Cpu\+Texture} to populate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if loading succeeded; false on any WIC failure. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_texture_utils_8hpp}{Texture\+Utils.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_texture_utils_8cpp}{Texture\+Utils.\+cpp}}\end{DoxyCompactItemize}

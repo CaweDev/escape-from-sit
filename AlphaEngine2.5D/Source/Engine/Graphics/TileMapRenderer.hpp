@@ -146,6 +146,10 @@ namespace Engine {
 		/**
 		 * @brief Assign all sprites for a specific tile type ID.
 		 * @param tileType  Integer tile type returned by TileMap::GetTile().
+		 * @param wall      Wall sprite used when this tile type is rendered as a wall.
+		 * @param ceiling   Ceiling sprite used for ceiling sampling (can be nullptr for color fallback).
+		 * @param floor     Floor sprite used for floor sampling (can be nullptr for color fallback).
+		 * @param door      Optional door sprite for this tile type. Defaults to nullptr.
 		 */
 		void SetTileSprites(int tileType, Sprite* wall, Sprite* ceiling, Sprite* floor, Sprite* door = nullptr);
 

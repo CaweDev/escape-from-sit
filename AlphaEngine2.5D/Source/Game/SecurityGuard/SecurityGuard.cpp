@@ -67,9 +67,7 @@ namespace Game {
 
     bool SecurityGuard::seeded = false;
 
-    /*!
-     * \brief [AUTO] Initialize
-     */
+    
     void SecurityGuard::Initialize() {
         if (!seeded) {
             std::srand((unsigned)std::time(nullptr));
@@ -80,26 +78,11 @@ namespace Game {
         BuildPathBFS_PatrolExplore();
     }
 
-    /*!
-     * \brief [AUTO] OnCCTVSpotted
-     * \param worldPos [in]
-     */
-    /*!
-     * \brief [AUTO] OnCCTVSpotted
-     * \param worldPos [in]
-     */
-    /*!
-     * \brief [AUTO] OnCCTVSpotted
-     * \param worldPos [in]
-     */
-    /*!
-     * \brief [AUTO] OnCCTVSpotted
-     * \param worldPos [in]
-     */
-    /*!
-     * \brief [AUTO] OnCCTVSpotted
-     * \param worldPos [in]
-     */
+    
+    
+    
+    
+    
     void SecurityGuard::OnCCTVSpotted(const Engine::Vector2& worldPos) {
         if (state != GuardState::Patrol) return;
 
@@ -139,9 +122,7 @@ namespace Game {
         isDistracted = false;
     }
 
-    /*!
-     * \brief [AUTO] Update
-     */
+    
     void SecurityGuard::Update() {
         if (!tileMap || !playerTf || !playerData) return;
         UpdateStateColor();
@@ -184,26 +165,11 @@ namespace Game {
         }
     }
 
-    /*!
-     * \brief [AUTO] SetState
-     * \param newState [in]
-     */
-    /*!
-     * \brief [AUTO] SetState
-     * \param newState [in]
-     */
-    /*!
-     * \brief [AUTO] SetState
-     * \param newState [in]
-     */
-    /*!
-     * \brief [AUTO] SetState
-     * \param newState [in]
-     */
-    /*!
-     * \brief [AUTO] SetState
-     * \param newState [in]
-     */
+    
+    
+    
+    
+    
     void SecurityGuard::SetState(GuardState newState) {
         if (state == newState) return;
         GuardState old = state;
@@ -225,31 +191,11 @@ namespace Game {
         }
     }
 
-    /*!
-     * \brief [AUTO] StateToString
-     * \param s [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] StateToString
-     * \param s [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] StateToString
-     * \param s [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] StateToString
-     * \param s [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] StateToString
-     * \param s [in]
-     * \return 
-     */
+    
+    
+    
+    
+    
     const char* SecurityGuard::StateToString(GuardState s) const {
         switch (s) {
         case GuardState::Patrol: return "Patrol";
@@ -340,9 +286,7 @@ namespace Game {
         FollowPath(patrolSpeed);
     }
 
-    /*!
-     * \brief [AUTO] ChaseUpdate
-     */
+    
     void SecurityGuard::ChaseUpdate() {
         if (IsCaught()) {
             if (playerData) {
@@ -519,26 +463,11 @@ namespace Game {
         }
     }
 
-    /*!
-     * \brief [AUTO] CanSeePlayer
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] CanSeePlayer
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] CanSeePlayer
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] CanSeePlayer
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] CanSeePlayer
-     * \return 
-     */
+    
+    
+    
+    
+    
     bool SecurityGuard::CanSeePlayer() const {
 
         if (playerTf) {
@@ -553,26 +482,11 @@ namespace Game {
         
     }
 
-    /*!
-     * \brief [AUTO] IsCaught
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] IsCaught
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] IsCaught
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] IsCaught
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] IsCaught
-     * \return 
-     */
+    
+    
+    
+    
+    
     bool SecurityGuard::IsCaught() const {
 
         if (playerData && playerData->IsInvulnerable()) {
@@ -584,67 +498,22 @@ namespace Game {
         return (dx * dx + dy * dy) <= catchRadius * catchRadius;
     }
 
-    /*!
-     * \brief [AUTO] DistSqTo
-     * \param x [in]
-     * \param y [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] DistSqTo
-     * \param x [in]
-     * \param y [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] DistSqTo
-     * \param x [in]
-     * \param y [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] DistSqTo
-     * \param x [in]
-     * \param y [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] DistSqTo
-     * \param x [in]
-     * \param y [in]
-     * \return 
-     */
+    
+    
+    
+    
+    
     float SecurityGuard::DistSqTo(float x, float y) const {
         float dx = x - gameObject->transform->position.x;
         float dy = y - gameObject->transform->position.y;
         return dx * dx + dy * dy;
     }
 
-    /*!
-     * \brief [AUTO] GetCurrentTile
-     * \param tx [in]
-     * \param ty [in]
-     */
-    /*!
-     * \brief [AUTO] GetCurrentTile
-     * \param tx [in]
-     * \param ty [in]
-     */
-    /*!
-     * \brief [AUTO] GetCurrentTile
-     * \param tx [in]
-     * \param ty [in]
-     */
-    /*!
-     * \brief [AUTO] GetCurrentTile
-     * \param tx [in]
-     * \param ty [in]
-     */
-    /*!
-     * \brief [AUTO] GetCurrentTile
-     * \param tx [in]
-     * \param ty [in]
-     */
+    
+    
+    
+    
+    
     void SecurityGuard::GetCurrentTile(int& tx, int& ty) const {
         tx = (int)gameObject->transform->position.x;
         ty = (int)gameObject->transform->position.y;
@@ -652,36 +521,11 @@ namespace Game {
         ty = std::clamp(ty, 0, tileMap->height - 1);
     }
 
-    /*!
-     * \brief [AUTO] FindDoorAtTile
-     * \param tx [in]
-     * \param ty [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] FindDoorAtTile
-     * \param tx [in]
-     * \param ty [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] FindDoorAtTile
-     * \param tx [in]
-     * \param ty [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] FindDoorAtTile
-     * \param tx [in]
-     * \param ty [in]
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] FindDoorAtTile
-     * \param tx [in]
-     * \param ty [in]
-     * \return 
-     */
+    
+    
+    
+    
+    
     Engine::Door* SecurityGuard::FindDoorAtTile(int tx, int ty) const {
         auto* scene = Engine::SceneManager::GetActiveScene();
         if (!scene) return nullptr;
@@ -697,9 +541,7 @@ namespace Game {
         return nullptr;
     }
 
-    /*!
-     * \brief [AUTO] UpdateDoorAuto
-     */
+    
     void SecurityGuard::UpdateDoorAuto() {
         const float releaseDistSq = doorHoldReleaseDist * doorHoldReleaseDist;
         const float interactDist = GetSecurityGuardConfig().doorInteractDistance;
@@ -825,26 +667,11 @@ namespace Game {
         heldDoor->RequestOpen(this);
     }
 
-    /*!
-     * \brief [AUTO] FollowPath
-     * \param speed [in]
-     */
-    /*!
-     * \brief [AUTO] FollowPath
-     * \param speed [in]
-     */
-    /*!
-     * \brief [AUTO] FollowPath
-     * \param speed [in]
-     */
-    /*!
-     * \brief [AUTO] FollowPath
-     * \param speed [in]
-     */
-    /*!
-     * \brief [AUTO] FollowPath
-     * \param speed [in]
-     */
+    
+    
+    
+    
+    
     void SecurityGuard::FollowPath(float speed) {
         auto rb = gameObject->GetComponent<Engine::Rigidbody2D>();
 
@@ -894,31 +721,11 @@ namespace Game {
         }
     }
 
-    /*!
-     * \brief [AUTO] BuildPathBFS_ToGoal
-     * \param gx [in]
-     * \param gy [in]
-     */
-    /*!
-     * \brief [AUTO] BuildPathBFS_ToGoal
-     * \param gx [in]
-     * \param gy [in]
-     */
-    /*!
-     * \brief [AUTO] BuildPathBFS_ToGoal
-     * \param gx [in]
-     * \param gy [in]
-     */
-    /*!
-     * \brief [AUTO] BuildPathBFS_ToGoal
-     * \param gx [in]
-     * \param gy [in]
-     */
-    /*!
-     * \brief [AUTO] BuildPathBFS_ToGoal
-     * \param gx [in]
-     * \param gy [in]
-     */
+    
+    
+    
+    
+    
     void SecurityGuard::BuildPathBFS_ToGoal(int gx, int gy) {
         path.clear();
         pathIndex = 0;
@@ -1002,9 +809,7 @@ namespace Game {
         sr->color = c;
     }
 
-    /*!
-     * \brief [AUTO] BuildPathBFS_PatrolExplore
-     */
+    
     void SecurityGuard::BuildPathBFS_PatrolExplore() {
         if (!tileMap) return;
 

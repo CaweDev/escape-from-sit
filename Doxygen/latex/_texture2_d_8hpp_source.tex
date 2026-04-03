@@ -1,0 +1,73 @@
+\doxysection{Texture2\+D.\+hpp}
+\hypertarget{_texture2_d_8hpp_source}{}\label{_texture2_d_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/Texture2D.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/Texture2D.hpp}}
+\doxymbox{\hyperlink{_texture2_d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{NineSliceBorder}}}
+\DoxyCodeLine{00020\ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border_a3748f3dfac1728758e4fc18e0acb447b}{left}}\ \ \ =\ 0;\ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border_a20c39d421ffe5067ddbc8b5d7cab34f7}{right}}\ \ =\ 0;\ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border_ac43be627fc50ce17edb2eea4ef9cea80}{top}}\ \ \ \ =\ 0;\ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border_a250c0cf4fa324d1825ea448983eb3b65}{bottom}}\ =\ 0;\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ AEGfxTexture*\ m\_texture\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::string\ m\_filePath;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_pixelWidth\ \ =\ 0;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_pixelHeight\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{NineSliceBorder}}\ m\_sliceBorder;\ \ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Singleton\ white\ texture}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}*\ s\_whiteTexture;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}(\textcolor{keyword}{const}\ std::string\&\ filePath);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_af52b93c989c53def45cb2b5c799e6ae8}{\string~Texture2D}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prevent\ copying\ (textures\ are\ resources)}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a53fcea92f9c3a6f1ba6dbfcc0be39e79}{Texture2D}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_af2a007bc49a20ac8b775b304b929805f}{operator=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Allow\ moving}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_af2a007bc49a20ac8b775b304b929805f}{operator=}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a8efe2c83c7dbe47d932390276870b5e2}{Load}}(\textcolor{keyword}{const}\ std::string\&\ filePath);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a60e45b664d285861509d45ff07662df4}{Unload}}();}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a50856647b12f44f452002169923f8ced}{IsLoaded}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texture\ !=\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ AEGfxTexture*\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_afc9dcc6dcfc7b7b06c04f5da7ec1e84b}{GetNativeTexture}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texture;\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_ad837cb748822c54254e047fd8acbbb1d}{GetFilePath}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_filePath;\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_ac4756fe9969ba4669de5e8a0689e51ca}{GetPixelWidth}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pixelWidth;\ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a72247a0a61f3bd5d3b6798e27b383aea}{GetPixelHeight}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pixelHeight;\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a7338a1a6aced4ea41cad1709b6c8e367}{SetSliceBorder}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{NineSliceBorder}}\&\ border)\ \{\ m\_sliceBorder\ =\ border;\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{NineSliceBorder}}\&\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a2ed36afe1da524dec113bb7f7f838075}{GetSliceBorder}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_sliceBorder;\ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a71a6d74e87b3f824c22654393d41f526}{WhiteTexture}}();}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a73364e2ab5d1e206a95512809f48e6cd}{InitializeStatics}}();}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a65139ab217b68a7804af7639be409312}{ShutdownStatics}}();}
+\DoxyCodeLine{00136\ \ \ \ \ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

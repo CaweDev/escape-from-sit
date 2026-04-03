@@ -1,0 +1,102 @@
+\doxysection{UI::\+Rect\+Transform Class Reference}
+\hypertarget{class_u_i_1_1_rect_transform}{}\label{class_u_i_1_1_rect_transform}\index{UI::RectTransform@{UI::RectTransform}}
+
+
+Defines position, size, and anchoring for \doxylink{namespace_u_i}{UI} elements (Unity-\/style).  
+
+
+
+
+{\ttfamily \+\#include $<$Rect\+Transform.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_a26ffa1facc7b95653ae4f8b70de7ee8a}{Calculate\+World\+Rect}} (const \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \&parent\+Rect) const
+\begin{DoxyCompactList}\small\item\em Calculate the world-\/space rectangle given a parent rect. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_a4a1594ac377b4a8500a6a6f3fa5aae0e}{Set\+Stretch\+All}} ()
+\begin{DoxyCompactList}\small\item\em Set anchors to stretch to fill parent. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_aceb88ffa80981a6ed1a004365bf62820}{Set\+Centered}} (f32 width, f32 height)
+\begin{DoxyCompactList}\small\item\em Set anchors to center with fixed size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_aaafec48884823c8afa9687388d6288f1}{UIElement}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines position, size, and anchoring for \doxylink{namespace_u_i}{UI} elements (Unity-\/style). 
+
+Coordinate system:\+
+\begin{DoxyItemize}
+\item anchor\+Min/\+anchor\+Max:\+ Normalized (0-\/1) relative to parent
+\item pivot:\+ Normalized (0-\/1) relative to this element (0,0 = bottom-\/left, 1,1 = top-\/right)
+\item anchored\+Position:\+ Offset in pixels from anchor midpoint
+\item size\+Delta:\+ Size offset or fixed size 
+\end{DoxyItemize}
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_rect_transform_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_rect_transform_a26ffa1facc7b95653ae4f8b70de7ee8a}\index{UI::RectTransform@{UI::RectTransform}!CalculateWorldRect@{CalculateWorldRect}}
+\index{CalculateWorldRect@{CalculateWorldRect}!UI::RectTransform@{UI::RectTransform}}
+\doxysubsubsection{\texorpdfstring{CalculateWorldRect()}{CalculateWorldRect()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_rect_transform_a26ffa1facc7b95653ae4f8b70de7ee8a} 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} UI::\+\+Rect\+Transform::\+\+Calculate\+World\+Rect (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \&}]{parent\+Rect}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calculate the world-\/space rectangle given a parent rect. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent\+Rect} & The parent element\textquotesingle{}s world rect (or canvas rect for root elements) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+World-\/space rectangle for this element 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_rect_transform_aceb88ffa80981a6ed1a004365bf62820}\index{UI::RectTransform@{UI::RectTransform}!SetCentered@{SetCentered}}
+\index{SetCentered@{SetCentered}!UI::RectTransform@{UI::RectTransform}}
+\doxysubsubsection{\texorpdfstring{SetCentered()}{SetCentered()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_rect_transform_aceb88ffa80981a6ed1a004365bf62820} 
+void UI::\+\+Rect\+Transform::\+\+Set\+Centered (\begin{DoxyParamCaption}\item[{f32}]{width}{, }\item[{f32}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set anchors to center with fixed size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Width in pixels \\
+\hline
+{\em height} & Height in pixels \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_rect_transform_a4a1594ac377b4a8500a6a6f3fa5aae0e}\index{UI::RectTransform@{UI::RectTransform}!SetStretchAll@{SetStretchAll}}
+\index{SetStretchAll@{SetStretchAll}!UI::RectTransform@{UI::RectTransform}}
+\doxysubsubsection{\texorpdfstring{SetStretchAll()}{SetStretchAll()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_rect_transform_a4a1594ac377b4a8500a6a6f3fa5aae0e} 
+void UI::\+\+Rect\+Transform::\+\+Set\+Stretch\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set anchors to stretch to fill parent. 
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_u_i_1_1_rect_transform_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_u_i_1_1_rect_transform_aaafec48884823c8afa9687388d6288f1}\index{UI::RectTransform@{UI::RectTransform}!UIElement@{UIElement}}
+\index{UIElement@{UIElement}!UI::RectTransform@{UI::RectTransform}}
+\doxysubsubsection{\texorpdfstring{UIElement}{UIElement}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_rect_transform_aaafec48884823c8afa9687388d6288f1} 
+friend class UIElement\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_rect_transform_8hpp}{Rect\+Transform.\+hpp}}\end{DoxyCompactItemize}

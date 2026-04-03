@@ -1,0 +1,242 @@
+\doxysection{UI::\+Interaction\+Prompt Class Reference}
+\hypertarget{class_u_i_1_1_interaction_prompt}{}\label{class_u_i_1_1_interaction_prompt}\index{UI::InteractionPrompt@{UI::InteractionPrompt}}
+
+
+Displays an interaction prompt below the crosshair.  
+
+
+
+
+{\ttfamily \+\#include $<$Interaction\+Prompt.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_af80ba180bd26ab4c0200a9ec288ba866}{Interaction\+Prompt}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a856093c7a9a553893403539d1ab560ce}{\texorpdfstring{$\sim$}{\string~}\+Interaction\+Prompt}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_af2d484fc0fbbbee31e1a1a8d70693090}{Show}} (const std::\+string \&action\+Text)
+\begin{DoxyCompactList}\small\item\em Show the prompt with the given action text. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_aee57991f60fb98e69292a09ef7d6128f}{Hide}} ()
+\begin{DoxyCompactList}\small\item\em Hide the prompt. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a583251ba735d7b27f1d48827b74f56f0}{Is\+Showing}} () const
+\begin{DoxyCompactList}\small\item\em Check if the prompt is currently visible. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a7b37ea6b9ba0b403dcbdb707c255f0af}{Set\+Key\+Text}} (const std::\+string \&key\+Text)
+\begin{DoxyCompactList}\small\item\em Set the key text prefix (e.\+g., "{}\+[\+E]\+"{}). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a265fcda2f1021909fde659fe0cc874cb}{Set\+Text\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Set the text color. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_ae6a00e1ca4171eb44170d420e1a10685}{Set\+Font\+Size}} (f32 size)
+\begin{DoxyCompactList}\small\item\em Set the font size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update the element (called each frame if enabled). \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{Render}} ()
+\begin{DoxyCompactList}\small\item\em Render the element (called each frame if visible). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Displays an interaction prompt below the crosshair. 
+
+Shows text like "{}\+[\+E]\+ Open"{} when the player is looking at an interactable object. Uses the \doxylink{namespace_u_i}{UI} hierarchy system with \doxylink{class_u_i_1_1_text}{Text} as a child. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_interaction_prompt_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_interaction_prompt_af80ba180bd26ab4c0200a9ec288ba866}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!InteractionPrompt@{InteractionPrompt}}
+\index{InteractionPrompt@{InteractionPrompt}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{InteractionPrompt()}{InteractionPrompt()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_af80ba180bd26ab4c0200a9ec288ba866} 
+UI::\+\+Interaction\+Prompt::\+\+Interaction\+Prompt (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_interaction_prompt_a856093c7a9a553893403539d1ab560ce}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!````~InteractionPrompt@{\texorpdfstring{$\sim$}{\string~}InteractionPrompt}}
+\index{````~InteractionPrompt@{\texorpdfstring{$\sim$}{\string~}InteractionPrompt}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}InteractionPrompt()}{\string~InteractionPrompt()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_a856093c7a9a553893403539d1ab560ce} 
+virtual UI::\+\+Interaction\+Prompt::\+\texorpdfstring{$\sim$}{\string~}\+Interaction\+Prompt (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_interaction_prompt_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_interaction_prompt_aee57991f60fb98e69292a09ef7d6128f}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!Hide@{Hide}}
+\index{Hide@{Hide}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{Hide()}{Hide()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_aee57991f60fb98e69292a09ef7d6128f} 
+void UI::\+\+Interaction\+Prompt::\+\+Hide (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Hide the prompt. 
+
+\Hypertarget{class_u_i_1_1_interaction_prompt_a583251ba735d7b27f1d48827b74f56f0}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!IsShowing@{IsShowing}}
+\index{IsShowing@{IsShowing}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{IsShowing()}{IsShowing()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_a583251ba735d7b27f1d48827b74f56f0} 
+bool UI::\+\+Interaction\+Prompt::\+\+Is\+Showing (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if the prompt is currently visible. 
+
+\Hypertarget{class_u_i_1_1_interaction_prompt_ae6a00e1ca4171eb44170d420e1a10685}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!SetFontSize@{SetFontSize}}
+\index{SetFontSize@{SetFontSize}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{SetFontSize()}{SetFontSize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_ae6a00e1ca4171eb44170d420e1a10685} 
+void UI::\+\+Interaction\+Prompt::\+\+Set\+Font\+Size (\begin{DoxyParamCaption}\item[{f32}]{size}{}\end{DoxyParamCaption})}
+
+
+
+Set the font size. 
+
+\Hypertarget{class_u_i_1_1_interaction_prompt_a7b37ea6b9ba0b403dcbdb707c255f0af}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!SetKeyText@{SetKeyText}}
+\index{SetKeyText@{SetKeyText}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{SetKeyText()}{SetKeyText()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_a7b37ea6b9ba0b403dcbdb707c255f0af} 
+void UI::\+\+Interaction\+Prompt::\+\+Set\+Key\+Text (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key\+Text}{}\end{DoxyParamCaption})}
+
+
+
+Set the key text prefix (e.\+g., "{}\+[\+E]\+"{}). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key\+Text} & The key indicator to show before action text \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_interaction_prompt_a265fcda2f1021909fde659fe0cc874cb}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!SetTextColor@{SetTextColor}}
+\index{SetTextColor@{SetTextColor}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{SetTextColor()}{SetTextColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_a265fcda2f1021909fde659fe0cc874cb} 
+void UI::\+\+Interaction\+Prompt::\+\+Set\+Text\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Set the text color. 
+
+\Hypertarget{class_u_i_1_1_interaction_prompt_af2d484fc0fbbbee31e1a1a8d70693090}\index{UI::InteractionPrompt@{UI::InteractionPrompt}!Show@{Show}}
+\index{Show@{Show}!UI::InteractionPrompt@{UI::InteractionPrompt}}
+\doxysubsubsection{\texorpdfstring{Show()}{Show()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_interaction_prompt_af2d484fc0fbbbee31e1a1a8d70693090} 
+void UI::\+\+Interaction\+Prompt::\+\+Show (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{action\+Text}{}\end{DoxyParamCaption})}
+
+
+
+Show the prompt with the given action text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em action\+Text} & The action description (e.\+g., "{}\+Open"{}, "{}\+Pick up"{}) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Specialized/\+\doxymbox{\hyperlink{_interaction_prompt_8hpp}{Interaction\+Prompt.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Specialized/\+\doxymbox{\hyperlink{_interaction_prompt_8cpp}{Interaction\+Prompt.\+cpp}}\end{DoxyCompactItemize}

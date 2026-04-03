@@ -1,0 +1,656 @@
+\doxysection{Game::\+Player\+HUD Class Reference}
+\hypertarget{class_game_1_1_player_h_u_d}{}\label{class_game_1_1_player_h_u_d}\index{Game::PlayerHUD@{Game::PlayerHUD}}
+
+
+Component that creates and manages \doxylink{class_u_i_1_1_minimap}{Minimap} and \doxylink{class_u_i_1_1_map}{Map} \doxylink{namespace_u_i}{UI} elements.  
+
+
+
+
+{\ttfamily \+\#include $<$Player\+HUD.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a57f46870f9a40e7954d266792152dd6f}{Player\+HUD}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a7d48cf866a815b49461c7b72ea4d7ebe}{\texorpdfstring{$\sim$}{\string~}\+Player\+HUD}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_aa7f71a0753a567811f7065673b63fe64}{Update\+NPCApproach}} (int annoying\+Count, float nearest\+Annoying\+Dist, int bully\+Count, float nearest\+Bully\+Dist)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a1ddbae0b3ead4f6dc2b254a91542f4cf}{Set\+Bandit\+Visualizer}} (\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::\+\+Bandit\+Visualizer}} \texorpdfstring{$\ast$}{*}bv)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a70467b04b1d6e3336b686f901c0c5468}{Awake}} () override
+\begin{DoxyCompactList}\small\item\em Called when the component is created. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af34e8f49ea1f13c4c9557e57e1374827}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Called every frame. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a31ac827501e0e5baea61af049e33b106}{On\+Destroy}} () override
+\begin{DoxyCompactList}\small\item\em Called when the component is destroyed. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a07a11db06498648775c76f4d5ed2ea76}{Set\+Tile\+Map}} (\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*}tile\+Map)
+\begin{DoxyCompactList}\small\item\em Set the tile map reference for both minimap and map. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af0c9cac33450a485c9afaebed42f1f75}{Get\+Tile\+Map}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a511804caccb9bb387f4e5fbd602364bf}{Set\+Zone\+Getter}} (std::\+function$<$ int(int, int)$>$ fn)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a06066b79a20d744c6ae78013b5416c57}{Set\+Player\+Transform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}})
+\begin{DoxyCompactList}\small\item\em Set the player transform for position tracking. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a9d191ab405991493908ad20dc27ff8dd}{Get\+Player\+Transform}} () const
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::\+\+Minimap}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a42b0ab986bffb4b58f4d60d32df38076}{Get\+Minimap}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a4d6405a3e95df7cc67c7827ec3a63694}{Add\+Enemy\+Transform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}enemy\+Transform)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a63d6915598ff743fa883ffb902f4f737}{Add\+CCTVTransform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}cctv\+Transform)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a88034fbac453932f8af9a5c027786c5c}{Clear\+CCTVs}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af582146b820632c469a52c275dedc11a}{Add\+Door}} (\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}} \texorpdfstring{$\ast$}{*}door)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a77e2decb152e1caa8c1cf4bdecdde8dd}{Toggle\+Map}} ()
+\begin{DoxyCompactList}\small\item\em Toggle the full map visibility. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a8840249678b935f9fd51cf952e7f0f49}{Toggle\+Heatmap}} ()
+\begin{DoxyCompactList}\small\item\em Toggle the heatmap overlay visibility. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a52ef9752575011a319a2cce8e589d938}{Is\+Map\+Visible}} () const
+\begin{DoxyCompactList}\small\item\em Check if the full map is visible. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a40084714879d62f45ca5d8e8945ccbc3}{Is\+Heatmap\+Visible}} () const
+\begin{DoxyCompactList}\small\item\em Check if the heatmap overlay is visible. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a1b536603f7ffa131366de52c471338d2}{Show\+Map}} ()
+\begin{DoxyCompactList}\small\item\em Show the full map. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a7a19df5c99917d6ce962ed314ed2a428}{Hide\+Map}} ()
+\begin{DoxyCompactList}\small\item\em Hide the full map. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a4aff4400329b9af30ab714611ea8c955}{Show\+Heatmap}} ()
+\begin{DoxyCompactList}\small\item\em Show the heatmap overlay. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af91ba200f80bfe62f5686751b4cbde60}{Hide\+Heatmap}} ()
+\begin{DoxyCompactList}\small\item\em Hide the heatmap overlay. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_acbbd385de5e03e225d23776f9cb0607f}{Set\+Heatmap}} (class \doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}} \texorpdfstring{$\ast$}{*}heatmap)
+\begin{DoxyCompactList}\small\item\em Set the heatmap data source. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a2e68913e496e278fc648b9cdf572169f}{Get\+Map}} () const
+\begin{DoxyCompactList}\small\item\em Get the minimap element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a58325693275a124b181a39137c5d7edc}{Set\+Minimap\+Width}} (f32 width)
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ac232c798c65d3edaca58179cd7287cea}{Get\+Minimap\+Width}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af76e55da6ad24886550a50967135eb79}{Set\+Minimap\+Height}} (f32 height)
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ac3a50a7f8cd1e185163d979086f6a73f}{Get\+Minimap\+Height}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a96edaf6f1bcb062eefe93f79486784bd}{Set\+Minimap\+Margin}} (f32 margin)
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a228bc0a19cd3d80d444d75d313d83b6c}{Get\+Minimap\+Margin}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a8ec63fe5c56c2f21d8d8eef4ea8dd9bd}{Set\+Map\+Width}} (f32 width)
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_afac6ba1084aa28d976e87517ca0bc4d1}{Get\+Map\+Width}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af26cbb222a54851dca459c65925b338f}{Set\+Map\+Height}} (f32 height)
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a1298183770608fa2f1cf7369c8894c33}{Get\+Map\+Height}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ae5b280d46c0cf8129c592a603051ddcf}{Update\+Alert\+Level}} (int stage, int priority\+Zone, int guard\+Count)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_acd34f3e982ddc2b97b253ae3e37d1b4d}{Set\+Alert\+UIVisible}} (bool visible)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ac7a680758df8c5821c4f5386c046779a}{Show\+CCTVWarning}} (bool show)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a06cf383d8ae8e2054a2dc9161b76c893}{Set\+Alert\+Detail\+Mode}} (bool detailed)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a14c2614df9fd104c9b18568e8855158a}{Update\+Stamina}} (float current, float max)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ac7b014e2f0ea8c14ba9a9a5e6bcbede8}{Update\+High\+Score}} (float high\+Score)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a3a74f14e2e0d2bc4732f85bcd27b5d7a}{Update\+Current\+Time}} (float current\+Time)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a4ebb88b271fc8184709e714798b9cfab}{Update\+Guard\+Proximity}} (float nearest\+Distance)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a953dbd3d6dc2d16117c75330ce97fc6f}{Show\+Hack\+Status}} (const std::\+string \&message, float duration=3.\+0f)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a97c015070bf838cfc5779bdf759d5fcb}{Check\+Zone\+Change}} (int zone\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_afb2820af8f4c6747e8cdf95ca9510a56}{Show\+Zone\+Entry}} (int zone\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a55e419392a95ec10f30fd91a35ee811b}{Collect\+Access\+Card}} (int card\+Id, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&collection\+Pos)
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a0b5b12ae773c6c14ef3f53138c8e32b1}{Has\+Access\+Card}} (int card\+Id) const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ae2664af50a80bf429f710f662d679b6d}{Get\+Collected\+Card\+Count}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a17324bd27c23ae110eb77540ac669b37}{Has\+All\+Access\+Cards}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a4b179d006dd4dbf0ad7b7c9c7e46d94e}{Update\+Card\+Display}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a3ecddabef4b35b1a3def2d6ee1e7010c}{Set\+Terminal\+Position}} (int zone\+Id, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&position)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a2e9868f1d82bf93acf9a2d91a9308541}{Get\+Terminal\+Position}} (int zone\+Id) const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_ab1e3f5d63b7a1c9ad6fd149cf4cac8f8}{Set\+Control\+Room\+Position}} (int zone\+Id, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&position)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a96d0eefe9c65d76fa3197d4cde4ca2f9}{Get\+Control\+Room\+Position}} (int zone\+Id) const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af8983a0416aee524b45d261f7aa41931}{Toggle\+Path}} (int card\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a85ea91003e11f4d4e3480a6a000d00d2}{Update\+Active\+Path}} ()
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a8f8e92103be897b6888a8c4fa0eecbf3}{Get\+Card\+Color}} (int card\+Id) const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a04b61ed882b599e893c45fab99b01ea8}{Update\+Power\+Up\+UI}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Component that creates and manages \doxylink{class_u_i_1_1_minimap}{Minimap} and \doxylink{class_u_i_1_1_map}{Map} \doxylink{namespace_u_i}{UI} elements. 
+
+Attach this to a Game\+Object (typically the \doxylink{class_game_1_1_player}{Player}) to get:\+
+\begin{DoxyItemize}
+\item A corner minimap showing nearby tiles
+\item A toggleable full map (M key) 
+\end{DoxyItemize}
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_player_h_u_d_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_player_h_u_d_a57f46870f9a40e7954d266792152dd6f}\index{Game::PlayerHUD@{Game::PlayerHUD}!PlayerHUD@{PlayerHUD}}
+\index{PlayerHUD@{PlayerHUD}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{PlayerHUD()}{PlayerHUD()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a57f46870f9a40e7954d266792152dd6f} 
+Game::\+\+Player\+HUD::\+\+Player\+HUD (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a7d48cf866a815b49461c7b72ea4d7ebe}\index{Game::PlayerHUD@{Game::PlayerHUD}!````~PlayerHUD@{\texorpdfstring{$\sim$}{\string~}PlayerHUD}}
+\index{````~PlayerHUD@{\texorpdfstring{$\sim$}{\string~}PlayerHUD}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}PlayerHUD()}{\string~PlayerHUD()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a7d48cf866a815b49461c7b72ea4d7ebe} 
+Game::\+\+Player\+HUD::\+\texorpdfstring{$\sim$}{\string~}\+Player\+HUD (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_player_h_u_d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_player_h_u_d_a63d6915598ff743fa883ffb902f4f737}\index{Game::PlayerHUD@{Game::PlayerHUD}!AddCCTVTransform@{AddCCTVTransform}}
+\index{AddCCTVTransform@{AddCCTVTransform}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{AddCCTVTransform()}{AddCCTVTransform()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a63d6915598ff743fa883ffb902f4f737} 
+void Game::\+\+Player\+HUD::\+\+Add\+CCTVTransform (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}}]{cctv\+Transform}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_af582146b820632c469a52c275dedc11a}\index{Game::PlayerHUD@{Game::PlayerHUD}!AddDoor@{AddDoor}}
+\index{AddDoor@{AddDoor}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{AddDoor()}{AddDoor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af582146b820632c469a52c275dedc11a} 
+void Game::\+\+Player\+HUD::\+\+Add\+Door (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}} \texorpdfstring{$\ast$}{*}}]{door}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a4d6405a3e95df7cc67c7827ec3a63694}\index{Game::PlayerHUD@{Game::PlayerHUD}!AddEnemyTransform@{AddEnemyTransform}}
+\index{AddEnemyTransform@{AddEnemyTransform}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{AddEnemyTransform()}{AddEnemyTransform()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a4d6405a3e95df7cc67c7827ec3a63694} 
+void Game::\+\+Player\+HUD::\+\+Add\+Enemy\+Transform (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}}]{enemy\+Transform}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a70467b04b1d6e3336b686f901c0c5468}\index{Game::PlayerHUD@{Game::PlayerHUD}!Awake@{Awake}}
+\index{Awake@{Awake}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a70467b04b1d6e3336b686f901c0c5468} 
+void Game::\+\+Player\+HUD::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called when the component is created. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_player_h_u_d_a97c015070bf838cfc5779bdf759d5fcb}\index{Game::PlayerHUD@{Game::PlayerHUD}!CheckZoneChange@{CheckZoneChange}}
+\index{CheckZoneChange@{CheckZoneChange}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{CheckZoneChange()}{CheckZoneChange()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a97c015070bf838cfc5779bdf759d5fcb} 
+void Game::\+\+Player\+HUD::\+\+Check\+Zone\+Change (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a88034fbac453932f8af9a5c027786c5c}\index{Game::PlayerHUD@{Game::PlayerHUD}!ClearCCTVs@{ClearCCTVs}}
+\index{ClearCCTVs@{ClearCCTVs}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ClearCCTVs()}{ClearCCTVs()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a88034fbac453932f8af9a5c027786c5c} 
+void Game::\+\+Player\+HUD::\+\+Clear\+CCTVs (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a55e419392a95ec10f30fd91a35ee811b}\index{Game::PlayerHUD@{Game::PlayerHUD}!CollectAccessCard@{CollectAccessCard}}
+\index{CollectAccessCard@{CollectAccessCard}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{CollectAccessCard()}{CollectAccessCard()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a55e419392a95ec10f30fd91a35ee811b} 
+void Game::\+\+Player\+HUD::\+\+Collect\+Access\+Card (\begin{DoxyParamCaption}\item[{int}]{card\+Id}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{collection\+Pos}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a8f8e92103be897b6888a8c4fa0eecbf3}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetCardColor@{GetCardColor}}
+\index{GetCardColor@{GetCardColor}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetCardColor()}{GetCardColor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a8f8e92103be897b6888a8c4fa0eecbf3} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+Player\+HUD::\+\+Get\+Card\+Color (\begin{DoxyParamCaption}\item[{int}]{card\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ae2664af50a80bf429f710f662d679b6d}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetCollectedCardCount@{GetCollectedCardCount}}
+\index{GetCollectedCardCount@{GetCollectedCardCount}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetCollectedCardCount()}{GetCollectedCardCount()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ae2664af50a80bf429f710f662d679b6d} 
+int Game::\+\+Player\+HUD::\+\+Get\+Collected\+Card\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a96d0eefe9c65d76fa3197d4cde4ca2f9}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetControlRoomPosition@{GetControlRoomPosition}}
+\index{GetControlRoomPosition@{GetControlRoomPosition}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetControlRoomPosition()}{GetControlRoomPosition()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a96d0eefe9c65d76fa3197d4cde4ca2f9} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+Player\+HUD::\+\+Get\+Control\+Room\+Position (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a2e68913e496e278fc648b9cdf572169f}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMap@{GetMap}}
+\index{GetMap@{GetMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMap()}{GetMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a2e68913e496e278fc648b9cdf572169f} 
+\doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}} \texorpdfstring{$\ast$}{*} Game::\+\+Player\+HUD::\+\+Get\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the minimap element. 
+
+Get the map element \Hypertarget{class_game_1_1_player_h_u_d_a1298183770608fa2f1cf7369c8894c33}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMapHeight@{GetMapHeight}}
+\index{GetMapHeight@{GetMapHeight}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMapHeight()}{GetMapHeight()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a1298183770608fa2f1cf7369c8894c33} 
+f32 Game::\+\+Player\+HUD::\+\+Get\+Map\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_afac6ba1084aa28d976e87517ca0bc4d1}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMapWidth@{GetMapWidth}}
+\index{GetMapWidth@{GetMapWidth}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMapWidth()}{GetMapWidth()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_afac6ba1084aa28d976e87517ca0bc4d1} 
+f32 Game::\+\+Player\+HUD::\+\+Get\+Map\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a42b0ab986bffb4b58f4d60d32df38076}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMinimap@{GetMinimap}}
+\index{GetMinimap@{GetMinimap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMinimap()}{GetMinimap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a42b0ab986bffb4b58f4d60d32df38076} 
+\doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::\+\+Minimap}} \texorpdfstring{$\ast$}{*} Game::\+\+Player\+HUD::\+\+Get\+Minimap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ac3a50a7f8cd1e185163d979086f6a73f}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMinimapHeight@{GetMinimapHeight}}
+\index{GetMinimapHeight@{GetMinimapHeight}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMinimapHeight()}{GetMinimapHeight()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ac3a50a7f8cd1e185163d979086f6a73f} 
+f32 Game::\+\+Player\+HUD::\+\+Get\+Minimap\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a228bc0a19cd3d80d444d75d313d83b6c}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMinimapMargin@{GetMinimapMargin}}
+\index{GetMinimapMargin@{GetMinimapMargin}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMinimapMargin()}{GetMinimapMargin()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a228bc0a19cd3d80d444d75d313d83b6c} 
+f32 Game::\+\+Player\+HUD::\+\+Get\+Minimap\+Margin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ac232c798c65d3edaca58179cd7287cea}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetMinimapWidth@{GetMinimapWidth}}
+\index{GetMinimapWidth@{GetMinimapWidth}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetMinimapWidth()}{GetMinimapWidth()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ac232c798c65d3edaca58179cd7287cea} 
+f32 Game::\+\+Player\+HUD::\+\+Get\+Minimap\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a9d191ab405991493908ad20dc27ff8dd}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetPlayerTransform@{GetPlayerTransform}}
+\index{GetPlayerTransform@{GetPlayerTransform}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetPlayerTransform()}{GetPlayerTransform()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a9d191ab405991493908ad20dc27ff8dd} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} Game::\+\+Player\+HUD::\+\+Get\+Player\+Transform (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a2e9868f1d82bf93acf9a2d91a9308541}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetTerminalPosition@{GetTerminalPosition}}
+\index{GetTerminalPosition@{GetTerminalPosition}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetTerminalPosition()}{GetTerminalPosition()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a2e9868f1d82bf93acf9a2d91a9308541} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+Player\+HUD::\+\+Get\+Terminal\+Position (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_h_u_d_af0c9cac33450a485c9afaebed42f1f75}\index{Game::PlayerHUD@{Game::PlayerHUD}!GetTileMap@{GetTileMap}}
+\index{GetTileMap@{GetTileMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{GetTileMap()}{GetTileMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af0c9cac33450a485c9afaebed42f1f75} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} Game::\+\+Player\+HUD::\+\+Get\+Tile\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a0b5b12ae773c6c14ef3f53138c8e32b1}\index{Game::PlayerHUD@{Game::PlayerHUD}!HasAccessCard@{HasAccessCard}}
+\index{HasAccessCard@{HasAccessCard}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{HasAccessCard()}{HasAccessCard()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a0b5b12ae773c6c14ef3f53138c8e32b1} 
+bool Game::\+\+Player\+HUD::\+\+Has\+Access\+Card (\begin{DoxyParamCaption}\item[{int}]{card\+Id}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a17324bd27c23ae110eb77540ac669b37}\index{Game::PlayerHUD@{Game::PlayerHUD}!HasAllAccessCards@{HasAllAccessCards}}
+\index{HasAllAccessCards@{HasAllAccessCards}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{HasAllAccessCards()}{HasAllAccessCards()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a17324bd27c23ae110eb77540ac669b37} 
+bool Game::\+\+Player\+HUD::\+\+Has\+All\+Access\+Cards (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_af91ba200f80bfe62f5686751b4cbde60}\index{Game::PlayerHUD@{Game::PlayerHUD}!HideHeatmap@{HideHeatmap}}
+\index{HideHeatmap@{HideHeatmap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{HideHeatmap()}{HideHeatmap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af91ba200f80bfe62f5686751b4cbde60} 
+void Game::\+\+Player\+HUD::\+\+Hide\+Heatmap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Hide the heatmap overlay. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a7a19df5c99917d6ce962ed314ed2a428}\index{Game::PlayerHUD@{Game::PlayerHUD}!HideMap@{HideMap}}
+\index{HideMap@{HideMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{HideMap()}{HideMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a7a19df5c99917d6ce962ed314ed2a428} 
+void Game::\+\+Player\+HUD::\+\+Hide\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Hide the full map. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a40084714879d62f45ca5d8e8945ccbc3}\index{Game::PlayerHUD@{Game::PlayerHUD}!IsHeatmapVisible@{IsHeatmapVisible}}
+\index{IsHeatmapVisible@{IsHeatmapVisible}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{IsHeatmapVisible()}{IsHeatmapVisible()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a40084714879d62f45ca5d8e8945ccbc3} 
+bool Game::\+\+Player\+HUD::\+\+Is\+Heatmap\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if the heatmap overlay is visible. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a52ef9752575011a319a2cce8e589d938}\index{Game::PlayerHUD@{Game::PlayerHUD}!IsMapVisible@{IsMapVisible}}
+\index{IsMapVisible@{IsMapVisible}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{IsMapVisible()}{IsMapVisible()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a52ef9752575011a319a2cce8e589d938} 
+bool Game::\+\+Player\+HUD::\+\+Is\+Map\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if the full map is visible. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a31ac827501e0e5baea61af049e33b106}\index{Game::PlayerHUD@{Game::PlayerHUD}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a31ac827501e0e5baea61af049e33b106} 
+void Game::\+\+Player\+HUD::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called when the component is destroyed. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_player_h_u_d_a06cf383d8ae8e2054a2dc9161b76c893}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetAlertDetailMode@{SetAlertDetailMode}}
+\index{SetAlertDetailMode@{SetAlertDetailMode}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetAlertDetailMode()}{SetAlertDetailMode()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a06cf383d8ae8e2054a2dc9161b76c893} 
+void Game::\+\+Player\+HUD::\+\+Set\+Alert\+Detail\+Mode (\begin{DoxyParamCaption}\item[{bool}]{detailed}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_acd34f3e982ddc2b97b253ae3e37d1b4d}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetAlertUIVisible@{SetAlertUIVisible}}
+\index{SetAlertUIVisible@{SetAlertUIVisible}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetAlertUIVisible()}{SetAlertUIVisible()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_acd34f3e982ddc2b97b253ae3e37d1b4d} 
+void Game::\+\+Player\+HUD::\+\+Set\+Alert\+UIVisible (\begin{DoxyParamCaption}\item[{bool}]{visible}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a1ddbae0b3ead4f6dc2b254a91542f4cf}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetBanditVisualizer@{SetBanditVisualizer}}
+\index{SetBanditVisualizer@{SetBanditVisualizer}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetBanditVisualizer()}{SetBanditVisualizer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a1ddbae0b3ead4f6dc2b254a91542f4cf} 
+void Game::\+\+Player\+HUD::\+\+Set\+Bandit\+Visualizer (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::\+\+Bandit\+Visualizer}} \texorpdfstring{$\ast$}{*}}]{bv}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ab1e3f5d63b7a1c9ad6fd149cf4cac8f8}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetControlRoomPosition@{SetControlRoomPosition}}
+\index{SetControlRoomPosition@{SetControlRoomPosition}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetControlRoomPosition()}{SetControlRoomPosition()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ab1e3f5d63b7a1c9ad6fd149cf4cac8f8} 
+void Game::\+\+Player\+HUD::\+\+Set\+Control\+Room\+Position (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_acbbd385de5e03e225d23776f9cb0607f}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetHeatmap@{SetHeatmap}}
+\index{SetHeatmap@{SetHeatmap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetHeatmap()}{SetHeatmap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_acbbd385de5e03e225d23776f9cb0607f} 
+void Game::\+\+Player\+HUD::\+\+Set\+Heatmap (\begin{DoxyParamCaption}\item[{class \doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}} \texorpdfstring{$\ast$}{*}}]{heatmap}{}\end{DoxyParamCaption})}
+
+
+
+Set the heatmap data source. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heatmap} & Pointer to heatmap (not owned) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_player_h_u_d_af26cbb222a54851dca459c65925b338f}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetMapHeight@{SetMapHeight}}
+\index{SetMapHeight@{SetMapHeight}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetMapHeight()}{SetMapHeight()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af26cbb222a54851dca459c65925b338f} 
+void Game::\+\+Player\+HUD::\+\+Set\+Map\+Height (\begin{DoxyParamCaption}\item[{f32}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a8ec63fe5c56c2f21d8d8eef4ea8dd9bd}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetMapWidth@{SetMapWidth}}
+\index{SetMapWidth@{SetMapWidth}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetMapWidth()}{SetMapWidth()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a8ec63fe5c56c2f21d8d8eef4ea8dd9bd} 
+void Game::\+\+Player\+HUD::\+\+Set\+Map\+Width (\begin{DoxyParamCaption}\item[{f32}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_af76e55da6ad24886550a50967135eb79}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetMinimapHeight@{SetMinimapHeight}}
+\index{SetMinimapHeight@{SetMinimapHeight}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetMinimapHeight()}{SetMinimapHeight()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af76e55da6ad24886550a50967135eb79} 
+void Game::\+\+Player\+HUD::\+\+Set\+Minimap\+Height (\begin{DoxyParamCaption}\item[{f32}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a96edaf6f1bcb062eefe93f79486784bd}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetMinimapMargin@{SetMinimapMargin}}
+\index{SetMinimapMargin@{SetMinimapMargin}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetMinimapMargin()}{SetMinimapMargin()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a96edaf6f1bcb062eefe93f79486784bd} 
+void Game::\+\+Player\+HUD::\+\+Set\+Minimap\+Margin (\begin{DoxyParamCaption}\item[{f32}]{margin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a58325693275a124b181a39137c5d7edc}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetMinimapWidth@{SetMinimapWidth}}
+\index{SetMinimapWidth@{SetMinimapWidth}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetMinimapWidth()}{SetMinimapWidth()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a58325693275a124b181a39137c5d7edc} 
+void Game::\+\+Player\+HUD::\+\+Set\+Minimap\+Width (\begin{DoxyParamCaption}\item[{f32}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a06066b79a20d744c6ae78013b5416c57}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetPlayerTransform@{SetPlayerTransform}}
+\index{SetPlayerTransform@{SetPlayerTransform}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetPlayerTransform()}{SetPlayerTransform()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a06066b79a20d744c6ae78013b5416c57} 
+void Game::\+\+Player\+HUD::\+\+Set\+Player\+Transform (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}}]{transform}{}\end{DoxyParamCaption})}
+
+
+
+Set the player transform for position tracking. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} & Pointer to player transform (not owned) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_player_h_u_d_a3ecddabef4b35b1a3def2d6ee1e7010c}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetTerminalPosition@{SetTerminalPosition}}
+\index{SetTerminalPosition@{SetTerminalPosition}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetTerminalPosition()}{SetTerminalPosition()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a3ecddabef4b35b1a3def2d6ee1e7010c} 
+void Game::\+\+Player\+HUD::\+\+Set\+Terminal\+Position (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{position}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a07a11db06498648775c76f4d5ed2ea76}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetTileMap@{SetTileMap}}
+\index{SetTileMap@{SetTileMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetTileMap()}{SetTileMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a07a11db06498648775c76f4d5ed2ea76} 
+void Game::\+\+Player\+HUD::\+\+Set\+Tile\+Map (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*}}]{tile\+Map}{}\end{DoxyParamCaption})}
+
+
+
+Set the tile map reference for both minimap and map. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tile\+Map} & Pointer to the tile map (not owned) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_player_h_u_d_a511804caccb9bb387f4e5fbd602364bf}\index{Game::PlayerHUD@{Game::PlayerHUD}!SetZoneGetter@{SetZoneGetter}}
+\index{SetZoneGetter@{SetZoneGetter}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{SetZoneGetter()}{SetZoneGetter()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a511804caccb9bb387f4e5fbd602364bf} 
+void Game::\+\+Player\+HUD::\+\+Set\+Zone\+Getter (\begin{DoxyParamCaption}\item[{std::\+function$<$ int(int, int)$>$}]{fn}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ac7a680758df8c5821c4f5386c046779a}\index{Game::PlayerHUD@{Game::PlayerHUD}!ShowCCTVWarning@{ShowCCTVWarning}}
+\index{ShowCCTVWarning@{ShowCCTVWarning}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ShowCCTVWarning()}{ShowCCTVWarning()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ac7a680758df8c5821c4f5386c046779a} 
+void Game::\+\+Player\+HUD::\+\+Show\+CCTVWarning (\begin{DoxyParamCaption}\item[{bool}]{show}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a953dbd3d6dc2d16117c75330ce97fc6f}\index{Game::PlayerHUD@{Game::PlayerHUD}!ShowHackStatus@{ShowHackStatus}}
+\index{ShowHackStatus@{ShowHackStatus}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ShowHackStatus()}{ShowHackStatus()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a953dbd3d6dc2d16117c75330ce97fc6f} 
+void Game::\+\+Player\+HUD::\+\+Show\+Hack\+Status (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{message}{, }\item[{float}]{duration}{ = {\ttfamily 3.0f}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a4aff4400329b9af30ab714611ea8c955}\index{Game::PlayerHUD@{Game::PlayerHUD}!ShowHeatmap@{ShowHeatmap}}
+\index{ShowHeatmap@{ShowHeatmap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ShowHeatmap()}{ShowHeatmap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a4aff4400329b9af30ab714611ea8c955} 
+void Game::\+\+Player\+HUD::\+\+Show\+Heatmap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Show the heatmap overlay. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a1b536603f7ffa131366de52c471338d2}\index{Game::PlayerHUD@{Game::PlayerHUD}!ShowMap@{ShowMap}}
+\index{ShowMap@{ShowMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ShowMap()}{ShowMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a1b536603f7ffa131366de52c471338d2} 
+void Game::\+\+Player\+HUD::\+\+Show\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Show the full map. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_afb2820af8f4c6747e8cdf95ca9510a56}\index{Game::PlayerHUD@{Game::PlayerHUD}!ShowZoneEntry@{ShowZoneEntry}}
+\index{ShowZoneEntry@{ShowZoneEntry}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ShowZoneEntry()}{ShowZoneEntry()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_afb2820af8f4c6747e8cdf95ca9510a56} 
+void Game::\+\+Player\+HUD::\+\+Show\+Zone\+Entry (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a8840249678b935f9fd51cf952e7f0f49}\index{Game::PlayerHUD@{Game::PlayerHUD}!ToggleHeatmap@{ToggleHeatmap}}
+\index{ToggleHeatmap@{ToggleHeatmap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ToggleHeatmap()}{ToggleHeatmap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a8840249678b935f9fd51cf952e7f0f49} 
+void Game::\+\+Player\+HUD::\+\+Toggle\+Heatmap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Toggle the heatmap overlay visibility. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_a77e2decb152e1caa8c1cf4bdecdde8dd}\index{Game::PlayerHUD@{Game::PlayerHUD}!ToggleMap@{ToggleMap}}
+\index{ToggleMap@{ToggleMap}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{ToggleMap()}{ToggleMap()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a77e2decb152e1caa8c1cf4bdecdde8dd} 
+void Game::\+\+Player\+HUD::\+\+Toggle\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Toggle the full map visibility. 
+
+\Hypertarget{class_game_1_1_player_h_u_d_af8983a0416aee524b45d261f7aa41931}\index{Game::PlayerHUD@{Game::PlayerHUD}!TogglePath@{TogglePath}}
+\index{TogglePath@{TogglePath}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{TogglePath()}{TogglePath()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af8983a0416aee524b45d261f7aa41931} 
+void Game::\+\+Player\+HUD::\+\+Toggle\+Path (\begin{DoxyParamCaption}\item[{int}]{card\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_af34e8f49ea1f13c4c9557e57e1374827}\index{Game::PlayerHUD@{Game::PlayerHUD}!Update@{Update}}
+\index{Update@{Update}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_af34e8f49ea1f13c4c9557e57e1374827} 
+void Game::\+\+Player\+HUD::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called every frame. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_player_h_u_d_a85ea91003e11f4d4e3480a6a000d00d2}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateActivePath@{UpdateActivePath}}
+\index{UpdateActivePath@{UpdateActivePath}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateActivePath()}{UpdateActivePath()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a85ea91003e11f4d4e3480a6a000d00d2} 
+void Game::\+\+Player\+HUD::\+\+Update\+Active\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ae5b280d46c0cf8129c592a603051ddcf}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateAlertLevel@{UpdateAlertLevel}}
+\index{UpdateAlertLevel@{UpdateAlertLevel}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateAlertLevel()}{UpdateAlertLevel()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ae5b280d46c0cf8129c592a603051ddcf} 
+void Game::\+\+Player\+HUD::\+\+Update\+Alert\+Level (\begin{DoxyParamCaption}\item[{int}]{stage}{, }\item[{int}]{priority\+Zone}{, }\item[{int}]{guard\+Count}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a4b179d006dd4dbf0ad7b7c9c7e46d94e}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateCardDisplay@{UpdateCardDisplay}}
+\index{UpdateCardDisplay@{UpdateCardDisplay}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateCardDisplay()}{UpdateCardDisplay()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a4b179d006dd4dbf0ad7b7c9c7e46d94e} 
+void Game::\+\+Player\+HUD::\+\+Update\+Card\+Display (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a3a74f14e2e0d2bc4732f85bcd27b5d7a}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateCurrentTime@{UpdateCurrentTime}}
+\index{UpdateCurrentTime@{UpdateCurrentTime}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateCurrentTime()}{UpdateCurrentTime()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a3a74f14e2e0d2bc4732f85bcd27b5d7a} 
+void Game::\+\+Player\+HUD::\+\+Update\+Current\+Time (\begin{DoxyParamCaption}\item[{float}]{current\+Time}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a4ebb88b271fc8184709e714798b9cfab}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateGuardProximity@{UpdateGuardProximity}}
+\index{UpdateGuardProximity@{UpdateGuardProximity}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateGuardProximity()}{UpdateGuardProximity()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a4ebb88b271fc8184709e714798b9cfab} 
+void Game::\+\+Player\+HUD::\+\+Update\+Guard\+Proximity (\begin{DoxyParamCaption}\item[{float}]{nearest\+Distance}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_ac7b014e2f0ea8c14ba9a9a5e6bcbede8}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateHighScore@{UpdateHighScore}}
+\index{UpdateHighScore@{UpdateHighScore}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateHighScore()}{UpdateHighScore()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_ac7b014e2f0ea8c14ba9a9a5e6bcbede8} 
+void Game::\+\+Player\+HUD::\+\+Update\+High\+Score (\begin{DoxyParamCaption}\item[{float}]{high\+Score}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_aa7f71a0753a567811f7065673b63fe64}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateNPCApproach@{UpdateNPCApproach}}
+\index{UpdateNPCApproach@{UpdateNPCApproach}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateNPCApproach()}{UpdateNPCApproach()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_aa7f71a0753a567811f7065673b63fe64} 
+void Game::\+\+Player\+HUD::\+\+Update\+NPCApproach (\begin{DoxyParamCaption}\item[{int}]{annoying\+Count}{, }\item[{float}]{nearest\+Annoying\+Dist}{, }\item[{int}]{bully\+Count}{, }\item[{float}]{nearest\+Bully\+Dist}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a04b61ed882b599e893c45fab99b01ea8}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdatePowerUpUI@{UpdatePowerUpUI}}
+\index{UpdatePowerUpUI@{UpdatePowerUpUI}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdatePowerUpUI()}{UpdatePowerUpUI()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a04b61ed882b599e893c45fab99b01ea8} 
+void Game::\+\+Player\+HUD::\+\+Update\+Power\+Up\+UI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_h_u_d_a14c2614df9fd104c9b18568e8855158a}\index{Game::PlayerHUD@{Game::PlayerHUD}!UpdateStamina@{UpdateStamina}}
+\index{UpdateStamina@{UpdateStamina}!Game::PlayerHUD@{Game::PlayerHUD}}
+\doxysubsubsection{\texorpdfstring{UpdateStamina()}{UpdateStamina()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_h_u_d_a14c2614df9fd104c9b18568e8855158a} 
+void Game::\+\+Player\+HUD::\+\+Update\+Stamina (\begin{DoxyParamCaption}\item[{float}]{current}{, }\item[{float}]{max}{}\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\doxymbox{\hyperlink{_player_h_u_d_8hpp}{Player\+HUD.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\doxymbox{\hyperlink{_player_h_u_d_8cpp}{Player\+HUD.\+cpp}}\end{DoxyCompactItemize}

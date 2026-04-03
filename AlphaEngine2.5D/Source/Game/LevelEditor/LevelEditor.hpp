@@ -24,7 +24,7 @@
 // using namespace Engine;
 
 // /**
-//  * @enum EditorMode
+//  * enum EditorMode
 //  * @brief What to place on tiles
 //  */
 // enum class EditorMode {

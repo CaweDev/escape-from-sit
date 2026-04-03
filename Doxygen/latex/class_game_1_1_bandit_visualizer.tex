@@ -1,0 +1,307 @@
+\doxysection{Game::\+Bandit\+Visualizer Class Reference}
+\hypertarget{class_game_1_1_bandit_visualizer}{}\label{class_game_1_1_bandit_visualizer}\index{Game::BanditVisualizer@{Game::BanditVisualizer}}
+
+
+{\ttfamily \+\#include $<$Bandit\+Visualizer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a2e2e09c61def36c2e7d94269bcc472a2}{Bandit\+Visualizer}} ()
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{class_game_1_1_bandit_visualizer}{Bandit\+Visualizer} component. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ab5da20c5500f78d2a8faaf2f16e66158}{\texorpdfstring{$\sim$}{\string~}\+Bandit\+Visualizer}} () override
+\begin{DoxyCompactList}\small\item\em Destructor and cleanup. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a7808f88f0e4c7cad26791309579c80fe}{Initialize}} () override
+\begin{DoxyCompactList}\small\item\em Initialize \doxylink{namespace_u_i}{UI} and internal state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_af75f68740e2059182c7251ede489a2ab}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Periodically refresh visualization from bandit data. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a0866ea03757518017e5e381d88e808e5}{On\+Destroy}} () override
+\begin{DoxyCompactList}\small\item\em Destroy \doxylink{namespace_u_i}{UI} and release references. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_aedeac6ee9b59a307e73fa3712d8c400a}{Set\+Guards\+Pointer}} (std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}g)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a3cabda8254c69bb15cb036543552b90d}{Set\+CCTVScore\+Pointer}} (float \texorpdfstring{$\ast$}{*}p)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a4d70f3a9ad7de32288b0ab4e3d835703}{Set\+Heatmap\+Pointer}} (\doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}} \texorpdfstring{$\ast$}{*}h)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a312c0bfcab2fc52bd262f48048dee142}{Set\+Zone\+Grid\+Pointer}} (std::\+vector$<$ int $>$ \texorpdfstring{$\ast$}{*}g)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a66576d0fbe895a2c78a307eaa232d5ad}{Set\+Selected\+Zone}} (int zid)
+\begin{DoxyCompactList}\small\item\em Set which zone is selected for detailed view. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a9b3d96da111476f1f09c9a86fd0dd885}{Toggle\+Visibility}} ()
+\begin{DoxyCompactList}\small\item\em Toggle the visibility of the main panel. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a8c4a49c6193e2ac03212c4beb92215bb}{Set\+Visible}} (bool v)
+\begin{DoxyCompactList}\small\item\em Set visibility state for the panel. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a67613a4aeecebaea896383d015541124}{Set\+MLSummary}} (int priority\+Zone, float hot\+Timer, bool full\+Escalation, const int pulls\+[4]\+, const float means\+[4]\+, const float cctv\+[5]\+, const float heat\+Zones\+[5]\+, const \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown}{Zone\+Breakdown}} \texorpdfstring{$\ast$}{*}breakdown=nullptr, const char \texorpdfstring{$\ast$}{*}reason=nullptr)
+\begin{DoxyCompactList}\small\item\em Update the ML summary and refresh \doxylink{namespace_u_i}{UI} fields. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ab79e31244ada7908bb371a1c7f0e695f}{Push\+CCTVRecord}} (const \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record}{CCTVRecord}} \&rec)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ad6a2808c640b9c24a5eb9764878fc75d}{Set\+CCTVStatus}} (int zone, float posX, float posY, bool visible)
+\begin{DoxyCompactList}\small\item\em Update CCTV visibility state and optionally log transitions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{UCB1\+Bandit}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a10154fbac2d32e10febb9713a0a02cf3}{bandit}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a418a8c288a8c049173e8434f9bba2ebc}{guards}} = nullptr
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a7fecfd0afa6fa6f54229b04e62160b81}{update\+Interval}} = 0.\+25f
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_bandit_visualizer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_bandit_visualizer_a2e2e09c61def36c2e7d94269bcc472a2}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!BanditVisualizer@{BanditVisualizer}}
+\index{BanditVisualizer@{BanditVisualizer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{BanditVisualizer()}{BanditVisualizer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a2e2e09c61def36c2e7d94269bcc472a2} 
+Game::\+\+Bandit\+Visualizer::\+\+Bandit\+Visualizer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Construct a \doxylink{class_game_1_1_bandit_visualizer}{Bandit\+Visualizer} component. 
+
+Default constructor. \Hypertarget{class_game_1_1_bandit_visualizer_ab5da20c5500f78d2a8faaf2f16e66158}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!````~BanditVisualizer@{\texorpdfstring{$\sim$}{\string~}BanditVisualizer}}
+\index{````~BanditVisualizer@{\texorpdfstring{$\sim$}{\string~}BanditVisualizer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BanditVisualizer()}{\string~BanditVisualizer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_ab5da20c5500f78d2a8faaf2f16e66158} 
+Game::\+\+Bandit\+Visualizer::\+\texorpdfstring{$\sim$}{\string~}\+Bandit\+Visualizer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+Destructor and cleanup. 
+
+Default destructor. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_bandit_visualizer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_bandit_visualizer_a7808f88f0e4c7cad26791309579c80fe}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a7808f88f0e4c7cad26791309579c80fe} 
+void Game::\+\+Bandit\+Visualizer::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Initialize \doxylink{namespace_u_i}{UI} and internal state. 
+
+Create \doxylink{namespace_u_i}{UI} canvases and build panels for visualization. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a0866ea03757518017e5e381d88e808e5}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a0866ea03757518017e5e381d88e808e5} 
+void Game::\+\+Bandit\+Visualizer::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Destroy \doxylink{namespace_u_i}{UI} and release references. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_bandit_visualizer_ab79e31244ada7908bb371a1c7f0e695f}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!PushCCTVRecord@{PushCCTVRecord}}
+\index{PushCCTVRecord@{PushCCTVRecord}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{PushCCTVRecord()}{PushCCTVRecord()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_ab79e31244ada7908bb371a1c7f0e695f} 
+void Game::\+\+Bandit\+Visualizer::\+\+Push\+CCTVRecord (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record}{CCTVRecord}} \&}]{rec}{}\end{DoxyParamCaption})}
+
+Push a CCTV record into the scrolling history log.
+\begin{DoxyParams}{Parameters}
+{\em rec} & \+[in]\+ Record to push\\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_bandit_visualizer_a3cabda8254c69bb15cb036543552b90d}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetCCTVScorePointer@{SetCCTVScorePointer}}
+\index{SetCCTVScorePointer@{SetCCTVScorePointer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetCCTVScorePointer()}{SetCCTVScorePointer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a3cabda8254c69bb15cb036543552b90d} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+CCTVScore\+Pointer (\begin{DoxyParamCaption}\item[{float \texorpdfstring{$\ast$}{*}}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_ad6a2808c640b9c24a5eb9764878fc75d}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetCCTVStatus@{SetCCTVStatus}}
+\index{SetCCTVStatus@{SetCCTVStatus}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetCCTVStatus()}{SetCCTVStatus()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_ad6a2808c640b9c24a5eb9764878fc75d} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+CCTVStatus (\begin{DoxyParamCaption}\item[{int}]{zone}{, }\item[{float}]{posX}{, }\item[{float}]{posY}{, }\item[{bool}]{visible}{}\end{DoxyParamCaption})}
+
+
+
+Update CCTV visibility state and optionally log transitions. 
+
+\Hypertarget{class_game_1_1_bandit_visualizer_aedeac6ee9b59a307e73fa3712d8c400a}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetGuardsPointer@{SetGuardsPointer}}
+\index{SetGuardsPointer@{SetGuardsPointer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetGuardsPointer()}{SetGuardsPointer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_aedeac6ee9b59a307e73fa3712d8c400a} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+Guards\+Pointer (\begin{DoxyParamCaption}\item[{std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}}]{g}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a4d70f3a9ad7de32288b0ab4e3d835703}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetHeatmapPointer@{SetHeatmapPointer}}
+\index{SetHeatmapPointer@{SetHeatmapPointer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetHeatmapPointer()}{SetHeatmapPointer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a4d70f3a9ad7de32288b0ab4e3d835703} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+Heatmap\+Pointer (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}} \texorpdfstring{$\ast$}{*}}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a67613a4aeecebaea896383d015541124}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetMLSummary@{SetMLSummary}}
+\index{SetMLSummary@{SetMLSummary}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetMLSummary()}{SetMLSummary()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a67613a4aeecebaea896383d015541124} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+MLSummary (\begin{DoxyParamCaption}\item[{int}]{priority\+Zone}{, }\item[{float}]{hot\+Timer}{, }\item[{bool}]{full\+Escalation}{, }\item[{const int}]{pulls}{\+[4]\+, }\item[{const float}]{means}{\+[4]\+, }\item[{const float}]{cctv}{\+[5]\+, }\item[{const float}]{heat\+Zones}{\+[5]\+, }\item[{const \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown}{Zone\+Breakdown}} \texorpdfstring{$\ast$}{*}}]{breakdown}{ = {\ttfamily nullptr}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{reason}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Update the ML summary and refresh \doxylink{namespace_u_i}{UI} fields. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em priority\+Zone} & \+[in]\+ The currently prioritized zone id \\
+\hline
+{\em hot\+Timer} & \+[in]\+ Hot timer value \\
+\hline
+{\em full\+Escalation} & \+[in]\+ Whether full escalation is active \\
+\hline
+{\em pulls} & \+[in]\+ Pull counts per arm \\
+\hline
+{\em means} & \+[in]\+ Mean values per arm \\
+\hline
+{\em cctv} & \+[in]\+ CCTV scores (indexed by zone) \\
+\hline
+{\em heat\+Zones} & \+[in]\+ \doxylink{class_game_1_1_heatmap}{Heatmap} sums per zone \\
+\hline
+{\em breakdown} & \+[in]\+ Optional breakdown structure \\
+\hline
+{\em reason} & \+[in]\+ Optional reason string \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_bandit_visualizer_a66576d0fbe895a2c78a307eaa232d5ad}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetSelectedZone@{SetSelectedZone}}
+\index{SetSelectedZone@{SetSelectedZone}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetSelectedZone()}{SetSelectedZone()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a66576d0fbe895a2c78a307eaa232d5ad} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+Selected\+Zone (\begin{DoxyParamCaption}\item[{int}]{zid}{}\end{DoxyParamCaption})}
+
+
+
+Set which zone is selected for detailed view. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em zid} & \+[in]\+ Zone id (1-\/4) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_bandit_visualizer_a8c4a49c6193e2ac03212c4beb92215bb}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetVisible@{SetVisible}}
+\index{SetVisible@{SetVisible}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetVisible()}{SetVisible()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a8c4a49c6193e2ac03212c4beb92215bb} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+Visible (\begin{DoxyParamCaption}\item[{bool}]{v}{}\end{DoxyParamCaption})}
+
+
+
+Set visibility state for the panel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & \+[in]\+ Visible flag \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_bandit_visualizer_a312c0bfcab2fc52bd262f48048dee142}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!SetZoneGridPointer@{SetZoneGridPointer}}
+\index{SetZoneGridPointer@{SetZoneGridPointer}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{SetZoneGridPointer()}{SetZoneGridPointer()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a312c0bfcab2fc52bd262f48048dee142} 
+void Game::\+\+Bandit\+Visualizer::\+\+Set\+Zone\+Grid\+Pointer (\begin{DoxyParamCaption}\item[{std::\+vector$<$ int $>$ \texorpdfstring{$\ast$}{*}}]{g}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a9b3d96da111476f1f09c9a86fd0dd885}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!ToggleVisibility@{ToggleVisibility}}
+\index{ToggleVisibility@{ToggleVisibility}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{ToggleVisibility()}{ToggleVisibility()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a9b3d96da111476f1f09c9a86fd0dd885} 
+void Game::\+\+Bandit\+Visualizer::\+\+Toggle\+Visibility (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Toggle the visibility of the main panel. 
+
+\Hypertarget{class_game_1_1_bandit_visualizer_af75f68740e2059182c7251ede489a2ab}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!Update@{Update}}
+\index{Update@{Update}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_af75f68740e2059182c7251ede489a2ab} 
+void Game::\+\+Bandit\+Visualizer::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Periodically refresh visualization from bandit data. 
+
+Periodic update to refresh ML summary and logs. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_bandit_visualizer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_bandit_visualizer_a10154fbac2d32e10febb9713a0a02cf3}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!bandit@{bandit}}
+\index{bandit@{bandit}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{bandit}{bandit}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a10154fbac2d32e10febb9713a0a02cf3} 
+\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{UCB1\+Bandit}}\texorpdfstring{$\ast$}{*} Game::\+\+Bandit\+Visualizer::\+bandit = nullptr}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a418a8c288a8c049173e8434f9bba2ebc}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!guards@{guards}}
+\index{guards@{guards}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{guards}{guards}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a418a8c288a8c049173e8434f9bba2ebc} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}}\texorpdfstring{$\ast$}{*}$>$\texorpdfstring{$\ast$}{*} Game::\+\+Bandit\+Visualizer::\+guards = nullptr}
+
+\Hypertarget{class_game_1_1_bandit_visualizer_a7fecfd0afa6fa6f54229b04e62160b81}\index{Game::BanditVisualizer@{Game::BanditVisualizer}!updateInterval@{updateInterval}}
+\index{updateInterval@{updateInterval}!Game::BanditVisualizer@{Game::BanditVisualizer}}
+\doxysubsubsection{\texorpdfstring{updateInterval}{updateInterval}}
+{\footnotesize\ttfamily \label{class_game_1_1_bandit_visualizer_a7fecfd0afa6fa6f54229b04e62160b81} 
+float Game::\+\+Bandit\+Visualizer::\+update\+Interval = 0.\+25f}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+UCB1\+Bandit/\+\doxymbox{\hyperlink{_bandit_visualizer_8hpp}{Bandit\+Visualizer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+UCB1\+Bandit/\+\doxymbox{\hyperlink{_bandit_visualizer_8cpp}{Bandit\+Visualizer.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,564 @@
+\doxysection{Game::\+CCTVTerminal Class Reference}
+\hypertarget{class_game_1_1_c_c_t_v_terminal}{}\label{class_game_1_1_c_c_t_v_terminal}\index{Game::CCTVTerminal@{Game::CCTVTerminal}}
+
+
+Terminal component that can disable/\+restore camera networks and be repaired.  
+
+
+
+
+{\ttfamily \+\#include $<$CCTVTerminal.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afafa9820d098821423be8719576c0cb2}{Awake}} () override
+\begin{DoxyCompactList}\small\item\em Initialize terminal (create interactable, icon). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_aa751985bea2f1d1fa7de8ca37658db24}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update handling timers and visuals. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afb779d2f3ae7c4fa4fc731a2a48e40cb}{Setup\+Interaction}} ()
+\begin{DoxyCompactList}\small\item\em Setup \doxylink{class_engine_1_1_interactable}{Interactable} callback for hacking. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5ee4fd19ebda8065c91168b75d7946da}{On\+Terminal\+Interact}} ()
+\begin{DoxyCompactList}\small\item\em Called when player interacts with terminal. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af48793382bba09554e44df852e895b59}{Can\+Hack}} () const
+\begin{DoxyCompactList}\small\item\em Whether player can start hacking now. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac5b30d0dafc622b31291976da2b17885}{Disable\+Cameras}} ()
+\begin{DoxyCompactList}\small\item\em Disable all controlled cameras immediately. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af6e260c12dd98fadcc5faa3239d1cada}{Restore\+Cameras}} ()
+\begin{DoxyCompactList}\small\item\em Restore controlled cameras to active state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a492342650fb51f1c03180aab7d0e7fd8}{Start\+Repair}} (\doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}} \texorpdfstring{$\ast$}{*}guard)
+\begin{DoxyCompactList}\small\item\em Start guard repair process. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afaa8874a37e18d7445cb2a947445705a}{Cancel\+Repair}} ()
+\begin{DoxyCompactList}\small\item\em Cancel active repair. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac5c4813ec4c99cbe212676ce6732964c}{Update\+Repair}} (float delta\+Time)
+\begin{DoxyCompactList}\small\item\em Progress repair by delta\+Time. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a2bdae95c3705ead6a6c26f64e7d8ec21}{Notify\+Guards\+Of\+Sabotage}} ()
+\begin{DoxyCompactList}\small\item\em Notify nearby guards about a sabotage event. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a591d773c68cfcef18b0c73cca2d2db4d}{Update\+Visual\+State}} ()
+\begin{DoxyCompactList}\small\item\em Update sprite color/\+animation based on terminal state. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ad09d83cf8a7cc0aad3e00ef81d9d4a08}{Get\+State\+Color}} () const
+\begin{DoxyCompactList}\small\item\em Get color representing current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7fcfd37304f66db897e87af1e464f8ec}{controlled\+Zone}} = 1
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ae590fc617dc0d193e9b16678eb6e2159}{controlled\+Cameras}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a3d348f9348d73bc7439b3cb3e1ae4240}{all\+Guards}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5102a9e05c97d04c6635445ddffd9f80}{player\+HUD}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a1eeaf261d27e4f0f52dc740f0c309621}{sprite\+Renderer}} = nullptr
+\item 
+\doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{Terminal\+State}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0522e2ca2a96f60b1e6fcef7ec0972a0}{state}} = \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{Terminal\+State::\+\+ACTIVE}}
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ab1223285fb9d50db621bc75a120d79ec}{is\+Disabled}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5e88b085cf3f868847dafdc057cd1fe2}{disabled\+Timer}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a464430237e4adb5f540f5147a109ce52}{disabled\+Duration}} = 30.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a15751ac08d77c4207aed0485b50a73b9}{guard\+Is\+Repairing}} = false
+\item 
+\doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0c35c75b1a64bfe7456ba54f804f4ce4}{repairing\+Guard}} = nullptr
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac4d320190273624822ecb9ae7d03c112}{repair\+Progress}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a1209136b959e2d433837f853f3833e93}{repair\+Time}} = 5.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0ca44764e928cb434ef35feeab718201}{repair\+Max\+Distance}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a85e65b7f5d1d625227ac2c400bb16aac}{interaction\+Time}} = 3.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7678ce9624562e027cc0e7765e0b2c76}{interaction\+Progress}} = 0.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5f0c94abed72e2d36bc2842e7bb32ff8}{player\+Is\+Interacting}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a77a24936218196a474321b7a9666953d}{cooldown\+Timer}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a3768109598f4a0a200aedb341a569b3b}{cooldown\+Duration}} = 10.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a9590f792c0e8816eabcc0ab13d803f97}{interact\+Max\+Distance}} = 2.\+5f
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_aa6f6cfb1c727b08e626e5dccdefc1170}{floating\+Icon}} = nullptr
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a48a70bcdf9def8b7ae2a9a509647db7e}{float\+Anim\+Time}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a6d11561ec9ca6b71b62c2a212dac48b0}{float\+Speed}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a50f5d351cb268fe81d576c205583aa9a}{float\+Amplitude}} = 0.\+15f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5fab670130097c4b8fa3aaafb53c8005}{float\+Base\+Height\+Offset}} = 0.\+8f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a98f767c197da08ea05724f0421593f1a}{pulse\+Speed}} = 3.\+0f
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af91ac2fbe5f3ae6982c4738a288a520c}{interact\+Text}} = "{}Hold E to Hack Terminal"{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac4ea80cd64e6b9e3f8b00a6669b6dfa1}{zone\+Hack\+Text\+Prefix}} = "{}Hold E to Hack "{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a66d6fe4e48de0725b77c32fc128e2107}{zone\+Hack\+Text\+Suffix}} = "{} Cameras"{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a9036c34e42112c6af8ea0ea9898f047f}{disabled\+Text\+Suffix}} = "{} CAMERAS OFFLINE"{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac16780735b0e39a3af4f8b2986eed021}{cooldown\+Text}} = "{}TERMINAL COOLING DOWN"{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a22811f49e2017533d250e3459ea3f607}{repairing\+Text}} = "{}GUARD REPAIRING SYSTEM"{}
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a19c410647280c50ea3f1ba34745ccac3}{hack\+Status\+Prefix}} = "{} CAMERAS DISABLED FOR 30s"{}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a007354fdf839718eef98c7f167aa0c2c}{hack\+Status\+Duration}} = 3.\+0f
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7fe1e9859637c1e082ec87a69c261a48}{active\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(0.\+2f, 0.\+8f, 1.\+0f, 1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af01c255a7c94eabe9fe36420c83ecb52}{hacking\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 1.\+0f, 0.\+0f, 1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a98013870929f035760d1261b36732abc}{disabled\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(0.\+5f, 0.\+0f, 0.\+0f, 1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a796bbf18aa6d64ea594b1da011c1321f}{repairing\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 0.\+5f, 0.\+0f, 1.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Terminal component that can disable/\+restore camera networks and be repaired. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_afafa9820d098821423be8719576c0cb2}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!Awake@{Awake}}
+\index{Awake@{Awake}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_afafa9820d098821423be8719576c0cb2} 
+void Game::\+\+CCTVTerminal::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Initialize terminal (create interactable, icon). 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_afaa8874a37e18d7445cb2a947445705a}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!CancelRepair@{CancelRepair}}
+\index{CancelRepair@{CancelRepair}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{CancelRepair()}{CancelRepair()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_afaa8874a37e18d7445cb2a947445705a} 
+void Game::\+\+CCTVTerminal::\+\+Cancel\+Repair (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Cancel active repair. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_af48793382bba09554e44df852e895b59}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!CanHack@{CanHack}}
+\index{CanHack@{CanHack}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{CanHack()}{CanHack()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_af48793382bba09554e44df852e895b59} 
+bool Game::\+\+CCTVTerminal::\+\+Can\+Hack (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Whether player can start hacking now. 
+
+\begin{DoxyReturn}{Returns}
+true if hackable 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ac5b30d0dafc622b31291976da2b17885}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!DisableCameras@{DisableCameras}}
+\index{DisableCameras@{DisableCameras}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{DisableCameras()}{DisableCameras()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ac5b30d0dafc622b31291976da2b17885} 
+void Game::\+\+CCTVTerminal::\+\+Disable\+Cameras (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Disable all controlled cameras immediately. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ad09d83cf8a7cc0aad3e00ef81d9d4a08}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!GetStateColor@{GetStateColor}}
+\index{GetStateColor@{GetStateColor}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{GetStateColor()}{GetStateColor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ad09d83cf8a7cc0aad3e00ef81d9d4a08} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+CCTVTerminal::\+\+Get\+State\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get color representing current state. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_engine_1_1_color}{Color} 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a2bdae95c3705ead6a6c26f64e7d8ec21}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!NotifyGuardsOfSabotage@{NotifyGuardsOfSabotage}}
+\index{NotifyGuardsOfSabotage@{NotifyGuardsOfSabotage}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{NotifyGuardsOfSabotage()}{NotifyGuardsOfSabotage()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a2bdae95c3705ead6a6c26f64e7d8ec21} 
+void Game::\+\+CCTVTerminal::\+\+Notify\+Guards\+Of\+Sabotage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Notify nearby guards about a sabotage event. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a5ee4fd19ebda8065c91168b75d7946da}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!OnTerminalInteract@{OnTerminalInteract}}
+\index{OnTerminalInteract@{OnTerminalInteract}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{OnTerminalInteract()}{OnTerminalInteract()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a5ee4fd19ebda8065c91168b75d7946da} 
+void Game::\+\+CCTVTerminal::\+\+On\+Terminal\+Interact (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Called when player interacts with terminal. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_af6e260c12dd98fadcc5faa3239d1cada}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!RestoreCameras@{RestoreCameras}}
+\index{RestoreCameras@{RestoreCameras}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{RestoreCameras()}{RestoreCameras()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_af6e260c12dd98fadcc5faa3239d1cada} 
+void Game::\+\+CCTVTerminal::\+\+Restore\+Cameras (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Restore controlled cameras to active state. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_afb779d2f3ae7c4fa4fc731a2a48e40cb}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!SetupInteraction@{SetupInteraction}}
+\index{SetupInteraction@{SetupInteraction}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{SetupInteraction()}{SetupInteraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_afb779d2f3ae7c4fa4fc731a2a48e40cb} 
+void Game::\+\+CCTVTerminal::\+\+Setup\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Setup \doxylink{class_engine_1_1_interactable}{Interactable} callback for hacking. 
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a492342650fb51f1c03180aab7d0e7fd8}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!StartRepair@{StartRepair}}
+\index{StartRepair@{StartRepair}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{StartRepair()}{StartRepair()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a492342650fb51f1c03180aab7d0e7fd8} 
+void Game::\+\+CCTVTerminal::\+\+Start\+Repair (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}} \texorpdfstring{$\ast$}{*}}]{guard}{}\end{DoxyParamCaption})}
+
+
+
+Start guard repair process. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em guard} & \+[in]\+ Guard performing repair \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_aa751985bea2f1d1fa7de8ca37658db24}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!Update@{Update}}
+\index{Update@{Update}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_aa751985bea2f1d1fa7de8ca37658db24} 
+void Game::\+\+CCTVTerminal::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update handling timers and visuals. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ac5c4813ec4c99cbe212676ce6732964c}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!UpdateRepair@{UpdateRepair}}
+\index{UpdateRepair@{UpdateRepair}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{UpdateRepair()}{UpdateRepair()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ac5c4813ec4c99cbe212676ce6732964c} 
+void Game::\+\+CCTVTerminal::\+\+Update\+Repair (\begin{DoxyParamCaption}\item[{float}]{delta\+Time}{}\end{DoxyParamCaption})}
+
+
+
+Progress repair by delta\+Time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Time} & \+[in]\+ \doxylink{class_engine_1_1_time}{Time} step \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a591d773c68cfcef18b0c73cca2d2db4d}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!UpdateVisualState@{UpdateVisualState}}
+\index{UpdateVisualState@{UpdateVisualState}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{UpdateVisualState()}{UpdateVisualState()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a591d773c68cfcef18b0c73cca2d2db4d} 
+void Game::\+\+CCTVTerminal::\+\+Update\+Visual\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Update sprite color/\+animation based on terminal state. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a7fe1e9859637c1e082ec87a69c261a48}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!activeColor@{activeColor}}
+\index{activeColor@{activeColor}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{activeColor}{activeColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a7fe1e9859637c1e082ec87a69c261a48} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+CCTVTerminal::\+active\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(0.\+2f, 0.\+8f, 1.\+0f, 1.\+0f)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a3d348f9348d73bc7439b3cb3e1ae4240}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!allGuards@{allGuards}}
+\index{allGuards@{allGuards}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{allGuards}{allGuards}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a3d348f9348d73bc7439b3cb3e1ae4240} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+CCTVTerminal::\+all\+Guards}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ae590fc617dc0d193e9b16678eb6e2159}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!controlledCameras@{controlledCameras}}
+\index{controlledCameras@{controlledCameras}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{controlledCameras}{controlledCameras}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ae590fc617dc0d193e9b16678eb6e2159} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}} \texorpdfstring{$\ast$}{*}$>$ Game::\+\+CCTVTerminal::\+controlled\+Cameras}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a7fcfd37304f66db897e87af1e464f8ec}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!controlledZone@{controlledZone}}
+\index{controlledZone@{controlledZone}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{controlledZone}{controlledZone}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a7fcfd37304f66db897e87af1e464f8ec} 
+int Game::\+\+CCTVTerminal::\+controlled\+Zone = 1}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a3768109598f4a0a200aedb341a569b3b}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!cooldownDuration@{cooldownDuration}}
+\index{cooldownDuration@{cooldownDuration}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{cooldownDuration}{cooldownDuration}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a3768109598f4a0a200aedb341a569b3b} 
+float Game::\+\+CCTVTerminal::\+cooldown\+Duration = 10.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ac16780735b0e39a3af4f8b2986eed021}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!cooldownText@{cooldownText}}
+\index{cooldownText@{cooldownText}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{cooldownText}{cooldownText}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ac16780735b0e39a3af4f8b2986eed021} 
+std::\+string Game::\+\+CCTVTerminal::\+cooldown\+Text = "{}TERMINAL COOLING DOWN"{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a77a24936218196a474321b7a9666953d}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!cooldownTimer@{cooldownTimer}}
+\index{cooldownTimer@{cooldownTimer}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{cooldownTimer}{cooldownTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a77a24936218196a474321b7a9666953d} 
+float Game::\+\+CCTVTerminal::\+cooldown\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a98013870929f035760d1261b36732abc}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!disabledColor@{disabledColor}}
+\index{disabledColor@{disabledColor}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{disabledColor}{disabledColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a98013870929f035760d1261b36732abc} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+CCTVTerminal::\+disabled\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(0.\+5f, 0.\+0f, 0.\+0f, 1.\+0f)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a464430237e4adb5f540f5147a109ce52}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!disabledDuration@{disabledDuration}}
+\index{disabledDuration@{disabledDuration}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{disabledDuration}{disabledDuration}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a464430237e4adb5f540f5147a109ce52} 
+float Game::\+\+CCTVTerminal::\+disabled\+Duration = 30.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a9036c34e42112c6af8ea0ea9898f047f}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!disabledTextSuffix@{disabledTextSuffix}}
+\index{disabledTextSuffix@{disabledTextSuffix}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{disabledTextSuffix}{disabledTextSuffix}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a9036c34e42112c6af8ea0ea9898f047f} 
+std::\+string Game::\+\+CCTVTerminal::\+disabled\+Text\+Suffix = "{} CAMERAS OFFLINE"{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a5e88b085cf3f868847dafdc057cd1fe2}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!disabledTimer@{disabledTimer}}
+\index{disabledTimer@{disabledTimer}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{disabledTimer}{disabledTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a5e88b085cf3f868847dafdc057cd1fe2} 
+float Game::\+\+CCTVTerminal::\+disabled\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a50f5d351cb268fe81d576c205583aa9a}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!floatAmplitude@{floatAmplitude}}
+\index{floatAmplitude@{floatAmplitude}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{floatAmplitude}{floatAmplitude}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a50f5d351cb268fe81d576c205583aa9a} 
+float Game::\+\+CCTVTerminal::\+float\+Amplitude = 0.\+15f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a48a70bcdf9def8b7ae2a9a509647db7e}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!floatAnimTime@{floatAnimTime}}
+\index{floatAnimTime@{floatAnimTime}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{floatAnimTime}{floatAnimTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a48a70bcdf9def8b7ae2a9a509647db7e} 
+float Game::\+\+CCTVTerminal::\+float\+Anim\+Time = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a5fab670130097c4b8fa3aaafb53c8005}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!floatBaseHeightOffset@{floatBaseHeightOffset}}
+\index{floatBaseHeightOffset@{floatBaseHeightOffset}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{floatBaseHeightOffset}{floatBaseHeightOffset}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a5fab670130097c4b8fa3aaafb53c8005} 
+float Game::\+\+CCTVTerminal::\+float\+Base\+Height\+Offset = 0.\+8f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_aa6f6cfb1c727b08e626e5dccdefc1170}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!floatingIcon@{floatingIcon}}
+\index{floatingIcon@{floatingIcon}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{floatingIcon}{floatingIcon}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_aa6f6cfb1c727b08e626e5dccdefc1170} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVTerminal::\+floating\+Icon = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a6d11561ec9ca6b71b62c2a212dac48b0}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!floatSpeed@{floatSpeed}}
+\index{floatSpeed@{floatSpeed}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{floatSpeed}{floatSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a6d11561ec9ca6b71b62c2a212dac48b0} 
+float Game::\+\+CCTVTerminal::\+float\+Speed = 2.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a15751ac08d77c4207aed0485b50a73b9}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!guardIsRepairing@{guardIsRepairing}}
+\index{guardIsRepairing@{guardIsRepairing}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{guardIsRepairing}{guardIsRepairing}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a15751ac08d77c4207aed0485b50a73b9} 
+bool Game::\+\+CCTVTerminal::\+guard\+Is\+Repairing = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_af01c255a7c94eabe9fe36420c83ecb52}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!hackingColor@{hackingColor}}
+\index{hackingColor@{hackingColor}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{hackingColor}{hackingColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_af01c255a7c94eabe9fe36420c83ecb52} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+CCTVTerminal::\+hacking\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 1.\+0f, 0.\+0f, 1.\+0f)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a007354fdf839718eef98c7f167aa0c2c}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!hackStatusDuration@{hackStatusDuration}}
+\index{hackStatusDuration@{hackStatusDuration}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{hackStatusDuration}{hackStatusDuration}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a007354fdf839718eef98c7f167aa0c2c} 
+float Game::\+\+CCTVTerminal::\+hack\+Status\+Duration = 3.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a19c410647280c50ea3f1ba34745ccac3}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!hackStatusPrefix@{hackStatusPrefix}}
+\index{hackStatusPrefix@{hackStatusPrefix}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{hackStatusPrefix}{hackStatusPrefix}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a19c410647280c50ea3f1ba34745ccac3} 
+std::\+string Game::\+\+CCTVTerminal::\+hack\+Status\+Prefix = "{} CAMERAS DISABLED FOR 30s"{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a7678ce9624562e027cc0e7765e0b2c76}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!interactionProgress@{interactionProgress}}
+\index{interactionProgress@{interactionProgress}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{interactionProgress}{interactionProgress}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a7678ce9624562e027cc0e7765e0b2c76} 
+float Game::\+\+CCTVTerminal::\+interaction\+Progress = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a85e65b7f5d1d625227ac2c400bb16aac}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!interactionTime@{interactionTime}}
+\index{interactionTime@{interactionTime}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{interactionTime}{interactionTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a85e65b7f5d1d625227ac2c400bb16aac} 
+float Game::\+\+CCTVTerminal::\+interaction\+Time = 3.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a9590f792c0e8816eabcc0ab13d803f97}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!interactMaxDistance@{interactMaxDistance}}
+\index{interactMaxDistance@{interactMaxDistance}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{interactMaxDistance}{interactMaxDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a9590f792c0e8816eabcc0ab13d803f97} 
+float Game::\+\+CCTVTerminal::\+interact\+Max\+Distance = 2.\+5f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_af91ac2fbe5f3ae6982c4738a288a520c}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!interactText@{interactText}}
+\index{interactText@{interactText}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{interactText}{interactText}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_af91ac2fbe5f3ae6982c4738a288a520c} 
+std::\+string Game::\+\+CCTVTerminal::\+interact\+Text = "{}Hold E to Hack Terminal"{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ab1223285fb9d50db621bc75a120d79ec}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!isDisabled@{isDisabled}}
+\index{isDisabled@{isDisabled}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{isDisabled}{isDisabled}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ab1223285fb9d50db621bc75a120d79ec} 
+bool Game::\+\+CCTVTerminal::\+is\+Disabled = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a5102a9e05c97d04c6635445ddffd9f80}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!playerHUD@{playerHUD}}
+\index{playerHUD@{playerHUD}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{playerHUD}{playerHUD}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a5102a9e05c97d04c6635445ddffd9f80} 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVTerminal::\+player\+HUD = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a5f0c94abed72e2d36bc2842e7bb32ff8}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!playerIsInteracting@{playerIsInteracting}}
+\index{playerIsInteracting@{playerIsInteracting}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{playerIsInteracting}{playerIsInteracting}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a5f0c94abed72e2d36bc2842e7bb32ff8} 
+bool Game::\+\+CCTVTerminal::\+player\+Is\+Interacting = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a98f767c197da08ea05724f0421593f1a}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!pulseSpeed@{pulseSpeed}}
+\index{pulseSpeed@{pulseSpeed}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{pulseSpeed}{pulseSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a98f767c197da08ea05724f0421593f1a} 
+float Game::\+\+CCTVTerminal::\+pulse\+Speed = 3.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a796bbf18aa6d64ea594b1da011c1321f}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairingColor@{repairingColor}}
+\index{repairingColor@{repairingColor}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairingColor}{repairingColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a796bbf18aa6d64ea594b1da011c1321f} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+CCTVTerminal::\+repairing\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 0.\+5f, 0.\+0f, 1.\+0f)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a0c35c75b1a64bfe7456ba54f804f4ce4}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairingGuard@{repairingGuard}}
+\index{repairingGuard@{repairingGuard}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairingGuard}{repairingGuard}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a0c35c75b1a64bfe7456ba54f804f4ce4} 
+\doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVTerminal::\+repairing\+Guard = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a22811f49e2017533d250e3459ea3f607}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairingText@{repairingText}}
+\index{repairingText@{repairingText}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairingText}{repairingText}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a22811f49e2017533d250e3459ea3f607} 
+std::\+string Game::\+\+CCTVTerminal::\+repairing\+Text = "{}GUARD REPAIRING SYSTEM"{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a0ca44764e928cb434ef35feeab718201}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairMaxDistance@{repairMaxDistance}}
+\index{repairMaxDistance@{repairMaxDistance}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairMaxDistance}{repairMaxDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a0ca44764e928cb434ef35feeab718201} 
+float Game::\+\+CCTVTerminal::\+repair\+Max\+Distance = 2.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ac4d320190273624822ecb9ae7d03c112}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairProgress@{repairProgress}}
+\index{repairProgress@{repairProgress}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairProgress}{repairProgress}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ac4d320190273624822ecb9ae7d03c112} 
+float Game::\+\+CCTVTerminal::\+repair\+Progress = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a1209136b959e2d433837f853f3833e93}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!repairTime@{repairTime}}
+\index{repairTime@{repairTime}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{repairTime}{repairTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a1209136b959e2d433837f853f3833e93} 
+float Game::\+\+CCTVTerminal::\+repair\+Time = 5.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a1eeaf261d27e4f0f52dc740f0c309621}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!spriteRenderer@{spriteRenderer}}
+\index{spriteRenderer@{spriteRenderer}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{spriteRenderer}{spriteRenderer}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a1eeaf261d27e4f0f52dc740f0c309621} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVTerminal::\+sprite\+Renderer = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a0522e2ca2a96f60b1e6fcef7ec0972a0}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!state@{state}}
+\index{state@{state}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a0522e2ca2a96f60b1e6fcef7ec0972a0} 
+\doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{Terminal\+State}} Game::\+\+CCTVTerminal::\+state = \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{Terminal\+State::\+\+ACTIVE}}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_ac4ea80cd64e6b9e3f8b00a6669b6dfa1}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!zoneHackTextPrefix@{zoneHackTextPrefix}}
+\index{zoneHackTextPrefix@{zoneHackTextPrefix}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{zoneHackTextPrefix}{zoneHackTextPrefix}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_ac4ea80cd64e6b9e3f8b00a6669b6dfa1} 
+std::\+string Game::\+\+CCTVTerminal::\+zone\+Hack\+Text\+Prefix = "{}Hold E to Hack "{}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_terminal_a66d6fe4e48de0725b77c32fc128e2107}\index{Game::CCTVTerminal@{Game::CCTVTerminal}!zoneHackTextSuffix@{zoneHackTextSuffix}}
+\index{zoneHackTextSuffix@{zoneHackTextSuffix}!Game::CCTVTerminal@{Game::CCTVTerminal}}
+\doxysubsubsection{\texorpdfstring{zoneHackTextSuffix}{zoneHackTextSuffix}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_terminal_a66d6fe4e48de0725b77c32fc128e2107} 
+std::\+string Game::\+\+CCTVTerminal::\+zone\+Hack\+Text\+Suffix = "{} Cameras"{}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+CCTV/\+\doxymbox{\hyperlink{_c_c_t_v_terminal_8hpp}{CCTVTerminal.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+CCTV/\+\doxymbox{\hyperlink{_c_c_t_v_terminal_8cpp}{CCTVTerminal.\+cpp}}\end{DoxyCompactItemize}

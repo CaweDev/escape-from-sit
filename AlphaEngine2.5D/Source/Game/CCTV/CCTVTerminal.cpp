@@ -18,18 +18,14 @@
 namespace Game
 {
 
-    /*!
-     * \brief [AUTO] Awake
-     */
+    
     void CCTVTerminal::Awake()
     {
         UpdateVisualState();
         SetupInteraction();
     }
 
-    /*!
-     * \brief [AUTO] SetupInteraction
-     */
+    
     void CCTVTerminal::SetupInteraction()
     {
         auto interactable = gameObject->GetComponent<Engine::Interactable>();
@@ -40,9 +36,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] OnTerminalInteract
-     */
+    
     void CCTVTerminal::OnTerminalInteract()
     {
         if (!CanHack())
@@ -64,10 +58,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] CanHack
-     * \return
-     */
+    
     bool CCTVTerminal::CanHack() const
     {
         if (isDisabled)
@@ -79,9 +70,7 @@ namespace Game
         return true;
     }
 
-    /*!
-     * \brief [AUTO] Update
-     */
+    
     void CCTVTerminal::Update()
     {
         if (floatingIcon)
@@ -138,9 +127,7 @@ namespace Game
         UpdateVisualState();
     }
 
-    /*!
-     * \brief [AUTO] DisableCameras
-     */
+    
     void CCTVTerminal::DisableCameras()
     {
         isDisabled = true;
@@ -160,9 +147,7 @@ namespace Game
         NotifyGuardsOfSabotage();
     }
 
-    /*!
-     * \brief [AUTO] RestoreCameras
-     */
+    
     void CCTVTerminal::RestoreCameras()
     {
         isDisabled = false;
@@ -182,10 +167,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] StartRepair
-     * \param guard [in]
-     */
+    
     void CCTVTerminal::StartRepair(SecurityGuard *guard)
     {
         if (!isDisabled)
@@ -197,9 +179,7 @@ namespace Game
         state = TerminalState::REPAIRING;
     }
 
-    /*!
-     * \brief [AUTO] CancelRepair
-     */
+    
     void CCTVTerminal::CancelRepair()
     {
         guardIsRepairing = false;
@@ -208,10 +188,7 @@ namespace Game
         state = TerminalState::DISABLED;
     }
 
-    /*!
-     * \brief [AUTO] UpdateRepair
-     * \param deltaTime [in]
-     */
+    
     void CCTVTerminal::UpdateRepair(float deltaTime)
     {
         if (!guardIsRepairing || !repairingGuard)
@@ -239,9 +216,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] NotifyGuardsOfSabotage
-     */
+    
     void CCTVTerminal::NotifyGuardsOfSabotage()
     {
         Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
@@ -259,10 +234,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] UpdateDisabledState
-     * \param deltaTime [in]
-     */
+    
     void CCTVTerminal::UpdateDisabledState(float deltaTime)
     {
         disabledTimer -= deltaTime;
@@ -273,10 +245,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] UpdateCooldown
-     * \param deltaTime [in]
-     */
+    
     void CCTVTerminal::UpdateCooldown(float deltaTime)
     {
         cooldownTimer -= deltaTime;
@@ -286,9 +255,7 @@ namespace Game
         }
     }
 
-    /*!
-     * \brief [AUTO] UpdateVisualState
-     */
+    
     void CCTVTerminal::UpdateVisualState()
     {
         if (!spriteRenderer)
@@ -305,10 +272,7 @@ namespace Game
         spriteRenderer->SetColor(color);
     }
 
-    /*!
-     * \brief [AUTO] GetStateColor
-     * \return
-     */
+    
     Engine::Color CCTVTerminal::GetStateColor() const
     {
         switch (state)

@@ -1,0 +1,46 @@
+\doxysection{Scene\+Registry.\+hpp}
+\hypertarget{_scene_registry_8hpp_source}{}\label{_scene_registry_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/SceneRegistry.hpp@{AlphaEngine2.5D/Source/Game/Scenes/SceneRegistry.hpp}}
+\doxymbox{\hyperlink{_scene_registry_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_manager_8hpp}{Engine/Scene/SceneManager.hpp}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_f_p_s_scene_8hpp}{Game/Scenes/FPSScene/FPSScene.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_test_scene_8hpp}{Game/Scenes/UITestScene/UITestScene.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interaction_demo_scene_8hpp}{Game/Scenes/InteractionDemoScene/InteractionDemoScene.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_main_menu_scene_8hpp}{Game/Scenes/MainMenuScene/MainMenuScene.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_loading_scene_8hpp}{Game/Scenes/LoadingScene/LoadingScene.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_splash_scene_8hpp}{Game/Scenes/SplashScene/SplashScene.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_credit_scene_8hpp}{Game/Scenes/CreditScene/CreditScene.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_editor_scene_8hpp}{Editor/EditorScene.hpp}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00017\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Scene\ instances}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene}{EditorScene}}\ \doxymbox{\hyperlink{namespace_game_a25ad7d2f399001c1b449460d72005aea}{editorScene}};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{FPSScene}}\ \doxymbox{\hyperlink{namespace_game_ac0a09aceca88b8efe5c233de15a1d77c}{fpsScene}};}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene}{UITestScene}}\ \doxymbox{\hyperlink{namespace_game_a5de8d5d48132456ce4797f0f53b7e92a}{uiTestScene}};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene}{InteractionDemoScene}}\ \doxymbox{\hyperlink{namespace_game_a656963219f8da44078ad2bec28acfd26}{interactionDemoScene}};}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_main_menu_scene}{MainMenuScene}}\ \doxymbox{\hyperlink{namespace_game_a9abcf2b7c0d594d03a5726f994ca2889}{mainMenuScene}};}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_loading_scene}{LoadingScene}}\ \doxymbox{\hyperlink{namespace_game_a0a3fd73ec1b106fe398a79aaccb2aa52}{loadingScene}};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_splash_scene}{SplashScene}}\ \doxymbox{\hyperlink{namespace_game_a5b67a5075c9502bfb5dbfaa38198169c}{splashScene}};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_game_1_1_credit_scene}{CreditScene}}\ \doxymbox{\hyperlink{namespace_game_ab296d23a31094016309b73371a373f46}{creditScene}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{namespace_game_ae7dde5a9626620e10e617719aa60f406}{RegisterAllScenes}}()}
+\DoxyCodeLine{00036\ \ \ \ \ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}SplashScene"{}},\ \&\doxymbox{\hyperlink{namespace_game_a5b67a5075c9502bfb5dbfaa38198169c}{splashScene}});}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}Credits"{}},\ \&\doxymbox{\hyperlink{namespace_game_ab296d23a31094016309b73371a373f46}{creditScene}});}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}MainMenu"{}},\ \&\doxymbox{\hyperlink{namespace_game_a9abcf2b7c0d594d03a5726f994ca2889}{mainMenuScene}});}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}FPS"{}},\ \&\doxymbox{\hyperlink{namespace_game_ac0a09aceca88b8efe5c233de15a1d77c}{fpsScene}});}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}InteractionDemo"{}},\ \&\doxymbox{\hyperlink{namespace_game_a656963219f8da44078ad2bec28acfd26}{interactionDemoScene}});}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}UI"{}},\ \&\doxymbox{\hyperlink{namespace_game_a5de8d5d48132456ce4797f0f53b7e92a}{uiTestScene}});}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}Loading"{}},\ \&\doxymbox{\hyperlink{namespace_game_a0a3fd73ec1b106fe398a79aaccb2aa52}{loadingScene}});}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{SceneManager::RegisterScene}}(\textcolor{stringliteral}{"{}EditorScene"{}},\ \&\doxymbox{\hyperlink{namespace_game_a25ad7d2f399001c1b449460d72005aea}{editorScene}});}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

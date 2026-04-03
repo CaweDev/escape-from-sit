@@ -1,0 +1,119 @@
+\doxysection{Mathf.\+hpp}
+\hypertarget{_mathf_8hpp_source}{}\label{_mathf_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Math/Mathf.hpp@{AlphaEngine2.5D/Source/Engine/Math/Mathf.hpp}}
+\doxymbox{\hyperlink{_mathf_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }Mathf\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a0f82929548976ae1efc41d75640f938d}{Deg2Rad}}\ =\ PI\ /\ 180.0f;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_aad86b1cd592b3d0bcbcf3d9374548439}{Rad2Deg}}\ =\ 180.0f\ /\ PI;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a4b73074b645bdd0cb4ae1d63930e9e5a}{Epsilon}}\ =\ 0.00001f;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a05d896417da61ca0cbc826d45e8df45d}{Infinity}}\ =\ 1e30f;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{comment}{//\ Trigonometry\ (using\ Alpha\ Engine)}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a9d77bf8c8b15c7ad03e00659d212a561}{Sin}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AESin(x);\ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a3955769ca533b3c08eb92139f4c16e0d}{Cos}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AECos(x);\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1d4b9650dbb8bf11e45a08224dfcd0ac}{Tan}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AETan(x);\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a886dc486b16d1ace9d79e9f46b9516e6}{Asin}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AEASin(x);\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a5cb90b7b23bd52aaa93d1dc08f22235f}{Acos}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AEACos(x);\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a5bd2891b39bd3ff85539a72379301d7f}{Atan}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ AEATan(x);\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a15f7dbf5b6150f54ee27bf7ec09d842e}{Atan2}}(f32\ y,\ f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::atan2(y,\ x);\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Basic\ math}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a65d1540252df283a78e88a2e7b95c6e5}{Abs}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ (x\ <\ 0)\ ?\ -\/x\ :\ x;\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_abc6f0aafe5942dfa3f2ff6af2968a1f0}{Abs}}(\textcolor{keywordtype}{int}\ x)\ \{\ \textcolor{keywordflow}{return}\ (x\ <\ 0)\ ?\ -\/x\ :\ x;\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a2ebb18557e4307972338c3dd6ea9e243}{Sqrt}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::sqrt(x);\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a22495a4f0e3e9130fae1645ae321baf1}{Pow}}(f32\ x,\ f32\ p)\ \{\ \textcolor{keywordflow}{return}\ std::pow(x,\ p);\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1f7c6d6e6c3dea72e747bf0a3e3fca65}{Exp}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::exp(x);\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_af90d3cb6d1b5434452670ac440a3d5d9}{Log}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::log(x);\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a4fa61d903f056bb9ad35efa8d8eb6ea4}{Log10}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::log10(x);\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Rounding}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_abcc1d2ad83f42ea170746af403bed70f}{Floor}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::floor(x);\ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_ab8bd4790b07765aa8cdd50b7e54f707a}{Ceil}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::ceil(x);\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a658a9274591881f1f4ac6a7cca1b31c4}{Round}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ std::round(x);\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a23b395a6a10999bb85df0c7cdce30fec}{FloorToInt}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::floor(x));\ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a40e8fb1838af0a1f67e428191ae331f4}{CeilToInt}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::ceil(x));\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a092f61db4755c010e06111afd9c449aa}{RoundToInt}}(f32\ x)\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::round(x));\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Clamping\ and\ interpolation}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a0b98945d0c6355b45a9f6baf93afd899}{Clamp}}(f32\ value,\ f32\ min,\ f32\ max)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ AEClamp(value,\ min,\ max);}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1d20287bd40edbc27efacf0d7b3ce61b}{Clamp01}}(f32\ value)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a0b98945d0c6355b45a9f6baf93afd899}{Clamp}}(value,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a8f7bb55cf3128bb7b3a077f72cb7ecd9}{Clamp}}(\textcolor{keywordtype}{int}\ value,\ \textcolor{keywordtype}{int}\ min,\ \textcolor{keywordtype}{int}\ max)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <\ min)\ \textcolor{keywordflow}{return}\ min;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ >\ max)\ \textcolor{keywordflow}{return}\ max;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a9ea7bd984176f833ec17e2da8cd76076}{Lerp}}(f32\ a,\ f32\ b,\ f32\ t)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ (b\ -\/\ a)\ *\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1d20287bd40edbc27efacf0d7b3ce61b}{Clamp01}}(t);}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a9480d945e55692b45f7967fb12b07e77}{LerpUnclamped}}(f32\ a,\ f32\ b,\ f32\ t)\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a\ +\ (b\ -\/\ a)\ *\ t;}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a4d295edc362b184831f745d8a74ba747}{InverseLerp}}(f32\ a,\ f32\ b,\ f32\ value)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_engine_1_1_mathf_a65d1540252df283a78e88a2e7b95c6e5}{Abs}}(b\ -\/\ a)\ <\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a4b73074b645bdd0cb4ae1d63930e9e5a}{Epsilon}})\ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1d20287bd40edbc27efacf0d7b3ce61b}{Clamp01}}((value\ -\/\ a)\ /\ (b\ -\/\ a));}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Comparison}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a8dd4b50e4515d585eebbf00ed955666b}{Min}}(f32\ a,\ f32\ b)\ \{\ \textcolor{keywordflow}{return}\ AEMin(a,\ b);\ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a74e76fad6942b05493af73551a7dc792}{Max}}(f32\ a,\ f32\ b)\ \{\ \textcolor{keywordflow}{return}\ AEMax(a,\ b);\ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_af9774a83ef53d24dc6651dcbb89810be}{Min}}(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)\ \{\ \textcolor{keywordflow}{return}\ (a\ <\ b)\ ?\ a\ :\ b;\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a0e4bfa5c2aa3abc7587a12c0afddb61e}{Max}}(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)\ \{\ \textcolor{keywordflow}{return}\ (a\ >\ b)\ ?\ a\ :\ b;\ \}}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Sign}}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a7e4e50bc0ac767e094342ad98a751def}{Sign}}(f32\ x)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ >\ 0)\ \textcolor{keywordflow}{return}\ 1.0f;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ <\ 0)\ \textcolor{keywordflow}{return}\ -\/1.0f;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0.0f;}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Movement\ helpers}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a64994ff728b19f49bdad6ab3a9a33df6}{MoveTowards}}(f32\ current,\ f32\ target,\ f32\ maxDelta)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_engine_1_1_mathf_a65d1540252df283a78e88a2e7b95c6e5}{Abs}}(target\ -\/\ current)\ <=\ maxDelta)\ \textcolor{keywordflow}{return}\ target;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ current\ +\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a7e4e50bc0ac767e094342ad98a751def}{Sign}}(target\ -\/\ current)\ *\ maxDelta;}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_ac018018e5cde877dbde9321c9be3f9cb}{SmoothStep}}(f32\ from,\ f32\ to,\ f32\ t)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ t\ =\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a1d20287bd40edbc27efacf0d7b3ce61b}{Clamp01}}(t);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ t\ =\ t\ *\ t\ *\ (3.0f\ -\/\ 2.0f\ *\ t);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ from\ +\ (to\ -\/\ from)\ *\ t;}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{comment}{//\ Angle\ helpers}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a81cd533ea8a2422750727d8874015083}{DeltaAngle}}(f32\ current,\ f32\ target)\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ f32\ delta\ =\ std::fmod(target\ -\/\ current,\ 360.0f);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delta\ >\ 180.0f)\ delta\ -\/=\ 360.0f;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (delta\ <\ -\/180.0f)\ delta\ +=\ 360.0f;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ delta;}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{comment}{//\ Approximately\ equal\ (for\ f32ing\ point\ comparison)}}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a9e6718b2db2c5919c5ba6b9007faa9c0}{Approximately}}(f32\ a,\ f32\ b)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a65d1540252df283a78e88a2e7b95c6e5}{Abs}}(a\ -\/\ b)\ <\ \doxymbox{\hyperlink{class_engine_1_1_mathf_a4b73074b645bdd0cb4ae1d63930e9e5a}{Epsilon}};}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00117\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_mathf}{Mathf}}()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class,\ no\ instantiation}}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

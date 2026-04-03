@@ -1,0 +1,269 @@
+\doxysection{Game::\+Path\+Renderer Class Reference}
+\hypertarget{class_game_1_1_path_renderer}{}\label{class_game_1_1_path_renderer}\index{Game::PathRenderer@{Game::PathRenderer}}
+
+
+Renders visual waypoint markers on the floor showing path to destination.  
+
+
+
+
+{\ttfamily \+\#include $<$Path\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_path_renderer_a9f5b94f76536cb93a5ceddac13281bf9}{Awake}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_path_renderer_a05ca31646ba38f58a6b6c0a73f637c69}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_path_renderer_a6a86fb2ed3607e8b287685a11caefe1f}{Render}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_path_renderer_af2fa2e70e581f688d6ba7327b0572f84}{Set\+Path}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&start, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&dest, int card\+ID=-\/1, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color=\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 1.\+0f, 0.\+0f, 0.\+8f))
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_path_renderer_a0ced2b98f44e308f59cab88492f6b261}{Clear\+Path}} ()
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_path_renderer_a5c3b82574a81c71c2021f114a91b9918}{Has\+Path}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\texorpdfstring{$\sim$}{\string~}\+IRenderer}} ()=default
+\item 
+virtual f32 \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{Get\+Sorting\+Key}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{Set\+Ignore\+Fog}} (bool value)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{Get\+Ignore\+Fog}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} $>$ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a7eca7fbbc9df7260fee1cd6e298f2239}{path\+Waypoints}}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_path_renderer_acb8250b0ba2dfd1f22a28d11c098e9d5}{marker\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 1.\+0f, 0.\+0f, 0.\+8f)
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_a03392c9b387c496e559377b95fddfdce}{marker\+Size}} = 0.\+3f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_a7a9e27d160f739987663a1069e5e505f}{marker\+Height}} = 0.\+02f
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_path_renderer_a23ef85e981f6aa6812313e225ca71c63}{card\+Id}} = -\/1
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_aee574b2a2c81a525978b2d260c019340}{glow\+Speed}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_a0a96f5ec1f93e5dc2069c841370741f6}{glow\+Intensity}} = 0.\+3f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_path_renderer_afeb53caa6a5818a387f70a279c418935}{auto\+Fade}} = true
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_abb819e8176ba2ad4b024f674d48f24b6}{fade\+Distance}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_path_renderer_ab09f206686a0b85ea03e688995399f6e}{current\+Alpha}} = 1.\+0f
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_path_renderer_a177808232393c889de7f596e95faa77d}{destination}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_path_renderer_acb0708bae427fddd18d7b2b7fcb9993e}{tile\+Map}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_path_renderer_a258237bc605ff927d50329da05e07347}{player\+Transform}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlight\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignore\+Fog}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Renders visual waypoint markers on the floor showing path to destination. 
+
+Uses A\texorpdfstring{$\ast$}{*} pathfinding to compute optimal route, then renders glowing markers on the floor tiles to guide the player. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_path_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_path_renderer_a9f5b94f76536cb93a5ceddac13281bf9}\index{Game::PathRenderer@{Game::PathRenderer}!Awake@{Awake}}
+\index{Awake@{Awake}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a9f5b94f76536cb93a5ceddac13281bf9} 
+void Game::\+\+Path\+Renderer::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is first created 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_path_renderer_a0ced2b98f44e308f59cab88492f6b261}\index{Game::PathRenderer@{Game::PathRenderer}!ClearPath@{ClearPath}}
+\index{ClearPath@{ClearPath}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{ClearPath()}{ClearPath()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a0ced2b98f44e308f59cab88492f6b261} 
+void Game::\+\+Path\+Renderer::\+\+Clear\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Clear the path \Hypertarget{class_game_1_1_path_renderer_a5c3b82574a81c71c2021f114a91b9918}\index{Game::PathRenderer@{Game::PathRenderer}!HasPath@{HasPath}}
+\index{HasPath@{HasPath}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{HasPath()}{HasPath()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a5c3b82574a81c71c2021f114a91b9918} 
+bool Game::\+\+Path\+Renderer::\+\+Has\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if path is active \Hypertarget{class_game_1_1_path_renderer_a6a86fb2ed3607e8b287685a11caefe1f}\index{Game::PathRenderer@{Game::PathRenderer}!Render@{Render}}
+\index{Render@{Render}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a6a86fb2ed3607e8b287685a11caefe1f} 
+void Game::\+\+Path\+Renderer::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Main render call (called by engine or specialized scenes) 
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_game_1_1_path_renderer_af2fa2e70e581f688d6ba7327b0572f84}\index{Game::PathRenderer@{Game::PathRenderer}!SetPath@{SetPath}}
+\index{SetPath@{SetPath}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{SetPath()}{SetPath()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_af2fa2e70e581f688d6ba7327b0572f84} 
+void Game::\+\+Path\+Renderer::\+\+Set\+Path (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{start}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{dest}{, }\item[{int}]{card\+ID}{ = {\ttfamily -\/1}, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{ = {\ttfamily \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.0f,~1.0f,~0.0f,~0.8f)}}\end{DoxyParamCaption})}
+
+Compute and set path from start to destination using A\texorpdfstring{$\ast$}{*}, with card-\/specific color \Hypertarget{class_game_1_1_path_renderer_a05ca31646ba38f58a6b6c0a73f637c69}\index{Game::PathRenderer@{Game::PathRenderer}!Update@{Update}}
+\index{Update@{Update}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a05ca31646ba38f58a6b6c0a73f637c69} 
+void Game::\+\+Path\+Renderer::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_path_renderer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_path_renderer_afeb53caa6a5818a387f70a279c418935}\index{Game::PathRenderer@{Game::PathRenderer}!autoFade@{autoFade}}
+\index{autoFade@{autoFade}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{autoFade}{autoFade}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_afeb53caa6a5818a387f70a279c418935} 
+bool Game::\+\+Path\+Renderer::\+auto\+Fade = true}
+
+Auto-\/fade when player gets close to destination \Hypertarget{class_game_1_1_path_renderer_a23ef85e981f6aa6812313e225ca71c63}\index{Game::PathRenderer@{Game::PathRenderer}!cardId@{cardId}}
+\index{cardId@{cardId}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{cardId}{cardId}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a23ef85e981f6aa6812313e225ca71c63} 
+int Game::\+\+Path\+Renderer::\+card\+Id = -\/1}
+
+Card ID this path is for (0-\/3, -\/1 for none) \Hypertarget{class_game_1_1_path_renderer_ab09f206686a0b85ea03e688995399f6e}\index{Game::PathRenderer@{Game::PathRenderer}!currentAlpha@{currentAlpha}}
+\index{currentAlpha@{currentAlpha}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{currentAlpha}{currentAlpha}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_ab09f206686a0b85ea03e688995399f6e} 
+float Game::\+\+Path\+Renderer::\+current\+Alpha = 1.\+0f}
+
+\Hypertarget{class_game_1_1_path_renderer_a177808232393c889de7f596e95faa77d}\index{Game::PathRenderer@{Game::PathRenderer}!destination@{destination}}
+\index{destination@{destination}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{destination}{destination}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a177808232393c889de7f596e95faa77d} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+Path\+Renderer::\+destination}
+
+Destination position \Hypertarget{class_game_1_1_path_renderer_abb819e8176ba2ad4b024f674d48f24b6}\index{Game::PathRenderer@{Game::PathRenderer}!fadeDistance@{fadeDistance}}
+\index{fadeDistance@{fadeDistance}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{fadeDistance}{fadeDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_abb819e8176ba2ad4b024f674d48f24b6} 
+float Game::\+\+Path\+Renderer::\+fade\+Distance = 2.\+0f}
+
+\Hypertarget{class_game_1_1_path_renderer_a0a96f5ec1f93e5dc2069c841370741f6}\index{Game::PathRenderer@{Game::PathRenderer}!glowIntensity@{glowIntensity}}
+\index{glowIntensity@{glowIntensity}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{glowIntensity}{glowIntensity}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a0a96f5ec1f93e5dc2069c841370741f6} 
+float Game::\+\+Path\+Renderer::\+glow\+Intensity = 0.\+3f}
+
+\Hypertarget{class_game_1_1_path_renderer_aee574b2a2c81a525978b2d260c019340}\index{Game::PathRenderer@{Game::PathRenderer}!glowSpeed@{glowSpeed}}
+\index{glowSpeed@{glowSpeed}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{glowSpeed}{glowSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_aee574b2a2c81a525978b2d260c019340} 
+float Game::\+\+Path\+Renderer::\+glow\+Speed = 2.\+0f}
+
+Glow animation \Hypertarget{class_game_1_1_path_renderer_acb8250b0ba2dfd1f22a28d11c098e9d5}\index{Game::PathRenderer@{Game::PathRenderer}!markerColor@{markerColor}}
+\index{markerColor@{markerColor}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{markerColor}{markerColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_acb8250b0ba2dfd1f22a28d11c098e9d5} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+Path\+Renderer::\+marker\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}}(1.\+0f, 1.\+0f, 0.\+0f, 0.\+8f)}
+
+Marker color (can be set per-\/card) \Hypertarget{class_game_1_1_path_renderer_a7a9e27d160f739987663a1069e5e505f}\index{Game::PathRenderer@{Game::PathRenderer}!markerHeight@{markerHeight}}
+\index{markerHeight@{markerHeight}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{markerHeight}{markerHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a7a9e27d160f739987663a1069e5e505f} 
+float Game::\+\+Path\+Renderer::\+marker\+Height = 0.\+02f}
+
+Marker height above floor \Hypertarget{class_game_1_1_path_renderer_a03392c9b387c496e559377b95fddfdce}\index{Game::PathRenderer@{Game::PathRenderer}!markerSize@{markerSize}}
+\index{markerSize@{markerSize}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{markerSize}{markerSize}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a03392c9b387c496e559377b95fddfdce} 
+float Game::\+\+Path\+Renderer::\+marker\+Size = 0.\+3f}
+
+Marker size \Hypertarget{class_game_1_1_path_renderer_a7eca7fbbc9df7260fee1cd6e298f2239}\index{Game::PathRenderer@{Game::PathRenderer}!pathWaypoints@{pathWaypoints}}
+\index{pathWaypoints@{pathWaypoints}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{pathWaypoints}{pathWaypoints}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a7eca7fbbc9df7260fee1cd6e298f2239} 
+std::\+vector$<$\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}$>$ Game::\+\+Path\+Renderer::\+path\+Waypoints}
+
+Path waypoints (tile coordinates) \Hypertarget{class_game_1_1_path_renderer_a258237bc605ff927d50329da05e07347}\index{Game::PathRenderer@{Game::PathRenderer}!playerTransform@{playerTransform}}
+\index{playerTransform@{playerTransform}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{playerTransform}{playerTransform}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_a258237bc605ff927d50329da05e07347} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Path\+Renderer::\+player\+Transform = nullptr}
+
+\doxylink{class_game_1_1_player}{Player} transform for distance checks \Hypertarget{class_game_1_1_path_renderer_acb0708bae427fddd18d7b2b7fcb9993e}\index{Game::PathRenderer@{Game::PathRenderer}!tileMap@{tileMap}}
+\index{tileMap@{tileMap}!Game::PathRenderer@{Game::PathRenderer}}
+\doxysubsubsection{\texorpdfstring{tileMap}{tileMap}}
+{\footnotesize\ttfamily \label{class_game_1_1_path_renderer_acb0708bae427fddd18d7b2b7fcb9993e} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}\texorpdfstring{$\ast$}{*} Game::\+\+Path\+Renderer::\+tile\+Map = nullptr}
+
+\doxylink{class_engine_1_1_tile_map}{Tile\+Map} reference for pathfinding 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Path\+Renderer/\+\doxymbox{\hyperlink{_path_renderer_8hpp}{Path\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Path\+Renderer/\+\doxymbox{\hyperlink{_path_renderer_8cpp}{Path\+Renderer.\+cpp}}\end{DoxyCompactItemize}

@@ -48,16 +48,8 @@ Sprite& Sprite::operator=(const Sprite& other) {
     return *this;
 }
 
-/*!
- * \brief [AUTO] Load
- * \param filepath [in]
- * \return 
- */
-/*!
- * \brief [AUTO] Load
- * \param filepath [in]
- * \return 
- */
+
+
 bool Sprite::Load(const std::string& filepath) {
     Unload();
     
@@ -77,9 +69,7 @@ bool Sprite::Load(const std::string& filepath) {
 
 
 
-/*!
- * \brief [AUTO] Unload
- */
+
 void Sprite::Unload() {
     // Texture is now managed by AssetManager, don't delete it
     texture = nullptr;
@@ -90,46 +80,26 @@ void Sprite::Unload() {
     }
 }
 
-/*!
- * \brief [AUTO] IsLoaded
- * \return 
- */
-/*!
- * \brief [AUTO] IsLoaded
- * \return 
- */
+
+
 bool Sprite::IsLoaded() const {
     return texture != nullptr && texture->IsLoaded() && mesh != nullptr;
 }
 
-/*!
- * \brief [AUTO] GetTexture
- * \return 
- */
-/*!
- * \brief [AUTO] GetTexture
- * \return 
- */
+
+
 AEGfxTexture* Sprite::GetTexture() const {
     return texture ? texture->GetNativeTexture() : nullptr;
 }
 
 
-/*!
- * \brief [AUTO] GetMesh
- * \return 
- */
-/*!
- * \brief [AUTO] GetMesh
- * \return 
- */
+
+
 AEGfxVertexList* Sprite::GetMesh() const {
     return mesh;
 }
 
-/*!
- * \brief [AUTO] CreateQuadMesh
- */
+
 void Sprite::CreateQuadMesh() {
     if (mesh) {
         AEGfxMeshFree(mesh);
@@ -159,14 +129,8 @@ void Sprite::CreateQuadMesh() {
 
 
 
-/*!
- * \brief [AUTO] IsReady
- * \return 
- */
-/*!
- * \brief [AUTO] IsReady
- * \return 
- */
+
+
 bool Sprite::IsReady() const {
     return mesh != nullptr;
 }

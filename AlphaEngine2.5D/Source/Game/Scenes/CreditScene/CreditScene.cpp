@@ -106,9 +106,7 @@ const char* CreditScene::CREDITS_TEXTURE_PATH = "Assets/UI/CreditScene.png";
 
 CreditScene::CreditScene() : Scene("CreditScene") {}
 
-/*!
- * \brief [AUTO] OnLoad
- */
+
 void CreditScene::OnLoad() {
     const auto& cfg = GetCreditSceneConfig();
     Input::RegisterCursorUnlock("CreditScene");
@@ -169,9 +167,7 @@ void CreditScene::OnLoad() {
     FadeService::FadeOut(cfg.fadeOutDuration);
 }
 
-/*!
- * \brief [AUTO] OnUpdate
- */
+
 void CreditScene::OnUpdate() {
     float dt = Time::unscaledDeltaTime;
 
@@ -191,35 +187,18 @@ void CreditScene::OnUpdate() {
     }
 }
 
-/*!
- * \brief [AUTO] SkipToEnd
- */
+
 void CreditScene::SkipToEnd() {
     if (m_transitioning) return;
     m_transitioning = true;
     SceneManager::LoadWithFade("MainMenu");
 }
 
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
+
+
+
+
+
 bool CreditScene::IsSkipPressed() const {
     if (Input::GetKeyDown(KeyCode::Return) ||
         Input::GetKeyDown(KeyCode::Escape) ||
@@ -231,9 +210,7 @@ bool CreditScene::IsSkipPressed() const {
     return false;
 }
 
-/*!
- * \brief [AUTO] OnUnload
- */
+
 void CreditScene::OnUnload() {
     Input::UnregisterCursorUnlock("CreditScene");
     if (m_canvas) {

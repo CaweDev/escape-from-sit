@@ -1,0 +1,49 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Core/\+\+Component.hpp File Reference}
+\hypertarget{_component_8hpp}{}\label{_component_8hpp}\index{AlphaEngine2.5D/Source/Engine/Core/Component.hpp@{AlphaEngine2.5D/Source/Engine/Core/Component.hpp}}
+
+
+Base component class with Unity-\/like lifecycle.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}
+\begin{DoxyCompactList}\small\item\em Base class for all components attached to Game\+Objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{_component_8hpp_aa196eb8fbe9315fd6dd7470e5e619290}{REQUIRE\+\_\+\+COMPONENT}}(Type)
+\begin{DoxyCompactList}\small\item\em Macro to require a component of type T on the same Game\+Object This defines a static method that can be checked by Game\+Object during Add\+Component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base component class with Unity-\/like lifecycle. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{_component_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_component_8hpp_aa196eb8fbe9315fd6dd7470e5e619290}\index{Component.hpp@{Component.hpp}!REQUIRE\_COMPONENT@{REQUIRE\_COMPONENT}}
+\index{REQUIRE\_COMPONENT@{REQUIRE\_COMPONENT}!Component.hpp@{Component.hpp}}
+\doxysubsubsection{\texorpdfstring{REQUIRE\_COMPONENT}{REQUIRE\_COMPONENT}}
+{\footnotesize\ttfamily \label{_component_8hpp_aa196eb8fbe9315fd6dd7470e5e619290} 
+\+\#define REQUIRE\+\_\+\+COMPONENT(\begin{DoxyParamCaption}\item[{}]{Type}{}\end{DoxyParamCaption})}
+
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using\ }required\_type\ =\ Type;\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ required\_type\_name()\ \{\ \textcolor{keywordflow}{return}\ \#Type;\ \}}
+
+\end{DoxyCode}
+
+
+Macro to require a component of type T on the same Game\+Object This defines a static method that can be checked by Game\+Object during Add\+Component. 
+

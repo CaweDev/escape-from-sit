@@ -1,0 +1,57 @@
+\doxysection{Puzzle\+Manager.\+hpp}
+\hypertarget{_puzzle_manager_8hpp_source}{}\label{_puzzle_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Puzzle/PuzzleManager.hpp@{AlphaEngine2.5D/Source/Game/Puzzle/PuzzleManager.hpp}}
+\doxymbox{\hyperlink{_puzzle_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_puzzle_object_8hpp}{PuzzleObject.hpp}}"{}}\ \textcolor{comment}{//\ This\ brings\ in\ your\ Book\ struct!}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//\ Struct\ to\ hold\ the\ dynamic\ grade\ tiers\ loaded\ from\ JSON}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_grade_tier}{GradeTier}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_grade_tier_af285ec2ac76718eb33540058e5318bb0}{letter}};}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_grade_tier_a6c6a7cb71b9b829a0c3ec926d25b509a}{maxMistakes}};}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_grade_tier_a5f1510417ad904c66f5a1872f5f7485d}{text}};}
+\DoxyCodeLine{00018\ \ \ \ \ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_puzzle_manager}{PuzzleManager}}}
+\DoxyCodeLine{00025\ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Core\ Stats\ \&\ Data\ -\/-\/-\/}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Book>\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a0ebecd3823f9f2d01e6fc3037589c4a9}{allBooks}};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Book>\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac3c55aba867c1dbabf4e24a5d440bc73}{Books}};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<GradeTier>\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a4846ca7b3ad23761b48d512a41076463}{gradeTiers}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{booksCollected}};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ab0feac1005a55d30ea5953041161acd5}{totalWrongAnswers}};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ UI\ Text\ Variables\ -\/-\/-\/}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a300e4bc74676e3a290b770811148feaf}{activeBookText}};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a9ab2aa162cdec5c39062d2fcc072f488}{activeBookTitle}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae2554e9605d43b5c22ec45c007749937}{popupTimer}};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a8d15cb9f99c4c0695ecbc2653ec5539f}{activeOpt1}};}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6a36ce5f3fdcfad0a3a0a94bebda5947}{activeOpt2}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_aed8a9d54fb900874af207ee021f5e19a}{activeOpt3}};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6c4be9fcd0c73ad4204591bdfb94a681}{activeGrade}};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Quiz\ State\ -\/-\/-\/}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6eb421f6821c997b5ffb615652cdff61}{isQuizActive}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a797671acaeb471fe37d6b20ff32e8c47}{currentCorrectAnswer}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}*\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a8fbf0df03cf4087efc1d3a8bf140bcdb}{currentBookObj}};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a2b507035fbcbdd70908f6d5fe60fe3b4}{currentBookId}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Core\ Functions\ -\/-\/-\/}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a31d526326c0113036c805d18de00a170}{CreatePuzzleObject}}(\doxymbox{\hyperlink{struct_game_1_1_book}{Book}}\ book);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4}{BookDataInit}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0}{Init}}();}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_af4a9ddf117f54f6ca1c07c427096bc9f}{FreeManager}}();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae26777692878695afd712684509d73f2}{OpenExitDoor}}();}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

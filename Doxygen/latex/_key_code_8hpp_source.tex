@@ -1,0 +1,134 @@
+\doxysection{Key\+Code.\+hpp}
+\hypertarget{_key_code_8hpp_source}{}\label{_key_code_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Input/KeyCode.hpp@{AlphaEngine2.5D/Source/Engine/Input/KeyCode.hpp}}
+\doxymbox{\hyperlink{_key_code_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{KeyCode}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Mouse\ buttons}}
+\DoxyCodeLine{00017\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab8f4af5198188c63664fb77aedd34640}{Mouse0}}\ =\ AEVK\_LBUTTON,}
+\DoxyCodeLine{00018\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a23f70ebe241b3f822fe71721a8964de1}{Mouse1}}\ =\ AEVK\_RBUTTON,}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3eb1c47e6d5b2e6b63c073a05e669e0e}{Mouse2}}\ =\ AEVK\_MBUTTON,}
+\DoxyCodeLine{00020\ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Special\ keys}}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70acd7d13ceea728b08555f7c818cfb13ef}{Backspace}}\ =\ AEVK\_BACK,}
+\DoxyCodeLine{00023\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5c6ba25104401c9ee0650230fc6ba413}{Tab}}\ =\ AEVK\_TAB,}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a988fd738de9c6d177440c5dcf69e73ce}{Return}}\ =\ AEVK\_RETURN,}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a013ec032d3460d4be4431c6ab1f8f224}{Escape}}\ =\ AEVK\_ESCAPE,}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad511f8439ecde36647437fbba67a4394}{Space}}\ =\ AEVK\_SPACE,}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Arrow\ keys}}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0b513090f0a012194da83d5515882b13}{UpArrow}}\ =\ AEVK\_UP,}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0a3f89b5a028cc88370ad5a49dfab276}{DownArrow}}\ =\ AEVK\_DOWN,}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1a45924fabe821ad288bd081b0bbf93b}{LeftArrow}}\ =\ AEVK\_LEFT,}
+\DoxyCodeLine{00032\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a026be376ee5c529a3d0a35866d1242ad}{RightArrow}}\ =\ AEVK\_RIGHT,}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ Modifiers}}
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a982621712db76f723b7bb88b631dc64d}{LeftShift}}\ =\ AEVK\_LSHIFT,}
+\DoxyCodeLine{00036\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a317d4a7487ee62605713987d4a037f83}{RightShift}}\ =\ AEVK\_RSHIFT,}
+\DoxyCodeLine{00037\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a641642d3718d5db8994a79d51b43e88c}{LeftControl}}\ =\ AEVK\_LCTRL,}
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a857bb13bb233ca520283eb9886509b65}{RightControl}}\ =\ AEVK\_RCTRL,}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a96f9c4eb595a467d02e35c723f63ebf7}{LeftAlt}}\ =\ AEVK\_LALT,}
+\DoxyCodeLine{00040\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad88bad98046b623323aa6ca28eefa6d5}{RightAlt}}\ =\ AEVK\_RALT,}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Navigation}}
+\DoxyCodeLine{00043\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa458be0f08b7e4ff3c0f633c100176c0}{Insert}}\ =\ AEVK\_INSERT,}
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af2a6c498fb90ee345d997f888fce3b18}{Delete}}\ =\ AEVK\_DELETE,}
+\DoxyCodeLine{00045\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8cf04a9734132302f96da8e113e80ce5}{Home}}\ =\ AEVK\_HOME,}
+\DoxyCodeLine{00046\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a87557f11575c0ad78e4e28abedc13b6e}{End}}\ =\ AEVK\_END,}
+\DoxyCodeLine{00047\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9b869c510c75c5827ac82e49d4340927}{PageUp}}\ =\ AEVK\_PAGEUP,}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aee3677bcca83ece9384b01e43952bf33}{PageDown}}\ =\ AEVK\_PAGEDOWN,}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Numbers\ (top\ row)}}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f1896b0949181219100380f7328e442}{Alpha0}}\ =\ AEVK\_0,}
+\DoxyCodeLine{00052\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a905b81f6ffb9ae0b60ff6184c1c099c0}{Alpha1}}\ =\ AEVK\_1,}
+\DoxyCodeLine{00053\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab59cd2e6e89feb9ae15aea97bb5c6e8c}{Alpha2}}\ =\ AEVK\_2,}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a45e199c3b864bd0b0b5d609860fd846c}{Alpha3}}\ =\ AEVK\_3,}
+\DoxyCodeLine{00055\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a01633f1e1b4af1c6933da83c8063347a}{Alpha4}}\ =\ AEVK\_4,}
+\DoxyCodeLine{00056\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a83ae9b0aff3420973c79ac1d273bccb2}{Alpha5}}\ =\ AEVK\_5,}
+\DoxyCodeLine{00057\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a906c322eddfed40af6ca8b789aaa917b}{Alpha6}}\ =\ AEVK\_6,}
+\DoxyCodeLine{00058\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7e1401e8efcb718a68c57b20a68631ae}{Alpha7}}\ =\ AEVK\_7,}
+\DoxyCodeLine{00059\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe20914526c7d83938bda15c24d3220a}{Alpha8}}\ =\ AEVK\_8,}
+\DoxyCodeLine{00060\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5ab466801223a5bdd2637ae199b7f4d4}{Alpha9}}\ =\ AEVK\_9,}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Letters}}
+\DoxyCodeLine{00063\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7fc56270e7a70fa81a5935b72eacbe29}{A}}\ =\ AEVK\_A,}
+\DoxyCodeLine{00064\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9d5ed678fe57bcca610140957afab571}{B}}\ =\ AEVK\_B,}
+\DoxyCodeLine{00065\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0d61f8370cad1d412f80b84d143e1257}{C}}\ =\ AEVK\_C,}
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af623e75af30e62bbd73d6df5b50bb7b5}{D}}\ =\ AEVK\_D,}
+\DoxyCodeLine{00067\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ =\ AEVK\_E,}
+\DoxyCodeLine{00068\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a800618943025315f869e4e1f09471012}{F}}\ =\ AEVK\_F,}
+\DoxyCodeLine{00069\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70adfcf28d0734569a6a693bc8194de62bf}{G}}\ =\ AEVK\_G,}
+\DoxyCodeLine{00070\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac1d9f50f86825a1a2302ec2449c17196}{H}}\ =\ AEVK\_H,}
+\DoxyCodeLine{00071\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70add7536794b63bf90eccfd37f9b147d7f}{I}}\ =\ AEVK\_I,}
+\DoxyCodeLine{00072\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aff44570aca8241914870afbc310cdb85}{J}}\ =\ AEVK\_J,}
+\DoxyCodeLine{00073\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa5f3c6a11b03839d46af9fb43c97c188}{K}}\ =\ AEVK\_K,}
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad20caec3b48a1eef164cb4ca81ba2587}{L}}\ =\ AEVK\_L,}
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a69691c7bdcc3ce6d5d8a1361f22d04ac}{M}}\ =\ AEVK\_M,}
+\DoxyCodeLine{00076\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8d9c307cb7f3c4a32822a51922d1ceaa}{N}}\ =\ AEVK\_N,}
+\DoxyCodeLine{00077\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af186217753c37b9b9f958d906208506e}{O}}\ =\ AEVK\_O,}
+\DoxyCodeLine{00078\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a44c29edb103a2872f519ad0c9a0fdaaa}{P}}\ =\ AEVK\_P,}
+\DoxyCodeLine{00079\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af09564c9ca56850d4cd6b3319e541aee}{Q}}\ =\ AEVK\_Q,}
+\DoxyCodeLine{00080\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1e1d3d40573127e9ee0480caf1283d6}{R}}\ =\ AEVK\_R,}
+\DoxyCodeLine{00081\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5dbc98dcc983a70728bd082d1a47546e}{S}}\ =\ AEVK\_S,}
+\DoxyCodeLine{00082\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ =\ AEVK\_T,}
+\DoxyCodeLine{00083\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4c614360da93c0a041b22e537de151eb}{U}}\ =\ AEVK\_U,}
+\DoxyCodeLine{00084\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5206560a306a2e085a437fd258eb57ce}{V}}\ =\ AEVK\_V,}
+\DoxyCodeLine{00085\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a61e9c06ea9a85a5088a499df6458d276}{W}}\ =\ AEVK\_W,}
+\DoxyCodeLine{00086\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a02129bb861061d1a052c592e2dc6b383}{X}}\ =\ AEVK\_X,}
+\DoxyCodeLine{00087\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a57cec4137b614c87cb4e24a3d003a3e0}{Y}}\ =\ AEVK\_Y,}
+\DoxyCodeLine{00088\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a21c2e59531c8710156d34a3c30ac81d5}{Z}}\ =\ AEVK\_Z,}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ Numpad}}
+\DoxyCodeLine{00091\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8af088f4456f200f66e7305e32aa1e3b}{Keypad0}}\ =\ AEVK\_NUMPAD0,}
+\DoxyCodeLine{00092\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5b32482cf767b1915b1fbeb9a3021479}{Keypad1}}\ =\ AEVK\_NUMPAD1,}
+\DoxyCodeLine{00093\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6661e97974ef5a2783c987ea071f8a0a}{Keypad2}}\ =\ AEVK\_NUMPAD2,}
+\DoxyCodeLine{00094\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6e29803ef8c72852fb9bc216e912e720}{Keypad3}}\ =\ AEVK\_NUMPAD3,}
+\DoxyCodeLine{00095\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad911ed9256592fc29bf18c68453614c4}{Keypad4}}\ =\ AEVK\_NUMPAD4,}
+\DoxyCodeLine{00096\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7b62ba810df419e5c085a7cc6e120e90}{Keypad5}}\ =\ AEVK\_NUMPAD5,}
+\DoxyCodeLine{00097\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4af249beec71483b20008b4d485ec499}{Keypad6}}\ =\ AEVK\_NUMPAD6,}
+\DoxyCodeLine{00098\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0205068de7df3cb53ae243591d39ae95}{Keypad7}}\ =\ AEVK\_NUMPAD7,}
+\DoxyCodeLine{00099\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a92e329d252b54f626755a38cae89a5be}{Keypad8}}\ =\ AEVK\_NUMPAD8,}
+\DoxyCodeLine{00100\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5bb0cbdeb920a0111e1a41cbd214cb49}{Keypad9}}\ =\ AEVK\_NUMPAD9,}
+\DoxyCodeLine{00101\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a12c8ec87631dc64e4307ab648b5e6596}{KeypadMultiply}}\ =\ AEVK\_NUM\_MULTIPLY,}
+\DoxyCodeLine{00102\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f3b5db5dd68593d6bebb3c91cbb75c5}{KeypadPlus}}\ =\ AEVK\_NUM\_PLUS,}
+\DoxyCodeLine{00103\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1b5cc648ff53810de4009a82d26270fe}{KeypadMinus}}\ =\ AEVK\_NUM\_MINUS,}
+\DoxyCodeLine{00104\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9bd3b7df5e51315fec833ca03b55d054}{KeypadPeriod}}\ =\ AEVK\_NUM\_PERIOD,}
+\DoxyCodeLine{00105\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1017496d0dc2f051ac948072d305f48c}{KeypadDivide}}\ =\ AEVK\_NUM\_DIVIDE,}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Function\ keys}}
+\DoxyCodeLine{00108\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1dffc8709f31a4987c8a88334107e89}{F1}}\ =\ AEVK\_F1,}
+\DoxyCodeLine{00109\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe5c3684dce76cdd9f7f42430868aa74}{F2}}\ =\ AEVK\_F2,}
+\DoxyCodeLine{00110\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4b6bf4b531770872d4328ce69bef5627}{F3}}\ =\ AEVK\_F3,}
+\DoxyCodeLine{00111\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae7e0e72401a9f2718ed0f39f2861d702}{F4}}\ =\ AEVK\_F4,}
+\DoxyCodeLine{00112\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a37f438df6a6d5ba4c17ef8ca58562f00}{F5}}\ =\ AEVK\_F5,}
+\DoxyCodeLine{00113\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1faf42f2823f184eb2c9f0dffe5d73f2}{F6}}\ =\ AEVK\_F6,}
+\DoxyCodeLine{00114\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a47489eb597b7db34caa24b1fc78fc839}{F7}}\ =\ AEVK\_F7,}
+\DoxyCodeLine{00115\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4787509ad9f9d747a81a30e9dde3d4a7}{F8}}\ =\ AEVK\_F8,}
+\DoxyCodeLine{00116\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a892a245e287c163080b23db737d3c4c9}{F9}}\ =\ AEVK\_F9,}
+\DoxyCodeLine{00117\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab213ce22ca6ad4eda8db82966b9b6e5a}{F10}}\ =\ AEVK\_F10,}
+\DoxyCodeLine{00118\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a643b0662422d1d0dffa3fca2e2bf28a8}{F11}}\ =\ AEVK\_F11,}
+\DoxyCodeLine{00119\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae902674982fc99aa343cdd94da7476c3}{F12}}\ =\ AEVK\_F12,}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ Symbols}}
+\DoxyCodeLine{00122\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9806fa37a3ecd39bf637c203aa011ed0}{Semicolon}}\ =\ AEVK\_SEMICOLON,}
+\DoxyCodeLine{00123\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a358cfe58715d680d9ab09f82e4010cbc}{Slash}}\ =\ AEVK\_SLASH,}
+\DoxyCodeLine{00124\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8c046c786b9034d32a14ced194f94548}{BackQuote}}\ =\ AEVK\_BACKQUOTE,}
+\DoxyCodeLine{00125\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a481c09f513474b2d31ba5c2992947b17}{LeftBracket}}\ =\ AEVK\_LBRACKET,}
+\DoxyCodeLine{00126\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af6c6379402dce27659f7cffee6bc1f00}{Backslash}}\ =\ AEVK\_BACKSLASH,}
+\DoxyCodeLine{00127\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a455364d8991395f71ef9ccc5cc449e5c}{RightBracket}}\ =\ AEVK\_RBRACKET,}
+\DoxyCodeLine{00128\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac48e929b2b1eabba2ba036884433345e}{Quote}}\ =\ AEVK\_QUOTE,}
+\DoxyCodeLine{00129\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0ccb67e7eaae09d9e4078d161eeca100}{Equals}}\ =\ AEVK\_EQUAL,}
+\DoxyCodeLine{00130\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a453fb623e752c5993f65bc410fd74fe5}{Minus}}\ =\ AEVK\_MINUS,}
+\DoxyCodeLine{00131\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1901606ea069a83dc7beea17881ef95a}{Period}}\ =\ AEVK\_PERIOD,}
+\DoxyCodeLine{00132\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a58be47db9455679e6a44df2eff9c9fa6}{Comma}}\ =\ AEVK\_COMMA}
+\DoxyCodeLine{00133\ \};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

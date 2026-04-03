@@ -1,0 +1,84 @@
+\doxysection{Player.\+hpp}
+\hypertarget{_player_8hpp_source}{}\label{_player_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Player/Player.hpp@{AlphaEngine2.5D/Source/Game/Player/Player.hpp}}
+\doxymbox{\hyperlink{_player_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_engine_8hpp}{Engine.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{PlayerState}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a960b44c579bc2f6818d2daaf9e4c16f0}{Normal}}=0,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a9cb9e5c146becbfbe208da9b67fe97e5}{Caught}},}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a19abd416eb9fe03ae7400a22446956a5}{Won}}}
+\DoxyCodeLine{00015\ \ \ \ \ \};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_player}{Player}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a0cc997dccfc40d69637cdc5f4aa83daa}{Catch}}();}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_ad014fd5b467a42ea8d7fb3b3e8e1c72d}{Win}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a0773bdb76957f4519932c89fd79dc1e7}{IsCaught}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a66ed000fc6470bbccfb5933128fd9b83}{IsWon}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{PlayerState}}\ \doxymbox{\hyperlink{class_game_1_1_player_a18662bfa4bc655d3f5581d2f389e090a}{GetState}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a295b128cef009ed7880ae1ca1af94e29}{CanSprint}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_player_adbeb925af8a94ec58d4b90350e1c1fda}{GetStamina}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_player_a367c912a284c10dc73d1faafbda4decb}{GetStaminaMax}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a32c73678e4d114dd713730bd56d3571a}{DrainSprint}}(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a8d72486da2264a356ecd63804b291ec3}{Regen}}(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_aee9970bda51c78d02a7a7eedfd00d003}{ResetStamina}}();}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Knockback\ (set\ by\ NPC/Bully)}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a65e8beab79ba568b47d048eb475c1126}{AddKnockback}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ v);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_player_a8e23eeaa7d86cb9856b3e8f7042a1945}{ConsumeKnockback}}();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Game\ timer\ and\ high\ score}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_player_a0ef1aac1b551f69f1d9495ac8e8462c1}{GetGameTime}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ gameTime;\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a4c0e7d39cc85b9856581f556f0a9b0dc}{UpdateGameTime}}(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_aee08068057ca9f4152b932d331bbe021}{ResetGameTime}}()\ \{\ gameTime\ =\ 0.0f;\ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_player_ac2ef847f3997a5528fc5ad137d8a180c}{GetHighScore}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ highScore;\ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_player_a7845ee9a7c893f9e28c9703037d1bd68}{SetHighScore}}(\textcolor{keywordtype}{float}\ score)\ \{\ highScore\ =\ score;\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Invulnerability\ check}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a5e3a5cdc78b08ab5f8b9d52ba8a3540a}{IsInvulnerable}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ invulnerabilityTimer\ >\ 0.0f;\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a1d73318a4f3ef217c381231bb02c8448}{isSprinting}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Power-\/up\ flags}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a456025a2e5c399ecc6061abf5fdda07e}{hasSpeedBoost}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a17ae4e8512255ddc9cf88da8e8c78378}{hasInfiniteStamina}};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a536f02f12e1b5b0be409fc3ac7904d2e}{hasShield}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_aef4fc2a9cae2948de40e47ab6146d272}{isInvisible}};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Accessor\ for\ invisibility\ state\ (use\ this\ instead\ of\ direct\ flag\ checks)}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_aa4cdeeb83ca5ac07b4a8d19d11a7c0c6}{IsInvisibleActive}}();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cheat\ flags\ (toggled\ by\ DebugMenu,\ only\ active\ in\ FPSScene)}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a787807043c904419f33a2d12365431a0}{cheatInfiniteSpeed}};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_player_a064bc10cd84e5fc55ab58246da7ac10e}{cheatCatchImmune}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{PlayerState}}\ state\ =\ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a960b44c579bc2f6818d2daaf9e4c16f0}{PlayerState::Normal}};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ knockback\{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ stamina\ =\ 100.0f;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ staminaMax\ =\ 100.0f;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ sprintResumeThreshold\ =\ 5.0f;\ \ \textcolor{comment}{//\ Lowered\ from\ 20.0f\ -\/\ player\ can\ sprint\ again\ at\ 5\%\ stamina}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ staminaDrainPerSec\ =\ 10.0f;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ staminaRegenPerSec\ =\ 5.0f;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ gameTime\ =\ 0.0f;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ highScore\ =\ 999999.0f;\ \textcolor{comment}{//\ Large\ number\ means\ no\ record\ yet}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ shield\ break\ invuln}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ invulnerabilityTimer\ =\ 0.0f;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ shieldBreakIFrameDuration\ =\ 2.0f;\ \textcolor{comment}{//\ 2\ seconds\ of\ safety\ after\ shield\ breaks}}
+\DoxyCodeLine{00079\ \ \ \ \ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \}}
+
+\end{DoxyCode}

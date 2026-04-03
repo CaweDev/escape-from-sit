@@ -1,0 +1,45 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\+Door.hpp File Reference}
+\hypertarget{_door_8hpp}{}\label{_door_8hpp}\index{AlphaEngine2.5D/Source/Engine/TileMap/Door.hpp@{AlphaEngine2.5D/Source/Engine/TileMap/Door.hpp}}
+
+
+Door component for interactive doors in the tilemap.  
+
+
+{\ttfamily \+\#include "{}../\+\+Core/\+\+Component.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}../\+\+Core/\+\+Config\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}../\+\+Math/\+\+Vector2.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}AEEngine.\+h"{}}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \+\#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \+\#include $<$cstdint$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_door_config}{Engine::\+\+Door\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises door.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}}
+\begin{DoxyCompactList}\small\item\em Interactive door component with animation support. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{Engine::\+\+Door\+State}} \{ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Engine::\+\+Closed}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140}{Engine::\+\+Opening}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274}{Engine::\+\+Open}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e}{Engine::\+\+Closing}}
+ \}
+\begin{DoxyCompactList}\small\item\em Current state of the door. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{Engine::\+\+Door\+Facing}} \{ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Engine::\+\+North\+South}}
+, \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{Engine::\+\+East\+West}}
+ \}
+\begin{DoxyCompactList}\small\item\em Direction the door faces (determines collision box orientation). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Door component for interactive doors in the tilemap. 
+

@@ -1,0 +1,88 @@
+\doxysection{Engine::\+Door\+Config Struct Reference}
+\hypertarget{struct_engine_1_1_door_config}{}\label{struct_engine_1_1_door_config}\index{Engine::DoorConfig@{Engine::DoorConfig}}
+
+
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises door.\+json.  
+
+
+
+
+{\ttfamily \+\#include $<$Door.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_door_config_a2ff7c346a621032e2278bcf607c099fa}{From\+Json}} (const Json::\+\+Value \&j) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498}{sfx\+Max\+Audible\+Distance}} = 12.\+0f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b}{passable\+Threshold}} = 0.\+5f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea}{collider\+Change\+Threshold}} = 0.\+1f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad}{animation\+Speed}} = 4.\+0f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises door.\+json. 
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_door_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_door_config_a2ff7c346a621032e2278bcf607c099fa}\index{Engine::DoorConfig@{Engine::DoorConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::DoorConfig@{Engine::DoorConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_config_a2ff7c346a621032e2278bcf607c099fa} 
+void Engine::\+\+Door\+Config::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{Engine::\+\+IConfig}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_door_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad}\index{Engine::DoorConfig@{Engine::DoorConfig}!animationSpeed@{animationSpeed}}
+\index{animationSpeed@{animationSpeed}!Engine::DoorConfig@{Engine::DoorConfig}}
+\doxysubsubsection{\texorpdfstring{animationSpeed}{animationSpeed}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad} 
+float Engine::\+\+Door\+Config::\+animation\+Speed = 4.\+0f}
+
+\Hypertarget{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea}\index{Engine::DoorConfig@{Engine::DoorConfig}!colliderChangeThreshold@{colliderChangeThreshold}}
+\index{colliderChangeThreshold@{colliderChangeThreshold}!Engine::DoorConfig@{Engine::DoorConfig}}
+\doxysubsubsection{\texorpdfstring{colliderChangeThreshold}{colliderChangeThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea} 
+float Engine::\+\+Door\+Config::\+collider\+Change\+Threshold = 0.\+1f}
+
+\Hypertarget{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b}\index{Engine::DoorConfig@{Engine::DoorConfig}!passableThreshold@{passableThreshold}}
+\index{passableThreshold@{passableThreshold}!Engine::DoorConfig@{Engine::DoorConfig}}
+\doxysubsubsection{\texorpdfstring{passableThreshold}{passableThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b} 
+float Engine::\+\+Door\+Config::\+passable\+Threshold = 0.\+5f}
+
+\Hypertarget{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498}\index{Engine::DoorConfig@{Engine::DoorConfig}!sfxMaxAudibleDistance@{sfxMaxAudibleDistance}}
+\index{sfxMaxAudibleDistance@{sfxMaxAudibleDistance}!Engine::DoorConfig@{Engine::DoorConfig}}
+\doxysubsubsection{\texorpdfstring{sfxMaxAudibleDistance}{sfxMaxAudibleDistance}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498} 
+float Engine::\+\+Door\+Config::\+sfx\+Max\+Audible\+Distance = 12.\+0f}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\doxymbox{\hyperlink{_door_8hpp}{Door.\+hpp}}\end{DoxyCompactItemize}

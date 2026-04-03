@@ -1,0 +1,36 @@
+\doxysection{Crosshair.\+hpp}
+\hypertarget{_crosshair_8hpp_source}{}\label{_crosshair_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Specialized/Crosshair.hpp@{AlphaEngine2.5D/Source/Engine/UI/Specialized/Crosshair.hpp}}
+\doxymbox{\hyperlink{_crosshair_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_image_8hpp}{Engine/UI/Components/Image.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture2_d_8hpp}{Engine/Graphics/Texture2D.hpp}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_crosshair_a9a49861284cba18bdf4beb42a7f2cd96}{Crosshair}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a64fa6b9e96f90ab351bfb181c55600a3}{Image}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_a9a49861284cba18bdf4beb42a7f2cd96}{Crosshair}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_accd348120d069d5d88a0c574937a1480}{\string~Crosshair}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_abde9624c62d5c1b9271ed3cc3ff4c3ed}{SetDefaultTexture}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ texture);}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_a95f3c5ac1f221dbcaabad439ae19809b}{SetHighlightTexture}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ texture);}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_a83d055dcf0d0e582f3782bf164813cc4}{SetHighlighted}}(\textcolor{keywordtype}{bool}\ highlighted);}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_crosshair_a7869b41039d0ec05c08ed317e1e6ab5c}{IsHighlighted}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_highlighted;\ \}}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ m\_defaultTexture\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ m\_highlightTexture\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_highlighted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00051\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateTexture();}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

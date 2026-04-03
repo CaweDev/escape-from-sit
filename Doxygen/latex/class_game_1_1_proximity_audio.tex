@@ -1,0 +1,126 @@
+\doxysection{Game::\+Proximity\+Audio Class Reference}
+\hypertarget{class_game_1_1_proximity_audio}{}\label{class_game_1_1_proximity_audio}\index{Game::ProximityAudio@{Game::ProximityAudio}}
+
+
+{\ttfamily \+\#include $<$Proximity\+Audio.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_proximity_audio_ace40e06310d282021258517570844bae}{Update}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_proximity_audio_a0a8605491c6c7a21dcf297da10bdaa2f}{player\+Transform}} = nullptr
+\item 
+std::\+string \doxymbox{\hyperlink{class_game_1_1_proximity_audio_a776e6a20ee2cbee93221f7c6d6eb79d7}{audio\+Key}} = "{}"{}
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_proximity_audio_a868ae39e06faee311495052bcc663583}{near\+Distance}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_proximity_audio_a037675ca287ed29ad9edede4f1138b9d}{far\+Distance}} = 6.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_proximity_audio_a9265e920e1161015ce87685afce431a8}{max\+Volume}} = 0.\+5f
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_proximity_audio_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_proximity_audio_ace40e06310d282021258517570844bae}\index{Game::ProximityAudio@{Game::ProximityAudio}!Update@{Update}}
+\index{Update@{Update}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_ace40e06310d282021258517570844bae} 
+void Game::\+\+Proximity\+Audio::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_proximity_audio_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_proximity_audio_a776e6a20ee2cbee93221f7c6d6eb79d7}\index{Game::ProximityAudio@{Game::ProximityAudio}!audioKey@{audioKey}}
+\index{audioKey@{audioKey}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{audioKey}{audioKey}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_a776e6a20ee2cbee93221f7c6d6eb79d7} 
+std::\+string Game::\+\+Proximity\+Audio::\+audio\+Key = "{}"{}}
+
+\Hypertarget{class_game_1_1_proximity_audio_a037675ca287ed29ad9edede4f1138b9d}\index{Game::ProximityAudio@{Game::ProximityAudio}!farDistance@{farDistance}}
+\index{farDistance@{farDistance}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{farDistance}{farDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_a037675ca287ed29ad9edede4f1138b9d} 
+float Game::\+\+Proximity\+Audio::\+far\+Distance = 6.\+0f}
+
+\Hypertarget{class_game_1_1_proximity_audio_a9265e920e1161015ce87685afce431a8}\index{Game::ProximityAudio@{Game::ProximityAudio}!maxVolume@{maxVolume}}
+\index{maxVolume@{maxVolume}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{maxVolume}{maxVolume}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_a9265e920e1161015ce87685afce431a8} 
+float Game::\+\+Proximity\+Audio::\+max\+Volume = 0.\+5f}
+
+\Hypertarget{class_game_1_1_proximity_audio_a868ae39e06faee311495052bcc663583}\index{Game::ProximityAudio@{Game::ProximityAudio}!nearDistance@{nearDistance}}
+\index{nearDistance@{nearDistance}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{nearDistance}{nearDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_a868ae39e06faee311495052bcc663583} 
+float Game::\+\+Proximity\+Audio::\+near\+Distance = 2.\+0f}
+
+\Hypertarget{class_game_1_1_proximity_audio_a0a8605491c6c7a21dcf297da10bdaa2f}\index{Game::ProximityAudio@{Game::ProximityAudio}!playerTransform@{playerTransform}}
+\index{playerTransform@{playerTransform}!Game::ProximityAudio@{Game::ProximityAudio}}
+\doxysubsubsection{\texorpdfstring{playerTransform}{playerTransform}}
+{\footnotesize\ttfamily \label{class_game_1_1_proximity_audio_a0a8605491c6c7a21dcf297da10bdaa2f} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Proximity\+Audio::\+player\+Transform = nullptr}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_proximity_audio_8hpp}{Proximity\+Audio.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_proximity_audio_8cpp}{Proximity\+Audio.\+cpp}}\end{DoxyCompactItemize}

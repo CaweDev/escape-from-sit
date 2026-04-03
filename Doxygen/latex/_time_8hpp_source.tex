@@ -1,0 +1,43 @@
+\doxysection{Time.\+hpp}
+\hypertarget{_time_8hpp_source}{}\label{_time_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Core/Time.hpp@{AlphaEngine2.5D/Source/Engine/Core/Time.hpp}}
+\doxymbox{\hyperlink{_time_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }Time\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{/*\ Gets\ Game\ Speed\ */}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_a4ff0c0b1afae7f5ad5dc5e11417c3817}{GetGameSpeed}}();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{/*\ Sets\ Game\ Speed\ */}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_time_af1b9775474db11827c878542a8ace725}{SetGameSpeed}}(f32\ newGameSpeed);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{deltaTime}};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{/*\ Time\ in\ seconds\ since\ last\ frame,\ independent\ from\ game\ speed\ */}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_a5724ffc3ac3cc237d307c1a26bcaecf5}{unscaledDeltaTime}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453}{fixedDeltaTime}};}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_ad22c94164ed8b600b3b6595283836766}{time}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_time_ad35fcab2964bad92bb4c4d5b04044251}{fps}};\ \textcolor{comment}{//\ Frames\ per\ second\ }}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_time_a79079d886f8b79b49b213ff05f69b5d0}{frameCount}};}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_time_ae8af13d438747bd01c3bd933c6baf21a}{Update}}();}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_time_a504f20a100cbcdd71d5cbde84a96d204}{Reset}}();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ f32\ gameSpeed;}
+\DoxyCodeLine{00047\ \ \ \ \ Time()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

@@ -1,0 +1,145 @@
+\doxysection{Puzzle\+Scene.\+hpp}
+\hypertarget{_puzzle_scene_8hpp_source}{}\label{_puzzle_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/Puzzle/PuzzleScene.hpp@{AlphaEngine2.5D/Source/Game/Scenes/Puzzle/PuzzleScene.hpp}}
+\doxymbox{\hyperlink{_puzzle_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_8hpp}{Engine/Scene/Scene.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_renderer_8hpp}{Engine/Graphics/TileMapRenderer.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_8hpp}{Engine/Graphics/Camera.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Engine/Physics/Rigidbody2D.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_circle_collider2_d_8hpp}{Engine/Physics/CircleCollider2D.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_collider2_d_8hpp}{Engine/Physics/TileMapCollider2D.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_f_p_s_controller_8hpp}{Game/FPSController.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <\doxymbox{\hyperlink{_sprite_renderer_8hpp}{Engine/Graphics/SpriteRenderer.hpp}}>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Game/Player.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_puzzle_manager_8hpp}{Game/Puzzle/PuzzleManager.hpp}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_text_8hpp}{Engine/UI/Components/Text.hpp}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_manager_8hpp}{Engine/UI/Core/UIManager.hpp}}"{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0a5d572a78ae2c8268670a8fc50ffa5f}{PuzzleScene}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}\ \{}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0a5d572a78ae2c8268670a8fc50ffa5f}{PuzzleScene}}()\ :\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}(\textcolor{stringliteral}{"{}PuzzleScene"{}})\ \{\}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}*\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a12969ef406f9718d0da38aa351f3db2f}{playerController}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00034\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::Canvas}}*\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48}{lastBookCount}}\ =\ -\/1;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a778535684623578afce32f93510f2484}{OnLoad}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Define\ a\ simple\ maze\ level}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ mapData[]\ =\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,0,1,1,1,0,1,1,1,0,0,1,0,1,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,0,1,0,1,1,1,0,1,0,1,1,0,1,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,1,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,1,1,0,1,0,1,0,1,1,0,1,0,1,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ world\ object\ with\ TileMap}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ world\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}World"{}});}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ map\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}}>();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ map-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e}{LoadFromArray}}(mapData,\ 16,\ 13);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ renderer\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{TileMapRenderer}}>();}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ renderer-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer_a90ebaeeb569f238ccc73de020ad01df7}{wallColorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.8f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ renderer-\/>wallColorEW\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.6f,\ 0.15f,\ 0.15f,\ 1.0f);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ renderer-\/>ceilingColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.1f,\ 0.1f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ renderer-\/>floorColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.3f,\ 0.25f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \{\ \ \ \textcolor{comment}{//\ Load\ map\ sprites\ into\ TileMapRenderer}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ skySprite\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ skySprite-\/>Load(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_ceiling.png"{}});}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ groundSprite\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ groundSprite-\/>Load(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_floor.png"{}});}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ wallSprite\ =\ std::make\_shared<Sprite>();}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ wallSprite-\/>Load(\textcolor{stringliteral}{"{}Assets/Tilemap/modern\_school\_wall.png"{}});}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ on\ TileMapRenderer}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ renderer-\/>SetCeilingSprite(skySprite);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ renderer-\/>SetFloorSprite(groundSprite);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ renderer-\/>SetWallSprite(wallSprite);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ tilemap\ collider\ for\ physics}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ tileMapCollider\ =\ world-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d}{TileMapCollider2D}}>();}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ tileMapCollider-\/>\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a6f042d71a3cb23182c9829ce1f34d6e8}{minHeight}}\ =\ 0.0f;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ tileMapCollider-\/>maxHeight\ =\ 3.0f;\ \textcolor{comment}{//\ Walls\ are\ 3\ units\ tall}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ player\ with\ physics}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ player\ =\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{stringliteral}{"{}Player"{}});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}>();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ physics\ components}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ playerRb\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}>();}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ playerRb-\/>gravityScale\ =\ 1.0f;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ playerRb-\/>drag\ =\ 5.0f;\ \textcolor{comment}{//\ Stop\ quickly\ when\ no\ input}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ playerCollider\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_engine_1_1_circle_collider2_d}{CircleCollider2D}}>();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ playerCollider-\/>\doxymbox{\hyperlink{class_engine_1_1_circle_collider2_d_a5dd0f2bf7dde91ceaa30cb52037d6959}{radius}}\ =\ 0.2f;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ playerCollider-\/>minHeight\ =\ 0.0f;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ playerCollider-\/>maxHeight\ =\ 1.8f;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ controller\ (requires\ Rigidbody2D)}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a12969ef406f9718d0da38aa351f3db2f}{playerController}}\ =\ player-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}>();}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ player-\/>AddComponent<\doxymbox{\hyperlink{class_game_1_1_player}{Player}}>();}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ player-\/>\doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}}-\/>\doxymbox{\hyperlink{class_engine_1_1_transform_ac6cd83bd10aa186c10c64948e7a2d03b}{position}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}(1.5f,\ 1.5f);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ player-\/>transform-\/>rotation\ =\ 0.0f;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Book\ Count\ UI:\ create\ a\ Canvas\ and\ add\ the\ Text\ as\ a\ child\ so\ the\ UIManager\ renders\ it}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}\ =\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a86747dbac01b7d605cec3d87ab752415}{UI::UIManager::GetInstance}}()-\/>\doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a476f7dd6678099fd5d4a7978ca94da1e}{CreateCanvas}}();}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}-\/>SetReferenceResolution(1280.0f,\ 720.0f);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}-\/>SetScaleMode(\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05}{UI::CanvasScaleMode::ScaleWithScreenSize}});}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}-\/>SetSortOrder(100);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}\ =\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hudCanvas}}-\/>CreateChild<\doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}>();}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>name\ =\ \textcolor{stringliteral}{"{}BookCountText"{}};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetAnchors(\{\ 0.0f,\ 1.0f\ \},\ \{\ 0.0f,\ 1.0f\ \});\ \textcolor{comment}{//\ top-\/left\ anchor}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetPivot(\{\ 0.0f,\ 1.0f\ \});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pivot\ at\ top-\/left}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetAnchoredPosition(\{\ 10.0f,\ -\/10.0f\ \});\ \ \ \ \ \textcolor{comment}{//\ 10px\ from\ top-\/left}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetSizeDelta(\{\ 0.0f,\ 0.0f\ \});}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetText(\textcolor{stringliteral}{"{}Books\ Collected:\ 0\ /\ 6"{}});}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetFontSize(1.2f);}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetColor(\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(1.0f,\ 1.0f,\ 1.0f,\ 1.0f));}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetAnchor(\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4}{UI::TextAnchor::UpperLeft}});}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetRenderOrder(1000);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4}{Game::PuzzleManager::BookDataInit}}();}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0}{Game::PuzzleManager::Init}}();}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0bf60f9ffdf53ca3a80461480e39d284}{OnUpdate}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Physics\ and\ rendering\ handled\ by\ components}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}}\ !=\ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48}{lastBookCount}})\ \{}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Construct\ the\ string}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ uiString\ =\ \textcolor{stringliteral}{"{}Books\ Collected:\ "{}}\ +\ std::to\_string(\doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}})\ +\ \textcolor{stringliteral}{"{}\ /\ 6"{}};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pass\ it\ to\ your\ setter}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{bookCountText}}-\/>SetText(uiString);}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Save\ the\ current\ count\ so\ we\ don't\ run\ this\ code\ again\ until\ the\ next\ book}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48}{lastBookCount}}\ =\ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{Game::PuzzleManager::booksCollected}};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

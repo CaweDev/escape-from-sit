@@ -1,0 +1,365 @@
+\doxysection{UI::\+Heatmap\+Overlay Class Reference}
+\hypertarget{class_u_i_1_1_heatmap_overlay}{}\label{class_u_i_1_1_heatmap_overlay}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+
+
+Renders a colored heatmap overlay on top of a map.  
+
+
+
+
+{\ttfamily \+\#include $<$Heatmap\+Overlay.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a2a6435b30819952fe80a66f3bdc54489}{Heatmap\+Overlay}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a511933251d5a52c4ecbd21229d132924}{\texorpdfstring{$\sim$}{\string~}\+Heatmap\+Overlay}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a65cbbdc9cac3bdd99f906227bdedce53}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Render the map with heatmap overlay. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a412421998f3f28eeeee55cb1945a110a}{Set\+Heatmap}} (\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \texorpdfstring{$\ast$}{*}heatmap)
+\begin{DoxyCompactList}\small\item\em Set the heatmap data source. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_ad6eb5a53e6244d43e2b5e26b40529fda}{Get\+Heatmap}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a291d87a6343bc74ec5f219bafa0daf28}{Set\+Heat\+Gradient}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&cold, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&warm, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&hot)
+\begin{DoxyCompactList}\small\item\em Set the color gradient for heatmap visualization. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_afe4a6addc7bdf6758970463a9c3da83e}{Set\+Min\+Threshold}} (float threshold)
+\begin{DoxyCompactList}\small\item\em Set the minimum heat threshold to display. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_aab3dca12277e1c2e1c5bd524398dfbde}{Get\+Min\+Threshold}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a622270ef0897ded350a144e11f1ad98f}{Set\+Max\+Value}} (float max\+Value)
+\begin{DoxyCompactList}\small\item\em Set the maximum heat value for color scaling. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a1e11632c23926dac3850e50e2be09a72}{Get\+Max\+Value}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a15e148ab5c40927df8cf44a0adb31171}{Set\+Opacity}} (float opacity)
+\begin{DoxyCompactList}\small\item\em Set the opacity of the heatmap overlay. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_ab1c94bff113e25c978acf700919de356}{Get\+Opacity}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_map_a6c975835aa50207046bf2d77bbed3a01}{Map}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_map_a68f65aea2c5124dbedd93a4fd42ab62b}{\texorpdfstring{$\sim$}{\string~}\+Map}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a85f7ace9ce88b748bb1789366131786c}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Render the map. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a43067b669d424acc39a83b8e7d74315c}{Set\+Zone\+Getter}} (std::\+function$<$ int(int, int)$>$ fn)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a0c73fa14caf0ad8b8469f6e97b62e6b3}{Set\+Tile\+Map}} (\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*}tile\+Map)
+\begin{DoxyCompactList}\small\item\em Set the tile map to display. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_map_a41c58445a5fbac2ef0a860f62b8527d7}{Get\+Tile\+Map}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a118ac66278c7f95728b18bdf55e9408c}{Set\+Player\+Transform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}transform)
+\begin{DoxyCompactList}\small\item\em Set the player transform to track. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_map_a4aa9b24d91561bed8c8df8481d56f030}{Get\+Player\+Transform}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_adcd430325db2bc9c2e25b98f6103c809}{Set\+Texture}} (\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*}p\+Texture)
+\begin{DoxyCompactList}\small\item\em Set the background texture for the map panel. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a77fcd5637acca5f2ddecc8a90a21ed34}{Add\+Enemy\+Transform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}transform)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a210077f9d65fc6b5e0ec68afcd90bae2}{Clear\+Enemies}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a1eb3373850ff561a3c0f1e10da6ba756}{Set\+Enemy\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_a6305af24135e534ee0186308371c25e8}{Get\+Enemy\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a1bbb4b8c897af7cfd000a9a5da2c4157}{Set\+Wall\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_a93abcce3d97369c13b5b9d0d4c9d83dd}{Get\+Wall\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_af17276f9c57887f4b7fa568da45cbeb1}{Set\+Floor\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_aaf43991a5992814aeb15904a03411963}{Get\+Floor\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_aa22c3b71ab72325849176883103aa6fc}{Set\+Player\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_aada64a081b77818164eafd92a6cc31a7}{Get\+Player\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a9c8533f969b075e04eef5a898c6d555b}{Set\+Background\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_a461152639680f3c3a4270333a2d830e4}{Get\+Background\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_aabf112dba7b3d45513fa5780b48bd6f4}{Set\+Border\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_map_a968cadf292ba0f53a937fe7c75f3edb1}{Get\+Border\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a7ab39c9107f09da148aeb2be9a7fe905}{Add\+CCTVTransform}} (\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*}transform)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a396f1f9c1a97612f69014146e360f97a}{Clear\+CCTVs}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_ab8e4702aafdb78ee2f21304be94ce674}{Set\+CCTVSprites}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::\+\+Sprite}} \texorpdfstring{$\ast$}{*}sprite)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a96a3f89ee4acec41f6f2095fcb127454}{Set\+Border\+Thickness}} (f32 thickness)
+\item 
+f32 \doxymbox{\hyperlink{class_u_i_1_1_map_aeba6a48e652c4106ff2235dee308cc5d}{Get\+Border\+Thickness}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update the element (called each frame if enabled). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}}}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_adb49aca0d71a12f12948227ed0b3ec5d}{Init\+Mesh}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the quad mesh for rendering. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_ae526f87bb4513946b579c8e632114350}{Draw\+Quad}} (f32 x, f32 y, f32 width, f32 height, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Draw a single colored quad. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a6168b3359c572a292e7127cb6807c15a}{Draw\+Quad\+Sprite}} (f32 x, f32 y, f32 width, f32 height, \doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::\+\+Sprite}} \texorpdfstring{$\ast$}{*}sprite, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_map_a8139341dfd50f849616dfedc9f0c9670}{Draw\+Quad\+Textured}} (f32 x, f32 y, f32 width, f32 height, \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*}p\+Texture, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Draw a single textured quad. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Renders a colored heatmap overlay on top of a map. 
+
+Displays player activity heatmap data as colored tiles. Supports gradient visualization from cold (low activity) to hot (high activity). 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a2a6435b30819952fe80a66f3bdc54489}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!HeatmapOverlay@{HeatmapOverlay}}
+\index{HeatmapOverlay@{HeatmapOverlay}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{HeatmapOverlay()}{HeatmapOverlay()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a2a6435b30819952fe80a66f3bdc54489} 
+UI::\+\+Heatmap\+Overlay::\+\+Heatmap\+Overlay (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a511933251d5a52c4ecbd21229d132924}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!````~HeatmapOverlay@{\texorpdfstring{$\sim$}{\string~}HeatmapOverlay}}
+\index{````~HeatmapOverlay@{\texorpdfstring{$\sim$}{\string~}HeatmapOverlay}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}HeatmapOverlay()}{\string~HeatmapOverlay()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a511933251d5a52c4ecbd21229d132924} 
+UI::\+\+Heatmap\+Overlay::\+\texorpdfstring{$\sim$}{\string~}\+Heatmap\+Overlay (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_ad6eb5a53e6244d43e2b5e26b40529fda}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!GetHeatmap@{GetHeatmap}}
+\index{GetHeatmap@{GetHeatmap}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{GetHeatmap()}{GetHeatmap()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_ad6eb5a53e6244d43e2b5e26b40529fda} 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \texorpdfstring{$\ast$}{*} UI::\+\+Heatmap\+Overlay::\+\+Get\+Heatmap (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a1e11632c23926dac3850e50e2be09a72}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!GetMaxValue@{GetMaxValue}}
+\index{GetMaxValue@{GetMaxValue}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{GetMaxValue()}{GetMaxValue()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a1e11632c23926dac3850e50e2be09a72} 
+float UI::\+\+Heatmap\+Overlay::\+\+Get\+Max\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_aab3dca12277e1c2e1c5bd524398dfbde}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!GetMinThreshold@{GetMinThreshold}}
+\index{GetMinThreshold@{GetMinThreshold}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{GetMinThreshold()}{GetMinThreshold()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_aab3dca12277e1c2e1c5bd524398dfbde} 
+float UI::\+\+Heatmap\+Overlay::\+\+Get\+Min\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_ab1c94bff113e25c978acf700919de356}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!GetOpacity@{GetOpacity}}
+\index{GetOpacity@{GetOpacity}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{GetOpacity()}{GetOpacity()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_ab1c94bff113e25c978acf700919de356} 
+float UI::\+\+Heatmap\+Overlay::\+\+Get\+Opacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a65cbbdc9cac3bdd99f906227bdedce53}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!Render@{Render}}
+\index{Render@{Render}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a65cbbdc9cac3bdd99f906227bdedce53} 
+void UI::\+\+Heatmap\+Overlay::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Render the map with heatmap overlay. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{UI::\+\+UIElement}}.
+
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a291d87a6343bc74ec5f219bafa0daf28}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!SetHeatGradient@{SetHeatGradient}}
+\index{SetHeatGradient@{SetHeatGradient}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{SetHeatGradient()}{SetHeatGradient()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a291d87a6343bc74ec5f219bafa0daf28} 
+void UI::\+\+Heatmap\+Overlay::\+\+Set\+Heat\+Gradient (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{cold}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{warm}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{hot}{}\end{DoxyParamCaption})}
+
+
+
+Set the color gradient for heatmap visualization. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cold} & Color for low heat values \\
+\hline
+{\em warm} & Color for medium heat values \\
+\hline
+{\em hot} & Color for high heat values \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a412421998f3f28eeeee55cb1945a110a}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!SetHeatmap@{SetHeatmap}}
+\index{SetHeatmap@{SetHeatmap}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{SetHeatmap()}{SetHeatmap()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a412421998f3f28eeeee55cb1945a110a} 
+void UI::\+\+Heatmap\+Overlay::\+\+Set\+Heatmap (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \texorpdfstring{$\ast$}{*}}]{heatmap}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the heatmap data source. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heatmap} & Pointer to the heatmap (not owned) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a622270ef0897ded350a144e11f1ad98f}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!SetMaxValue@{SetMaxValue}}
+\index{SetMaxValue@{SetMaxValue}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{SetMaxValue()}{SetMaxValue()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a622270ef0897ded350a144e11f1ad98f} 
+void UI::\+\+Heatmap\+Overlay::\+\+Set\+Max\+Value (\begin{DoxyParamCaption}\item[{float}]{max\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the maximum heat value for color scaling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Value} & Maximum expected heat value \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_afe4a6addc7bdf6758970463a9c3da83e}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!SetMinThreshold@{SetMinThreshold}}
+\index{SetMinThreshold@{SetMinThreshold}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{SetMinThreshold()}{SetMinThreshold()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_afe4a6addc7bdf6758970463a9c3da83e} 
+void UI::\+\+Heatmap\+Overlay::\+\+Set\+Min\+Threshold (\begin{DoxyParamCaption}\item[{float}]{threshold}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the minimum heat threshold to display. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em threshold} & Minimum value to show (values below are transparent) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_heatmap_overlay_a15e148ab5c40927df8cf44a0adb31171}\index{UI::HeatmapOverlay@{UI::HeatmapOverlay}!SetOpacity@{SetOpacity}}
+\index{SetOpacity@{SetOpacity}!UI::HeatmapOverlay@{UI::HeatmapOverlay}}
+\doxysubsubsection{\texorpdfstring{SetOpacity()}{SetOpacity()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_heatmap_overlay_a15e148ab5c40927df8cf44a0adb31171} 
+void UI::\+\+Heatmap\+Overlay::\+\+Set\+Opacity (\begin{DoxyParamCaption}\item[{float}]{opacity}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the opacity of the heatmap overlay. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em opacity} & Opacity value (0.\+0 = transparent, 1.\+0 = opaque) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Specialized/\+\doxymbox{\hyperlink{_heatmap_overlay_8hpp}{Heatmap\+Overlay.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Specialized/\+\doxymbox{\hyperlink{_heatmap_overlay_8cpp}{Heatmap\+Overlay.\+cpp}}\end{DoxyCompactItemize}

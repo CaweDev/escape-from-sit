@@ -508,26 +508,11 @@ void SplashScene::SkipToEnd() {
  * \brief Query common inputs to determine if user requested skip
  * \return True if a skip key or mouse button was pressed
  */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
-/*!
- * \brief [AUTO] IsSkipPressed
- * \return 
- */
+
+
+
+
+
 bool SplashScene::IsSkipPressed() const {
     // Check any common keys
     if (Input::GetKeyDown(KeyCode::Return) ||

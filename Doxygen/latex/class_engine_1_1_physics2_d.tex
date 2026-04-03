@@ -1,0 +1,201 @@
+\doxysection{Engine::\+Physics2D Class Reference}
+\hypertarget{class_engine_1_1_physics2_d}{}\label{class_engine_1_1_physics2_d}\index{Engine::Physics2D@{Engine::Physics2D}}
+
+
+Static class managing 2.\+5D physics simulation.  
+
+
+
+
+{\ttfamily \+\#include $<$Physics2\+D.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_abc72390d6c7a05e57c521e654fb792fe}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+physics.\+json"{})
+\begin{DoxyCompactList}\small\item\em Load physics configuration from a JSON file. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a30d426e319beacc1737686a5de6d1fa9}{Fixed\+Update}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a4f9b0bc979f6611634ebc36ce1385b16}{Register\+Collider}} (\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*}collider)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ab6210a763afd8df6fc9626f6fee95f38}{Unregister\+Collider}} (\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*}collider)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa351ec67068f087527df4f83ceb6a310}{Register\+Rigidbody}} (\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}rb)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a76044538bdf431f47d7d523ffe47c368}{Unregister\+Rigidbody}} (\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}rb)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{Raycast\+Hit2D}} \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa070b0543ca1ca626fef269b0fba9968}{Raycast}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&origin, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&direction, f32 max\+Distance=1000.\+0f)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{Raycast\+Hit2D}} $>$ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a312fc91c1e39d99ffde82f72875ec40d}{Raycast\+All}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&origin, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&direction, f32 max\+Distance=1000.\+0f)
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_physics2_d_acc2f8602d0f6ea4e77ab82c7e3410656}{Overlap\+Circle}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, f32 radius, f32 height=1.\+0f, f32 height\+Pos=0.\+0f)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a2e73b97e12c300a49c721e2a04c220a8}{Overlap\+Circle\+All}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, f32 radius, f32 height=1.\+0f, f32 height\+Pos=0.\+0f)
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a476be1bfffdcd106535911a43d130aa9}{Overlap\+Box}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&size, f32 height=1.\+0f, f32 height\+Pos=0.\+0f)
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a84310a95b84fd21e40c2b872b6153e72}{Overlap\+Box\+All}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&size, f32 height=1.\+0f, f32 height\+Pos=0.\+0f)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_physics2_d_abdc7ed4672825f2be470c105754275c4}{Is\+Walkable}} (f32 x, f32 y)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a78e12d83b73f473f6161ef7d86c0fc13}{Move\+With\+Collision}} (\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}rb, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&movement)
+\item 
+static const std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ab6c6f629a1c8ec99f069e9ceb04636f2}{Get\+Colliders}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a10d21b362784b7cd506988354cfb7476}{Draw\+Debug\+View}} ()
+\begin{DoxyCompactList}\small\item\em Renders 3D debug collider outlines on top of the current frame. Uses \doxylink{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}{Camera::\+main} for projection. Call after all other renderers have drawn. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_physics2_d_ad11a9051db6fdb78003ebefca206581d}{gravity}} = 9.\+81f
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56}{debug\+Draw\+Enabled}} = false
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_physics2_d_a7a92a3af329851f97a64e53691c6e3a7}{tile\+Map}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class managing 2.\+5D physics simulation. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_physics2_d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_physics2_d_a10d21b362784b7cd506988354cfb7476}\index{Engine::Physics2D@{Engine::Physics2D}!DrawDebugView@{DrawDebugView}}
+\index{DrawDebugView@{DrawDebugView}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{DrawDebugView()}{DrawDebugView()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a10d21b362784b7cd506988354cfb7476} 
+void Engine::\+\+Physics2\+D::\+\+Draw\+Debug\+View (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Renders 3D debug collider outlines on top of the current frame. Uses \doxylink{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}{Camera::\+main} for projection. Call after all other renderers have drawn. 
+
+\Hypertarget{class_engine_1_1_physics2_d_a30d426e319beacc1737686a5de6d1fa9}\index{Engine::Physics2D@{Engine::Physics2D}!FixedUpdate@{FixedUpdate}}
+\index{FixedUpdate@{FixedUpdate}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{FixedUpdate()}{FixedUpdate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a30d426e319beacc1737686a5de6d1fa9} 
+void Engine::\+\+Physics2\+D::\+\+Fixed\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Run physics simulation step (called by \doxylink{class_engine_1_1_scene}{Scene}) \Hypertarget{class_engine_1_1_physics2_d_ab6c6f629a1c8ec99f069e9ceb04636f2}\index{Engine::Physics2D@{Engine::Physics2D}!GetColliders@{GetColliders}}
+\index{GetColliders@{GetColliders}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{GetColliders()}{GetColliders()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_ab6c6f629a1c8ec99f069e9ceb04636f2} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ \& Engine::\+\+Physics2\+D::\+\+Get\+Colliders (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the list of all registered colliders (useful for debug drawing) \Hypertarget{class_engine_1_1_physics2_d_abc72390d6c7a05e57c521e654fb792fe}\index{Engine::Physics2D@{Engine::Physics2D}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_abc72390d6c7a05e57c521e654fb792fe} 
+void Engine::\+\+Physics2\+D::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+physics.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load physics configuration from a JSON file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config\+Path} & Path to physics.\+json. Defaults to the engine config location. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_physics2_d_abdc7ed4672825f2be470c105754275c4}\index{Engine::Physics2D@{Engine::Physics2D}!IsWalkable@{IsWalkable}}
+\index{IsWalkable@{IsWalkable}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{IsWalkable()}{IsWalkable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_abdc7ed4672825f2be470c105754275c4} 
+bool Engine::\+\+Physics2\+D::\+\+Is\+Walkable (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a position is walkable on the tilemap \Hypertarget{class_engine_1_1_physics2_d_a78e12d83b73f473f6161ef7d86c0fc13}\index{Engine::Physics2D@{Engine::Physics2D}!MoveWithCollision@{MoveWithCollision}}
+\index{MoveWithCollision@{MoveWithCollision}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{MoveWithCollision()}{MoveWithCollision()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a78e12d83b73f473f6161ef7d86c0fc13} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Physics2\+D::\+\+Move\+With\+Collision (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}}]{rb}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{movement}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Try to move a rigidbody with collision \Hypertarget{class_engine_1_1_physics2_d_a476be1bfffdcd106535911a43d130aa9}\index{Engine::Physics2D@{Engine::Physics2D}!OverlapBox@{OverlapBox}}
+\index{OverlapBox@{OverlapBox}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{OverlapBox()}{OverlapBox()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a476be1bfffdcd106535911a43d130aa9} 
+\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Physics2\+D::\+\+Overlap\+Box (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{size}{, }\item[{f32}]{height}{ = {\ttfamily 1.0f}, }\item[{f32}]{height\+Pos}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a box overlaps any collider \Hypertarget{class_engine_1_1_physics2_d_a84310a95b84fd21e40c2b872b6153e72}\index{Engine::Physics2D@{Engine::Physics2D}!OverlapBoxAll@{OverlapBoxAll}}
+\index{OverlapBoxAll@{OverlapBoxAll}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{OverlapBoxAll()}{OverlapBoxAll()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a84310a95b84fd21e40c2b872b6153e72} 
+std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ Engine::\+\+Physics2\+D::\+\+Overlap\+Box\+All (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{size}{, }\item[{f32}]{height}{ = {\ttfamily 1.0f}, }\item[{f32}]{height\+Pos}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get all colliders overlapping a box \Hypertarget{class_engine_1_1_physics2_d_acc2f8602d0f6ea4e77ab82c7e3410656}\index{Engine::Physics2D@{Engine::Physics2D}!OverlapCircle@{OverlapCircle}}
+\index{OverlapCircle@{OverlapCircle}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{OverlapCircle()}{OverlapCircle()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_acc2f8602d0f6ea4e77ab82c7e3410656} 
+\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Physics2\+D::\+\+Overlap\+Circle (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{f32}]{radius}{, }\item[{f32}]{height}{ = {\ttfamily 1.0f}, }\item[{f32}]{height\+Pos}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a circle overlaps any collider \Hypertarget{class_engine_1_1_physics2_d_a2e73b97e12c300a49c721e2a04c220a8}\index{Engine::Physics2D@{Engine::Physics2D}!OverlapCircleAll@{OverlapCircleAll}}
+\index{OverlapCircleAll@{OverlapCircleAll}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{OverlapCircleAll()}{OverlapCircleAll()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a2e73b97e12c300a49c721e2a04c220a8} 
+std::\+vector$<$ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} $>$ Engine::\+\+Physics2\+D::\+\+Overlap\+Circle\+All (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{f32}]{radius}{, }\item[{f32}]{height}{ = {\ttfamily 1.0f}, }\item[{f32}]{height\+Pos}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get all colliders overlapping a circle \Hypertarget{class_engine_1_1_physics2_d_aa070b0543ca1ca626fef269b0fba9968}\index{Engine::Physics2D@{Engine::Physics2D}!Raycast@{Raycast}}
+\index{Raycast@{Raycast}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{Raycast()}{Raycast()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_aa070b0543ca1ca626fef269b0fba9968} 
+\doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{Raycast\+Hit2D}} Engine::\+\+Physics2\+D::\+\+Raycast (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{origin}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{direction}{, }\item[{f32}]{max\+Distance}{ = {\ttfamily 1000.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Cast a ray and get first hit \Hypertarget{class_engine_1_1_physics2_d_a312fc91c1e39d99ffde82f72875ec40d}\index{Engine::Physics2D@{Engine::Physics2D}!RaycastAll@{RaycastAll}}
+\index{RaycastAll@{RaycastAll}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{RaycastAll()}{RaycastAll()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a312fc91c1e39d99ffde82f72875ec40d} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{Raycast\+Hit2D}} $>$ Engine::\+\+Physics2\+D::\+\+Raycast\+All (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{origin}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{direction}{, }\item[{f32}]{max\+Distance}{ = {\ttfamily 1000.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Cast a ray and get all hits \Hypertarget{class_engine_1_1_physics2_d_a4f9b0bc979f6611634ebc36ce1385b16}\index{Engine::Physics2D@{Engine::Physics2D}!RegisterCollider@{RegisterCollider}}
+\index{RegisterCollider@{RegisterCollider}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{RegisterCollider()}{RegisterCollider()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a4f9b0bc979f6611634ebc36ce1385b16} 
+void Engine::\+\+Physics2\+D::\+\+Register\+Collider (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*}}]{collider}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Register a collider for physics \Hypertarget{class_engine_1_1_physics2_d_aa351ec67068f087527df4f83ceb6a310}\index{Engine::Physics2D@{Engine::Physics2D}!RegisterRigidbody@{RegisterRigidbody}}
+\index{RegisterRigidbody@{RegisterRigidbody}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{RegisterRigidbody()}{RegisterRigidbody()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_aa351ec67068f087527df4f83ceb6a310} 
+void Engine::\+\+Physics2\+D::\+\+Register\+Rigidbody (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}}]{rb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Register a rigidbody for physics \Hypertarget{class_engine_1_1_physics2_d_ab6210a763afd8df6fc9626f6fee95f38}\index{Engine::Physics2D@{Engine::Physics2D}!UnregisterCollider@{UnregisterCollider}}
+\index{UnregisterCollider@{UnregisterCollider}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{UnregisterCollider()}{UnregisterCollider()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_ab6210a763afd8df6fc9626f6fee95f38} 
+void Engine::\+\+Physics2\+D::\+\+Unregister\+Collider (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*}}]{collider}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Unregister a collider \Hypertarget{class_engine_1_1_physics2_d_a76044538bdf431f47d7d523ffe47c368}\index{Engine::Physics2D@{Engine::Physics2D}!UnregisterRigidbody@{UnregisterRigidbody}}
+\index{UnregisterRigidbody@{UnregisterRigidbody}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{UnregisterRigidbody()}{UnregisterRigidbody()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a76044538bdf431f47d7d523ffe47c368} 
+void Engine::\+\+Physics2\+D::\+\+Unregister\+Rigidbody (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*}}]{rb}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Unregister a rigidbody 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_physics2_d_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56}\index{Engine::Physics2D@{Engine::Physics2D}!debugDrawEnabled@{debugDrawEnabled}}
+\index{debugDrawEnabled@{debugDrawEnabled}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{debugDrawEnabled}{debugDrawEnabled}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_aa7f3d4dae42d8924b088fede501cba56} 
+bool Engine::\+\+Physics2\+D::\+debug\+Draw\+Enabled = false\hspace{0.3cm}{\ttfamily [static]}}
+
+Global flag for debug collider rendering (used by Minimap/\+\+Renderers) \Hypertarget{class_engine_1_1_physics2_d_ad11a9051db6fdb78003ebefca206581d}\index{Engine::Physics2D@{Engine::Physics2D}!gravity@{gravity}}
+\index{gravity@{gravity}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{gravity}{gravity}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_ad11a9051db6fdb78003ebefca206581d} 
+f32 Engine::\+\+Physics2\+D::\+gravity = 9.\+81f\hspace{0.3cm}{\ttfamily [static]}}
+
+Global gravity (units per second squared) \Hypertarget{class_engine_1_1_physics2_d_a7a92a3af329851f97a64e53691c6e3a7}\index{Engine::Physics2D@{Engine::Physics2D}!tileMap@{tileMap}}
+\index{tileMap@{tileMap}!Engine::Physics2D@{Engine::Physics2D}}
+\doxysubsubsection{\texorpdfstring{tileMap}{tileMap}}
+{\footnotesize\ttfamily \label{class_engine_1_1_physics2_d_a7a92a3af329851f97a64e53691c6e3a7} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}} \texorpdfstring{$\ast$}{*} Engine::\+\+Physics2\+D::\+tile\+Map = nullptr\hspace{0.3cm}{\ttfamily [static]}}
+
+Reference to the active tilemap for wall collision 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_physics2_d_8hpp}{Physics2\+D.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_physics2_d_8cpp}{Physics2\+D.\+cpp}}\end{DoxyCompactItemize}

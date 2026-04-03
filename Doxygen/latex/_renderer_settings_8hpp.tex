@@ -1,0 +1,38 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Graphics/\+\+Renderer\+Settings.hpp File Reference}
+\hypertarget{_renderer_settings_8hpp}{}\label{_renderer_settings_8hpp}\index{AlphaEngine2.5D/Source/Engine/Graphics/RendererSettings.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/RendererSettings.hpp}}
+
+
+Shared rendering configuration loaded from Assets/\+\+Config/\+\+Engine/\+rendering.\+json.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$json/\+json.\+h$>$}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Config\+Manager.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_rendering_config}{Engine::\+\+Rendering\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises rendering.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_renderer_settings}{Engine::\+\+Renderer\+Settings}}
+\begin{DoxyCompactList}\small\item\em Static holder for shared rendering configuration values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Shared rendering configuration loaded from Assets/\+\+Config/\+\+Engine/\+rendering.\+json. 
+
+Exposes tunable rendering constants (near-\/plane clamps, fog LUT precision, door intersection thresholds) as static members so that Tile\+Map\+Renderer, Door\+Renderer, and Projection\+Helper all read from one authoritative source.
+
+Call Renderer\+Settings::\+\+Initialize() once at startup (before any renderer is used). If not called, sensible defaults matching the shipped values are used.
+
+Example:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ In\ scene/game\ init:}}
+\DoxyCodeLine{\doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a9802561989a95f37fb14bccbc1339818}{Engine::RendererSettings::Initialize}}(\textcolor{stringliteral}{"{}Assets/Config/Engine/rendering.json"{}});}
+
+\end{DoxyCode}
+ 

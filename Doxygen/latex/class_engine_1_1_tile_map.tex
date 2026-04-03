@@ -1,0 +1,171 @@
+\doxysection{Engine::\+Tile\+Map Class Reference}
+\hypertarget{class_engine_1_1_tile_map}{}\label{class_engine_1_1_tile_map}\index{Engine::TileMap@{Engine::TileMap}}
+
+
+2D grid of tiles for raycasting  
+
+
+
+
+{\ttfamily \+\#include $<$Tile\+Map.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_aa34f7eb4eaadd8ea25c0d7c3ce07e75a}{Tile\+Map}} ()=default
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_a11c68138b19188ad08d536d5eaa3b3b1}{Tile\+Map}} (int w, int h)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_a4f20d4ff6eba0da07fad1b6d42404919}{Initialize}} () override
+\item 
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Tile\+Type}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_a7593151efcf4556ea26f8fdda34bd7d4}{Get\+Tile}} (int x, int y) const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_a35810c5c0c818ada0f26186a26ac4681}{Set\+Tile}} (int x, int y, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Tile\+Type}} type)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_a0a268984ec46203a67f69bce69c312fe}{Is\+Wall}} (int x, int y) const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_aa820dc9b1d8aa155d79714c65bac2e86}{Is\+Walkable}} (f32 worldX, f32 worldY) const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e}{Load\+From\+Array}} (const int \texorpdfstring{$\ast$}{*}data, int w, int h)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_tile_map_a006231465fb030073a5ebc42cc3a74eb}{width}} = 0
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_tile_map_a2d632ff11db17a91091e11852ad3335a}{height}} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+2D grid of tiles for raycasting 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_tile_map_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_tile_map_aa34f7eb4eaadd8ea25c0d7c3ce07e75a}\index{Engine::TileMap@{Engine::TileMap}!TileMap@{TileMap}}
+\index{TileMap@{TileMap}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{TileMap()}{TileMap()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_aa34f7eb4eaadd8ea25c0d7c3ce07e75a} 
+Engine::\+\+Tile\+Map::\+\+Tile\+Map (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_tile_map_a11c68138b19188ad08d536d5eaa3b3b1}\index{Engine::TileMap@{Engine::TileMap}!TileMap@{TileMap}}
+\index{TileMap@{TileMap}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{TileMap()}{TileMap()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a11c68138b19188ad08d536d5eaa3b3b1} 
+Engine::\+\+Tile\+Map::\+\+Tile\+Map (\begin{DoxyParamCaption}\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_tile_map_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_tile_map_a7593151efcf4556ea26f8fdda34bd7d4}\index{Engine::TileMap@{Engine::TileMap}!GetTile@{GetTile}}
+\index{GetTile@{GetTile}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{GetTile()}{GetTile()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a7593151efcf4556ea26f8fdda34bd7d4} 
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Tile\+Type}} Engine::\+\+Tile\+Map::\+\+Get\+Tile (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get tile at position \Hypertarget{class_engine_1_1_tile_map_a4f20d4ff6eba0da07fad1b6d42404919}\index{Engine::TileMap@{Engine::TileMap}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a4f20d4ff6eba0da07fad1b6d42404919} 
+void Tile\+Map::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_tile_map_aa820dc9b1d8aa155d79714c65bac2e86}\index{Engine::TileMap@{Engine::TileMap}!IsWalkable@{IsWalkable}}
+\index{IsWalkable@{IsWalkable}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{IsWalkable()}{IsWalkable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_aa820dc9b1d8aa155d79714c65bac2e86} 
+bool Engine::\+\+Tile\+Map::\+\+Is\+Walkable (\begin{DoxyParamCaption}\item[{f32}]{worldX}{, }\item[{f32}]{worldY}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if world position is walkable (zero or negative tile values) \Hypertarget{class_engine_1_1_tile_map_a0a268984ec46203a67f69bce69c312fe}\index{Engine::TileMap@{Engine::TileMap}!IsWall@{IsWall}}
+\index{IsWall@{IsWall}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{IsWall()}{IsWall()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a0a268984ec46203a67f69bce69c312fe} 
+bool Engine::\+\+Tile\+Map::\+\+Is\+Wall (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if position is a wall (tile values 1-\/9 are walls) \Hypertarget{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e}\index{Engine::TileMap@{Engine::TileMap}!LoadFromArray@{LoadFromArray}}
+\index{LoadFromArray@{LoadFromArray}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{LoadFromArray()}{LoadFromArray()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_aef0e40afea7ea27b541c2d0e815bc60e} 
+void Tile\+Map::\+\+Load\+From\+Array (\begin{DoxyParamCaption}\item[{const int \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+Create map from 2D array \Hypertarget{class_engine_1_1_tile_map_a35810c5c0c818ada0f26186a26ac4681}\index{Engine::TileMap@{Engine::TileMap}!SetTile@{SetTile}}
+\index{SetTile@{SetTile}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{SetTile()}{SetTile()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a35810c5c0c818ada0f26186a26ac4681} 
+void Engine::\+\+Tile\+Map::\+\+Set\+Tile (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{int}]{y}{, }\item[{\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Tile\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set tile at position 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_tile_map_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_tile_map_a2d632ff11db17a91091e11852ad3335a}\index{Engine::TileMap@{Engine::TileMap}!height@{height}}
+\index{height@{height}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{height}{height}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a2d632ff11db17a91091e11852ad3335a} 
+int Engine::\+\+Tile\+Map::\+height = 0}
+
+\Hypertarget{class_engine_1_1_tile_map_a006231465fb030073a5ebc42cc3a74eb}\index{Engine::TileMap@{Engine::TileMap}!width@{width}}
+\index{width@{width}!Engine::TileMap@{Engine::TileMap}}
+\doxysubsubsection{\texorpdfstring{width}{width}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_a006231465fb030073a5ebc42cc3a74eb} 
+int Engine::\+\+Tile\+Map::\+width = 0}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\doxymbox{\hyperlink{_tile_map_8hpp}{Tile\+Map.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\doxymbox{\hyperlink{_tile_map_8cpp}{Tile\+Map.\+cpp}}\end{DoxyCompactItemize}

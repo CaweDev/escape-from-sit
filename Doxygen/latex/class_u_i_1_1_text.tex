@@ -1,0 +1,293 @@
+\doxysection{UI::\+Text Class Reference}
+\hypertarget{class_u_i_1_1_text}{}\label{class_u_i_1_1_text}\index{UI::Text@{UI::Text}}
+
+
+\doxylink{namespace_u_i}{UI} component for rendering text.  
+
+
+
+
+{\ttfamily \+\#include $<$Text.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_text_af1cb9fb28e70ff76d48ea8cd547aba26}{Text}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_text_a2c2164fed3edad27cec2ab890c09e83a}{\texorpdfstring{$\sim$}{\string~}\+Text}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_a1230395d29456ecf99995929a33c540a}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Render the text. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_a8cb462c21e1b4b68a8f273ef6278b5b8}{Set\+Text}} (const std::\+string \&text)
+\begin{DoxyCompactList}\small\item\em Set the text content. \end{DoxyCompactList}\item 
+const std::\+string \& \doxymbox{\hyperlink{class_u_i_1_1_text_ab3c4efc7039ca3871c0ef5339ffd529f}{Get\+Text}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_a2502c13eef8202504c0689097d8de987}{Set\+Font}} (s8 font)
+\begin{DoxyCompactList}\small\item\em Set the font handle (use -\/1 for default font). \end{DoxyCompactList}\item 
+s8 \doxymbox{\hyperlink{class_u_i_1_1_text_a9955efe59d0553bfec639a4b7c146f59}{Get\+Font}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_a1db3b5f5492d2eeee6f57bddbde65b41}{Set\+Font\+Size}} (f32 size)
+\begin{DoxyCompactList}\small\item\em Set the font size (scale factor). \end{DoxyCompactList}\item 
+f32 \doxymbox{\hyperlink{class_u_i_1_1_text_a57a5e3ca05989d39a450da8110ca5171}{Get\+Font\+Size}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_ac749e82b7499e0ca29229c9f11942fb6}{Set\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Set the text color. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_text_a79e1d94a55664046d42d854709b689fc}{Get\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_a1a8aa604bc47a893dcbe5f947255dfe5}{Set\+Anchor}} (\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{Text\+Anchor}} anchor)
+\begin{DoxyCompactList}\small\item\em Set the text anchor/\+alignment. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{Text\+Anchor}} \doxymbox{\hyperlink{class_u_i_1_1_text_aa8140741b1f1b69fa7a39ec8d3a7516d}{Get\+Anchor}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_text_aeb0d3e4e421214572e4c418187d1d5d2}{Get\+Text\+Size}} (f32 \&out\+Width, f32 \&out\+Height) const
+\begin{DoxyCompactList}\small\item\em Get the rendered text size in pixels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update the element (called each frame if enabled). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{namespace_u_i}{UI} component for rendering text. 
+
+Similar to Unity\textquotesingle{}s \doxylink{class_u_i_1_1_text}{Text} component. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_text_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_text_af1cb9fb28e70ff76d48ea8cd547aba26}\index{UI::Text@{UI::Text}!Text@{Text}}
+\index{Text@{Text}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{Text()}{Text()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_af1cb9fb28e70ff76d48ea8cd547aba26} 
+UI::\+\+Text::\+\+Text (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_text_a2c2164fed3edad27cec2ab890c09e83a}\index{UI::Text@{UI::Text}!````~Text@{\texorpdfstring{$\sim$}{\string~}Text}}
+\index{````~Text@{\texorpdfstring{$\sim$}{\string~}Text}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Text()}{\string~Text()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a2c2164fed3edad27cec2ab890c09e83a} 
+virtual UI::\+\+Text::\+\texorpdfstring{$\sim$}{\string~}\+Text (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_text_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_text_aa8140741b1f1b69fa7a39ec8d3a7516d}\index{UI::Text@{UI::Text}!GetAnchor@{GetAnchor}}
+\index{GetAnchor@{GetAnchor}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetAnchor()}{GetAnchor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_aa8140741b1f1b69fa7a39ec8d3a7516d} 
+\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{Text\+Anchor}} UI::\+\+Text::\+\+Get\+Anchor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_text_a79e1d94a55664046d42d854709b689fc}\index{UI::Text@{UI::Text}!GetColor@{GetColor}}
+\index{GetColor@{GetColor}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetColor()}{GetColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a79e1d94a55664046d42d854709b689fc} 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& UI::\+\+Text::\+\+Get\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_text_a9955efe59d0553bfec639a4b7c146f59}\index{UI::Text@{UI::Text}!GetFont@{GetFont}}
+\index{GetFont@{GetFont}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetFont()}{GetFont()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a9955efe59d0553bfec639a4b7c146f59} 
+s8 UI::\+\+Text::\+\+Get\+Font (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_text_a57a5e3ca05989d39a450da8110ca5171}\index{UI::Text@{UI::Text}!GetFontSize@{GetFontSize}}
+\index{GetFontSize@{GetFontSize}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetFontSize()}{GetFontSize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a57a5e3ca05989d39a450da8110ca5171} 
+f32 UI::\+\+Text::\+\+Get\+Font\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_text_ab3c4efc7039ca3871c0ef5339ffd529f}\index{UI::Text@{UI::Text}!GetText@{GetText}}
+\index{GetText@{GetText}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetText()}{GetText()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_ab3c4efc7039ca3871c0ef5339ffd529f} 
+const std::\+string \& UI::\+\+Text::\+\+Get\+Text (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_text_aeb0d3e4e421214572e4c418187d1d5d2}\index{UI::Text@{UI::Text}!GetTextSize@{GetTextSize}}
+\index{GetTextSize@{GetTextSize}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{GetTextSize()}{GetTextSize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_aeb0d3e4e421214572e4c418187d1d5d2} 
+void UI::\+\+Text::\+\+Get\+Text\+Size (\begin{DoxyParamCaption}\item[{f32 \&}]{out\+Width}{, }\item[{f32 \&}]{out\+Height}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the rendered text size in pixels. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+Width} & Output width \\
+\hline
+{\em out\+Height} & Output height \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_text_a1230395d29456ecf99995929a33c540a}\index{UI::Text@{UI::Text}!Render@{Render}}
+\index{Render@{Render}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a1230395d29456ecf99995929a33c540a} 
+void UI::\+\+Text::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Render the text. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{UI::\+\+UIElement}}.
+
+\Hypertarget{class_u_i_1_1_text_a1a8aa604bc47a893dcbe5f947255dfe5}\index{UI::Text@{UI::Text}!SetAnchor@{SetAnchor}}
+\index{SetAnchor@{SetAnchor}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{SetAnchor()}{SetAnchor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a1a8aa604bc47a893dcbe5f947255dfe5} 
+void UI::\+\+Text::\+\+Set\+Anchor (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{Text\+Anchor}}}]{anchor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the text anchor/\+alignment. 
+
+\Hypertarget{class_u_i_1_1_text_ac749e82b7499e0ca29229c9f11942fb6}\index{UI::Text@{UI::Text}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_ac749e82b7499e0ca29229c9f11942fb6} 
+void UI::\+\+Text::\+\+Set\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the text color. 
+
+\Hypertarget{class_u_i_1_1_text_a2502c13eef8202504c0689097d8de987}\index{UI::Text@{UI::Text}!SetFont@{SetFont}}
+\index{SetFont@{SetFont}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{SetFont()}{SetFont()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a2502c13eef8202504c0689097d8de987} 
+void UI::\+\+Text::\+\+Set\+Font (\begin{DoxyParamCaption}\item[{s8}]{font}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the font handle (use -\/1 for default font). 
+
+\Hypertarget{class_u_i_1_1_text_a1db3b5f5492d2eeee6f57bddbde65b41}\index{UI::Text@{UI::Text}!SetFontSize@{SetFontSize}}
+\index{SetFontSize@{SetFontSize}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{SetFontSize()}{SetFontSize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a1db3b5f5492d2eeee6f57bddbde65b41} 
+void UI::\+\+Text::\+\+Set\+Font\+Size (\begin{DoxyParamCaption}\item[{f32}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the font size (scale factor). 
+
+\Hypertarget{class_u_i_1_1_text_a8cb462c21e1b4b68a8f273ef6278b5b8}\index{UI::Text@{UI::Text}!SetText@{SetText}}
+\index{SetText@{SetText}!UI::Text@{UI::Text}}
+\doxysubsubsection{\texorpdfstring{SetText()}{SetText()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_text_a8cb462c21e1b4b68a8f273ef6278b5b8} 
+void UI::\+\+Text::\+\+Set\+Text (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{text}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the text content. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_text_8hpp}{Text.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_text_8cpp}{Text.\+cpp}}\end{DoxyCompactItemize}

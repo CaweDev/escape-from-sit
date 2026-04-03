@@ -1,0 +1,57 @@
+\doxysection{Asset\+Manager.\+hpp}
+\hypertarget{_asset_manager_8hpp_source}{}\label{_asset_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Core/AssetManager.hpp@{AlphaEngine2.5D/Source/Engine/Core/AssetManager.hpp}}
+\doxymbox{\hyperlink{_asset_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_8hpp}{../Graphics/Sprite.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_sheet_8hpp}{../Graphics/SpriteSheet.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture2_d_8hpp}{../Graphics/Texture2D.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{class\ }AssetManager}
+\DoxyCodeLine{00023\ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ Sprite*>\ s\_spriteCache;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ SpriteSheet*>\ s\_spritesheetCache;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ Texture2D*>\ s\_textureCache;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prevent\ instantiation}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ AssetManager()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ AssetManager(\textcolor{keyword}{const}\ AssetManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ AssetManager\&\ operator=(\textcolor{keyword}{const}\ AssetManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{GetSprite}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a5687f7d8357a375498862fde904d226f}{GetTexture}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a9534e25c4dac35cee621f585bbcba9d2}{UnloadSprite}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a0cf8cb7080b78aefae99d8a8bf1adc93}{UnloadTexture}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a37435ac113a3860ab6d6158f363e779a}{UnloadAll}}();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2be04d3673d37badac330d5fb8ee2808}{GetSpriteCacheSize}}()\ \{\ \textcolor{keywordflow}{return}\ s\_spriteCache.size();\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2307b738d4991ed5dba8a43bd06d1efa}{GetTextureCacheSize}}()\ \{\ \textcolor{keywordflow}{return}\ s\_textureCache.size();\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{SpriteSheet}}*\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a4931469d0d3fa9af329c8568b89bc51e}{GetSpriteSheet}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{SpriteSheet}}*\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a4931469d0d3fa9af329c8568b89bc51e}{GetSpriteSheet}}(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a221b64ffeaf05d29d41ccf34e32b67a3}{UnloadSpriteSheet}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2fbab77a52dfff436bf59503f9465954}{HasSprite}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_ab55dd8ee678011deb0f2ea96c48229ab}{HasSpriteSheet}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a384f75790fcde90c8f78b376e1260203}{HasTexture}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00111\ \ \ \ \ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

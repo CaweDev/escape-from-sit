@@ -1,0 +1,368 @@
+\doxysection{Game::\+Security\+Guard Class Reference}
+\hypertarget{class_game_1_1_security_guard}{}\label{class_game_1_1_security_guard}\index{Game::SecurityGuard@{Game::SecurityGuard}}
+
+
+{\ttfamily \+\#include $<$Security\+Guard.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_acd21b66a2528fbcc5cfb316ee5ccdb83}{Initialize}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a98da57a4114c5a510c96400c20cbf8d5}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_ac98b446431254dbcd7cde3fc5ec94a6e}{Update\+State\+Color}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_ac61b5147fc056b887deff9aac2e3c7e6}{On\+CCTVSpotted}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&world\+Pos)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a3ab00b5c1713c8db82c51d61292c46c6}{On\+CCTVSystem\+Sabotaged}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&control\+Room\+Pos, int sabotaged\+Zone\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a21f42b4233036ad2e6a9e6c041dc72b4}{Set\+Terminals}} (std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}terminals)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a9aba1e2218755c61440eb67ebc837fa6}{Set\+Patrol\+Zone\+Override}} (int zone\+Id)
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_security_guard_a563ff250d416691041573bbd86c5f6da}{Get\+Patrol\+Zone\+Override}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_security_guard_a6fc6a82f1eb0a4e6e3d1b365c1467b1a}{Is\+In\+Patrol\+State}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_security_guard_a2b57ea224d390e6115d938b2f05821a4}{Is\+In\+Chase\+State}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_security_guard_a5655046b46ca4294a69dc12b1f11db62}{Is\+In\+Search\+State}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a888ffe41a1d0af28914580ea7057f8d1}{Set\+Assist\+Zone}} (int zone\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a0576f901cddf70c47e0115b1e0016a8e}{Clear\+Assist}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_ad3a9e1754a0af1663b8fe2c7fcab74f6}{Set\+Full\+Escalation}} (int zone\+Id)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a7e882a927a3220f012cdd80fde1a8c18}{Clear\+Full\+Escalation}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a914707b457bee44192c7dc374ce6e612}{On\+Distracted}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&noise\+Pos)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_security_guard_a5f60bf242525d3c265937b6b28845c9d}{Clear\+Distraction}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769}{tile\+Map}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a3d3f29cccc2920b2b6ef569053d589b0}{player\+Tf}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player}{Player}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a5a052b5c318e34d9add47c9243a684d6}{player\+Data}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_zone_manager}{Game::\+\+Zone\+Manager}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a76a77641d91017ab66b840fb898c7dd2}{zone\+Mgr}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a80796320d7e4d80b9936e7bd3708d2e9}{heatmap}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a8c89f378159c6388afdd9f58d98f7057}{cctv\+Terminals}} = nullptr
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_adfd94d2f0d2147fe3368f2202fc33575}{patrol\+Speed}} = 1.\+5f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_ad5c3ab376544011e2956456856b7f48d}{chase\+Speed}} = 2.\+4f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_ae50c2da88fbdc0dbc2e33f6ea8d29815}{search\+Speed}} = 0.\+8f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_acde32910619a8baa2a2fc64ab9506dfd}{arrive\+Distance}} = 0.\+10f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_a177b889284114083f53e2ff26f2327d9}{detect\+Radius}} = 4.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_af81b549c189f9bef62e162001cd4d483}{catch\+Radius}} = 0.\+7f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_acfbeb569e9573d962695c29db5d7cf4a}{max\+Lost\+Sight\+Time}} = 2.\+5f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_security_guard_a911e8fd38cd28d072b219625c697769c}{search\+Duration}} = 4.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_security_guard_ad45ac6d2ff32d6190dec3f3fd404fdc7}{is\+Distracted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_security_guard_abbc5a0832770cf658fa33178a00c54b9}{distraction\+Pos}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_security_guard_a24cd82ff2f916fdbe949a62177fffd45}{home\+Zone\+Id}} = 1
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_security_guard_a12898acca30d52b91de31acc1fdd3625}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_security_guard_aa732d8f9116e55f88d5c35b59198f781}{investigating\+Sabotage}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_security_guard_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_security_guard_a0576f901cddf70c47e0115b1e0016a8e}\index{Game::SecurityGuard@{Game::SecurityGuard}!ClearAssist@{ClearAssist}}
+\index{ClearAssist@{ClearAssist}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{ClearAssist()}{ClearAssist()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a0576f901cddf70c47e0115b1e0016a8e} 
+void Game::\+\+Security\+Guard::\+\+Clear\+Assist (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a5f60bf242525d3c265937b6b28845c9d}\index{Game::SecurityGuard@{Game::SecurityGuard}!ClearDistraction@{ClearDistraction}}
+\index{ClearDistraction@{ClearDistraction}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{ClearDistraction()}{ClearDistraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a5f60bf242525d3c265937b6b28845c9d} 
+void Game::\+\+Security\+Guard::\+\+Clear\+Distraction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a7e882a927a3220f012cdd80fde1a8c18}\index{Game::SecurityGuard@{Game::SecurityGuard}!ClearFullEscalation@{ClearFullEscalation}}
+\index{ClearFullEscalation@{ClearFullEscalation}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{ClearFullEscalation()}{ClearFullEscalation()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a7e882a927a3220f012cdd80fde1a8c18} 
+void Game::\+\+Security\+Guard::\+\+Clear\+Full\+Escalation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a563ff250d416691041573bbd86c5f6da}\index{Game::SecurityGuard@{Game::SecurityGuard}!GetPatrolZoneOverride@{GetPatrolZoneOverride}}
+\index{GetPatrolZoneOverride@{GetPatrolZoneOverride}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{GetPatrolZoneOverride()}{GetPatrolZoneOverride()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a563ff250d416691041573bbd86c5f6da} 
+int Game::\+\+Security\+Guard::\+\+Get\+Patrol\+Zone\+Override (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_security_guard_acd21b66a2528fbcc5cfb316ee5ccdb83}\index{Game::SecurityGuard@{Game::SecurityGuard}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_acd21b66a2528fbcc5cfb316ee5ccdb83} 
+void Game::\+\+Security\+Guard::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_security_guard_a2b57ea224d390e6115d938b2f05821a4}\index{Game::SecurityGuard@{Game::SecurityGuard}!IsInChaseState@{IsInChaseState}}
+\index{IsInChaseState@{IsInChaseState}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{IsInChaseState()}{IsInChaseState()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a2b57ea224d390e6115d938b2f05821a4} 
+bool Game::\+\+Security\+Guard::\+\+Is\+In\+Chase\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_security_guard_a6fc6a82f1eb0a4e6e3d1b365c1467b1a}\index{Game::SecurityGuard@{Game::SecurityGuard}!IsInPatrolState@{IsInPatrolState}}
+\index{IsInPatrolState@{IsInPatrolState}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{IsInPatrolState()}{IsInPatrolState()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a6fc6a82f1eb0a4e6e3d1b365c1467b1a} 
+bool Game::\+\+Security\+Guard::\+\+Is\+In\+Patrol\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_security_guard_a5655046b46ca4294a69dc12b1f11db62}\index{Game::SecurityGuard@{Game::SecurityGuard}!IsInSearchState@{IsInSearchState}}
+\index{IsInSearchState@{IsInSearchState}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{IsInSearchState()}{IsInSearchState()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a5655046b46ca4294a69dc12b1f11db62} 
+bool Game::\+\+Security\+Guard::\+\+Is\+In\+Search\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_security_guard_ac61b5147fc056b887deff9aac2e3c7e6}\index{Game::SecurityGuard@{Game::SecurityGuard}!OnCCTVSpotted@{OnCCTVSpotted}}
+\index{OnCCTVSpotted@{OnCCTVSpotted}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{OnCCTVSpotted()}{OnCCTVSpotted()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ac61b5147fc056b887deff9aac2e3c7e6} 
+void Game::\+\+Security\+Guard::\+\+On\+CCTVSpotted (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{world\+Pos}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a3ab00b5c1713c8db82c51d61292c46c6}\index{Game::SecurityGuard@{Game::SecurityGuard}!OnCCTVSystemSabotaged@{OnCCTVSystemSabotaged}}
+\index{OnCCTVSystemSabotaged@{OnCCTVSystemSabotaged}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{OnCCTVSystemSabotaged()}{OnCCTVSystemSabotaged()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a3ab00b5c1713c8db82c51d61292c46c6} 
+void Game::\+\+Security\+Guard::\+\+On\+CCTVSystem\+Sabotaged (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{control\+Room\+Pos}{, }\item[{int}]{sabotaged\+Zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a914707b457bee44192c7dc374ce6e612}\index{Game::SecurityGuard@{Game::SecurityGuard}!OnDistracted@{OnDistracted}}
+\index{OnDistracted@{OnDistracted}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{OnDistracted()}{OnDistracted()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a914707b457bee44192c7dc374ce6e612} 
+void Game::\+\+Security\+Guard::\+\+On\+Distracted (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{noise\+Pos}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a888ffe41a1d0af28914580ea7057f8d1}\index{Game::SecurityGuard@{Game::SecurityGuard}!SetAssistZone@{SetAssistZone}}
+\index{SetAssistZone@{SetAssistZone}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{SetAssistZone()}{SetAssistZone()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a888ffe41a1d0af28914580ea7057f8d1} 
+void Game::\+\+Security\+Guard::\+\+Set\+Assist\+Zone (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_ad3a9e1754a0af1663b8fe2c7fcab74f6}\index{Game::SecurityGuard@{Game::SecurityGuard}!SetFullEscalation@{SetFullEscalation}}
+\index{SetFullEscalation@{SetFullEscalation}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{SetFullEscalation()}{SetFullEscalation()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ad3a9e1754a0af1663b8fe2c7fcab74f6} 
+void Game::\+\+Security\+Guard::\+\+Set\+Full\+Escalation (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a9aba1e2218755c61440eb67ebc837fa6}\index{Game::SecurityGuard@{Game::SecurityGuard}!SetPatrolZoneOverride@{SetPatrolZoneOverride}}
+\index{SetPatrolZoneOverride@{SetPatrolZoneOverride}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{SetPatrolZoneOverride()}{SetPatrolZoneOverride()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a9aba1e2218755c61440eb67ebc837fa6} 
+void Game::\+\+Security\+Guard::\+\+Set\+Patrol\+Zone\+Override (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_security_guard_a21f42b4233036ad2e6a9e6c041dc72b4}\index{Game::SecurityGuard@{Game::SecurityGuard}!SetTerminals@{SetTerminals}}
+\index{SetTerminals@{SetTerminals}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{SetTerminals()}{SetTerminals()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a21f42b4233036ad2e6a9e6c041dc72b4} 
+void Game::\+\+Security\+Guard::\+\+Set\+Terminals (\begin{DoxyParamCaption}\item[{std::\+vector$<$ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}}]{terminals}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_security_guard_a98da57a4114c5a510c96400c20cbf8d5}\index{Game::SecurityGuard@{Game::SecurityGuard}!Update@{Update}}
+\index{Update@{Update}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a98da57a4114c5a510c96400c20cbf8d5} 
+void Game::\+\+Security\+Guard::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_security_guard_ac98b446431254dbcd7cde3fc5ec94a6e}\index{Game::SecurityGuard@{Game::SecurityGuard}!UpdateStateColor@{UpdateStateColor}}
+\index{UpdateStateColor@{UpdateStateColor}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{UpdateStateColor()}{UpdateStateColor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ac98b446431254dbcd7cde3fc5ec94a6e} 
+void Game::\+\+Security\+Guard::\+\+Update\+State\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_security_guard_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_security_guard_acde32910619a8baa2a2fc64ab9506dfd}\index{Game::SecurityGuard@{Game::SecurityGuard}!arriveDistance@{arriveDistance}}
+\index{arriveDistance@{arriveDistance}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{arriveDistance}{arriveDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_acde32910619a8baa2a2fc64ab9506dfd} 
+float Game::\+\+Security\+Guard::\+arrive\+Distance = 0.\+10f}
+
+\Hypertarget{class_game_1_1_security_guard_af81b549c189f9bef62e162001cd4d483}\index{Game::SecurityGuard@{Game::SecurityGuard}!catchRadius@{catchRadius}}
+\index{catchRadius@{catchRadius}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{catchRadius}{catchRadius}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_af81b549c189f9bef62e162001cd4d483} 
+float Game::\+\+Security\+Guard::\+catch\+Radius = 0.\+7f}
+
+\Hypertarget{class_game_1_1_security_guard_a8c89f378159c6388afdd9f58d98f7057}\index{Game::SecurityGuard@{Game::SecurityGuard}!cctvTerminals@{cctvTerminals}}
+\index{cctvTerminals@{cctvTerminals}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{cctvTerminals}{cctvTerminals}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a8c89f378159c6388afdd9f58d98f7057} 
+std::\+vector$<$\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}} \texorpdfstring{$\ast$}{*}$>$\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+cctv\+Terminals = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_ad5c3ab376544011e2956456856b7f48d}\index{Game::SecurityGuard@{Game::SecurityGuard}!chaseSpeed@{chaseSpeed}}
+\index{chaseSpeed@{chaseSpeed}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{chaseSpeed}{chaseSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ad5c3ab376544011e2956456856b7f48d} 
+float Game::\+\+Security\+Guard::\+chase\+Speed = 2.\+4f}
+
+\Hypertarget{class_game_1_1_security_guard_a177b889284114083f53e2ff26f2327d9}\index{Game::SecurityGuard@{Game::SecurityGuard}!detectRadius@{detectRadius}}
+\index{detectRadius@{detectRadius}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{detectRadius}{detectRadius}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a177b889284114083f53e2ff26f2327d9} 
+float Game::\+\+Security\+Guard::\+detect\+Radius = 4.\+0f}
+
+\Hypertarget{class_game_1_1_security_guard_abbc5a0832770cf658fa33178a00c54b9}\index{Game::SecurityGuard@{Game::SecurityGuard}!distractionPos@{distractionPos}}
+\index{distractionPos@{distractionPos}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{distractionPos}{distractionPos}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_abbc5a0832770cf658fa33178a00c54b9} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+Security\+Guard::\+distraction\+Pos}
+
+\Hypertarget{class_game_1_1_security_guard_a80796320d7e4d80b9936e7bd3708d2e9}\index{Game::SecurityGuard@{Game::SecurityGuard}!heatmap@{heatmap}}
+\index{heatmap@{heatmap}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{heatmap}{heatmap}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a80796320d7e4d80b9936e7bd3708d2e9} 
+\doxymbox{\hyperlink{class_game_1_1_heatmap}{Game::\+\+Heatmap}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+heatmap = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_a24cd82ff2f916fdbe949a62177fffd45}\index{Game::SecurityGuard@{Game::SecurityGuard}!homeZoneId@{homeZoneId}}
+\index{homeZoneId@{homeZoneId}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{homeZoneId}{homeZoneId}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a24cd82ff2f916fdbe949a62177fffd45} 
+int Game::\+\+Security\+Guard::\+home\+Zone\+Id = 1}
+
+\Hypertarget{class_game_1_1_security_guard_aa732d8f9116e55f88d5c35b59198f781}\index{Game::SecurityGuard@{Game::SecurityGuard}!investigatingSabotage@{investigatingSabotage}}
+\index{investigatingSabotage@{investigatingSabotage}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{investigatingSabotage}{investigatingSabotage}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_aa732d8f9116e55f88d5c35b59198f781} 
+bool Game::\+\+Security\+Guard::\+investigating\+Sabotage = false}
+
+\Hypertarget{class_game_1_1_security_guard_ad45ac6d2ff32d6190dec3f3fd404fdc7}\index{Game::SecurityGuard@{Game::SecurityGuard}!isDistracted@{isDistracted}}
+\index{isDistracted@{isDistracted}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{isDistracted}{isDistracted}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ad45ac6d2ff32d6190dec3f3fd404fdc7} 
+bool Game::\+\+Security\+Guard::\+is\+Distracted = false}
+
+\Hypertarget{class_game_1_1_security_guard_acfbeb569e9573d962695c29db5d7cf4a}\index{Game::SecurityGuard@{Game::SecurityGuard}!maxLostSightTime@{maxLostSightTime}}
+\index{maxLostSightTime@{maxLostSightTime}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{maxLostSightTime}{maxLostSightTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_acfbeb569e9573d962695c29db5d7cf4a} 
+float Game::\+\+Security\+Guard::\+max\+Lost\+Sight\+Time = 2.\+5f}
+
+\Hypertarget{class_game_1_1_security_guard_adfd94d2f0d2147fe3368f2202fc33575}\index{Game::SecurityGuard@{Game::SecurityGuard}!patrolSpeed@{patrolSpeed}}
+\index{patrolSpeed@{patrolSpeed}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{patrolSpeed}{patrolSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_adfd94d2f0d2147fe3368f2202fc33575} 
+float Game::\+\+Security\+Guard::\+patrol\+Speed = 1.\+5f}
+
+\Hypertarget{class_game_1_1_security_guard_a5a052b5c318e34d9add47c9243a684d6}\index{Game::SecurityGuard@{Game::SecurityGuard}!playerData@{playerData}}
+\index{playerData@{playerData}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{playerData}{playerData}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a5a052b5c318e34d9add47c9243a684d6} 
+\doxymbox{\hyperlink{class_game_1_1_player}{Player}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+player\+Data = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_a3d3f29cccc2920b2b6ef569053d589b0}\index{Game::SecurityGuard@{Game::SecurityGuard}!playerTf@{playerTf}}
+\index{playerTf@{playerTf}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{playerTf}{playerTf}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a3d3f29cccc2920b2b6ef569053d589b0} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+player\+Tf = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_a911e8fd38cd28d072b219625c697769c}\index{Game::SecurityGuard@{Game::SecurityGuard}!searchDuration@{searchDuration}}
+\index{searchDuration@{searchDuration}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{searchDuration}{searchDuration}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a911e8fd38cd28d072b219625c697769c} 
+float Game::\+\+Security\+Guard::\+search\+Duration = 4.\+0f}
+
+\Hypertarget{class_game_1_1_security_guard_ae50c2da88fbdc0dbc2e33f6ea8d29815}\index{Game::SecurityGuard@{Game::SecurityGuard}!searchSpeed@{searchSpeed}}
+\index{searchSpeed@{searchSpeed}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{searchSpeed}{searchSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_ae50c2da88fbdc0dbc2e33f6ea8d29815} 
+float Game::\+\+Security\+Guard::\+search\+Speed = 0.\+8f}
+
+\Hypertarget{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769}\index{Game::SecurityGuard@{Game::SecurityGuard}!tileMap@{tileMap}}
+\index{tileMap@{tileMap}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{tileMap}{tileMap}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a38d269e5588e01b47d9da6701df20769} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+tile\+Map = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_a12898acca30d52b91de31acc1fdd3625}\index{Game::SecurityGuard@{Game::SecurityGuard}!transform@{transform}}
+\index{transform@{transform}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{transform}{transform}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a12898acca30d52b91de31acc1fdd3625} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+transform = nullptr}
+
+\Hypertarget{class_game_1_1_security_guard_a76a77641d91017ab66b840fb898c7dd2}\index{Game::SecurityGuard@{Game::SecurityGuard}!zoneMgr@{zoneMgr}}
+\index{zoneMgr@{zoneMgr}!Game::SecurityGuard@{Game::SecurityGuard}}
+\doxysubsubsection{\texorpdfstring{zoneMgr}{zoneMgr}}
+{\footnotesize\ttfamily \label{class_game_1_1_security_guard_a76a77641d91017ab66b840fb898c7dd2} 
+\doxymbox{\hyperlink{class_game_1_1_zone_manager}{Game::\+\+Zone\+Manager}}\texorpdfstring{$\ast$}{*} Game::\+\+Security\+Guard::\+zone\+Mgr = nullptr}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Security\+Guard/\+\doxymbox{\hyperlink{_security_guard_8hpp}{Security\+Guard.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Security\+Guard/\+\doxymbox{\hyperlink{_security_guard_8cpp}{Security\+Guard.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,78 @@
+\doxysection{Input.\+hpp}
+\hypertarget{_input_8hpp_source}{}\label{_input_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Input/Input.hpp@{AlphaEngine2.5D/Source/Engine/Input/Input.hpp}}
+\doxymbox{\hyperlink{_input_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_key_code_8hpp}{KeyCode.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_xbox_controller_8hpp}{XboxController.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{../Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }Input\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Keyboard\ input}}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_a1354fc0536c0fe8e0be1efa98e39e314}{GetKey}}(\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{KeyCode}}\ key);}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}{GetKeyDown}}(\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{KeyCode}}\ key);}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_ad91ab367518b08b078e8b1fb22785525}{GetKeyUp}}(\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{KeyCode}}\ key);}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Mouse\ input}}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_a7830452407db3c4acf1ad3dafa8cc5d4}{GetMouseButton}}(\textcolor{keywordtype}{int}\ button);}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_a986ec20a2bd0c536d4b53a54f7b6976b}{GetMouseButtonDown}}(\textcolor{keywordtype}{int}\ button);}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_ad238cda8deacccfc3b7885839ff49a31}{GetMouseButtonUp}}(\textcolor{keywordtype}{int}\ button);}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_input_a992400fb285105b9f4970d0f1ee5e97e}{GetMousePosition}}();}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_input_a4e4f4415cb2e8d7719a5f4efbc277cf3}{GetMouseDelta}}();}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_input_a8cc3ae8d06e399a96a4bbd5e766e0922}{GetMouseScrollDelta}}();}
+\DoxyCodeLine{00052\ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ Axis\ input\ (Unity-\/style)}}
+\DoxyCodeLine{00054\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_input_a79f413889851cab59a13404169655ea7}{GetAxis}}(\textcolor{keyword}{const}\ std::string\&\ axisName);}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_input_afc924b182b616a21bb1c7c0ada2db5b0}{GetAxisRaw}}(\textcolor{keyword}{const}\ std::string\&\ axisName);}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ Cursor\ control}}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_input_ad5b03ef6db990b5be4accb3103e426fd}{SetCursorVisible}}(\textcolor{keywordtype}{bool}\ visible);}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Cursor\ lock\ registration\ system}}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_input_a5e07c524dc33cd081934a95dd0510a97}{RegisterCursorUnlock}}(\textcolor{keyword}{const}\ std::string\&\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_input_a2e2490f038c3214a4d7b51bf7f65b3a1}{UnregisterCursorUnlock}}(\textcolor{keyword}{const}\ std::string\&\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_input_a38c07992fec1dec41b36f966f8939905}{IsCursorLocked}}();}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_input_a1f749822e5a9922b676ff70bc37dc194}{Update}}();}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00081\ \ \ \ \ Input()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00082\ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ UpdateWindowCenter();}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ CenterCursor();}
+\DoxyCodeLine{00085\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ std::set<std::string>\ cursorUnlockRegistrations;}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ HWND\ hwnd;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ centerX;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ centerY;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ f32\ mouseDeltaX;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ f32\ mouseDeltaY;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ firstFrame;}
+\DoxyCodeLine{00093\ \};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

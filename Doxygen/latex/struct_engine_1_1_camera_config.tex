@@ -1,0 +1,136 @@
+\doxysection{Engine::\+Camera\+Config Struct Reference}
+\hypertarget{struct_engine_1_1_camera_config}{}\label{struct_engine_1_1_camera_config}\index{Engine::CameraConfig@{Engine::CameraConfig}}
+
+
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises camera.\+json.  
+
+
+
+
+{\ttfamily \+\#include $<$Camera.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a063d9b458e43b3e15aa0d93d4b5a37f8}{From\+Json}} (const Json::\+\+Value \&j) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{background\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+2f, 1.\+0f)
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec}{orthographic\+Size}} = 5.\+0f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca}{fov}} = 75.\+0f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0}{pitch}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fog\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+0f, 0.\+0f, 0.\+0f, 1.\+0f)
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875}{fog\+Distance}} = 20.\+0f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3}{fog\+Min\+Visibility}} = 0.\+2f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc}{fog\+Max\+Visibility}} = 1.\+0f
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9}{fog\+Precision}} = 200.\+0f
+\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2}{fog\+Enabled}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises camera.\+json. 
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_camera_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_camera_config_a063d9b458e43b3e15aa0d93d4b5a37f8}\index{Engine::CameraConfig@{Engine::CameraConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a063d9b458e43b3e15aa0d93d4b5a37f8} 
+void Engine::\+\+Camera\+Config::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{Engine::\+\+IConfig}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_camera_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}\index{Engine::CameraConfig@{Engine::CameraConfig}!backgroundColor@{backgroundColor}}
+\index{backgroundColor@{backgroundColor}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{backgroundColor}{backgroundColor}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Camera\+Config::\+background\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+2f, 1.\+0f)}
+
+\Hypertarget{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogColor@{fogColor}}
+\index{fogColor@{fogColor}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogColor}{fogColor}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Camera\+Config::\+fog\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+0f, 0.\+0f, 0.\+0f, 1.\+0f)}
+
+\Hypertarget{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogDistance@{fogDistance}}
+\index{fogDistance@{fogDistance}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogDistance}{fogDistance}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875} 
+float Engine::\+\+Camera\+Config::\+fog\+Distance = 20.\+0f}
+
+\Hypertarget{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogEnabled@{fogEnabled}}
+\index{fogEnabled@{fogEnabled}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogEnabled}{fogEnabled}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2} 
+bool Engine::\+\+Camera\+Config::\+fog\+Enabled = false}
+
+\Hypertarget{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogMaxVisibility@{fogMaxVisibility}}
+\index{fogMaxVisibility@{fogMaxVisibility}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogMaxVisibility}{fogMaxVisibility}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc} 
+float Engine::\+\+Camera\+Config::\+fog\+Max\+Visibility = 1.\+0f}
+
+\Hypertarget{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogMinVisibility@{fogMinVisibility}}
+\index{fogMinVisibility@{fogMinVisibility}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogMinVisibility}{fogMinVisibility}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3} 
+float Engine::\+\+Camera\+Config::\+fog\+Min\+Visibility = 0.\+2f}
+
+\Hypertarget{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9}\index{Engine::CameraConfig@{Engine::CameraConfig}!fogPrecision@{fogPrecision}}
+\index{fogPrecision@{fogPrecision}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fogPrecision}{fogPrecision}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9} 
+float Engine::\+\+Camera\+Config::\+fog\+Precision = 200.\+0f}
+
+\Hypertarget{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca}\index{Engine::CameraConfig@{Engine::CameraConfig}!fov@{fov}}
+\index{fov@{fov}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca} 
+float Engine::\+\+Camera\+Config::\+fov = 75.\+0f}
+
+\Hypertarget{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec}\index{Engine::CameraConfig@{Engine::CameraConfig}!orthographicSize@{orthographicSize}}
+\index{orthographicSize@{orthographicSize}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{orthographicSize}{orthographicSize}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec} 
+float Engine::\+\+Camera\+Config::\+orthographic\+Size = 5.\+0f}
+
+\Hypertarget{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0}\index{Engine::CameraConfig@{Engine::CameraConfig}!pitch@{pitch}}
+\index{pitch@{pitch}!Engine::CameraConfig@{Engine::CameraConfig}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0} 
+float Engine::\+\+Camera\+Config::\+pitch = 0.\+0f}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_camera_8hpp}{Camera.\+hpp}}\end{DoxyCompactItemize}

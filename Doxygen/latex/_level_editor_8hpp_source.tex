@@ -1,0 +1,128 @@
+\doxysection{Level\+Editor.\+hpp}
+\hypertarget{_level_editor_8hpp_source}{}\label{_level_editor_8hpp_source}\index{AlphaEngine2.5D/Source/Game/LevelEditor/LevelEditor.hpp@{AlphaEngine2.5D/Source/Game/LevelEditor/LevelEditor.hpp}}
+\doxymbox{\hyperlink{_level_editor_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ /*!}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ \ *\ \(\backslash\)file\ AlphaEngine2.5D\(\backslash\)Source\(\backslash\)Game\(\backslash\)LevelEditor\(\backslash\)LevelEditor.hpp}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ \ *\ \(\backslash\)author\ DigiPen\ Student}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ \ *\ \(\backslash\)date\ 2026-\/03-\/29}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ \ *\ \(\backslash\)brief\ [AUTO]\ Added\ Doxygen\ file\ header}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ \ */}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \#include\ "{}Engine/Scene/Scene.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ \#include\ "{}Engine/TileMap/TileMap.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \#include\ "{}Engine/Input/Input.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ \#include\ "{}Engine/Input/KeyCode.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ \#include\ "{}Engine/UI/UI.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ \#include\ "{}Engine/Graphics/Camera.hpp"{}}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ \#include\ "{}Engine/Core/Transform.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ \#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \#include\ <vector>}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ \#include\ <string>}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ \#include\ <functional>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ namespace\ Game\ \{}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ using\ namespace\ Engine;}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ /**}}
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ \ *\ enum\ EditorMode}}
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ \ *\ @brief\ What\ to\ place\ on\ tiles}}
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ \ */}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ enum\ class\ EditorMode\ \{}}
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ \ \ \ \ Wall,\ \ \ \ \ \ \ \ \ \ \ //\ Build\ walls}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ \ \ \ \ Door,\ \ \ \ \ \ \ \ \ \ \ //\ Convert\ floor\ to\ door}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ \ \ \ \ Terminal,\ \ \ \ \ \ \ //\ Mark\ terminal\ location}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ \ \ \ \ Exit,\ \ \ \ \ \ \ \ \ \ \ //\ Mark\ exit\ location}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ \ \ \ \ ControlRoom,\ \ \ \ //\ Mark\ control\ room\ door}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ \ \ \ \ GreenCard,\ \ \ \ \ \ //\ Mark\ green\ access\ card\ spawn}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ \ \ \ \ PurpleCard,\ \ \ \ \ //\ Mark\ purple\ access\ card\ spawn}}
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ \ \ \ \ RedCard,\ \ \ \ \ \ \ \ //\ Mark\ red\ access\ card\ spawn}}
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ \ \ \ \ YellowCard,\ \ \ \ \ //\ Mark\ yellow\ access\ card\ spawn}}
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ \ \ \ \ Erase\ \ \ \ \ \ \ \ \ \ \ //\ Convert\ back\ to\ floor}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ \};}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ /**}}
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ \ *\ @class\ LevelEditor}}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ \ *\ @brief\ Visual\ top-\/down\ map\ editor\ -\/\ click\ on\ floor\ tiles\ to\ place\ objects}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ \ */}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ class\ LevelEditor\ \{}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ public:}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ \ \ \ \ LevelEditor();}}
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ \ \ \ \ \string~LevelEditor();}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ \ \ \ \ //\ Core\ functions}}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ \ \ \ \ void\ Initialize(Scene*\ scene,\ TileMap*\ map,\ Camera*\ camera,\ Transform*\ playerTransform);}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ \ \ \ \ void\ Update();}}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ \ \ \ \ void\ Render();}}
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ \ \ \ \ void\ ToggleEditor();}}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ \ \ \ \ bool\ IsActive()\ const\ \{\ return\ isActive;\ \}}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ private:}}
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ \ \ \ \ void\ CreateUI();}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ \ \ \ \ void\ UpdateUI();}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ \ \ \ \ void\ HandleInput();}}
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ \ \ \ \ void\ RenderMap();}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ \ \ \ \ void\ RenderMapGrid();}}
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00067\ \textcolor{comment}{//\ \ \ \ \ void\ SetMode(EditorMode\ mode);}}
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ \ \ \ \ void\ HandleMapClick();}}
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ \ \ \ \ void\ SaveMapTxt(const\ std::string\&\ filename);}}
+\DoxyCodeLine{00070\ \textcolor{comment}{//\ \ \ \ \ void\ SpawnDoorAt(int\ x,\ int\ y);\ \ \ \ \ \ \ //\ Real-\/time\ door\ spawning}}
+\DoxyCodeLine{00071\ \textcolor{comment}{//\ \ \ \ \ void\ SpawnTerminalAt(int\ x,\ int\ y);\ \ \ //\ Real-\/time\ terminal\ spawning}}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ \ \ \ \ Vector2\ ScreenToMapCoords(float\ screenX,\ float\ screenY);}}
+\DoxyCodeLine{00074\ \textcolor{comment}{//\ \ \ \ \ bool\ IsFloorTile(int\ x,\ int\ y);}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ \ \ \ \ bool\ isActive\ =\ false;}}
+\DoxyCodeLine{00077\ \textcolor{comment}{//\ \ \ \ \ Scene*\ scene\ =\ nullptr;}}
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ \ \ \ \ TileMap*\ tileMap\ =\ nullptr;}}
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ \ \ \ \ Camera*\ camera\ =\ nullptr;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ \ \ \ \ Transform*\ playerTransform\ =\ nullptr;}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{comment}{//\ \ \ \ \ EditorMode\ currentMode\ =\ EditorMode::Door;}}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00084\ \textcolor{comment}{//\ \ \ \ \ //\ Map\ view\ state}}
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ \ \ \ \ int\ mapWidth\ =\ 0;}}
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ \ \ \ \ int\ mapHeight\ =\ 0;}}
+\DoxyCodeLine{00087\ \textcolor{comment}{//\ \ \ \ \ float\ viewOffsetX\ =\ 0.0f;}}
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ \ \ \ \ float\ viewOffsetY\ =\ 0.0f;}}
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ \ \ \ \ float\ viewZoom\ =\ 1.0f;}}
+\DoxyCodeLine{00090\ \textcolor{comment}{//\ \ \ \ \ float\ tileSize\ =\ 8.0f;\ //\ Pixels\ per\ tile\ at\ zoom=1}}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ \ \ \ \ //\ Mouse\ state}}
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ \ \ \ \ bool\ isDragging\ =\ false;}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ \ \ \ \ float\ lastMouseX\ =\ 0.0f;}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ \ \ \ \ float\ lastMouseY\ =\ 0.0f;}}
+\DoxyCodeLine{00096\ \textcolor{comment}{//\ \ \ \ \ int\ hoveredTileX\ =\ -\/1;}}
+\DoxyCodeLine{00097\ \textcolor{comment}{//\ \ \ \ \ int\ hoveredTileY\ =\ -\/1;}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ \ \ \ \ //\ UI}}
+\DoxyCodeLine{00100\ \textcolor{comment}{//\ \ \ \ \ UI::Canvas*\ editorCanvas\ =\ nullptr;}}
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ \ \ \ \ UI::Panel*\ toolPanel\ =\ nullptr;}}
+\DoxyCodeLine{00102\ \textcolor{comment}{//\ \ \ \ \ UI::Panel*\ mapViewPanel\ =\ nullptr;}}
+\DoxyCodeLine{00103\ \textcolor{comment}{//\ \ \ \ \ UI::Text*\ statusText\ =\ nullptr;}}
+\DoxyCodeLine{00104\ \textcolor{comment}{//\ \ \ \ \ UI::Text*\ helpText\ =\ nullptr;}}
+\DoxyCodeLine{00105\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ wallButton\ =\ nullptr;}}
+\DoxyCodeLine{00106\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ doorButton\ =\ nullptr;}}
+\DoxyCodeLine{00107\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ terminalButton\ =\ nullptr;}}
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ exitButton\ =\ nullptr;}}
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ controlRoomButton\ =\ nullptr;}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ greenCardButton\ =\ nullptr;}}
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ purpleCardButton\ =\ nullptr;}}
+\DoxyCodeLine{00112\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ redCardButton\ =\ nullptr;}}
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ yellowCardButton\ =\ nullptr;}}
+\DoxyCodeLine{00114\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ eraseButton\ =\ nullptr;}}
+\DoxyCodeLine{00115\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ saveButton\ =\ nullptr;}}
+\DoxyCodeLine{00116\ \textcolor{comment}{//\ \ \ \ \ UI::Button*\ closeButton\ =\ nullptr;}}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ \ \ \ \ //\ Meshes\ for\ rendering}}
+\DoxyCodeLine{00119\ \textcolor{comment}{//\ \ \ \ \ AEGfxVertexList*\ tileMesh\ =\ nullptr;}}
+\DoxyCodeLine{00120\ \textcolor{comment}{//\ \};}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{comment}{//\ \}\ //\ namespace\ Game}}
+
+\end{DoxyCode}

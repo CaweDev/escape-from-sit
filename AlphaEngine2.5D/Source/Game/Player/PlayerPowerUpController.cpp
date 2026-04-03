@@ -40,16 +40,12 @@ namespace
 
 namespace Game {
 
-/*!
- * \brief [AUTO] Awake
- */
+
 void PlayerPowerUpController::Awake() {
     player = gameObject->GetComponent<Player>();
 }
 
-/*!
- * \brief [AUTO] Update
- */
+
 void PlayerPowerUpController::Update() {
     if (!player) return;
     const auto& cfg = GetPlayerPowerUpControllerConfig();
@@ -67,31 +63,11 @@ void PlayerPowerUpController::Update() {
     }
 }
 
-/*!
- * \brief [AUTO] AddPowerUp
- * \param type [in]
- * \param duration [in]
- */
-/*!
- * \brief [AUTO] AddPowerUp
- * \param type [in]
- * \param duration [in]
- */
-/*!
- * \brief [AUTO] AddPowerUp
- * \param type [in]
- * \param duration [in]
- */
-/*!
- * \brief [AUTO] AddPowerUp
- * \param type [in]
- * \param duration [in]
- */
-/*!
- * \brief [AUTO] AddPowerUp
- * \param type [in]
- * \param duration [in]
- */
+
+
+
+
+
 void PlayerPowerUpController::AddPowerUp(PowerUpType type, float duration) {
     if (!player) return;
     activeTimers[type] = duration;
@@ -101,31 +77,11 @@ void PlayerPowerUpController::AddPowerUp(PowerUpType type, float duration) {
         std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";*/
 }
 
-/*!
- * \brief [AUTO] UpdatePlayerFlags
- * \param type [in]
- * \param isActive [in]
- */
-/*!
- * \brief [AUTO] UpdatePlayerFlags
- * \param type [in]
- * \param isActive [in]
- */
-/*!
- * \brief [AUTO] UpdatePlayerFlags
- * \param type [in]
- * \param isActive [in]
- */
-/*!
- * \brief [AUTO] UpdatePlayerFlags
- * \param type [in]
- * \param isActive [in]
- */
-/*!
- * \brief [AUTO] UpdatePlayerFlags
- * \param type [in]
- * \param isActive [in]
- */
+
+
+
+
+
 void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive) {
     switch (type) {
     case PowerUpType::SpeedBoost:
@@ -148,26 +104,11 @@ void PlayerPowerUpController::UpdatePlayerFlags(PowerUpType type, bool isActive)
     }*/
 }
 
-/*!
- * \brief [AUTO] RemovePowerUp
- * \param type [in]
- */
-/*!
- * \brief [AUTO] RemovePowerUp
- * \param type [in]
- */
-/*!
- * \brief [AUTO] RemovePowerUp
- * \param type [in]
- */
-/*!
- * \brief [AUTO] RemovePowerUp
- * \param type [in]
- */
-/*!
- * \brief [AUTO] RemovePowerUp
- * \param type [in]
- */
+
+
+
+
+
 void PlayerPowerUpController::RemovePowerUp(PowerUpType type) {
     auto it = activeTimers.find(type);
     if (it != activeTimers.end()) {

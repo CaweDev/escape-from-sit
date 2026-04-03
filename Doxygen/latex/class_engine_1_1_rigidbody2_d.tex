@@ -1,0 +1,319 @@
+\doxysection{Engine::\+Rigidbody2D Class Reference}
+\hypertarget{class_engine_1_1_rigidbody2_d}{}\label{class_engine_1_1_rigidbody2_d}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+
+
+Physics body component for 2.\+5D movement with height.  
+
+
+
+
+{\ttfamily \+\#include $<$Rigidbody2\+D.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a65fff0f73514f394f92a95d16ebe0bc9}{Rigidbody2D}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a05d118828e2a48b5c76d622ce68a9594}{Awake}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6e699ef2b9f62170ca93cf1acd7d502c}{On\+Destroy}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a5bddbe1586a849cb9133730c553141bc}{Fixed\+Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a97e30af5b924ebfd20193dd3adc62bff}{Add\+Force}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&force)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a98194ef65883355d5ecd1efb02c98e69}{Add\+Impulse}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&impulse)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad43707c0315fec1cf7c2e833b211da78}{Set\+Velocity}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&vel)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad6677da841186c8f926559d5cdd1b63e}{Set\+Velocity}} (f32 x, f32 y, f32 vertical=0.\+0f)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aa7f65ac6d99aeac4986137f547f939d7}{Move\+Position}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&position)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad87d6c12215eb398eed373968c9ad0b3}{Jump}} (f32 jump\+Force)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aef67b22657856687697f94726c7541db}{Crouch}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a1f757cf31cc6a3a79483ad7868bffb42}{Stand}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad0df95c0ac0705d8b302707e18802f8c}{Toggle\+Crouch}} ()
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ab420b9c4aee0952cc4c9ad52b26268b5}{Get\+Speed}} () const
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aed0d27ce8ba75397a2f0d6a27bcc2d8b}{Get\+Collider}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a9e01015d7c514b68266b73eb12e6d1d5}{velocity}}
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6752c441bb0d1cbabd040ab3ba043d90}{vertical\+Velocity}} = 0.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a48a6b55e12c224eedb8f451e1a5ebe52}{mass}} = 1.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e5f99c8b6fdf2fe336b9c4cc57be85c}{drag}} = 0.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6bcc473d82b5529f33bc0370c27808c9}{gravity\+Scale}} = 1.\+0f
+\item 
+\doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{Rigidbody\+Type2D}} \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a01a95441223142eb987be4fa75afd887}{body\+Type}} = \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}{Rigidbody\+Type2\+D::\+\+Dynamic}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a3eba850d77293a9e2e83071c0ecaf064}{freeze\+Rotation}} = true
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a853e596d3e22a3572f63dc3b99007ace}{current\+Height}} = 0.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ac601dc7c9ecd19dc9f0a82bef78b598b}{standing\+Height}} = 0.\+75f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}{crouch\+Height}} = 0.\+3f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_adb8bcfe84c0cd874ad2774ac3af8dc13}{collision\+Height}} = \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}{crouch\+Height}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a7d1b5e6a0502ba1f323af7a5a6ff6d3a}{is\+Crouching}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_add29642a0cc43b0992569240a7dc856b}{is\+Grounded}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Physics body component for 2.\+5D movement with height. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_rigidbody2_d_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_rigidbody2_d_a65fff0f73514f394f92a95d16ebe0bc9}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!Rigidbody2D@{Rigidbody2D}}
+\index{Rigidbody2D@{Rigidbody2D}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{Rigidbody2D()}{Rigidbody2D()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a65fff0f73514f394f92a95d16ebe0bc9} 
+Engine::\+\+Rigidbody2\+D::\+\+Rigidbody2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_rigidbody2_d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_rigidbody2_d_a97e30af5b924ebfd20193dd3adc62bff}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!AddForce@{AddForce}}
+\index{AddForce@{AddForce}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{AddForce()}{AddForce()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a97e30af5b924ebfd20193dd3adc62bff} 
+void Engine::\+\+Rigidbody2\+D::\+\+Add\+Force (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{force}{}\end{DoxyParamCaption})}
+
+Add a force to the rigidbody (affected by mass) \Hypertarget{class_engine_1_1_rigidbody2_d_a98194ef65883355d5ecd1efb02c98e69}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!AddImpulse@{AddImpulse}}
+\index{AddImpulse@{AddImpulse}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{AddImpulse()}{AddImpulse()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a98194ef65883355d5ecd1efb02c98e69} 
+void Engine::\+\+Rigidbody2\+D::\+\+Add\+Impulse (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{impulse}{}\end{DoxyParamCaption})}
+
+Add an instant velocity change (ignores mass) \Hypertarget{class_engine_1_1_rigidbody2_d_a05d118828e2a48b5c76d622ce68a9594}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!Awake@{Awake}}
+\index{Awake@{Awake}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a05d118828e2a48b5c76d622ce68a9594} 
+void Engine::\+\+Rigidbody2\+D::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is first created 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_rigidbody2_d_aef67b22657856687697f94726c7541db}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!Crouch@{Crouch}}
+\index{Crouch@{Crouch}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{Crouch()}{Crouch()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_aef67b22657856687697f94726c7541db} 
+void Engine::\+\+Rigidbody2\+D::\+\+Crouch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Start crouching (reduces collision height) \Hypertarget{class_engine_1_1_rigidbody2_d_a5bddbe1586a849cb9133730c553141bc}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!FixedUpdate@{FixedUpdate}}
+\index{FixedUpdate@{FixedUpdate}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{FixedUpdate()}{FixedUpdate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a5bddbe1586a849cb9133730c553141bc} 
+void Engine::\+\+Rigidbody2\+D::\+\+Fixed\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every physics step (fixed timestep) 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_rigidbody2_d_aed0d27ce8ba75397a2f0d6a27bcc2d8b}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!GetCollider@{GetCollider}}
+\index{GetCollider@{GetCollider}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{GetCollider()}{GetCollider()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_aed0d27ce8ba75397a2f0d6a27bcc2d8b} 
+\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Rigidbody2\+D::\+\+Get\+Collider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get the attached collider (if any) \Hypertarget{class_engine_1_1_rigidbody2_d_ab420b9c4aee0952cc4c9ad52b26268b5}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!GetSpeed@{GetSpeed}}
+\index{GetSpeed@{GetSpeed}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{GetSpeed()}{GetSpeed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ab420b9c4aee0952cc4c9ad52b26268b5} 
+f32 Engine::\+\+Rigidbody2\+D::\+\+Get\+Speed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get current speed (magnitude of velocity) \Hypertarget{class_engine_1_1_rigidbody2_d_ad87d6c12215eb398eed373968c9ad0b3}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!Jump@{Jump}}
+\index{Jump@{Jump}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{Jump()}{Jump()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ad87d6c12215eb398eed373968c9ad0b3} 
+void Engine::\+\+Rigidbody2\+D::\+\+Jump (\begin{DoxyParamCaption}\item[{f32}]{jump\+Force}{}\end{DoxyParamCaption})}
+
+Jump with specified force (only works if grounded) \Hypertarget{class_engine_1_1_rigidbody2_d_aa7f65ac6d99aeac4986137f547f939d7}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!MovePosition@{MovePosition}}
+\index{MovePosition@{MovePosition}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{MovePosition()}{MovePosition()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_aa7f65ac6d99aeac4986137f547f939d7} 
+void Engine::\+\+Rigidbody2\+D::\+\+Move\+Position (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{position}{}\end{DoxyParamCaption})}
+
+Move to a position (kinematic movement) \Hypertarget{class_engine_1_1_rigidbody2_d_a6e699ef2b9f62170ca93cf1acd7d502c}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a6e699ef2b9f62170ca93cf1acd7d502c} 
+void Engine::\+\+Rigidbody2\+D::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is destroyed 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_rigidbody2_d_ad43707c0315fec1cf7c2e833b211da78}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!SetVelocity@{SetVelocity}}
+\index{SetVelocity@{SetVelocity}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{SetVelocity()}{SetVelocity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ad43707c0315fec1cf7c2e833b211da78} 
+void Engine::\+\+Rigidbody2\+D::\+\+Set\+Velocity (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{vel}{}\end{DoxyParamCaption})}
+
+Set velocity directly \Hypertarget{class_engine_1_1_rigidbody2_d_ad6677da841186c8f926559d5cdd1b63e}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!SetVelocity@{SetVelocity}}
+\index{SetVelocity@{SetVelocity}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{SetVelocity()}{SetVelocity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ad6677da841186c8f926559d5cdd1b63e} 
+void Engine::\+\+Rigidbody2\+D::\+\+Set\+Velocity (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{, }\item[{f32}]{vertical}{ = {\ttfamily 0.0f}}\end{DoxyParamCaption})}
+
+Set velocity directly (including vertical) \Hypertarget{class_engine_1_1_rigidbody2_d_a1f757cf31cc6a3a79483ad7868bffb42}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!Stand@{Stand}}
+\index{Stand@{Stand}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{Stand()}{Stand()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a1f757cf31cc6a3a79483ad7868bffb42} 
+void Engine::\+\+Rigidbody2\+D::\+\+Stand (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Stop crouching (restores collision height) \Hypertarget{class_engine_1_1_rigidbody2_d_ad0df95c0ac0705d8b302707e18802f8c}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!ToggleCrouch@{ToggleCrouch}}
+\index{ToggleCrouch@{ToggleCrouch}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{ToggleCrouch()}{ToggleCrouch()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ad0df95c0ac0705d8b302707e18802f8c} 
+void Engine::\+\+Rigidbody2\+D::\+\+Toggle\+Crouch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Toggle crouch state 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_rigidbody2_d_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_rigidbody2_d_a01a95441223142eb987be4fa75afd887}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!bodyType@{bodyType}}
+\index{bodyType@{bodyType}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{bodyType}{bodyType}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a01a95441223142eb987be4fa75afd887} 
+\doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{Rigidbody\+Type2D}} Engine::\+\+Rigidbody2\+D::\+body\+Type = \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}{Rigidbody\+Type2\+D::\+\+Dynamic}}}
+
+Type of rigidbody simulation \Hypertarget{class_engine_1_1_rigidbody2_d_adb8bcfe84c0cd874ad2774ac3af8dc13}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!collisionHeight@{collisionHeight}}
+\index{collisionHeight@{collisionHeight}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{collisionHeight}{collisionHeight}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_adb8bcfe84c0cd874ad2774ac3af8dc13} 
+f32 Engine::\+\+Rigidbody2\+D::\+collision\+Height = \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}{crouch\+Height}}}
+
+Current collision height (changes when crouching) \Hypertarget{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!crouchHeight@{crouchHeight}}
+\index{crouchHeight@{crouchHeight}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{crouchHeight}{crouchHeight}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4} 
+f32 Engine::\+\+Rigidbody2\+D::\+crouch\+Height = 0.\+3f}
+
+Height of player when crouching \Hypertarget{class_engine_1_1_rigidbody2_d_a853e596d3e22a3572f63dc3b99007ace}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!currentHeight@{currentHeight}}
+\index{currentHeight@{currentHeight}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{currentHeight}{currentHeight}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a853e596d3e22a3572f63dc3b99007ace} 
+f32 Engine::\+\+Rigidbody2\+D::\+current\+Height = 0.\+0f}
+
+Current height above ground \Hypertarget{class_engine_1_1_rigidbody2_d_a0e5f99c8b6fdf2fe336b9c4cc57be85c}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!drag@{drag}}
+\index{drag@{drag}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{drag}{drag}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a0e5f99c8b6fdf2fe336b9c4cc57be85c} 
+f32 Engine::\+\+Rigidbody2\+D::\+drag = 0.\+0f}
+
+Linear drag (velocity damping) \Hypertarget{class_engine_1_1_rigidbody2_d_a3eba850d77293a9e2e83071c0ecaf064}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!freezeRotation@{freezeRotation}}
+\index{freezeRotation@{freezeRotation}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{freezeRotation}{freezeRotation}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a3eba850d77293a9e2e83071c0ecaf064} 
+bool Engine::\+\+Rigidbody2\+D::\+freeze\+Rotation = true}
+
+If true, rotation is not affected by physics \Hypertarget{class_engine_1_1_rigidbody2_d_a6bcc473d82b5529f33bc0370c27808c9}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!gravityScale@{gravityScale}}
+\index{gravityScale@{gravityScale}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{gravityScale}{gravityScale}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a6bcc473d82b5529f33bc0370c27808c9} 
+f32 Engine::\+\+Rigidbody2\+D::\+gravity\+Scale = 1.\+0f}
+
+Gravity multiplier (1.\+0 = normal gravity) \Hypertarget{class_engine_1_1_rigidbody2_d_a7d1b5e6a0502ba1f323af7a5a6ff6d3a}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!isCrouching@{isCrouching}}
+\index{isCrouching@{isCrouching}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{isCrouching}{isCrouching}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a7d1b5e6a0502ba1f323af7a5a6ff6d3a} 
+bool Engine::\+\+Rigidbody2\+D::\+is\+Crouching = false}
+
+Whether currently crouching \Hypertarget{class_engine_1_1_rigidbody2_d_add29642a0cc43b0992569240a7dc856b}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!isGrounded@{isGrounded}}
+\index{isGrounded@{isGrounded}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{isGrounded}{isGrounded}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_add29642a0cc43b0992569240a7dc856b} 
+bool Engine::\+\+Rigidbody2\+D::\+is\+Grounded = true}
+
+Whether currently on the ground \Hypertarget{class_engine_1_1_rigidbody2_d_a48a6b55e12c224eedb8f451e1a5ebe52}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!mass@{mass}}
+\index{mass@{mass}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{mass}{mass}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a48a6b55e12c224eedb8f451e1a5ebe52} 
+f32 Engine::\+\+Rigidbody2\+D::\+mass = 1.\+0f}
+
+Mass of the rigidbody \Hypertarget{class_engine_1_1_rigidbody2_d_ac601dc7c9ecd19dc9f0a82bef78b598b}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!standingHeight@{standingHeight}}
+\index{standingHeight@{standingHeight}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{standingHeight}{standingHeight}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_ac601dc7c9ecd19dc9f0a82bef78b598b} 
+f32 Engine::\+\+Rigidbody2\+D::\+standing\+Height = 0.\+75f}
+
+Height of player when standing \Hypertarget{class_engine_1_1_rigidbody2_d_a9e01015d7c514b68266b73eb12e6d1d5}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!velocity@{velocity}}
+\index{velocity@{velocity}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{velocity}{velocity}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a9e01015d7c514b68266b73eb12e6d1d5} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Rigidbody2\+D::\+velocity}
+
+Current velocity on the floor plane \Hypertarget{class_engine_1_1_rigidbody2_d_a6752c441bb0d1cbabd040ab3ba043d90}\index{Engine::Rigidbody2D@{Engine::Rigidbody2D}!verticalVelocity@{verticalVelocity}}
+\index{verticalVelocity@{verticalVelocity}!Engine::Rigidbody2D@{Engine::Rigidbody2D}}
+\doxysubsubsection{\texorpdfstring{verticalVelocity}{verticalVelocity}}
+{\footnotesize\ttfamily \label{class_engine_1_1_rigidbody2_d_a6752c441bb0d1cbabd040ab3ba043d90} 
+f32 Engine::\+\+Rigidbody2\+D::\+vertical\+Velocity = 0.\+0f}
+
+Current vertical velocity (for jumping) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Rigidbody2\+D.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_rigidbody2_d_8cpp}{Rigidbody2\+D.\+cpp}}\end{DoxyCompactItemize}

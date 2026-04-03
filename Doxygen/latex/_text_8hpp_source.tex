@@ -1,0 +1,66 @@
+\doxysection{Text.\+hpp}
+\hypertarget{_text_8hpp_source}{}\label{_text_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Components/Text.hpp@{AlphaEngine2.5D/Source/Engine/UI/Components/Text.hpp}}
+\doxymbox{\hyperlink{_text_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{TextAnchor}}}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4}{UpperLeft}},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361ad04aa2ea3d1e9deb66236247893cc603}{UpperCenter}},}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a894d4b94cedce8501ff5165b6863ea3a}{UpperRight}},}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a1d536cb49605c6a39292c33cfc5e872a}{MiddleLeft}},}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81}{MiddleCenter}},}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a3b9c2b3657981eb77a10390aa0e8c156}{MiddleRight}},}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361aa8594fd8be60c94e1a2607fa0fa50fae}{LowerLeft}},}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a4dc6391f310bea83cdf5d7675e0cc5f0}{LowerCenter}},}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a5ef0d4d135d5f2814b07feaf13fda653}{LowerRight}}}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_text_af1cb9fb28e70ff76d48ea8cd547aba26}{Text}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00037\ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ std::string\ m\_text;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ s8\ m\_font\ =\ -\/1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Font\ handle\ (-\/1\ uses\ default)}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ f32\ m\_fontSize\ =\ 1.0f;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Scale\ factor}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_color;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Text\ color}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{TextAnchor}}\ m\_anchor\ =\ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81}{TextAnchor::MiddleCenter}};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text_af1cb9fb28e70ff76d48ea8cd547aba26}{Text}}();}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a2c2164fed3edad27cec2ab890c09e83a}{\string~Text}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a1230395d29456ecf99995929a33c540a}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a8cb462c21e1b4b68a8f273ef6278b5b8}{SetText}}(\textcolor{keyword}{const}\ std::string\&\ text)\ \{\ m\_text\ =\ text;\ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_u_i_1_1_text_ab3c4efc7039ca3871c0ef5339ffd529f}{GetText}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_text;\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a2502c13eef8202504c0689097d8de987}{SetFont}}(s8\ font)\ \{\ m\_font\ =\ font;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ s8\ \doxymbox{\hyperlink{class_u_i_1_1_text_a9955efe59d0553bfec639a4b7c146f59}{GetFont}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_font;\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a1db3b5f5492d2eeee6f57bddbde65b41}{SetFontSize}}(f32\ size)\ \{\ m\_fontSize\ =\ size;\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_text_a57a5e3ca05989d39a450da8110ca5171}{GetFontSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_fontSize;\ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_ac749e82b7499e0ca29229c9f11942fb6}{SetColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_color\ =\ color;\ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_text_a79e1d94a55664046d42d854709b689fc}{GetColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_color;\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_a1a8aa604bc47a893dcbe5f947255dfe5}{SetAnchor}}(\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{TextAnchor}}\ anchor)\ \{\ m\_anchor\ =\ anchor;\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{TextAnchor}}\ \doxymbox{\hyperlink{class_u_i_1_1_text_aa8140741b1f1b69fa7a39ec8d3a7516d}{GetAnchor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_anchor;\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_text_aeb0d3e4e421214572e4c418187d1d5d2}{GetTextSize}}(f32\&\ outWidth,\ f32\&\ outHeight)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ s8\ GetActiveFont()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ CalculateTextPosition(f32\&\ outX,\ f32\&\ outY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ \ \ \ \ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

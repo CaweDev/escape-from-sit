@@ -1,0 +1,318 @@
+\doxysection{AEEditor Namespace Reference}
+\hypertarget{namespace_a_e_editor}{}\label{namespace_a_e_editor}\index{AEEditor@{AEEditor}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_a_e_editor_1_1_editor_manager}{Editor\+Manager}}
+\item 
+class \doxymbox{\hyperlink{class_a_e_editor_1_1_game_editor}{Game\+Editor}}
+\item 
+class \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager}{Object\+Manager}}
+\item 
+struct \doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor}{Field\+Descriptor}}
+\item 
+struct \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor}{Type\+Descriptor}}
+\item 
+class \doxymbox{\hyperlink{class_a_e_editor_1_1_registry}{Registry}}
+\item 
+class \doxymbox{\hyperlink{class_a_e_editor_1_1_reflection_registry}{Reflection\+Registry}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \doxymbox{\hyperlink{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34}{Instantiate\+Fn}} = \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*})(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*})
+\item 
+using \doxymbox{\hyperlink{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822}{Remove\+Fn}} = void (\texorpdfstring{$\ast$}{*})(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{Data\+Type}} \{ \newline
+\doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1686a6c336b71b36d77354cea19a8b52}{Int}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa22ae0e2b89e5e3d477f988cc36d3272b}{Float}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac26f15e86e3de4c398a8273272aba034}{Bool}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1bebc5ae2822f8e361fb0ce57b5e09e2}{Vector2}}
+, \newline
+\doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa02b4dab58bbc49e0851fb3fd8df520cc}{Vector3}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28facb5feb1b7314637725a2e73bdc9f7295}{Color}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa51f2b7b14433aa22c67d1f4fc18943cd}{Sprite}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa47945664520c45ad70e9c4b667ea1915}{Sprite\+Sheet}}
+, \newline
+\doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa27118326006d3829667a400ad23d5d98}{String}}
+, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac907926ec1a512d0ea7a434ca3c9aa9f}{Key\+Code}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a520d75c8b67d5ab530dbc87926678230}{Register\+Transform}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a9262cef7d503d728a199cebef5cf7deb}{Register\+Sprite\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad5f0c3a49fb0eccde75bec014f02f552}{Register\+Sprite\+Sheet\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_affe942bb8399e43c58ff56a01fa932e0}{Register\+Door\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a7ab72fead1350179ee932a8f40092ae1}{Register\+Door}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a2e95b0df4498ecbe36a14ee7e190defc}{Register\+Interactable}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a2f184979e6ea4718256ff4c357fa30d0}{Register\+Access\+Card}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a8ba21f0faf114e6a9f3a63655710b616}{Register\+CCTVCamera}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a4818d323142b58fdb58215bb8f7d2437}{Register\+Control\+Room\+Door}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad609f284d88bf05abf30a9ddf0fb25a2}{Register\+NPC}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ab19e477baa36fe08ecb01c8080c843ee}{Register\+Player}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad87aea94d464d17ace0f6933b9ff077d}{Register\+Power\+Up\+Object}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a8bc0c07a002b325434894024b0718ddc}{Register\+Puzzle\+Object}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a3304edb22f61210da6d93a8b58f8782d}{Register\+Rigidbody2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ac710c366b78c830bdec460fc6bbcda15}{Register\+Camera}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_aa2106ce7186bcb9f1abf5820cf27200e}{Register\+Box\+Collider2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a7acf815ef1f01ddee7a8a02d7e552f11}{Register\+Circle\+Collider2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a869dfed73f8307fec03fbb0a38fd7234}{Register\+FPSController}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a0401318577c9f0ab43ecda8a0ffac601}{Register\+Interaction\+Controller}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_af599a8f28d4056abe847492d764ec29d}{Register\+Player\+UIComponents}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a42b444a29c82aa88864484931055ca87}{Register\+Security\+Guard}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_abe4bbf7be189765938b07c26b003e46d}{Register\+CCTVTerminal}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-typedef-members}
+\Hypertarget{namespace_a_e_editor_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34}\index{AEEditor@{AEEditor}!InstantiateFn@{InstantiateFn}}
+\index{InstantiateFn@{InstantiateFn}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{InstantiateFn}{InstantiateFn}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34} 
+using \doxymbox{\hyperlink{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34}{AEEditor::\+\+Instantiate\+Fn}} = \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*})(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*})}
+
+\Hypertarget{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822}\index{AEEditor@{AEEditor}!RemoveFn@{RemoveFn}}
+\index{RemoveFn@{RemoveFn}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RemoveFn}{RemoveFn}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822} 
+using \doxymbox{\hyperlink{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822}{AEEditor::\+\+Remove\+Fn}} = void (\texorpdfstring{$\ast$}{*})(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*})}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_a_e_editor_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}\index{AEEditor@{AEEditor}!DataType@{DataType}}
+\index{DataType@{DataType}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{DataType}{DataType}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f} 
+enum class \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{AEEditor::\+\+Data\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Int@{Int}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Int@{Int}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1686a6c336b71b36d77354cea19a8b52}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1686a6c336b71b36d77354cea19a8b52} 
+Int&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Float@{Float}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Float@{Float}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa22ae0e2b89e5e3d477f988cc36d3272b}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa22ae0e2b89e5e3d477f988cc36d3272b} 
+Float&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Bool@{Bool}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Bool@{Bool}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac26f15e86e3de4c398a8273272aba034}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac26f15e86e3de4c398a8273272aba034} 
+Bool&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vector2@{Vector2}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Vector2@{Vector2}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1bebc5ae2822f8e361fb0ce57b5e09e2}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1bebc5ae2822f8e361fb0ce57b5e09e2} 
+Vector2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Vector3@{Vector3}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Vector3@{Vector3}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa02b4dab58bbc49e0851fb3fd8df520cc}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa02b4dab58bbc49e0851fb3fd8df520cc} 
+Vector3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Color@{Color}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Color@{Color}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28facb5feb1b7314637725a2e73bdc9f7295}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28facb5feb1b7314637725a2e73bdc9f7295} 
+Color&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sprite@{Sprite}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!Sprite@{Sprite}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa51f2b7b14433aa22c67d1f4fc18943cd}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa51f2b7b14433aa22c67d1f4fc18943cd} 
+Sprite&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SpriteSheet@{SpriteSheet}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!SpriteSheet@{SpriteSheet}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa47945664520c45ad70e9c4b667ea1915}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa47945664520c45ad70e9c4b667ea1915} 
+Sprite\+Sheet&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{String@{String}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!String@{String}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa27118326006d3829667a400ad23d5d98}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa27118326006d3829667a400ad23d5d98} 
+String&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeyCode@{KeyCode}!AEEditor@{AEEditor}}
+\index{AEEditor@{AEEditor}!KeyCode@{KeyCode}}
+}\Hypertarget{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac907926ec1a512d0ea7a434ca3c9aa9f}\label{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac907926ec1a512d0ea7a434ca3c9aa9f} 
+Key\+Code&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_a_e_editor_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_a_e_editor_a2f184979e6ea4718256ff4c357fa30d0}\index{AEEditor@{AEEditor}!RegisterAccessCard@{RegisterAccessCard}}
+\index{RegisterAccessCard@{RegisterAccessCard}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterAccessCard()}{RegisterAccessCard()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a2f184979e6ea4718256ff4c357fa30d0} 
+void AEEditor::\+\+Register\+Access\+Card (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_aa2106ce7186bcb9f1abf5820cf27200e}\index{AEEditor@{AEEditor}!RegisterBoxCollider2D@{RegisterBoxCollider2D}}
+\index{RegisterBoxCollider2D@{RegisterBoxCollider2D}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterBoxCollider2D()}{RegisterBoxCollider2D()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_aa2106ce7186bcb9f1abf5820cf27200e} 
+void AEEditor::\+\+Register\+Box\+Collider2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_ac710c366b78c830bdec460fc6bbcda15}\index{AEEditor@{AEEditor}!RegisterCamera@{RegisterCamera}}
+\index{RegisterCamera@{RegisterCamera}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterCamera()}{RegisterCamera()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_ac710c366b78c830bdec460fc6bbcda15} 
+void AEEditor::\+\+Register\+Camera (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a8ba21f0faf114e6a9f3a63655710b616}\index{AEEditor@{AEEditor}!RegisterCCTVCamera@{RegisterCCTVCamera}}
+\index{RegisterCCTVCamera@{RegisterCCTVCamera}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterCCTVCamera()}{RegisterCCTVCamera()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a8ba21f0faf114e6a9f3a63655710b616} 
+void AEEditor::\+\+Register\+CCTVCamera (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_abe4bbf7be189765938b07c26b003e46d}\index{AEEditor@{AEEditor}!RegisterCCTVTerminal@{RegisterCCTVTerminal}}
+\index{RegisterCCTVTerminal@{RegisterCCTVTerminal}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterCCTVTerminal()}{RegisterCCTVTerminal()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_abe4bbf7be189765938b07c26b003e46d} 
+void AEEditor::\+\+Register\+CCTVTerminal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a7acf815ef1f01ddee7a8a02d7e552f11}\index{AEEditor@{AEEditor}!RegisterCircleCollider2D@{RegisterCircleCollider2D}}
+\index{RegisterCircleCollider2D@{RegisterCircleCollider2D}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterCircleCollider2D()}{RegisterCircleCollider2D()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a7acf815ef1f01ddee7a8a02d7e552f11} 
+void AEEditor::\+\+Register\+Circle\+Collider2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a4818d323142b58fdb58215bb8f7d2437}\index{AEEditor@{AEEditor}!RegisterControlRoomDoor@{RegisterControlRoomDoor}}
+\index{RegisterControlRoomDoor@{RegisterControlRoomDoor}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterControlRoomDoor()}{RegisterControlRoomDoor()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a4818d323142b58fdb58215bb8f7d2437} 
+void AEEditor::\+\+Register\+Control\+Room\+Door (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a7ab72fead1350179ee932a8f40092ae1}\index{AEEditor@{AEEditor}!RegisterDoor@{RegisterDoor}}
+\index{RegisterDoor@{RegisterDoor}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterDoor()}{RegisterDoor()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a7ab72fead1350179ee932a8f40092ae1} 
+void AEEditor::\+\+Register\+Door (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_affe942bb8399e43c58ff56a01fa932e0}\index{AEEditor@{AEEditor}!RegisterDoorRenderer@{RegisterDoorRenderer}}
+\index{RegisterDoorRenderer@{RegisterDoorRenderer}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterDoorRenderer()}{RegisterDoorRenderer()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_affe942bb8399e43c58ff56a01fa932e0} 
+void AEEditor::\+\+Register\+Door\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a869dfed73f8307fec03fbb0a38fd7234}\index{AEEditor@{AEEditor}!RegisterFPSController@{RegisterFPSController}}
+\index{RegisterFPSController@{RegisterFPSController}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterFPSController()}{RegisterFPSController()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a869dfed73f8307fec03fbb0a38fd7234} 
+void AEEditor::\+\+Register\+FPSController (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a2e95b0df4498ecbe36a14ee7e190defc}\index{AEEditor@{AEEditor}!RegisterInteractable@{RegisterInteractable}}
+\index{RegisterInteractable@{RegisterInteractable}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterInteractable()}{RegisterInteractable()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a2e95b0df4498ecbe36a14ee7e190defc} 
+void AEEditor::\+\+Register\+Interactable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a0401318577c9f0ab43ecda8a0ffac601}\index{AEEditor@{AEEditor}!RegisterInteractionController@{RegisterInteractionController}}
+\index{RegisterInteractionController@{RegisterInteractionController}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterInteractionController()}{RegisterInteractionController()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a0401318577c9f0ab43ecda8a0ffac601} 
+void AEEditor::\+\+Register\+Interaction\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_ad609f284d88bf05abf30a9ddf0fb25a2}\index{AEEditor@{AEEditor}!RegisterNPC@{RegisterNPC}}
+\index{RegisterNPC@{RegisterNPC}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterNPC()}{RegisterNPC()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_ad609f284d88bf05abf30a9ddf0fb25a2} 
+void AEEditor::\+\+Register\+NPC (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_ab19e477baa36fe08ecb01c8080c843ee}\index{AEEditor@{AEEditor}!RegisterPlayer@{RegisterPlayer}}
+\index{RegisterPlayer@{RegisterPlayer}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterPlayer()}{RegisterPlayer()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_ab19e477baa36fe08ecb01c8080c843ee} 
+void AEEditor::\+\+Register\+Player (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_af599a8f28d4056abe847492d764ec29d}\index{AEEditor@{AEEditor}!RegisterPlayerUIComponents@{RegisterPlayerUIComponents}}
+\index{RegisterPlayerUIComponents@{RegisterPlayerUIComponents}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterPlayerUIComponents()}{RegisterPlayerUIComponents()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_af599a8f28d4056abe847492d764ec29d} 
+void AEEditor::\+\+Register\+Player\+UIComponents (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_ad87aea94d464d17ace0f6933b9ff077d}\index{AEEditor@{AEEditor}!RegisterPowerUpObject@{RegisterPowerUpObject}}
+\index{RegisterPowerUpObject@{RegisterPowerUpObject}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterPowerUpObject()}{RegisterPowerUpObject()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_ad87aea94d464d17ace0f6933b9ff077d} 
+void AEEditor::\+\+Register\+Power\+Up\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a8bc0c07a002b325434894024b0718ddc}\index{AEEditor@{AEEditor}!RegisterPuzzleObject@{RegisterPuzzleObject}}
+\index{RegisterPuzzleObject@{RegisterPuzzleObject}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterPuzzleObject()}{RegisterPuzzleObject()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a8bc0c07a002b325434894024b0718ddc} 
+void AEEditor::\+\+Register\+Puzzle\+Object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a3304edb22f61210da6d93a8b58f8782d}\index{AEEditor@{AEEditor}!RegisterRigidbody2D@{RegisterRigidbody2D}}
+\index{RegisterRigidbody2D@{RegisterRigidbody2D}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterRigidbody2D()}{RegisterRigidbody2D()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a3304edb22f61210da6d93a8b58f8782d} 
+void AEEditor::\+\+Register\+Rigidbody2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a42b444a29c82aa88864484931055ca87}\index{AEEditor@{AEEditor}!RegisterSecurityGuard@{RegisterSecurityGuard}}
+\index{RegisterSecurityGuard@{RegisterSecurityGuard}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterSecurityGuard()}{RegisterSecurityGuard()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a42b444a29c82aa88864484931055ca87} 
+void AEEditor::\+\+Register\+Security\+Guard (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a9262cef7d503d728a199cebef5cf7deb}\index{AEEditor@{AEEditor}!RegisterSpriteRenderer@{RegisterSpriteRenderer}}
+\index{RegisterSpriteRenderer@{RegisterSpriteRenderer}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterSpriteRenderer()}{RegisterSpriteRenderer()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a9262cef7d503d728a199cebef5cf7deb} 
+void AEEditor::\+\+Register\+Sprite\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_ad5f0c3a49fb0eccde75bec014f02f552}\index{AEEditor@{AEEditor}!RegisterSpriteSheetRenderer@{RegisterSpriteSheetRenderer}}
+\index{RegisterSpriteSheetRenderer@{RegisterSpriteSheetRenderer}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterSpriteSheetRenderer()}{RegisterSpriteSheetRenderer()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_ad5f0c3a49fb0eccde75bec014f02f552} 
+void AEEditor::\+\+Register\+Sprite\+Sheet\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_a_e_editor_a520d75c8b67d5ab530dbc87926678230}\index{AEEditor@{AEEditor}!RegisterTransform@{RegisterTransform}}
+\index{RegisterTransform@{RegisterTransform}!AEEditor@{AEEditor}}
+\doxysubsubsection{\texorpdfstring{RegisterTransform()}{RegisterTransform()}}
+{\footnotesize\ttfamily \label{namespace_a_e_editor_a520d75c8b67d5ab530dbc87926678230} 
+void AEEditor::\+\+Register\+Transform (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+

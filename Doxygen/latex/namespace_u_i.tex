@@ -1,0 +1,335 @@
+\doxysection{UI Namespace Reference}
+\hypertarget{namespace_u_i}{}\label{namespace_u_i}\index{UI@{UI}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_u_i_1_1_color_block}{Color\+Block}}
+\begin{DoxyCompactList}\small\item\em Colors for each button state. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_button}{Button}}
+\begin{DoxyCompactList}\small\item\em Interactive button with visual state transitions. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_u_i}{UI} component for rendering textures/\+sprites. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_panel}{Panel}}
+\begin{DoxyCompactList}\small\item\em Container \doxylink{namespace_u_i}{UI} element with optional background. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image}{Sprite\+Sheet\+Image}}
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_u_i}{UI} component for rendering animated spritesheets. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_text}{Text}}
+\begin{DoxyCompactList}\small\item\em \doxylink{namespace_u_i}{UI} component for rendering text. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}
+\begin{DoxyCompactList}\small\item\em Root container for \doxylink{namespace_u_i}{UI} elements, similar to Unity\textquotesingle{}s \doxylink{class_u_i_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}
+\begin{DoxyCompactList}\small\item\em Represents a rectangle in world coordinates. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}}
+\begin{DoxyCompactList}\small\item\em Defines position, size, and anchoring for \doxylink{namespace_u_i}{UI} elements (Unity-\/style). \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}
+\begin{DoxyCompactList}\small\item\em Base class for all \doxylink{namespace_u_i}{UI} elements (\doxylink{class_u_i_1_1_image}{Image}, \doxylink{class_u_i_1_1_text}{Text}, \doxylink{class_u_i_1_1_button}{Button}, \doxylink{class_u_i_1_1_panel}{Panel}, etc.). \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}}
+\begin{DoxyCompactList}\small\item\em Data passed to pointer event handlers. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler}{IPointer\+Enter\+Handler}}
+\begin{DoxyCompactList}\small\item\em Interface for receiving pointer enter events. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler}{IPointer\+Exit\+Handler}}
+\begin{DoxyCompactList}\small\item\em Interface for receiving pointer exit events. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler}{IPointer\+Down\+Handler}}
+\begin{DoxyCompactList}\small\item\em Interface for receiving pointer down events. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler}{IPointer\+Up\+Handler}}
+\begin{DoxyCompactList}\small\item\em Interface for receiving pointer up events. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler}{IPointer\+Click\+Handler}}
+\begin{DoxyCompactList}\small\item\em Interface for receiving pointer click events. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager}{UIManager}}
+\begin{DoxyCompactList}\small\item\em Singleton that manages all \doxylink{namespace_u_i}{UI} managers, services, rendering and input. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog}{Confirmation\+Dialog}}
+\begin{DoxyCompactList}\small\item\em Modal confirmation dialog with message text and confirm/\+cancel buttons. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_dialog_service}{Dialog\+Service}}
+\begin{DoxyCompactList}\small\item\em Static service for modal \doxylink{namespace_u_i}{UI} dialogs. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_fade_service}{Fade\+Service}}
+\begin{DoxyCompactList}\small\item\em Static service for full-\/screen fade-\/to-\/black transitions. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_nine_slice_renderer}{Nine\+Slice\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Static utility class for drawing 9-\/sliced images. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_horizontal_layout_group}{Horizontal\+Layout\+Group}}
+\begin{DoxyCompactList}\small\item\em Arranges children in a horizontal row. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_u_i_1_1_padding}{Padding} around layout content. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{Layout\+Group}}
+\begin{DoxyCompactList}\small\item\em Base class for automatic layout controllers. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group}{Vertical\+Layout\+Group}}
+\begin{DoxyCompactList}\small\item\em Arranges children in a vertical stack. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_crosshair}{Crosshair}}
+\begin{DoxyCompactList}\small\item\em Specialized \doxylink{class_u_i_1_1_image}{Image} that swaps textures based on highlight state. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay}{Heatmap\+Overlay}}
+\begin{DoxyCompactList}\small\item\em Renders a colored heatmap overlay on top of a map. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt}{Interaction\+Prompt}}
+\begin{DoxyCompactList}\small\item\em Displays an interaction prompt below the crosshair. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_map}{Map}}
+\begin{DoxyCompactList}\small\item\em Renders a large top-\/down view of the entire tile map. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_u_i_1_1_minimap_vertex}{Minimap\+Vertex}}
+\begin{DoxyCompactList}\small\item\em Vertex structure for dynamic minimap geometry. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_minimap}{Minimap}}
+\begin{DoxyCompactList}\small\item\em Renders a small top-\/down view of the tile map with player position. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_texture2_d}{Texture2D}}
+\begin{DoxyCompactList}\small\item\em RAII wrapper for AEGfx\+Texture (PNG file loading). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7}{Button\+State}} \{ \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a960b44c579bc2f6818d2daaf9e4c16f0}{Normal}}
+, \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a128f36ec46f7ca11bafb48cd2022a54c}{Highlighted}}
+, \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ad78a68f6a85421ae121c2cb5b73a1040}{Pressed}}
+, \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ab9f5c797ebbf55adccdd8539a65a0241}{Disabled}}
+ \}
+\begin{DoxyCompactList}\small\item\em Current state of the button. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{Image\+Type}} \{ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319a1fbb1e3943c2c6c560247ac8f9289780}{Simple}}
+, \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319afa6a7b9fa989f179f6bbf2796bf4337c}{Sliced}}
+ \}
+\begin{DoxyCompactList}\small\item\em How the image is rendered. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{Text\+Anchor}} \{ \newline
+\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4}{Upper\+Left}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361ad04aa2ea3d1e9deb66236247893cc603}{Upper\+Center}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a894d4b94cedce8501ff5165b6863ea3a}{Upper\+Right}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a1d536cb49605c6a39292c33cfc5e872a}{Middle\+Left}}
+, \newline
+\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81}{Middle\+Center}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a3b9c2b3657981eb77a10390aa0e8c156}{Middle\+Right}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361aa8594fd8be60c94e1a2607fa0fa50fae}{Lower\+Left}}
+, \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a4dc6391f310bea83cdf5d7675e0cc5f0}{Lower\+Center}}
+, \newline
+\doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a5ef0d4d135d5f2814b07feaf13fda653}{Lower\+Right}}
+ \}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_u_i_1_1_text}{Text} alignment within the rect. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{Canvas\+Scale\+Mode}} \{ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913aa07993906b341f3f90d4c0e59ac7c8fd}{Constant\+Pixel\+Size}}
+, \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05}{Scale\+With\+Screen\+Size}}
+ \}
+\begin{DoxyCompactList}\small\item\em How the canvas scales with screen size. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{Child\+Alignment}} \{ \newline
+\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a6f43ca0793e0c68184761673278f4ca4}{Upper\+Left}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632ad04aa2ea3d1e9deb66236247893cc603}{Upper\+Center}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a894d4b94cedce8501ff5165b6863ea3a}{Upper\+Right}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a1d536cb49605c6a39292c33cfc5e872a}{Middle\+Left}}
+, \newline
+\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a2096d77a6ee8ef295acbdc276773dd81}{Middle\+Center}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a3b9c2b3657981eb77a10390aa0e8c156}{Middle\+Right}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632aa8594fd8be60c94e1a2607fa0fa50fae}{Lower\+Left}}
+, \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a4dc6391f310bea83cdf5d7675e0cc5f0}{Lower\+Center}}
+, \newline
+\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a5ef0d4d135d5f2814b07feaf13fda653}{Lower\+Right}}
+ \}
+\begin{DoxyCompactList}\small\item\em How children are aligned within the layout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_u_i_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_u_i_aa228d368de3b96b402f849e8bec164d7}\index{UI@{UI}!ButtonState@{ButtonState}}
+\index{ButtonState@{ButtonState}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{ButtonState}{ButtonState}}
+{\footnotesize\ttfamily \label{namespace_u_i_aa228d368de3b96b402f849e8bec164d7} 
+enum class \doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7}{UI::\+\+Button\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Current state of the button. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Normal@{Normal}!UI@{UI}}
+\index{UI@{UI}!Normal@{Normal}}
+}\Hypertarget{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a960b44c579bc2f6818d2daaf9e4c16f0}\label{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a960b44c579bc2f6818d2daaf9e4c16f0} 
+Normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Highlighted@{Highlighted}!UI@{UI}}
+\index{UI@{UI}!Highlighted@{Highlighted}}
+}\Hypertarget{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a128f36ec46f7ca11bafb48cd2022a54c}\label{namespace_u_i_aa228d368de3b96b402f849e8bec164d7a128f36ec46f7ca11bafb48cd2022a54c} 
+Highlighted&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Pressed@{Pressed}!UI@{UI}}
+\index{UI@{UI}!Pressed@{Pressed}}
+}\Hypertarget{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ad78a68f6a85421ae121c2cb5b73a1040}\label{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ad78a68f6a85421ae121c2cb5b73a1040} 
+Pressed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Disabled@{Disabled}!UI@{UI}}
+\index{UI@{UI}!Disabled@{Disabled}}
+}\Hypertarget{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ab9f5c797ebbf55adccdd8539a65a0241}\label{namespace_u_i_aa228d368de3b96b402f849e8bec164d7ab9f5c797ebbf55adccdd8539a65a0241} 
+Disabled&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_u_i_a17925c7951ee0cd716d2222439da2913}\index{UI@{UI}!CanvasScaleMode@{CanvasScaleMode}}
+\index{CanvasScaleMode@{CanvasScaleMode}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{CanvasScaleMode}{CanvasScaleMode}}
+{\footnotesize\ttfamily \label{namespace_u_i_a17925c7951ee0cd716d2222439da2913} 
+enum class \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{UI::\+\+Canvas\+Scale\+Mode}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+How the canvas scales with screen size. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ConstantPixelSize@{ConstantPixelSize}!UI@{UI}}
+\index{UI@{UI}!ConstantPixelSize@{ConstantPixelSize}}
+}\Hypertarget{namespace_u_i_a17925c7951ee0cd716d2222439da2913aa07993906b341f3f90d4c0e59ac7c8fd}\label{namespace_u_i_a17925c7951ee0cd716d2222439da2913aa07993906b341f3f90d4c0e59ac7c8fd} 
+Constant\+Pixel\+Size&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ScaleWithScreenSize@{ScaleWithScreenSize}!UI@{UI}}
+\index{UI@{UI}!ScaleWithScreenSize@{ScaleWithScreenSize}}
+}\Hypertarget{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05}\label{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05} 
+Scale\+With\+Screen\+Size&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}\index{UI@{UI}!ChildAlignment@{ChildAlignment}}
+\index{ChildAlignment@{ChildAlignment}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{ChildAlignment}{ChildAlignment}}
+{\footnotesize\ttfamily \label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632} 
+enum class \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{UI::\+\+Child\+Alignment}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+How children are aligned within the layout. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperLeft@{UpperLeft}!UI@{UI}}
+\index{UI@{UI}!UpperLeft@{UpperLeft}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a6f43ca0793e0c68184761673278f4ca4}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a6f43ca0793e0c68184761673278f4ca4} 
+Upper\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperCenter@{UpperCenter}!UI@{UI}}
+\index{UI@{UI}!UpperCenter@{UpperCenter}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632ad04aa2ea3d1e9deb66236247893cc603}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632ad04aa2ea3d1e9deb66236247893cc603} 
+Upper\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperRight@{UpperRight}!UI@{UI}}
+\index{UI@{UI}!UpperRight@{UpperRight}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a894d4b94cedce8501ff5165b6863ea3a}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a894d4b94cedce8501ff5165b6863ea3a} 
+Upper\+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleLeft@{MiddleLeft}!UI@{UI}}
+\index{UI@{UI}!MiddleLeft@{MiddleLeft}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a1d536cb49605c6a39292c33cfc5e872a}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a1d536cb49605c6a39292c33cfc5e872a} 
+Middle\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleCenter@{MiddleCenter}!UI@{UI}}
+\index{UI@{UI}!MiddleCenter@{MiddleCenter}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a2096d77a6ee8ef295acbdc276773dd81}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a2096d77a6ee8ef295acbdc276773dd81} 
+Middle\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleRight@{MiddleRight}!UI@{UI}}
+\index{UI@{UI}!MiddleRight@{MiddleRight}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a3b9c2b3657981eb77a10390aa0e8c156}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a3b9c2b3657981eb77a10390aa0e8c156} 
+Middle\+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerLeft@{LowerLeft}!UI@{UI}}
+\index{UI@{UI}!LowerLeft@{LowerLeft}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632aa8594fd8be60c94e1a2607fa0fa50fae}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632aa8594fd8be60c94e1a2607fa0fa50fae} 
+Lower\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerCenter@{LowerCenter}!UI@{UI}}
+\index{UI@{UI}!LowerCenter@{LowerCenter}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a4dc6391f310bea83cdf5d7675e0cc5f0}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a4dc6391f310bea83cdf5d7675e0cc5f0} 
+Lower\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerRight@{LowerRight}!UI@{UI}}
+\index{UI@{UI}!LowerRight@{LowerRight}}
+}\Hypertarget{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a5ef0d4d135d5f2814b07feaf13fda653}\label{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a5ef0d4d135d5f2814b07feaf13fda653} 
+Lower\+Right&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_u_i_a013f4ee0281816cbb835924482e37319}\index{UI@{UI}!ImageType@{ImageType}}
+\index{ImageType@{ImageType}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{ImageType}{ImageType}}
+{\footnotesize\ttfamily \label{namespace_u_i_a013f4ee0281816cbb835924482e37319} 
+enum class \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{UI::\+\+Image\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+How the image is rendered. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Simple@{Simple}!UI@{UI}}
+\index{UI@{UI}!Simple@{Simple}}
+}\Hypertarget{namespace_u_i_a013f4ee0281816cbb835924482e37319a1fbb1e3943c2c6c560247ac8f9289780}\label{namespace_u_i_a013f4ee0281816cbb835924482e37319a1fbb1e3943c2c6c560247ac8f9289780} 
+Simple&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sliced@{Sliced}!UI@{UI}}
+\index{UI@{UI}!Sliced@{Sliced}}
+}\Hypertarget{namespace_u_i_a013f4ee0281816cbb835924482e37319afa6a7b9fa989f179f6bbf2796bf4337c}\label{namespace_u_i_a013f4ee0281816cbb835924482e37319afa6a7b9fa989f179f6bbf2796bf4337c} 
+Sliced&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}\index{UI@{UI}!TextAnchor@{TextAnchor}}
+\index{TextAnchor@{TextAnchor}!UI@{UI}}
+\doxysubsubsection{\texorpdfstring{TextAnchor}{TextAnchor}}
+{\footnotesize\ttfamily \label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361} 
+enum class \doxymbox{\hyperlink{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361}{UI::\+\+Text\+Anchor}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+\doxylink{class_u_i_1_1_text}{Text} alignment within the rect. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperLeft@{UpperLeft}!UI@{UI}}
+\index{UI@{UI}!UpperLeft@{UpperLeft}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a6f43ca0793e0c68184761673278f4ca4} 
+Upper\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperCenter@{UpperCenter}!UI@{UI}}
+\index{UI@{UI}!UpperCenter@{UpperCenter}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361ad04aa2ea3d1e9deb66236247893cc603}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361ad04aa2ea3d1e9deb66236247893cc603} 
+Upper\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpperRight@{UpperRight}!UI@{UI}}
+\index{UI@{UI}!UpperRight@{UpperRight}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a894d4b94cedce8501ff5165b6863ea3a}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a894d4b94cedce8501ff5165b6863ea3a} 
+Upper\+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleLeft@{MiddleLeft}!UI@{UI}}
+\index{UI@{UI}!MiddleLeft@{MiddleLeft}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a1d536cb49605c6a39292c33cfc5e872a}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a1d536cb49605c6a39292c33cfc5e872a} 
+Middle\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleCenter@{MiddleCenter}!UI@{UI}}
+\index{UI@{UI}!MiddleCenter@{MiddleCenter}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a2096d77a6ee8ef295acbdc276773dd81} 
+Middle\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MiddleRight@{MiddleRight}!UI@{UI}}
+\index{UI@{UI}!MiddleRight@{MiddleRight}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a3b9c2b3657981eb77a10390aa0e8c156}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a3b9c2b3657981eb77a10390aa0e8c156} 
+Middle\+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerLeft@{LowerLeft}!UI@{UI}}
+\index{UI@{UI}!LowerLeft@{LowerLeft}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361aa8594fd8be60c94e1a2607fa0fa50fae}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361aa8594fd8be60c94e1a2607fa0fa50fae} 
+Lower\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerCenter@{LowerCenter}!UI@{UI}}
+\index{UI@{UI}!LowerCenter@{LowerCenter}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a4dc6391f310bea83cdf5d7675e0cc5f0}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a4dc6391f310bea83cdf5d7675e0cc5f0} 
+Lower\+Center&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LowerRight@{LowerRight}!UI@{UI}}
+\index{UI@{UI}!LowerRight@{LowerRight}}
+}\Hypertarget{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a5ef0d4d135d5f2814b07feaf13fda653}\label{namespace_u_i_ae51c3ad505b30e07bfbb67bfb3b9a361a5ef0d4d135d5f2814b07feaf13fda653} 
+Lower\+Right&\\
+\hline
+
+\end{DoxyEnumFields}

@@ -48,22 +48,8 @@ namespace Engine {
 		}
 	}
 
-	/*!
-	 * \brief [AUTO] SetTileSprites
-	 * \param tileType [in]
-	 * \param wall [in]
-	 * \param ceiling [in]
-	 * \param floor [in]
-	 * \param door [in]
-	 */
-	/*!
-	 * \brief [AUTO] SetTileSprites
-	 * \param tileType [in]
-	 * \param wall [in]
-	 * \param ceiling [in]
-	 * \param floor [in]
-	 * \param door [in]
-	 */
+	
+	
 	void TileMapRenderer::SetTileSprites(int tileType, Sprite* wall, Sprite* ceiling, Sprite* floor, Sprite* door) {
 		tileSprites[tileType] = { wall, ceiling, floor, door };
 		
@@ -80,14 +66,8 @@ namespace Engine {
 	// Stores the sprite pointer and immediately loads a CPU-side pixel copy.
 	// The CPU copy is required by the framebuffer rasteriser since we cannot
 	// read pixels back from an AEGfxTexture (GPU-only handle).
-	/*!
-	 * \brief [AUTO] SetFloorSprite
-	 * \param sprite [in]
-	 */
-	/*!
-	 * \brief [AUTO] SetFloorSprite
-	 * \param sprite [in]
-	 */
+	
+	
 	void TileMapRenderer::SetFloorSprite(Sprite* sprite) {
 		tileSprites[1].floor = sprite;
 		if (sprite && sprite->GetTexture2D()) {
@@ -95,14 +75,8 @@ namespace Engine {
 		}
 	}
 
-	/*!
-	 * \brief [AUTO] SetCeilingSprite
-	 * \param sprite [in]
-	 */
-	/*!
-	 * \brief [AUTO] SetCeilingSprite
-	 * \param sprite [in]
-	 */
+	
+	
 	void TileMapRenderer::SetCeilingSprite(Sprite* sprite) {
 		tileSprites[1].ceiling = sprite;
 		if (sprite && sprite->GetTexture2D()) {
@@ -112,9 +86,7 @@ namespace Engine {
 
 	// Full-screen unit quad centred at origin (vertex positions in [-0.5, 0.5]).
 	// UV (0,0) maps to top-left of the framebuffer texture; (1,1) to bottom-right.
-	/*!
-	 * \brief [AUTO] CreateFullscreenMesh
-	 */
+	
 	void TileMapRenderer::CreateFullscreenMesh() {
 		AEGfxMeshStart();
 		AEGfxTriAdd(
@@ -128,9 +100,7 @@ namespace Engine {
 		fullscreenMesh = AEGfxMeshEnd();
 	}
 
-	/*!
-	 * \brief [AUTO] Render
-	 */
+	
 	void TileMapRenderer::Render() {
 		if (!enabled) return;
 
@@ -715,18 +685,8 @@ namespace Engine {
 	// the current mesh and start a new one with the new GPU state.
 	// This keeps GPU state changes to a minimum (~1 draw call per unique tileType).
 	// ===================================================================
-	/*!
-	 * \brief [AUTO] RenderWalls
-	 * \param horizon [in]
-	 * \param screenHeight [in]
-	 * \param columns [in]
-	 */
-	/*!
-	 * \brief [AUTO] RenderWalls
-	 * \param horizon [in]
-	 * \param screenHeight [in]
-	 * \param columns [in]
-	 */
+	
+	
 	void TileMapRenderer::RenderWalls([[maybe_unused]] int horizon, int screenHeight, const std::vector<ColumnInfo>& columns) {
 		if (columns.empty()) return; // Nothing to draw.
 
@@ -870,9 +830,7 @@ namespace Engine {
 
 	// 1×1 unit quad used by DrawColumn for solid-colour fallback walls.
 	// Two triangles form a square from (0,0) to (1,1) with full UVs.
-	/*!
-	 * \brief [AUTO] CreateColumnMesh
-	 */
+	
 	void TileMapRenderer::CreateColumnMesh() {
 		AEGfxMeshStart();
 		// Triangle 1: bottom-left → top-left → top-right.
@@ -884,24 +842,8 @@ namespace Engine {
 
 	// Draws a single solid-colour column strip (fallback when no wall sprite assigned).
 	// Positions the 1×1 column mesh at (x, y) with height h using scale + translate matrices.
-	/*!
-	 * \brief [AUTO] DrawColumn
-	 * \param x [in]
-	 * \param y [in]
-	 * \param h [in]
-	 * \param color [in]
-	 * \param sw [in]
-	 * \param sh [in]
-	 */
-	/*!
-	 * \brief [AUTO] DrawColumn
-	 * \param x [in]
-	 * \param y [in]
-	 * \param h [in]
-	 * \param color [in]
-	 * \param sw [in]
-	 * \param sh [in]
-	 */
+	
+	
 	void TileMapRenderer::DrawColumn(f32 x, f32 y, f32 h, const Color& color, int sw, int sh) {
 		AEGfxSetRenderMode(AE_GFX_RM_COLOR);                        // No texture — flat colour.
 		AEGfxSetBlendMode(AE_GFX_BM_NONE);                          // Opaque draw.
@@ -922,14 +864,8 @@ namespace Engine {
 	// Pre-computes fogLUT[i] = exp(-i * 0.01 / fogDistance) for i in [0, 9999].
 	// This avoids calling expf() per-pixel during rendering.
 	// fogLUT covers world distances 0–100 at 0.01-unit precision (10 000 entries).
-	/*!
-	 * \brief [AUTO] UpdateFogLUT
-	 * \param fogDistance [in]
-	 */
-	/*!
-	 * \brief [AUTO] UpdateFogLUT
-	 * \param fogDistance [in]
-	 */
+	
+	
 	void TileMapRenderer::UpdateFogLUT(f32 fogDistance) {
 		const int lutSize = static_cast<int>(RendererSettings::fogLutDistScale * 100.0f); // covers 100 world units
 		fogLUT.resize(lutSize);

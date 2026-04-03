@@ -1,0 +1,200 @@
+\doxysection{Engine::\+Scene\+Manager Class Reference}
+\hypertarget{class_engine_1_1_scene_manager}{}\label{class_engine_1_1_scene_manager}\index{Engine::SceneManager@{Engine::SceneManager}}
+
+
+Static class for loading and managing scenes.  
+
+
+
+
+{\ttfamily \+\#include $<$Scene\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_scene_manager_ad4853579ad69ac3ad9b072a3c0344a25}{Get\+Default\+Fade\+In\+Duration}} ()
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a56212071c359d5cdb50d4fba87081c52}{Get\+Default\+Fade\+Out\+Duration}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f686ef392e6e9f6a1b686160480402a}{Load\+Scene}} (const std::\+string \&scene\+Name)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a750fca12c64809ddd2e7b157fee7ec4b}{Load\+Scene}} (int build\+Index)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_af3cf725f94bddbf0d1bcc85f3795cfdf}{Load\+With\+Loading\+Screen}} (const std::\+string \&scene\+Name)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a28dddb5f04bd272c15f89f8bbb6e863b}{Load\+With\+Loading\+Screen}} (const std::\+string \&scene\+Name, f32 fade\+In\+Duration, f32 fade\+Out\+Duration)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a434ab4c0ea8cd52b7328c5a776b46cde}{Load\+With\+Fade}} (const std::\+string \&scene\+Name)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a1efd1dd310963b5787000e0d5dea3426}{Load\+With\+Fade}} (const std::\+string \&scene\+Name, f32 fade\+In\+Duration, f32 fade\+Out\+Duration)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a95b8a8ec4d0e1c65da6bd0d53454c294}{Load\+Scene\+Deferred}} (const std::\+string \&scene\+Name)
+\item 
+static const std::\+string \& \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a0832bb018df801d3c9510a907adf069a}{Get\+Load\+With\+Screen\+Target}} ()
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a84f5892d5132ac48e0a9ce5ed49a2095}{Get\+Load\+With\+Screen\+Fade\+In\+Duration}} ()
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a5ca30793cd5327607e08731baf5a0f2d}{Get\+Load\+With\+Screen\+Fade\+Out\+Duration}} ()
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a09c888ee24de4179c69e7d4a53a2d8f6}{Get\+Active\+Scene}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{Register\+Scene}} (const std::\+string \&name, \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*}scene)
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_scene_manager_adbd548dee643d814b7a0af94a823209a}{Get\+Scene\+Count}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a82b5830d8ee4c158857b341a7577f2ff}{Request\+Fade\+Out\+After\+Next\+Scene\+Load}} (f32 duration)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a4c6bc4dd408e4744fa315e5abd4fa13c}{Update\+Active\+Scene}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a6183b368d220385c6c03cc9eb495e5da}{Render\+Active\+Scene}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a97d9a2f88fcc41dd96072b7c249a9ec2}{Load\+First\+Scene}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a156347d8cef2e3f3f817493fa213f1bd}{Unload\+Active\+Scene}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_scene_manager_ace7d01cf13d8091a6d669aff9aab6353}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+game.\+json"{})
+\begin{DoxyCompactList}\small\item\em Load scene manager configuration from game.\+json (fade durations). Called automatically by \doxylink{class_engine_1_1_config_manager_a606989c1ecc78b25655198cf331f84c1}{Config\+Manager::\+\+Initialize\+All()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for loading and managing scenes. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_scene_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_scene_manager_a09c888ee24de4179c69e7d4a53a2d8f6}\index{Engine::SceneManager@{Engine::SceneManager}!GetActiveScene@{GetActiveScene}}
+\index{GetActiveScene@{GetActiveScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetActiveScene()}{GetActiveScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a09c888ee24de4179c69e7d4a53a2d8f6} 
+\doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*} Engine::\+\+Scene\+Manager::\+\+Get\+Active\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get the currently active scene \Hypertarget{class_engine_1_1_scene_manager_ad4853579ad69ac3ad9b072a3c0344a25}\index{Engine::SceneManager@{Engine::SceneManager}!GetDefaultFadeInDuration@{GetDefaultFadeInDuration}}
+\index{GetDefaultFadeInDuration@{GetDefaultFadeInDuration}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetDefaultFadeInDuration()}{GetDefaultFadeInDuration()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_ad4853579ad69ac3ad9b072a3c0344a25} 
+f32 Engine::\+\+Scene\+Manager::\+\+Get\+Default\+Fade\+In\+Duration (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the default fade-\/in duration for loading screen transitions \Hypertarget{class_engine_1_1_scene_manager_a56212071c359d5cdb50d4fba87081c52}\index{Engine::SceneManager@{Engine::SceneManager}!GetDefaultFadeOutDuration@{GetDefaultFadeOutDuration}}
+\index{GetDefaultFadeOutDuration@{GetDefaultFadeOutDuration}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetDefaultFadeOutDuration()}{GetDefaultFadeOutDuration()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a56212071c359d5cdb50d4fba87081c52} 
+f32 Engine::\+\+Scene\+Manager::\+\+Get\+Default\+Fade\+Out\+Duration (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the default fade-\/out duration for loading screen transitions \Hypertarget{class_engine_1_1_scene_manager_a84f5892d5132ac48e0a9ce5ed49a2095}\index{Engine::SceneManager@{Engine::SceneManager}!GetLoadWithScreenFadeInDuration@{GetLoadWithScreenFadeInDuration}}
+\index{GetLoadWithScreenFadeInDuration@{GetLoadWithScreenFadeInDuration}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetLoadWithScreenFadeInDuration()}{GetLoadWithScreenFadeInDuration()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a84f5892d5132ac48e0a9ce5ed49a2095} 
+f32 Engine::\+\+Scene\+Manager::\+\+Get\+Load\+With\+Screen\+Fade\+In\+Duration (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the fade-\/in duration for the current loading screen transition \Hypertarget{class_engine_1_1_scene_manager_a5ca30793cd5327607e08731baf5a0f2d}\index{Engine::SceneManager@{Engine::SceneManager}!GetLoadWithScreenFadeOutDuration@{GetLoadWithScreenFadeOutDuration}}
+\index{GetLoadWithScreenFadeOutDuration@{GetLoadWithScreenFadeOutDuration}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetLoadWithScreenFadeOutDuration()}{GetLoadWithScreenFadeOutDuration()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a5ca30793cd5327607e08731baf5a0f2d} 
+f32 Engine::\+\+Scene\+Manager::\+\+Get\+Load\+With\+Screen\+Fade\+Out\+Duration (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the fade-\/out duration for the current loading screen transition \Hypertarget{class_engine_1_1_scene_manager_a0832bb018df801d3c9510a907adf069a}\index{Engine::SceneManager@{Engine::SceneManager}!GetLoadWithScreenTarget@{GetLoadWithScreenTarget}}
+\index{GetLoadWithScreenTarget@{GetLoadWithScreenTarget}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetLoadWithScreenTarget()}{GetLoadWithScreenTarget()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a0832bb018df801d3c9510a907adf069a} 
+const std::\+string \& Engine::\+\+Scene\+Manager::\+\+Get\+Load\+With\+Screen\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Get the target scene name for loading screen transitions \Hypertarget{class_engine_1_1_scene_manager_adbd548dee643d814b7a0af94a823209a}\index{Engine::SceneManager@{Engine::SceneManager}!GetSceneCount@{GetSceneCount}}
+\index{GetSceneCount@{GetSceneCount}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{GetSceneCount()}{GetSceneCount()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_adbd548dee643d814b7a0af94a823209a} 
+int Engine::\+\+Scene\+Manager::\+\+Get\+Scene\+Count (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get total number of registered scenes \Hypertarget{class_engine_1_1_scene_manager_ace7d01cf13d8091a6d669aff9aab6353}\index{Engine::SceneManager@{Engine::SceneManager}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_ace7d01cf13d8091a6d669aff9aab6353} 
+void Engine::\+\+Scene\+Manager::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+game.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load scene manager configuration from game.\+json (fade durations). Called automatically by \doxylink{class_engine_1_1_config_manager_a606989c1ecc78b25655198cf331f84c1}{Config\+Manager::\+\+Initialize\+All()}. 
+
+\Hypertarget{class_engine_1_1_scene_manager_a97d9a2f88fcc41dd96072b7c249a9ec2}\index{Engine::SceneManager@{Engine::SceneManager}!LoadFirstScene@{LoadFirstScene}}
+\index{LoadFirstScene@{LoadFirstScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadFirstScene()}{LoadFirstScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a97d9a2f88fcc41dd96072b7c249a9ec2} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+First\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load first registered scene (call on startup) \Hypertarget{class_engine_1_1_scene_manager_a2f686ef392e6e9f6a1b686160480402a}\index{Engine::SceneManager@{Engine::SceneManager}!LoadScene@{LoadScene}}
+\index{LoadScene@{LoadScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadScene()}{LoadScene()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a2f686ef392e6e9f6a1b686160480402a} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+Scene (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene by name (switches immediately) \Hypertarget{class_engine_1_1_scene_manager_a750fca12c64809ddd2e7b157fee7ec4b}\index{Engine::SceneManager@{Engine::SceneManager}!LoadScene@{LoadScene}}
+\index{LoadScene@{LoadScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadScene()}{LoadScene()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a750fca12c64809ddd2e7b157fee7ec4b} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+Scene (\begin{DoxyParamCaption}\item[{int}]{build\+Index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene by build index (switches immediately) \Hypertarget{class_engine_1_1_scene_manager_a95b8a8ec4d0e1c65da6bd0d53454c294}\index{Engine::SceneManager@{Engine::SceneManager}!LoadSceneDeferred@{LoadSceneDeferred}}
+\index{LoadSceneDeferred@{LoadSceneDeferred}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadSceneDeferred()}{LoadSceneDeferred()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a95b8a8ec4d0e1c65da6bd0d53454c294} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+Scene\+Deferred (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Queue a scene load for end of current update cycle \Hypertarget{class_engine_1_1_scene_manager_a434ab4c0ea8cd52b7328c5a776b46cde}\index{Engine::SceneManager@{Engine::SceneManager}!LoadWithFade@{LoadWithFade}}
+\index{LoadWithFade@{LoadWithFade}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadWithFade()}{LoadWithFade()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a434ab4c0ea8cd52b7328c5a776b46cde} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+With\+Fade (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene with a direct fade transition (using configured defaults) \Hypertarget{class_engine_1_1_scene_manager_a1efd1dd310963b5787000e0d5dea3426}\index{Engine::SceneManager@{Engine::SceneManager}!LoadWithFade@{LoadWithFade}}
+\index{LoadWithFade@{LoadWithFade}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadWithFade()}{LoadWithFade()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a1efd1dd310963b5787000e0d5dea3426} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+With\+Fade (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{, }\item[{f32}]{fade\+In\+Duration}{, }\item[{f32}]{fade\+Out\+Duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene with a direct fade transition with explicit fade durations \Hypertarget{class_engine_1_1_scene_manager_af3cf725f94bddbf0d1bcc85f3795cfdf}\index{Engine::SceneManager@{Engine::SceneManager}!LoadWithLoadingScreen@{LoadWithLoadingScreen}}
+\index{LoadWithLoadingScreen@{LoadWithLoadingScreen}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadWithLoadingScreen()}{LoadWithLoadingScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_af3cf725f94bddbf0d1bcc85f3795cfdf} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+With\+Loading\+Screen (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene via the loading screen with fade transitions (using configured defaults) \Hypertarget{class_engine_1_1_scene_manager_a28dddb5f04bd272c15f89f8bbb6e863b}\index{Engine::SceneManager@{Engine::SceneManager}!LoadWithLoadingScreen@{LoadWithLoadingScreen}}
+\index{LoadWithLoadingScreen@{LoadWithLoadingScreen}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{LoadWithLoadingScreen()}{LoadWithLoadingScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a28dddb5f04bd272c15f89f8bbb6e863b} 
+void Engine::\+\+Scene\+Manager::\+\+Load\+With\+Loading\+Screen (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{scene\+Name}{, }\item[{f32}]{fade\+In\+Duration}{, }\item[{f32}]{fade\+Out\+Duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Load a scene via the loading screen with explicit fade durations \Hypertarget{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}\index{Engine::SceneManager@{Engine::SceneManager}!RegisterScene@{RegisterScene}}
+\index{RegisterScene@{RegisterScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{RegisterScene()}{RegisterScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7} 
+void Engine::\+\+Scene\+Manager::\+\+Register\+Scene (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}} \texorpdfstring{$\ast$}{*}}]{scene}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Register a scene with the manager \Hypertarget{class_engine_1_1_scene_manager_a6183b368d220385c6c03cc9eb495e5da}\index{Engine::SceneManager@{Engine::SceneManager}!RenderActiveScene@{RenderActiveScene}}
+\index{RenderActiveScene@{RenderActiveScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{RenderActiveScene()}{RenderActiveScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a6183b368d220385c6c03cc9eb495e5da} 
+void Engine::\+\+Scene\+Manager::\+\+Render\+Active\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_scene_manager_a82b5830d8ee4c158857b341a7577f2ff}\index{Engine::SceneManager@{Engine::SceneManager}!RequestFadeOutAfterNextSceneLoad@{RequestFadeOutAfterNextSceneLoad}}
+\index{RequestFadeOutAfterNextSceneLoad@{RequestFadeOutAfterNextSceneLoad}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{RequestFadeOutAfterNextSceneLoad()}{RequestFadeOutAfterNextSceneLoad()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a82b5830d8ee4c158857b341a7577f2ff} 
+void Engine::\+\+Scene\+Manager::\+\+Request\+Fade\+Out\+After\+Next\+Scene\+Load (\begin{DoxyParamCaption}\item[{f32}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Request a screen fade-\/out immediately after the next successful scene load \Hypertarget{class_engine_1_1_scene_manager_a156347d8cef2e3f3f817493fa213f1bd}\index{Engine::SceneManager@{Engine::SceneManager}!UnloadActiveScene@{UnloadActiveScene}}
+\index{UnloadActiveScene@{UnloadActiveScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{UnloadActiveScene()}{UnloadActiveScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a156347d8cef2e3f3f817493fa213f1bd} 
+void Engine::\+\+Scene\+Manager::\+\+Unload\+Active\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Unload active scene and cleanup all Game\+Objects (call before shutdown) \Hypertarget{class_engine_1_1_scene_manager_a4c6bc4dd408e4744fa315e5abd4fa13c}\index{Engine::SceneManager@{Engine::SceneManager}!UpdateActiveScene@{UpdateActiveScene}}
+\index{UpdateActiveScene@{UpdateActiveScene}!Engine::SceneManager@{Engine::SceneManager}}
+\doxysubsubsection{\texorpdfstring{UpdateActiveScene()}{UpdateActiveScene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_manager_a4c6bc4dd408e4744fa315e5abd4fa13c} 
+void Engine::\+\+Scene\+Manager::\+\+Update\+Active\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Update active scene 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Scene/\+\doxymbox{\hyperlink{_scene_manager_8hpp}{Scene\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Scene/\+\doxymbox{\hyperlink{_scene_manager_8cpp}{Scene\+Manager.\+cpp}}\end{DoxyCompactItemize}

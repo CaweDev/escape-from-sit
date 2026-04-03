@@ -1,0 +1,40 @@
+\doxysection{Zone\+Manager.\+hpp}
+\hypertarget{_zone_manager_8hpp_source}{}\label{_zone_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Game/ZoneManager/ZoneManager.hpp@{AlphaEngine2.5D/Source/Game/ZoneManager/ZoneManager.hpp}}
+\doxymbox{\hyperlink{_zone_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}};\ \}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_zone_manager}{ZoneManager}}}
+\DoxyCodeLine{00017\ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_aa6c47a161e3e0e30e5e0c350ab46fdea}{Init}}(\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ map,\ \textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ h);}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_a2b623d2642846d42ae628a3410b828c9}{SetZoneGrid}}(\textcolor{keyword}{const}\ std::vector<int>\&\ grid);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ returns\ -\/1\ if\ out\ of\ bounds\ /\ not\ ready}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_ab05784fec6b07f2454638614fe558979}{GetZoneId}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ returns\ false\ if\ no\ walkable\ found}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_a20ad1b3567931576a60e87ca62364924}{PickRandomWalkableInZone}}(\textcolor{keywordtype}{int}\ zoneId,\ \textcolor{keywordtype}{int}\&\ outX,\ \textcolor{keywordtype}{int}\&\ outY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<int>\&\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_aec1f4aea997751cacd5d921e9dca741a}{GetGrid}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_zoneGrid;\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_af4ed6d6a360b0b7636e98ebb1119c6cb}{W}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_w;\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_zone_manager_a2584244b284c25e92a8d38dc57759f2f}{H}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_h;\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ InBounds(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ x\ >=\ 0\ \&\&\ y\ >=\ 0\ \&\&\ x\ <\ m\_w\ \&\&\ y\ <\ m\_h;\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ m\_map\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_w\ =\ 0,\ m\_h\ =\ 0;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::vector<int>\ m\_zoneGrid;}
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

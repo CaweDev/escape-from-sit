@@ -1,0 +1,40 @@
+\doxysection{Panel.\+hpp}
+\hypertarget{_panel_8hpp_source}{}\label{_panel_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Components/Panel.hpp@{AlphaEngine2.5D/Source/Engine/UI/Components/Panel.hpp}}
+\doxymbox{\hyperlink{_panel_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_image_8hpp}{Engine/UI/Components/Image.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_panel_a84c250f623cceb71ccf7dd1b42bba750}{Panel}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ m\_background\ =\ \textcolor{keyword}{nullptr};\ \ \textcolor{comment}{//\ Owned\ background\ image}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel_a84c250f623cceb71ccf7dd1b42bba750}{Panel}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_a0dbb662e5118573600d60f90451f4230}{\string~Panel}}();}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_a2ad2ae6fd5c7f28d021bc3665b259178}{Update}}(f32\ dt)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_a5248393b4d3ba4fcdc3fd4792ba90525}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_a20d14ee46343d418a9f7e0f5d2a4f637}{SetBackgroundColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_ac04abddc33f851d372f3d5cdfcd83d02}{SetBackgroundSprite}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ texture);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \doxymbox{\hyperlink{class_u_i_1_1_panel_ab7276c94adb5973997acc44649fba198}{GetBackground}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_background;\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_panel_aaae2d6003e83c57f3479ed7e7b01a72c}{ClearBackground}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ EnsureBackground();}
+\DoxyCodeLine{00066\ \ \ \ \ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

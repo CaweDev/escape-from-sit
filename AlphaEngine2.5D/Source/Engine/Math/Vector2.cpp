@@ -12,59 +12,23 @@ namespace Engine
     Vector2::Vector2(const AEVec2 &v) : x(v.x), y(v.y) {}
     Vector2::Vector2(const Vector3 &v) : x(v.x), y(v.y) {}
 
-    /*!
-     * \brief [AUTO] zero
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] zero
-     * \return 
-     */
+    
+    
     Vector2 Vector2::zero() { return Vector2(0, 0); }
-    /*!
-     * \brief [AUTO] one
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] one
-     * \return 
-     */
+    
+    
     Vector2 Vector2::one() { return Vector2(1, 1); }
-    /*!
-     * \brief [AUTO] up
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] up
-     * \return 
-     */
+    
+    
     Vector2 Vector2::up() { return Vector2(0, 1); }
-    /*!
-     * \brief [AUTO] down
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] down
-     * \return 
-     */
+    
+    
     Vector2 Vector2::down() { return Vector2(0, -1); }
-    /*!
-     * \brief [AUTO] left
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] left
-     * \return 
-     */
+    
+    
     Vector2 Vector2::left() { return Vector2(-1, 0); }
-    /*!
-     * \brief [AUTO] right
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] right
-     * \return 
-     */
+    
+    
     Vector2 Vector2::right() { return Vector2(1, 0); }
 
     Vector2 Vector2::operator+(const Vector2 &other) const { return Vector2(x + other.x, y + other.y); }
@@ -104,23 +68,11 @@ namespace Engine
     bool Vector2::operator==(const Vector2 &other) const { return x == other.x && y == other.y; }
     bool Vector2::operator!=(const Vector2 &other) const { return !(*this == other); }
 
-    /*!
-     * \brief [AUTO] Magnitude
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] Magnitude
-     * \return 
-     */
+    
+    
     f32 Vector2::Magnitude() const { return std::sqrt(x * x + y * y); }
-    /*!
-     * \brief [AUTO] SqrMagnitude
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] SqrMagnitude
-     * \return 
-     */
+    
+    
     f32 Vector2::SqrMagnitude() const { return x * x + y * y; }
 
     Vector2 Vector2::Normalized() const

@@ -1,0 +1,55 @@
+\doxysection{Editor\+Scene.\+hpp}
+\hypertarget{_editor_scene_8hpp_source}{}\label{_editor_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Editor/EditorScene.hpp@{AlphaEngine2.5D/Source/Editor/EditorScene.hpp}}
+\doxymbox{\hyperlink{_editor_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_8hpp}{Engine/Scene/Scene.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ Forward\ Declarations}}
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{TileMapRenderer}};}
+\DoxyCodeLine{00018\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_editor_scene_a89c229ebb1081ba22231983a9f7d23d3}{EditorScene}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::Scene}}}
+\DoxyCodeLine{00024\ \ \ \ \ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_editor_scene_a89c229ebb1081ba22231983a9f7d23d3}{EditorScene}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_camera}{Engine::Camera}}\ *\doxymbox{\hyperlink{class_game_1_1_editor_scene_ab5b4c1dc4c21f36ca77294b83aad67f9}{editorCamera}};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}\ *\doxymbox{\hyperlink{class_game_1_1_editor_scene_ac5ac8da3ae96dbc959dba658d2b0b7d4}{cameraTf}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_aa4f953495c7e431a043c2ee9ed8f1b2f}{mapWidth}};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_a33177447e3b529b6dc8987918eed5d7a}{mapHeight}};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone}{Zone}}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone_af1b74ca3d3db5a5db09f1cd6334a9b26}{id}};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone_a59b092994f14c8d65855023fcdb4fef4}{minX}},\ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone_a9d0cadea4a33398cc8aabc0af59e18cc}{maxX}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone_abcea50f7d5dd0f19240a9d7e9355d6f3}{minY}},\ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone_a7893f2054a99fad6f1d4697ee9eecc37}{maxY}};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ std::vector<Zone>\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_afd2a8ef6ef5cdc45a0bd384984912cf0}{zones}};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_ab3a5ca195abd7ec9edcc378177381968}{GetZoneId}}(\textcolor{keywordtype}{int}\ tx,\ \textcolor{keywordtype}{int}\ ty)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_aae23a178ac1bff3768960b67b0cebf5c}{OnLoad}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_ade93877881c16a1e19d84865e91f911b}{OnUpdate}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_editor_scene_a164586b9323d668a69e131c2260f6a4f}{OnUnload}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

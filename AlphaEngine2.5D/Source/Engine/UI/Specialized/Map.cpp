@@ -156,18 +156,10 @@ namespace UI
         m_cctvTransforms.push_back(transform);
     }
 
-    /*!
-     * \brief [AUTO] ClearCCTVs
-     */
+    
     void Map::ClearCCTVs() { m_cctvTransforms.clear(); }
-    /*!
-     * \brief [AUTO] SetCCTVSprites
-     * \param sprite [in]
-     */
-    /*!
-     * \brief [AUTO] SetCCTVSprites
-     * \param sprite [in]
-     */
+    
+    
     void Map::SetCCTVSprites(Engine::Sprite* sprite) { m_cctvSprite = sprite; }
     void Map::DrawQuad(f32 x, f32 y, f32 width, f32 height, const Engine::Color& color)
     {

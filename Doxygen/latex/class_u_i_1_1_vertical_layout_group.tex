@@ -1,0 +1,258 @@
+\doxysection{UI::\+Vertical\+Layout\+Group Class Reference}
+\hypertarget{class_u_i_1_1_vertical_layout_group}{}\label{class_u_i_1_1_vertical_layout_group}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+
+
+Arranges children in a vertical stack.  
+
+
+
+
+{\ttfamily \+\#include $<$Vertical\+Layout\+Group.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{UI::\+\+Layout\+Group}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_aaa53cd83e54dd41da9de773fe48b30e9}{Vertical\+Layout\+Group}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_aa3fc9a697272cdd2c5c128fa6931e4c4}{\texorpdfstring{$\sim$}{\string~}\+Vertical\+Layout\+Group}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_ae0e806cc82428d4bf64bf3b413e12468}{Set\+Child\+Force\+Expand\+Width}} (bool expand)
+\begin{DoxyCompactList}\small\item\em Force children to expand to fill width. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_a193f530a6e779396047fd1258d6b15d6}{Get\+Child\+Force\+Expand\+Width}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_a06fee1e64540b87f424fee51cd3b380c}{Set\+Child\+Force\+Expand\+Height}} (bool expand)
+\begin{DoxyCompactList}\small\item\em Force children to expand to fill available height. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_ac40d31b9c8fb5851fdcb7b149e386a42}{Get\+Child\+Force\+Expand\+Height}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{UI::\+\+Layout\+Group}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_layout_group_abc684eb0b49ddfe178b462acd3fcd18e}{Layout\+Group}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_layout_group_aece7117db89bc9912becd76ebbce35d5}{\texorpdfstring{$\sim$}{\string~}\+Layout\+Group}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a84b48e62f343f74613ed839d9dbcecf4}{Update}} (f32 dt) override
+\begin{DoxyCompactList}\small\item\em Update -\/ recalculates layout if dirty. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a01c3b2493840ff00245598568cb9279d}{Set\+Padding}} (const \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}} \&padding)
+\begin{DoxyCompactList}\small\item\em Set padding around content. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}} \& \doxymbox{\hyperlink{class_u_i_1_1_layout_group_ae4fea5fdc04e6fbe0fb96a7c9069a05e}{Get\+Padding}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_af10e1377588b3d417735e77fb966a944}{Set\+Spacing}} (f32 spacing)
+\begin{DoxyCompactList}\small\item\em Set spacing between children. \end{DoxyCompactList}\item 
+f32 \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a3d0639fba89d39b75ce4e4ca687f4fba}{Get\+Spacing}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a141baa810150e006fadfa66c96177a93}{Set\+Child\+Alignment}} (\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{Child\+Alignment}} alignment)
+\begin{DoxyCompactList}\small\item\em Set child alignment. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{Child\+Alignment}} \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a72ab5796c1487258e90ced5e78d7a9c8}{Get\+Child\+Alignment}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_aec4e5995f6c2500ea6b7f5183d73d4f6}{Set\+Layout\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark layout as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_ae7b9e4cd829401e3ca0a3af7d10e473c}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Add child and mark layout dirty. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a6a3b0a78351bb63a12ee5f6ac6a82104}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\begin{DoxyCompactList}\small\item\em Remove child and mark layout dirty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{Render}} ()
+\begin{DoxyCompactList}\small\item\em Render the element (called each frame if visible). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_vertical_layout_group_aa0116da02c294a9f4749af80eb231d97}{Calculate\+Layout}} () override
+\begin{DoxyCompactList}\small\item\em Calculate vertical layout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{UI::\+\+Layout\+Group}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_layout_group_acf43ce05f0cdad8afb768c1304b16c3c}{Get\+Content\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the content area (parent rect minus padding). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{UI::\+\+Layout\+Group}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_padding}{Padding}} \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a8b828e8e33ad1cf528a3760d19e8df04}{m\+\_\+padding}}
+\item 
+f32 \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a3a8c2c61de5b591d4e96b19bc3367a62}{m\+\_\+spacing}} = 0
+\item 
+\doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632}{Child\+Alignment}} \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a9e65e098552eb52048b2db76c388f5a0}{m\+\_\+child\+Alignment}} = \doxymbox{\hyperlink{namespace_u_i_a16e550dd894fb52393ab3feeef28e632a6f43ca0793e0c68184761673278f4ca4}{Child\+Alignment::\+\+Upper\+Left}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a930e3ed041766d0c19f43131f3a3b117}{m\+\_\+layout\+Dirty}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Arranges children in a vertical stack. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_vertical_layout_group_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_vertical_layout_group_aaa53cd83e54dd41da9de773fe48b30e9}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!VerticalLayoutGroup@{VerticalLayoutGroup}}
+\index{VerticalLayoutGroup@{VerticalLayoutGroup}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{VerticalLayoutGroup()}{VerticalLayoutGroup()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_aaa53cd83e54dd41da9de773fe48b30e9} 
+UI::\+\+Vertical\+Layout\+Group::\+\+Vertical\+Layout\+Group (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_vertical_layout_group_aa3fc9a697272cdd2c5c128fa6931e4c4}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!````~VerticalLayoutGroup@{\texorpdfstring{$\sim$}{\string~}VerticalLayoutGroup}}
+\index{````~VerticalLayoutGroup@{\texorpdfstring{$\sim$}{\string~}VerticalLayoutGroup}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}VerticalLayoutGroup()}{\string~VerticalLayoutGroup()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_aa3fc9a697272cdd2c5c128fa6931e4c4} 
+virtual UI::\+\+Vertical\+Layout\+Group::\+\texorpdfstring{$\sim$}{\string~}\+Vertical\+Layout\+Group (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_vertical_layout_group_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_vertical_layout_group_aa0116da02c294a9f4749af80eb231d97}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!CalculateLayout@{CalculateLayout}}
+\index{CalculateLayout@{CalculateLayout}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{CalculateLayout()}{CalculateLayout()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_aa0116da02c294a9f4749af80eb231d97} 
+void UI::\+\+Vertical\+Layout\+Group::\+\+Calculate\+Layout (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Calculate vertical layout. 
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_layout_group_acec9a87566797b8a95aa0d7e0dcc23d9}{UI::\+\+Layout\+Group}}.
+
+\Hypertarget{class_u_i_1_1_vertical_layout_group_ac40d31b9c8fb5851fdcb7b149e386a42}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!GetChildForceExpandHeight@{GetChildForceExpandHeight}}
+\index{GetChildForceExpandHeight@{GetChildForceExpandHeight}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{GetChildForceExpandHeight()}{GetChildForceExpandHeight()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_ac40d31b9c8fb5851fdcb7b149e386a42} 
+bool UI::\+\+Vertical\+Layout\+Group::\+\+Get\+Child\+Force\+Expand\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_vertical_layout_group_a193f530a6e779396047fd1258d6b15d6}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!GetChildForceExpandWidth@{GetChildForceExpandWidth}}
+\index{GetChildForceExpandWidth@{GetChildForceExpandWidth}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{GetChildForceExpandWidth()}{GetChildForceExpandWidth()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_a193f530a6e779396047fd1258d6b15d6} 
+bool UI::\+\+Vertical\+Layout\+Group::\+\+Get\+Child\+Force\+Expand\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_vertical_layout_group_a06fee1e64540b87f424fee51cd3b380c}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!SetChildForceExpandHeight@{SetChildForceExpandHeight}}
+\index{SetChildForceExpandHeight@{SetChildForceExpandHeight}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{SetChildForceExpandHeight()}{SetChildForceExpandHeight()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_a06fee1e64540b87f424fee51cd3b380c} 
+void UI::\+\+Vertical\+Layout\+Group::\+\+Set\+Child\+Force\+Expand\+Height (\begin{DoxyParamCaption}\item[{bool}]{expand}{}\end{DoxyParamCaption})}
+
+
+
+Force children to expand to fill available height. 
+
+\Hypertarget{class_u_i_1_1_vertical_layout_group_ae0e806cc82428d4bf64bf3b413e12468}\index{UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}!SetChildForceExpandWidth@{SetChildForceExpandWidth}}
+\index{SetChildForceExpandWidth@{SetChildForceExpandWidth}!UI::VerticalLayoutGroup@{UI::VerticalLayoutGroup}}
+\doxysubsubsection{\texorpdfstring{SetChildForceExpandWidth()}{SetChildForceExpandWidth()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_vertical_layout_group_ae0e806cc82428d4bf64bf3b413e12468} 
+void UI::\+\+Vertical\+Layout\+Group::\+\+Set\+Child\+Force\+Expand\+Width (\begin{DoxyParamCaption}\item[{bool}]{expand}{}\end{DoxyParamCaption})}
+
+
+
+Force children to expand to fill width. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Layout/\+\doxymbox{\hyperlink{_vertical_layout_group_8hpp}{Vertical\+Layout\+Group.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Layout/\+\doxymbox{\hyperlink{_vertical_layout_group_8cpp}{Vertical\+Layout\+Group.\+cpp}}\end{DoxyCompactItemize}

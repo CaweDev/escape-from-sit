@@ -1,0 +1,116 @@
+\doxysection{Engine::\+Xbox\+Controller Class Reference}
+\hypertarget{class_engine_1_1_xbox_controller}{}\label{class_engine_1_1_xbox_controller}\index{Engine::XboxController@{Engine::XboxController}}
+
+
+Static class for querying Xbox controller state.  
+
+
+
+
+{\ttfamily \+\#include $<$Xbox\+Controller.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2888497ce75c4d8cb1e5c7a304c2fa25}{Is\+Connected}} (int controller\+Index=0)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_afa700a8aad76b8dc35fa81343494f5d6}{Get\+Button}} (\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}} button, int controller\+Index=0)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2daccbd9d3155023b8493a1660456c20}{Get\+Button\+Down}} (\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}} button, int controller\+Index=0)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2fe58935013b961627e562f156a655f0}{Get\+Button\+Up}} (\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}} button, int controller\+Index=0)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_acf3abaa5e47c770dd7b13dd1454db3e1}{Get\+Left\+Stick}} (int controller\+Index=0)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_abc800b4037f10a5041067f3ceed5ee2b}{Get\+Right\+Stick}} (int controller\+Index=0)
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_ab9f1e641c6c0d65bc4a8e3e79331cc26}{Get\+Left\+Trigger}} (int controller\+Index=0)
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_ad6e732c60523f569d96dd7856a3dfdbd}{Get\+Right\+Trigger}} (int controller\+Index=0)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a57b86ebad28072725a88bd5f332a10c0}{Set\+Vibration}} (f32 left\+Motor, f32 right\+Motor, int controller\+Index=0)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a4ff0847b69f8e22394092e74bbc08309}{Update}} ()
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a5f0c7349011c89d2e92c03a38481ca2a}{Get\+First\+Connected\+Controller}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for querying Xbox controller state. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_xbox_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_xbox_controller_afa700a8aad76b8dc35fa81343494f5d6}\index{Engine::XboxController@{Engine::XboxController}!GetButton@{GetButton}}
+\index{GetButton@{GetButton}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetButton()}{GetButton()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_afa700a8aad76b8dc35fa81343494f5d6} 
+bool Engine::\+\+Xbox\+Controller::\+\+Get\+Button (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}}}]{button}{, }\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if button is currently held \Hypertarget{class_engine_1_1_xbox_controller_a2daccbd9d3155023b8493a1660456c20}\index{Engine::XboxController@{Engine::XboxController}!GetButtonDown@{GetButtonDown}}
+\index{GetButtonDown@{GetButtonDown}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetButtonDown()}{GetButtonDown()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a2daccbd9d3155023b8493a1660456c20} 
+bool Engine::\+\+Xbox\+Controller::\+\+Get\+Button\+Down (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}}}]{button}{, }\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if button was pressed this frame \Hypertarget{class_engine_1_1_xbox_controller_a2fe58935013b961627e562f156a655f0}\index{Engine::XboxController@{Engine::XboxController}!GetButtonUp@{GetButtonUp}}
+\index{GetButtonUp@{GetButtonUp}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetButtonUp()}{GetButtonUp()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a2fe58935013b961627e562f156a655f0} 
+bool Engine::\+\+Xbox\+Controller::\+\+Get\+Button\+Up (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}}}]{button}{, }\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if button was released this frame \Hypertarget{class_engine_1_1_xbox_controller_a5f0c7349011c89d2e92c03a38481ca2a}\index{Engine::XboxController@{Engine::XboxController}!GetFirstConnectedController@{GetFirstConnectedController}}
+\index{GetFirstConnectedController@{GetFirstConnectedController}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetFirstConnectedController()}{GetFirstConnectedController()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a5f0c7349011c89d2e92c03a38481ca2a} 
+int Engine::\+\+Xbox\+Controller::\+\+Get\+First\+Connected\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get any connected controller index (-\/1 if none) \Hypertarget{class_engine_1_1_xbox_controller_acf3abaa5e47c770dd7b13dd1454db3e1}\index{Engine::XboxController@{Engine::XboxController}!GetLeftStick@{GetLeftStick}}
+\index{GetLeftStick@{GetLeftStick}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetLeftStick()}{GetLeftStick()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_acf3abaa5e47c770dd7b13dd1454db3e1} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Xbox\+Controller::\+\+Get\+Left\+Stick (\begin{DoxyParamCaption}\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get left stick position (-\/1 to 1 for both axes) \Hypertarget{class_engine_1_1_xbox_controller_ab9f1e641c6c0d65bc4a8e3e79331cc26}\index{Engine::XboxController@{Engine::XboxController}!GetLeftTrigger@{GetLeftTrigger}}
+\index{GetLeftTrigger@{GetLeftTrigger}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetLeftTrigger()}{GetLeftTrigger()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_ab9f1e641c6c0d65bc4a8e3e79331cc26} 
+f32 Engine::\+\+Xbox\+Controller::\+\+Get\+Left\+Trigger (\begin{DoxyParamCaption}\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get left trigger value (0 to 1) \Hypertarget{class_engine_1_1_xbox_controller_abc800b4037f10a5041067f3ceed5ee2b}\index{Engine::XboxController@{Engine::XboxController}!GetRightStick@{GetRightStick}}
+\index{GetRightStick@{GetRightStick}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetRightStick()}{GetRightStick()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_abc800b4037f10a5041067f3ceed5ee2b} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Xbox\+Controller::\+\+Get\+Right\+Stick (\begin{DoxyParamCaption}\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get right stick position (-\/1 to 1 for both axes) \Hypertarget{class_engine_1_1_xbox_controller_ad6e732c60523f569d96dd7856a3dfdbd}\index{Engine::XboxController@{Engine::XboxController}!GetRightTrigger@{GetRightTrigger}}
+\index{GetRightTrigger@{GetRightTrigger}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{GetRightTrigger()}{GetRightTrigger()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_ad6e732c60523f569d96dd7856a3dfdbd} 
+f32 Engine::\+\+Xbox\+Controller::\+\+Get\+Right\+Trigger (\begin{DoxyParamCaption}\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get right trigger value (0 to 1) \Hypertarget{class_engine_1_1_xbox_controller_a2888497ce75c4d8cb1e5c7a304c2fa25}\index{Engine::XboxController@{Engine::XboxController}!IsConnected@{IsConnected}}
+\index{IsConnected@{IsConnected}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{IsConnected()}{IsConnected()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a2888497ce75c4d8cb1e5c7a304c2fa25} 
+bool Engine::\+\+Xbox\+Controller::\+\+Is\+Connected (\begin{DoxyParamCaption}\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a specific controller is connected (0-\/3) \Hypertarget{class_engine_1_1_xbox_controller_a57b86ebad28072725a88bd5f332a10c0}\index{Engine::XboxController@{Engine::XboxController}!SetVibration@{SetVibration}}
+\index{SetVibration@{SetVibration}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{SetVibration()}{SetVibration()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a57b86ebad28072725a88bd5f332a10c0} 
+void Engine::\+\+Xbox\+Controller::\+\+Set\+Vibration (\begin{DoxyParamCaption}\item[{f32}]{left\+Motor}{, }\item[{f32}]{right\+Motor}{, }\item[{int}]{controller\+Index}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Set vibration (0 to 1 for both motors) \Hypertarget{class_engine_1_1_xbox_controller_a4ff0847b69f8e22394092e74bbc08309}\index{Engine::XboxController@{Engine::XboxController}!Update@{Update}}
+\index{Update@{Update}!Engine::XboxController@{Engine::XboxController}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_xbox_controller_a4ff0847b69f8e22394092e74bbc08309} 
+void Engine::\+\+Xbox\+Controller::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Must be called each frame to update controller state 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Input/\+\doxymbox{\hyperlink{_xbox_controller_8hpp}{Xbox\+Controller.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Input/\+\doxymbox{\hyperlink{_xbox_controller_8cpp}{Xbox\+Controller.\+cpp}}\end{DoxyCompactItemize}

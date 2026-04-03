@@ -216,14 +216,8 @@ namespace AEEditor
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    /*!
-     * \brief [AUTO] GetCamOffsetX
-     * \return 
-     */
+    
     float EditorManager::GetCamOffsetX() { return gCamOffsetX; }
-    /*!
-     * \brief [AUTO] GetCamOffsetY
-     * \return 
-     */
+    
     float EditorManager::GetCamOffsetY() { return gCamOffsetY; }
 }

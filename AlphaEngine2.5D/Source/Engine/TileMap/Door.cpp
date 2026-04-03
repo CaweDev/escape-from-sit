@@ -43,9 +43,7 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] Awake
-     */
+    
     void Door::Initialize()
     {
         // Cache collider reference only if not already set by spawning logic
@@ -70,9 +68,7 @@ namespace Engine
         UpdateCollider();
     }
 
-    /*!
-     * \brief [AUTO] Update
-     */
+    
     void Door::Update()
     {
         f32 dt = Time::deltaTime;
@@ -136,9 +132,7 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] Open
-     */
+    
     void Door::Open()
     {
         if (state == DoorState::Closed)
@@ -158,9 +152,7 @@ namespace Engine
         autoCloseTimer = 0.0f;
     }
 
-    /*!
-     * \brief [AUTO] Close
-     */
+    
     void Door::Close()
     {
         if (state == DoorState::Open || state == DoorState::Opening)
@@ -174,9 +166,7 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] Toggle
-     */
+    
     void Door::Toggle()
     {
         switch (state)
@@ -192,23 +182,15 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] IsPassable
-     * \return
-     */
-    /*!
-     * \brief [AUTO] IsPassable
-     * \return
-     */
+    
+    
     bool Door::IsPassable() const
     {
         // Door is passable when open beyond the configured threshold
         return openAmount > s_passableThreshold;
     }
 
-    /*!
-     * \brief [AUTO] UpdateCollider
-     */
+    
     void Door::UpdateCollider()
     {
         if (!collider && gameObject)
@@ -235,31 +217,15 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] GetWorldPosition
-     * \return
-     */
-    /*!
-     * \brief [AUTO] GetWorldPosition
-     * \return
-     */
+    
+    
     Vector2 Door::GetWorldPosition() const
     {
         return Vector2(static_cast<f32>(tileX) + 0.5f, static_cast<f32>(tileY) + 0.5f);
     }
 
-    /*!
-     * \brief [AUTO] SetupInteractable
-     * \param interactable [in]
-     * \param openText [in]
-     * \param closeText [in]
-     */
-    /*!
-     * \brief [AUTO] SetupInteractable
-     * \param interactable [in]
-     * \param openText [in]
-     * \param closeText [in]
-     */
+    
+    
     void Door::SetupInteractable(Interactable *interactable, const char *openText, const char *closeText)
     {
         if (!interactable)
@@ -279,9 +245,7 @@ namespace Engine
         };
     }
 
-    /*!
-     * \brief [AUTO] DisableInteraction
-     */
+    
     void Door::DisableInteraction()
     {
         // Clear the interaction callback so Door doesn't respond to interactions

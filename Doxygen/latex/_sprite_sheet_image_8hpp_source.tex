@@ -1,0 +1,63 @@
+\doxysection{Sprite\+Sheet\+Image.\+hpp}
+\hypertarget{_sprite_sheet_image_8hpp_source}{}\label{_sprite_sheet_image_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Components/SpriteSheetImage.hpp@{AlphaEngine2.5D/Source/Engine/UI/Components/SpriteSheetImage.hpp}}
+\doxymbox{\hyperlink{_sprite_sheet_image_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_image_8hpp}{Engine/UI/Components/Image.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_sheet_8hpp}{Engine/Graphics/SpriteSheet.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a5c66de9fa09830053f25976a0cd52b02}{SpriteSheetImage}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Engine::SpriteSheet}}*\ m\_spriteSheet\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ AEGfxVertexList*\ m\_mesh\ =\ \textcolor{keyword}{nullptr};\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_color;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{Engine::AnimationClip}}*\ m\_currentClip\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_currentFrame\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_elapsedTime\ =\ 0.0f;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_playing\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ s\_emptyString;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ CreateSpritesheetMesh();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FreeMesh();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a5c66de9fa09830053f25976a0cd52b02}{SpriteSheetImage}}();}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a555bee0414ebf150680c88e0a6c9fe90}{\string~SpriteSheetImage}}();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a68ba0f535582288dbaf8e001c6850e67}{SetSpriteSheet}}(\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Engine::SpriteSheet}}*\ sheet);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_acffbc065ea3e16ca0ee00cf0941d519f}{Play}}(\textcolor{keyword}{const}\ std::string\&\ animationName);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a6325054f0d914e44042beb4473fccb73}{Stop}}();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a3aab8785f7cc67a0d1fc8d82a9d38537}{Pause}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a0f005a1c9fd2468ebd7573baf79f0c84}{Resume}}();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a018db9b819efb460851bb0551da11ddd}{IsPlaying}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_playing;\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_af48e25d395bc80814e1b18d4b0513a01}{GetCurrentAnimation}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a6eb020d06b445beb238fcbff56922a61}{SetFrame}}(\textcolor{keywordtype}{int}\ frame);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a8d93d0e81462651917710c76ddfe6e7e}{GetFrame}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentFrame;\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_ad891529928afc10fc2784f7e1cdae4c4}{SetColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_color\ =\ color;\ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a17f4d54d21305672170e399a537c7676}{GetColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_color;\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_af7daa6c7197100a36dea2a3d86a17331}{Update}}(f32\ dt)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_ac7da2ad657f030f840ec05299c46c1eb}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ \ \ \ \ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

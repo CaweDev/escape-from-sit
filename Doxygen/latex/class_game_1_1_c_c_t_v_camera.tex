@@ -1,0 +1,304 @@
+\doxysection{Game::\+CCTVCamera Class Reference}
+\hypertarget{class_game_1_1_c_c_t_v_camera}{}\label{class_game_1_1_c_c_t_v_camera}\index{Game::CCTVCamera@{Game::CCTVCamera}}
+
+
+{\ttfamily \+\#include $<$CCTVCamera.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} $>$ \& \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a31638d9e5d8674ecacfe83b258e7ee98}{Get\+Vision\+Polygon}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_afbf4dca2c3572a0c414e719df0806fc4}{Is\+Tile\+Visible}} (int tx, int ty) const
+\begin{DoxyCompactList}\small\item\em Test if a given tile is visible by this camera. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a7b039f27d2a4184a42433d546125d9af}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Main per-\/frame update:\+ detection, sounds, minimap and sprite color. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aa49973e491db15598c623278499b179d}{Raycast\+To\+Wall}} (\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} from, \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} dir, float max\+Dist) const
+\begin{DoxyCompactList}\small\item\em Raycast in a direction until a wall is hit or max\+Dist reached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_ad763ee01a5872f65fb3a254fc301ff9a}{tile}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a50ebf9b3e5eb1157d7714895d1472784}{tf}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_ab552a2caecd6912ca12d0dca807d171e}{hud}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::\+\+Minimap}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a65c0375738d372fed9c80f90df5d6d07}{minimap}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a5fa62a32d8ea4e7af009773f53a7df1e}{sprite\+Renderer}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a10d73bdbc366a3b31ab25c0b1cb23715}{has\+Last\+Seen}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a5cc1b6a0a564a281f5b9083540297a8b}{last\+Seen\+Tile}} = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}(-\/1, -\/1)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a01746242be66a91151f21972cabf155f}{last\+Seen\+World}} = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}(0, 0)
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a0ed81870384a62aca35f1da597cc4aad}{id}} = 0
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a8a1ca87fd2db1469b82de2a9f09b0b8d}{detect\+Radius}} = 3.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_afe302f054ba6c92046ec2fb4c5ed9618}{cone\+Width}} = 170.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a8d6db8e6175338d83fc9f42640b5322b}{max\+Range}} = 10.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aa5410c20536932416585359333f34629}{need\+LOS}} = true
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a0bbc586fa48059bed3378c06e37cc19c}{show\+Vision}} = true
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aae96538b0da83da021f14fa57ef590bd}{ray\+Count}} = 60
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a740478031529228ea68fda0dc6e8da9d}{ray\+Step\+Per\+Unit}} = 12.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_aedf83b465bafeceaee212741a81aafab}{is\+Seeing\+Player}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a788015841e6072bb7f993e7d8153e43d}{just\+Spotted}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a1aed6ff2f2685ed3b803d9246493de0d}{is\+Disabled}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a9b245c1cec82d283c3fc38e48964af17}{disabled\+Time\+Remaining}} = 0.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a31638d9e5d8674ecacfe83b258e7ee98}\index{Game::CCTVCamera@{Game::CCTVCamera}!GetVisionPolygon@{GetVisionPolygon}}
+\index{GetVisionPolygon@{GetVisionPolygon}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{GetVisionPolygon()}{GetVisionPolygon()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a31638d9e5d8674ecacfe83b258e7ee98} 
+const std::\+vector$<$ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} $>$ \& Game::\+\+CCTVCamera::\+\+Get\+Vision\+Polygon (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_afbf4dca2c3572a0c414e719df0806fc4}\index{Game::CCTVCamera@{Game::CCTVCamera}!IsTileVisible@{IsTileVisible}}
+\index{IsTileVisible@{IsTileVisible}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{IsTileVisible()}{IsTileVisible()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_afbf4dca2c3572a0c414e719df0806fc4} 
+bool Game::\+\+CCTVCamera::\+\+Is\+Tile\+Visible (\begin{DoxyParamCaption}\item[{int}]{tx}{, }\item[{int}]{ty}{}\end{DoxyParamCaption}) const}
+
+
+
+Test if a given tile is visible by this camera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tx} & \+[in]\+ Tile X\\
+\hline
+{\em ty} & \+[in]\+ Tile Y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if tile visible 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_aa49973e491db15598c623278499b179d}\index{Game::CCTVCamera@{Game::CCTVCamera}!RaycastToWall@{RaycastToWall}}
+\index{RaycastToWall@{RaycastToWall}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{RaycastToWall()}{RaycastToWall()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_aa49973e491db15598c623278499b179d} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+CCTVCamera::\+\+Raycast\+To\+Wall (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}}]{from}{, }\item[{\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}}]{dir}{, }\item[{float}]{max\+Dist}{}\end{DoxyParamCaption}) const}
+
+
+
+Raycast in a direction until a wall is hit or max\+Dist reached. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em from} & \+[in]\+ Origin\\
+\hline
+{\em dir} & \+[in]\+ Unit direction\\
+\hline
+{\em max\+Dist} & \+[in]\+ Maximum distance \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Impact position 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a7b039f27d2a4184a42433d546125d9af}\index{Game::CCTVCamera@{Game::CCTVCamera}!Update@{Update}}
+\index{Update@{Update}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a7b039f27d2a4184a42433d546125d9af} 
+void Game::\+\+CCTVCamera::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Main per-\/frame update:\+ detection, sounds, minimap and sprite color. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_c_c_t_v_camera_afe302f054ba6c92046ec2fb4c5ed9618}\index{Game::CCTVCamera@{Game::CCTVCamera}!coneWidth@{coneWidth}}
+\index{coneWidth@{coneWidth}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{coneWidth}{coneWidth}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_afe302f054ba6c92046ec2fb4c5ed9618} 
+float Game::\+\+CCTVCamera::\+cone\+Width = 170.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a8a1ca87fd2db1469b82de2a9f09b0b8d}\index{Game::CCTVCamera@{Game::CCTVCamera}!detectRadius@{detectRadius}}
+\index{detectRadius@{detectRadius}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{detectRadius}{detectRadius}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a8a1ca87fd2db1469b82de2a9f09b0b8d} 
+float Game::\+\+CCTVCamera::\+detect\+Radius = 3.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a9b245c1cec82d283c3fc38e48964af17}\index{Game::CCTVCamera@{Game::CCTVCamera}!disabledTimeRemaining@{disabledTimeRemaining}}
+\index{disabledTimeRemaining@{disabledTimeRemaining}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{disabledTimeRemaining}{disabledTimeRemaining}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a9b245c1cec82d283c3fc38e48964af17} 
+float Game::\+\+CCTVCamera::\+disabled\+Time\+Remaining = 0.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a10d73bdbc366a3b31ab25c0b1cb23715}\index{Game::CCTVCamera@{Game::CCTVCamera}!hasLastSeen@{hasLastSeen}}
+\index{hasLastSeen@{hasLastSeen}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{hasLastSeen}{hasLastSeen}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a10d73bdbc366a3b31ab25c0b1cb23715} 
+bool Game::\+\+CCTVCamera::\+has\+Last\+Seen = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_ab552a2caecd6912ca12d0dca807d171e}\index{Game::CCTVCamera@{Game::CCTVCamera}!hud@{hud}}
+\index{hud@{hud}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{hud}{hud}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_ab552a2caecd6912ca12d0dca807d171e} 
+\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVCamera::\+hud = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a0ed81870384a62aca35f1da597cc4aad}\index{Game::CCTVCamera@{Game::CCTVCamera}!id@{id}}
+\index{id@{id}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a0ed81870384a62aca35f1da597cc4aad} 
+int Game::\+\+CCTVCamera::\+id = 0}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a1aed6ff2f2685ed3b803d9246493de0d}\index{Game::CCTVCamera@{Game::CCTVCamera}!isDisabled@{isDisabled}}
+\index{isDisabled@{isDisabled}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{isDisabled}{isDisabled}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a1aed6ff2f2685ed3b803d9246493de0d} 
+bool Game::\+\+CCTVCamera::\+is\+Disabled = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_aedf83b465bafeceaee212741a81aafab}\index{Game::CCTVCamera@{Game::CCTVCamera}!isSeeingPlayer@{isSeeingPlayer}}
+\index{isSeeingPlayer@{isSeeingPlayer}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{isSeeingPlayer}{isSeeingPlayer}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_aedf83b465bafeceaee212741a81aafab} 
+bool Game::\+\+CCTVCamera::\+is\+Seeing\+Player = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a788015841e6072bb7f993e7d8153e43d}\index{Game::CCTVCamera@{Game::CCTVCamera}!justSpotted@{justSpotted}}
+\index{justSpotted@{justSpotted}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{justSpotted}{justSpotted}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a788015841e6072bb7f993e7d8153e43d} 
+bool Game::\+\+CCTVCamera::\+just\+Spotted = false}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a5cc1b6a0a564a281f5b9083540297a8b}\index{Game::CCTVCamera@{Game::CCTVCamera}!lastSeenTile@{lastSeenTile}}
+\index{lastSeenTile@{lastSeenTile}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{lastSeenTile}{lastSeenTile}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a5cc1b6a0a564a281f5b9083540297a8b} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+CCTVCamera::\+last\+Seen\+Tile = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}(-\/1, -\/1)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a01746242be66a91151f21972cabf155f}\index{Game::CCTVCamera@{Game::CCTVCamera}!lastSeenWorld@{lastSeenWorld}}
+\index{lastSeenWorld@{lastSeenWorld}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{lastSeenWorld}{lastSeenWorld}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a01746242be66a91151f21972cabf155f} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+CCTVCamera::\+last\+Seen\+World = \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}}(0, 0)}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a8d6db8e6175338d83fc9f42640b5322b}\index{Game::CCTVCamera@{Game::CCTVCamera}!maxRange@{maxRange}}
+\index{maxRange@{maxRange}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{maxRange}{maxRange}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a8d6db8e6175338d83fc9f42640b5322b} 
+float Game::\+\+CCTVCamera::\+max\+Range = 10.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a65c0375738d372fed9c80f90df5d6d07}\index{Game::CCTVCamera@{Game::CCTVCamera}!minimap@{minimap}}
+\index{minimap@{minimap}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{minimap}{minimap}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a65c0375738d372fed9c80f90df5d6d07} 
+\doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::\+\+Minimap}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVCamera::\+minimap = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_aa5410c20536932416585359333f34629}\index{Game::CCTVCamera@{Game::CCTVCamera}!needLOS@{needLOS}}
+\index{needLOS@{needLOS}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{needLOS}{needLOS}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_aa5410c20536932416585359333f34629} 
+bool Game::\+\+CCTVCamera::\+need\+LOS = true}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_aae96538b0da83da021f14fa57ef590bd}\index{Game::CCTVCamera@{Game::CCTVCamera}!rayCount@{rayCount}}
+\index{rayCount@{rayCount}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{rayCount}{rayCount}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_aae96538b0da83da021f14fa57ef590bd} 
+int Game::\+\+CCTVCamera::\+ray\+Count = 60}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a740478031529228ea68fda0dc6e8da9d}\index{Game::CCTVCamera@{Game::CCTVCamera}!rayStepPerUnit@{rayStepPerUnit}}
+\index{rayStepPerUnit@{rayStepPerUnit}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{rayStepPerUnit}{rayStepPerUnit}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a740478031529228ea68fda0dc6e8da9d} 
+float Game::\+\+CCTVCamera::\+ray\+Step\+Per\+Unit = 12.\+0f}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a0bbc586fa48059bed3378c06e37cc19c}\index{Game::CCTVCamera@{Game::CCTVCamera}!showVision@{showVision}}
+\index{showVision@{showVision}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{showVision}{showVision}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a0bbc586fa48059bed3378c06e37cc19c} 
+bool Game::\+\+CCTVCamera::\+show\+Vision = true}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a5fa62a32d8ea4e7af009773f53a7df1e}\index{Game::CCTVCamera@{Game::CCTVCamera}!spriteRenderer@{spriteRenderer}}
+\index{spriteRenderer@{spriteRenderer}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{spriteRenderer}{spriteRenderer}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a5fa62a32d8ea4e7af009773f53a7df1e} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVCamera::\+sprite\+Renderer = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_a50ebf9b3e5eb1157d7714895d1472784}\index{Game::CCTVCamera@{Game::CCTVCamera}!tf@{tf}}
+\index{tf@{tf}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{tf}{tf}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_a50ebf9b3e5eb1157d7714895d1472784} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVCamera::\+tf = nullptr}
+
+\Hypertarget{class_game_1_1_c_c_t_v_camera_ad763ee01a5872f65fb3a254fc301ff9a}\index{Game::CCTVCamera@{Game::CCTVCamera}!tile@{tile}}
+\index{tile@{tile}!Game::CCTVCamera@{Game::CCTVCamera}}
+\doxysubsubsection{\texorpdfstring{tile}{tile}}
+{\footnotesize\ttfamily \label{class_game_1_1_c_c_t_v_camera_ad763ee01a5872f65fb3a254fc301ff9a} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}\texorpdfstring{$\ast$}{*} Game::\+\+CCTVCamera::\+tile = nullptr}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+CCTV/\+\doxymbox{\hyperlink{_c_c_t_v_camera_8hpp}{CCTVCamera.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+CCTV/\+\doxymbox{\hyperlink{_c_c_t_v_camera_8cpp}{CCTVCamera.\+cpp}}\end{DoxyCompactItemize}

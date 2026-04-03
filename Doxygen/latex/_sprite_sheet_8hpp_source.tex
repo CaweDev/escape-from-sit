@@ -1,0 +1,57 @@
+\doxysection{Sprite\+Sheet.\+hpp}
+\hypertarget{_sprite_sheet_8hpp_source}{}\label{_sprite_sheet_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/SpriteSheet.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/SpriteSheet.hpp}}
+\doxymbox{\hyperlink{_sprite_sheet_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture2_d_8hpp}{Texture2D.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{AnimationClip}}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_acf02b4d99e32f1953c72c94b588ea9ac}{name}};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_ae2a5118ddfdf848bba4a97fed888056b}{startFrame}}\ =\ 0;\ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a3a6e1ef2d049b3925cdda853ebafaf8a}{frameCount}}\ =\ 1;\ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a13a677c4152eeafc8cad78e758595dca}{frameRate}}\ =\ 10.0f;\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a6233c9ff0594c35bd54be2849015c7a3}{loop}}\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{SpriteSheet}}\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{SpriteSheet}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00041\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a9f665607cde8c7bfcf62ab40b5e3855c}{\string~SpriteSheet}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Non-\/copyable\ (shared\ asset)}}
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a2a48ae3ba9c6e518f15c0ec37e815683}{SpriteSheet}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{SpriteSheet}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00045\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{SpriteSheet}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a04dbcaceb68d8d9def4b25221a8168b9}{operator=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{SpriteSheet}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_af3b71fe3575ff6223018d73fab7bdae5}{Load}}(\textcolor{keyword}{const}\ std::string\&\ filepath,\ \textcolor{keywordtype}{int}\ rows,\ \textcolor{keywordtype}{int}\ cols);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a668cc9d77d1acc419f43dc2348e62754}{AddAnimation}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}\ startFrame,\ \textcolor{keywordtype}{int}\ frameCount,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ fps,\ \textcolor{keywordtype}{bool}\ loop\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{AnimationClip}}*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_afc2ad10cb70a25f0a74f3315debfe7b3}{GetAnimation}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a4baadfd9e5656ab4d1a6ae29ef33c331}{GetTexture}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ texture;\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_ab0272463bef7f104f79449b774b6f04c}{GetRows}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ rows;\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a19ffed4598218078350f90f676643b19}{GetCols}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ cols;\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_afa1b9907dd48430bb5634ab3f8ce36bf}{GetTotalCells}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ rows\ *\ cols;\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a59aa96061caf2f51cea948ba02174a77}{IsReady}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ texture\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ rows\ =\ 1;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ cols\ =\ 1;}
+\DoxyCodeLine{00093\ \ \ \ \ std::unordered\_map<std::string,\ AnimationClip>\ animations;}
+\DoxyCodeLine{00094\ \};}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

@@ -1,0 +1,192 @@
+\doxysection{Engine::\+Sprite\+Sheet Class Reference}
+\hypertarget{class_engine_1_1_sprite_sheet}{}\label{class_engine_1_1_sprite_sheet}\index{Engine::SpriteSheet@{Engine::SpriteSheet}}
+
+
+Shared data asset representing a spritesheet with named animations.  
+
+
+
+
+{\ttfamily \+\#include $<$Sprite\+Sheet.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{Sprite\+Sheet}} ()=default
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a9f665607cde8c7bfcf62ab40b5e3855c}{\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet}} ()=default
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a2a48ae3ba9c6e518f15c0ec37e815683}{Sprite\+Sheet}} (const Sprite\+Sheet \&)=delete
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{Sprite\+Sheet}} \& \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a04dbcaceb68d8d9def4b25221a8168b9}{operator=}} (const \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{Sprite\+Sheet}} \&)=delete
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_af3b71fe3575ff6223018d73fab7bdae5}{Load}} (const std::\+string \&filepath, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Load texture and set grid dimensions. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a668cc9d77d1acc419f43dc2348e62754}{Add\+Animation}} (const std::\+string \&name, int start\+Frame, int frame\+Count, float fps, bool loop=true)
+\begin{DoxyCompactList}\small\item\em Define or overwrite a named animation clip. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{Animation\+Clip}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_afc2ad10cb70a25f0a74f3315debfe7b3}{Get\+Animation}} (const std::\+string \&name) const
+\begin{DoxyCompactList}\small\item\em Get an animation clip by name, or nullptr if not found. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a4baadfd9e5656ab4d1a6ae29ef33c331}{Get\+Texture}} () const
+\begin{DoxyCompactList}\small\item\em Get the underlying texture. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_ab0272463bef7f104f79449b774b6f04c}{Get\+Rows}} () const
+\begin{DoxyCompactList}\small\item\em Get grid row count. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a19ffed4598218078350f90f676643b19}{Get\+Cols}} () const
+\begin{DoxyCompactList}\small\item\em Get grid column count. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_afa1b9907dd48430bb5634ab3f8ce36bf}{Get\+Total\+Cells}} () const
+\begin{DoxyCompactList}\small\item\em Get total cells in the grid (rows \texorpdfstring{$\ast$}{*} cols). \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a59aa96061caf2f51cea948ba02174a77}{Is\+Ready}} () const
+\begin{DoxyCompactList}\small\item\em Check if texture is loaded and grid is valid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Shared data asset representing a spritesheet with named animations. 
+
+Holds a texture reference, grid layout (rows x cols), and a map of named Animation\+Clips. Multiple Sprite\+Sheet\+Renderers can share the same \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} while each playing different animations independently.
+
+Cached by \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager} via Get\+Sprite\+Sheet(). 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_sprite_sheet_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65} 
+Engine::\+\+Sprite\+Sheet::\+\+Sprite\+Sheet (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_sprite_sheet_a9f665607cde8c7bfcf62ab40b5e3855c}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!````~SpriteSheet@{\texorpdfstring{$\sim$}{\string~}SpriteSheet}}
+\index{````~SpriteSheet@{\texorpdfstring{$\sim$}{\string~}SpriteSheet}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SpriteSheet()}{\string~SpriteSheet()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a9f665607cde8c7bfcf62ab40b5e3855c} 
+Engine::\+\+Sprite\+Sheet::\+\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_sprite_sheet_a2a48ae3ba9c6e518f15c0ec37e815683}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!SpriteSheet@{SpriteSheet}}
+\index{SpriteSheet@{SpriteSheet}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{SpriteSheet()}{SpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a2a48ae3ba9c6e518f15c0ec37e815683} 
+Engine::\+\+Sprite\+Sheet::\+\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const Sprite\+Sheet \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_sprite_sheet_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_sprite_sheet_a668cc9d77d1acc419f43dc2348e62754}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!AddAnimation@{AddAnimation}}
+\index{AddAnimation@{AddAnimation}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{AddAnimation()}{AddAnimation()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a668cc9d77d1acc419f43dc2348e62754} 
+void Engine::\+\+Sprite\+Sheet::\+\+Add\+Animation (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{, }\item[{int}]{start\+Frame}{, }\item[{int}]{frame\+Count}{, }\item[{float}]{fps}{, }\item[{bool}]{loop}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+
+
+Define or overwrite a named animation clip. 
+
+If an animation with the same name already exists, it is silently overwritten. Frame indices are row-\/major (0 = top-\/left cell).
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Unique name for this animation (e.\+g. "{}idle"{}, "{}walk"{}) \\
+\hline
+{\em start\+Frame} & Index of the first frame in the clip \\
+\hline
+{\em frame\+Count} & Number of frames in the clip \\
+\hline
+{\em fps} & Playback speed in frames per second \\
+\hline
+{\em loop} & Whether the animation loops (default:\+ true) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_sprite_sheet_afc2ad10cb70a25f0a74f3315debfe7b3}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!GetAnimation@{GetAnimation}}
+\index{GetAnimation@{GetAnimation}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetAnimation()}{GetAnimation()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_afc2ad10cb70a25f0a74f3315debfe7b3} 
+const \doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{Animation\+Clip}} \texorpdfstring{$\ast$}{*} Engine::\+\+Sprite\+Sheet::\+\+Get\+Animation (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{}\end{DoxyParamCaption}) const}
+
+
+
+Get an animation clip by name, or nullptr if not found. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_a19ffed4598218078350f90f676643b19}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!GetCols@{GetCols}}
+\index{GetCols@{GetCols}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetCols()}{GetCols()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a19ffed4598218078350f90f676643b19} 
+int Engine::\+\+Sprite\+Sheet::\+\+Get\+Cols (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get grid column count. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_ab0272463bef7f104f79449b774b6f04c}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!GetRows@{GetRows}}
+\index{GetRows@{GetRows}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetRows()}{GetRows()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_ab0272463bef7f104f79449b774b6f04c} 
+int Engine::\+\+Sprite\+Sheet::\+\+Get\+Rows (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get grid row count. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_a4baadfd9e5656ab4d1a6ae29ef33c331}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!GetTexture@{GetTexture}}
+\index{GetTexture@{GetTexture}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetTexture()}{GetTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a4baadfd9e5656ab4d1a6ae29ef33c331} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Sprite\+Sheet::\+\+Get\+Texture (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the underlying texture. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_afa1b9907dd48430bb5634ab3f8ce36bf}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!GetTotalCells@{GetTotalCells}}
+\index{GetTotalCells@{GetTotalCells}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{GetTotalCells()}{GetTotalCells()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_afa1b9907dd48430bb5634ab3f8ce36bf} 
+int Engine::\+\+Sprite\+Sheet::\+\+Get\+Total\+Cells (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get total cells in the grid (rows \texorpdfstring{$\ast$}{*} cols). 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_a59aa96061caf2f51cea948ba02174a77}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!IsReady@{IsReady}}
+\index{IsReady@{IsReady}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{IsReady()}{IsReady()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a59aa96061caf2f51cea948ba02174a77} 
+bool Engine::\+\+Sprite\+Sheet::\+\+Is\+Ready (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Check if texture is loaded and grid is valid. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_af3b71fe3575ff6223018d73fab7bdae5}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!Load@{Load}}
+\index{Load@{Load}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_af3b71fe3575ff6223018d73fab7bdae5} 
+bool Engine::\+\+Sprite\+Sheet::\+\+Load (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})}
+
+
+
+Load texture and set grid dimensions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to spritesheet image (PNG) \\
+\hline
+{\em rows} & Number of rows in the spritesheet grid \\
+\hline
+{\em cols} & Number of columns in the spritesheet grid \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if texture loaded successfully 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_sprite_sheet_a04dbcaceb68d8d9def4b25221a8168b9}\index{Engine::SpriteSheet@{Engine::SpriteSheet}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine::SpriteSheet@{Engine::SpriteSheet}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_a04dbcaceb68d8d9def4b25221a8168b9} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{Sprite\+Sheet}} \& Engine::\+\+Sprite\+Sheet::\+operator= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_a62fd34e430853b588308609ff14a5a65}{Sprite\+Sheet}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_sheet_8hpp}{Sprite\+Sheet.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_sheet_8cpp}{Sprite\+Sheet.\+cpp}}\end{DoxyCompactItemize}

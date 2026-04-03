@@ -1,6 +1,6 @@
 /**
- * @file FPSScene.hpp
- * @brief Demo scene for Doom-style raycasting with physics
+ * @file PuzzleScene.hpp
+ * @brief Puzzle scene definition
  */
 #pragma once
 

@@ -1,0 +1,85 @@
+\doxysection{Reflection.\+hpp}
+\hypertarget{_reflection_8hpp_source}{}\label{_reflection_8hpp_source}\index{AlphaEngine2.5D/Source/Editor/Reflection.hpp@{AlphaEngine2.5D/Source/Editor/Reflection.hpp}}
+\doxymbox{\hyperlink{_reflection_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ Start\ Header\ ************************************************************************/}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ End\ Header\ **************************************************************************/}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_game_object_8hpp}{Engine/Core/GameObject.hpp}}"{}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_a_e_editor}{AEEditor}}}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{DataType}}}
+\DoxyCodeLine{00031\ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1686a6c336b71b36d77354cea19a8b52}{Int}},}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa22ae0e2b89e5e3d477f988cc36d3272b}{Float}},}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac26f15e86e3de4c398a8273272aba034}{Bool}},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa1bebc5ae2822f8e361fb0ce57b5e09e2}{Vector2}},}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa02b4dab58bbc49e0851fb3fd8df520cc}{Vector3}},}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28facb5feb1b7314637725a2e73bdc9f7295}{Color}},}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa51f2b7b14433aa22c67d1f4fc18943cd}{Sprite}},}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa47945664520c45ad70e9c4b667ea1915}{SpriteSheet}},}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fa27118326006d3829667a400ad23d5d98}{String}},}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28fac907926ec1a512d0ea7a434ca3c9aa9f}{KeyCode}}}
+\DoxyCodeLine{00042\ \ \ \ \ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor}{FieldDescriptor}}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor_aa8991943b8a2a7c220bcec0a4e6775c8}{name}};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{DataType}}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor_a9f948718a95665a83679098d4502e6b5}{type}};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor_ae27a5ba68e40fd49ca64ea9aed721a1e}{offset}};}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{using\ }\doxymbox{\hyperlink{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34}{InstantiateFn}}\ =\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ *(*)(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *);}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{using\ }\doxymbox{\hyperlink{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822}{RemoveFn}}\ =\ void\ (*)(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor}{TypeDescriptor}}}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor_aa83a35624b67f74a91fa6de55c4b37cc}{name}};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ std::vector<FieldDescriptor>\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor_a7fe00e5ab314edb709ef4c6cbf5e166f}{fields}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_a64e20701f20978899a1f4c0d34302e34}{InstantiateFn}}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor_a865d4a270c01dbb812f48254b896a59f}{instantiate}};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_a_e_editor_af8d95dcb0d9aa55647de53c67b124822}{RemoveFn}}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor_a9f258d0943442b45de3d2d2c35b24bd6}{remove}};}
+\DoxyCodeLine{00058\ \ \ \ \ \};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_e_editor_1_1_registry}{Registry}}}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::type\_index,\ TypeDescriptor>\ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ std::type\_index>\ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_aa7c6dc4c0045609581204dbd0aa27563}{nameToType}};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ ClassType>}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_a00728a51d4a396f1c715819084e95cb8}{RegisterClassType}}(\textcolor{keyword}{const}\ std::string\ \&className)}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ std::type\_index\ typeIdx\ =\ std::type\_index(\textcolor{keyword}{typeid}(ClassType));}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}}[typeIdx]}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .name\ =\ className;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}}[typeIdx].instantiate\ =\ [](\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *go)\ -\/>\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ *}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ go-\/>AddComponent<ClassType>();}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}}[typeIdx].remove\ =\ [](\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *go)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ go-\/>RemoveComponent<ClassType>();}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_aa7c6dc4c0045609581204dbd0aa27563}{nameToType}}.emplace(className,\ typeIdx);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ ClassType>}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_af1a2de8c1fc710970879ebf5d88e3858}{RegisterFieldType}}(\textcolor{keyword}{const}\ std::string\ \&fieldName,\ \textcolor{keywordtype}{size\_t}\ offset,\ \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{DataType}}\ type)}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}}[std::type\_index(\textcolor{keyword}{typeid}(ClassType))].fields.push\_back(\{fieldName,\ type,\ offset\});}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \};}
+\DoxyCodeLine{00091\ \}}
+
+\end{DoxyCode}

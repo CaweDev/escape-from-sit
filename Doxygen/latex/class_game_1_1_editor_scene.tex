@@ -1,0 +1,210 @@
+\doxysection{Game::\+Editor\+Scene Class Reference}
+\hypertarget{class_game_1_1_editor_scene}{}\label{class_game_1_1_editor_scene}\index{Game::EditorScene@{Game::EditorScene}}
+
+
+{\ttfamily \+\#include $<$Editor\+Scene.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}.
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone}{Zone}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_editor_scene_a89c229ebb1081ba22231983a9f7d23d3}{Editor\+Scene}} ()
+\begin{DoxyCompactList}\small\item\em Construct an \doxylink{class_game_1_1_editor_scene}{Editor\+Scene} used for in-\/engine editing. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_editor_scene_ab3a5ca195abd7ec9edcc378177381968}{Get\+Zone\+Id}} (int tx, int ty) const
+\begin{DoxyCompactList}\small\item\em Determine zone id for a given tile coord. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_editor_scene_aae23a178ac1bff3768960b67b0cebf5c}{On\+Load}} () override
+\begin{DoxyCompactList}\small\item\em Load editor scene map, spawn existing objects for editing. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_editor_scene_ade93877881c16a1e19d84865e91f911b}{On\+Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update handling editor camera controls. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_editor_scene_a164586b9323d668a69e131c2260f6a4f}{On\+Unload}} () override
+\begin{DoxyCompactList}\small\item\em Unload editor scene (no-\/op). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{On\+After\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_camera}{Engine::\+\+Camera}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_editor_scene_ab5b4c1dc4c21f36ca77294b83aad67f9}{editor\+Camera}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_editor_scene_ac5ac8da3ae96dbc959dba658d2b0b7d4}{camera\+Tf}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_editor_scene_aa4f953495c7e431a043c2ee9ed8f1b2f}{map\+Width}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_editor_scene_a33177447e3b529b6dc8987918eed5d7a}{map\+Height}}
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone}{Zone}} $>$ \doxymbox{\hyperlink{class_game_1_1_editor_scene_afd2a8ef6ef5cdc45a0bd384984912cf0}{zones}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_editor_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_editor_scene_a89c229ebb1081ba22231983a9f7d23d3}\index{Game::EditorScene@{Game::EditorScene}!EditorScene@{EditorScene}}
+\index{EditorScene@{EditorScene}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{EditorScene()}{EditorScene()}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_a89c229ebb1081ba22231983a9f7d23d3} 
+Game::\+\+Editor\+Scene::\+\+Editor\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Construct an \doxylink{class_game_1_1_editor_scene}{Editor\+Scene} used for in-\/engine editing. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_editor_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_editor_scene_ab3a5ca195abd7ec9edcc378177381968}\index{Game::EditorScene@{Game::EditorScene}!GetZoneId@{GetZoneId}}
+\index{GetZoneId@{GetZoneId}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{GetZoneId()}{GetZoneId()}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_ab3a5ca195abd7ec9edcc378177381968} 
+int Game::\+\+Editor\+Scene::\+\+Get\+Zone\+Id (\begin{DoxyParamCaption}\item[{int}]{tx}{, }\item[{int}]{ty}{}\end{DoxyParamCaption}) const}
+
+
+
+Determine zone id for a given tile coord. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tx} & \+[in]\+ Tile X\\
+\hline
+{\em ty} & \+[in]\+ Tile Y \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zone id or -\/1 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_editor_scene_aae23a178ac1bff3768960b67b0cebf5c}\index{Game::EditorScene@{Game::EditorScene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_aae23a178ac1bff3768960b67b0cebf5c} 
+void Game::\+\+Editor\+Scene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Load editor scene map, spawn existing objects for editing. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_editor_scene_a164586b9323d668a69e131c2260f6a4f}\index{Game::EditorScene@{Game::EditorScene}!OnUnload@{OnUnload}}
+\index{OnUnload@{OnUnload}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{OnUnload()}{OnUnload()}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_a164586b9323d668a69e131c2260f6a4f} 
+void Game::\+\+Editor\+Scene::\+\+On\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Unload editor scene (no-\/op). 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_editor_scene_ade93877881c16a1e19d84865e91f911b}\index{Game::EditorScene@{Game::EditorScene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_ade93877881c16a1e19d84865e91f911b} 
+void Game::\+\+Editor\+Scene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update handling editor camera controls. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{Engine::\+\+Scene}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_editor_scene_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_editor_scene_ac5ac8da3ae96dbc959dba658d2b0b7d4}\index{Game::EditorScene@{Game::EditorScene}!cameraTf@{cameraTf}}
+\index{cameraTf@{cameraTf}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{cameraTf}{cameraTf}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_ac5ac8da3ae96dbc959dba658d2b0b7d4} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Editor\+Scene::\+camera\+Tf}
+
+\Hypertarget{class_game_1_1_editor_scene_ab5b4c1dc4c21f36ca77294b83aad67f9}\index{Game::EditorScene@{Game::EditorScene}!editorCamera@{editorCamera}}
+\index{editorCamera@{editorCamera}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{editorCamera}{editorCamera}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_ab5b4c1dc4c21f36ca77294b83aad67f9} 
+\doxymbox{\hyperlink{class_engine_1_1_camera}{Engine::\+\+Camera}}\texorpdfstring{$\ast$}{*} Game::\+\+Editor\+Scene::\+editor\+Camera}
+
+\Hypertarget{class_game_1_1_editor_scene_a33177447e3b529b6dc8987918eed5d7a}\index{Game::EditorScene@{Game::EditorScene}!mapHeight@{mapHeight}}
+\index{mapHeight@{mapHeight}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{mapHeight}{mapHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_a33177447e3b529b6dc8987918eed5d7a} 
+int Game::\+\+Editor\+Scene::\+map\+Height}
+
+\Hypertarget{class_game_1_1_editor_scene_aa4f953495c7e431a043c2ee9ed8f1b2f}\index{Game::EditorScene@{Game::EditorScene}!mapWidth@{mapWidth}}
+\index{mapWidth@{mapWidth}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{mapWidth}{mapWidth}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_aa4f953495c7e431a043c2ee9ed8f1b2f} 
+int Game::\+\+Editor\+Scene::\+map\+Width}
+
+\Hypertarget{class_game_1_1_editor_scene_afd2a8ef6ef5cdc45a0bd384984912cf0}\index{Game::EditorScene@{Game::EditorScene}!zones@{zones}}
+\index{zones@{zones}!Game::EditorScene@{Game::EditorScene}}
+\doxysubsubsection{\texorpdfstring{zones}{zones}}
+{\footnotesize\ttfamily \label{class_game_1_1_editor_scene_afd2a8ef6ef5cdc45a0bd384984912cf0} 
+std::\+vector$<$\doxymbox{\hyperlink{struct_game_1_1_editor_scene_1_1_zone}{Zone}}$>$ Game::\+\+Editor\+Scene::\+zones}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_editor_scene_8hpp}{Editor\+Scene.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_editor_scene_8cpp}{Editor\+Scene.\+cpp}}\end{DoxyCompactItemize}

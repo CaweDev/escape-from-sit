@@ -1,0 +1,28 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Graphics/\+\+Texture\+Utils.hpp File Reference}
+\hypertarget{_texture_utils_8hpp}{}\label{_texture_utils_8hpp}\index{AlphaEngine2.5D/Source/Engine/Graphics/TextureUtils.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/TextureUtils.hpp}}
+
+
+Static utility class for texture operations not provided by AEEngine.  
+
+
+{\ttfamily \+\#include "{}AEEngine.\+h"{}}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_cpu_texture}{Engine::\+\+Cpu\+Texture}}
+\begin{DoxyCompactList}\small\item\em CPU-\/side copy of a texture\textquotesingle{}s pixel data, loaded via WIC. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_texture_utils}{Engine::\+\+Texture\+Utils}}
+\begin{DoxyCompactList}\small\item\em Static utility class for texture operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static utility class for texture operations not provided by AEEngine. 
+
+Provides CPU-\/side pixel loading via Windows Imaging Component (WIC). Extracted from Tile\+Map\+Renderer to enable reuse across the engine. 

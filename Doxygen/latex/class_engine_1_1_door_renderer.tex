@@ -1,0 +1,215 @@
+\doxysection{Engine::\+Door\+Renderer Class Reference}
+\hypertarget{class_engine_1_1_door_renderer}{}\label{class_engine_1_1_door_renderer}\index{Engine::DoorRenderer@{Engine::DoorRenderer}}
+
+
+Renders a door as a wall segment using raycasting projection.  
+
+
+
+
+{\ttfamily \+\#include $<$Door\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_door_renderer_aa6c69cdbe22b055e0e64810e2e4ff0e4}{Door\+Renderer}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a5463991225bebf575bdf5878c4c5b997}{\texorpdfstring{$\sim$}{\string~}\+Door\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a018778b36d4b3fb0bcf850992e88f3f5}{Render}} () override
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a8e7cbc3519af9e4e99fc5739d27cf1da}{Get\+Sorting\+Key}} () const override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a4218c116280b8de8f9c2ae628f83b044}{Set\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}new\+Sprite)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\texorpdfstring{$\sim$}{\string~}\+IRenderer}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{Set\+Ignore\+Fog}} (bool value)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{Get\+Ignore\+Fog}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a0a98a3d4fee4627e696323886c1b09cc}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+door.\+json"{})
+\begin{DoxyCompactList}\small\item\em Load \doxylink{class_engine_1_1_door_renderer}{Door\+Renderer} defaults from door.\+json. Call once at startup; newly created Door\+Renderers will pick up these defaults. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a0831af6ee294458e127da83f80a5b3a0}{sprite}}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a72fb95f971d12e0aeb446b8398b5aea5}{sprite\+Path}} = "{}"{}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a9833824c2ee604e7bbe3b77e5672e581}{color\+NS}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+4f, 0.\+2f, 1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_door_renderer_aa55e8cedfa85bd86dcbf9a61f9d26ca5}{color\+EW}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+5f, 0.\+35f, 0.\+18f, 1.\+0f)
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a9093651e9cbcdaf1c6bbe1f98309e3fc}{fov}} = 75.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlight\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignore\+Fog}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Renders a door as a wall segment using raycasting projection. 
+
+The door is rendered as a vertical wall segment that slides vertically based on the door\textquotesingle{}s open\+Amount. When fully open, nothing renders. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_door_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_door_renderer_aa6c69cdbe22b055e0e64810e2e4ff0e4}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!DoorRenderer@{DoorRenderer}}
+\index{DoorRenderer@{DoorRenderer}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{DoorRenderer()}{DoorRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_aa6c69cdbe22b055e0e64810e2e4ff0e4} 
+Engine::\+\+Door\+Renderer::\+\+Door\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_door_renderer_a5463991225bebf575bdf5878c4c5b997}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!````~DoorRenderer@{\texorpdfstring{$\sim$}{\string~}DoorRenderer}}
+\index{````~DoorRenderer@{\texorpdfstring{$\sim$}{\string~}DoorRenderer}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}DoorRenderer()}{\string~DoorRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a5463991225bebf575bdf5878c4c5b997} 
+Engine::\+\+Door\+Renderer::\+\texorpdfstring{$\sim$}{\string~}\+Door\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_door_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_door_renderer_a8e7cbc3519af9e4e99fc5739d27cf1da}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!GetSortingKey@{GetSortingKey}}
+\index{GetSortingKey@{GetSortingKey}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSortingKey()}{GetSortingKey()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a8e7cbc3519af9e4e99fc5739d27cf1da} 
+f32 Engine::\+\+Door\+Renderer::\+\+Get\+Sorting\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get sorting key (distance from camera, for depth sorting) 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_door_renderer_a0a98a3d4fee4627e696323886c1b09cc}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a0a98a3d4fee4627e696323886c1b09cc} 
+void Engine::\+\+Door\+Renderer::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+door.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load \doxylink{class_engine_1_1_door_renderer}{Door\+Renderer} defaults from door.\+json. Call once at startup; newly created Door\+Renderers will pick up these defaults. 
+
+\Hypertarget{class_engine_1_1_door_renderer_a018778b36d4b3fb0bcf850992e88f3f5}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!Render@{Render}}
+\index{Render@{Render}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a018778b36d4b3fb0bcf850992e88f3f5} 
+void Engine::\+\+Door\+Renderer::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Render the door 
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_door_renderer_a4218c116280b8de8f9c2ae628f83b044}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!SetSprite@{SetSprite}}
+\index{SetSprite@{SetSprite}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{SetSprite()}{SetSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a4218c116280b8de8f9c2ae628f83b044} 
+void Engine::\+\+Door\+Renderer::\+\+Set\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{new\+Sprite}{}\end{DoxyParamCaption})}
+
+Set sprite from shared pointer 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_door_renderer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_door_renderer_aa55e8cedfa85bd86dcbf9a61f9d26ca5}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!colorEW@{colorEW}}
+\index{colorEW@{colorEW}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{colorEW}{colorEW}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_aa55e8cedfa85bd86dcbf9a61f9d26ca5} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Door\+Renderer::\+color\+EW = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+5f, 0.\+35f, 0.\+18f, 1.\+0f)}
+
+Fallback color for East/\+\+West facing doors \Hypertarget{class_engine_1_1_door_renderer_a9833824c2ee604e7bbe3b77e5672e581}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!colorNS@{colorNS}}
+\index{colorNS@{colorNS}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{colorNS}{colorNS}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a9833824c2ee604e7bbe3b77e5672e581} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Door\+Renderer::\+color\+NS = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+4f, 0.\+2f, 1.\+0f)}
+
+Fallback color for North/\+\+South facing doors \Hypertarget{class_engine_1_1_door_renderer_a9093651e9cbcdaf1c6bbe1f98309e3fc}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!fov@{fov}}
+\index{fov@{fov}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a9093651e9cbcdaf1c6bbe1f98309e3fc} 
+f32 Engine::\+\+Door\+Renderer::\+fov = 75.\+0f}
+
+Field of view (should match \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer}) \Hypertarget{class_engine_1_1_door_renderer_a0831af6ee294458e127da83f80a5b3a0}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!sprite@{sprite}}
+\index{sprite@{sprite}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{sprite}{sprite}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a0831af6ee294458e127da83f80a5b3a0} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}\texorpdfstring{$\ast$}{*} Engine::\+\+Door\+Renderer::\+sprite}
+
+\doxylink{class_engine_1_1_sprite}{Sprite} for the door texture (optional) \Hypertarget{class_engine_1_1_door_renderer_a72fb95f971d12e0aeb446b8398b5aea5}\index{Engine::DoorRenderer@{Engine::DoorRenderer}!spritePath@{spritePath}}
+\index{spritePath@{spritePath}!Engine::DoorRenderer@{Engine::DoorRenderer}}
+\doxysubsubsection{\texorpdfstring{spritePath}{spritePath}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_renderer_a72fb95f971d12e0aeb446b8398b5aea5} 
+std::\+string Engine::\+\+Door\+Renderer::\+sprite\+Path = "{}"{}}
+
+Asset path for the sprite to be serialized by the editor 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_door_renderer_8hpp}{Door\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_door_renderer_8cpp}{Door\+Renderer.\+cpp}}\end{DoxyCompactItemize}

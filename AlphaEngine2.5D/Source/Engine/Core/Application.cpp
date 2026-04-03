@@ -24,70 +24,38 @@ void Application::Initialize(const std::string& configPath)
     targetFrameRate = config.targetFrameRate;
 }
 
-/*!
- * \brief [AUTO] Quit
- */
+
 void Application::Quit() {
     isRunning = false;
 }
 
-/*!
- * \brief [AUTO] GetWindowWidth
- * \return 
- */
-/*!
- * \brief [AUTO] GetWindowWidth
- * \return 
- */
+
+
 int Application::GetWindowWidth() {
     return AEGfxGetWindowWidth();
 }
 
-/*!
- * \brief [AUTO] GetWindowHeight
- * \return 
- */
-/*!
- * \brief [AUTO] GetWindowHeight
- * \return 
- */
+
+
 int Application::GetWindowHeight() {
     return AEGfxGetWindowHeight();
 }
 
-/*!
- * \brief [AUTO] WindowExists
- * \return 
- */
-/*!
- * \brief [AUTO] WindowExists
- * \return 
- */
+
+
 bool Application::WindowExists() {
     return AESysDoesWindowExist() != 0;
 }
 
-/*!
- * \brief [AUTO] RegisterPause
- * \param key [in]
- */
-/*!
- * \brief [AUTO] RegisterPause
- * \param key [in]
- */
+
+
 void Application::RegisterPause(const std::string& key) {
     pauseRegistry.insert(key);
     Time::SetGameSpeed(0.0f);
 }
 
-/*!
- * \brief [AUTO] UnregisterPause
- * \param key [in]
- */
-/*!
- * \brief [AUTO] UnregisterPause
- * \param key [in]
- */
+
+
 void Application::UnregisterPause(const std::string& key) {
     pauseRegistry.erase(key);
     if (pauseRegistry.empty()) {
@@ -95,26 +63,14 @@ void Application::UnregisterPause(const std::string& key) {
     }
 }
 
-/*!
- * \brief [AUTO] IsPaused
- * \return 
- */
-/*!
- * \brief [AUTO] IsPaused
- * \return 
- */
+
+
 bool Application::IsPaused() {
     return !pauseRegistry.empty();
 }
 
-/*!
- * \brief [AUTO] GetPauseCount
- * \return 
- */
-/*!
- * \brief [AUTO] GetPauseCount
- * \return 
- */
+
+
 size_t Application::GetPauseCount() {
     return pauseRegistry.size();
 }

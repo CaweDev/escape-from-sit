@@ -7,14 +7,8 @@
 
 namespace Engine {
 
-/*!
- * \brief [AUTO] GetBounds
- * \return 
- */
-/*!
- * \brief [AUTO] GetBounds
- * \return 
- */
+
+
 Bounds2D BoxCollider2D::GetBounds() const {
     Vector2 center = GetCenter();
     Vector2 halfSize = size * 0.5f;
@@ -31,16 +25,8 @@ Bounds2D BoxCollider2D::GetBounds() const {
     return bounds;
 }
 
-/*!
- * \brief [AUTO] ContainsPoint
- * \param point [in]
- * \return 
- */
-/*!
- * \brief [AUTO] ContainsPoint
- * \param point [in]
- * \return 
- */
+
+
 bool BoxCollider2D::ContainsPoint(const Vector2& point) const {
     Bounds2D bounds = GetBounds();
     return point.x >= bounds.min.x && point.x <= bounds.max.x &&

@@ -11,7 +11,7 @@
 namespace Engine {
 
 /**
- * @enum HitShape
+ * @enum InteractableHitShape
  * @brief Shape used for interaction hit detection
  */
 enum class InteractableHitShape {

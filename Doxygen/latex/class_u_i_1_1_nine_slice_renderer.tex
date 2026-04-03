@@ -1,0 +1,70 @@
+\doxysection{UI::\+Nine\+Slice\+Renderer Class Reference}
+\hypertarget{class_u_i_1_1_nine_slice_renderer}{}\label{class_u_i_1_1_nine_slice_renderer}\index{UI::NineSliceRenderer@{UI::NineSliceRenderer}}
+
+
+Static utility class for drawing 9-\/sliced images.  
+
+
+
+
+{\ttfamily \+\#include $<$Nine\+Slice\+Renderer.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_nine_slice_renderer_abe116f5412ea497d2e2ee8ec72e4768b}{Draw}} (const \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \&world\+Rect, \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}texture, const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color, f32 border\+Scale=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Draw a 9-\/sliced image using the texture\textquotesingle{}s intrinsic border. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static utility class for drawing 9-\/sliced images. 
+
+Builds a transient 18-\/triangle mesh with correct per-\/patch UVs, draws it in a single draw call, then frees it.
+
+Border widths are read from the texture\textquotesingle{}s Nine\+Slice\+Border (set via \doxylink{class_u_i_1_1_texture2_d_a7338a1a6aced4ea41cad1709b6c8e367}{Texture2\+D::\+\+Set\+Slice\+Border}). The border is an intrinsic property of the texture asset.
+
+9-\/Slice layout:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ \ TL\ \ \ \ |\ \ \ \ TC\ \ \ \ \ |\ \ \ TR\ \ \ |\ \ <-\/\ border.top\ (fixed\ height)}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ \ ML\ \ \ \ |\ \ \ \ MC\ \ \ \ \ |\ \ \ MR\ \ \ |\ \ <-\/\ stretches\ vertically}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{|\ \ BL\ \ \ \ |\ \ \ \ BC\ \ \ \ \ |\ \ \ BR\ \ \ |\ \ <-\/\ border.bottom\ (fixed\ height)}
+\DoxyCodeLine{+-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/+}
+\DoxyCodeLine{\ \ border\ \ \ \ stretches\ \ \ border}
+\DoxyCodeLine{\ \ .left\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .right}
+
+\end{DoxyCode}
+ 
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_nine_slice_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_nine_slice_renderer_abe116f5412ea497d2e2ee8ec72e4768b}\index{UI::NineSliceRenderer@{UI::NineSliceRenderer}!Draw@{Draw}}
+\index{Draw@{Draw}!UI::NineSliceRenderer@{UI::NineSliceRenderer}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_nine_slice_renderer_abe116f5412ea497d2e2ee8ec72e4768b} 
+void UI::\+\+Nine\+Slice\+Renderer::\+\+Draw (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \&}]{world\+Rect}{, }\item[{\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}}]{texture}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{, }\item[{f32}]{border\+Scale}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Draw a 9-\/sliced image using the texture\textquotesingle{}s intrinsic border. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em world\+Rect} & World-\/space rectangle to fill \\
+\hline
+{\em texture} & Source texture (must be loaded, with valid pixel dimensions and border set) \\
+\hline
+{\em color} & Tint/\+multiply color \\
+\hline
+{\em border\+Scale} & Scaling factor for the border thickness \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_nine_slice_renderer_8hpp}{Nine\+Slice\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_nine_slice_renderer_8cpp}{Nine\+Slice\+Renderer.\+cpp}}\end{DoxyCompactItemize}

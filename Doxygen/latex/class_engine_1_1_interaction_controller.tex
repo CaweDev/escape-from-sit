@@ -1,0 +1,180 @@
+\doxysection{Engine::\+Interaction\+Controller Class Reference}
+\hypertarget{class_engine_1_1_interaction_controller}{}\label{class_engine_1_1_interaction_controller}\index{Engine::InteractionController@{Engine::InteractionController}}
+
+
+Player component that detects and interacts with \doxylink{class_engine_1_1_interactable}{Interactable} objects.  
+
+
+
+
+{\ttfamily \+\#include $<$Interaction\+Controller.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab5b1f8031f163f8b86d175c70b01ff8d}{Interaction\+Controller}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a8d659d9e626e3fe14e18af8b7c52b3ba}{\texorpdfstring{$\sim$}{\string~}\+Interaction\+Controller}} ()=default
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a9f0a4e3da32f4c7d6b3aa08a6d093ede}{Get\+Current\+Target}} () const
+\begin{DoxyCompactList}\small\item\em Get the currently targeted interactable (nullptr if none). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a7d52c39dd095fce67c20192bad336622}{Initialize}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a2c7ef788c412acbb6db2c09ad1443d48}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab9a7f50e54e78a350c02ccd0d1ff07a4}{On\+Destroy}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_acb42fe38b39886cde213a64f6e612596}{interact\+Key}} = \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{Key\+Code::\+E}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab421126a3844cf80f01989ab5e2e82da}{default\+Crosshair\+Texture}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a305715ee4f886f4aa4637b239a7ebeaf}{highlight\+Crosshair\+Texture}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Player component that detects and interacts with \doxylink{class_engine_1_1_interactable}{Interactable} objects. 
+
+Attach this component to the player\textquotesingle{}s camera \doxylink{class_engine_1_1_game_object}{Game\+Object}. It will:\+
+\begin{DoxyItemize}
+\item Only run when \doxylink{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}{Camera::\+main}-\/\texorpdfstring{$>$}{>}game\+Object matches this-\/\texorpdfstring{$>$}{>}game\+Object
+\item Raycast from screen center to find interactable objects
+\item Update crosshair and prompt \doxylink{namespace_u_i}{UI}
+\item Highlight the targeted sprite
+\item Handle interaction input 
+\end{DoxyItemize}
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_interaction_controller_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_interaction_controller_ab5b1f8031f163f8b86d175c70b01ff8d}\index{Engine::InteractionController@{Engine::InteractionController}!InteractionController@{InteractionController}}
+\index{InteractionController@{InteractionController}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{InteractionController()}{InteractionController()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_ab5b1f8031f163f8b86d175c70b01ff8d} 
+Engine::\+\+Interaction\+Controller::\+\+Interaction\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_interaction_controller_a8d659d9e626e3fe14e18af8b7c52b3ba}\index{Engine::InteractionController@{Engine::InteractionController}!````~InteractionController@{\texorpdfstring{$\sim$}{\string~}InteractionController}}
+\index{````~InteractionController@{\texorpdfstring{$\sim$}{\string~}InteractionController}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}InteractionController()}{\string~InteractionController()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_a8d659d9e626e3fe14e18af8b7c52b3ba} 
+virtual Engine::\+\+Interaction\+Controller::\+\texorpdfstring{$\sim$}{\string~}\+Interaction\+Controller (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_interaction_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_interaction_controller_a9f0a4e3da32f4c7d6b3aa08a6d093ede}\index{Engine::InteractionController@{Engine::InteractionController}!GetCurrentTarget@{GetCurrentTarget}}
+\index{GetCurrentTarget@{GetCurrentTarget}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{GetCurrentTarget()}{GetCurrentTarget()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_a9f0a4e3da32f4c7d6b3aa08a6d093ede} 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}} \texorpdfstring{$\ast$}{*} Engine::\+\+Interaction\+Controller::\+\+Get\+Current\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the currently targeted interactable (nullptr if none). 
+
+\Hypertarget{class_engine_1_1_interaction_controller_a7d52c39dd095fce67c20192bad336622}\index{Engine::InteractionController@{Engine::InteractionController}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_a7d52c39dd095fce67c20192bad336622} 
+void Engine::\+\+Interaction\+Controller::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_interaction_controller_ab9a7f50e54e78a350c02ccd0d1ff07a4}\index{Engine::InteractionController@{Engine::InteractionController}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_ab9a7f50e54e78a350c02ccd0d1ff07a4} 
+void Engine::\+\+Interaction\+Controller::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is destroyed 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_interaction_controller_a2c7ef788c412acbb6db2c09ad1443d48}\index{Engine::InteractionController@{Engine::InteractionController}!Update@{Update}}
+\index{Update@{Update}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_a2c7ef788c412acbb6db2c09ad1443d48} 
+void Engine::\+\+Interaction\+Controller::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_interaction_controller_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_interaction_controller_ab421126a3844cf80f01989ab5e2e82da}\index{Engine::InteractionController@{Engine::InteractionController}!defaultCrosshairTexture@{defaultCrosshairTexture}}
+\index{defaultCrosshairTexture@{defaultCrosshairTexture}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{defaultCrosshairTexture}{defaultCrosshairTexture}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_ab421126a3844cf80f01989ab5e2e82da} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}\texorpdfstring{$\ast$}{*} Engine::\+\+Interaction\+Controller::\+default\+Crosshair\+Texture = nullptr}
+
+Default crosshair texture (set by user) \Hypertarget{class_engine_1_1_interaction_controller_a305715ee4f886f4aa4637b239a7ebeaf}\index{Engine::InteractionController@{Engine::InteractionController}!highlightCrosshairTexture@{highlightCrosshairTexture}}
+\index{highlightCrosshairTexture@{highlightCrosshairTexture}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{highlightCrosshairTexture}{highlightCrosshairTexture}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_a305715ee4f886f4aa4637b239a7ebeaf} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}\texorpdfstring{$\ast$}{*} Engine::\+\+Interaction\+Controller::\+highlight\+Crosshair\+Texture = nullptr}
+
+Highlighted crosshair texture (set by user) \Hypertarget{class_engine_1_1_interaction_controller_acb42fe38b39886cde213a64f6e612596}\index{Engine::InteractionController@{Engine::InteractionController}!interactKey@{interactKey}}
+\index{interactKey@{interactKey}!Engine::InteractionController@{Engine::InteractionController}}
+\doxysubsubsection{\texorpdfstring{interactKey}{interactKey}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interaction_controller_acb42fe38b39886cde213a64f6e612596} 
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} Engine::\+\+Interaction\+Controller::\+interact\+Key = \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{Key\+Code::\+E}}}
+
+Key to trigger interaction 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Interaction/\+\doxymbox{\hyperlink{_interaction_controller_8hpp}{Interaction\+Controller.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Interaction/\+\doxymbox{\hyperlink{_interaction_controller_8cpp}{Interaction\+Controller.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,86 @@
+\doxysection{UIManager.\+hpp}
+\hypertarget{_u_i_manager_8hpp_source}{}\label{_u_i_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Core/UIManager.hpp@{AlphaEngine2.5D/Source/Engine/UI/Core/UIManager.hpp}}
+\doxymbox{\hyperlink{_u_i_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_canvas_8hpp}{Engine/UI/Core/Canvas.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }UIManager}
+\DoxyCodeLine{00025\ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Singleton\ instance}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ UIManager*\ s\_instance;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Shared\ 1x1\ quad\ mesh\ for\ all\ UI\ rendering}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AEGfxVertexList*\ s\_quadMesh;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Active\ canvases}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::vector<Canvas*>\ m\_canvases;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Input\ state\ tracking}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ m\_hoveredElement\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ m\_pressedElement\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Default\ font}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ s8\ m\_defaultFont\ =\ -\/1;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Private\ constructor\ (singleton)}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ UIManager()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prevent\ copying}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3f44afedeca3bea31a3fc6dfe4f84958}{UIManager}}(\textcolor{keyword}{const}\ UIManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ UIManager\&\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a5ec64462727e8589e802337bfd56993f}{operator=}}(\textcolor{keyword}{const}\ UIManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3db3601fd96013e0433351ae53c29fdb}{Initialize}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a4870374e3aac421298d7a9f2030e0d29}{Shutdown}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ UIManager*\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a86747dbac01b7d605cec3d87ab752415}{GetInstance}}()\ \{\ \textcolor{keywordflow}{return}\ s\_instance;\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AEGfxVertexList*\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a3ac10c4389f9f4e0df1b3cec78fe0f12}{GetQuadMesh}}()\ \{\ \textcolor{keywordflow}{return}\ s\_quadMesh;\ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a7c924d2b57169d98478daa644cec7778}{Update}}(f32\ dt);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ab3a3e606cc90324158f6cadacdf7c0c6}{Render}}();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ae2afa3f9453fc326a9a7764314987511}{SetCanvasesSortDirty}}()\ \{\ m\_canvasesSortDirty\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}*\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a476f7dd6678099fd5d4a7978ca94da1e}{CreateCanvas}}();}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_abc7e4fb49abb95d0be48ddf55daaebbe}{DestroyCanvas}}(\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}*\ canvas);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Canvas*>\&\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a2db10d62ea0e1c1d7e7390d14ed9fafe}{GetCanvases}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_canvases;\ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ s8\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a31d849daf4418395701bbd57fcdccdce}{GetDefaultFont}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_defaultFont;\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_ac1dd66bdd3d64e1b1a33eaffec134fe7}{GetHoveredElement}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_hoveredElement;\ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a92be404a5a031ddcee908989f23cf56f}{ScreenToWorld}}(s32\ screenX,\ s32\ screenY,\ f32\&\ outWorldX,\ f32\&\ outWorldY);}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_manager_a8a5e41fa9a75e8c22c915a4e5cbf87c8}{OnElementDestroyed}}(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ element);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ LoadDefaultFont(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ fontPath,\ s32\ fontSize);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ CreateQuadMesh();}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ ProcessInput();}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ RaycastAll(f32\ worldX,\ f32\ worldY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_canvasesSortDirty\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SortCanvases();}
+\DoxyCodeLine{00161\ \ \ \ \ \};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

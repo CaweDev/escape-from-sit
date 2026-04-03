@@ -1,0 +1,177 @@
+\doxysection{Minimap.\+hpp}
+\hypertarget{_minimap_8hpp_source}{}\label{_minimap_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Specialized/Minimap.hpp@{AlphaEngine2.5D/Source/Engine/UI/Specialized/Minimap.hpp}}
+\doxymbox{\hyperlink{_minimap_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{Engine/Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_8hpp}{Engine/Graphics/Sprite.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_mathf_8hpp}{Engine/Math/Mathf.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_door_8hpp}{Engine/TileMap/Door.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_u_i_1_1_minimap_vertex}{MinimapVertex}}}
+\DoxyCodeLine{00028\ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ AEVec2\ \doxymbox{\hyperlink{struct_u_i_1_1_minimap_vertex_a1a34f8f879b4c1a384ddc7217a4f3aa5}{pos}};\ \ \ \ \ \textcolor{comment}{//\ Screen-\/space\ position}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ u32\ \doxymbox{\hyperlink{struct_u_i_1_1_minimap_vertex_a2358e1f93fb6100780b44cf3f2a8e0a4}{color}};\ \ \ \ \ \ \textcolor{comment}{//\ Packed\ 32-\/bit\ color\ (RGBA)}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ AEVec2\ \doxymbox{\hyperlink{struct_u_i_1_1_minimap_vertex_af248ece6a1dddf3a89fb2c0ac85975b7}{uv}};\ \ \ \ \ \ \textcolor{comment}{//\ Texture\ coordinates\ for\ sprites}}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_minimap_a897741a363e6054712fe04e5df2bc2e2}{Minimap}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Rendering\ Colors\ -\/-\/-\/}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_wallColor;\ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ used\ for\ wall\ tiles}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_floorColor;\ \ \ \ \ \ \textcolor{comment}{//\ Color\ used\ for\ walkable\ floor\ tiles}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_doorColor;\ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ used\ for\ door\ tiles\ (orange/yellow)}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_playerColor;\ \ \ \ \ \textcolor{comment}{//\ Color\ for\ the\ player\ icon/dot}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_backgroundColor;\ \textcolor{comment}{//\ Background\ panel\ color\ (visible\ behind\ tiles)}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_borderColor;\ \ \ \ \ \textcolor{comment}{//\ Color\ for\ the\ decorative\ border\ frame}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_enemyColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.9f,\ 0.1f,\ 0.1f,\ 1.0f);\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_cctvColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.9f,\ 0.1f,\ 0.1f,\ 1.0f);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_cctvNormalColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.0f,\ 1.0f,\ 0.0f,\ 0.15f);\ \ \textcolor{comment}{//\ Green\ when\ safe\ (lower\ opacity\ for\ circles)}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_cctvAlertColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 0.0f,\ 0.0f,\ 0.25f);\ \ \ \textcolor{comment}{//\ Red\ when\ detecting\ (lower\ opacity\ for\ circles)}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_pathColor\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 1.0f,\ 0.0f,\ 1.0f);\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ for\ path\ waypoints\ (default\ yellow)}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ View\ Configuration\ -\/-\/-\/}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\_viewRadius\ =\ 5;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ How\ many\ tiles\ to\ show\ in\ each\ direction}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ f32\ m\_tilePixelSize\ =\ 8.0f;\ \ \ \ \ \ \ \textcolor{comment}{//\ Base\ size\ of\ a\ single\ tile\ in\ pixels}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_centerOnPlayer\ =\ \textcolor{keyword}{true};\ \ \ \ \textcolor{comment}{//\ If\ true,\ the\ map\ scrolls\ as\ the\ player\ moves}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ f32\ m\_borderThickness\ =\ 8.0f;\ \ \ \ \ \textcolor{comment}{//\ Thickness\ of\ the\ border\ used\ for\ clipping/masking}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Component\ References\ -\/-\/-\/}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ m\_tileMap\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pointer\ to\ the\ level\ data}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ m\_playerTransform\ =\ \textcolor{keyword}{nullptr};\ \ \ \textcolor{comment}{//\ Pointer\ to\ player\ transform\ for\ tracking}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ std::vector<Engine::Transform*>\ m\_enemyTransforms;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ std::vector<Engine::Transform*>\ m\_cctvTransforms;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ std::vector<Engine::Door*>\ m\_doors;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::Sprite}}*\ m\_cctvSprite\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Terminal\ icons}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }TerminalIcon\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ worldPos;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::Sprite}}*\ sprite;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ std::vector<TerminalIcon>\ m\_terminalIcons;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCTV\ vision\ cone\ data}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }CCTVConeData\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ transform;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ coneWidth;\ \ \ \ \ \ \textcolor{comment}{//\ Not\ used\ for\ circles,\ kept\ for\ compatibility}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ maxRange;\ \ \ \ \ \ \ \textcolor{comment}{//\ Detection\ radius}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isDetecting;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ std::vector<CCTVConeData>\ m\_cctvCones;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ waypoints\ (GTA-\/style\ waypoint\ line)}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ m\_pathWaypoints;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Graphics\ Resources\ -\/-\/-\/}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ AEGfxVertexList*\ m\_quadMesh\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cached\ unit\ quad\ mesh\ for\ simple\ draws}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/\ Optional\ Sprites\ -\/-\/-\/}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::shared\_ptr<Engine::Sprite>\ m\_playerSprite\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ Optional\ icon\ for\ the\ player}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ std::shared\_ptr<Engine::Sprite>\ m\_borderSprite\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ Optional\ texture\ for\ the\ border\ frame}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a897741a363e6054712fe04e5df2bc2e2}{Minimap}}();}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_acd37aff85419ba07414b3e11ab9ab65f}{\string~Minimap}}();}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a5c003575f273da4f5e0d753b14a5b414}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ac7ff8de83e60f13e2e1d6356b6d1ff5f}{SetTileMap}}(\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ tileMap);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_aee8c2fcf0f1ad637d79c947d8d01bac4}{GetTileMap}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tileMap;\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a175a513dcf72c2c02eec8fb2ae2a65f8}{SetPlayerTransform}}(\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ transform);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a5044204a8b0000e1dcbee13ee87ddc59}{GetPlayerTransform}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_playerTransform;\ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a5c7af8f51209770b16ca7ccb4c20983e}{SetPlayerSprite}}(std::shared\_ptr<Engine::Sprite>\ sprite)\ \{\ m\_playerSprite\ =\ sprite;\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a4702872a326b3fa7f6e79cde179e2634}{SetBorderSprite}}(std::shared\_ptr<Engine::Sprite>\ sprite)\ \{\ m\_borderSprite\ =\ sprite;\ \}}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a17d59ade51a7621ea9b7f44074435a32}{AddEnemyTransform}}(\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ transform);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ab85d88c6a923bf1f1c81d81e4916569f}{ClearEnemies}}()\ \{\ m\_enemyTransforms.clear();\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a0f4afa85b0c9445d295402d868ca00d0}{SetEnemyColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_enemyColor\ =\ color;\ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_aaeb99571e7523441f1f0e5250d28bc46}{GetEnemyColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_enemyColor;\ \}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a7c0d9a9f12425ed93d6756f67ad76a2d}{AddCCTVTransform}}(\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ transform);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ae0adda8d7470f83155b0f8d8ee11d99c}{ClearCCTVs}}();}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a1f8a30a2baa9eb729fb5b0f18da61d37}{AddDoor}}(\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::Door}}*\ door);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ab3a68437f34d60b09e1fe514cb01bac9}{SetCCTVSprites}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::Sprite}}*\ sprite);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Terminal\ icon\ management}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_aec3c04ad4bb71628b877eefd80c78aee}{AddTerminalIcon}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ worldPos,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::Sprite}}*\ sprite);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_adc8df09f0d68939fe2f738cc7b343fc5}{ClearTerminalIcons}}()\ \{\ m\_terminalIcons.clear();\ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CCTV\ vision\ cone\ management}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_aaeed82dbfaf52672b8e040de04601bed}{UpdateCCTVCone}}(\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ transform,\ \textcolor{keywordtype}{float}\ coneWidth,\ \textcolor{keywordtype}{float}\ maxRange,\ \textcolor{keywordtype}{bool}\ isDetecting);}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a0e1dd4ad5307f254cd01af8b10d5a793}{SetCCTVConeColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ normalColor,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ alertColor)\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ m\_cctvNormalColor\ =\ normalColor;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ m\_cctvAlertColor\ =\ alertColor;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ waypoint\ rendering\ (GTA-\/style)}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_afd67aba3dd8e5fe15bb53289468b9bec}{SetPathWaypoints}}(\textcolor{keyword}{const}\ std::vector<Engine::Vector2>\&\ waypoints)\ \{\ m\_pathWaypoints\ =\ waypoints;\ \}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_acadfb37e86dfce2cdb19f3d9238fca46}{ClearPath}}()\ \{\ m\_pathWaypoints.clear();\ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Engine::Vector2>\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ab87ed5a8163ab073aca3aa7dc720aa10}{GetPathWaypoints}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pathWaypoints;\ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path\ color\ control}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a6f91ef730d3176ad255d7498508ab095}{SetPathColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_pathColor\ =\ color;\ \}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a6ff0660bb5308edd1bf8174eeea4b2f2}{GetPathColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pathColor;\ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters\ and\ Setters\ for\ Colors}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a2dc860159d29a80e62b2079fdd2ee287}{SetWallColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_wallColor\ =\ color;\ \}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a0b6114861ece26b96cc60652ba6e5409}{GetWallColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_wallColor;\ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ab6a106e098893a7a43fddd611fa7ad3f}{SetFloorColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_floorColor\ =\ color;\ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ac19d53a451098296dce8f15efbfb334e}{GetFloorColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_floorColor;\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a3d44dbd500c74995e382b37741f3911f}{SetPlayerColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_playerColor\ =\ color;\ \}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_abb30848502d40f22f3b876894f86308d}{GetPlayerColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_playerColor;\ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ae5868fc62af6c08f5e8e49f3f9fcfa89}{SetBackgroundColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_backgroundColor\ =\ color;\ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a87ba843d79f9c787de4ed24e540ea75c}{GetBackgroundColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_backgroundColor;\ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a66a9caa1872a38724999271a6aad9179}{SetBorderColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_borderColor\ =\ color;\ \}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a3ddbd477b3dd6b409497247e1564f400}{GetBorderColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_borderColor;\ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Getters\ and\ Setters\ for\ Configuration}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a418ca52d1dc52d24a9f4b81880d31773}{SetViewRadius}}(\textcolor{keywordtype}{int}\ radius)\ \{\ m\_viewRadius\ =\ radius;\ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a6c252a72843122e2f39cbcbccd9d128f}{GetViewRadius}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_viewRadius;\ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ae83025de96a787e3ad470101c80cf0e0}{SetTilePixelSize}}(f32\ size)\ \{\ m\_tilePixelSize\ =\ size;\ \}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a34d36b3e7272cba4804860d2709fd843}{GetTilePixelSize}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_tilePixelSize;\ \}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_ac101dafcfebd44070757b76c69868335}{SetCenterOnPlayer}}(\textcolor{keywordtype}{bool}\ center)\ \{\ m\_centerOnPlayer\ =\ center;\ \}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a8e570b260063f9169379f25acd08f441}{GetCenterOnPlayer}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_centerOnPlayer;\ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a4168fd79fc7baa4ab281c279762d7769}{SetBorderThickness}}(f32\ thickness)\ \{\ m\_borderThickness\ =\ thickness;\ \}}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_minimap_a149962ed2a090eeb4593bef0721afed2}{GetBorderThickness}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_borderThickness;\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ InitMesh();}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ std::vector<MinimapVertex>\ GetClippedVertices(f32\ x,\ f32\ y,\ f32\ width,\ f32\ height,\ f32\ rotationRad,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color);}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ DrawQuadClipped(f32\ x,\ f32\ y,\ f32\ width,\ f32\ height,\ f32\ rotationRad,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color,\ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Engine::Sprite}}*\ sprite\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ DrawBorderFrame(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}\&\ mapRect);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderCCTVCones(\textcolor{keywordtype}{float}\ mapCenterX,\ \textcolor{keywordtype}{float}\ mapCenterY,\ \textcolor{keywordtype}{float}\ tileSize,\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ playerTileX,\ \textcolor{keywordtype}{float}\ playerTileY,\ \textcolor{keywordtype}{float}\ playerRotation);}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderPathWaypoints(\textcolor{keywordtype}{float}\ mapCenterX,\ \textcolor{keywordtype}{float}\ mapCenterY,\ \textcolor{keywordtype}{float}\ tileSize,}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ playerTileX,\ \textcolor{keywordtype}{float}\ playerTileY);}
+\DoxyCodeLine{00225\ \ \ \ \ \};}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

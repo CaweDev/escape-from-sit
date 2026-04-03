@@ -1,0 +1,57 @@
+\doxysection{Color.\+hpp}
+\hypertarget{_color_8hpp_source}{}\label{_color_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/Color.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/Color.hpp}}
+\doxymbox{\hyperlink{_color_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ Constructors}}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}()\ :\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}(1),\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}(1),\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}(1),\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}(1)\ \{\}}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color_ac9e0bf7ed8571ef73c206182657b9013}{Color}}(f32\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}},\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}},\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}},\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}\ =\ 1.0f)\ :\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}(\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}),\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}(\doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}),\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}(\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}),\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}(\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}})\ \{\}}
+\DoxyCodeLine{00021\ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ From\ 0-\/255\ values}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ad2b3b497a7b28618b20a5a29121fbc72}{FromRGBA}}(\textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}},\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}},\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}},\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}\ =\ 255);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ Preset\ colors}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{white}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a7b6200472f44bf3b6593b1ec871fb5d4}{black}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a0d44e38fcebc60c404f451bcc64f6fa1}{red}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a48b1c9ba808469f48003600a8de254f9}{green}}();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a7ea73a031859cda1a0cd64dae2ffc0bd}{blue}}();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a5c0c6591b3ec4849d2789aa8e7b75a56}{yellow}}();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_afdd3c8100d1a84bb4bf28f3bf632c651}{cyan}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a351b7e4100a1195a31f11c316481081a}{magenta}}();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_af864385dbf07c336b36d363c92c3046a}{gray}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a601ad6673ae7fd168627cf8aaacc4c76}{clear}}();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Operators}}
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a2419d3688a63001805c3e87fcf886884}{operator*}}(f32\ scalar)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}(\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}\ *\ scalar,\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}\ *\ scalar,\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}\ *\ scalar,\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}});\ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a7f8236362e431bcbb6e2f6b60da07f38}{operator*}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}(\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}\ *\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}\ *\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}\ *\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}},\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}\ *\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}});\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_color_abe29c09be2d82c625305365dd8c6df4d}{operator==}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}\ ==\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}\ \&\&\ \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}\ ==\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}\ \&\&\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}\ ==\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}\ \&\&\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}\ ==\ other.\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}};}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ac5d3bc676ee3e33e167456bb2f2c74e0}{operator!=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}}\&\ other)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !(*\textcolor{keyword}{this}\ ==\ other);\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ Interpolation}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_color_a1d4d7baa2d295810972a8935c282dabf}{Lerp}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\&\ \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}},\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\&\ \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}},\ f32\ t);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ u32\ \doxymbox{\hyperlink{struct_engine_1_1_color_ad3771079ef6cf5a97139fa1e9c41c5e1}{ToU32}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ u8\ ar\ =\ \textcolor{keyword}{static\_cast<}u8\textcolor{keyword}{>}(\doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}\ *\ 255.0f);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ u8\ ag\ =\ \textcolor{keyword}{static\_cast<}u8\textcolor{keyword}{>}(\doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}\ *\ 255.0f);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ u8\ ab\ =\ \textcolor{keyword}{static\_cast<}u8\textcolor{keyword}{>}(\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}\ *\ 255.0f);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ u8\ aa\ =\ \textcolor{keyword}{static\_cast<}u8\textcolor{keyword}{>}(\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}\ *\ 255.0f);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (aa\ <<\ 24)\ |\ (ar\ <<\ 16)\ |\ (ag\ <<\ 8)\ |\ ab;}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

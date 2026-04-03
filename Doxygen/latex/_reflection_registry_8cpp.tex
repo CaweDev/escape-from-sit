@@ -1,0 +1,102 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Editor/\+\+Reflection\+Registry.cpp File Reference}
+\hypertarget{_reflection_registry_8cpp}{}\label{_reflection_registry_8cpp}\index{AlphaEngine2.5D/Source/Editor/ReflectionRegistry.cpp@{AlphaEngine2.5D/Source/Editor/ReflectionRegistry.cpp}}
+
+
+\+[AUTO]\+ Reflection\+Registry  
+
+
+{\ttfamily \+\#include "{}Reflection\+Registry.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Reflection.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Transform.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite\+Sheet\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Interaction/\+\+Interactable.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Rigidbody2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Circle\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Box\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Door\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Tilemap/\+\+Door.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Access\+Card/\+\+Access\+Card.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+CCTV/\+\+CCTVCamera.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Control\+Room\+Door/\+\+Control\+Room\+Door.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+NPC/\+\+NPC.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Player/\+\+Player.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Power\+Up/\+\+Power\+Up.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Puzzle/\+\+Puzzle\+Object.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+FPSController.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Player\+HUD.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Pause\+Menu.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Lose\+Screen.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Win\+Screen.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Hands67.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Scenes/\+\+Main\+Menu\+Scene/\+\+UI/\+\+Controls\+Menu.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Player/\+\+Player\+Power\+Up\+Controller.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+Security\+Guard/\+\+Security\+Guard.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}game/\+\+CCTV/\+\+CCTVTerminal.\+hpp"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_a_e_editor}{AEEditor}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a520d75c8b67d5ab530dbc87926678230}{AEEditor::\+\+Register\+Transform}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a9262cef7d503d728a199cebef5cf7deb}{AEEditor::\+\+Register\+Sprite\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad5f0c3a49fb0eccde75bec014f02f552}{AEEditor::\+\+Register\+Sprite\+Sheet\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_affe942bb8399e43c58ff56a01fa932e0}{AEEditor::\+\+Register\+Door\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a7ab72fead1350179ee932a8f40092ae1}{AEEditor::\+\+Register\+Door}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a2e95b0df4498ecbe36a14ee7e190defc}{AEEditor::\+\+Register\+Interactable}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a2f184979e6ea4718256ff4c357fa30d0}{AEEditor::\+\+Register\+Access\+Card}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a8ba21f0faf114e6a9f3a63655710b616}{AEEditor::\+\+Register\+CCTVCamera}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a4818d323142b58fdb58215bb8f7d2437}{AEEditor::\+\+Register\+Control\+Room\+Door}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad609f284d88bf05abf30a9ddf0fb25a2}{AEEditor::\+\+Register\+NPC}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ab19e477baa36fe08ecb01c8080c843ee}{AEEditor::\+\+Register\+Player}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ad87aea94d464d17ace0f6933b9ff077d}{AEEditor::\+\+Register\+Power\+Up\+Object}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a8bc0c07a002b325434894024b0718ddc}{AEEditor::\+\+Register\+Puzzle\+Object}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a3304edb22f61210da6d93a8b58f8782d}{AEEditor::\+\+Register\+Rigidbody2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_ac710c366b78c830bdec460fc6bbcda15}{AEEditor::\+\+Register\+Camera}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_aa2106ce7186bcb9f1abf5820cf27200e}{AEEditor::\+\+Register\+Box\+Collider2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a7acf815ef1f01ddee7a8a02d7e552f11}{AEEditor::\+\+Register\+Circle\+Collider2D}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a869dfed73f8307fec03fbb0a38fd7234}{AEEditor::\+\+Register\+FPSController}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a0401318577c9f0ab43ecda8a0ffac601}{AEEditor::\+\+Register\+Interaction\+Controller}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_af599a8f28d4056abe847492d764ec29d}{AEEditor::\+\+Register\+Player\+UIComponents}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_a42b444a29c82aa88864484931055ca87}{AEEditor::\+\+Register\+Security\+Guard}} ()
+\item 
+void \doxymbox{\hyperlink{namespace_a_e_editor_abe4bbf7be189765938b07c26b003e46d}{AEEditor::\+\+Register\+CCTVTerminal}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+[AUTO]\+ Reflection\+Registry 
+
+\begin{DoxyAuthor}{Author}
+
+\end{DoxyAuthor}
+\begin{DoxyParagraph}{}
+
+\end{DoxyParagraph}
+\begin{DoxyDate}{Date}
+March, 29, 2026 
+\end{DoxyDate}
+Copyright (C) 2026 Digi\+Pen Institute of Technology. Reproduction or disclosure of this file or its contents without the prior written consent of Digi\+Pen Institute of Technology is prohibited. 

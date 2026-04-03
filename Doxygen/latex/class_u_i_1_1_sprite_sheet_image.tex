@@ -1,0 +1,331 @@
+\doxysection{UI::\+Sprite\+Sheet\+Image Class Reference}
+\hypertarget{class_u_i_1_1_sprite_sheet_image}{}\label{class_u_i_1_1_sprite_sheet_image}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+
+
+\doxylink{namespace_u_i}{UI} component for rendering animated spritesheets.  
+
+
+
+
+{\ttfamily \+\#include $<$Sprite\+Sheet\+Image.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a5c66de9fa09830053f25976a0cd52b02}{Sprite\+Sheet\+Image}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a555bee0414ebf150680c88e0a6c9fe90}{\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet\+Image}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a68ba0f535582288dbaf8e001c6850e67}{Set\+Sprite\+Sheet}} (\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Engine::\+\+Sprite\+Sheet}} \texorpdfstring{$\ast$}{*}sheet)
+\begin{DoxyCompactList}\small\item\em Assign a spritesheet (rebuilds internal mesh). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_acffbc065ea3e16ca0ee00cf0941d519f}{Play}} (const std::\+string \&animation\+Name)
+\begin{DoxyCompactList}\small\item\em Play a named animation from the start. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a6325054f0d914e44042beb4473fccb73}{Stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop playback and reset to frame 0. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a3aab8785f7cc67a0d1fc8d82a9d38537}{Pause}} ()
+\begin{DoxyCompactList}\small\item\em Pause at current frame. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a0f005a1c9fd2468ebd7573baf79f0c84}{Resume}} ()
+\begin{DoxyCompactList}\small\item\em Resume from paused state. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a018db9b819efb460851bb0551da11ddd}{Is\+Playing}} () const
+\begin{DoxyCompactList}\small\item\em Check if playing. \end{DoxyCompactList}\item 
+const std::\+string \& \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_af48e25d395bc80814e1b18d4b0513a01}{Get\+Current\+Animation}} () const
+\begin{DoxyCompactList}\small\item\em Get name of active animation clip. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a6eb020d06b445beb238fcbff56922a61}{Set\+Frame}} (int frame)
+\begin{DoxyCompactList}\small\item\em Manually set frame index within the current clip. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a8d93d0e81462651917710c76ddfe6e7e}{Get\+Frame}} () const
+\begin{DoxyCompactList}\small\item\em Get current frame index within clip. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_ad891529928afc10fc2784f7e1cdae4c4}{Set\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Set the color (tint if texture, solid if no texture). \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_a17f4d54d21305672170e399a537c7676}{Get\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_af7daa6c7197100a36dea2a3d86a17331}{Update}} (f32 dt) override
+\begin{DoxyCompactList}\small\item\em Update animation timing. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_ac7da2ad657f030f840ec05299c46c1eb}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Render the current animation frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{namespace_u_i}{UI} component for rendering animated spritesheets. 
+
+Extends \doxylink{class_u_i_1_1_image}{Image} to support spritesheet-\/based animation. References a shared Sprite\+Sheet for animation data and manages per-\/instance playback state. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a5c66de9fa09830053f25976a0cd52b02}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!SpriteSheetImage@{SpriteSheetImage}}
+\index{SpriteSheetImage@{SpriteSheetImage}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{SpriteSheetImage()}{SpriteSheetImage()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a5c66de9fa09830053f25976a0cd52b02} 
+UI::\+\+Sprite\+Sheet\+Image::\+\+Sprite\+Sheet\+Image (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a555bee0414ebf150680c88e0a6c9fe90}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!````~SpriteSheetImage@{\texorpdfstring{$\sim$}{\string~}SpriteSheetImage}}
+\index{````~SpriteSheetImage@{\texorpdfstring{$\sim$}{\string~}SpriteSheetImage}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SpriteSheetImage()}{\string~SpriteSheetImage()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a555bee0414ebf150680c88e0a6c9fe90} 
+UI::\+\+Sprite\+Sheet\+Image::\+\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet\+Image (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a17f4d54d21305672170e399a537c7676}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!GetColor@{GetColor}}
+\index{GetColor@{GetColor}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{GetColor()}{GetColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a17f4d54d21305672170e399a537c7676} 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \& UI::\+\+Sprite\+Sheet\+Image::\+\+Get\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_af48e25d395bc80814e1b18d4b0513a01}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!GetCurrentAnimation@{GetCurrentAnimation}}
+\index{GetCurrentAnimation@{GetCurrentAnimation}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{GetCurrentAnimation()}{GetCurrentAnimation()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_af48e25d395bc80814e1b18d4b0513a01} 
+const std::\+string \& UI::\+\+Sprite\+Sheet\+Image::\+\+Get\+Current\+Animation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get name of active animation clip. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a8d93d0e81462651917710c76ddfe6e7e}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!GetFrame@{GetFrame}}
+\index{GetFrame@{GetFrame}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{GetFrame()}{GetFrame()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a8d93d0e81462651917710c76ddfe6e7e} 
+int UI::\+\+Sprite\+Sheet\+Image::\+\+Get\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get current frame index within clip. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a018db9b819efb460851bb0551da11ddd}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!IsPlaying@{IsPlaying}}
+\index{IsPlaying@{IsPlaying}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{IsPlaying()}{IsPlaying()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a018db9b819efb460851bb0551da11ddd} 
+bool UI::\+\+Sprite\+Sheet\+Image::\+\+Is\+Playing (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if playing. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a3aab8785f7cc67a0d1fc8d82a9d38537}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Pause@{Pause}}
+\index{Pause@{Pause}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Pause()}{Pause()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a3aab8785f7cc67a0d1fc8d82a9d38537} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Pause (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Pause at current frame. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_acffbc065ea3e16ca0ee00cf0941d519f}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Play@{Play}}
+\index{Play@{Play}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Play()}{Play()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_acffbc065ea3e16ca0ee00cf0941d519f} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Play (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{animation\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Play a named animation from the start. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation\+Name} & Name of the clip defined on the Sprite\+Sheet \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_ac7da2ad657f030f840ec05299c46c1eb}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Render@{Render}}
+\index{Render@{Render}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_ac7da2ad657f030f840ec05299c46c1eb} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Render the current animation frame. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{UI::\+\+UIElement}}.
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a0f005a1c9fd2468ebd7573baf79f0c84}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Resume@{Resume}}
+\index{Resume@{Resume}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Resume()}{Resume()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a0f005a1c9fd2468ebd7573baf79f0c84} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Resume (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Resume from paused state. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_ad891529928afc10fc2784f7e1cdae4c4}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_ad891529928afc10fc2784f7e1cdae4c4} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Set\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the color (tint if texture, solid if no texture). 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a6eb020d06b445beb238fcbff56922a61}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!SetFrame@{SetFrame}}
+\index{SetFrame@{SetFrame}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{SetFrame()}{SetFrame()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a6eb020d06b445beb238fcbff56922a61} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Set\+Frame (\begin{DoxyParamCaption}\item[{int}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Manually set frame index within the current clip. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Frame index relative to clip start (0-\/based) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a68ba0f535582288dbaf8e001c6850e67}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!SetSpriteSheet@{SetSpriteSheet}}
+\index{SetSpriteSheet@{SetSpriteSheet}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{SetSpriteSheet()}{SetSpriteSheet()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a68ba0f535582288dbaf8e001c6850e67} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Set\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Engine::\+\+Sprite\+Sheet}} \texorpdfstring{$\ast$}{*}}]{sheet}{}\end{DoxyParamCaption})}
+
+
+
+Assign a spritesheet (rebuilds internal mesh). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & Pointer to a Sprite\+Sheet (typically from Asset\+Manager) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_a6325054f0d914e44042beb4473fccb73}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Stop@{Stop}}
+\index{Stop@{Stop}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Stop()}{Stop()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_a6325054f0d914e44042beb4473fccb73} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Stop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stop playback and reset to frame 0. 
+
+\Hypertarget{class_u_i_1_1_sprite_sheet_image_af7daa6c7197100a36dea2a3d86a17331}\index{UI::SpriteSheetImage@{UI::SpriteSheetImage}!Update@{Update}}
+\index{Update@{Update}!UI::SpriteSheetImage@{UI::SpriteSheetImage}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_sprite_sheet_image_af7daa6c7197100a36dea2a3d86a17331} 
+void UI::\+\+Sprite\+Sheet\+Image::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update animation timing. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{UI::\+\+UIElement}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_sprite_sheet_image_8hpp}{Sprite\+Sheet\+Image.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_sprite_sheet_image_8cpp}{Sprite\+Sheet\+Image.\+cpp}}\end{DoxyCompactItemize}

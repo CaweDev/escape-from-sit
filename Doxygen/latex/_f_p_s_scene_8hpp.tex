@@ -1,0 +1,77 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Game/\+\+Scenes/\+\+FPSScene/\+\+FPSScene.hpp File Reference}
+\hypertarget{_f_p_s_scene_8hpp}{}\label{_f_p_s_scene_8hpp}\index{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/FPSScene.hpp@{AlphaEngine2.5D/Source/Game/Scenes/FPSScene/FPSScene.hpp}}
+
+
+Main FPS gameplay scene declaration and helpers.  
+
+
+{\ttfamily \+\#include "{}Engine/\+\+Scene/\+\+Scene.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Tile\+Map/\+\+Tile\+Map.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Tile\+Map\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Camera.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Rigidbody2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Circle\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Box\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Tile\+Map\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Time.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Asset\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Input/\+\+Key\+Code.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Application.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Audio/\+\+Sound\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Tile\+Map/\+\+Door.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Door\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Interaction/\+\+Interactable.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+FPSController.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Player/\+\+Player.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Security\+Guard/\+\+Security\+Guard.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+CCTV/\+\+CCTVCamera.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+CCTV/\+\+CCTVTerminal.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Player\+HUD.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Pause\+Menu.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Lose\+Screen.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Win\+Screen.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+UI/\+\+Hands67.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+Main\+Menu\+Scene/\+\+UI/\+\+Controls\+Menu.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Puzzle/\+\+Puzzle\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+NPC/\+\+Camera\+Shake.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+NPC/\+\+NPC.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$Engine/\+\+Graphics/\+\+Sprite\+Renderer.\+hpp$>$}\newline
+{\ttfamily \+\#include "{}Game/\+\+Zone\+Manager/\+\+Zone\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Heatmap/\+\+Heatmap.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+UCB1\+Bandit/\+\+UCB1\+Bandit.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+UCB1\+Bandit/\+\+Bandit\+Visualizer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Access\+Card/\+\+Access\+Card.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Control\+Room\+Door/\+\+Control\+Room\+Door.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Path\+Renderer/\+\+Path\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Power\+Up/\+\+Power\+Up\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Game/\+\+Player/\+\+Player\+Power\+Up\+Controller.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Interaction/\+\+Interaction\+Controller.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Editor/\+\+Object\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$cmath$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$fstream$>$}\newline
+{\ttfamily \+\#include $<$functional$>$}\newline
+{\ttfamily \+\#include $<$cstdlib$>$}\newline
+{\ttfamily \+\#include $<$iomanip$>$}\newline
+{\ttfamily \+\#include "{}Game/\+\+Scenes/\+\+FPSScene/\+\+FPSScene.\+cpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{Game::\+\+FPSScene}}
+\begin{DoxyCompactList}\small\item\em Core gameplay scene for FPS-\/style gameplay and AI systems. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_c_c_t_v_info}{Game::\+\+FPSScene::\+\+CCTVInfo}}
+\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_f_p_s_scene_1_1_zone}{Game::\+\+FPSScene::\+\+Zone}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_game}{Game}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main FPS gameplay scene declaration and helpers. 
+

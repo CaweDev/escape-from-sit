@@ -1,0 +1,138 @@
+\doxysection{CCTVTerminal.\+hpp}
+\hypertarget{_c_c_t_v_terminal_8hpp_source}{}\label{_c_c_t_v_terminal_8hpp_source}\index{AlphaEngine2.5D/Source/Game/CCTV/CCTVTerminal.hpp@{AlphaEngine2.5D/Source/Game/CCTV/CCTVTerminal.hpp}}
+\doxymbox{\hyperlink{_c_c_t_v_terminal_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interactable_8hpp}{Engine/Interaction/Interactable.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_renderer_8hpp}{Engine/Graphics/SpriteRenderer.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_security_guard}{SecurityGuard}};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{PlayerHUD}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{char}\ \doxymbox{\hyperlink{namespace_game_adef639520defc44629cb313425e5f841}{ZoneIdToLetter}}(\textcolor{keywordtype}{int}\ zoneId)}
+\DoxyCodeLine{00026\ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (zoneId)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{charliteral}{'A'};\ \textcolor{comment}{//\ Bottom-\/Left}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{charliteral}{'B'};\ \textcolor{comment}{//\ Top-\/Left}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{charliteral}{'C'};\ \textcolor{comment}{//\ Top-\/Right}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{charliteral}{'D'};\ \textcolor{comment}{//\ Bottom-\/Right}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{charliteral}{'?'};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ \doxymbox{\hyperlink{namespace_game_af787122ee3ebcdc40733f6322afb980b}{GetZoneName}}(\textcolor{keywordtype}{int}\ zoneId)}
+\DoxyCodeLine{00046\ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::string(\textcolor{stringliteral}{"{}ZONE\ "{}})\ +\ \doxymbox{\hyperlink{namespace_game_adef639520defc44629cb313425e5f841}{ZoneIdToLetter}}(zoneId);}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{TerminalState}}}
+\DoxyCodeLine{00055\ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{ACTIVE}},\ \ \ \textcolor{comment}{//\ Blue/green\ glow\ -\/\ cameras\ online}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a884b897f0b13c2d7044127cda8920c82}{HACKING}},\ \ \textcolor{comment}{//\ Yellow\ pulsing\ -\/\ player\ interacting}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a055c1a591abb0e8cd86dc969727bcc0b}{DISABLED}},\ \textcolor{comment}{//\ Red/dark\ -\/\ cameras\ offline}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11aacc349d2cc266d1d8a2098929a8f66ad}{REPAIRING}}\ \textcolor{comment}{//\ Orange\ pulsing\ -\/\ guard\ fixing}}
+\DoxyCodeLine{00060\ \ \ \ \ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Configuration}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7fcfd37304f66db897e87af1e464f8ec}{controlledZone}}\ =\ 1;\ \textcolor{comment}{//\ 1-\/4}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ References}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ std::vector<CCTVCamera\ *>\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ae590fc617dc0d193e9b16678eb6e2159}{controlledCameras}};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ std::vector<SecurityGuard\ *>\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a3d348f9348d73bc7439b3cb3e1ae4240}{allGuards}};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{PlayerHUD}}\ *\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5102a9e05c97d04c6635445ddffd9f80}{playerHUD}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::SpriteRenderer}}\ *\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a1eeaf261d27e4f0f52dc740f0c309621}{spriteRenderer}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ State}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{TerminalState}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0522e2ca2a96f60b1e6fcef7ec0972a0}{state}}\ =\ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{TerminalState::ACTIVE}};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ab1223285fb9d50db621bc75a120d79ec}{isDisabled}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5e88b085cf3f868847dafdc057cd1fe2}{disabledTimer}}\ =\ 0.0f;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a464430237e4adb5f540f5147a109ce52}{disabledDuration}}\ =\ 30.0f;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Repair\ system}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a15751ac08d77c4207aed0485b50a73b9}{guardIsRepairing}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_security_guard}{SecurityGuard}}\ *\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0c35c75b1a64bfe7456ba54f804f4ce4}{repairingGuard}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac4d320190273624822ecb9ae7d03c112}{repairProgress}}\ =\ 0.0f;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a1209136b959e2d433837f853f3833e93}{repairTime}}\ =\ 5.0f;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a0ca44764e928cb434ef35feeab718201}{repairMaxDistance}}\ =\ 2.0f;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Interaction}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a85e65b7f5d1d625227ac2c400bb16aac}{interactionTime}}\ =\ 3.0f;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7678ce9624562e027cc0e7765e0b2c76}{interactionProgress}}\ =\ 0.0f;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5f0c94abed72e2d36bc2842e7bb32ff8}{playerIsInteracting}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a77a24936218196a474321b7a9666953d}{cooldownTimer}}\ =\ 0.0f;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a3768109598f4a0a200aedb341a569b3b}{cooldownDuration}}\ =\ 10.0f;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a9590f792c0e8816eabcc0ab13d803f97}{interactMaxDistance}}\ =\ 2.5f;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Floating\ icon\ \&\ Visuals}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *\doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_aa6f6cfb1c727b08e626e5dccdefc1170}{floatingIcon}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a48a70bcdf9def8b7ae2a9a509647db7e}{floatAnimTime}}\ =\ 0.0f;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a6d11561ec9ca6b71b62c2a212dac48b0}{floatSpeed}}\ =\ 2.0f;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a50f5d351cb268fe81d576c205583aa9a}{floatAmplitude}}\ =\ 0.15f;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5fab670130097c4b8fa3aaafb53c8005}{floatBaseHeightOffset}}\ =\ 0.8f;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a98f767c197da08ea05724f0421593f1a}{pulseSpeed}}\ =\ 3.0f;}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Text\ configuration}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af91ac2fbe5f3ae6982c4738a288a520c}{interactText}}\ =\ \textcolor{stringliteral}{"{}Hold\ E\ to\ Hack\ Terminal"{}};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac4ea80cd64e6b9e3f8b00a6669b6dfa1}{zoneHackTextPrefix}}\ =\ \textcolor{stringliteral}{"{}Hold\ E\ to\ Hack\ "{}};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a66d6fe4e48de0725b77c32fc128e2107}{zoneHackTextSuffix}}\ =\ \textcolor{stringliteral}{"{}\ Cameras"{}};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a9036c34e42112c6af8ea0ea9898f047f}{disabledTextSuffix}}\ =\ \textcolor{stringliteral}{"{}\ CAMERAS\ OFFLINE"{}};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac16780735b0e39a3af4f8b2986eed021}{cooldownText}}\ =\ \textcolor{stringliteral}{"{}TERMINAL\ COOLING\ DOWN"{}};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a22811f49e2017533d250e3459ea3f607}{repairingText}}\ =\ \textcolor{stringliteral}{"{}GUARD\ REPAIRING\ SYSTEM"{}};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a19c410647280c50ea3f1ba34745ccac3}{hackStatusPrefix}}\ =\ \textcolor{stringliteral}{"{}\ CAMERAS\ DISABLED\ FOR\ 30s"{}};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a007354fdf839718eef98c7f167aa0c2c}{hackStatusDuration}}\ =\ 3.0f;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Colors}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a7fe1e9859637c1e082ec87a69c261a48}{activeColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.2f,\ 0.8f,\ 1.0f,\ 1.0f);}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af01c255a7c94eabe9fe36420c83ecb52}{hackingColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 1.0f,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a98013870929f035760d1261b36732abc}{disabledColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(0.5f,\ 0.0f,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a796bbf18aa6d64ea594b1da011c1321f}{repairingColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 0.5f,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Component\ lifecycle}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afafa9820d098821423be8719576c0cb2}{Awake}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_aa751985bea2f1d1fa7de8ca37658db24}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Interaction\ handling}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afb779d2f3ae7c4fa4fc731a2a48e40cb}{SetupInteraction}}();}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a5ee4fd19ebda8065c91168b75d7946da}{OnTerminalInteract}}();}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af48793382bba09554e44df852e895b59}{CanHack}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Terminal\ actions}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac5b30d0dafc622b31291976da2b17885}{DisableCameras}}();}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_af6e260c12dd98fadcc5faa3239d1cada}{RestoreCameras}}();}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a492342650fb51f1c03180aab7d0e7fd8}{StartRepair}}(\doxymbox{\hyperlink{class_game_1_1_security_guard}{SecurityGuard}}\ *guard);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afaa8874a37e18d7445cb2a947445705a}{CancelRepair}}();}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ac5c4813ec4c99cbe212676ce6732964c}{UpdateRepair}}(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Notification}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a2bdae95c3705ead6a6c26f64e7d8ec21}{NotifyGuardsOfSabotage}}();}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Visual}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_a591d773c68cfcef18b0c73cca2d2db4d}{UpdateVisualState}}();}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_ad09d83cf8a7cc0aad3e00ef81d9d4a08}{GetStateColor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateDisabledState(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCooldown(\textcolor{keywordtype}{float}\ deltaTime);}
+\DoxyCodeLine{00162\ \ \ \ \ \};}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

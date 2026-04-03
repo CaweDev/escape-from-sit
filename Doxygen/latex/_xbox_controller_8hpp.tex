@@ -1,0 +1,48 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Input/\+\+Xbox\+Controller.hpp File Reference}
+\hypertarget{_xbox_controller_8hpp}{}\label{_xbox_controller_8hpp}\index{AlphaEngine2.5D/Source/Engine/Input/XboxController.hpp@{AlphaEngine2.5D/Source/Engine/Input/XboxController.hpp}}
+
+
+Xbox controller support using XInput API.  
+
+
+{\ttfamily \+\#include $<$Windows.\+h$>$}\newline
+{\ttfamily \+\#include $<$Xinput.\+h$>$}\newline
+{\ttfamily \+\#include "{}../\+\+Math/\+\+Vector2.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_xbox_controller}{Engine::\+\+Xbox\+Controller}}
+\begin{DoxyCompactList}\small\item\em Static class for querying Xbox controller state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Engine::\+\+Xbox\+Button}} \{ \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a6e53ad4e24c7b597e15b2193883bf7f2}{Engine::\+\+DPad\+Up}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+UP
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a826b0ea5950d9f05469d6f3ded8b570f}{Engine::\+\+DPad\+Down}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+DOWN
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a1afff4bd4c22275dff273ca6f01952f1}{Engine::\+\+DPad\+Left}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+LEFT
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aee57d4f85b132ca155ad4f77e71b7df1}{Engine::\+\+DPad\+Right}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+RIGHT
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aa6122a65eaa676f700ae68d393054a37}{Engine::\+\+Start}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+START
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a0557fa923dcee4d0f86b1409f5c2167f}{Engine::\+\+Back}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+BACK
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a2cd349073c4937c593353ffe98956c58}{Engine::\+\+Left\+Thumb}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+LEFT\+\_\+\+THUMB
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10ae499bf8bc6e897455b94cabc7a5c2da7}{Engine::\+\+Right\+Thumb}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+RIGHT\+\_\+\+THUMB
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a36131cbdc50218d923d0bcb0d9870e1c}{Engine::\+\+Left\+Shoulder}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+LEFT\+\_\+\+SHOULDER
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a27a5390f2d1b44a43f74d57703f8d354}{Engine::\+\+Right\+Shoulder}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+RIGHT\+\_\+\+SHOULDER
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a7fc56270e7a70fa81a5935b72eacbe29}{Engine::\+A}} = XINPUT\+\_\+\+GAMEPAD\+\_\+A
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a9d5ed678fe57bcca610140957afab571}{Engine::\+B}} = XINPUT\+\_\+\+GAMEPAD\+\_\+B
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a02129bb861061d1a052c592e2dc6b383}{Engine::\+X}} = XINPUT\+\_\+\+GAMEPAD\+\_\+X
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a57cec4137b614c87cb4e24a3d003a3e0}{Engine::\+Y}} = XINPUT\+\_\+\+GAMEPAD\+\_\+Y
+ \}
+\begin{DoxyCompactList}\small\item\em Xbox controller button codes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Xbox controller support using XInput API. 
+

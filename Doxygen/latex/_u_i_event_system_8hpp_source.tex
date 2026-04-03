@@ -1,0 +1,61 @@
+\doxysection{UIEvent\+System.\+hpp}
+\hypertarget{_u_i_event_system_8hpp_source}{}\label{_u_i_event_system_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Core/UIEventSystem.hpp@{AlphaEngine2.5D/Source/Engine/UI/Core/UIEventSystem.hpp}}
+\doxymbox{\hyperlink{_u_i_event_system_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{comment}{//\ Forward\ declaration}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}}
+\DoxyCodeLine{00019\ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_ac69f56c4ba2483bb17f634a1e9aa6b78}{worldX}}\ =\ 0;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ World\ X\ position\ of\ pointer}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_aad276daebea7e56bb5fbf96ff9ef0419}{worldY}}\ =\ 0;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ World\ Y\ position\ of\ pointer}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ s32\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_a920fd92f0b17639b95b6b19a0ce2c3d3}{screenX}}\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Screen\ X\ position}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ s32\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_ace6a4762f885ae44abe7b2b35d613f3d}{screenY}}\ =\ 0;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Screen\ Y\ position}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_abe124ffdcf40aa12f53780ff34287344}{isPressed}}\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Is\ the\ button\ currently\ pressed}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data_a50035f36c7343fef7016b8cf6aa61c6c}{target}}\ =\ \textcolor{keyword}{nullptr};\ \textcolor{comment}{//\ Target\ element}}
+\DoxyCodeLine{00026\ \ \ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler}{IPointerEnterHandler}}}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler_ad8241544dc300787f037dfab18ddb09b}{\string~IPointerEnterHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler_ad3c82f9ab6befd0092e6dbe9569e0e60}{OnPointerEnter}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}\&\ eventData)\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler}{IPointerExitHandler}}}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler_a8541fbdf26c59cb6ce736f88c366b19e}{\string~IPointerExitHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler_a0e5c5e7027e5c5dd1cd9bd7d617aabeb}{OnPointerExit}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}\&\ eventData)\ =\ 0;}
+\DoxyCodeLine{00048\ \ \ \ \ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler}{IPointerDownHandler}}}
+\DoxyCodeLine{00055\ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler_a7492d6033e6b40096a4bae12d6346815}{\string~IPointerDownHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler_a92169e620c9eec620b223afe3e621b1d}{OnPointerDown}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}\&\ eventData)\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler}{IPointerUpHandler}}}
+\DoxyCodeLine{00066\ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler_ab0965999dddbc903aa840b2ee2e7b225}{\string~IPointerUpHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler_af8853809e143a066854fe1a931b3ec96}{OnPointerUp}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}\&\ eventData)\ =\ 0;}
+\DoxyCodeLine{00070\ \ \ \ \ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler}{IPointerClickHandler}}}
+\DoxyCodeLine{00077\ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler_a5989fc89939a490a4ff51c1957a1dc79}{\string~IPointerClickHandler}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler_aae5a21bfd4be614b63435518e0155f2a}{OnPointerClick}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{PointerEventData}}\&\ eventData)\ =\ 0;}
+\DoxyCodeLine{00081\ \ \ \ \ \};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

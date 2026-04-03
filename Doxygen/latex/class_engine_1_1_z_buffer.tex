@@ -1,0 +1,113 @@
+\doxysection{Engine::\+ZBuffer Class Reference}
+\hypertarget{class_engine_1_1_z_buffer}{}\label{class_engine_1_1_z_buffer}\index{Engine::ZBuffer@{Engine::ZBuffer}}
+
+
+Static utility class for managing a 1D depth buffer (Z-\/buffer). Used for occlusion in 2.\+5D rendering.  
+
+
+
+
+{\ttfamily \+\#include $<$ZBuffer.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_z_buffer_add7a5931e50200e5a747236dd14c500b}{Resize}} (int width)
+\begin{DoxyCompactList}\small\item\em Resizes the buffer to match the screen width. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a358b569d3c05475248186a38275eefc0}{Clear}} (float default\+Depth=1e30f)
+\begin{DoxyCompactList}\small\item\em Clears the buffer with a very large depth value. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_z_buffer_ae3596e0d7745cf8e65d768941e2fbbeb}{Set\+Depth}} (int x, float depth)
+\begin{DoxyCompactList}\small\item\em Sets the depth for a specific screen column. \end{DoxyCompactList}\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a15ac02c77413e7a51e053b39dec5ad0a}{Get\+Depth}} (int x)
+\begin{DoxyCompactList}\small\item\em Gets the depth for a specific screen column. \end{DoxyCompactList}\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_z_buffer_a7169210d584519cc820e7d27c70d12a9}{Get\+Width}} ()
+\begin{DoxyCompactList}\small\item\em Returns the current width of the buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static utility class for managing a 1D depth buffer (Z-\/buffer). Used for occlusion in 2.\+5D rendering. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_z_buffer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_z_buffer_a358b569d3c05475248186a38275eefc0}\index{Engine::ZBuffer@{Engine::ZBuffer}!Clear@{Clear}}
+\index{Clear@{Clear}!Engine::ZBuffer@{Engine::ZBuffer}}
+\doxysubsubsection{\texorpdfstring{Clear()}{Clear()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_z_buffer_a358b569d3c05475248186a38275eefc0} 
+void Engine::\+\+ZBuffer::\+\+Clear (\begin{DoxyParamCaption}\item[{float}]{default\+Depth}{ = {\ttfamily 1e30f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Clears the buffer with a very large depth value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em default\+Depth} & The value to fill the buffer with (default:\+ infinity). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_z_buffer_a15ac02c77413e7a51e053b39dec5ad0a}\index{Engine::ZBuffer@{Engine::ZBuffer}!GetDepth@{GetDepth}}
+\index{GetDepth@{GetDepth}!Engine::ZBuffer@{Engine::ZBuffer}}
+\doxysubsubsection{\texorpdfstring{GetDepth()}{GetDepth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_z_buffer_a15ac02c77413e7a51e053b39dec5ad0a} 
+float Engine::\+\+ZBuffer::\+\+Get\+Depth (\begin{DoxyParamCaption}\item[{int}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the depth for a specific screen column. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The column index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The stored depth value. 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_z_buffer_a7169210d584519cc820e7d27c70d12a9}\index{Engine::ZBuffer@{Engine::ZBuffer}!GetWidth@{GetWidth}}
+\index{GetWidth@{GetWidth}!Engine::ZBuffer@{Engine::ZBuffer}}
+\doxysubsubsection{\texorpdfstring{GetWidth()}{GetWidth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_z_buffer_a7169210d584519cc820e7d27c70d12a9} 
+int Engine::\+\+ZBuffer::\+\+Get\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns the current width of the buffer. 
+
+\Hypertarget{class_engine_1_1_z_buffer_add7a5931e50200e5a747236dd14c500b}\index{Engine::ZBuffer@{Engine::ZBuffer}!Resize@{Resize}}
+\index{Resize@{Resize}!Engine::ZBuffer@{Engine::ZBuffer}}
+\doxysubsubsection{\texorpdfstring{Resize()}{Resize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_z_buffer_add7a5931e50200e5a747236dd14c500b} 
+void Engine::\+\+ZBuffer::\+\+Resize (\begin{DoxyParamCaption}\item[{int}]{width}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Resizes the buffer to match the screen width. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The screen width in pixels. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_z_buffer_ae3596e0d7745cf8e65d768941e2fbbeb}\index{Engine::ZBuffer@{Engine::ZBuffer}!SetDepth@{SetDepth}}
+\index{SetDepth@{SetDepth}!Engine::ZBuffer@{Engine::ZBuffer}}
+\doxysubsubsection{\texorpdfstring{SetDepth()}{SetDepth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_z_buffer_ae3596e0d7745cf8e65d768941e2fbbeb} 
+void Engine::\+\+ZBuffer::\+\+Set\+Depth (\begin{DoxyParamCaption}\item[{int}]{x}{, }\item[{float}]{depth}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sets the depth for a specific screen column. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The column index (0 to width-\/1). \\
+\hline
+{\em depth} & The perpendicular distance to the wall. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_z_buffer_8hpp}{ZBuffer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_z_buffer_8cpp}{ZBuffer.\+cpp}}\end{DoxyCompactItemize}

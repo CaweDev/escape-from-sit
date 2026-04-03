@@ -1,0 +1,211 @@
+\doxysection{Engine::\+Audio\+Source Class Reference}
+\hypertarget{class_engine_1_1_audio_source}{}\label{class_engine_1_1_audio_source}\index{Engine::AudioSource@{Engine::AudioSource}}
+
+
+\doxylink{class_engine_1_1_component}{Component} that plays audio clips.  
+
+
+
+
+{\ttfamily \+\#include $<$Audio\+Source.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_source_ab6de6a1fb3ddc3e7d3629a12e0bd7a2c}{Audio\+Source}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_source_ace080bae69fcd9c0bd038d2f0ace92ec}{\texorpdfstring{$\sim$}{\string~}\+Audio\+Source}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_a21a2fbbd789225b33b009e3660d27654}{Awake}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_ae6aa607f5e53527f657d877d6f362f45}{Play}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_ae9e40e2d5a35f2ab3228f679385bb61a}{Play\+One\+Shot}} (\doxymbox{\hyperlink{class_engine_1_1_audio_clip}{Audio\+Clip}} \texorpdfstring{$\ast$}{*}one\+Shot, f32 volume\+Scale=1.\+0f)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_a0a98931b0ba1e556a4dd29d348d8d427}{Stop}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_a0b0ead432f251669fb259d281d44b5c4}{Pause}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_a0e2724394307288f10de47c3dd0e0209}{Resume}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_ab68ddf270d6da8754bc45accb0d3fda1}{Set\+Volume}} (f32 new\+Volume)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_source_acf1690fcbe68d7bd2cffbb7333126167}{Set\+Pitch}} (f32 new\+Pitch)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip}{Audio\+Clip}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_audio_source_abeebfe378193e0eb2372c36b67d416d0}{clip}} = nullptr
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_audio_source_af670ed3be603bcbe33077cd7127ab28d}{volume}} = 1.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_audio_source_a33de7c9ecdb38a7049ff25bd41af2a26}{pitch}} = 1.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_audio_source_ae31463e93bcb4be8ef3171931d70a1d7}{loop}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_audio_source_a3afa83fe6770ba166d4b82bc31e7752b}{play\+On\+Awake}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_component}{Component} that plays audio clips. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_audio_source_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_audio_source_ab6de6a1fb3ddc3e7d3629a12e0bd7a2c}\index{Engine::AudioSource@{Engine::AudioSource}!AudioSource@{AudioSource}}
+\index{AudioSource@{AudioSource}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{AudioSource()}{AudioSource()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ab6de6a1fb3ddc3e7d3629a12e0bd7a2c} 
+Engine::\+\+Audio\+Source::\+\+Audio\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_audio_source_ace080bae69fcd9c0bd038d2f0ace92ec}\index{Engine::AudioSource@{Engine::AudioSource}!````~AudioSource@{\texorpdfstring{$\sim$}{\string~}AudioSource}}
+\index{````~AudioSource@{\texorpdfstring{$\sim$}{\string~}AudioSource}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AudioSource()}{\string~AudioSource()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ace080bae69fcd9c0bd038d2f0ace92ec} 
+Engine::\+\+Audio\+Source::\+\texorpdfstring{$\sim$}{\string~}\+Audio\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_audio_source_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_audio_source_a21a2fbbd789225b33b009e3660d27654}\index{Engine::AudioSource@{Engine::AudioSource}!Awake@{Awake}}
+\index{Awake@{Awake}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a21a2fbbd789225b33b009e3660d27654} 
+void Engine::\+\+Audio\+Source::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is first created 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_audio_source_a0b0ead432f251669fb259d281d44b5c4}\index{Engine::AudioSource@{Engine::AudioSource}!Pause@{Pause}}
+\index{Pause@{Pause}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{Pause()}{Pause()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a0b0ead432f251669fb259d281d44b5c4} 
+void Engine::\+\+Audio\+Source::\+\+Pause (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Pause playback \Hypertarget{class_engine_1_1_audio_source_ae6aa607f5e53527f657d877d6f362f45}\index{Engine::AudioSource@{Engine::AudioSource}!Play@{Play}}
+\index{Play@{Play}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{Play()}{Play()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ae6aa607f5e53527f657d877d6f362f45} 
+void Engine::\+\+Audio\+Source::\+\+Play (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Play the audio clip \Hypertarget{class_engine_1_1_audio_source_ae9e40e2d5a35f2ab3228f679385bb61a}\index{Engine::AudioSource@{Engine::AudioSource}!PlayOneShot@{PlayOneShot}}
+\index{PlayOneShot@{PlayOneShot}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{PlayOneShot()}{PlayOneShot()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ae9e40e2d5a35f2ab3228f679385bb61a} 
+void Engine::\+\+Audio\+Source::\+\+Play\+One\+Shot (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_audio_clip}{Audio\+Clip}} \texorpdfstring{$\ast$}{*}}]{one\+Shot}{, }\item[{f32}]{volume\+Scale}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+Play a specific clip (one-\/shot) \Hypertarget{class_engine_1_1_audio_source_a0e2724394307288f10de47c3dd0e0209}\index{Engine::AudioSource@{Engine::AudioSource}!Resume@{Resume}}
+\index{Resume@{Resume}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{Resume()}{Resume()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a0e2724394307288f10de47c3dd0e0209} 
+void Engine::\+\+Audio\+Source::\+\+Resume (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Resume playback \Hypertarget{class_engine_1_1_audio_source_acf1690fcbe68d7bd2cffbb7333126167}\index{Engine::AudioSource@{Engine::AudioSource}!SetPitch@{SetPitch}}
+\index{SetPitch@{SetPitch}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{SetPitch()}{SetPitch()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_acf1690fcbe68d7bd2cffbb7333126167} 
+void Engine::\+\+Audio\+Source::\+\+Set\+Pitch (\begin{DoxyParamCaption}\item[{f32}]{new\+Pitch}{}\end{DoxyParamCaption})}
+
+Set pitch (applies to group) \Hypertarget{class_engine_1_1_audio_source_ab68ddf270d6da8754bc45accb0d3fda1}\index{Engine::AudioSource@{Engine::AudioSource}!SetVolume@{SetVolume}}
+\index{SetVolume@{SetVolume}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{SetVolume()}{SetVolume()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ab68ddf270d6da8754bc45accb0d3fda1} 
+void Engine::\+\+Audio\+Source::\+\+Set\+Volume (\begin{DoxyParamCaption}\item[{f32}]{new\+Volume}{}\end{DoxyParamCaption})}
+
+Set volume (applies to group) \Hypertarget{class_engine_1_1_audio_source_a0a98931b0ba1e556a4dd29d348d8d427}\index{Engine::AudioSource@{Engine::AudioSource}!Stop@{Stop}}
+\index{Stop@{Stop}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{Stop()}{Stop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a0a98931b0ba1e556a4dd29d348d8d427} 
+void Engine::\+\+Audio\+Source::\+\+Stop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Stop playback 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_audio_source_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_audio_source_abeebfe378193e0eb2372c36b67d416d0}\index{Engine::AudioSource@{Engine::AudioSource}!clip@{clip}}
+\index{clip@{clip}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{clip}{clip}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_abeebfe378193e0eb2372c36b67d416d0} 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip}{Audio\+Clip}}\texorpdfstring{$\ast$}{*} Engine::\+\+Audio\+Source::\+clip = nullptr}
+
+Audio clip to play \Hypertarget{class_engine_1_1_audio_source_ae31463e93bcb4be8ef3171931d70a1d7}\index{Engine::AudioSource@{Engine::AudioSource}!loop@{loop}}
+\index{loop@{loop}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{loop}{loop}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_ae31463e93bcb4be8ef3171931d70a1d7} 
+bool Engine::\+\+Audio\+Source::\+loop = false}
+
+Whether to loop playback \Hypertarget{class_engine_1_1_audio_source_a33de7c9ecdb38a7049ff25bd41af2a26}\index{Engine::AudioSource@{Engine::AudioSource}!pitch@{pitch}}
+\index{pitch@{pitch}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a33de7c9ecdb38a7049ff25bd41af2a26} 
+f32 Engine::\+\+Audio\+Source::\+pitch = 1.\+0f}
+
+Pitch (0 to 1, where 1 is normal) \Hypertarget{class_engine_1_1_audio_source_a3afa83fe6770ba166d4b82bc31e7752b}\index{Engine::AudioSource@{Engine::AudioSource}!playOnAwake@{playOnAwake}}
+\index{playOnAwake@{playOnAwake}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{playOnAwake}{playOnAwake}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_a3afa83fe6770ba166d4b82bc31e7752b} 
+bool Engine::\+\+Audio\+Source::\+play\+On\+Awake = false}
+
+Play on awake \Hypertarget{class_engine_1_1_audio_source_af670ed3be603bcbe33077cd7127ab28d}\index{Engine::AudioSource@{Engine::AudioSource}!volume@{volume}}
+\index{volume@{volume}!Engine::AudioSource@{Engine::AudioSource}}
+\doxysubsubsection{\texorpdfstring{volume}{volume}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_source_af670ed3be603bcbe33077cd7127ab28d} 
+f32 Engine::\+\+Audio\+Source::\+volume = 1.\+0f}
+
+Volume (0 to 1) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_audio_source_8hpp}{Audio\+Source.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_audio_source_8cpp}{Audio\+Source.\+cpp}}\end{DoxyCompactItemize}

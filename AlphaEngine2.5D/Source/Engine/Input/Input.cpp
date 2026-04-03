@@ -16,58 +16,26 @@ f32 Input::mouseDeltaX = 0.0f;
 f32 Input::mouseDeltaY = 0.0f;
 bool Input::firstFrame = true;
 
-/*!
- * \brief [AUTO] GetKey
- * \param key [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetKey
- * \param key [in]
- * \return 
- */
+
+
 bool Input::GetKey(KeyCode key) {
     return AEInputCheckCurr(static_cast<u8>(key)) != 0;
 }
 
-/*!
- * \brief [AUTO] GetKeyDown
- * \param key [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetKeyDown
- * \param key [in]
- * \return 
- */
+
+
 bool Input::GetKeyDown(KeyCode key) {
     return AEInputCheckTriggered(static_cast<u8>(key)) != 0;
 }
 
-/*!
- * \brief [AUTO] GetKeyUp
- * \param key [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetKeyUp
- * \param key [in]
- * \return 
- */
+
+
 bool Input::GetKeyUp(KeyCode key) {
     return AEInputCheckReleased(static_cast<u8>(key)) != 0;
 }
 
-/*!
- * \brief [AUTO] GetMouseButton
- * \param button [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetMouseButton
- * \param button [in]
- * \return 
- */
+
+
 bool Input::GetMouseButton(int button) {
     u8 key;
     switch (button) {
@@ -79,16 +47,8 @@ bool Input::GetMouseButton(int button) {
     return AEInputCheckCurr(key) != 0;
 }
 
-/*!
- * \brief [AUTO] GetMouseButtonDown
- * \param button [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetMouseButtonDown
- * \param button [in]
- * \return 
- */
+
+
 bool Input::GetMouseButtonDown(int button) {
     u8 key;
     switch (button) {
@@ -100,16 +60,8 @@ bool Input::GetMouseButtonDown(int button) {
     return AEInputCheckTriggered(key) != 0;
 }
 
-/*!
- * \brief [AUTO] GetMouseButtonUp
- * \param button [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetMouseButtonUp
- * \param button [in]
- * \return 
- */
+
+
 bool Input::GetMouseButtonUp(int button) {
     u8 key;
     switch (button) {
@@ -121,28 +73,16 @@ bool Input::GetMouseButtonUp(int button) {
     return AEInputCheckReleased(key) != 0;
 }
 
-/*!
- * \brief [AUTO] GetMousePosition
- * \return 
- */
-/*!
- * \brief [AUTO] GetMousePosition
- * \return 
- */
+
+
 Vector2 Input::GetMousePosition() {
     s32 x, y;
     AEInputGetCursorPosition(&x, &y);
     return Vector2(static_cast<f32>(x), static_cast<f32>(y));
 }
 
-/*!
- * \brief [AUTO] GetMouseDelta
- * \return 
- */
-/*!
- * \brief [AUTO] GetMouseDelta
- * \return 
- */
+
+
 Vector2 Input::GetMouseDelta() {
     if (IsCursorLocked()) {
         // Return the delta calculated from centered cursor
@@ -154,30 +94,16 @@ Vector2 Input::GetMouseDelta() {
     return Vector2(static_cast<f32>(dx), static_cast<f32>(dy));
 }
 
-/*!
- * \brief [AUTO] GetMouseScrollDelta
- * \return 
- */
-/*!
- * \brief [AUTO] GetMouseScrollDelta
- * \return 
- */
+
+
 f32 Input::GetMouseScrollDelta() {
     s32 delta;
     AEInputMouseWheelDelta(&delta);
     return static_cast<f32>(delta);
 }
 
-/*!
- * \brief [AUTO] GetAxis
- * \param axisName [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetAxis
- * \param axisName [in]
- * \return 
- */
+
+
 f32 Input::GetAxis(const std::string& axisName) {
     if (axisName == "Horizontal") {
         f32 value = 0;
@@ -232,40 +158,20 @@ f32 Input::GetAxis(const std::string& axisName) {
     return 0;
 }
 
-/*!
- * \brief [AUTO] GetAxisRaw
- * \param axisName [in]
- * \return 
- */
-/*!
- * \brief [AUTO] GetAxisRaw
- * \param axisName [in]
- * \return 
- */
+
+
 f32 Input::GetAxisRaw(const std::string& axisName) {
     return GetAxis(axisName);
 }
 
-/*!
- * \brief [AUTO] SetCursorVisible
- * \param visible [in]
- */
-/*!
- * \brief [AUTO] SetCursorVisible
- * \param visible [in]
- */
+
+
 void Input::SetCursorVisible(bool visible) {
     AEInputShowCursor(visible ? 1 : 0);
 }
 
-/*!
- * \brief [AUTO] RegisterCursorUnlock
- * \param id [in]
- */
-/*!
- * \brief [AUTO] RegisterCursorUnlock
- * \param id [in]
- */
+
+
 void Input::RegisterCursorUnlock(const std::string& id) {
     bool wasEmpty = cursorUnlockRegistrations.empty();
     cursorUnlockRegistrations.insert(id);
@@ -276,14 +182,8 @@ void Input::RegisterCursorUnlock(const std::string& id) {
     }
 }
 
-/*!
- * \brief [AUTO] UnregisterCursorUnlock
- * \param id [in]
- */
-/*!
- * \brief [AUTO] UnregisterCursorUnlock
- * \param id [in]
- */
+
+
 void Input::UnregisterCursorUnlock(const std::string& id) {
     cursorUnlockRegistrations.erase(id);
     
@@ -294,21 +194,13 @@ void Input::UnregisterCursorUnlock(const std::string& id) {
     }
 }
 
-/*!
- * \brief [AUTO] IsCursorLocked
- * \return 
- */
-/*!
- * \brief [AUTO] IsCursorLocked
- * \return 
- */
+
+
 bool Input::IsCursorLocked() {
     return cursorUnlockRegistrations.empty();
 }
 
-/*!
- * \brief [AUTO] Update
- */
+
 void Input::Update() {
     // Update Xbox controller state first
     XboxController::Update();
@@ -343,9 +235,7 @@ void Input::Update() {
     CenterCursor();
 }
 
-/*!
- * \brief [AUTO] UpdateWindowCenter
- */
+
 void Input::UpdateWindowCenter() {
     if (!hwnd) hwnd = GetActiveWindow();
     if (hwnd) {
@@ -356,9 +246,7 @@ void Input::UpdateWindowCenter() {
     }
 }
 
-/*!
- * \brief [AUTO] CenterCursor
- */
+
 void Input::CenterCursor() {
     SetCursorPos(centerX, centerY);
 }

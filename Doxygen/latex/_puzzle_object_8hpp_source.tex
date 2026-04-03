@@ -1,0 +1,37 @@
+\doxysection{Puzzle\+Object.\+hpp}
+\hypertarget{_puzzle_object_8hpp_source}{}\label{_puzzle_object_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Puzzle/PuzzleObject.hpp@{AlphaEngine2.5D/Source/Game/Puzzle/PuzzleObject.hpp}}
+\doxymbox{\hyperlink{_puzzle_object_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Inside\ PuzzleObject.hpp}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector3_8hpp}{Engine/Math/Vector3.hpp}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_book}{Book}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_book_a85a8762ac2f5a0f649eb7496c0d6352f}{bookId}}\ =\ 0;}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Engine::Vector3}}\ \doxymbox{\hyperlink{struct_game_1_1_book_aff33b260b66058e75f6d9c06a12694ee}{bookPosition}}\ =\ \{\ 0.0f,\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_game_1_1_book_a2bf16f1254bd688b379cd383cc6508c0}{bookCollected}}\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Must\ be\ lowercase\ 'b'!}}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_book_aaf78cfc696088e9b0acaa5734de162bc}{bookName}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_book_af12ab1abc0632eeb3f4808fbc81d77d5}{bookLore}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_book_a021d02745352560f5b0b1396cfc3850e}{opt1}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_book_a54be9d5e2988cf6250f78f5cf7995a58}{opt2}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_book_a26031587128a73033a3921f65ff7327e}{opt3}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_game_1_1_book_a1be4e70249a6523f5ad0c18b32a022ef}{correctAnswer}}\ =\ 1;}
+\DoxyCodeLine{00019\ \ \ \ \ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_puzzle_object}{PuzzleObject}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a56208265e75454c62cd9f70074846aae}{isReading}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a96d670a946182d05ec23766e46fb5fb3}{puzzleCompleted}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a57e0ad4f4adfbb8f79315e661d7a4513}{baseZ}}\ =\ 0.0f;\ \textcolor{comment}{//\ The\ anchor\ for\ our\ floating\ animation}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a6ad805ce148a85c0f0c8f112e50edd93}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a207d063ce343a0a7b1254c80a02661ed}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ \ \ \ \ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

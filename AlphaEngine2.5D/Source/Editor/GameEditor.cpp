@@ -1,6 +1,6 @@
 /* Start Header ************************************************************************/
 /*!
-\file       GameEditor.cpp
+\file GameEditor.cpp
 \author
 \par
 \date   March, 29, 2026
@@ -49,10 +49,7 @@ namespace AEEditor
     int GameEditor::hoveredX = -1;
     int GameEditor::hoveredY = -1;
 
-    /*!
-     * \brief [AUTO] Is3DMode
-     * \return
-     */
+    
     bool GameEditor::Is3DMode() { return is3DMode; }
 
     void GameEditor::Initialize(Engine::Scene *s, Engine::TileMap *tileMap)

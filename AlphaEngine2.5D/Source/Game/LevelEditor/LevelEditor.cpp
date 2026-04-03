@@ -95,41 +95,11 @@
 //  * \param cam [in] Camera pointer
 //  * \param playerTf [in] Player transform pointer
 //  */
-// /*!
-//  * \brief [AUTO] Initialize
-//  * \param scn [in]
-//  * \param map [in]
-//  * \param cam [in]
-//  * \param playerTf [in]
-//  */
-// /*!
-//  * \brief [AUTO] Initialize
-//  * \param scn [in]
-//  * \param map [in]
-//  * \param cam [in]
-//  * \param playerTf [in]
-//  */
-// /*!
-//  * \brief [AUTO] Initialize
-//  * \param scn [in]
-//  * \param map [in]
-//  * \param cam [in]
-//  * \param playerTf [in]
-//  */
-// /*!
-//  * \brief [AUTO] Initialize
-//  * \param scn [in]
-//  * \param map [in]
-//  * \param cam [in]
-//  * \param playerTf [in]
-//  */
-// /*!
-//  * \brief [AUTO] Initialize
-//  * \param scn [in]
-//  * \param map [in]
-//  * \param cam [in]
-//  * \param playerTf [in]
-//  */
+// 
+// 
+// 
+// 
+// 
 // void LevelEditor::Initialize(Scene* scn, TileMap* map, Camera* cam, Transform* playerTf) {
 //     // Re-initialize safety for scene reloads (FPS can be loaded multiple times)
 //     if (isActive) {
@@ -532,36 +502,11 @@
 //  * \param screenY [in] Screen Y in pixels
 //  * \return Map coordinates as a Vector2
 //  */
-// /*!
-//  * \brief [AUTO] ScreenToMapCoords
-//  * \param screenX [in]
-//  * \param screenY [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] ScreenToMapCoords
-//  * \param screenX [in]
-//  * \param screenY [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] ScreenToMapCoords
-//  * \param screenX [in]
-//  * \param screenY [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] ScreenToMapCoords
-//  * \param screenX [in]
-//  * \param screenY [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] ScreenToMapCoords
-//  * \param screenX [in]
-//  * \param screenY [in]
-//  * \return 
-//  */
+// 
+// 
+// 
+// 
+// 
 // Vector2 LevelEditor::ScreenToMapCoords(float screenX, float screenY) {
 //     int screenWidth = AEGfxGetWindowWidth();
 //     int screenHeight = AEGfxGetWindowHeight();
@@ -594,36 +539,11 @@
 //  * \param y [in] Tile Y
 //  * \return true when tile is floor and within bounds
 //  */
-// /*!
-//  * \brief [AUTO] IsFloorTile
-//  * \param x [in]
-//  * \param y [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] IsFloorTile
-//  * \param x [in]
-//  * \param y [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] IsFloorTile
-//  * \param x [in]
-//  * \param y [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] IsFloorTile
-//  * \param x [in]
-//  * \param y [in]
-//  * \return 
-//  */
-// /*!
-//  * \brief [AUTO] IsFloorTile
-//  * \param x [in]
-//  * \param y [in]
-//  * \return 
-//  */
+// 
+// 
+// 
+// 
+// 
 // bool LevelEditor::IsFloorTile(int x, int y) {
 //     if (!tileMap) return false;
 //     if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return false;
@@ -634,26 +554,11 @@
 //  * \brief Set the editor placement mode.
 //  * \param mode [in] Desired EditorMode
 //  */
-// /*!
-//  * \brief [AUTO] SetMode
-//  * \param mode [in]
-//  */
-// /*!
-//  * \brief [AUTO] SetMode
-//  * \param mode [in]
-//  */
-// /*!
-//  * \brief [AUTO] SetMode
-//  * \param mode [in]
-//  */
-// /*!
-//  * \brief [AUTO] SetMode
-//  * \param mode [in]
-//  */
-// /*!
-//  * \brief [AUTO] SetMode
-//  * \param mode [in]
-//  */
+// 
+// 
+// 
+// 
+// 
 // void LevelEditor::SetMode(EditorMode mode) {
 //     currentMode = mode;
 //     const char* modeNames[] = {"Wall", "Door", "Terminal", "Exit", "ControlRoom", "GreenCard", "PurpleCard", "RedCard", "YellowCard", "Delete"};
@@ -714,9 +619,7 @@
 //         Engine::Color(1.0f, 0.5f, 0.5f, 1.0f) : Engine::Color(0.8f, 0.3f, 0.3f, 1.0f));
 // }
 
-// /*!
-//  * \brief [AUTO] ToggleEditor
-//  */
+// 
 // void LevelEditor::ToggleEditor() {
 //     isActive = !isActive;
     
@@ -745,18 +648,14 @@
 //     }
 // }
 
-// /*!
-//  * \brief [AUTO] Render
-//  */
+// 
 // void LevelEditor::Render() {
 //     if (!isActive || !tileMap || !tileMesh) return;
     
 //     RenderMap();
 // }
 
-// /*!
-//  * \brief [AUTO] RenderMap
-//  */
+// 
 // void LevelEditor::RenderMap() {
 //     AEGfxSetRenderMode(AE_GFX_RM_COLOR);
 //     AEGfxSetBlendMode(AE_GFX_BM_BLEND);
@@ -830,34 +729,17 @@
 //     RenderMapGrid();
 // }
 
-// /*!
-//  * \brief [AUTO] RenderMapGrid
-//  */
+// 
 // void LevelEditor::RenderMapGrid() {
 //     // Grid rendering disabled for performance with large map (128x43)
 //     // Can be enabled for smaller maps if needed
 // }
 
-// /*!
-//  * \brief [AUTO] SaveMapTxt
-//  * \param filename [in]
-//  */
-// /*!
-//  * \brief [AUTO] SaveMapTxt
-//  * \param filename [in]
-//  */
-// /*!
-//  * \brief [AUTO] SaveMapTxt
-//  * \param filename [in]
-//  */
-// /*!
-//  * \brief [AUTO] SaveMapTxt
-//  * \param filename [in]
-//  */
-// /*!
-//  * \brief [AUTO] SaveMapTxt
-//  * \param filename [in]
-//  */
+// 
+// 
+// 
+// 
+// 
 // void LevelEditor::SaveMapTxt(const std::string& filename) {
 //     if (!tileMap) {
 //         std::cout << "[LevelEditor] No tilemap to save!\n";
@@ -958,31 +840,11 @@
 //     std::cout << "\n=================\n";
 // }
 
-// /*!
-//  * \brief [AUTO] SpawnDoorAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnDoorAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnDoorAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnDoorAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnDoorAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
+// 
+// 
+// 
+// 
+// 
 // void LevelEditor::SpawnDoorAt(int x, int y) {
 //     if (!scene || !tileMap) {
 //         std::cout << "[LevelEditor] ERROR: No scene/tilemap available for spawning!\n";
@@ -1056,31 +918,11 @@
 //  * \param x [in] Tile X coordinate
 //  * \param y [in] Tile Y coordinate
 //  */
-// /*!
-//  * \brief [AUTO] SpawnTerminalAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnTerminalAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnTerminalAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnTerminalAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
-// /*!
-//  * \brief [AUTO] SpawnTerminalAt
-//  * \param x [in]
-//  * \param y [in]
-//  */
+// 
+// 
+// 
+// 
+// 
 // void LevelEditor::SpawnTerminalAt(int x, int y) {
 //     if (!scene) {
 //         std::cout << "[LevelEditor] ERROR: No scene available for spawning!\n";

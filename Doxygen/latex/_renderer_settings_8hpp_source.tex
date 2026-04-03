@@ -1,0 +1,71 @@
+\doxysection{Renderer\+Settings.\+hpp}
+\hypertarget{_renderer_settings_8hpp_source}{}\label{_renderer_settings_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/RendererSettings.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/RendererSettings.hpp}}
+\doxymbox{\hyperlink{_renderer_settings_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <json/json.h>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{Engine/Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_rendering_config}{RenderingConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00030\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}{perpWallDistClamp}}\ \ \ =\ 0.1f;\ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}{fogLutDistScale}}\ \ \ \ \ =\ 100.0f;\ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}{fogRebuildThreshold}}\ =\ 0.001f;\ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}{doorRayDirThreshold}}\ =\ 0.0001f;\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}{doorZBufferBias}}\ \ \ \ \ =\ 0.01f;\ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}{projectionNearClamp}}\ =\ 0.1f;\ \ \ \ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}{raycastColumnStep}}\ =\ 10.0f;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}{maxTrianglesPerMesh}}\ =\ 8000.0f;\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}{tilemapFbScale}}\ =\ 0.2f;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}{visibilityCullThreshold}}\ =\ 0.01f;\ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}{wallOverlapPadding}}\ =\ 10.0f;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a9fe2bc30abfc67f24d82319431c8b07a}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00045\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}{perpWallDistClamp}}\ \ \ =\ j.get(\textcolor{stringliteral}{"{}perpWallDistClamp"{}},\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}{perpWallDistClamp}}).asFloat();}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}{fogLutDistScale}}\ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}fogLutDistScale"{}},\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}{fogLutDistScale}}).asFloat();}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}{fogRebuildThreshold}}\ =\ j.get(\textcolor{stringliteral}{"{}fogRebuildThreshold"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}{fogRebuildThreshold}}).asFloat();}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}{doorRayDirThreshold}}\ =\ j.get(\textcolor{stringliteral}{"{}doorRayDirThreshold"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}{doorRayDirThreshold}}).asFloat();}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}{doorZBufferBias}}\ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}doorZBufferBias"{}},\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}{doorZBufferBias}}).asFloat();}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}{projectionNearClamp}}\ =\ j.get(\textcolor{stringliteral}{"{}projectionNearClamp"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}{projectionNearClamp}}).asFloat();}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}{raycastColumnStep}}\ \ \ =\ j.get(\textcolor{stringliteral}{"{}raycastColumnStep"{}},\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}{raycastColumnStep}}).asFloat();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}{maxTrianglesPerMesh}}\ =\ j.get(\textcolor{stringliteral}{"{}maxTrianglesPerMesh"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}{maxTrianglesPerMesh}}).asFloat();}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}{tilemapFbScale}}\ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}tilemapFbScale"{}},\ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}{tilemapFbScale}}).asFloat();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}{visibilityCullThreshold}}\ =\ j.get(\textcolor{stringliteral}{"{}visibilityCullThreshold"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}{visibilityCullThreshold}}).asFloat();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}{wallOverlapPadding}}\ \ =\ j.get(\textcolor{stringliteral}{"{}wallOverlapPadding"{}},\ \ \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}{wallOverlapPadding}}).asFloat();}
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{class\ }RendererSettings}
+\DoxyCodeLine{00066\ \{}
+\DoxyCodeLine{00067\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \ \ RendererSettings()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00069\ \ \ \ \ RendererSettings(\textcolor{keyword}{const}\ RendererSettings\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00070\ \ \ \ \ RendererSettings\&\ operator=(\textcolor{keyword}{const}\ RendererSettings\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a9802561989a95f37fb14bccbc1339818}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/rendering.json"{}});}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a77ac7ebbccabaa20776f960b7249997e}{perpWallDistClamp}};\ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_af73003bc137219ea80f3835f362a1d24}{fogLutDistScale}};\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a601a89c3ffff6a932335f09f79628cbd}{fogRebuildThreshold}};\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_aa0cec422fa24d36a9a30b6542646808a}{doorRayDirThreshold}};\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_af9f818f57569aa170d1a445b75325aa1}{doorZBufferBias}};\ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a0f8bf69e7f6b3b40deea814ad7afd8cf}{projectionNearClamp}};\ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_aec4c406dbf02e60691b05ab3dc977b0c}{raycastColumnStep}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a1a825519623165e3e0abf785d02e2709}{maxTrianglesPerMesh}};\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a59b8fd2fd6a76ae7251aeac46876bd6c}{tilemapFbScale}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a007c189f87de01c74190dcd5bf5ff515}{visibilityCullThreshold}};\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a82df2be8a97d6da2e240a6d6c4ab2254}{wallOverlapPadding}};\ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

@@ -156,26 +156,11 @@ namespace Game {
 		return out;
 	}
 
-	/*!
-	 * \brief [AUTO] UpdateGameTime
-	 * \param dt [in]
-	 */
-	/*!
-	 * \brief [AUTO] UpdateGameTime
-	 * \param dt [in]
-	 */
-	/*!
-	 * \brief [AUTO] UpdateGameTime
-	 * \param dt [in]
-	 */
-	/*!
-	 * \brief [AUTO] UpdateGameTime
-	 * \param dt [in]
-	 */
-	/*!
-	 * \brief [AUTO] UpdateGameTime
-	 * \param dt [in]
-	 */
+	
+	
+	
+	
+	
 	void Player::UpdateGameTime(float dt) {
 		gameTime += dt;
 

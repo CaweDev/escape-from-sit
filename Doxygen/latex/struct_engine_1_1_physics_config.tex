@@ -1,0 +1,116 @@
+\doxysection{Engine::\+Physics\+Config Struct Reference}
+\hypertarget{struct_engine_1_1_physics_config}{}\label{struct_engine_1_1_physics_config}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+
+
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises physics.\+json.  
+
+
+
+
+{\ttfamily \+\#include $<$Physics2\+D.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a867970d9fbf48524f9402c06fecef0f5}{From\+Json}} (const Json::\+\+Value \&j) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908}{gravity}} = 9.\+81f
+\begin{DoxyCompactList}\small\item\em World gravity in units per second squared. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f}{default\+Collision\+Radius}} = 0.\+2f
+\begin{DoxyCompactList}\small\item\em Fallback collision radius when no collider component is found. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986}{fixed\+Delta\+Time\+Fallback}} = 0.\+02f
+\begin{DoxyCompactList}\small\item\em Fallback fixed delta time (50 Hz) used when \doxylink{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453}{Time::\+fixed\+Delta\+Time} is zero. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994}{delta\+Time\+Cap}} = 0.\+1f
+\begin{DoxyCompactList}\small\item\em Maximum allowed delta time to avoid large physics steps during frame spikes. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf}{push\+Dir\+Sqr\+Threshold}} = 0.\+0001f
+\begin{DoxyCompactList}\small\item\em Minimum squared magnitude of the push direction before defaulting to (1,0). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises physics.\+json. 
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_physics_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_physics_config_a867970d9fbf48524f9402c06fecef0f5}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_a867970d9fbf48524f9402c06fecef0f5} 
+void Engine::\+\+Physics\+Config::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{Engine::\+\+IConfig}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_physics_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!defaultCollisionRadius@{defaultCollisionRadius}}
+\index{defaultCollisionRadius@{defaultCollisionRadius}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{defaultCollisionRadius}{defaultCollisionRadius}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_a9fc0d46434427ced65561a3285b3ec5f} 
+float Engine::\+\+Physics\+Config::\+default\+Collision\+Radius = 0.\+2f}
+
+
+
+Fallback collision radius when no collider component is found. 
+
+\Hypertarget{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!deltaTimeCap@{deltaTimeCap}}
+\index{deltaTimeCap@{deltaTimeCap}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{deltaTimeCap}{deltaTimeCap}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_abbc09494efc889620a4c1540fa140994} 
+float Engine::\+\+Physics\+Config::\+delta\+Time\+Cap = 0.\+1f}
+
+
+
+Maximum allowed delta time to avoid large physics steps during frame spikes. 
+
+\Hypertarget{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!fixedDeltaTimeFallback@{fixedDeltaTimeFallback}}
+\index{fixedDeltaTimeFallback@{fixedDeltaTimeFallback}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{fixedDeltaTimeFallback}{fixedDeltaTimeFallback}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_a67661ddd9d802eb13ab3ab8056ce6986} 
+float Engine::\+\+Physics\+Config::\+fixed\+Delta\+Time\+Fallback = 0.\+02f}
+
+
+
+Fallback fixed delta time (50 Hz) used when \doxylink{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453}{Time::\+fixed\+Delta\+Time} is zero. 
+
+\Hypertarget{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!gravity@{gravity}}
+\index{gravity@{gravity}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{gravity}{gravity}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_a20d50216ea7527651d8619d2dd071908} 
+float Engine::\+\+Physics\+Config::\+gravity = 9.\+81f}
+
+
+
+World gravity in units per second squared. 
+
+\Hypertarget{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf}\index{Engine::PhysicsConfig@{Engine::PhysicsConfig}!pushDirSqrThreshold@{pushDirSqrThreshold}}
+\index{pushDirSqrThreshold@{pushDirSqrThreshold}!Engine::PhysicsConfig@{Engine::PhysicsConfig}}
+\doxysubsubsection{\texorpdfstring{pushDirSqrThreshold}{pushDirSqrThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_physics_config_a57123a4f61d38b79adf57ea0a9883ecf} 
+float Engine::\+\+Physics\+Config::\+push\+Dir\+Sqr\+Threshold = 0.\+0001f}
+
+
+
+Minimum squared magnitude of the push direction before defaulting to (1,0). 
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_physics2_d_8hpp}{Physics2\+D.\+hpp}}\end{DoxyCompactItemize}

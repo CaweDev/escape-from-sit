@@ -1,0 +1,65 @@
+\doxysection{Path\+Renderer.\+hpp}
+\hypertarget{_path_renderer_8hpp_source}{}\label{_path_renderer_8hpp_source}\index{AlphaEngine2.5D/Source/Game/PathRenderer/PathRenderer.hpp@{AlphaEngine2.5D/Source/Game/PathRenderer/PathRenderer.hpp}}
+\doxymbox{\hyperlink{_path_renderer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_renderer_8hpp}{Engine/Graphics/IRenderer.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}};}
+\DoxyCodeLine{00014\ \}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_path_renderer}{PathRenderer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::IRenderer}}\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a7eca7fbbc9df7260fee1cd6e298f2239}{pathWaypoints}};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_acb8250b0ba2dfd1f22a28d11c098e9d5}{markerColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 1.0f,\ 0.0f,\ 0.8f);\ \textcolor{comment}{//\ Yellow\ default}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a03392c9b387c496e559377b95fddfdce}{markerSize}}\ =\ 0.3f;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a7a9e27d160f739987663a1069e5e505f}{markerHeight}}\ =\ 0.02f;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a23ef85e981f6aa6812313e225ca71c63}{cardId}}\ =\ -\/1;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_aee574b2a2c81a525978b2d260c019340}{glowSpeed}}\ =\ 2.0f;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a0a96f5ec1f93e5dc2069c841370741f6}{glowIntensity}}\ =\ 0.3f;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_afeb53caa6a5818a387f70a279c418935}{autoFade}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_abb819e8176ba2ad4b024f674d48f24b6}{fadeDistance}}\ =\ 2.0f;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_ab09f206686a0b85ea03e688995399f6e}{currentAlpha}}\ =\ 1.0f;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a177808232393c889de7f596e95faa77d}{destination}};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_acb0708bae427fddd18d7b2b7fcb9993e}{tileMap}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a258237bc605ff927d50329da05e07347}{playerTransform}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lifecycle}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a9f5b94f76536cb93a5ceddac13281bf9}{Awake}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a05ca31646ba38f58a6b6c0a73f637c69}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a6a86fb2ed3607e8b287685a11caefe1f}{Render}}()\ \textcolor{keyword}{override};\ \textcolor{comment}{//\ IRenderer\ interface\ -\/\ called\ during\ render\ phase}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_af2fa2e70e581f688d6ba7327b0572f84}{SetPath}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ start,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ dest,\ \textcolor{keywordtype}{int}\ cardID\ =\ -\/1,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}(1.0f,\ 1.0f,\ 0.0f,\ 0.8f));}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a0ced2b98f44e308f59cab88492f6b261}{ClearPath}}();}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_path_renderer_a5c3b82574a81c71c2021f114a91b9918}{HasPath}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\doxymbox{\hyperlink{class_game_1_1_path_renderer_a7eca7fbbc9df7260fee1cd6e298f2239}{pathWaypoints}}.empty();\ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ animTime\ =\ 0.0f;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ FindPath(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ start,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ goal);}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RenderMarker(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\&\ position,\ \textcolor{keywordtype}{float}\ alpha,\ \textcolor{keywordtype}{float}\ glowMod);}
+\DoxyCodeLine{00082\ \ \ \ \ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

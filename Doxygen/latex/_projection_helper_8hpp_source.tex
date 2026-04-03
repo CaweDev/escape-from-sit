@@ -1,0 +1,45 @@
+\doxysection{Projection\+Helper.\+hpp}
+\hypertarget{_projection_helper_8hpp_source}{}\label{_projection_helper_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Raycasting/ProjectionHelper.hpp@{AlphaEngine2.5D/Source/Engine/Raycasting/ProjectionHelper.hpp}}
+\doxymbox{\hyperlink{_projection_helper_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector3_8hpp}{../Math/Vector3.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_mathf_8hpp}{../Math/Mathf.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{../Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_projection_result}{ProjectionResult}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_acb36c3394c3d523d5589450377d30fbe}{isVisible}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00021\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_a5e3c0e11ec17b1a1f15637bd6234426b}{screenX}}\ =\ 0.0f;}
+\DoxyCodeLine{00022\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_a24798852fd67e67462eb95eb625289d4}{screenY}}\ =\ 0.0f;}
+\DoxyCodeLine{00023\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_a5213848b05d47d24b83dbfd48feff1cf}{scale}}\ =\ 1.0f;}
+\DoxyCodeLine{00024\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_a879608a41558746ee4971ba29c3f9bec}{distance}}\ =\ 0.0f;\ \ \ \ \ \ \textcolor{comment}{//\ Euclidean\ distance}}
+\DoxyCodeLine{00025\ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result_a04c7444399af31daab2ea8f82ad6d75c}{perpDistance}}\ =\ 0.0f;\ \ \textcolor{comment}{//\ Fisheye-\/corrected\ distance}}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_projection_helper}{ProjectionHelper}}\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result}{ProjectionResult}}\ \doxymbox{\hyperlink{class_engine_1_1_projection_helper_a6edddc58aacbe6cbf9af5dcb4ff4813f}{ProjectToScreen}}(}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}\&\ worldPos,\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}\&\ camPos,\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ f32\ camRotationDeg,\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ f32\ fovDeg,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ screenWidth,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ screenHeight);}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_projection_result}{ProjectionResult}}\ \doxymbox{\hyperlink{class_engine_1_1_projection_helper_a6edddc58aacbe6cbf9af5dcb4ff4813f}{ProjectToScreen}}(}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}*\ target,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}*\ camera,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ f32\ fovDeg,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ screenWidth,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ screenHeight);}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

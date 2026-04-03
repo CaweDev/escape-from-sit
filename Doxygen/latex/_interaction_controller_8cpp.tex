@@ -1,0 +1,38 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Interaction/\+\+Interaction\+Controller.cpp File Reference}
+\hypertarget{_interaction_controller_8cpp}{}\label{_interaction_controller_8cpp}\index{AlphaEngine2.5D/Source/Engine/Interaction/InteractionController.cpp@{AlphaEngine2.5D/Source/Engine/Interaction/InteractionController.cpp}}
+
+
+Implementation of Interaction\+Controller component.  
+
+
+{\ttfamily \+\#include "{}Interaction\+Controller.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Camera.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite\+Sheet\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Application.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Game\+Object.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Time.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Scene/\+\+Scene\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Raycasting/\+\+Projection\+Helper.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Input/\+\+Input.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Input/\+\+Xbox\+Controller.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+UI/\+\+Core/\+\+UIManager.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+UI/\+\+Specialized/\+\+Crosshair.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+UI/\+\+Specialized/\+\+Interaction\+Prompt.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Door\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Tile\+Map/\+\+Door.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Math/\+\+Mathf.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Asset\+Manager.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$cfloat$>$}\newline
+{\ttfamily \+\#include $<$cmath$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of Interaction\+Controller component. 
+

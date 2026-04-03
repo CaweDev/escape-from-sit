@@ -19,12 +19,7 @@ void TileMap::Initialize()
 	initialized = true;
 }
 
-/*!
- * \brief [AUTO] LoadFromArray
- * \param data [in]
- * \param w [in]
- * \param h [in]
- */
+
 void TileMap::LoadFromArray(const int *data, int w, int h)
 {
 	width = w;

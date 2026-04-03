@@ -1,0 +1,29 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+UI/\+\+Game\+Object/\+\+Confirmation\+Dialog.hpp File Reference}
+\hypertarget{_confirmation_dialog_8hpp}{}\label{_confirmation_dialog_8hpp}\index{AlphaEngine2.5D/Source/Engine/UI/GameObject/ConfirmationDialog.hpp@{AlphaEngine2.5D/Source/Engine/UI/GameObject/ConfirmationDialog.hpp}}
+
+
+Modal confirmation dialog that inherits from Component.  
+
+
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Component.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Color.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$functional$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog}{UI::\+\+Confirmation\+Dialog}}
+\begin{DoxyCompactList}\small\item\em Modal confirmation dialog with message text and confirm/\+cancel buttons. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\item 
+namespace \doxymbox{\hyperlink{namespace_u_i}{UI}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Modal confirmation dialog that inherits from Component. 
+
+Creates and owns its own Canvas + \doxylink{namespace_u_i}{UI} hierarchy (overlay, dialog panel, text, buttons). Managed by Dialog\+Service. 

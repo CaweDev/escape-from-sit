@@ -1,0 +1,240 @@
+\doxysection{Game::\+NPC Class Reference}
+\hypertarget{class_game_1_1_n_p_c}{}\label{class_game_1_1_n_p_c}\index{Game::NPC@{Game::NPC}}
+
+
+{\ttfamily \+\#include $<$NPC.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_n_p_c_ad5c8ab6dd0e47775c3cfe50710c3bf37}{Initialize}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_n_p_c_ab8bb3367950157f7256f41e9dec228d2}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5be2aa62b368abec00e8d9498ce87feb}{Set\+Pick\+Goal\+In\+Zone}} (std::\+function$<$ bool(int, int \&, int \&)$>$ fn)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_n_p_c_a9070792e8ba862c91d26ba673045af89}{On\+Distracted}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&noise\+Pos)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_n_p_c_a7d5e46dd62abbef2cc3746ed96e01a6c}{Clear\+Distraction}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932}{tile\+Map}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_afc628e3fcbd7adfef7c7a0b74d7b2ee8}{player\+Tf}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::\+\+Rigidbody2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_a9e29c46f3f7d15248800b8a968a74e27}{m\+\_\+rb}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::\+\+Rigidbody2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_a94e0cbea7f8c196ed1084c2ff7f092ac}{player\+Rb}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_player}{Game::\+\+Player}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_adfa2f4c413c78a5585cb0dd1733f3af1}{player\+Data}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::\+\+Camera\+Shake}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_n_p_c_a542eda38e86c4a6cc1ad5208be2938a7}{cam\+Shake}} = nullptr
+\item 
+\doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{NPCType}} \doxymbox{\hyperlink{class_game_1_1_n_p_c_aa908d7027774ada4285af543fbcc9630}{type}} = \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{NPCType::\+\+Annoying}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_n_p_c_a243860339214823c1b14aeb2cd5a5be0}{zone\+Id}} = 1
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_n_p_c_acb56c9ea583aabc7323916bd2b9a82f6}{speed}} = 1.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_n_p_c_a63d8b0bdba391569a2fec56eb8628a98}{arrive\+Distance}} = 0.\+10f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_n_p_c_aba78fdae7db603e0109c9b0ae4b56ce2}{trigger\+Radius}} = 2.\+2f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_n_p_c_a8039d9bc962f9ea5db6d4fa97c14f3da}{block\+Time}} = 1.\+2f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5f8123db7aa12edc7cc9df37a9f30f44}{patrol\+Repath\+Time}} = 2.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5f0abe0d5c8730e4686b153193d43bb7}{is\+Distracted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_n_p_c_a19b6a6aecc6ff47fa0c04caa81b81aba}{distraction\+Pos}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_n_p_c_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_n_p_c_a7d5e46dd62abbef2cc3746ed96e01a6c}\index{Game::NPC@{Game::NPC}!ClearDistraction@{ClearDistraction}}
+\index{ClearDistraction@{ClearDistraction}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{ClearDistraction()}{ClearDistraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a7d5e46dd62abbef2cc3746ed96e01a6c} 
+void Game::\+\+NPC::\+\+Clear\+Distraction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_n_p_c_ad5c8ab6dd0e47775c3cfe50710c3bf37}\index{Game::NPC@{Game::NPC}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_ad5c8ab6dd0e47775c3cfe50710c3bf37} 
+void Game::\+\+NPC::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_n_p_c_a9070792e8ba862c91d26ba673045af89}\index{Game::NPC@{Game::NPC}!OnDistracted@{OnDistracted}}
+\index{OnDistracted@{OnDistracted}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{OnDistracted()}{OnDistracted()}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a9070792e8ba862c91d26ba673045af89} 
+void Game::\+\+NPC::\+\+On\+Distracted (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{noise\+Pos}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_n_p_c_a5be2aa62b368abec00e8d9498ce87feb}\index{Game::NPC@{Game::NPC}!SetPickGoalInZone@{SetPickGoalInZone}}
+\index{SetPickGoalInZone@{SetPickGoalInZone}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{SetPickGoalInZone()}{SetPickGoalInZone()}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a5be2aa62b368abec00e8d9498ce87feb} 
+void Game::\+\+NPC::\+\+Set\+Pick\+Goal\+In\+Zone (\begin{DoxyParamCaption}\item[{std::\+function$<$ bool(int, int \&, int \&)$>$}]{fn}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_n_p_c_ab8bb3367950157f7256f41e9dec228d2}\index{Game::NPC@{Game::NPC}!Update@{Update}}
+\index{Update@{Update}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_ab8bb3367950157f7256f41e9dec228d2} 
+void Game::\+\+NPC::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_n_p_c_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_n_p_c_a63d8b0bdba391569a2fec56eb8628a98}\index{Game::NPC@{Game::NPC}!arriveDistance@{arriveDistance}}
+\index{arriveDistance@{arriveDistance}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{arriveDistance}{arriveDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a63d8b0bdba391569a2fec56eb8628a98} 
+float Game::\+\+NPC::\+arrive\+Distance = 0.\+10f}
+
+\Hypertarget{class_game_1_1_n_p_c_a8039d9bc962f9ea5db6d4fa97c14f3da}\index{Game::NPC@{Game::NPC}!blockTime@{blockTime}}
+\index{blockTime@{blockTime}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{blockTime}{blockTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a8039d9bc962f9ea5db6d4fa97c14f3da} 
+float Game::\+\+NPC::\+block\+Time = 1.\+2f}
+
+\Hypertarget{class_game_1_1_n_p_c_a542eda38e86c4a6cc1ad5208be2938a7}\index{Game::NPC@{Game::NPC}!camShake@{camShake}}
+\index{camShake@{camShake}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{camShake}{camShake}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a542eda38e86c4a6cc1ad5208be2938a7} 
+\doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::\+\+Camera\+Shake}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+cam\+Shake = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_a19b6a6aecc6ff47fa0c04caa81b81aba}\index{Game::NPC@{Game::NPC}!distractionPos@{distractionPos}}
+\index{distractionPos@{distractionPos}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{distractionPos}{distractionPos}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a19b6a6aecc6ff47fa0c04caa81b81aba} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+NPC::\+distraction\+Pos}
+
+\Hypertarget{class_game_1_1_n_p_c_a5f0abe0d5c8730e4686b153193d43bb7}\index{Game::NPC@{Game::NPC}!isDistracted@{isDistracted}}
+\index{isDistracted@{isDistracted}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{isDistracted}{isDistracted}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a5f0abe0d5c8730e4686b153193d43bb7} 
+bool Game::\+\+NPC::\+is\+Distracted = false}
+
+\Hypertarget{class_game_1_1_n_p_c_a9e29c46f3f7d15248800b8a968a74e27}\index{Game::NPC@{Game::NPC}!m\_rb@{m\_rb}}
+\index{m\_rb@{m\_rb}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{m\_rb}{m\_rb}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a9e29c46f3f7d15248800b8a968a74e27} 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::\+\+Rigidbody2D}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+m\+\_\+rb = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_a5f8123db7aa12edc7cc9df37a9f30f44}\index{Game::NPC@{Game::NPC}!patrolRepathTime@{patrolRepathTime}}
+\index{patrolRepathTime@{patrolRepathTime}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{patrolRepathTime}{patrolRepathTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a5f8123db7aa12edc7cc9df37a9f30f44} 
+float Game::\+\+NPC::\+patrol\+Repath\+Time = 2.\+0f}
+
+\Hypertarget{class_game_1_1_n_p_c_adfa2f4c413c78a5585cb0dd1733f3af1}\index{Game::NPC@{Game::NPC}!playerData@{playerData}}
+\index{playerData@{playerData}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{playerData}{playerData}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_adfa2f4c413c78a5585cb0dd1733f3af1} 
+\doxymbox{\hyperlink{class_game_1_1_player}{Game::\+\+Player}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+player\+Data = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_a94e0cbea7f8c196ed1084c2ff7f092ac}\index{Game::NPC@{Game::NPC}!playerRb@{playerRb}}
+\index{playerRb@{playerRb}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{playerRb}{playerRb}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a94e0cbea7f8c196ed1084c2ff7f092ac} 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::\+\+Rigidbody2D}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+player\+Rb = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_afc628e3fcbd7adfef7c7a0b74d7b2ee8}\index{Game::NPC@{Game::NPC}!playerTf@{playerTf}}
+\index{playerTf@{playerTf}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{playerTf}{playerTf}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_afc628e3fcbd7adfef7c7a0b74d7b2ee8} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+player\+Tf = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_acb56c9ea583aabc7323916bd2b9a82f6}\index{Game::NPC@{Game::NPC}!speed@{speed}}
+\index{speed@{speed}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_acb56c9ea583aabc7323916bd2b9a82f6} 
+float Game::\+\+NPC::\+speed = 1.\+0f}
+
+\Hypertarget{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932}\index{Game::NPC@{Game::NPC}!tileMap@{tileMap}}
+\index{tileMap@{tileMap}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{tileMap}{tileMap}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}\texorpdfstring{$\ast$}{*} Game::\+\+NPC::\+tile\+Map = nullptr}
+
+\Hypertarget{class_game_1_1_n_p_c_aba78fdae7db603e0109c9b0ae4b56ce2}\index{Game::NPC@{Game::NPC}!triggerRadius@{triggerRadius}}
+\index{triggerRadius@{triggerRadius}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{triggerRadius}{triggerRadius}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_aba78fdae7db603e0109c9b0ae4b56ce2} 
+float Game::\+\+NPC::\+trigger\+Radius = 2.\+2f}
+
+\Hypertarget{class_game_1_1_n_p_c_aa908d7027774ada4285af543fbcc9630}\index{Game::NPC@{Game::NPC}!type@{type}}
+\index{type@{type}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_aa908d7027774ada4285af543fbcc9630} 
+\doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{NPCType}} Game::\+\+NPC::\+type = \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{NPCType::\+\+Annoying}}}
+
+\Hypertarget{class_game_1_1_n_p_c_a243860339214823c1b14aeb2cd5a5be0}\index{Game::NPC@{Game::NPC}!zoneId@{zoneId}}
+\index{zoneId@{zoneId}!Game::NPC@{Game::NPC}}
+\doxysubsubsection{\texorpdfstring{zoneId}{zoneId}}
+{\footnotesize\ttfamily \label{class_game_1_1_n_p_c_a243860339214823c1b14aeb2cd5a5be0} 
+int Game::\+\+NPC::\+zone\+Id = 1}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+NPC/\+\doxymbox{\hyperlink{_n_p_c_8hpp}{NPC.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+NPC/\+\doxymbox{\hyperlink{_n_p_c_8cpp}{NPC.\+cpp}}\end{DoxyCompactItemize}

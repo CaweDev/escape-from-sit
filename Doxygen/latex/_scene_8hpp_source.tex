@@ -1,0 +1,65 @@
+\doxysection{Scene.\+hpp}
+\hypertarget{_scene_8hpp_source}{}\label{_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Scene/Scene.hpp@{AlphaEngine2.5D/Source/Engine/Scene/Scene.hpp}}
+\doxymbox{\hyperlink{_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_game_object_8hpp}{../Core/GameObject.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}};}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{buildIndex}}\ =\ -\/1;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}(\textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}\ =\ \textcolor{stringliteral}{"{}Untitled"{}});}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\string~Scene}}();}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Lifecycle\ (override\ in\ derived\ classes)}}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{OnLoad}}()\ \{\}}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{OnUnload}}()\ \{\}}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{OnUpdate}}()\ \{\}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{OnPreRender}}()\ \{\}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{OnAfterRender}}()\ \{\}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ GameObject\ management}}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_game_object}{GameObject}}*\ \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{CreateGameObject}}(\textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}\ =\ \textcolor{stringliteral}{"{}GameObject"{}});}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_game_object}{GameObject}}*\ \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}}(\textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::unique\_ptr<GameObject>>\&\ \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{GetGameObjects}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ Internal\ methods\ (called\ by\ SceneManager)}}
+\DoxyCodeLine{00058\ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{LoadInternal}}();}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{UnloadInternal}}();}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{UpdateInternal}}();}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{RenderInternal}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{IsLoaded}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00070\ \ \ \ \ std::vector<std::unique\_ptr<GameObject>>\ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{gameObjects}};}
+\DoxyCodeLine{00071\ \ \ \ \ std::vector<std::unique\_ptr<GameObject>>\ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pendingGameObjects}};}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{isLoaded}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{isUpdating}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00074\ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

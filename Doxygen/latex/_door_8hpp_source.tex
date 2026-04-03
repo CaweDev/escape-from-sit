@@ -1,0 +1,134 @@
+\doxysection{Door.\+hpp}
+\hypertarget{_door_8hpp_source}{}\label{_door_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/TileMap/Door.hpp@{AlphaEngine2.5D/Source/Engine/TileMap/Door.hpp}}
+\doxymbox{\hyperlink{_door_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{../Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{../Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{../Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_box_collider2_d}{BoxCollider2D}};}
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_door_config}{DoorConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498}{sfxMaxAudibleDistance}}\ \ =\ 12.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b}{passableThreshold}}\ \ \ \ \ \ =\ 0.5f;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea}{colliderChangeThreshold}}\ =\ 0.1f;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad}{animationSpeed}}\ \ \ \ \ \ \ \ \ =\ 4.0f;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a2ff7c346a621032e2278bcf607c099fa}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00034\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498}{sfxMaxAudibleDistance}}\ \ \ =\ j.get(\textcolor{stringliteral}{"{}sfxMaxAudibleDistance"{}},\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_acafa8aae2338b6cff577a038eecfc498}{sfxMaxAudibleDistance}}).asFloat();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b}{passableThreshold}}\ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}passableThreshold"{}},\ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a5c835b3e57624d04a44d8cc89845931b}{passableThreshold}}).asFloat();}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea}{colliderChangeThreshold}}\ =\ j.get(\textcolor{stringliteral}{"{}colliderChangeThreshold"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_config_ab276ec138bf7887141865a5782d5b3ea}{colliderChangeThreshold}}).asFloat();}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad}{animationSpeed}}\ \ \ \ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}animationSpeed"{}},\ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_config_a076361c5f299c622bf28d22d3b17f2ad}{animationSpeed}}).asFloat();}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{DoorState}}\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Closed}},\ \ \ \textcolor{comment}{//\ Door\ is\ fully\ closed}}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140}{Opening}},\ \ \textcolor{comment}{//\ Door\ is\ animating\ open}}
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274}{Open}},\ \ \ \ \ \textcolor{comment}{//\ Door\ is\ fully\ open}}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e}{Closing}}\ \ \ \textcolor{comment}{//\ Door\ is\ animating\ closed}}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{DoorFacing}}\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{NorthSouth}},\ \ \textcolor{comment}{//\ Door\ faces\ N/S\ (blocks\ E/W\ movement\ when\ closed)}}
+\DoxyCodeLine{00059\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{EastWest}}\ \ \ \ \ \textcolor{comment}{//\ Door\ faces\ E/W\ (blocks\ N/S\ movement\ when\ closed)}}
+\DoxyCodeLine{00060\ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}{Door}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00070\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2}{tileX}}\ =\ 0;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396}{tileY}}\ =\ 0;}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_door_ad517d16a4d744433785f19660adb182e}{doorType}}\ =\ 10;}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{DoorFacing}}\ \doxymbox{\hyperlink{class_engine_1_1_door_adc0deb87153306e4f2da62d774887222}{facing}}\ =\ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{DoorFacing::NorthSouth}};}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{DoorState}}\ \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}}\ =\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{DoorState::Closed}};}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_door_a9af7003fbaa76c4430ccdc02f26bfaa5}{openAmount}}\ =\ 0.0f;}
+\DoxyCodeLine{00086\ \ \ \ \ }
+\DoxyCodeLine{00088\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_door_a95adb13c0bd864b05931ae3820c5ba53}{animationSpeed}}\ =\ 4.0f;}
+\DoxyCodeLine{00089\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_door_a512de044decab2f4bc3100545d64c37e}{autoCloseDelay}}\ =\ 0.0f;}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ }
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}{Door}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_door_afb182fde339c081894b2c00cce8c5909}{\string~Door}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Lifecycle}}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_a0ac8b013ca2c3f645f952c19e081fbe0}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_a856a4e90b9583f49fee468ebf9677e43}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Door\ control}}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_ad3b769db38255f0de098a412fb7d8243}{Open}}();}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_a8a0d0f3fcc7686d061e306fb02317c15}{Close}}();}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_aa6fb7ab3afc011578e81b83482adff93}{Toggle}}();}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{comment}{//\ State\ queries}}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_door_a76335b9bf59bd9010487c9ecae942189}{IsPassable}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00117\ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_door_a8331c501b87e9dc9639e233136793d21}{IsFullyOpen}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}}\ ==\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274}{DoorState::Open}};\ \}}
+\DoxyCodeLine{00120\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_door_a1990ca60cd543baa67e9227e61ec8221}{IsFullyClosed}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}}\ ==\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{DoorState::Closed}};\ \}}
+\DoxyCodeLine{00123\ \ \ \ \ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_door_a58c5211aebe8e61aa50d127e78a8e11e}{IsAnimating}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}}\ ==\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140}{DoorState::Opening}}\ ||\ \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}}\ ==\ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e}{DoorState::Closing}};\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_door_a57ba95917cc74fc7b56645fd226ea92d}{GetWorldPosition}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00129\ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{comment}{//\ Integration\ helpers}}
+\DoxyCodeLine{00131\ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_ab3dcb782223e05ab9e5ef88873f79018}{SetupInteractable}}(\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ interactable,\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ openText\ =\ \textcolor{stringliteral}{"{}Open"{}},}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ closeText\ =\ \textcolor{stringliteral}{"{}Close"{}});}
+\DoxyCodeLine{00141\ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_afd2fa3c7fef857e10797a28ae7894e51}{DisableInteraction}}();}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00149\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_box_collider2_d}{BoxCollider2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_door_ad9e8e3b3a2e26bd86c7d0e2843fd11ff}{collider}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_a35856b43a9ca01e9f2103835fce2f989}{RequestOpen}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ requester);}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_a8b1152f597a9cc3041977fc4e21ca853}{ReleaseOpen}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ requester);}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_door_aaee9b190a6866a9037190da980f7c88c}{IsHeldOpen}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !m\_holders.empty();}
+\DoxyCodeLine{00156\ \ \ \ \ \}}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_door}{Door}}*\ \doxymbox{\hyperlink{class_engine_1_1_door_a6ea8174fa09f3fef8a28b257e444edb6}{FindAtTile}}(\textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2}{tileX}},\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396}{tileY}});}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00161\ \ \ \ \ }
+\DoxyCodeLine{00163\ \ \ \ \ f32\ autoCloseTimer\ =\ 0.0f;}
+\DoxyCodeLine{00164\ \ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCollider();}
+\DoxyCodeLine{00167\ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ m\_openText\ =\ \textcolor{stringliteral}{"{}Open"{}};}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ m\_closeText\ =\ \textcolor{stringliteral}{"{}Close"{}};}
+\DoxyCodeLine{00171\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ m\_interactable\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \ \ std::unordered\_set<const\ void*>m\_holders;}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \};}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

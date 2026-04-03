@@ -1,0 +1,54 @@
+\doxysection{Sprite\+Renderer.\+hpp}
+\hypertarget{_sprite_renderer_8hpp_source}{}\label{_sprite_renderer_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/SpriteRenderer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/SpriteRenderer.hpp}}
+\doxymbox{\hyperlink{_sprite_renderer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{../Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{../Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_renderer_8hpp}{IRenderer.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_8hpp}{Sprite.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Color.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_projection_helper_8hpp}{../Raycasting/ProjectionHelper.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_8hpp}{Camera.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <\doxymbox{\hyperlink{_application_8hpp}{Engine/Core/Application.hpp}}>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad613b25c3e277bc3a30469dd59198c91}{SpriteRenderer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a6dbdde18f023a570b930088c7bb3bcc9}{sprite}};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad6188a630a3473fad569d43da9105c21}{spritePath}};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e}{color}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{Color::white}}();}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a276f22dc0a091160ddab17252dd41515}{sortingOrder}}\ =\ 0;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ab27beebd1bc2b8c10a95a08d1bd55112}{flipX}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a48d919a07d4f1d2f02e90141c2c27c69}{flipY}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a9b78d9dcc55fa4c3d59fbabb05895b00}{billboard}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad613b25c3e277bc3a30469dd59198c91}{SpriteRenderer}}();}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{SetSprite}}(std::shared\_ptr<Sprite>\ newSprite);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{SetSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ newSprite);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a661ae22da1f5a2b0192eaebb79057e66}{SetColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\&\ newColor)\ \{\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e}{color}}\ =\ newColor;\ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a37a1b27eb1b25bf1834b1e21e8972fee}{GetColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e}{color}};\ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ae6997d8e2e899f7cc75d029922285548}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a85a4fc3b765afd351fc742ad5c9d9f4f}{GetSortingKey}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ AddStripToMesh(\textcolor{keywordtype}{int}\ x1,\ \textcolor{keywordtype}{int}\ x2,\ f32\ spriteStart,\ f32\ spriteWidth,\ f32\ yTop,\ f32\ yBottom);}
+\DoxyCodeLine{00066\ \ \ \ \ \};}
+\DoxyCodeLine{00067\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

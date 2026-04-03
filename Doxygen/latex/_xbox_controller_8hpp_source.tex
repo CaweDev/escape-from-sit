@@ -1,0 +1,70 @@
+\doxysection{Xbox\+Controller.\+hpp}
+\hypertarget{_xbox_controller_8hpp_source}{}\label{_xbox_controller_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Input/XboxController.hpp@{AlphaEngine2.5D/Source/Engine/Input/XboxController.hpp}}
+\doxymbox{\hyperlink{_xbox_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <Windows.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <Xinput.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{../Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#pragma\ comment(lib,\ "{}XInput.lib"{})}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{XboxButton}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a6e53ad4e24c7b597e15b2193883bf7f2}{DPadUp}}\ =\ XINPUT\_GAMEPAD\_DPAD\_UP,}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a826b0ea5950d9f05469d6f3ded8b570f}{DPadDown}}\ =\ XINPUT\_GAMEPAD\_DPAD\_DOWN,}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a1afff4bd4c22275dff273ca6f01952f1}{DPadLeft}}\ =\ XINPUT\_GAMEPAD\_DPAD\_LEFT,}
+\DoxyCodeLine{00023\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aee57d4f85b132ca155ad4f77e71b7df1}{DPadRight}}\ =\ XINPUT\_GAMEPAD\_DPAD\_RIGHT,}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aa6122a65eaa676f700ae68d393054a37}{Start}}\ =\ XINPUT\_GAMEPAD\_START,}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a0557fa923dcee4d0f86b1409f5c2167f}{Back}}\ =\ XINPUT\_GAMEPAD\_BACK,}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a2cd349073c4937c593353ffe98956c58}{LeftThumb}}\ =\ XINPUT\_GAMEPAD\_LEFT\_THUMB,}
+\DoxyCodeLine{00027\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10ae499bf8bc6e897455b94cabc7a5c2da7}{RightThumb}}\ =\ XINPUT\_GAMEPAD\_RIGHT\_THUMB,}
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a36131cbdc50218d923d0bcb0d9870e1c}{LeftShoulder}}\ =\ XINPUT\_GAMEPAD\_LEFT\_SHOULDER,}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a27a5390f2d1b44a43f74d57703f8d354}{RightShoulder}}\ =\ XINPUT\_GAMEPAD\_RIGHT\_SHOULDER,}
+\DoxyCodeLine{00030\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7fc56270e7a70fa81a5935b72eacbe29}{A}}\ =\ XINPUT\_GAMEPAD\_A,}
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9d5ed678fe57bcca610140957afab571}{B}}\ =\ XINPUT\_GAMEPAD\_B,}
+\DoxyCodeLine{00032\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a02129bb861061d1a052c592e2dc6b383}{X}}\ =\ XINPUT\_GAMEPAD\_X,}
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a57cec4137b614c87cb4e24a3d003a3e0}{Y}}\ =\ XINPUT\_GAMEPAD\_Y}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{class\ }XboxController\ \{}
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2888497ce75c4d8cb1e5c7a304c2fa25}{IsConnected}}(\textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_afa700a8aad76b8dc35fa81343494f5d6}{GetButton}}(\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{XboxButton}}\ button,\ \textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2daccbd9d3155023b8493a1660456c20}{GetButtonDown}}(\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{XboxButton}}\ button,\ \textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00050\ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a2fe58935013b961627e562f156a655f0}{GetButtonUp}}(\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{XboxButton}}\ button,\ \textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_acf3abaa5e47c770dd7b13dd1454db3e1}{GetLeftStick}}(\textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_abc800b4037f10a5041067f3ceed5ee2b}{GetRightStick}}(\textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_ab9f1e641c6c0d65bc4a8e3e79331cc26}{GetLeftTrigger}}(\textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_ad6e732c60523f569d96dd7856a3dfdbd}{GetRightTrigger}}(\textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a57b86ebad28072725a88bd5f332a10c0}{SetVibration}}(f32\ leftMotor,\ f32\ rightMotor,\ \textcolor{keywordtype}{int}\ controllerIndex\ =\ 0);}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a4ff0847b69f8e22394092e74bbc08309}{Update}}();}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_xbox_controller_a5f0c7349011c89d2e92c03a38481ca2a}{GetFirstConnectedController}}();}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ \ \ XboxController()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00077\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ XINPUT\_STATE\ currentState[XUSER\_MAX\_COUNT];}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ XINPUT\_STATE\ previousState[XUSER\_MAX\_COUNT];}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ connected[XUSER\_MAX\_COUNT];}
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ f32\ ApplyDeadzone(SHORT\ value,\ SHORT\ deadzone);}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ IsButtonPressed(\textcolor{keyword}{const}\ XINPUT\_STATE\&\ state,\ \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{XboxButton}}\ button);}
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

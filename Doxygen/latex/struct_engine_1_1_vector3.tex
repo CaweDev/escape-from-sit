@@ -1,0 +1,316 @@
+\doxysection{Engine::\+Vector3 Struct Reference}
+\hypertarget{struct_engine_1_1_vector3}{}\label{struct_engine_1_1_vector3}\index{Engine::Vector3@{Engine::Vector3}}
+
+
+{\ttfamily \+\#include $<$Vector3.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} ()
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_ac8a50a35924497f464a97e71a3a86c63}{Vector3}} (f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a21d23fd5b37c228742db3e1bb1239db9}{x}}, f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a878f2975c3fad1b362649969645075ac}{y}}, f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_afb9ae1a631303cf42f8589b5e1382fff}{z}}=0)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a021bf4c15b9032865a754bbccacb351e}{Vector3}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&v, f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_afb9ae1a631303cf42f8589b5e1382fff}{z}}=0)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1a9773dc8c11cf1cbf9cb988e33d8528}{operator+}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a9dae08795a0a2db2163411d08181fa30}{operator-\/}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a9ed39a6c6f86c987ffae69ece0d6e6b0}{operator\texorpdfstring{$\ast$}{*}}} (f32 scalar) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a8297a164520ae45e2b453505b50314ec}{operator/\+}} (f32 scalar) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a4418ac19dd3ab46a8a7aa135bd059120}{operator-\/}} () const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& \doxymbox{\hyperlink{struct_engine_1_1_vector3_ac9d9113259f1f4388813ca991e8938f5}{operator+=}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& \doxymbox{\hyperlink{struct_engine_1_1_vector3_a0f17fd01cacf76366ce809429f659aaa}{operator-\/=}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& \doxymbox{\hyperlink{struct_engine_1_1_vector3_ab92de55d86bfa1b1fda20cffd2e467b1}{operator\texorpdfstring{$\ast$}{*}=}} (f32 scalar)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& \doxymbox{\hyperlink{struct_engine_1_1_vector3_ac01dd1fb947a38e7ba49a585d554902b}{operator/\+=}} (f32 scalar)
+\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_vector3_afa0739706e104c7cb9a0a084d6e92afa}{operator==}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other) const
+\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_vector3_a324592e13b0499aef091fb983716bf8d}{operator!=}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&other) const
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_ad915efd4b7e695f48fe114cddd693ce8}{Magnitude}} () const
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a9ef7904f57d51fe3a810aed74f9f1f8c}{Sqr\+Magnitude}} () const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_abf5bb0079cd7f67d48cf7e45620f9a45}{Normalized}} () const
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_vector3_a58b74c3199fe4a1976b92e4f524bfd8a}{Normalize}} ()
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a942fc4ed55123fc6627d5efc684aeb99}{To\+Vector2}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a206f3366afe737618211d8d295f525b1}{zero}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_aed9008363018ca7767fdc969b5360102}{one}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_afe3acddf139e73ad0be058e6c30b637e}{up}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_abd3fc663c9970b945616be39bab022eb}{down}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_aacf6c7df6af52531eb1973ce9efc256a}{left}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a6f5814657b5daa71eee69a3b5df57561}{right}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a6bd09f01a95a2a72153f35988053dafb}{forward}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_a950afb0b9a62a0ce0df434ebce3d01ba}{back}} ()
+\item 
+static f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a4e7d8cb8315dbb19d0add64f2bd32905}{Dot}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&a, const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&b)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_aa1b37805203893828cc3e675de39498a}{Cross}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&a, const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&b)
+\item 
+static f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a580d467e74c3727adc46f130ba28e8da}{Distance}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&a, const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&b)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_ab4c3e1a36bac52819721776b93695d1c}{Lerp}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&a, const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&b, f32 t)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \doxymbox{\hyperlink{struct_engine_1_1_vector3_adafeee250c08d275bd1da67f200b43a9}{Lerp\+Unclamped}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&a, const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&b, f32 t)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a21d23fd5b37c228742db3e1bb1239db9}{x}}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_a878f2975c3fad1b362649969645075ac}{y}}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_vector3_afb9ae1a631303cf42f8589b5e1382fff}{z}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{struct_engine_1_1_vector3_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}\index{Engine::Vector3@{Engine::Vector3}!Vector3@{Vector3}}
+\index{Vector3@{Vector3}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Vector3()}{Vector3()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d} 
+Engine::\+\+Vector3::\+\+Vector3 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_ac8a50a35924497f464a97e71a3a86c63}\index{Engine::Vector3@{Engine::Vector3}!Vector3@{Vector3}}
+\index{Vector3@{Vector3}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Vector3()}{Vector3()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ac8a50a35924497f464a97e71a3a86c63} 
+Engine::\+\+Vector3::\+\+Vector3 (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{, }\item[{f32}]{z}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_a021bf4c15b9032865a754bbccacb351e}\index{Engine::Vector3@{Engine::Vector3}!Vector3@{Vector3}}
+\index{Vector3@{Vector3}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Vector3()}{Vector3()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a021bf4c15b9032865a754bbccacb351e} 
+Engine::\+\+Vector3::\+\+Vector3 (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{v}{, }\item[{f32}]{z}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_vector3_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_vector3_a950afb0b9a62a0ce0df434ebce3d01ba}\index{Engine::Vector3@{Engine::Vector3}!back@{back}}
+\index{back@{back}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{back()}{back()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a950afb0b9a62a0ce0df434ebce3d01ba} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+back (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_aa1b37805203893828cc3e675de39498a}\index{Engine::Vector3@{Engine::Vector3}!Cross@{Cross}}
+\index{Cross@{Cross}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Cross()}{Cross()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_aa1b37805203893828cc3e675de39498a} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+\+Cross (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a580d467e74c3727adc46f130ba28e8da}\index{Engine::Vector3@{Engine::Vector3}!Distance@{Distance}}
+\index{Distance@{Distance}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Distance()}{Distance()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a580d467e74c3727adc46f130ba28e8da} 
+f32 Engine::\+\+Vector3::\+\+Distance (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a4e7d8cb8315dbb19d0add64f2bd32905}\index{Engine::Vector3@{Engine::Vector3}!Dot@{Dot}}
+\index{Dot@{Dot}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Dot()}{Dot()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a4e7d8cb8315dbb19d0add64f2bd32905} 
+f32 Engine::\+\+Vector3::\+\+Dot (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{b}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_abd3fc663c9970b945616be39bab022eb}\index{Engine::Vector3@{Engine::Vector3}!down@{down}}
+\index{down@{down}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{down()}{down()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_abd3fc663c9970b945616be39bab022eb} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+down (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a6bd09f01a95a2a72153f35988053dafb}\index{Engine::Vector3@{Engine::Vector3}!forward@{forward}}
+\index{forward@{forward}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{forward()}{forward()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a6bd09f01a95a2a72153f35988053dafb} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+forward (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_aacf6c7df6af52531eb1973ce9efc256a}\index{Engine::Vector3@{Engine::Vector3}!left@{left}}
+\index{left@{left}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{left()}{left()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_aacf6c7df6af52531eb1973ce9efc256a} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+left (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_ab4c3e1a36bac52819721776b93695d1c}\index{Engine::Vector3@{Engine::Vector3}!Lerp@{Lerp}}
+\index{Lerp@{Lerp}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Lerp()}{Lerp()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ab4c3e1a36bac52819721776b93695d1c} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+\+Lerp (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{b}{, }\item[{f32}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_adafeee250c08d275bd1da67f200b43a9}\index{Engine::Vector3@{Engine::Vector3}!LerpUnclamped@{LerpUnclamped}}
+\index{LerpUnclamped@{LerpUnclamped}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{LerpUnclamped()}{LerpUnclamped()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_adafeee250c08d275bd1da67f200b43a9} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+\+Lerp\+Unclamped (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{b}{, }\item[{f32}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_ad915efd4b7e695f48fe114cddd693ce8}\index{Engine::Vector3@{Engine::Vector3}!Magnitude@{Magnitude}}
+\index{Magnitude@{Magnitude}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Magnitude()}{Magnitude()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ad915efd4b7e695f48fe114cddd693ce8} 
+f32 Engine::\+\+Vector3::\+\+Magnitude (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a58b74c3199fe4a1976b92e4f524bfd8a}\index{Engine::Vector3@{Engine::Vector3}!Normalize@{Normalize}}
+\index{Normalize@{Normalize}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Normalize()}{Normalize()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a58b74c3199fe4a1976b92e4f524bfd8a} 
+void Engine::\+\+Vector3::\+\+Normalize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_abf5bb0079cd7f67d48cf7e45620f9a45}\index{Engine::Vector3@{Engine::Vector3}!Normalized@{Normalized}}
+\index{Normalized@{Normalized}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{Normalized()}{Normalized()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_abf5bb0079cd7f67d48cf7e45620f9a45} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+\+Normalized (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_aed9008363018ca7767fdc969b5360102}\index{Engine::Vector3@{Engine::Vector3}!one@{one}}
+\index{one@{one}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{one()}{one()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_aed9008363018ca7767fdc969b5360102} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+one (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a324592e13b0499aef091fb983716bf8d}\index{Engine::Vector3@{Engine::Vector3}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a324592e13b0499aef091fb983716bf8d} 
+bool Engine::\+\+Vector3::\+operator!= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a9ed39a6c6f86c987ffae69ece0d6e6b0}\index{Engine::Vector3@{Engine::Vector3}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a9ed39a6c6f86c987ffae69ece0d6e6b0} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{f32}]{scalar}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_ab92de55d86bfa1b1fda20cffd2e467b1}\index{Engine::Vector3@{Engine::Vector3}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ab92de55d86bfa1b1fda20cffd2e467b1} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& Engine::\+\+Vector3::\+operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{f32}]{scalar}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_a1a9773dc8c11cf1cbf9cb988e33d8528}\index{Engine::Vector3@{Engine::Vector3}!operator+@{operator+}}
+\index{operator+@{operator+}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a1a9773dc8c11cf1cbf9cb988e33d8528} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+operator+ (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_ac9d9113259f1f4388813ca991e8938f5}\index{Engine::Vector3@{Engine::Vector3}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ac9d9113259f1f4388813ca991e8938f5} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& Engine::\+\+Vector3::\+operator+= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_a4418ac19dd3ab46a8a7aa135bd059120}\index{Engine::Vector3@{Engine::Vector3}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a4418ac19dd3ab46a8a7aa135bd059120} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+operator-\/ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a9dae08795a0a2db2163411d08181fa30}\index{Engine::Vector3@{Engine::Vector3}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a9dae08795a0a2db2163411d08181fa30} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+operator-\/ (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a0f17fd01cacf76366ce809429f659aaa}\index{Engine::Vector3@{Engine::Vector3}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a0f17fd01cacf76366ce809429f659aaa} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& Engine::\+\+Vector3::\+operator-\/= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_a8297a164520ae45e2b453505b50314ec}\index{Engine::Vector3@{Engine::Vector3}!operator/@{operator/}}
+\index{operator/@{operator/}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a8297a164520ae45e2b453505b50314ec} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+operator/\+ (\begin{DoxyParamCaption}\item[{f32}]{scalar}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_ac01dd1fb947a38e7ba49a585d554902b}\index{Engine::Vector3@{Engine::Vector3}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_ac01dd1fb947a38e7ba49a585d554902b} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \& Engine::\+\+Vector3::\+operator/\+= (\begin{DoxyParamCaption}\item[{f32}]{scalar}{}\end{DoxyParamCaption})}
+
+\Hypertarget{struct_engine_1_1_vector3_afa0739706e104c7cb9a0a084d6e92afa}\index{Engine::Vector3@{Engine::Vector3}!operator==@{operator==}}
+\index{operator==@{operator==}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_afa0739706e104c7cb9a0a084d6e92afa} 
+bool Engine::\+\+Vector3::\+operator== (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} \&}]{other}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a6f5814657b5daa71eee69a3b5df57561}\index{Engine::Vector3@{Engine::Vector3}!right@{right}}
+\index{right@{right}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{right()}{right()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a6f5814657b5daa71eee69a3b5df57561} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+right (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a9ef7904f57d51fe3a810aed74f9f1f8c}\index{Engine::Vector3@{Engine::Vector3}!SqrMagnitude@{SqrMagnitude}}
+\index{SqrMagnitude@{SqrMagnitude}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{SqrMagnitude()}{SqrMagnitude()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a9ef7904f57d51fe3a810aed74f9f1f8c} 
+f32 Engine::\+\+Vector3::\+\+Sqr\+Magnitude (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_a942fc4ed55123fc6627d5efc684aeb99}\index{Engine::Vector3@{Engine::Vector3}!ToVector2@{ToVector2}}
+\index{ToVector2@{ToVector2}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{ToVector2()}{ToVector2()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a942fc4ed55123fc6627d5efc684aeb99} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Vector3::\+\+To\+Vector2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{struct_engine_1_1_vector3_afe3acddf139e73ad0be058e6c30b637e}\index{Engine::Vector3@{Engine::Vector3}!up@{up}}
+\index{up@{up}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{up()}{up()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_afe3acddf139e73ad0be058e6c30b637e} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+up (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_vector3_a206f3366afe737618211d8d295f525b1}\index{Engine::Vector3@{Engine::Vector3}!zero@{zero}}
+\index{zero@{zero}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{zero()}{zero()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a206f3366afe737618211d8d295f525b1} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3_a1851eee233ef844f39009af2f11bb09d}{Vector3}} Engine::\+\+Vector3::\+zero (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_vector3_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_vector3_a21d23fd5b37c228742db3e1bb1239db9}\index{Engine::Vector3@{Engine::Vector3}!x@{x}}
+\index{x@{x}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a21d23fd5b37c228742db3e1bb1239db9} 
+f32 Engine::\+\+Vector3::\+x}
+
+\Hypertarget{struct_engine_1_1_vector3_a878f2975c3fad1b362649969645075ac}\index{Engine::Vector3@{Engine::Vector3}!y@{y}}
+\index{y@{y}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_a878f2975c3fad1b362649969645075ac} 
+f32 Engine::\+\+Vector3::\+y}
+
+\Hypertarget{struct_engine_1_1_vector3_afb9ae1a631303cf42f8589b5e1382fff}\index{Engine::Vector3@{Engine::Vector3}!z@{z}}
+\index{z@{z}!Engine::Vector3@{Engine::Vector3}}
+\doxysubsubsection{\texorpdfstring{z}{z}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_vector3_afb9ae1a631303cf42f8589b5e1382fff} 
+f32 Engine::\+\+Vector3::\+z}
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Math/\+\doxymbox{\hyperlink{_vector3_8hpp}{Vector3.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Math/\+\doxymbox{\hyperlink{_vector3_8cpp}{Vector3.\+cpp}}\end{DoxyCompactItemize}

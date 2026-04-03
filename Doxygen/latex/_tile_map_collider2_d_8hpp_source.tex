@@ -1,0 +1,41 @@
+\doxysection{Tile\+Map\+Collider2\+D.\+hpp}
+\hypertarget{_tile_map_collider2_d_8hpp_source}{}\label{_tile_map_collider2_d_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Physics/TileMapCollider2D.hpp@{AlphaEngine2.5D/Source/Engine/Physics/TileMapCollider2D.hpp}}
+\doxymbox{\hyperlink{_tile_map_collider2_d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_collider2_d_8hpp}{Collider2D.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{../TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a019ad1397e40f657b8888a65ec4d7943}{TileMapCollider2D}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}}\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{_component_8hpp_aa196eb8fbe9315fd6dd7470e5e619290}{REQUIRE\_COMPONENT}}(\doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}})}
+\DoxyCodeLine{00022\ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{TileMap}}*\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_aa8015b5685f9664549bdb2ba0eaab913}{tileMap}}\ =\ \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a019ad1397e40f657b8888a65ec4d7943}{TileMapCollider2D}}()\ =\ default;}
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_abb4f70cd6729363299341d3a832972b7}{Awake}}()\ override;}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_bounds2_d}{Bounds2D}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a665946103f103196e43eef26b5ba7e75}{GetBounds}}()\ const\ override;}
+\DoxyCodeLine{00032\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_adae4bc30a83a63e57eae95b49b13308d}{Overlaps}}(const\ \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}}*\ other)\ const\ override;}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a23e86b22dc8cb112a335e1f0f4b0350c}{OverlapsCircle}}(const\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ f32\ radius)\ const;}
+\DoxyCodeLine{00038\ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a809a82c090254a2ce687d2eda0261608}{OverlapsBox}}(const\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ center,\ const\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ size)\ const;}
+\DoxyCodeLine{00041\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a73e55fe1020c4f92d0431afcc4b5fc53}{PointInWall}}(f32\ x,\ f32\ y)\ const;}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_addb970df98d1dd2148e554070e75f80c}{IsWalkable}}(f32\ x,\ f32\ y)\ const;}
+\DoxyCodeLine{00047\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_ac917b696967b3170d8784fe3be91d6e2}{ResolveMovement}}(const\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ position,\ const\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ delta,\ f32\ radius)\ const;}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

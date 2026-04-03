@@ -1,0 +1,156 @@
+\doxysection{Game::\+Puzzle\+Scene Class Reference}
+\hypertarget{class_game_1_1_puzzle_scene}{}\label{class_game_1_1_puzzle_scene}\index{Game::PuzzleScene@{Game::PuzzleScene}}
+
+
+Doom-\/style first-\/person demo with physics.  
+
+
+
+
+{\ttfamily \+\#include $<$Puzzle\+Scene.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0a5d572a78ae2c8268670a8fc50ffa5f}{Puzzle\+Scene}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a778535684623578afce32f93510f2484}{On\+Load}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0bf60f9ffdf53ca3a80461480e39d284}{On\+Update}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{On\+Unload}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{On\+After\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a12969ef406f9718d0da38aa351f3db2f}{player\+Controller}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_text}{UI::\+\+Text}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}{book\+Count\+Text}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::\+\+Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}{hud\+Canvas}} = nullptr
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48}{last\+Book\+Count}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Doom-\/style first-\/person demo with physics. 
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_puzzle_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_puzzle_scene_a0a5d572a78ae2c8268670a8fc50ffa5f}\index{Game::PuzzleScene@{Game::PuzzleScene}!PuzzleScene@{PuzzleScene}}
+\index{PuzzleScene@{PuzzleScene}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{PuzzleScene()}{PuzzleScene()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_a0a5d572a78ae2c8268670a8fc50ffa5f} 
+Game::\+\+Puzzle\+Scene::\+\+Puzzle\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_puzzle_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_puzzle_scene_a778535684623578afce32f93510f2484}\index{Game::PuzzleScene@{Game::PuzzleScene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_a778535684623578afce32f93510f2484} 
+void Game::\+\+Puzzle\+Scene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when scene starts loading 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_puzzle_scene_a0bf60f9ffdf53ca3a80461480e39d284}\index{Game::PuzzleScene@{Game::PuzzleScene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_a0bf60f9ffdf53ca3a80461480e39d284} 
+void Game::\+\+Puzzle\+Scene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame while scene is active 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{Engine::\+\+Scene}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_puzzle_scene_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35}\index{Game::PuzzleScene@{Game::PuzzleScene}!bookCountText@{bookCountText}}
+\index{bookCountText@{bookCountText}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{bookCountText}{bookCountText}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_a9e721114fa8961b3c30bdfaeefbc2f35} 
+\doxymbox{\hyperlink{class_u_i_1_1_text}{UI::\+\+Text}}\texorpdfstring{$\ast$}{*} Game::\+\+Puzzle\+Scene::\+book\+Count\+Text = nullptr}
+
+\Hypertarget{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf}\index{Game::PuzzleScene@{Game::PuzzleScene}!hudCanvas@{hudCanvas}}
+\index{hudCanvas@{hudCanvas}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{hudCanvas}{hudCanvas}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_aec9c7f993506bfcc16c00e3aa8cc36cf} 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::\+\+Canvas}}\texorpdfstring{$\ast$}{*} Game::\+\+Puzzle\+Scene::\+hud\+Canvas = nullptr}
+
+\Hypertarget{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48}\index{Game::PuzzleScene@{Game::PuzzleScene}!lastBookCount@{lastBookCount}}
+\index{lastBookCount@{lastBookCount}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{lastBookCount}{lastBookCount}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_acfc8f333d6e3c6f418fefaed30139f48} 
+int Game::\+\+Puzzle\+Scene::\+last\+Book\+Count = -\/1}
+
+\Hypertarget{class_game_1_1_puzzle_scene_a12969ef406f9718d0da38aa351f3db2f}\index{Game::PuzzleScene@{Game::PuzzleScene}!playerController@{playerController}}
+\index{playerController@{playerController}!Game::PuzzleScene@{Game::PuzzleScene}}
+\doxysubsubsection{\texorpdfstring{playerController}{playerController}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_scene_a12969ef406f9718d0da38aa351f3db2f} 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}\texorpdfstring{$\ast$}{*} Game::\+\+Puzzle\+Scene::\+player\+Controller = nullptr}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+Puzzle/\+\doxymbox{\hyperlink{_puzzle_scene_8hpp}{Puzzle\+Scene.\+hpp}}\end{DoxyCompactItemize}

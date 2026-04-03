@@ -1,0 +1,44 @@
+\doxysection{Audio\+Clip.\+hpp}
+\hypertarget{_audio_clip_8hpp_source}{}\label{_audio_clip_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Audio/AudioClip.hpp@{AlphaEngine2.5D/Source/Engine/Audio/AudioClip.hpp}}
+\doxymbox{\hyperlink{_audio_clip_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}();}
+\DoxyCodeLine{00019\ \ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a411ef90e6ed34c7ed394f33b4e5f316a}{\string~AudioClip}}();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Prevent\ copying\ (owns\ resources)}}
+\DoxyCodeLine{00023\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a0ef53c4c8ba58bec0db3c38782628152}{AudioClip}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_abc17bd76c13a9236e4f967670ee9f93d}{operator=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Allow\ moving}}
+\DoxyCodeLine{00027\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}(\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00028\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_abc17bd76c13a9236e4f967670ee9f93d}{operator=}}(\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{AudioClip}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_aa6854bf02d2fc96f0a849c45dee619c3}{LoadSound}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a99abfa83e8e38ef9e2492e4030d07e60}{LoadMusic}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_af5c3cbd8f7d777049722b10baae7ca77}{Unload}}();}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_ab16c01d916ba68869c4b53d368d8723b}{IsLoaded}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ AEAudio\ \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a92c4e3b9e6aa179057a7f370412bad18}{GetHandle}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \ \ AEAudio\ audio\ =\ \{\ \textcolor{keyword}{nullptr}\ \};}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

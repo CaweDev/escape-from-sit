@@ -81,9 +81,7 @@ namespace
 
 namespace Game {
 
-/*!
- * \brief [AUTO] Initialize
- */
+
 void FPSController::Initialize() {
     // Get rigidbody reference
     rigidbody = gameObject->GetComponent<Rigidbody2D>();
@@ -94,9 +92,7 @@ void FPSController::Initialize() {
 }
 
 
-/*!
- * \brief [AUTO] Update
- */
+
 void FPSController::Update() {
     if (!transform || !rigidbody) return;
 
@@ -285,9 +281,7 @@ void FPSController::Update() {
     targetViewHeight = eyeHeight + rigidbody->currentHeight + crouchOffset;
 }
 
-/*!
- * \brief [AUTO] LateUpdate
- */
+
 void FPSController::LateUpdate() {
     if (!transform || !rigidbody) return;
     
@@ -302,9 +296,7 @@ void FPSController::LateUpdate() {
     transform->position.z = currentViewHeight;
 }
 
-/*!
- * \brief [AUTO] OnDestroy
- */
+
 void FPSController::OnDestroy() {
     
 }

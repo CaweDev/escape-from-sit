@@ -1,0 +1,421 @@
+\doxysection{UI::\+Button Class Reference}
+\hypertarget{class_u_i_1_1_button}{}\label{class_u_i_1_1_button}\index{UI::Button@{UI::Button}}
+
+
+Interactive button with visual state transitions.  
+
+
+
+
+{\ttfamily \+\#include $<$Button.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}, \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler}{UI::\+\+IPointer\+Enter\+Handler}}, \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler}{UI::\+\+IPointer\+Exit\+Handler}}, \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler}{UI::\+\+IPointer\+Down\+Handler}}, \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler}{UI::\+\+IPointer\+Up\+Handler}}, and \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler}{UI::\+\+IPointer\+Click\+Handler}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_button_a046a640aeedc54eeeec2d1a9f1708d6d}{Button}} ()
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_button_a43716a7b5dd7d0447f664607e062a8a8}{\texorpdfstring{$\sim$}{\string~}\+Button}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a894121f9656055e5182875e84ec4fdc4}{Update}} (f32 dt) override
+\begin{DoxyCompactList}\small\item\em Update button state and color transitions. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a8e40abfdad0c063d00485f4ba616d5be}{Render}} () override
+\begin{DoxyCompactList}\small\item\em Render the button. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_af28720f69f1cbf0e97f9a178b20f6610}{On\+Pointer\+Enter}} (const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&event\+Data) override
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a615a85cd87dbced82a6fae5be32e3679}{On\+Pointer\+Exit}} (const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&event\+Data) override
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a0855b4fbfc1598c96b899e84cf8768c9}{On\+Pointer\+Down}} (const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&event\+Data) override
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_af8d346aed61bf7743e39761c4e06330b}{On\+Pointer\+Up}} (const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&event\+Data) override
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a43dffac487c2b0dfa47975b1fa301d2c}{On\+Pointer\+Click}} (const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&event\+Data) override
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a3678fb248f4113bf295d89dcb0e00d90}{Set\+Interactable}} (bool interactable)
+\begin{DoxyCompactList}\small\item\em Set whether the button is interactable. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_button_aea410e2beeadf8cd121d54201f29a710}{Is\+Interactable}} () const
+\item 
+\doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7}{Button\+State}} \doxymbox{\hyperlink{class_u_i_1_1_button_a67eedb04da1416bf756d67b39f1d38d0}{Get\+State}} () const
+\begin{DoxyCompactList}\small\item\em Get the current button state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_ad5a3a37bc6699378da5ac199867688f7}{Set\+Colors}} (const \doxymbox{\hyperlink{struct_u_i_1_1_color_block}{Color\+Block}} \&colors)
+\begin{DoxyCompactList}\small\item\em Set the button colors. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_u_i_1_1_color_block}{Color\+Block}} \& \doxymbox{\hyperlink{class_u_i_1_1_button_ad64e1b633ef14016f4fb7648e8e71ca6}{Get\+Colors}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a2d49976df0c61fca4f0bd7f0b3bfc263}{Set\+Text}} (const std::\+string \&text)
+\begin{DoxyCompactList}\small\item\em Set the button text. \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_button_a3299f4482dbe0c0015d66af1e95c49cb}{Get\+Text}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_aa931f3e67275e5a2da8d54efafce7d85}{Set\+Background\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&color)
+\begin{DoxyCompactList}\small\item\em Set the background color (normal state). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_button_a4af25c2b25a2dad41911167fc454d621}{Set\+Background\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}texture, bool sliced=true)
+\begin{DoxyCompactList}\small\item\em Set a background sprite/\+texture (enables 9-\/slice if texture has a border set). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_image}{Image}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_button_ac814ec72b1380117ed31ff1c0a06203b}{Get\+Background}} () const
+\begin{DoxyCompactList}\small\item\em Get the background image. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_text}{Text}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_button_af1ae7db50b5938c77099472922d69deb}{Get\+Label}} () const
+\begin{DoxyCompactList}\small\item\em Get the label text component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler}{UI::\+\+IPointer\+Enter\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler_ad8241544dc300787f037dfab18ddb09b}{\texorpdfstring{$\sim$}{\string~}\+IPointer\+Enter\+Handler}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler}{UI::\+\+IPointer\+Exit\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler_a8541fbdf26c59cb6ce736f88c366b19e}{\texorpdfstring{$\sim$}{\string~}\+IPointer\+Exit\+Handler}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler}{UI::\+\+IPointer\+Down\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler_a7492d6033e6b40096a4bae12d6346815}{\texorpdfstring{$\sim$}{\string~}\+IPointer\+Down\+Handler}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler}{UI::\+\+IPointer\+Up\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler_ab0965999dddbc903aa840b2ee2e7b225}{\texorpdfstring{$\sim$}{\string~}\+IPointer\+Up\+Handler}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler}{UI::\+\+IPointer\+Click\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler_a5989fc89939a490a4ff51c1957a1dc79}{\texorpdfstring{$\sim$}{\string~}\+IPointer\+Click\+Handler}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+function$<$ void()$>$ \doxymbox{\hyperlink{class_u_i_1_1_button_ad4e13bcd609b5b64feae2caa31476bea}{on\+Click}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UI::\+\+UIElement}}}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interactive button with visual state transitions. 
+
+Similar to Unity\textquotesingle{}s \doxylink{class_u_i_1_1_button}{Button} component. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_button_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_button_a046a640aeedc54eeeec2d1a9f1708d6d}\index{UI::Button@{UI::Button}!Button@{Button}}
+\index{Button@{Button}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{Button()}{Button()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a046a640aeedc54eeeec2d1a9f1708d6d} 
+UI::\+\+Button::\+\+Button (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_button_a43716a7b5dd7d0447f664607e062a8a8}\index{UI::Button@{UI::Button}!````~Button@{\texorpdfstring{$\sim$}{\string~}Button}}
+\index{````~Button@{\texorpdfstring{$\sim$}{\string~}Button}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Button()}{\string~Button()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a43716a7b5dd7d0447f664607e062a8a8} 
+UI::\+\+Button::\+\texorpdfstring{$\sim$}{\string~}\+Button (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_button_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_button_ac814ec72b1380117ed31ff1c0a06203b}\index{UI::Button@{UI::Button}!GetBackground@{GetBackground}}
+\index{GetBackground@{GetBackground}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{GetBackground()}{GetBackground()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_ac814ec72b1380117ed31ff1c0a06203b} 
+\doxymbox{\hyperlink{class_u_i_1_1_image}{Image}} \texorpdfstring{$\ast$}{*} UI::\+\+Button::\+\+Get\+Background (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the background image. 
+
+\Hypertarget{class_u_i_1_1_button_ad64e1b633ef14016f4fb7648e8e71ca6}\index{UI::Button@{UI::Button}!GetColors@{GetColors}}
+\index{GetColors@{GetColors}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{GetColors()}{GetColors()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_ad64e1b633ef14016f4fb7648e8e71ca6} 
+const \doxymbox{\hyperlink{struct_u_i_1_1_color_block}{Color\+Block}} \& UI::\+\+Button::\+\+Get\+Colors (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_button_af1ae7db50b5938c77099472922d69deb}\index{UI::Button@{UI::Button}!GetLabel@{GetLabel}}
+\index{GetLabel@{GetLabel}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{GetLabel()}{GetLabel()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_af1ae7db50b5938c77099472922d69deb} 
+\doxymbox{\hyperlink{class_u_i_1_1_text}{Text}} \texorpdfstring{$\ast$}{*} UI::\+\+Button::\+\+Get\+Label (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the label text component. 
+
+\Hypertarget{class_u_i_1_1_button_a67eedb04da1416bf756d67b39f1d38d0}\index{UI::Button@{UI::Button}!GetState@{GetState}}
+\index{GetState@{GetState}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{GetState()}{GetState()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a67eedb04da1416bf756d67b39f1d38d0} 
+\doxymbox{\hyperlink{namespace_u_i_aa228d368de3b96b402f849e8bec164d7}{Button\+State}} UI::\+\+Button::\+\+Get\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the current button state. 
+
+\Hypertarget{class_u_i_1_1_button_a3299f4482dbe0c0015d66af1e95c49cb}\index{UI::Button@{UI::Button}!GetText@{GetText}}
+\index{GetText@{GetText}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{GetText()}{GetText()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a3299f4482dbe0c0015d66af1e95c49cb} 
+std::\+string UI::\+\+Button::\+\+Get\+Text (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_u_i_1_1_button_aea410e2beeadf8cd121d54201f29a710}\index{UI::Button@{UI::Button}!IsInteractable@{IsInteractable}}
+\index{IsInteractable@{IsInteractable}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{IsInteractable()}{IsInteractable()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_aea410e2beeadf8cd121d54201f29a710} 
+bool UI::\+\+Button::\+\+Is\+Interactable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_button_a43dffac487c2b0dfa47975b1fa301d2c}\index{UI::Button@{UI::Button}!OnPointerClick@{OnPointerClick}}
+\index{OnPointerClick@{OnPointerClick}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{OnPointerClick()}{OnPointerClick()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a43dffac487c2b0dfa47975b1fa301d2c} 
+void UI::\+\+Button::\+\+On\+Pointer\+Click (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&}]{event\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_click_handler_aae5a21bfd4be614b63435518e0155f2a}{UI::\+\+IPointer\+Click\+Handler}}.
+
+\Hypertarget{class_u_i_1_1_button_a0855b4fbfc1598c96b899e84cf8768c9}\index{UI::Button@{UI::Button}!OnPointerDown@{OnPointerDown}}
+\index{OnPointerDown@{OnPointerDown}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{OnPointerDown()}{OnPointerDown()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a0855b4fbfc1598c96b899e84cf8768c9} 
+void UI::\+\+Button::\+\+On\+Pointer\+Down (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&}]{event\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_down_handler_a92169e620c9eec620b223afe3e621b1d}{UI::\+\+IPointer\+Down\+Handler}}.
+
+\Hypertarget{class_u_i_1_1_button_af28720f69f1cbf0e97f9a178b20f6610}\index{UI::Button@{UI::Button}!OnPointerEnter@{OnPointerEnter}}
+\index{OnPointerEnter@{OnPointerEnter}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{OnPointerEnter()}{OnPointerEnter()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_af28720f69f1cbf0e97f9a178b20f6610} 
+void UI::\+\+Button::\+\+On\+Pointer\+Enter (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&}]{event\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_enter_handler_ad3c82f9ab6befd0092e6dbe9569e0e60}{UI::\+\+IPointer\+Enter\+Handler}}.
+
+\Hypertarget{class_u_i_1_1_button_a615a85cd87dbced82a6fae5be32e3679}\index{UI::Button@{UI::Button}!OnPointerExit@{OnPointerExit}}
+\index{OnPointerExit@{OnPointerExit}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{OnPointerExit()}{OnPointerExit()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a615a85cd87dbced82a6fae5be32e3679} 
+void UI::\+\+Button::\+\+On\+Pointer\+Exit (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&}]{event\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_exit_handler_a0e5c5e7027e5c5dd1cd9bd7d617aabeb}{UI::\+\+IPointer\+Exit\+Handler}}.
+
+\Hypertarget{class_u_i_1_1_button_af8d346aed61bf7743e39761c4e06330b}\index{UI::Button@{UI::Button}!OnPointerUp@{OnPointerUp}}
+\index{OnPointerUp@{OnPointerUp}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{OnPointerUp()}{OnPointerUp()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_af8d346aed61bf7743e39761c4e06330b} 
+void UI::\+\+Button::\+\+On\+Pointer\+Up (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_pointer_event_data}{Pointer\+Event\+Data}} \&}]{event\+Data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{class_u_i_1_1_i_pointer_up_handler_af8853809e143a066854fe1a931b3ec96}{UI::\+\+IPointer\+Up\+Handler}}.
+
+\Hypertarget{class_u_i_1_1_button_a8e40abfdad0c063d00485f4ba616d5be}\index{UI::Button@{UI::Button}!Render@{Render}}
+\index{Render@{Render}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a8e40abfdad0c063d00485f4ba616d5be} 
+void UI::\+\+Button::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Render the button. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{UI::\+\+UIElement}}.
+
+\Hypertarget{class_u_i_1_1_button_aa931f3e67275e5a2da8d54efafce7d85}\index{UI::Button@{UI::Button}!SetBackgroundColor@{SetBackgroundColor}}
+\index{SetBackgroundColor@{SetBackgroundColor}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{SetBackgroundColor()}{SetBackgroundColor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_aa931f3e67275e5a2da8d54efafce7d85} 
+void UI::\+\+Button::\+\+Set\+Background\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \&}]{color}{}\end{DoxyParamCaption})}
+
+
+
+Set the background color (normal state). 
+
+\Hypertarget{class_u_i_1_1_button_a4af25c2b25a2dad41911167fc454d621}\index{UI::Button@{UI::Button}!SetBackgroundSprite@{SetBackgroundSprite}}
+\index{SetBackgroundSprite@{SetBackgroundSprite}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{SetBackgroundSprite()}{SetBackgroundSprite()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a4af25c2b25a2dad41911167fc454d621} 
+void UI::\+\+Button::\+\+Set\+Background\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}}]{texture}{, }\item[{bool}]{sliced}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+
+
+Set a background sprite/\+texture (enables 9-\/slice if texture has a border set). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & Texture to use as background \\
+\hline
+{\em sliced} & If true, sets \doxylink{namespace_u_i_a013f4ee0281816cbb835924482e37319afa6a7b9fa989f179f6bbf2796bf4337c}{Image\+Type::\+\+Sliced} for 9-\/slice rendering \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_button_ad5a3a37bc6699378da5ac199867688f7}\index{UI::Button@{UI::Button}!SetColors@{SetColors}}
+\index{SetColors@{SetColors}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{SetColors()}{SetColors()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_ad5a3a37bc6699378da5ac199867688f7} 
+void UI::\+\+Button::\+\+Set\+Colors (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_u_i_1_1_color_block}{Color\+Block}} \&}]{colors}{}\end{DoxyParamCaption})}
+
+
+
+Set the button colors. 
+
+\Hypertarget{class_u_i_1_1_button_a3678fb248f4113bf295d89dcb0e00d90}\index{UI::Button@{UI::Button}!SetInteractable@{SetInteractable}}
+\index{SetInteractable@{SetInteractable}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{SetInteractable()}{SetInteractable()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a3678fb248f4113bf295d89dcb0e00d90} 
+void UI::\+\+Button::\+\+Set\+Interactable (\begin{DoxyParamCaption}\item[{bool}]{interactable}{}\end{DoxyParamCaption})}
+
+
+
+Set whether the button is interactable. 
+
+\Hypertarget{class_u_i_1_1_button_a2d49976df0c61fca4f0bd7f0b3bfc263}\index{UI::Button@{UI::Button}!SetText@{SetText}}
+\index{SetText@{SetText}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{SetText()}{SetText()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a2d49976df0c61fca4f0bd7f0b3bfc263} 
+void UI::\+\+Button::\+\+Set\+Text (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{text}{}\end{DoxyParamCaption})}
+
+
+
+Set the button text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & \doxylink{class_u_i_1_1_text}{Text} to display \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_button_a894121f9656055e5182875e84ec4fdc4}\index{UI::Button@{UI::Button}!Update@{Update}}
+\index{Update@{Update}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_a894121f9656055e5182875e84ec4fdc4} 
+void UI::\+\+Button::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update button state and color transitions. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{UI::\+\+UIElement}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_u_i_1_1_button_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_u_i_1_1_button_ad4e13bcd609b5b64feae2caa31476bea}\index{UI::Button@{UI::Button}!onClick@{onClick}}
+\index{onClick@{onClick}!UI::Button@{UI::Button}}
+\doxysubsubsection{\texorpdfstring{onClick}{onClick}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_button_ad4e13bcd609b5b64feae2caa31476bea} 
+std::\+function$<$void()$>$ UI::\+\+Button::\+on\+Click}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_button_8hpp}{Button.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Components/\+\doxymbox{\hyperlink{_button_8cpp}{Button.\+cpp}}\end{DoxyCompactItemize}

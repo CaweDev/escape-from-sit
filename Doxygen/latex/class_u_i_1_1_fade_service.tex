@@ -1,0 +1,121 @@
+\doxysection{UI::\+Fade\+Service Class Reference}
+\hypertarget{class_u_i_1_1_fade_service}{}\label{class_u_i_1_1_fade_service}\index{UI::FadeService@{UI::FadeService}}
+
+
+Static service for full-\/screen fade-\/to-\/black transitions.  
+
+
+
+
+{\ttfamily \+\#include $<$Fade\+Service.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_fade_service_a3ab915d4a9c364654f80592593c8a2c2}{Initialize}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the fade overlay (call after \doxylink{class_u_i_1_1_u_i_manager}{UIManager} is ready). \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_fade_service_a9fec73ae31fc521b79b159738230f438}{Shutdown}} ()
+\begin{DoxyCompactList}\small\item\em Shut down and release resources. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_fade_service_a768cce7340d1722a155f9bd820362b52}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Advance the fade animation (call once per frame). \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_fade_service_a681bbce5d6d2c71134e135c1e13ae652}{Fade\+In}} (f32 duration, std::\+function$<$ void()$>$ on\+Complete=nullptr)
+\begin{DoxyCompactList}\small\item\em Fade screen to black (transparent -\/\texorpdfstring{$>$}{>} opaque). \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_u_i_1_1_fade_service_ab29bd0b6d0ccc8bbf19cd333d60928bd}{Fade\+Out}} (f32 duration, std::\+function$<$ void()$>$ on\+Complete=nullptr)
+\begin{DoxyCompactList}\small\item\em Fade screen from black (opaque -\/\texorpdfstring{$>$}{>} transparent). \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{class_u_i_1_1_fade_service_a2fcb33fd758b7bfbfd2610faa7dd36bd}{Is\+Fading}} ()
+\begin{DoxyCompactList}\small\item\em Check if a fade is currently in progress. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static service for full-\/screen fade-\/to-\/black transitions. 
+
+Uses a dedicated \doxylink{class_u_i_1_1_canvas}{Canvas} (sort\+Order 9999) with a full-\/screen black \doxylink{class_u_i_1_1_image}{Image}. Supports smooth ease-\/in-\/out interpolation with completion callbacks. 
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_fade_service_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_fade_service_a681bbce5d6d2c71134e135c1e13ae652}\index{UI::FadeService@{UI::FadeService}!FadeIn@{FadeIn}}
+\index{FadeIn@{FadeIn}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{FadeIn()}{FadeIn()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_a681bbce5d6d2c71134e135c1e13ae652} 
+void UI::\+\+Fade\+Service::\+\+Fade\+In (\begin{DoxyParamCaption}\item[{f32}]{duration}{, }\item[{std::\+function$<$ void()$>$}]{on\+Complete}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Fade screen to black (transparent -\/\texorpdfstring{$>$}{>} opaque). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duration} & Fade duration in seconds \\
+\hline
+{\em on\+Complete} & Optional callback when fade completes \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_fade_service_ab29bd0b6d0ccc8bbf19cd333d60928bd}\index{UI::FadeService@{UI::FadeService}!FadeOut@{FadeOut}}
+\index{FadeOut@{FadeOut}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{FadeOut()}{FadeOut()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_ab29bd0b6d0ccc8bbf19cd333d60928bd} 
+void UI::\+\+Fade\+Service::\+\+Fade\+Out (\begin{DoxyParamCaption}\item[{f32}]{duration}{, }\item[{std::\+function$<$ void()$>$}]{on\+Complete}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Fade screen from black (opaque -\/\texorpdfstring{$>$}{>} transparent). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duration} & Fade duration in seconds \\
+\hline
+{\em on\+Complete} & Optional callback when fade completes \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_fade_service_a3ab915d4a9c364654f80592593c8a2c2}\index{UI::FadeService@{UI::FadeService}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_a3ab915d4a9c364654f80592593c8a2c2} 
+void UI::\+\+Fade\+Service::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initialize the fade overlay (call after \doxylink{class_u_i_1_1_u_i_manager}{UIManager} is ready). 
+
+\Hypertarget{class_u_i_1_1_fade_service_a2fcb33fd758b7bfbfd2610faa7dd36bd}\index{UI::FadeService@{UI::FadeService}!IsFading@{IsFading}}
+\index{IsFading@{IsFading}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{IsFading()}{IsFading()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_a2fcb33fd758b7bfbfd2610faa7dd36bd} 
+bool UI::\+\+Fade\+Service::\+\+Is\+Fading (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Check if a fade is currently in progress. 
+
+\Hypertarget{class_u_i_1_1_fade_service_a9fec73ae31fc521b79b159738230f438}\index{UI::FadeService@{UI::FadeService}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_a9fec73ae31fc521b79b159738230f438} 
+void UI::\+\+Fade\+Service::\+\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Shut down and release resources. 
+
+\Hypertarget{class_u_i_1_1_fade_service_a768cce7340d1722a155f9bd820362b52}\index{UI::FadeService@{UI::FadeService}!Update@{Update}}
+\index{Update@{Update}!UI::FadeService@{UI::FadeService}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_fade_service_a768cce7340d1722a155f9bd820362b52} 
+void UI::\+\+Fade\+Service::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Advance the fade animation (call once per frame). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & Delta time in seconds \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_fade_service_8hpp}{Fade\+Service.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Helpers/\+\doxymbox{\hyperlink{_fade_service_8cpp}{Fade\+Service.\+cpp}}\end{DoxyCompactItemize}

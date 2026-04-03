@@ -1,0 +1,331 @@
+\doxysection{Engine::\+Door Class Reference}
+\hypertarget{class_engine_1_1_door}{}\label{class_engine_1_1_door}\index{Engine::Door@{Engine::Door}}
+
+
+Interactive door component with animation support.  
+
+
+
+
+{\ttfamily \+\#include $<$Door.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}{Door}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_door_afb182fde339c081894b2c00cce8c5909}{\texorpdfstring{$\sim$}{\string~}\+Door}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_a0ac8b013ca2c3f645f952c19e081fbe0}{Initialize}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_a856a4e90b9583f49fee468ebf9677e43}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_ad3b769db38255f0de098a412fb7d8243}{Open}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_a8a0d0f3fcc7686d061e306fb02317c15}{Close}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_aa6fb7ab3afc011578e81b83482adff93}{Toggle}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_door_a76335b9bf59bd9010487c9ecae942189}{Is\+Passable}} () const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_door_a8331c501b87e9dc9639e233136793d21}{Is\+Fully\+Open}} () const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_door_a1990ca60cd543baa67e9227e61ec8221}{Is\+Fully\+Closed}} () const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_door_a58c5211aebe8e61aa50d127e78a8e11e}{Is\+Animating}} () const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_door_a57ba95917cc74fc7b56645fd226ea92d}{Get\+World\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_ab3dcb782223e05ab9e5ef88873f79018}{Setup\+Interactable}} (\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}} \texorpdfstring{$\ast$}{*}interactable, const char \texorpdfstring{$\ast$}{*}open\+Text="{}Open"{}, const char \texorpdfstring{$\ast$}{*}close\+Text="{}Close"{})
+\begin{DoxyCompactList}\small\item\em Set up an \doxylink{class_engine_1_1_interactable}{Interactable} to control this door. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_afd2fa3c7fef857e10797a28ae7894e51}{Disable\+Interaction}} ()
+\begin{DoxyCompactList}\small\item\em Disable this door\textquotesingle{}s interaction (for when another component takes over) Used by Control\+Room\+Door to prevent base \doxylink{class_engine_1_1_door}{Door} from handling interactions. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_a35856b43a9ca01e9f2103835fce2f989}{Request\+Open}} (const void \texorpdfstring{$\ast$}{*}requester)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_door_a8b1152f597a9cc3041977fc4e21ca853}{Release\+Open}} (const void \texorpdfstring{$\ast$}{*}requester)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_door_aaee9b190a6866a9037190da980f7c88c}{Is\+Held\+Open}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}{Door}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_door_a6ea8174fa09f3fef8a28b257e444edb6}{Find\+At\+Tile}} (int \doxymbox{\hyperlink{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2}{tileX}}, int \doxymbox{\hyperlink{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396}{tileY}})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2}{tileX}} = 0
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396}{tileY}} = 0
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_door_ad517d16a4d744433785f19660adb182e}{door\+Type}} = 10
+\item 
+\doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{Door\+Facing}} \doxymbox{\hyperlink{class_engine_1_1_door_adc0deb87153306e4f2da62d774887222}{facing}} = \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Door\+Facing::\+\+North\+South}}
+\item 
+\doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{Door\+State}} \doxymbox{\hyperlink{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}{state}} = \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Door\+State::\+\+Closed}}
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_door_a9af7003fbaa76c4430ccdc02f26bfaa5}{open\+Amount}} = 0.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_door_a95adb13c0bd864b05931ae3820c5ba53}{animation\+Speed}} = 4.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_door_a512de044decab2f4bc3100545d64c37e}{auto\+Close\+Delay}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_box_collider2_d}{Box\+Collider2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_door_ad9e8e3b3a2e26bd86c7d0e2843fd11ff}{collider}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interactive door component with animation support. 
+
+Doors can be opened/\+closed with smooth animation. When open, they allow passage through. Designed to work with the \doxylink{class_engine_1_1_interactable}{Interactable} system. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_door_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}\index{Engine::Door@{Engine::Door}!Door@{Door}}
+\index{Door@{Door}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Door()}{Door()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3} 
+Engine::\+\+Door::\+\+Door (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_door_afb182fde339c081894b2c00cce8c5909}\index{Engine::Door@{Engine::Door}!````~Door@{\texorpdfstring{$\sim$}{\string~}Door}}
+\index{````~Door@{\texorpdfstring{$\sim$}{\string~}Door}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Door()}{\string~Door()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_afb182fde339c081894b2c00cce8c5909} 
+virtual Engine::\+\+Door::\+\texorpdfstring{$\sim$}{\string~}\+Door (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_door_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_door_a8a0d0f3fcc7686d061e306fb02317c15}\index{Engine::Door@{Engine::Door}!Close@{Close}}
+\index{Close@{Close}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Close()}{Close()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a8a0d0f3fcc7686d061e306fb02317c15} 
+void Engine::\+\+Door::\+\+Close (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Start closing the door \Hypertarget{class_engine_1_1_door_afd2fa3c7fef857e10797a28ae7894e51}\index{Engine::Door@{Engine::Door}!DisableInteraction@{DisableInteraction}}
+\index{DisableInteraction@{DisableInteraction}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{DisableInteraction()}{DisableInteraction()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_afd2fa3c7fef857e10797a28ae7894e51} 
+void Engine::\+\+Door::\+\+Disable\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Disable this door\textquotesingle{}s interaction (for when another component takes over) Used by Control\+Room\+Door to prevent base \doxylink{class_engine_1_1_door}{Door} from handling interactions. 
+
+\Hypertarget{class_engine_1_1_door_a6ea8174fa09f3fef8a28b257e444edb6}\index{Engine::Door@{Engine::Door}!FindAtTile@{FindAtTile}}
+\index{FindAtTile@{FindAtTile}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{FindAtTile()}{FindAtTile()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a6ea8174fa09f3fef8a28b257e444edb6} 
+\doxymbox{\hyperlink{class_engine_1_1_door_af0a1fb059fe9056d12997f8ff832acc3}{Door}} \texorpdfstring{$\ast$}{*} Engine::\+\+Door::\+\+Find\+At\+Tile (\begin{DoxyParamCaption}\item[{int}]{tileX}{, }\item[{int}]{tileY}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_door_a57ba95917cc74fc7b56645fd226ea92d}\index{Engine::Door@{Engine::Door}!GetWorldPosition@{GetWorldPosition}}
+\index{GetWorldPosition@{GetWorldPosition}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{GetWorldPosition()}{GetWorldPosition()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a57ba95917cc74fc7b56645fd226ea92d} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Door::\+\+Get\+World\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get world position (center of door tile) \Hypertarget{class_engine_1_1_door_a0ac8b013ca2c3f645f952c19e081fbe0}\index{Engine::Door@{Engine::Door}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a0ac8b013ca2c3f645f952c19e081fbe0} 
+void Engine::\+\+Door::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_door_a58c5211aebe8e61aa50d127e78a8e11e}\index{Engine::Door@{Engine::Door}!IsAnimating@{IsAnimating}}
+\index{IsAnimating@{IsAnimating}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{IsAnimating()}{IsAnimating()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a58c5211aebe8e61aa50d127e78a8e11e} 
+bool Engine::\+\+Door::\+\+Is\+Animating (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if door is currently animating \Hypertarget{class_engine_1_1_door_a1990ca60cd543baa67e9227e61ec8221}\index{Engine::Door@{Engine::Door}!IsFullyClosed@{IsFullyClosed}}
+\index{IsFullyClosed@{IsFullyClosed}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{IsFullyClosed()}{IsFullyClosed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a1990ca60cd543baa67e9227e61ec8221} 
+bool Engine::\+\+Door::\+\+Is\+Fully\+Closed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if door is fully closed \Hypertarget{class_engine_1_1_door_a8331c501b87e9dc9639e233136793d21}\index{Engine::Door@{Engine::Door}!IsFullyOpen@{IsFullyOpen}}
+\index{IsFullyOpen@{IsFullyOpen}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{IsFullyOpen()}{IsFullyOpen()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a8331c501b87e9dc9639e233136793d21} 
+bool Engine::\+\+Door::\+\+Is\+Fully\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if door is fully open \Hypertarget{class_engine_1_1_door_aaee9b190a6866a9037190da980f7c88c}\index{Engine::Door@{Engine::Door}!IsHeldOpen@{IsHeldOpen}}
+\index{IsHeldOpen@{IsHeldOpen}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{IsHeldOpen()}{IsHeldOpen()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_aaee9b190a6866a9037190da980f7c88c} 
+bool Engine::\+\+Door::\+\+Is\+Held\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_engine_1_1_door_a76335b9bf59bd9010487c9ecae942189}\index{Engine::Door@{Engine::Door}!IsPassable@{IsPassable}}
+\index{IsPassable@{IsPassable}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{IsPassable()}{IsPassable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a76335b9bf59bd9010487c9ecae942189} 
+bool Engine::\+\+Door::\+\+Is\+Passable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Check if door allows passage (open enough to walk through) \Hypertarget{class_engine_1_1_door_ad3b769db38255f0de098a412fb7d8243}\index{Engine::Door@{Engine::Door}!Open@{Open}}
+\index{Open@{Open}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Open()}{Open()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_ad3b769db38255f0de098a412fb7d8243} 
+void Engine::\+\+Door::\+\+Open (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Start opening the door \Hypertarget{class_engine_1_1_door_a8b1152f597a9cc3041977fc4e21ca853}\index{Engine::Door@{Engine::Door}!ReleaseOpen@{ReleaseOpen}}
+\index{ReleaseOpen@{ReleaseOpen}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{ReleaseOpen()}{ReleaseOpen()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a8b1152f597a9cc3041977fc4e21ca853} 
+void Engine::\+\+Door::\+\+Release\+Open (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{requester}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_door_a35856b43a9ca01e9f2103835fce2f989}\index{Engine::Door@{Engine::Door}!RequestOpen@{RequestOpen}}
+\index{RequestOpen@{RequestOpen}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{RequestOpen()}{RequestOpen()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a35856b43a9ca01e9f2103835fce2f989} 
+void Engine::\+\+Door::\+\+Request\+Open (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{requester}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_door_ab3dcb782223e05ab9e5ef88873f79018}\index{Engine::Door@{Engine::Door}!SetupInteractable@{SetupInteractable}}
+\index{SetupInteractable@{SetupInteractable}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{SetupInteractable()}{SetupInteractable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_ab3dcb782223e05ab9e5ef88873f79018} 
+void Engine::\+\+Door::\+\+Setup\+Interactable (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}} \texorpdfstring{$\ast$}{*}}]{interactable}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{open\+Text}{ = {\ttfamily "{}Open"{}}, }\item[{const char \texorpdfstring{$\ast$}{*}}]{close\+Text}{ = {\ttfamily "{}Close"{}}}\end{DoxyParamCaption})}
+
+
+
+Set up an \doxylink{class_engine_1_1_interactable}{Interactable} to control this door. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interactable} & The \doxylink{class_engine_1_1_interactable}{Interactable} component to bind \\
+\hline
+{\em open\+Text} & Text shown when door is closed (default:\+ "{}\+Open"{}) \\
+\hline
+{\em close\+Text} & Text shown when door is open (default:\+ "{}\+Close"{}) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_door_aa6fb7ab3afc011578e81b83482adff93}\index{Engine::Door@{Engine::Door}!Toggle@{Toggle}}
+\index{Toggle@{Toggle}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Toggle()}{Toggle()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_aa6fb7ab3afc011578e81b83482adff93} 
+void Engine::\+\+Door::\+\+Toggle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Toggle between open and closed \Hypertarget{class_engine_1_1_door_a856a4e90b9583f49fee468ebf9677e43}\index{Engine::Door@{Engine::Door}!Update@{Update}}
+\index{Update@{Update}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a856a4e90b9583f49fee468ebf9677e43} 
+void Engine::\+\+Door::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_door_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_door_a95adb13c0bd864b05931ae3820c5ba53}\index{Engine::Door@{Engine::Door}!animationSpeed@{animationSpeed}}
+\index{animationSpeed@{animationSpeed}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{animationSpeed}{animationSpeed}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a95adb13c0bd864b05931ae3820c5ba53} 
+f32 Engine::\+\+Door::\+animation\+Speed = 4.\+0f}
+
+Animation speed (full open/\+close per second) \Hypertarget{class_engine_1_1_door_a512de044decab2f4bc3100545d64c37e}\index{Engine::Door@{Engine::Door}!autoCloseDelay@{autoCloseDelay}}
+\index{autoCloseDelay@{autoCloseDelay}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{autoCloseDelay}{autoCloseDelay}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a512de044decab2f4bc3100545d64c37e} 
+f32 Engine::\+\+Door::\+auto\+Close\+Delay = 0.\+0f}
+
+Auto-\/close delay in seconds (0 = never auto-\/close) \Hypertarget{class_engine_1_1_door_ad9e8e3b3a2e26bd86c7d0e2843fd11ff}\index{Engine::Door@{Engine::Door}!collider@{collider}}
+\index{collider@{collider}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{collider}{collider}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_ad9e8e3b3a2e26bd86c7d0e2843fd11ff} 
+\doxymbox{\hyperlink{class_engine_1_1_box_collider2_d}{Box\+Collider2D}}\texorpdfstring{$\ast$}{*} Engine::\+\+Door::\+collider = nullptr}
+
+Cached reference to collider (for enabling/\+disabling) \Hypertarget{class_engine_1_1_door_ad517d16a4d744433785f19660adb182e}\index{Engine::Door@{Engine::Door}!doorType@{doorType}}
+\index{doorType@{doorType}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{doorType}{doorType}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_ad517d16a4d744433785f19660adb182e} 
+int Engine::\+\+Door::\+door\+Type = 10}
+
+\doxylink{class_engine_1_1_door}{Door} type (10-\/13, used for texture lookup) \Hypertarget{class_engine_1_1_door_adc0deb87153306e4f2da62d774887222}\index{Engine::Door@{Engine::Door}!facing@{facing}}
+\index{facing@{facing}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{facing}{facing}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_adc0deb87153306e4f2da62d774887222} 
+\doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{Door\+Facing}} Engine::\+\+Door::\+facing = \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{Door\+Facing::\+\+North\+South}}}
+
+Facing direction \Hypertarget{class_engine_1_1_door_a9af7003fbaa76c4430ccdc02f26bfaa5}\index{Engine::Door@{Engine::Door}!openAmount@{openAmount}}
+\index{openAmount@{openAmount}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{openAmount}{openAmount}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a9af7003fbaa76c4430ccdc02f26bfaa5} 
+f32 Engine::\+\+Door::\+open\+Amount = 0.\+0f}
+
+Animation progress (0.\+0 = closed, 1.\+0 = open) \Hypertarget{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7}\index{Engine::Door@{Engine::Door}!state@{state}}
+\index{state@{state}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a986e27f8aa20e3d5bedd43b8c70e21f7} 
+\doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{Door\+State}} Engine::\+\+Door::\+state = \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Door\+State::\+\+Closed}}}
+
+Current door state \Hypertarget{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2}\index{Engine::Door@{Engine::Door}!tileX@{tileX}}
+\index{tileX@{tileX}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{tileX}{tileX}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a8ef04af1d4d61ec09c42b45bb4b34fb2} 
+int Engine::\+\+Door::\+tileX = 0}
+
+Tile position in tilemap coordinates \Hypertarget{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396}\index{Engine::Door@{Engine::Door}!tileY@{tileY}}
+\index{tileY@{tileY}!Engine::Door@{Engine::Door}}
+\doxysubsubsection{\texorpdfstring{tileY}{tileY}}
+{\footnotesize\ttfamily \label{class_engine_1_1_door_a3f11c6185d318b0c69bcf60090778396} 
+int Engine::\+\+Door::\+tileY = 0}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\doxymbox{\hyperlink{_door_8hpp}{Door.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\doxymbox{\hyperlink{_door_8cpp}{Door.\+cpp}}\end{DoxyCompactItemize}

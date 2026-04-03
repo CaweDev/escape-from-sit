@@ -1,0 +1,255 @@
+\doxysection{Engine::\+Camera Class Reference}
+\hypertarget{class_engine_1_1_camera}{}\label{class_engine_1_1_camera}\index{Engine::Camera@{Engine::Camera}}
+
+
+\doxylink{class_engine_1_1_component}{Component} for camera control and viewport management.  
+
+
+
+
+{\ttfamily \+\#include $<$Camera.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_camera_a50c3da422fcd130529763013c0075c09}{Awake}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_camera_a0f0acbe7cec8c50eb954e77447bb8ade}{On\+Destroy}} () override
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_camera_ab180e73ca97b61109cd35ad8857cd8a1}{Apply}} ()
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_camera_a6428a0b82fbfe084bc0f19873cf259f9}{Screen\+To\+World\+Point}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&screen\+Pos)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_camera_a85c3050a3d0decaf817059ecd8eeb7ee}{World\+To\+Screen\+Point}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&world\+Pos)
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_af8af5a36d8465b72a02bf9df4ecb3cd2}{Get\+Viewport\+Width}} () const
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a3b80b0149c06d3859375fd2df5c1ecc8}{Get\+Viewport\+Height}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_camera_abcdd740afd6905a7594398a8a07c030c}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+camera.\+json"{})
+\begin{DoxyCompactList}\small\item\em Apply defaults from camera.\+json to every new \doxylink{class_engine_1_1_camera}{Camera} at Awake time. Call once at startup. Falls back to built-\/in defaults if the file is missing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_camera_a43989442d530de4328a07f31f45605f9}{background\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+2f, 1.\+0f)
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a514b411d1cecaa14cef45e6c1334e358}{orthographic\+Size}} = 5.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a59c867ed73a5434472a44c68a0c6ca20}{fov}} = 75.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_acfc60b6bc71f1dc166e49246fd9426cf}{pitch}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_camera_ace5565e61ce7edd7db49be48a5c4633e}{fog\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+0f, 0.\+0f, 0.\+0f, 1.\+0f)
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a2d00d6310d60cbb5fab54ddcad087c7a}{fog\+Distance}} = 20.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a110d1a9d87ae99b985ec4b24695f6a47}{fog\+Min\+Visibility}} = 0.\+2f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_a922f173c2e6951a899952655b632e502}{fog\+Max\+Visibility}} = 1.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_camera_acfa80f23100ffea8eeb6b13e7990c2da}{fog\+Precision}} = 200.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_camera_a405f02b972c65ebaaef777f9615042c1}{fog\+Enabled}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}{main}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_component}{Component} for camera control and viewport management. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_camera_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_camera_ab180e73ca97b61109cd35ad8857cd8a1}\index{Engine::Camera@{Engine::Camera}!Apply@{Apply}}
+\index{Apply@{Apply}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{Apply()}{Apply()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_ab180e73ca97b61109cd35ad8857cd8a1} 
+void Engine::\+\+Camera::\+\+Apply (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Apply camera settings (called before rendering) \Hypertarget{class_engine_1_1_camera_a50c3da422fcd130529763013c0075c09}\index{Engine::Camera@{Engine::Camera}!Awake@{Awake}}
+\index{Awake@{Awake}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a50c3da422fcd130529763013c0075c09} 
+void Engine::\+\+Camera::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is first created 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_camera_a3b80b0149c06d3859375fd2df5c1ecc8}\index{Engine::Camera@{Engine::Camera}!GetViewportHeight@{GetViewportHeight}}
+\index{GetViewportHeight@{GetViewportHeight}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{GetViewportHeight()}{GetViewportHeight()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a3b80b0149c06d3859375fd2df5c1ecc8} 
+f32 Engine::\+\+Camera::\+\+Get\+Viewport\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get viewport height in world units \Hypertarget{class_engine_1_1_camera_af8af5a36d8465b72a02bf9df4ecb3cd2}\index{Engine::Camera@{Engine::Camera}!GetViewportWidth@{GetViewportWidth}}
+\index{GetViewportWidth@{GetViewportWidth}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{GetViewportWidth()}{GetViewportWidth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_af8af5a36d8465b72a02bf9df4ecb3cd2} 
+f32 Engine::\+\+Camera::\+\+Get\+Viewport\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get viewport width in world units \Hypertarget{class_engine_1_1_camera_abcdd740afd6905a7594398a8a07c030c}\index{Engine::Camera@{Engine::Camera}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_abcdd740afd6905a7594398a8a07c030c} 
+void Engine::\+\+Camera::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+camera.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Apply defaults from camera.\+json to every new \doxylink{class_engine_1_1_camera}{Camera} at Awake time. Call once at startup. Falls back to built-\/in defaults if the file is missing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config\+Path} & Path to camera.\+json. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_camera_a0f0acbe7cec8c50eb954e77447bb8ade}\index{Engine::Camera@{Engine::Camera}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a0f0acbe7cec8c50eb954e77447bb8ade} 
+void Engine::\+\+Camera::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is destroyed 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_engine_1_1_camera_a6428a0b82fbfe084bc0f19873cf259f9}\index{Engine::Camera@{Engine::Camera}!ScreenToWorldPoint@{ScreenToWorldPoint}}
+\index{ScreenToWorldPoint@{ScreenToWorldPoint}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{ScreenToWorldPoint()}{ScreenToWorldPoint()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a6428a0b82fbfe084bc0f19873cf259f9} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Camera::\+\+Screen\+To\+World\+Point (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{screen\+Pos}{}\end{DoxyParamCaption})}
+
+Convert screen position to world position \Hypertarget{class_engine_1_1_camera_a85c3050a3d0decaf817059ecd8eeb7ee}\index{Engine::Camera@{Engine::Camera}!WorldToScreenPoint@{WorldToScreenPoint}}
+\index{WorldToScreenPoint@{WorldToScreenPoint}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{WorldToScreenPoint()}{WorldToScreenPoint()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a85c3050a3d0decaf817059ecd8eeb7ee} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Camera::\+\+World\+To\+Screen\+Point (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{world\+Pos}{}\end{DoxyParamCaption})}
+
+Convert world position to screen position 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_camera_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_camera_a43989442d530de4328a07f31f45605f9}\index{Engine::Camera@{Engine::Camera}!backgroundColor@{backgroundColor}}
+\index{backgroundColor@{backgroundColor}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{backgroundColor}{backgroundColor}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a43989442d530de4328a07f31f45605f9} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Camera::\+background\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+2f, 1.\+0f)}
+
+Background clear color \Hypertarget{class_engine_1_1_camera_ace5565e61ce7edd7db49be48a5c4633e}\index{Engine::Camera@{Engine::Camera}!fogColor@{fogColor}}
+\index{fogColor@{fogColor}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogColor}{fogColor}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_ace5565e61ce7edd7db49be48a5c4633e} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Camera::\+fog\+Color = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+0f, 0.\+0f, 0.\+0f, 1.\+0f)}
+
+Fog settings for distance-\/based darkening (global, affects all renderers) \Hypertarget{class_engine_1_1_camera_a2d00d6310d60cbb5fab54ddcad087c7a}\index{Engine::Camera@{Engine::Camera}!fogDistance@{fogDistance}}
+\index{fogDistance@{fogDistance}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogDistance}{fogDistance}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a2d00d6310d60cbb5fab54ddcad087c7a} 
+f32 Engine::\+\+Camera::\+fog\+Distance = 20.\+0f}
+
+\Hypertarget{class_engine_1_1_camera_a405f02b972c65ebaaef777f9615042c1}\index{Engine::Camera@{Engine::Camera}!fogEnabled@{fogEnabled}}
+\index{fogEnabled@{fogEnabled}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogEnabled}{fogEnabled}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a405f02b972c65ebaaef777f9615042c1} 
+bool Engine::\+\+Camera::\+fog\+Enabled = false}
+
+\Hypertarget{class_engine_1_1_camera_a922f173c2e6951a899952655b632e502}\index{Engine::Camera@{Engine::Camera}!fogMaxVisibility@{fogMaxVisibility}}
+\index{fogMaxVisibility@{fogMaxVisibility}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogMaxVisibility}{fogMaxVisibility}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a922f173c2e6951a899952655b632e502} 
+f32 Engine::\+\+Camera::\+fog\+Max\+Visibility = 1.\+0f}
+
+\Hypertarget{class_engine_1_1_camera_a110d1a9d87ae99b985ec4b24695f6a47}\index{Engine::Camera@{Engine::Camera}!fogMinVisibility@{fogMinVisibility}}
+\index{fogMinVisibility@{fogMinVisibility}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogMinVisibility}{fogMinVisibility}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a110d1a9d87ae99b985ec4b24695f6a47} 
+f32 Engine::\+\+Camera::\+fog\+Min\+Visibility = 0.\+2f}
+
+\Hypertarget{class_engine_1_1_camera_acfa80f23100ffea8eeb6b13e7990c2da}\index{Engine::Camera@{Engine::Camera}!fogPrecision@{fogPrecision}}
+\index{fogPrecision@{fogPrecision}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fogPrecision}{fogPrecision}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_acfa80f23100ffea8eeb6b13e7990c2da} 
+f32 Engine::\+\+Camera::\+fog\+Precision = 200.\+0f}
+
+\Hypertarget{class_engine_1_1_camera_a59c867ed73a5434472a44c68a0c6ca20}\index{Engine::Camera@{Engine::Camera}!fov@{fov}}
+\index{fov@{fov}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a59c867ed73a5434472a44c68a0c6ca20} 
+f32 Engine::\+\+Camera::\+fov = 75.\+0f}
+
+\Hypertarget{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}\index{Engine::Camera@{Engine::Camera}!main@{main}}
+\index{main@{main}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{main}{main}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370} 
+\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}} \texorpdfstring{$\ast$}{*} Engine::\+\+Camera::\+main = nullptr\hspace{0.3cm}{\ttfamily [static]}}
+
+Static reference to main camera \Hypertarget{class_engine_1_1_camera_a514b411d1cecaa14cef45e6c1334e358}\index{Engine::Camera@{Engine::Camera}!orthographicSize@{orthographicSize}}
+\index{orthographicSize@{orthographicSize}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{orthographicSize}{orthographicSize}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_a514b411d1cecaa14cef45e6c1334e358} 
+f32 Engine::\+\+Camera::\+orthographic\+Size = 5.\+0f}
+
+Orthographic size (half-\/height in world units) \Hypertarget{class_engine_1_1_camera_acfc60b6bc71f1dc166e49246fd9426cf}\index{Engine::Camera@{Engine::Camera}!pitch@{pitch}}
+\index{pitch@{pitch}!Engine::Camera@{Engine::Camera}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily \label{class_engine_1_1_camera_acfc60b6bc71f1dc166e49246fd9426cf} 
+f32 Engine::\+\+Camera::\+pitch = 0.\+0f}
+
+Vertical rotation (pitch) for 2.\+5D dynamic horizon 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_camera_8hpp}{Camera.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_camera_8cpp}{Camera.\+cpp}}\end{DoxyCompactItemize}

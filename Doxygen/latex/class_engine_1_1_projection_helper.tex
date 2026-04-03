@@ -1,0 +1,44 @@
+\doxysection{Engine::\+Projection\+Helper Class Reference}
+\hypertarget{class_engine_1_1_projection_helper}{}\label{class_engine_1_1_projection_helper}\index{Engine::ProjectionHelper@{Engine::ProjectionHelper}}
+
+
+Utility for projecting 3D positions into 2.\+5D screen space.  
+
+
+
+
+{\ttfamily \+\#include $<$Projection\+Helper.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_projection_result}{Projection\+Result}} \doxymbox{\hyperlink{class_engine_1_1_projection_helper_a6edddc58aacbe6cbf9af5dcb4ff4813f}{Project\+To\+Screen}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&world\+Pos, const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&cam\+Pos, f32 cam\+Rotation\+Deg, f32 fov\+Deg, int screen\+Width, int screen\+Height)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_projection_result}{Projection\+Result}} \doxymbox{\hyperlink{class_engine_1_1_projection_helper_abdb42a7f37efa4a920db0a78c8ca2e4c}{Project\+To\+Screen}} (const \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*}target, const \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*}camera, f32 fov\+Deg, int screen\+Width, int screen\+Height)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility for projecting 3D positions into 2.\+5D screen space. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_projection_helper_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_projection_helper_abdb42a7f37efa4a920db0a78c8ca2e4c}\index{Engine::ProjectionHelper@{Engine::ProjectionHelper}!ProjectToScreen@{ProjectToScreen}}
+\index{ProjectToScreen@{ProjectToScreen}!Engine::ProjectionHelper@{Engine::ProjectionHelper}}
+\doxysubsubsection{\texorpdfstring{ProjectToScreen()}{ProjectToScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_projection_helper_abdb42a7f37efa4a920db0a78c8ca2e4c} 
+\doxymbox{\hyperlink{struct_engine_1_1_projection_result}{Projection\+Result}} Engine::\+\+Projection\+Helper::\+\+Project\+To\+Screen (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*}}]{target}{, }\item[{const \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*}}]{camera}{, }\item[{f32}]{fov\+Deg}{, }\item[{int}]{screen\+Width}{, }\item[{int}]{screen\+Height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Overload for \doxylink{class_engine_1_1_transform}{Transform} objects \Hypertarget{class_engine_1_1_projection_helper_a6edddc58aacbe6cbf9af5dcb4ff4813f}\index{Engine::ProjectionHelper@{Engine::ProjectionHelper}!ProjectToScreen@{ProjectToScreen}}
+\index{ProjectToScreen@{ProjectToScreen}!Engine::ProjectionHelper@{Engine::ProjectionHelper}}
+\doxysubsubsection{\texorpdfstring{ProjectToScreen()}{ProjectToScreen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_projection_helper_a6edddc58aacbe6cbf9af5dcb4ff4813f} 
+\doxymbox{\hyperlink{struct_engine_1_1_projection_result}{Projection\+Result}} Engine::\+\+Projection\+Helper::\+\+Project\+To\+Screen (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&}]{world\+Pos}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&}]{cam\+Pos}{, }\item[{f32}]{cam\+Rotation\+Deg}{, }\item[{f32}]{fov\+Deg}{, }\item[{int}]{screen\+Width}{, }\item[{int}]{screen\+Height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Raycasting/\+\doxymbox{\hyperlink{_projection_helper_8hpp}{Projection\+Helper.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Raycasting/\+\doxymbox{\hyperlink{_projection_helper_8cpp}{Projection\+Helper.\+cpp}}\end{DoxyCompactItemize}

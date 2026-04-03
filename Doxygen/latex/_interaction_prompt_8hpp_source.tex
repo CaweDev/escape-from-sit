@@ -1,0 +1,41 @@
+\doxysection{Interaction\+Prompt.\+hpp}
+\hypertarget{_interaction_prompt_8hpp_source}{}\label{_interaction_prompt_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Specialized/InteractionPrompt.hpp@{AlphaEngine2.5D/Source/Engine/UI/Specialized/InteractionPrompt.hpp}}
+\doxymbox{\hyperlink{_interaction_prompt_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_text_8hpp}{Engine/UI/Components/Text.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_af80ba180bd26ab4c0200a9ec288ba866}{InteractionPrompt}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}\ \{}
+\DoxyCodeLine{00021\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_af80ba180bd26ab4c0200a9ec288ba866}{InteractionPrompt}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a856093c7a9a553893403539d1ab560ce}{\string~InteractionPrompt}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_af2d484fc0fbbbee31e1a1a8d70693090}{Show}}(\textcolor{keyword}{const}\ std::string\&\ actionText);}
+\DoxyCodeLine{00030\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_aee57991f60fb98e69292a09ef7d6128f}{Hide}}();}
+\DoxyCodeLine{00035\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a583251ba735d7b27f1d48827b74f56f0}{IsShowing}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}};\ \}}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a7b37ea6b9ba0b403dcbdb707c255f0af}{SetKeyText}}(\textcolor{keyword}{const}\ std::string\&\ keyText);}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_a265fcda2f1021909fde659fe0cc874cb}{SetTextColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color);}
+\DoxyCodeLine{00051\ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt_ae6a00e1ca4171eb44170d420e1a10685}{SetFontSize}}(f32\ size);}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{Text}}*\ m\_text\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00059\ \ \ \ \ std::string\ m\_keyText\ =\ \textcolor{stringliteral}{"{}[E]"{}};}
+\DoxyCodeLine{00060\ \ \ \ \ std::string\ m\_currentActionText;}
+\DoxyCodeLine{00061\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateText();}
+\DoxyCodeLine{00063\ \};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

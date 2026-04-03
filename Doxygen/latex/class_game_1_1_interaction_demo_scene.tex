@@ -1,0 +1,212 @@
+\doxysection{Game::\+Interaction\+Demo\+Scene Class Reference}
+\hypertarget{class_game_1_1_interaction_demo_scene}{}\label{class_game_1_1_interaction_demo_scene}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+
+
+Demonstrates the \doxylink{class_engine_1_1_interactable}{Interactable} system with test objects.  
+
+
+
+
+{\ttfamily \+\#include $<$Interaction\+Demo\+Scene.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ab2d5d73eebf40f6ded7fd6cdc80e22e6}{Interaction\+Demo\+Scene}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abfd6c4a337a9db194f9c11165626c321}{On\+Load}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a634ba36c4d8470cd2fe278b2637b9a8a}{On\+Update}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{On\+Unload}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{On\+After\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}{door\+Sprite}}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}{key\+Sprite}}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}{chest\+Sprite}}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a7eb97fe466801d0d26a6688f8398d635}{wall\+Sprite}}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_acc598a4cbc93cc513148313a86b3d003}{floor\+Sprite}}
+\item 
+std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_acf89c32003ca342690ca38038d50c7b3}{ceiling\+Sprite}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_ada9b60021b8fdf894fe3ba7f1170b100}{player\+Controller}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}{player\+Tf}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}{has\+Key}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5}{door\+Open}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529}{chest\+Looted}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_scene}{Engine::\+\+Scene}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Demonstrates the \doxylink{class_engine_1_1_interactable}{Interactable} system with test objects. 
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_interaction_demo_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_interaction_demo_scene_ab2d5d73eebf40f6ded7fd6cdc80e22e6}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!InteractionDemoScene@{InteractionDemoScene}}
+\index{InteractionDemoScene@{InteractionDemoScene}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{InteractionDemoScene()}{InteractionDemoScene()}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_ab2d5d73eebf40f6ded7fd6cdc80e22e6} 
+Game::\+\+Interaction\+Demo\+Scene::\+\+Interaction\+Demo\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_interaction_demo_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_interaction_demo_scene_abfd6c4a337a9db194f9c11165626c321}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_abfd6c4a337a9db194f9c11165626c321} 
+void Game::\+\+Interaction\+Demo\+Scene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when scene starts loading 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{Engine::\+\+Scene}}.
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a634ba36c4d8470cd2fe278b2637b9a8a}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a634ba36c4d8470cd2fe278b2637b9a8a} 
+void Game::\+\+Interaction\+Demo\+Scene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame while scene is active 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{Engine::\+\+Scene}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_interaction_demo_scene_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_interaction_demo_scene_acf89c32003ca342690ca38038d50c7b3}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!ceilingSprite@{ceilingSprite}}
+\index{ceilingSprite@{ceilingSprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{ceilingSprite}{ceilingSprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_acf89c32003ca342690ca38038d50c7b3} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+ceiling\+Sprite}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!chestLooted@{chestLooted}}
+\index{chestLooted@{chestLooted}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{chestLooted}{chestLooted}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a858f49d64c9d11b1729c16caae1d9529} 
+bool Game::\+\+Interaction\+Demo\+Scene::\+chest\+Looted = false}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!chestSprite@{chestSprite}}
+\index{chestSprite@{chestSprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{chestSprite}{chestSprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a5d601c526799cc427529b2fc1e94f14d} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+chest\+Sprite}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!doorOpen@{doorOpen}}
+\index{doorOpen@{doorOpen}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{doorOpen}{doorOpen}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_abf4d4e4349eb242acef6aa1e69aab0c5} 
+bool Game::\+\+Interaction\+Demo\+Scene::\+door\+Open = false}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!doorSprite@{doorSprite}}
+\index{doorSprite@{doorSprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{doorSprite}{doorSprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_aa674802192bc72d0883d2333760922a9} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+door\+Sprite}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_acc598a4cbc93cc513148313a86b3d003}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!floorSprite@{floorSprite}}
+\index{floorSprite@{floorSprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{floorSprite}{floorSprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_acc598a4cbc93cc513148313a86b3d003} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+floor\+Sprite}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!hasKey@{hasKey}}
+\index{hasKey@{hasKey}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{hasKey}{hasKey}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a8fa4c011e18586bf4eb5f4b9e325617b} 
+bool Game::\+\+Interaction\+Demo\+Scene::\+has\+Key = false}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!keySprite@{keySprite}}
+\index{keySprite@{keySprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{keySprite}{keySprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_af4c55b6d032fd3c96b81b6678a387a8b} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+key\+Sprite}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_ada9b60021b8fdf894fe3ba7f1170b100}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!playerController@{playerController}}
+\index{playerController@{playerController}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{playerController}{playerController}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_ada9b60021b8fdf894fe3ba7f1170b100} 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}\texorpdfstring{$\ast$}{*} Game::\+\+Interaction\+Demo\+Scene::\+player\+Controller = nullptr}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!playerTf@{playerTf}}
+\index{playerTf@{playerTf}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{playerTf}{playerTf}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a633278425fecf0289884762f0e98c058} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}\texorpdfstring{$\ast$}{*} Game::\+\+Interaction\+Demo\+Scene::\+player\+Tf = nullptr}
+
+\Hypertarget{class_game_1_1_interaction_demo_scene_a7eb97fe466801d0d26a6688f8398d635}\index{Game::InteractionDemoScene@{Game::InteractionDemoScene}!wallSprite@{wallSprite}}
+\index{wallSprite@{wallSprite}!Game::InteractionDemoScene@{Game::InteractionDemoScene}}
+\doxysubsubsection{\texorpdfstring{wallSprite}{wallSprite}}
+{\footnotesize\ttfamily \label{class_game_1_1_interaction_demo_scene_a7eb97fe466801d0d26a6688f8398d635} 
+std::\+shared\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}$>$ Game::\+\+Interaction\+Demo\+Scene::\+wall\+Sprite}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Scenes/\+\+Interaction\+Demo\+Scene/\+\doxymbox{\hyperlink{_interaction_demo_scene_8hpp}{Interaction\+Demo\+Scene.\+hpp}}\end{DoxyCompactItemize}

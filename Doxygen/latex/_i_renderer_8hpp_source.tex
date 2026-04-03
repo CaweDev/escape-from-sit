@@ -1,0 +1,37 @@
+\doxysection{IRenderer.\+hpp}
+\hypertarget{_i_renderer_8hpp_source}{}\label{_i_renderer_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/IRenderer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/IRenderer.hpp}}
+\doxymbox{\hyperlink{_i_renderer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{../Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{../Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Color.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00019\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\string~IRenderer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Render}}()\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{GetSortingKey}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{SetIgnoreFog}}(\textcolor{keywordtype}{bool}\ value)\ \{\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignoreFog}}\ =\ value;\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{GetIgnoreFog}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignoreFog}};\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlightColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.2f,\ 0.2f,\ 0.0f,\ 0.0f);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignoreFog}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

@@ -1,0 +1,174 @@
+\doxysection{Engine::\+Renderer\+Settings Class Reference}
+\hypertarget{class_engine_1_1_renderer_settings}{}\label{class_engine_1_1_renderer_settings}\index{Engine::RendererSettings@{Engine::RendererSettings}}
+
+
+Static holder for shared rendering configuration values.  
+
+
+
+
+{\ttfamily \+\#include $<$Renderer\+Settings.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a9802561989a95f37fb14bccbc1339818}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+rendering.\+json"{})
+\begin{DoxyCompactList}\small\item\em Load rendering configuration from a JSON file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a77ac7ebbccabaa20776f960b7249997e}{perp\+Wall\+Dist\+Clamp}} = 0.\+1f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_af73003bc137219ea80f3835f362a1d24}{fog\+Lut\+Dist\+Scale}} = 100.\+0f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a601a89c3ffff6a932335f09f79628cbd}{fog\+Rebuild\+Threshold}} = 0.\+001f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_aa0cec422fa24d36a9a30b6542646808a}{door\+Ray\+Dir\+Threshold}} = 0.\+0001f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_af9f818f57569aa170d1a445b75325aa1}{door\+ZBuffer\+Bias}} = 0.\+01f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a0f8bf69e7f6b3b40deea814ad7afd8cf}{projection\+Near\+Clamp}} = 0.\+1f
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_aec4c406dbf02e60691b05ab3dc977b0c}{raycast\+Column\+Step}} = 10
+\item 
+static int \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a1a825519623165e3e0abf785d02e2709}{max\+Triangles\+Per\+Mesh}} = 8000
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a59b8fd2fd6a76ae7251aeac46876bd6c}{tilemap\+Fb\+Scale}} = 0.\+2f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a007c189f87de01c74190dcd5bf5ff515}{visibility\+Cull\+Threshold}} = 0.\+01f
+\item 
+static float \doxymbox{\hyperlink{class_engine_1_1_renderer_settings_a82df2be8a97d6da2e240a6d6c4ab2254}{wall\+Overlap\+Padding}} = 10.\+0f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static holder for shared rendering configuration values. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_renderer_settings_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_renderer_settings_a9802561989a95f37fb14bccbc1339818}\index{Engine::RendererSettings@{Engine::RendererSettings}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a9802561989a95f37fb14bccbc1339818} 
+void Engine::\+\+Renderer\+Settings::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+\doxymbox{\hyperlink{namespace_engine}{Engine}}/\+rendering.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load rendering configuration from a JSON file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config\+Path} & Path to rendering.\+json. Defaults to the engine config location. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_renderer_settings_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_renderer_settings_aa0cec422fa24d36a9a30b6542646808a}\index{Engine::RendererSettings@{Engine::RendererSettings}!doorRayDirThreshold@{doorRayDirThreshold}}
+\index{doorRayDirThreshold@{doorRayDirThreshold}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{doorRayDirThreshold}{doorRayDirThreshold}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_aa0cec422fa24d36a9a30b6542646808a} 
+float Engine::\+\+Renderer\+Settings::\+door\+Ray\+Dir\+Threshold = 0.\+0001f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}{Rendering\+Config::\+door\+Ray\+Dir\+Threshold} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_af9f818f57569aa170d1a445b75325aa1}\index{Engine::RendererSettings@{Engine::RendererSettings}!doorZBufferBias@{doorZBufferBias}}
+\index{doorZBufferBias@{doorZBufferBias}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{doorZBufferBias}{doorZBufferBias}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_af9f818f57569aa170d1a445b75325aa1} 
+float Engine::\+\+Renderer\+Settings::\+door\+ZBuffer\+Bias = 0.\+01f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}{Rendering\+Config::\+door\+ZBuffer\+Bias} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_af73003bc137219ea80f3835f362a1d24}\index{Engine::RendererSettings@{Engine::RendererSettings}!fogLutDistScale@{fogLutDistScale}}
+\index{fogLutDistScale@{fogLutDistScale}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{fogLutDistScale}{fogLutDistScale}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_af73003bc137219ea80f3835f362a1d24} 
+float Engine::\+\+Renderer\+Settings::\+fog\+Lut\+Dist\+Scale = 100.\+0f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}{Rendering\+Config::\+fog\+Lut\+Dist\+Scale} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a601a89c3ffff6a932335f09f79628cbd}\index{Engine::RendererSettings@{Engine::RendererSettings}!fogRebuildThreshold@{fogRebuildThreshold}}
+\index{fogRebuildThreshold@{fogRebuildThreshold}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{fogRebuildThreshold}{fogRebuildThreshold}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a601a89c3ffff6a932335f09f79628cbd} 
+float Engine::\+\+Renderer\+Settings::\+fog\+Rebuild\+Threshold = 0.\+001f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}{Rendering\+Config::\+fog\+Rebuild\+Threshold} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a1a825519623165e3e0abf785d02e2709}\index{Engine::RendererSettings@{Engine::RendererSettings}!maxTrianglesPerMesh@{maxTrianglesPerMesh}}
+\index{maxTrianglesPerMesh@{maxTrianglesPerMesh}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{maxTrianglesPerMesh}{maxTrianglesPerMesh}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a1a825519623165e3e0abf785d02e2709} 
+int Engine::\+\+Renderer\+Settings::\+max\+Triangles\+Per\+Mesh = 8000\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}{Rendering\+Config::\+max\+Triangles\+Per\+Mesh} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a77ac7ebbccabaa20776f960b7249997e}\index{Engine::RendererSettings@{Engine::RendererSettings}!perpWallDistClamp@{perpWallDistClamp}}
+\index{perpWallDistClamp@{perpWallDistClamp}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{perpWallDistClamp}{perpWallDistClamp}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a77ac7ebbccabaa20776f960b7249997e} 
+float Engine::\+\+Renderer\+Settings::\+perp\+Wall\+Dist\+Clamp = 0.\+1f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}{Rendering\+Config::\+perp\+Wall\+Dist\+Clamp} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a0f8bf69e7f6b3b40deea814ad7afd8cf}\index{Engine::RendererSettings@{Engine::RendererSettings}!projectionNearClamp@{projectionNearClamp}}
+\index{projectionNearClamp@{projectionNearClamp}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{projectionNearClamp}{projectionNearClamp}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a0f8bf69e7f6b3b40deea814ad7afd8cf} 
+float Engine::\+\+Renderer\+Settings::\+projection\+Near\+Clamp = 0.\+1f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}{Rendering\+Config::\+projection\+Near\+Clamp} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_aec4c406dbf02e60691b05ab3dc977b0c}\index{Engine::RendererSettings@{Engine::RendererSettings}!raycastColumnStep@{raycastColumnStep}}
+\index{raycastColumnStep@{raycastColumnStep}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{raycastColumnStep}{raycastColumnStep}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_aec4c406dbf02e60691b05ab3dc977b0c} 
+int Engine::\+\+Renderer\+Settings::\+raycast\+Column\+Step = 10\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}{Rendering\+Config::\+raycast\+Column\+Step} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a59b8fd2fd6a76ae7251aeac46876bd6c}\index{Engine::RendererSettings@{Engine::RendererSettings}!tilemapFbScale@{tilemapFbScale}}
+\index{tilemapFbScale@{tilemapFbScale}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{tilemapFbScale}{tilemapFbScale}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a59b8fd2fd6a76ae7251aeac46876bd6c} 
+float Engine::\+\+Renderer\+Settings::\+tilemap\+Fb\+Scale = 0.\+2f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}{Rendering\+Config::\+tilemap\+Fb\+Scale} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a007c189f87de01c74190dcd5bf5ff515}\index{Engine::RendererSettings@{Engine::RendererSettings}!visibilityCullThreshold@{visibilityCullThreshold}}
+\index{visibilityCullThreshold@{visibilityCullThreshold}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{visibilityCullThreshold}{visibilityCullThreshold}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a007c189f87de01c74190dcd5bf5ff515} 
+float Engine::\+\+Renderer\+Settings::\+visibility\+Cull\+Threshold = 0.\+01f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}{Rendering\+Config::\+visibility\+Cull\+Threshold} 
+\end{DoxySeeAlso}
+\Hypertarget{class_engine_1_1_renderer_settings_a82df2be8a97d6da2e240a6d6c4ab2254}\index{Engine::RendererSettings@{Engine::RendererSettings}!wallOverlapPadding@{wallOverlapPadding}}
+\index{wallOverlapPadding@{wallOverlapPadding}!Engine::RendererSettings@{Engine::RendererSettings}}
+\doxysubsubsection{\texorpdfstring{wallOverlapPadding}{wallOverlapPadding}}
+{\footnotesize\ttfamily \label{class_engine_1_1_renderer_settings_a82df2be8a97d6da2e240a6d6c4ab2254} 
+float Engine::\+\+Renderer\+Settings::\+wall\+Overlap\+Padding = 10.\+0f\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}{Rendering\+Config::\+wall\+Overlap\+Padding} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_renderer_settings_8hpp}{Renderer\+Settings.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_renderer_settings_8cpp}{Renderer\+Settings.\+cpp}}\end{DoxyCompactItemize}

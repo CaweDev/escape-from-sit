@@ -188,18 +188,13 @@ namespace UI
             return;
         m_doors.push_back(door);
     }
-    /*!
-     * \brief [AUTO] ClearCCTVs
-     */
+    
     void Minimap::ClearCCTVs()
     {
         m_cctvTransforms.clear();
         m_cctvCones.clear();
     }
-    /*!
-     * \brief [AUTO] SetCCTVSprites
-     * \param sprite [in]
-     */
+    
     void Minimap::SetCCTVSprites(Engine::Sprite *sprite) { m_cctvSprite = sprite; }
 
     void Minimap::AddTerminalIcon(const Engine::Vector2 &worldPos, Engine::Sprite *sprite)

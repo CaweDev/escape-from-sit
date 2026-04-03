@@ -1,0 +1,188 @@
+\doxysection{Engine::\+Rendering\+Config Struct Reference}
+\hypertarget{struct_engine_1_1_rendering_config}{}\label{struct_engine_1_1_rendering_config}\index{Engine::RenderingConfig@{Engine::RenderingConfig}}
+
+
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises rendering.\+json.  
+
+
+
+
+{\ttfamily \+\#include $<$Renderer\+Settings.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a9fe2bc30abfc67f24d82319431c8b07a}{From\+Json}} (const Json::\+\+Value \&j) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}{perp\+Wall\+Dist\+Clamp}} = 0.\+1f
+\begin{DoxyCompactList}\small\item\em Minimum perpendicular wall distance to prevent divide-\/by-\/zero. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}{fog\+Lut\+Dist\+Scale}} = 100.\+0f
+\begin{DoxyCompactList}\small\item\em LUT entries per world unit (precision = 1/\+fog\+Lut\+Dist\+Scale). \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}{fog\+Rebuild\+Threshold}} = 0.\+001f
+\begin{DoxyCompactList}\small\item\em Min fog-\/distance change that triggers a LUT rebuild. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}{door\+Ray\+Dir\+Threshold}} = 0.\+0001f
+\begin{DoxyCompactList}\small\item\em Minimum ray-\/direction component to be treated as non-\/parallel. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}{door\+ZBuffer\+Bias}} = 0.\+01f
+\begin{DoxyCompactList}\small\item\em Depth bias added when comparing against the Z-\/buffer. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}{projection\+Near\+Clamp}} = 0.\+1f
+\begin{DoxyCompactList}\small\item\em Minimum 2D distance /\+ perp-\/distance in \doxylink{class_engine_1_1_projection_helper}{Projection\+Helper}. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}{raycast\+Column\+Step}} = 10.\+0f
+\begin{DoxyCompactList}\small\item\em Horizontal ray step in pixels for \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer}. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}{max\+Triangles\+Per\+Mesh}} = 8000.\+0f
+\begin{DoxyCompactList}\small\item\em Triangle flush threshold for \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} batches. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}{tilemap\+Fb\+Scale}} = 0.\+2f
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} floor/\+ceiling framebuffer scale. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}{visibility\+Cull\+Threshold}} = 0.\+01f
+\begin{DoxyCompactList}\small\item\em Visibility threshold used to cull heavily fogged rows/\+columns. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}{wall\+Overlap\+Padding}} = 10.\+0f
+\begin{DoxyCompactList}\small\item\em Pixel overlap to avoid tiny gaps between walls and floor/\+ceiling. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises rendering.\+json. 
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_rendering_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_rendering_config_a9fe2bc30abfc67f24d82319431c8b07a}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a9fe2bc30abfc67f24d82319431c8b07a} 
+void Engine::\+\+Rendering\+Config::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{Engine::\+\+IConfig}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_rendering_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!doorRayDirThreshold@{doorRayDirThreshold}}
+\index{doorRayDirThreshold@{doorRayDirThreshold}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{doorRayDirThreshold}{doorRayDirThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_aebbfd82e56369ecf9b0e5425fa828dc0} 
+float Engine::\+\+Rendering\+Config::\+door\+Ray\+Dir\+Threshold = 0.\+0001f}
+
+
+
+Minimum ray-\/direction component to be treated as non-\/parallel. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!doorZBufferBias@{doorZBufferBias}}
+\index{doorZBufferBias@{doorZBufferBias}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{doorZBufferBias}{doorZBufferBias}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_aaab1c6ee318f42165104aed8a1659483} 
+float Engine::\+\+Rendering\+Config::\+door\+ZBuffer\+Bias = 0.\+01f}
+
+
+
+Depth bias added when comparing against the Z-\/buffer. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!fogLutDistScale@{fogLutDistScale}}
+\index{fogLutDistScale@{fogLutDistScale}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{fogLutDistScale}{fogLutDistScale}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_ae1da7f641cbe940384afb7f9d778e928} 
+float Engine::\+\+Rendering\+Config::\+fog\+Lut\+Dist\+Scale = 100.\+0f}
+
+
+
+LUT entries per world unit (precision = 1/\+fog\+Lut\+Dist\+Scale). 
+
+\Hypertarget{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!fogRebuildThreshold@{fogRebuildThreshold}}
+\index{fogRebuildThreshold@{fogRebuildThreshold}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{fogRebuildThreshold}{fogRebuildThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a8c2032bda95cd0f697ba7ec7cf761095} 
+float Engine::\+\+Rendering\+Config::\+fog\+Rebuild\+Threshold = 0.\+001f}
+
+
+
+Min fog-\/distance change that triggers a LUT rebuild. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!maxTrianglesPerMesh@{maxTrianglesPerMesh}}
+\index{maxTrianglesPerMesh@{maxTrianglesPerMesh}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{maxTrianglesPerMesh}{maxTrianglesPerMesh}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_afeba39dca61f0ff83b2516e70e8e81b5} 
+float Engine::\+\+Rendering\+Config::\+max\+Triangles\+Per\+Mesh = 8000.\+0f}
+
+
+
+Triangle flush threshold for \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} batches. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!perpWallDistClamp@{perpWallDistClamp}}
+\index{perpWallDistClamp@{perpWallDistClamp}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{perpWallDistClamp}{perpWallDistClamp}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a007847c29d7ad6c18c148c126e662b91} 
+float Engine::\+\+Rendering\+Config::\+perp\+Wall\+Dist\+Clamp = 0.\+1f}
+
+
+
+Minimum perpendicular wall distance to prevent divide-\/by-\/zero. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!projectionNearClamp@{projectionNearClamp}}
+\index{projectionNearClamp@{projectionNearClamp}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{projectionNearClamp}{projectionNearClamp}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a4b65b6a19af0d793ed069bb11cf75e46} 
+float Engine::\+\+Rendering\+Config::\+projection\+Near\+Clamp = 0.\+1f}
+
+
+
+Minimum 2D distance /\+ perp-\/distance in \doxylink{class_engine_1_1_projection_helper}{Projection\+Helper}. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!raycastColumnStep@{raycastColumnStep}}
+\index{raycastColumnStep@{raycastColumnStep}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{raycastColumnStep}{raycastColumnStep}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_af8c5969c5836a6dbbe53f471f54a6839} 
+float Engine::\+\+Rendering\+Config::\+raycast\+Column\+Step = 10.\+0f}
+
+
+
+Horizontal ray step in pixels for \doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer}. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!tilemapFbScale@{tilemapFbScale}}
+\index{tilemapFbScale@{tilemapFbScale}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{tilemapFbScale}{tilemapFbScale}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a29292087b869b4a9415ab9c3653dffa1} 
+float Engine::\+\+Rendering\+Config::\+tilemap\+Fb\+Scale = 0.\+2f}
+
+
+
+\doxylink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer} floor/\+ceiling framebuffer scale. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!visibilityCullThreshold@{visibilityCullThreshold}}
+\index{visibilityCullThreshold@{visibilityCullThreshold}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{visibilityCullThreshold}{visibilityCullThreshold}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_aa682f0f90c04ba71ff56ba1f11fdc084} 
+float Engine::\+\+Rendering\+Config::\+visibility\+Cull\+Threshold = 0.\+01f}
+
+
+
+Visibility threshold used to cull heavily fogged rows/\+columns. 
+
+\Hypertarget{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad}\index{Engine::RenderingConfig@{Engine::RenderingConfig}!wallOverlapPadding@{wallOverlapPadding}}
+\index{wallOverlapPadding@{wallOverlapPadding}!Engine::RenderingConfig@{Engine::RenderingConfig}}
+\doxysubsubsection{\texorpdfstring{wallOverlapPadding}{wallOverlapPadding}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_rendering_config_a907b1ace73af994f1eba23abfa7ba6ad} 
+float Engine::\+\+Rendering\+Config::\+wall\+Overlap\+Padding = 10.\+0f}
+
+
+
+Pixel overlap to avoid tiny gaps between walls and floor/\+ceiling. 
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_renderer_settings_8hpp}{Renderer\+Settings.\+hpp}}\end{DoxyCompactItemize}

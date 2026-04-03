@@ -1,0 +1,53 @@
+\doxysection{Sprite.\+hpp}
+\hypertarget{_sprite_8hpp_source}{}\label{_sprite_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/Sprite.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/Sprite.hpp}}
+\doxymbox{\hyperlink{_sprite_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture2_d_8hpp}{Texture2D.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}();}
+\DoxyCodeLine{00020\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_acc9ee12451d3b270b616b3576f1329a0}{\string~Sprite}}();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ Prevent\ copying\ (owns\ resources)}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Allow\ copying\ (creates\ new\ mesh,\ shares\ texture)}}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\ other);}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a3ca5db5991caccf13a4874c9cdd861f4}{operator=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\ other);}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{comment}{//\ Allow\ moving}}
+\DoxyCodeLine{00028\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00029\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a3ca5db5991caccf13a4874c9cdd861f4}{operator=}}(\doxymbox{\hyperlink{class_engine_1_1_sprite_a746b3982c0973eaf3d607a039c45a209}{Sprite}}\&\&\ other)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a5f473f0e9cde3da7198ca52d74d11d41}{Load}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a323d99f2c19dd60a93b7f2a8f633841e}{Unload}}();}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a207752c2a35f8ddb4ea11fb642a6ac6d}{IsLoaded}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ AEGfxTexture*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a525df809c7d19d447dd107a8601151d4}{GetTexture}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_aef8c400e86424be56901a6c011546642}{GetTexture2D}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ texture;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ AEGfxVertexList*\ \doxymbox{\hyperlink{class_engine_1_1_sprite_a58734196c7fea3077a895e265271d53f}{GetMesh}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ texture\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00051\ \ \ \ \ AEGfxVertexList*\ mesh\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ CreateQuadMesh();}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sprite_af3ef1f386a8e220b596f42e3f5308b03}{IsReady}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

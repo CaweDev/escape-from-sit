@@ -1,0 +1,53 @@
+\doxysection{Image.\+hpp}
+\hypertarget{_image_8hpp_source}{}\label{_image_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Components/Image.hpp@{AlphaEngine2.5D/Source/Engine/UI/Components/Image.hpp}}
+\doxymbox{\hyperlink{_image_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_nine_slice_renderer_8hpp}{Engine/UI/Helpers/NineSliceRenderer.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_texture2_d_8hpp}{Engine/Graphics/Texture2D.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{ImageType}}}
+\DoxyCodeLine{00019\ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319a1fbb1e3943c2c6c560247ac8f9289780}{Simple}},\ \ \ \ \ \textcolor{comment}{//\ Stretch\ to\ fill\ rect}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319afa6a7b9fa989f179f6bbf2796bf4337c}{Sliced}},\ \ \ \ \ \textcolor{comment}{//\ 9-\/slice\ scaling\ (future\ enhancement)}}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_image_a64fa6b9e96f90ab351bfb181c55600a3}{Image}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ m\_texture\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \textcolor{comment}{//\ Texture\ to\ render\ (not\ owned)}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ m\_color;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ tint/solid\ color}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{ImageType}}\ m\_imageType\ =\ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319a1fbb1e3943c2c6c560247ac8f9289780}{ImageType::Simple}};}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ f32\ m\_fillAmount\ =\ 1.0f;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ progress\ bars\ (0-\/1)}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ f32\ m\_pixelsPerUnitMultiplier\ =\ 1.0f;\ \textcolor{comment}{//\ Multiplier\ for\ 9-\/slice\ borders}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image_a64fa6b9e96f90ab351bfb181c55600a3}{Image}}();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a09adb95498bc9cb0d385ef8646b83c0e}{\string~Image}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a0edcd3381db499cf1836e26d9d22da73}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a8615cabf2e3ec99a660c55f0fda4aec6}{SetTexture}}(\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ texture)\ \{\ m\_texture\ =\ texture;\ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::Texture2D}}*\ \doxymbox{\hyperlink{class_u_i_1_1_image_add339b1f4d2e3d60359b628942e7dfb1}{GetTexture}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_texture;\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_af2b6d570189e4323e58a9668c0145e28}{SetColor}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ color)\ \{\ m\_color\ =\ color;\ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_image_a2ece98cf4acd6e9432d003ac516ddb2c}{GetColor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_color;\ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a3526b50e9d68a27ba645ce862714eee1}{SetImageType}}(\doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{ImageType}}\ type)\ \{\ m\_imageType\ =\ type;\ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a013f4ee0281816cbb835924482e37319}{ImageType}}\ \doxymbox{\hyperlink{class_u_i_1_1_image_ab52684e0884de8aceb864d77246aa793}{GetImageType}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_imageType;\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a017a6f2f58771d5010a7b5afa37be99c}{SetFillAmount}}(f32\ amount)\ \{\ m\_fillAmount\ =\ amount;\ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_image_a5aef04cd34aa85b025a3a8760ab01aec}{GetFillAmount}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_fillAmount;\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_image_a4c593afe050a9f3ec3f2e4ae534fff67}{SetPixelsPerUnitMultiplier}}(f32\ multiplier)\ \{\ m\_pixelsPerUnitMultiplier\ =\ multiplier;\ \}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_image_af3280e476264fdfff19bffe7905f5d3a}{GetPixelsPerUnitMultiplier}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_pixelsPerUnitMultiplier;\ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

@@ -1,0 +1,232 @@
+\doxysection{Engine::\+Scene Class Reference}
+\hypertarget{class_engine_1_1_scene}{}\label{class_engine_1_1_scene}\index{Engine::Scene@{Engine::Scene}}
+
+
+Container for Game\+Objects with lifecycle methods.  
+
+
+
+
+{\ttfamily \+\#include $<$Scene.\+hpp$>$}
+
+
+
+Inherited by \doxymbox{\hyperlink{class_game_1_1_credit_scene}{Game::\+\+Credit\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_editor_scene}{Game::\+\+Editor\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{Game::\+\+FPSScene}}, \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene}{Game::\+\+Interaction\+Demo\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_loading_scene}{Game::\+\+Loading\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_main_menu_scene}{Game::\+\+Main\+Menu\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_scene}{Game::\+\+Puzzle\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_splash_scene}{Game::\+\+Splash\+Scene}}, and \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene}{Game::\+\+UITest\+Scene}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Untitled"{})
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}{\texorpdfstring{$\sim$}{\string~}\+Scene}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}{On\+Load}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}{On\+Unload}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}{On\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}{On\+Pre\+Render}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}{On\+After\+Render}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}{Create\+Game\+Object}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}="{}Game\+Object"{})
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}{Find}} (const std::\+string \&\doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}) const
+\item 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& \doxymbox{\hyperlink{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}{Get\+Game\+Objects}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}{Load\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}{Unload\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}{Update\+Internal}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}{Render\+Internal}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}{Is\+Loaded}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}{name}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}{build\+Index}} = -\/1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}{game\+Objects}}
+\item 
+std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \doxymbox{\hyperlink{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}{pending\+Game\+Objects}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}{is\+Loaded}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}{is\+Updating}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container for Game\+Objects with lifecycle methods. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_scene_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}\index{Engine::Scene@{Engine::Scene}!Scene@{Scene}}
+\index{Scene@{Scene}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{Scene()}{Scene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781} 
+Engine::\+\+Scene::\+\+Scene (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{ = {\ttfamily "{}Untitled"{}}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8}\index{Engine::Scene@{Engine::Scene}!````~Scene@{\texorpdfstring{$\sim$}{\string~}Scene}}
+\index{````~Scene@{\texorpdfstring{$\sim$}{\string~}Scene}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Scene()}{\string~Scene()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a876a153365c543baf4233f06ab0e08f8} 
+Engine::\+\+Scene::\+\texorpdfstring{$\sim$}{\string~}\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_scene_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6}\index{Engine::Scene@{Engine::Scene}!CreateGameObject@{CreateGameObject}}
+\index{CreateGameObject@{CreateGameObject}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{CreateGameObject()}{CreateGameObject()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a00aa39d4d488ad3193952c011b7d21b6} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} Engine::\+\+Scene::\+\+Create\+Game\+Object (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{ = {\ttfamily "{}GameObject"{}}}\end{DoxyParamCaption})}
+
+Create a new \doxylink{class_engine_1_1_game_object}{Game\+Object} in this scene \Hypertarget{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b}\index{Engine::Scene@{Engine::Scene}!Find@{Find}}
+\index{Find@{Find}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{Find()}{Find()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_af45b0d6087cce3395f32cd96c79f1c7b} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} \texorpdfstring{$\ast$}{*} Engine::\+\+Scene::\+\+Find (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{name}{}\end{DoxyParamCaption}) const}
+
+Find \doxylink{class_engine_1_1_game_object}{Game\+Object} by name in this scene \Hypertarget{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab}\index{Engine::Scene@{Engine::Scene}!GetGameObjects@{GetGameObjects}}
+\index{GetGameObjects@{GetGameObjects}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{GetGameObjects()}{GetGameObjects()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a562e273fa8ff4c3ac8bb19ac2b3b21ab} 
+const std::\+vector$<$ std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}} $>$ $>$ \& Engine::\+\+Scene::\+\+Get\+Game\+Objects (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get all Game\+Objects in this scene \Hypertarget{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a}\index{Engine::Scene@{Engine::Scene}!IsLoaded@{IsLoaded}}
+\index{IsLoaded@{IsLoaded}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{IsLoaded()}{IsLoaded()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a36aeedbec6a90499d7cdb27cb2cea60a} 
+bool Engine::\+\+Scene::\+\+Is\+Loaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a}\index{Engine::Scene@{Engine::Scene}!LoadInternal@{LoadInternal}}
+\index{LoadInternal@{LoadInternal}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{LoadInternal()}{LoadInternal()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_ad12145c669959e16715a04854dddd31a} 
+void Engine::\+\+Scene::\+\+Load\+Internal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88}\index{Engine::Scene@{Engine::Scene}!OnAfterRender@{OnAfterRender}}
+\index{OnAfterRender@{OnAfterRender}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{OnAfterRender()}{OnAfterRender()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a7d6fa2c7293c0d38475901a217eaba88} 
+virtual void Engine::\+\+Scene::\+\+On\+After\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every frame after scene renders gameobjects 
+
+Reimplemented in \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a36733f42ad5917ea990b5052f70bd022}{Game::\+\+FPSScene}}.
+
+\Hypertarget{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02}\index{Engine::Scene@{Engine::Scene}!OnLoad@{OnLoad}}
+\index{OnLoad@{OnLoad}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{OnLoad()}{OnLoad()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a04da2df86dba2166fda36851f5ff8c02} 
+virtual void Engine::\+\+Scene::\+\+On\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when scene starts loading 
+
+Reimplemented in \doxymbox{\hyperlink{class_game_1_1_credit_scene_a1565ec487b88d42cfc886055649743f9}{Game::\+\+Credit\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_editor_scene_aae23a178ac1bff3768960b67b0cebf5c}{Game::\+\+Editor\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_aaba794f32f554a6064034f5e7bf3423f}{Game::\+\+FPSScene}}, \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_abfd6c4a337a9db194f9c11165626c321}{Game::\+\+Interaction\+Demo\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_loading_scene_a62f045e8c32cb739c16a9c0c975dc29b}{Game::\+\+Loading\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_main_menu_scene_a756b3416c1f26e733cf3cb099046a760}{Game::\+\+Main\+Menu\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a778535684623578afce32f93510f2484}{Game::\+\+Puzzle\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_splash_scene_acbe361241b1705f74b45b86c9f5f854b}{Game::\+\+Splash\+Scene}}, and \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene_aa34ba618e6c806f8673ace88002f5cab}{Game::\+\+UITest\+Scene}}.
+
+\Hypertarget{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc}\index{Engine::Scene@{Engine::Scene}!OnPreRender@{OnPreRender}}
+\index{OnPreRender@{OnPreRender}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{OnPreRender()}{OnPreRender()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a8b77ae4a43f9ef703c6f6cc16e69c1bc} 
+virtual void Engine::\+\+Scene::\+\+On\+Pre\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every frame before scene is about to render \Hypertarget{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9}\index{Engine::Scene@{Engine::Scene}!OnUnload@{OnUnload}}
+\index{OnUnload@{OnUnload}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{OnUnload()}{OnUnload()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a0443fbd735a0b1e97c13a8e7e7eee7d9} 
+virtual void Engine::\+\+Scene::\+\+On\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when scene is about to unload 
+
+Reimplemented in \doxymbox{\hyperlink{class_game_1_1_credit_scene_ac489dcbd3e3b5a886ed3f0e05575f2dd}{Game::\+\+Credit\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_editor_scene_a164586b9323d668a69e131c2260f6a4f}{Game::\+\+Editor\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a2cc4926886de2f4cab4979652e129654}{Game::\+\+FPSScene}}, \doxymbox{\hyperlink{class_game_1_1_loading_scene_a89d7fe57ef720ab46aa2bad57a836d63}{Game::\+\+Loading\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_main_menu_scene_afcfc09ecab1d68dc7d4bd47641d7acac}{Game::\+\+Main\+Menu\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_splash_scene_ae786d8ef811bae1f1a13611d2350e96f}{Game::\+\+Splash\+Scene}}, and \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene_acacadbf3df350f9222bdc02a704b9416}{Game::\+\+UITest\+Scene}}.
+
+\Hypertarget{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c}\index{Engine::Scene@{Engine::Scene}!OnUpdate@{OnUpdate}}
+\index{OnUpdate@{OnUpdate}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{OnUpdate()}{OnUpdate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_af42a01d7647e1ef1d934011888eaa79c} 
+virtual void Engine::\+\+Scene::\+\+On\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every frame while scene is active 
+
+Reimplemented in \doxymbox{\hyperlink{class_game_1_1_credit_scene_ad2839495def1a13ee65172c509b09666}{Game::\+\+Credit\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_editor_scene_ade93877881c16a1e19d84865e91f911b}{Game::\+\+Editor\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene_a298fedbe024858ab5f39efd8460af9ad}{Game::\+\+FPSScene}}, \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene_a634ba36c4d8470cd2fe278b2637b9a8a}{Game::\+\+Interaction\+Demo\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_loading_scene_ac1b3a4a939739071a63883800f07e2f3}{Game::\+\+Loading\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_main_menu_scene_a8664ad975cf3f63ef8012f6c41c1b727}{Game::\+\+Main\+Menu\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_scene_a0bf60f9ffdf53ca3a80461480e39d284}{Game::\+\+Puzzle\+Scene}}, \doxymbox{\hyperlink{class_game_1_1_splash_scene_a2baca3bad05bfcd9f82e8582804a0765}{Game::\+\+Splash\+Scene}}, and \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene_acbade0b2c475168fe8c415095eee7489}{Game::\+\+UITest\+Scene}}.
+
+\Hypertarget{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245}\index{Engine::Scene@{Engine::Scene}!RenderInternal@{RenderInternal}}
+\index{RenderInternal@{RenderInternal}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{RenderInternal()}{RenderInternal()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_ae15d29132cad960f14ce7ce0451ba245} 
+void Engine::\+\+Scene::\+\+Render\+Internal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce}\index{Engine::Scene@{Engine::Scene}!UnloadInternal@{UnloadInternal}}
+\index{UnloadInternal@{UnloadInternal}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{UnloadInternal()}{UnloadInternal()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a9b5a84c00555424306495d699fac9bce} 
+void Engine::\+\+Scene::\+\+Unload\+Internal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5}\index{Engine::Scene@{Engine::Scene}!UpdateInternal@{UpdateInternal}}
+\index{UpdateInternal@{UpdateInternal}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{UpdateInternal()}{UpdateInternal()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a557a815ca0cf7cbb25bfc24fa6b749c5} 
+void Engine::\+\+Scene::\+\+Update\+Internal (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_scene_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d}\index{Engine::Scene@{Engine::Scene}!buildIndex@{buildIndex}}
+\index{buildIndex@{buildIndex}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{buildIndex}{buildIndex}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a0a64aa71dd1f4e45bae2dd30c35ccc5d} 
+int Engine::\+\+Scene::\+build\+Index = -\/1}
+
+Build index for scene ordering \Hypertarget{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478}\index{Engine::Scene@{Engine::Scene}!gameObjects@{gameObjects}}
+\index{gameObjects@{gameObjects}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{gameObjects}{gameObjects}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_aeb458b427d14d488a2fa145fe358f478} 
+std::\+vector$<$std::\+unique\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}}$>$ $>$ Engine::\+\+Scene::\+game\+Objects\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0}\index{Engine::Scene@{Engine::Scene}!isLoaded@{isLoaded}}
+\index{isLoaded@{isLoaded}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{isLoaded}{isLoaded}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_ae4fdcd686eaa950bfd930fb8fb2fade0} 
+bool Engine::\+\+Scene::\+is\+Loaded = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36}\index{Engine::Scene@{Engine::Scene}!isUpdating@{isUpdating}}
+\index{isUpdating@{isUpdating}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{isUpdating}{isUpdating}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a68c2fcb3dd729ee2180afe403eacda36} 
+bool Engine::\+\+Scene::\+is\+Updating = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a}\index{Engine::Scene@{Engine::Scene}!name@{name}}
+\index{name@{name}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a8af1d4ed58239717287199e4670e805a} 
+std::\+string Engine::\+\+Scene::\+name}
+
+Name of the scene \Hypertarget{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5}\index{Engine::Scene@{Engine::Scene}!pendingGameObjects@{pendingGameObjects}}
+\index{pendingGameObjects@{pendingGameObjects}!Engine::Scene@{Engine::Scene}}
+\doxysubsubsection{\texorpdfstring{pendingGameObjects}{pendingGameObjects}}
+{\footnotesize\ttfamily \label{class_engine_1_1_scene_a89d3aa47297d54547f517c02cad5d3b5} 
+std::\+vector$<$std::\+unique\+\_\+ptr$<$\doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}}$>$ $>$ Engine::\+\+Scene::\+pending\+Game\+Objects\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Scene/\+\doxymbox{\hyperlink{_scene_8hpp}{Scene.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Scene/\+\doxymbox{\hyperlink{_scene_8cpp}{Scene.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,122 @@
+\doxysection{Rect\+Transform.\+hpp}
+\hypertarget{_rect_transform_8hpp_source}{}\label{_rect_transform_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Core/RectTransform.hpp@{AlphaEngine2.5D/Source/Engine/UI/Core/RectTransform.hpp}}
+\doxymbox{\hyperlink{_rect_transform_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}};\ \textcolor{comment}{//\ Forward\ declaration\ for\ friend\ class\ access}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_u_i_1_1_rect_ac46f18fe89a0bfc2fb38292f30f5cdbc}{Rect}}}
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}};\ \ \ \ \ \ \textcolor{comment}{//\ Left\ edge\ x\ position}}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}};\ \ \ \ \ \ \textcolor{comment}{//\ Bottom\ edge\ y\ position}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}};\ \ \textcolor{comment}{//\ Width\ of\ rectangle}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}};\ \textcolor{comment}{//\ Height\ of\ rectangle}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_rect_ac46f18fe89a0bfc2fb38292f30f5cdbc}{Rect}}()\ :\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}(0),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}(0),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}}(0),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}}(0)\ \{\}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_rect_af4804cd2c333ce01767e4c5902d68e4c}{Rect}}(f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}},\ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}},\ f32\ w,\ f32\ h)\ :\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}(\doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}(\doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}}(w),\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}}(h)\ \{\}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a8bc9e66958d7362e08407ecaac96795b}{GetXMin}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}};\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a8a13765ffe0d7d7f79f91f8db43852be}{GetXMax}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}\ +\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}};\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_adab8684a74797f6e2763bd362a8d85ff}{GetYMin}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}};\ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abc24cf6195521ba884902858aa33ee87}{GetYMax}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ +\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}};\ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a623289c13b1e8c220ff3ea0c0fa7a31a}{GetCenterX}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}\ +\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}}\ *\ 0.5f;\ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a8c94760cbeb09a92772b7eedef9cbb4e}{GetCenterY}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ +\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}}\ *\ 0.5f;\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_ae3dd05446a3a3d1b59a0fd2dae1f1984}{Contains}}(f32\ px,\ f32\ py)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ px\ >=\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}\ \&\&\ px\ <=\ x\ +\ width\ \&\&\ py\ >=\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ \&\&\ py\ <=\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ +\ \doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{class\ }RectTransform}
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Anchor\ points\ relative\ to\ parent\ (0-\/1\ normalized)}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ AEVec2\ anchorMin;\ \ \ \ \ \ \ \textcolor{comment}{//\ Bottom-\/left\ anchor\ point}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ AEVec2\ anchorMax;\ \ \ \ \ \ \ \textcolor{comment}{//\ Top-\/right\ anchor\ point}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pivot\ point\ for\ rotation/scaling\ (0-\/1\ normalized,\ relative\ to\ this\ element)}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ AEVec2\ pivot;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Position\ offset\ from\ anchor\ midpoint\ in\ pixels}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ AEVec2\ anchoredPosition;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Size\ in\ pixels\ (when\ anchors\ are\ same\ point)}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ When\ anchors\ differ,\ this\ is\ the\ size\ delta\ from\ anchor-\/defined\ size}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ AEVec2\ sizeDelta;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ RectTransform()}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ :\ anchorMin\{\ 0.5f,\ 0.5f\ \}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ anchorMax\{\ 0.5f,\ 0.5f\ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ pivot\{\ 0.5f,\ 0.5f\ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ anchoredPosition\{\ 0.0f,\ 0.0f\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ ,\ sizeDelta\{\ 100.0f,\ 100.0f\ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_rect_transform_aaafec48884823c8afa9687388d6288f1}{UIElement}};\ \textcolor{comment}{//\ Allow\ UIElement\ to\ access\ private\ members\ for\ simplicity}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}\ \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_a26ffa1facc7b95653ae4f8b70de7ee8a}{CalculateWorldRect}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}\&\ parentRect)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00083\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ anchor\ positions\ in\ parent\ space}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorLeft\ =\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}\ +\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}}\ *\ anchorMin.x;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorRight\ =\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a5fd34ad97ebd4a119cacad3969300132}{x}}\ +\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a69401b77e3d6cc0d609f78dbe8e382ef}{width}}\ *\ anchorMax.x;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorBottom\ =\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ +\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}}\ *\ anchorMin.y;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorTop\ =\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_abd17b6a8661910aa5c9d609f2e791d78}{y}}\ +\ parentRect.\doxymbox{\hyperlink{struct_u_i_1_1_rect_a219eca4798099afdb6d075466616fb51}{height}}\ *\ anchorMax.y;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ width,\ height,\ x,\ y;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ width/height}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (anchorMin.x\ ==\ anchorMax.x)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ width\ =\ sizeDelta.x;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ width\ =\ (anchorRight\ -\/\ anchorLeft)\ +\ sizeDelta.x;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (anchorMin.y\ ==\ anchorMax.y)}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height\ =\ sizeDelta.y;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ height\ =\ (anchorTop\ -\/\ anchorBottom)\ +\ sizeDelta.y;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ anchoredPosition\ is\ the\ offset\ from\ the\ anchor\ midpoint\ to\ the\ pivot}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorCenterX\ =\ (anchorLeft\ +\ anchorRight)\ *\ 0.5f;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ anchorCenterY\ =\ (anchorBottom\ +\ anchorTop)\ *\ 0.5f;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ anchorCenterX\ +\ anchoredPosition.x\ -\/\ width\ *\ pivot.x;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ y\ =\ anchorCenterY\ +\ anchoredPosition.y\ -\/\ height\ *\ pivot.y;}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}(x,\ y,\ width,\ height);}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_a4a1594ac377b4a8500a6a6f3fa5aae0e}{SetStretchAll}}()}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ anchorMin\ =\ \{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ anchorMax\ =\ \{\ 1.0f,\ 1.0f\ \};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ anchoredPosition\ =\ \{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ sizeDelta\ =\ \{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_rect_transform_aceb88ffa80981a6ed1a004365bf62820}{SetCentered}}(f32\ width,\ f32\ height)}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ anchorMin\ =\ \{\ 0.5f,\ 0.5f\ \};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ anchorMax\ =\ \{\ 0.5f,\ 0.5f\ \};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ pivot\ =\ \{\ 0.5f,\ 0.5f\ \};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ anchoredPosition\ =\ \{\ 0.0f,\ 0.0f\ \};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ sizeDelta\ =\ \{\ width,\ height\ \};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

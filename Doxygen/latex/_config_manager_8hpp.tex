@@ -1,0 +1,44 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Core/\+\+Config\+Manager.hpp File Reference}
+\hypertarget{_config_manager_8hpp}{}\label{_config_manager_8hpp}\index{AlphaEngine2.5D/Source/Engine/Core/ConfigManager.hpp@{AlphaEngine2.5D/Source/Engine/Core/ConfigManager.hpp}}
+
+
+Static configuration management class for loading JSON config files into C++ structs.  
+
+
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$json/\+json.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}
+\begin{DoxyCompactList}\small\item\em Abstract base struct that configuration data types should inherit from. Enforces the implementation of the From\+Json deserialization method. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_config_manager}{Engine::\+\+Config\+Manager}}
+\begin{DoxyCompactList}\small\item\em Static class for centralized configuration loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static configuration management class for loading JSON config files into C++ structs. 
+
+Example usage:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyConfig\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::IConfig}}\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ speed;}
+\DoxyCodeLine{\ \ \ \ std::string\ name;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ speed\ =\ j.get(\textcolor{stringliteral}{"{}speed"{}},\ 0).asInt();}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ name\ =\ j.get(\textcolor{stringliteral}{"{}name"{}},\ \textcolor{stringliteral}{"{}Unknown"{}}).asString();}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Usage:}}
+\DoxyCodeLine{MyConfig\ config;}
+\DoxyCodeLine{\doxymbox{\hyperlink{class_engine_1_1_config_manager_a16bf2dd1ec188cdf9969ea8557b81c9c}{Engine::ConfigManager::ReadConfig}}(\textcolor{stringliteral}{"{}config.json"{}},\ config);}
+
+\end{DoxyCode}
+ 

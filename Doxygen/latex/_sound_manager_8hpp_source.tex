@@ -1,0 +1,125 @@
+\doxysection{Sound\+Manager.\+hpp}
+\hypertarget{_sound_manager_8hpp_source}{}\label{_sound_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Audio/SoundManager.hpp@{AlphaEngine2.5D/Source/Engine/Audio/SoundManager.hpp}}
+\doxymbox{\hyperlink{_sound_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ Start\ Header\ ************************************************************************/}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ End\ Header\ **************************************************************************/}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_audio_source_8hpp}{AudioSource.hpp}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_audio_clip_8hpp}{AudioClip.hpp}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{Engine/Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sound_manager}{SoundManager}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a0b8e2c6ee6db12d82c037feed86210ca}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/audio\_config\_custom.json"{}});}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a7cec7dbd94242fd8fba4341a429f0bfe}{Shutdown}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a94beeb60bdbf124b45cb1a824a073ece}{Update}}(f32\ deltaTime);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aafd52fde9e3e7128098bfd0a9ec8900b}{PlayBGM}}(\textcolor{keyword}{const}\ std::string\&\ key,\ \textcolor{keywordtype}{bool}\ loop\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a02165d8eb342f21a2491031582b1fff7}{StopBGM}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9}{PlaySFX}}(\textcolor{keyword}{const}\ std::string\&\ key,\ f32\ volumeScale\ =\ 1.0f);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aeb5b3f35003c7d99287c713178869e86}{StopAllSFX}}();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enable/disable\ SFX\ (BGM\ continues\ regardless).\ When\ disabled,\ all\ SFX/loops}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ are\ stopped\ and\ further\ SFX/loops\ will\ be\ suppressed\ until\ re-\/enabled.}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a0de9ca93011cebbceb9cdb3ea5c3462b}{SetSFXEnabled}}(\textcolor{keywordtype}{bool}\ enabled);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_ad0ed42cb1b9f8b7e4303bf5b8bab0496}{IsSFXEnabled}}();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a6e003c4103c14a3b56eec930ea79caeb}{SetBGMVolume}}(f32\ volume);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a33fbcf1f2047adaa53416d5bd4ae4075}{SetSFXVolume}}(f32\ volume);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a472c4ae098e373c9e76e87414bde6b68}{UpdateDistanceLoop}}(\textcolor{keyword}{const}\ std::string\&\ key,\ f32\ distance,\ f32\ nearDistance,\ f32\ farDistance,\ f32\ maxVolume\ =\ 1.0f);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a61c7ac62b4b62d53c30dbc1d915f8f59}{UpdateGuardProximityLoop}}(f32\ nearestDistance);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aa1ef4154bdf1e1702af3f579f74d76df}{UpdateCCTVHumLoop}}(f32\ nearestDistance);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a00e69a4404d7085b5b51514a1d005ac3}{UpdateTerminalBuzzLoop}}(f32\ nearestDistance);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stop\ a\ distance-\/based\ loop\ by\ key\ (forces\ channel\ stop\ and\ cleanup)}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a19e6efb05c2a51a801d478393e690fb8}{StopDistanceLoop}}(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generic\ loop\ control:\ start\ /\ stop\ a\ looping\ SFX\ by\ key}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a430a95997305a920de9d521279927f7f}{PlayLoop}}(\textcolor{keyword}{const}\ std::string\&\ key,\ f32\ volume\ =\ 1.0f);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443}{StopLoop}}(\textcolor{keyword}{const}\ std::string\&\ key);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config_afb35d375cae654171cdf5d4a38186b79}{nearDistance}}\ =\ 2.5f;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config_aa4c7d934d613958c761bfedaf0c6440b}{farDistance}}\ =\ 10.0f;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config_ab60ac6be7a29c630fadd3195f75a3990}{maxVolume}}\ =\ 0.8f;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_add79c1d521ee783ff5337af5bc4bd311}{GetGuardLoopConfig}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a5819aa9057f158de7288eb54a04365b8}{GetCCTVLoopConfig}}();}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\&\ \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a1098c85af864c3b3a8bd238f4d78b20f}{GetTerminalLoopConfig}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ BGMFadeState\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ None,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ FadingOut,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ FadingIn}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }DistanceLoopChannel\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_audio_source}{AudioSource}}*\ source\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ playing\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }AudioConfig\ :\ \textcolor{keyword}{public}\ IConfig\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ std::string>\ bgm;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ std::unordered\_map<std::string,\ std::string>\ sfx;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ bgmVolume\ =\ 0.7f;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ sfxVolume\ =\ 1.0f;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ f32\ bgmFadeDuration\ =\ 0.8f;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ DistanceLoopConfig\ guardLoop;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ DistanceLoopConfig\ cctvLoop;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ DistanceLoopConfig\ terminalLoop;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FromJson(\textcolor{keyword}{const}\ Json::Value\&\ json)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ EnsureInitialized();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AudioClip*\ LoadMusicClip(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AudioClip*\ LoadSoundClip(\textcolor{keyword}{const}\ std::string\&\ path);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_initialized;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AudioSource*\ s\_bgmSource;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ AudioSource*\ s\_sfxSource;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ AudioClip*>\ s\_bgmClips;}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ AudioClip*>\ s\_sfxClips;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ s\_currentBGMKey;}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_bgmBaseVolume;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_bgmFadeDuration;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_bgmFadeTimer;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_bgmFadeStartVolume;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ BGMFadeState\ s\_bgmFadeState;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ s\_pendingBGMKey;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_pendingBGMLoop;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_stopAfterFadeOut;}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ DistanceLoopChannel>\ s\_distanceLoops;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\ s\_guardLoopConfig;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\ s\_cctvLoopConfig;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{DistanceLoopConfig}}\ s\_terminalLoopConfig;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Track\ last\ applied\ volume\ for\ distance-\/based\ loops\ to\ avoid\ per-\/frame\ tiny\ updates}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ f32>\ s\_distanceLoopLastVolume;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generic\ loop\ channels\ (key\ -\/>\ AudioSource*)\ with\ reference\ counting}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ AudioSource*>\ s\_loopChannels;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ int>\ s\_loopRefCount;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Track\ last\ requested\ volume\ per\ loop\ to\ avoid\ per-\/frame\ tiny\ volume\ changes}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ f32>\ s\_loopLastVolume;}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_sfxEnabled;}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ kGuardLoopKey\ =\ \textcolor{stringliteral}{"{}guard\_proximity\_loop"{}};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ kCCTVHumLoopKey\ =\ \textcolor{stringliteral}{"{}cctv\_hum\_loop"{}};}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ kTerminalBuzzLoopKey\ =\ \textcolor{stringliteral}{"{}terminal\_buzz\_loop"{}};}
+\DoxyCodeLine{00129\ \ \ \ \ \};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

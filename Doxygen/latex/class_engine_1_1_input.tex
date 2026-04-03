@@ -1,0 +1,156 @@
+\doxysection{Engine::\+Input Class Reference}
+\hypertarget{class_engine_1_1_input}{}\label{class_engine_1_1_input}\index{Engine::Input@{Engine::Input}}
+
+
+Static class for querying input state.  
+
+
+
+
+{\ttfamily \+\#include $<$Input.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_a1354fc0536c0fe8e0be1efa98e39e314}{Get\+Key}} (\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} key)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}{Get\+Key\+Down}} (\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} key)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_ad91ab367518b08b078e8b1fb22785525}{Get\+Key\+Up}} (\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} key)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_a7830452407db3c4acf1ad3dafa8cc5d4}{Get\+Mouse\+Button}} (int button)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_a986ec20a2bd0c536d4b53a54f7b6976b}{Get\+Mouse\+Button\+Down}} (int button)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_ad238cda8deacccfc3b7885839ff49a31}{Get\+Mouse\+Button\+Up}} (int button)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_input_a992400fb285105b9f4970d0f1ee5e97e}{Get\+Mouse\+Position}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_input_a4e4f4415cb2e8d7719a5f4efbc277cf3}{Get\+Mouse\+Delta}} ()
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_input_a8cc3ae8d06e399a96a4bbd5e766e0922}{Get\+Mouse\+Scroll\+Delta}} ()
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_input_a79f413889851cab59a13404169655ea7}{Get\+Axis}} (const std::\+string \&axis\+Name)
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_input_afc924b182b616a21bb1c7c0ada2db5b0}{Get\+Axis\+Raw}} (const std::\+string \&axis\+Name)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_input_ad5b03ef6db990b5be4accb3103e426fd}{Set\+Cursor\+Visible}} (bool visible)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_input_a5e07c524dc33cd081934a95dd0510a97}{Register\+Cursor\+Unlock}} (const std::\+string \&id)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_input_a2e2490f038c3214a4d7b51bf7f65b3a1}{Unregister\+Cursor\+Unlock}} (const std::\+string \&id)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_input_a38c07992fec1dec41b36f966f8939905}{Is\+Cursor\+Locked}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_input_a1f749822e5a9922b676ff70bc37dc194}{Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for querying input state. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_input_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_input_a79f413889851cab59a13404169655ea7}\index{Engine::Input@{Engine::Input}!GetAxis@{GetAxis}}
+\index{GetAxis@{GetAxis}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetAxis()}{GetAxis()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a79f413889851cab59a13404169655ea7} 
+f32 Engine::\+\+Input::\+\+Get\+Axis (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{axis\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get axis value (-\/1 to 1) for named axis \Hypertarget{class_engine_1_1_input_afc924b182b616a21bb1c7c0ada2db5b0}\index{Engine::Input@{Engine::Input}!GetAxisRaw@{GetAxisRaw}}
+\index{GetAxisRaw@{GetAxisRaw}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetAxisRaw()}{GetAxisRaw()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_afc924b182b616a21bb1c7c0ada2db5b0} 
+f32 Engine::\+\+Input::\+\+Get\+Axis\+Raw (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{axis\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get raw axis value (no smoothing, same as Get\+Axis for now) \Hypertarget{class_engine_1_1_input_a1354fc0536c0fe8e0be1efa98e39e314}\index{Engine::Input@{Engine::Input}!GetKey@{GetKey}}
+\index{GetKey@{GetKey}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetKey()}{GetKey()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a1354fc0536c0fe8e0be1efa98e39e314} 
+bool Engine::\+\+Input::\+\+Get\+Key (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if key is currently held down \Hypertarget{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81}\index{Engine::Input@{Engine::Input}!GetKeyDown@{GetKeyDown}}
+\index{GetKeyDown@{GetKeyDown}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetKeyDown()}{GetKeyDown()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_aa0ef3bd74fa22c7b55270fd7e2486a81} 
+bool Engine::\+\+Input::\+\+Get\+Key\+Down (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if key was pressed this frame \Hypertarget{class_engine_1_1_input_ad91ab367518b08b078e8b1fb22785525}\index{Engine::Input@{Engine::Input}!GetKeyUp@{GetKeyUp}}
+\index{GetKeyUp@{GetKeyUp}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetKeyUp()}{GetKeyUp()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_ad91ab367518b08b078e8b1fb22785525} 
+bool Engine::\+\+Input::\+\+Get\+Key\+Up (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}}}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if key was released this frame \Hypertarget{class_engine_1_1_input_a7830452407db3c4acf1ad3dafa8cc5d4}\index{Engine::Input@{Engine::Input}!GetMouseButton@{GetMouseButton}}
+\index{GetMouseButton@{GetMouseButton}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMouseButton()}{GetMouseButton()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a7830452407db3c4acf1ad3dafa8cc5d4} 
+bool Engine::\+\+Input::\+\+Get\+Mouse\+Button (\begin{DoxyParamCaption}\item[{int}]{button}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if mouse button is currently held (0=left, 1=right, 2=middle) \Hypertarget{class_engine_1_1_input_a986ec20a2bd0c536d4b53a54f7b6976b}\index{Engine::Input@{Engine::Input}!GetMouseButtonDown@{GetMouseButtonDown}}
+\index{GetMouseButtonDown@{GetMouseButtonDown}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMouseButtonDown()}{GetMouseButtonDown()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a986ec20a2bd0c536d4b53a54f7b6976b} 
+bool Engine::\+\+Input::\+\+Get\+Mouse\+Button\+Down (\begin{DoxyParamCaption}\item[{int}]{button}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if mouse button was pressed this frame \Hypertarget{class_engine_1_1_input_ad238cda8deacccfc3b7885839ff49a31}\index{Engine::Input@{Engine::Input}!GetMouseButtonUp@{GetMouseButtonUp}}
+\index{GetMouseButtonUp@{GetMouseButtonUp}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMouseButtonUp()}{GetMouseButtonUp()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_ad238cda8deacccfc3b7885839ff49a31} 
+bool Engine::\+\+Input::\+\+Get\+Mouse\+Button\+Up (\begin{DoxyParamCaption}\item[{int}]{button}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if mouse button was released this frame \Hypertarget{class_engine_1_1_input_a4e4f4415cb2e8d7719a5f4efbc277cf3}\index{Engine::Input@{Engine::Input}!GetMouseDelta@{GetMouseDelta}}
+\index{GetMouseDelta@{GetMouseDelta}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMouseDelta()}{GetMouseDelta()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a4e4f4415cb2e8d7719a5f4efbc277cf3} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Input::\+\+Get\+Mouse\+Delta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get mouse movement delta since last frame (uses centered cursor when locked) \Hypertarget{class_engine_1_1_input_a992400fb285105b9f4970d0f1ee5e97e}\index{Engine::Input@{Engine::Input}!GetMousePosition@{GetMousePosition}}
+\index{GetMousePosition@{GetMousePosition}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMousePosition()}{GetMousePosition()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a992400fb285105b9f4970d0f1ee5e97e} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Input::\+\+Get\+Mouse\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get current mouse position in screen coordinates \Hypertarget{class_engine_1_1_input_a8cc3ae8d06e399a96a4bbd5e766e0922}\index{Engine::Input@{Engine::Input}!GetMouseScrollDelta@{GetMouseScrollDelta}}
+\index{GetMouseScrollDelta@{GetMouseScrollDelta}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{GetMouseScrollDelta()}{GetMouseScrollDelta()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a8cc3ae8d06e399a96a4bbd5e766e0922} 
+f32 Engine::\+\+Input::\+\+Get\+Mouse\+Scroll\+Delta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get mouse scroll wheel delta \Hypertarget{class_engine_1_1_input_a38c07992fec1dec41b36f966f8939905}\index{Engine::Input@{Engine::Input}!IsCursorLocked@{IsCursorLocked}}
+\index{IsCursorLocked@{IsCursorLocked}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{IsCursorLocked()}{IsCursorLocked()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a38c07992fec1dec41b36f966f8939905} 
+bool Engine::\+\+Input::\+\+Is\+Cursor\+Locked (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if cursor is currently locked \Hypertarget{class_engine_1_1_input_a5e07c524dc33cd081934a95dd0510a97}\index{Engine::Input@{Engine::Input}!RegisterCursorUnlock@{RegisterCursorUnlock}}
+\index{RegisterCursorUnlock@{RegisterCursorUnlock}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{RegisterCursorUnlock()}{RegisterCursorUnlock()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a5e07c524dc33cd081934a95dd0510a97} 
+void Engine::\+\+Input::\+\+Register\+Cursor\+Unlock (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Register a component for cursor unlock. Cursor is shown when count \texorpdfstring{$>$}{>} 0 \Hypertarget{class_engine_1_1_input_ad5b03ef6db990b5be4accb3103e426fd}\index{Engine::Input@{Engine::Input}!SetCursorVisible@{SetCursorVisible}}
+\index{SetCursorVisible@{SetCursorVisible}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{SetCursorVisible()}{SetCursorVisible()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_ad5b03ef6db990b5be4accb3103e426fd} 
+void Engine::\+\+Input::\+\+Set\+Cursor\+Visible (\begin{DoxyParamCaption}\item[{bool}]{visible}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Show or hide the cursor \Hypertarget{class_engine_1_1_input_a2e2490f038c3214a4d7b51bf7f65b3a1}\index{Engine::Input@{Engine::Input}!UnregisterCursorUnlock@{UnregisterCursorUnlock}}
+\index{UnregisterCursorUnlock@{UnregisterCursorUnlock}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{UnregisterCursorUnlock()}{UnregisterCursorUnlock()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a2e2490f038c3214a4d7b51bf7f65b3a1} 
+void Engine::\+\+Input::\+\+Unregister\+Cursor\+Unlock (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Unregister a component. Cursor is hidden \& centered when count reaches 0 \Hypertarget{class_engine_1_1_input_a1f749822e5a9922b676ff70bc37dc194}\index{Engine::Input@{Engine::Input}!Update@{Update}}
+\index{Update@{Update}!Engine::Input@{Engine::Input}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_input_a1f749822e5a9922b676ff70bc37dc194} 
+void Engine::\+\+Input::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Must be called each frame to update mouse state 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Input/\+\doxymbox{\hyperlink{_input_8hpp}{Input.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Input/\+\doxymbox{\hyperlink{_input_8cpp}{Input.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,97 @@
+\doxysection{Camera.\+hpp}
+\hypertarget{_camera_8hpp_source}{}\label{_camera_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/Camera.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/Camera.hpp}}
+\doxymbox{\hyperlink{_camera_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{Engine/Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Color.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_camera_config}{CameraConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}\ \ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.2f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec}{orthographicSize}}\ =\ 5.0f;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca}{fov}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 75.0f;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0}{pitch}}\ \ \ \ \ \ \ \ \ \ \ \ =\ 0.0f;}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}\ \ \ \ \ \ \ \ \ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.0f,\ 0.0f,\ 0.0f,\ 1.0f);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875}{fogDistance}}\ \ \ \ \ \ =\ 20.0f;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3}{fogMinVisibility}}\ =\ 0.2f;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc}{fogMaxVisibility}}\ =\ 1.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9}{fogPrecision}}\ \ \ \ \ =\ 200.0f;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2}{fogEnabled}}\ \ \ \ \ \ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a063d9b458e43b3e15aa0d93d4b5a37f8}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j.isMember(\textcolor{stringliteral}{"{}backgroundColor"{}}))\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ bg\ =\ j[\textcolor{stringliteral}{"{}backgroundColor"{}}];}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(bg.get(\textcolor{stringliteral}{"{}r"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}.r).asFloat(),}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bg.get(\textcolor{stringliteral}{"{}g"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}.g).asFloat(),}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bg.get(\textcolor{stringliteral}{"{}b"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}.b).asFloat(),}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bg.get(\textcolor{stringliteral}{"{}a"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_abb1e9c2b080b8a3e90012f90ac4f493d}{backgroundColor}}.a).asFloat());}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec}{orthographicSize}}\ =\ j.get(\textcolor{stringliteral}{"{}orthographicSize"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a44ffec73c5f60f668a08714100f8feec}{orthographicSize}}).asFloat();}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca}{fov}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}fov"{}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_adda5ba97299d535f1bd54cf900578bca}{fov}}).asFloat();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0}{pitch}}\ \ \ \ \ \ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}pitch"{}},\ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a74f25fff29a5cce0a95310c93fbc18e0}{pitch}}).asFloat();}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j.isMember(\textcolor{stringliteral}{"{}fogColor"{}}))\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ fc\ =\ j[\textcolor{stringliteral}{"{}fogColor"{}}];}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(fc.get(\textcolor{stringliteral}{"{}r"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}.r).asFloat(),}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fc.get(\textcolor{stringliteral}{"{}g"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}.g).asFloat(),}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fc.get(\textcolor{stringliteral}{"{}b"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}.b).asFloat(),}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fc.get(\textcolor{stringliteral}{"{}a"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_ad2fe7dfcf38c83671dcc9d14ee272aa3}{fogColor}}.a).asFloat());}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875}{fogDistance}}\ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}fogDistance"{}},\ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a4a967a86e432387d4896d77d72adf875}{fogDistance}}).asFloat();}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3}{fogMinVisibility}}\ =\ j.get(\textcolor{stringliteral}{"{}fogMinVisibility"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a0bf7f20d8c2d9c3fdb5c02bf150508a3}{fogMinVisibility}}).asFloat();}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc}{fogMaxVisibility}}\ =\ j.get(\textcolor{stringliteral}{"{}fogMaxVisibility"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a8069a069b17aa292e19481d8281c3fcc}{fogMaxVisibility}}).asFloat();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9}{fogPrecision}}\ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}fogPrecision"{}},\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a3df1e8af9e7c57a88be2ac6bd2daf2b9}{fogPrecision}}).asFloat();}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2}{fogEnabled}}\ \ \ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}fogEnabled"{}},\ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a70cd343e80935fab52217c4763d331e2}{fogEnabled}}).asBool();}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00064\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00066\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a43989442d530de4328a07f31f45605f9}{backgroundColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.2f,\ 0.2f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a514b411d1cecaa14cef45e6c1334e358}{orthographicSize}}\ =\ 5.0f;}
+\DoxyCodeLine{00070\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a59c867ed73a5434472a44c68a0c6ca20}{fov}}\ =\ 75.0f;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00074\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_acfc60b6bc71f1dc166e49246fd9426cf}{pitch}}\ =\ 0.0f;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00077\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_camera_ace5565e61ce7edd7db49be48a5c4633e}{fogColor}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.0f,\ 0.0f,\ 0.0f,\ 1.0f);\ \ \textcolor{comment}{//\ Black\ by\ default}}
+\DoxyCodeLine{00078\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a2d00d6310d60cbb5fab54ddcad087c7a}{fogDistance}}\ =\ 20.0f;\ \ \ \textcolor{comment}{//\ Distance\ at\ which\ fog\ reaches\ maximum}}
+\DoxyCodeLine{00079\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a110d1a9d87ae99b985ec4b24695f6a47}{fogMinVisibility}}\ =\ 0.2f;\ \ \textcolor{comment}{//\ Minimum\ visibility\ (prevents\ total\ blackout\ at\ distance)}}
+\DoxyCodeLine{00080\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a922f173c2e6951a899952655b632e502}{fogMaxVisibility}}\ =\ 1.0f;\ \ \textcolor{comment}{//\ Maximum\ visibility\ (caps\ brightness\ at\ close\ range)}}
+\DoxyCodeLine{00081\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_acfa80f23100ffea8eeb6b13e7990c2da}{fogPrecision}}\ =\ 200.0f;\ \ \ \ \textcolor{comment}{//\ Precision\ for\ fog\ quantization\ (increments\ =\ 1.0\ /\ fogPrecision)}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a405f02b972c65ebaaef777f9615042c1}{fogEnabled}}\ =\ \textcolor{keyword}{false};\ \ \textcolor{comment}{//\ Disabled\ by\ default}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}*\ \doxymbox{\hyperlink{class_engine_1_1_camera_abf6ed02ded65f0cb5970c5ba56a53370}{main}};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/camera.json"{}});}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a50c3da422fcd130529763013c0075c09}{Awake}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00095\ \ \ \ \ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a0f0acbe7cec8c50eb954e77447bb8ade}{OnDestroy}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_camera_ab180e73ca97b61109cd35ad8857cd8a1}{Apply}}();}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a6428a0b82fbfe084bc0f19873cf259f9}{ScreenToWorldPoint}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ screenPos);}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_camera_a85c3050a3d0decaf817059ecd8eeb7ee}{WorldToScreenPoint}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ worldPos);}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_af8af5a36d8465b72a02bf9df4ecb3cd2}{GetViewportWidth}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00111\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_camera_a3b80b0149c06d3859375fd2df5c1ecc8}{GetViewportHeight}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

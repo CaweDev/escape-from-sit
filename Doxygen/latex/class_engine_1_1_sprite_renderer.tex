@@ -1,0 +1,230 @@
+\doxysection{Engine::\+Sprite\+Renderer Class Reference}
+\hypertarget{class_engine_1_1_sprite_renderer}{}\label{class_engine_1_1_sprite_renderer}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+
+
+\doxylink{class_engine_1_1_component}{Component} that renders a sprite at the \doxylink{class_engine_1_1_game_object}{Game\+Object}\textquotesingle{}s transform.  
+
+
+
+
+{\ttfamily \+\#include $<$Sprite\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad613b25c3e277bc3a30469dd59198c91}{Sprite\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}{Set\+Sprite}} (std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$ new\+Sprite)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_aa3b93db55678d7b0d665c352b7ea99c3}{Set\+Sprite}} (\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}new\+Sprite)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a661ae22da1f5a2b0192eaebb79057e66}{Set\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \&new\+Color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \& \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a37a1b27eb1b25bf1834b1e21e8972fee}{Get\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ae6997d8e2e899f7cc75d029922285548}{Render}} () override
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a85a4fc3b765afd351fc742ad5c9d9f4f}{Get\+Sorting\+Key}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\texorpdfstring{$\sim$}{\string~}\+IRenderer}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{Set\+Ignore\+Fog}} (bool value)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{Get\+Ignore\+Fog}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a6dbdde18f023a570b930088c7bb3bcc9}{sprite}}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad6188a630a3473fad569d43da9105c21}{sprite\+Path}}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e}{color}} = \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{Color::\+white}}()
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a276f22dc0a091160ddab17252dd41515}{sorting\+Order}} = 0
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_ab27beebd1bc2b8c10a95a08d1bd55112}{flipX}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a48d919a07d4f1d2f02e90141c2c27c69}{flipY}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer_a9b78d9dcc55fa4c3d59fbabb05895b00}{billboard}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlight\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignore\+Fog}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_component}{Component} that renders a sprite at the \doxylink{class_engine_1_1_game_object}{Game\+Object}\textquotesingle{}s transform. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_sprite_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_sprite_renderer_ad613b25c3e277bc3a30469dd59198c91}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!SpriteRenderer@{SpriteRenderer}}
+\index{SpriteRenderer@{SpriteRenderer}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{SpriteRenderer()}{SpriteRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_ad613b25c3e277bc3a30469dd59198c91} 
+Engine::\+\+Sprite\+Renderer::\+\+Sprite\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_sprite_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_sprite_renderer_a37a1b27eb1b25bf1834b1e21e8972fee}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!GetColor@{GetColor}}
+\index{GetColor@{GetColor}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{GetColor()}{GetColor()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a37a1b27eb1b25bf1834b1e21e8972fee} 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \& Engine::\+\+Sprite\+Renderer::\+\+Get\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the color tint \Hypertarget{class_engine_1_1_sprite_renderer_a85a4fc3b765afd351fc742ad5c9d9f4f}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!GetSortingKey@{GetSortingKey}}
+\index{GetSortingKey@{GetSortingKey}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSortingKey()}{GetSortingKey()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a85a4fc3b765afd351fc742ad5c9d9f4f} 
+f32 Engine::\+\+Sprite\+Renderer::\+\+Get\+Sorting\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get sorting key for depth sorting (combines z position and sorting\+Order) 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_sprite_renderer_ae6997d8e2e899f7cc75d029922285548}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!Render@{Render}}
+\index{Render@{Render}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_ae6997d8e2e899f7cc75d029922285548} 
+void Engine::\+\+Sprite\+Renderer::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Render the sprite (called by renderer system) 
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_sprite_renderer_a661ae22da1f5a2b0192eaebb79057e66}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a661ae22da1f5a2b0192eaebb79057e66} 
+void Engine::\+\+Sprite\+Renderer::\+\+Set\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \&}]{new\+Color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the color tint \Hypertarget{class_engine_1_1_sprite_renderer_aa3b93db55678d7b0d665c352b7ea99c3}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!SetSprite@{SetSprite}}
+\index{SetSprite@{SetSprite}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{SetSprite()}{SetSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_aa3b93db55678d7b0d665c352b7ea99c3} 
+void Engine::\+\+Sprite\+Renderer::\+\+Set\+Sprite (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*}}]{new\+Sprite}{}\end{DoxyParamCaption})}
+
+Set sprite from shared pointer \Hypertarget{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!SetSprite@{SetSprite}}
+\index{SetSprite@{SetSprite}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{SetSprite()}{SetSprite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a797831955b819942cfa39be3c90e8d15} 
+void Engine::\+\+Sprite\+Renderer::\+\+Set\+Sprite (\begin{DoxyParamCaption}\item[{std::\+shared\+\_\+ptr$<$ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} $>$}]{new\+Sprite}{}\end{DoxyParamCaption})}
+
+Set sprite from shared pointer 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_sprite_renderer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_sprite_renderer_a9b78d9dcc55fa4c3d59fbabb05895b00}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!billboard@{billboard}}
+\index{billboard@{billboard}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{billboard}{billboard}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a9b78d9dcc55fa4c3d59fbabb05895b00} 
+bool Engine::\+\+Sprite\+Renderer::\+billboard = false}
+
+If true, renders as a 2.\+5D billboard in raycast space \Hypertarget{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!color@{color}}
+\index{color@{color}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_ad7a6010100c9714b0a9983a02c66e67e} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Sprite\+Renderer::\+color = \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{Color::\+white}}()}
+
+\doxylink{struct_engine_1_1_color}{Color} tint multiplier \Hypertarget{class_engine_1_1_sprite_renderer_ab27beebd1bc2b8c10a95a08d1bd55112}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!flipX@{flipX}}
+\index{flipX@{flipX}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{flipX}{flipX}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_ab27beebd1bc2b8c10a95a08d1bd55112} 
+bool Engine::\+\+Sprite\+Renderer::\+flipX = false}
+
+Flip sprite horizontally \Hypertarget{class_engine_1_1_sprite_renderer_a48d919a07d4f1d2f02e90141c2c27c69}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!flipY@{flipY}}
+\index{flipY@{flipY}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{flipY}{flipY}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a48d919a07d4f1d2f02e90141c2c27c69} 
+bool Engine::\+\+Sprite\+Renderer::\+flipY = false}
+
+Flip sprite vertically \Hypertarget{class_engine_1_1_sprite_renderer_a276f22dc0a091160ddab17252dd41515}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!sortingOrder@{sortingOrder}}
+\index{sortingOrder@{sortingOrder}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{sortingOrder}{sortingOrder}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a276f22dc0a091160ddab17252dd41515} 
+int Engine::\+\+Sprite\+Renderer::\+sorting\+Order = 0}
+
+Sorting order for z-\/depth (higher = rendered later/\+on top) \Hypertarget{class_engine_1_1_sprite_renderer_a6dbdde18f023a570b930088c7bb3bcc9}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!sprite@{sprite}}
+\index{sprite@{sprite}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{sprite}{sprite}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_a6dbdde18f023a570b930088c7bb3bcc9} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}\texorpdfstring{$\ast$}{*} Engine::\+\+Sprite\+Renderer::\+sprite}
+
+The sprite to render \Hypertarget{class_engine_1_1_sprite_renderer_ad6188a630a3473fad569d43da9105c21}\index{Engine::SpriteRenderer@{Engine::SpriteRenderer}!spritePath@{spritePath}}
+\index{spritePath@{spritePath}!Engine::SpriteRenderer@{Engine::SpriteRenderer}}
+\doxysubsubsection{\texorpdfstring{spritePath}{spritePath}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_renderer_ad6188a630a3473fad569d43da9105c21} 
+std::\+string Engine::\+\+Sprite\+Renderer::\+sprite\+Path}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_renderer_8hpp}{Sprite\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_renderer_8cpp}{Sprite\+Renderer.\+cpp}}\end{DoxyCompactItemize}

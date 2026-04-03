@@ -11,77 +11,29 @@ namespace Engine
     Vector3::Vector3(f32 x, f32 y, f32 z) : x(x), y(y), z(z) {}
     Vector3::Vector3(const Vector2 &v, f32 z) : x(v.x), y(v.y), z(z) {}
 
-    /*!
-     * \brief [AUTO] zero
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] zero
-     * \return 
-     */
+    
+    
     Vector3 Vector3::zero() { return Vector3(0, 0, 0); }
-    /*!
-     * \brief [AUTO] one
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] one
-     * \return 
-     */
+    
+    
     Vector3 Vector3::one() { return Vector3(1, 1, 1); }
-    /*!
-     * \brief [AUTO] up
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] up
-     * \return 
-     */
+    
+    
     Vector3 Vector3::up() { return Vector3(0, 1, 0); }
-    /*!
-     * \brief [AUTO] down
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] down
-     * \return 
-     */
+    
+    
     Vector3 Vector3::down() { return Vector3(0, -1, 0); }
-    /*!
-     * \brief [AUTO] left
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] left
-     * \return 
-     */
+    
+    
     Vector3 Vector3::left() { return Vector3(-1, 0, 0); }
-    /*!
-     * \brief [AUTO] right
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] right
-     * \return 
-     */
+    
+    
     Vector3 Vector3::right() { return Vector3(1, 0, 0); }
-    /*!
-     * \brief [AUTO] forward
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] forward
-     * \return 
-     */
+    
+    
     Vector3 Vector3::forward() { return Vector3(0, 0, 1); }
-    /*!
-     * \brief [AUTO] back
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] back
-     * \return 
-     */
+    
+    
     Vector3 Vector3::back() { return Vector3(0, 0, -1); }
 
     Vector3 Vector3::operator+(const Vector3 &other) const { return Vector3(x + other.x, y + other.y, z + other.z); }
@@ -122,23 +74,11 @@ namespace Engine
     bool Vector3::operator==(const Vector3 &other) const { return x == other.x && y == other.y && z == other.z; }
     bool Vector3::operator!=(const Vector3 &other) const { return !(*this == other); }
 
-    /*!
-     * \brief [AUTO] Magnitude
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] Magnitude
-     * \return 
-     */
+    
+    
     f32 Vector3::Magnitude() const { return std::sqrt(x * x + y * y + z * z); }
-    /*!
-     * \brief [AUTO] SqrMagnitude
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] SqrMagnitude
-     * \return 
-     */
+    
+    
     f32 Vector3::SqrMagnitude() const { return x * x + y * y + z * z; }
 
     Vector3 Vector3::Normalized() const
@@ -160,14 +100,8 @@ namespace Engine
         }
     }
 
-    /*!
-     * \brief [AUTO] ToVector2
-     * \return 
-     */
-    /*!
-     * \brief [AUTO] ToVector2
-     * \return 
-     */
+    
+    
     Vector2 Vector3::ToVector2() const { return Vector2(x, y); }
 
     f32 Vector3::Dot(const Vector3 &a, const Vector3 &b)

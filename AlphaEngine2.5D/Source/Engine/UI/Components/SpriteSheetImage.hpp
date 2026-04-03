@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @file AnimatedImage.hpp
+ * @file SpriteSheetImage.hpp
  * @brief UI Image component with spritesheet animation support
  */
 

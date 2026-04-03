@@ -1,0 +1,167 @@
+\doxysection{Engine::\+Interactable Class Reference}
+\hypertarget{class_engine_1_1_interactable}{}\label{class_engine_1_1_interactable}\index{Engine::Interactable@{Engine::Interactable}}
+
+
+Marks a \doxylink{class_engine_1_1_game_object}{Game\+Object} as interactable when player looks at it.  
+
+
+
+
+{\ttfamily \+\#include $<$Interactable.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_interactable_ad94a68141aff163c54c7282bad802af0}{Interactable}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_interactable_a3b19067de9a907d8b30950509cb0573c}{\texorpdfstring{$\sim$}{\string~}\+Interactable}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_interactable_a2af70fdd2d7458095be7b4fb30418521}{Interact}} ()
+\begin{DoxyCompactList}\small\item\em Called by \doxylink{class_engine_1_1_interaction_controller}{Interaction\+Controller} when player confirms interaction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd}{action\+Text}} = "{}Interact"{}
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_interactable_a087c0432f5f418a1891640cd91a05803}{max\+Distance}} = 5.\+0f
+\item 
+\doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{Interactable\+Hit\+Shape}} \doxymbox{\hyperlink{class_engine_1_1_interactable_abf046c9bf425765e05dde22953eaf74d}{hit\+Shape}} = \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}{Interactable\+Hit\+Shape::\+\+Rectangle}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_interactable_a1442c1477350824718d446486675951a}{require\+Hold}} = false
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_interactable_ad2f9a4feb6eed191f368be5119fde830}{hold\+Duration}} = 1.\+0f
+\item 
+std::\+function$<$ void()$>$ \doxymbox{\hyperlink{class_engine_1_1_interactable_aebc0dfc56ec37fadf135311bfc02552a}{on\+Interact}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Marks a \doxylink{class_engine_1_1_game_object}{Game\+Object} as interactable when player looks at it. 
+
+Attach this component to any \doxylink{class_engine_1_1_game_object}{Game\+Object} with a billboard \doxylink{class_engine_1_1_sprite_renderer}{Sprite\+Renderer} to make it interactable. The \doxylink{class_engine_1_1_interaction_controller}{Interaction\+Controller} will automatically detect it when the player looks at it. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_interactable_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_interactable_ad94a68141aff163c54c7282bad802af0}\index{Engine::Interactable@{Engine::Interactable}!Interactable@{Interactable}}
+\index{Interactable@{Interactable}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{Interactable()}{Interactable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_ad94a68141aff163c54c7282bad802af0} 
+Engine::\+\+Interactable::\+\+Interactable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_interactable_a3b19067de9a907d8b30950509cb0573c}\index{Engine::Interactable@{Engine::Interactable}!````~Interactable@{\texorpdfstring{$\sim$}{\string~}Interactable}}
+\index{````~Interactable@{\texorpdfstring{$\sim$}{\string~}Interactable}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Interactable()}{\string~Interactable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_a3b19067de9a907d8b30950509cb0573c} 
+virtual Engine::\+\+Interactable::\+\texorpdfstring{$\sim$}{\string~}\+Interactable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_interactable_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_interactable_a2af70fdd2d7458095be7b4fb30418521}\index{Engine::Interactable@{Engine::Interactable}!Interact@{Interact}}
+\index{Interact@{Interact}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{Interact()}{Interact()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_a2af70fdd2d7458095be7b4fb30418521} 
+void Engine::\+\+Interactable::\+\+Interact (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Called by \doxylink{class_engine_1_1_interaction_controller}{Interaction\+Controller} when player confirms interaction. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_interactable_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd}\index{Engine::Interactable@{Engine::Interactable}!actionText@{actionText}}
+\index{actionText@{actionText}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{actionText}{actionText}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd} 
+std::\+string Engine::\+\+Interactable::\+action\+Text = "{}Interact"{}}
+
+Text shown in the action prompt (e.\+g., "{}\+Open"{}, "{}\+Pick up"{}) \Hypertarget{class_engine_1_1_interactable_abf046c9bf425765e05dde22953eaf74d}\index{Engine::Interactable@{Engine::Interactable}!hitShape@{hitShape}}
+\index{hitShape@{hitShape}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{hitShape}{hitShape}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_abf046c9bf425765e05dde22953eaf74d} 
+\doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{Interactable\+Hit\+Shape}} Engine::\+\+Interactable::\+hit\+Shape = \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}{Interactable\+Hit\+Shape::\+\+Rectangle}}}
+
+Shape used for hit detection \Hypertarget{class_engine_1_1_interactable_ad2f9a4feb6eed191f368be5119fde830}\index{Engine::Interactable@{Engine::Interactable}!holdDuration@{holdDuration}}
+\index{holdDuration@{holdDuration}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{holdDuration}{holdDuration}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_ad2f9a4feb6eed191f368be5119fde830} 
+f32 Engine::\+\+Interactable::\+hold\+Duration = 1.\+0f}
+
+Duration in seconds required to hold the button \Hypertarget{class_engine_1_1_interactable_a087c0432f5f418a1891640cd91a05803}\index{Engine::Interactable@{Engine::Interactable}!maxDistance@{maxDistance}}
+\index{maxDistance@{maxDistance}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{maxDistance}{maxDistance}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_a087c0432f5f418a1891640cd91a05803} 
+f32 Engine::\+\+Interactable::\+max\+Distance = 5.\+0f}
+
+Maximum distance from camera for interaction (world units) \Hypertarget{class_engine_1_1_interactable_aebc0dfc56ec37fadf135311bfc02552a}\index{Engine::Interactable@{Engine::Interactable}!onInteract@{onInteract}}
+\index{onInteract@{onInteract}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{onInteract}{onInteract}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_aebc0dfc56ec37fadf135311bfc02552a} 
+std::\+function$<$void()$>$ Engine::\+\+Interactable::\+on\+Interact}
+
+Callback when player interacts (optional, for C++ usage) \Hypertarget{class_engine_1_1_interactable_a1442c1477350824718d446486675951a}\index{Engine::Interactable@{Engine::Interactable}!requireHold@{requireHold}}
+\index{requireHold@{requireHold}!Engine::Interactable@{Engine::Interactable}}
+\doxysubsubsection{\texorpdfstring{requireHold}{requireHold}}
+{\footnotesize\ttfamily \label{class_engine_1_1_interactable_a1442c1477350824718d446486675951a} 
+bool Engine::\+\+Interactable::\+require\+Hold = false}
+
+Whether interaction requires holding the button 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Interaction/\+\doxymbox{\hyperlink{_interactable_8hpp}{Interactable.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Interaction/\+\doxymbox{\hyperlink{_interactable_8cpp}{Interactable.\+cpp}}\end{DoxyCompactItemize}

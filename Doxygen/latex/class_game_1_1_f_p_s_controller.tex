@@ -1,0 +1,204 @@
+\doxysection{Game::\+FPSController Class Reference}
+\hypertarget{class_game_1_1_f_p_s_controller}{}\label{class_game_1_1_f_p_s_controller}\index{Game::FPSController@{Game::FPSController}}
+
+
+First-\/person movement with WASD, mouse look, jumping, and crouching.  
+
+
+
+
+{\ttfamily \+\#include $<$FPSController.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a994b2bfdb80f3b571b5f82fd63a1738d}{Initialize}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_af81f799cff5ddd20bbf0f912d60cdb1b}{Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a086fec7af5fb681f51637b7c6e4b777f}{Late\+Update}} () override
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a3629d4d64a3741237e482bdc09b6d4aa}{On\+Destroy}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a9f05103e1219b11cd950678e5ea4496f}{move\+Speed}} = 3.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_ad19797ca408780c325e4579df3dcb106}{sprint\+Speed}} = 6.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_aa093df8c5a421b79c8e6e782e31f6c26}{rotate\+Speed}} = 60.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a0b57dfed18b73b071954bf10ec5208b6}{mouse\+Sensitivity}} = 0.\+15f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a571189e68662c4f34179ea33e58a39c9}{jump\+Force}} = 3.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_ae9e35bd2947ecfbee72ff0c29a20125c}{eye\+Height}} = 0.\+5f
+\item 
+f32 \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a20d9c4e28469559ad1ad506966987599}{view\+Height\+Smooth\+Speed}} = 15.\+0f
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a35c4727bacec50a12d04da177dda1fbc}{rigidbody}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a373a57b4448ec536244838d9b640391c}{walking\+Loop\+Active}} = false
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_aa2017ae5b7398f0ab2a42578e2c4de36}{running\+Loop\+Active}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+First-\/person movement with WASD, mouse look, jumping, and crouching. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_f_p_s_controller_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_f_p_s_controller_a994b2bfdb80f3b571b5f82fd63a1738d}\index{Game::FPSController@{Game::FPSController}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a994b2bfdb80f3b571b5f82fd63a1738d} 
+void Game::\+\+FPSController::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_f_p_s_controller_a086fec7af5fb681f51637b7c6e4b777f}\index{Game::FPSController@{Game::FPSController}!LateUpdate@{LateUpdate}}
+\index{LateUpdate@{LateUpdate}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{LateUpdate()}{LateUpdate()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a086fec7af5fb681f51637b7c6e4b777f} 
+void Game::\+\+FPSController::\+\+Late\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame after all Update calls 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_f_p_s_controller_a3629d4d64a3741237e482bdc09b6d4aa}\index{Game::FPSController@{Game::FPSController}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a3629d4d64a3741237e482bdc09b6d4aa} 
+void Game::\+\+FPSController::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is destroyed 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_f_p_s_controller_af81f799cff5ddd20bbf0f912d60cdb1b}\index{Game::FPSController@{Game::FPSController}!Update@{Update}}
+\index{Update@{Update}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_af81f799cff5ddd20bbf0f912d60cdb1b} 
+void Game::\+\+FPSController::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_f_p_s_controller_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_f_p_s_controller_ae9e35bd2947ecfbee72ff0c29a20125c}\index{Game::FPSController@{Game::FPSController}!eyeHeight@{eyeHeight}}
+\index{eyeHeight@{eyeHeight}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{eyeHeight}{eyeHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_ae9e35bd2947ecfbee72ff0c29a20125c} 
+f32 Game::\+\+FPSController::\+eye\+Height = 0.\+5f}
+
+Eye height in world units (0.\+5 = center of wall, standard eye level) \Hypertarget{class_game_1_1_f_p_s_controller_a571189e68662c4f34179ea33e58a39c9}\index{Game::FPSController@{Game::FPSController}!jumpForce@{jumpForce}}
+\index{jumpForce@{jumpForce}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{jumpForce}{jumpForce}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a571189e68662c4f34179ea33e58a39c9} 
+f32 Game::\+\+FPSController::\+jump\+Force = 3.\+0f}
+
+Jump force \Hypertarget{class_game_1_1_f_p_s_controller_a0b57dfed18b73b071954bf10ec5208b6}\index{Game::FPSController@{Game::FPSController}!mouseSensitivity@{mouseSensitivity}}
+\index{mouseSensitivity@{mouseSensitivity}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{mouseSensitivity}{mouseSensitivity}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a0b57dfed18b73b071954bf10ec5208b6} 
+f32 Game::\+\+FPSController::\+mouse\+Sensitivity = 0.\+15f}
+
+Mouse sensitivity \Hypertarget{class_game_1_1_f_p_s_controller_a9f05103e1219b11cd950678e5ea4496f}\index{Game::FPSController@{Game::FPSController}!moveSpeed@{moveSpeed}}
+\index{moveSpeed@{moveSpeed}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{moveSpeed}{moveSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a9f05103e1219b11cd950678e5ea4496f} 
+f32 Game::\+\+FPSController::\+move\+Speed = 3.\+0f}
+
+Movement speed in units per second \Hypertarget{class_game_1_1_f_p_s_controller_a35c4727bacec50a12d04da177dda1fbc}\index{Game::FPSController@{Game::FPSController}!rigidbody@{rigidbody}}
+\index{rigidbody@{rigidbody}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{rigidbody}{rigidbody}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a35c4727bacec50a12d04da177dda1fbc} 
+\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}\texorpdfstring{$\ast$}{*} Game::\+\+FPSController::\+rigidbody = nullptr}
+
+Cached rigidbody reference \Hypertarget{class_game_1_1_f_p_s_controller_aa093df8c5a421b79c8e6e782e31f6c26}\index{Game::FPSController@{Game::FPSController}!rotateSpeed@{rotateSpeed}}
+\index{rotateSpeed@{rotateSpeed}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{rotateSpeed}{rotateSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_aa093df8c5a421b79c8e6e782e31f6c26} 
+f32 Game::\+\+FPSController::\+rotate\+Speed = 60.\+0f}
+
+Rotation speed in degrees per second \Hypertarget{class_game_1_1_f_p_s_controller_aa2017ae5b7398f0ab2a42578e2c4de36}\index{Game::FPSController@{Game::FPSController}!runningLoopActive@{runningLoopActive}}
+\index{runningLoopActive@{runningLoopActive}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{runningLoopActive}{runningLoopActive}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_aa2017ae5b7398f0ab2a42578e2c4de36} 
+bool Game::\+\+FPSController::\+running\+Loop\+Active = false}
+
+\Hypertarget{class_game_1_1_f_p_s_controller_ad19797ca408780c325e4579df3dcb106}\index{Game::FPSController@{Game::FPSController}!sprintSpeed@{sprintSpeed}}
+\index{sprintSpeed@{sprintSpeed}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{sprintSpeed}{sprintSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_ad19797ca408780c325e4579df3dcb106} 
+f32 Game::\+\+FPSController::\+sprint\+Speed = 6.\+0f}
+
+\Hypertarget{class_game_1_1_f_p_s_controller_a20d9c4e28469559ad1ad506966987599}\index{Game::FPSController@{Game::FPSController}!viewHeightSmoothSpeed@{viewHeightSmoothSpeed}}
+\index{viewHeightSmoothSpeed@{viewHeightSmoothSpeed}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{viewHeightSmoothSpeed}{viewHeightSmoothSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a20d9c4e28469559ad1ad506966987599} 
+f32 Game::\+\+FPSController::\+view\+Height\+Smooth\+Speed = 15.\+0f}
+
+Smoothing speed for camera height changes \Hypertarget{class_game_1_1_f_p_s_controller_a373a57b4448ec536244838d9b640391c}\index{Game::FPSController@{Game::FPSController}!walkingLoopActive@{walkingLoopActive}}
+\index{walkingLoopActive@{walkingLoopActive}!Game::FPSController@{Game::FPSController}}
+\doxysubsubsection{\texorpdfstring{walkingLoopActive}{walkingLoopActive}}
+{\footnotesize\ttfamily \label{class_game_1_1_f_p_s_controller_a373a57b4448ec536244838d9b640391c} 
+bool Game::\+\+FPSController::\+walking\+Loop\+Active = false}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\doxymbox{\hyperlink{_f_p_s_controller_8hpp}{FPSController.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\doxymbox{\hyperlink{_f_p_s_controller_8cpp}{FPSController.\+cpp}}\end{DoxyCompactItemize}

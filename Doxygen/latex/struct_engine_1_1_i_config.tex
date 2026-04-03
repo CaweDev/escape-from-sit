@@ -1,0 +1,56 @@
+\doxysection{Engine::\+IConfig Struct Reference}
+\hypertarget{struct_engine_1_1_i_config}{}\label{struct_engine_1_1_i_config}\index{Engine::IConfig@{Engine::IConfig}}
+
+
+Abstract base struct that configuration data types should inherit from. Enforces the implementation of the From\+Json deserialization method.  
+
+
+
+
+{\ttfamily \+\#include $<$Config\+Manager.\+hpp$>$}
+
+
+
+Inherited by \doxymbox{\hyperlink{struct_engine_1_1_application_config}{Engine::\+\+Application\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_camera_config}{Engine::\+\+Camera\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_door_config}{Engine::\+\+Door\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config}{Engine::\+\+Door\+Renderer\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_physics_config}{Engine::\+\+Physics\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_rendering_config}{Engine::\+\+Rendering\+Config}}, \doxymbox{\hyperlink{struct_game_1_1_player_h_u_d_config}{Game::\+\+Player\+HUDConfig}}, and \doxymbox{\hyperlink{struct_game_1_1_tips_config}{Game::\+\+Tips\+Config}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{From\+Json}} (const Json::\+\+Value \&json)=0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base struct that configuration data types should inherit from. Enforces the implementation of the From\+Json deserialization method. 
+
+\label{doc-constructors}
+\Hypertarget{struct_engine_1_1_i_config_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}\index{Engine::IConfig@{Engine::IConfig}!````~IConfig@{\texorpdfstring{$\sim$}{\string~}IConfig}}
+\index{````~IConfig@{\texorpdfstring{$\sim$}{\string~}IConfig}!Engine::IConfig@{Engine::IConfig}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}IConfig()}{\string~IConfig()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd} 
+virtual Engine::\+\+IConfig::\+\texorpdfstring{$\sim$}{\string~}\+IConfig (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_i_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}\index{Engine::IConfig@{Engine::IConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::IConfig@{Engine::IConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035} 
+virtual void Engine::\+\+IConfig::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{json}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \doxymbox{\hyperlink{struct_engine_1_1_application_config_aaff6d875fe44a77c0d7070aa93add60d}{Engine::\+\+Application\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_camera_config_a063d9b458e43b3e15aa0d93d4b5a37f8}{Engine::\+\+Camera\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_door_config_a2ff7c346a621032e2278bcf607c099fa}{Engine::\+\+Door\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a58e4b522ed25a64863dc14b6c1fc0d43}{Engine::\+\+Door\+Renderer\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_physics_config_a867970d9fbf48524f9402c06fecef0f5}{Engine::\+\+Physics\+Config}}, \doxymbox{\hyperlink{struct_engine_1_1_rendering_config_a9fe2bc30abfc67f24d82319431c8b07a}{Engine::\+\+Rendering\+Config}}, \doxymbox{\hyperlink{struct_game_1_1_player_h_u_d_config_a8f9a6129dec150cee3432ae982fb5156}{Game::\+\+Player\+HUDConfig}}, and \doxymbox{\hyperlink{struct_game_1_1_tips_config_a160ec270aba8ffc226dc1b06bb7ac669}{Game::\+\+Tips\+Config}}.
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_config_manager_8hpp}{Config\+Manager.\+hpp}}\end{DoxyCompactItemize}

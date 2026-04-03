@@ -1,0 +1,39 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Graphics/\+\+Tile\+Map\+Renderer.cpp File Reference}
+\hypertarget{_tile_map_renderer_8cpp}{}\label{_tile_map_renderer_8cpp}\index{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.cpp@{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.cpp}}
+
+
+Implementation of the Tile\+Map\+Renderer raycasting renderer.  
+
+
+{\ttfamily \+\#include "{}Tile\+Map\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Texture\+Utils.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}ZBuffer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Renderer\+Settings.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Application.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Physics2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Box\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Physics/\+\+Circle\+Collider2\+D.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Math/\+\+Mathf.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$cmath$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$algorithm$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$future$>$}\newline
+{\ttfamily \+\#include $<$thread$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the Tile\+Map\+Renderer raycasting renderer. 
+
+Rendering pipeline per frame:\+
+\begin{DoxyEnumerate}
+\item Column pass — DDA-\/casts one ray per COLUMN\+\_\+\+STEP pixels, fills managed\+Columns and writes perpendicular distances to ZBuffer.
+\item Ceiling pass — CPU-\/rasterises ceiling into a scaled framebuffer, uploads as a single GPU texture, draws one full-\/screen quad.
+\item Floor pass — Same as ceiling but below the horizon.
+\item Wall pass — Draws textured/\+coloured wall strips via AEGfx\+Tri\+Add, batched by tile type and fog key to minimise GPU draw calls. 
+\end{DoxyEnumerate}

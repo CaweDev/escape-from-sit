@@ -1,0 +1,1265 @@
+\doxysection{Engine Namespace Reference}
+\hypertarget{namespace_engine}{}\label{namespace_engine}\index{Engine@{Engine}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_audio_clip}{Audio\+Clip}}
+\begin{DoxyCompactList}\small\item\em Represents an audio file that can be played. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_audio_source}{Audio\+Source}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_component}{Component} that plays audio clips. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_auto_shutdown}{Sound\+Manager\+Auto\+Shutdown}}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_sound_manager}{Sound\+Manager}}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_application_config}{Application\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises application.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_application}{Application}}
+\begin{DoxyCompactList}\small\item\em Static class for application-\/level operations. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_asset_manager}{Asset\+Manager}}
+\begin{DoxyCompactList}\small\item\em Static class for centralized asset loading and caching. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_component}{Component}}
+\begin{DoxyCompactList}\small\item\em Base class for all components attached to Game\+Objects. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}
+\begin{DoxyCompactList}\small\item\em Abstract base struct that configuration data types should inherit from. Enforces the implementation of the From\+Json deserialization method. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_config_manager}{Config\+Manager}}
+\begin{DoxyCompactList}\small\item\em Static class for centralized configuration loading. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_game_object}{Game\+Object}}
+\begin{DoxyCompactList}\small\item\em Container for components, similar to Unity\textquotesingle{}s \doxylink{class_engine_1_1_game_object}{Game\+Object}. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_time}{Time}}
+\begin{DoxyCompactList}\small\item\em Static class for time-\/related values. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_component}{Component} that holds position, rotation, and scale. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_camera_config}{Camera\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises camera.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_camera}{Camera}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_component}{Component} for camera control and viewport management. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}
+\begin{DoxyCompactList}\small\item\em RGBA color with values 0-\/1. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config}{Door\+Renderer\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation for \doxylink{class_engine_1_1_door_renderer}{Door\+Renderer}, deserialised from door.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_door_renderer}{Door\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Renders a door as a wall segment using raycasting projection. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}
+\begin{DoxyCompactList}\small\item\em Abstract base class for components that render to the screen. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_rendering_config}{Rendering\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises rendering.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_renderer_settings}{Renderer\+Settings}}
+\begin{DoxyCompactList}\small\item\em Static holder for shared rendering configuration values. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}
+\begin{DoxyCompactList}\small\item\em Represents a 2D sprite (texture + mesh). \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Sprite\+Renderer}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_component}{Component} that renders a sprite at the \doxylink{class_engine_1_1_game_object}{Game\+Object}\textquotesingle{}s transform. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_animation_clip}{Animation\+Clip}}
+\begin{DoxyCompactList}\small\item\em Defines a named animation as a range of frames within a spritesheet. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}}
+\begin{DoxyCompactList}\small\item\em Shared data asset representing a spritesheet with named animations. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer}{Sprite\+Sheet\+Renderer}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_component}{Component} that renders animated sprites from a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{Nine\+Slice\+Border}}
+\begin{DoxyCompactList}\small\item\em Border widths in source-\/texture pixels for 9-\/slice rendering. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}
+\begin{DoxyCompactList}\small\item\em RAII wrapper for AEGfx\+Texture (PNG file loading). \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_cpu_texture}{Cpu\+Texture}}
+\begin{DoxyCompactList}\small\item\em CPU-\/side copy of a texture\textquotesingle{}s pixel data, loaded via WIC. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_texture_utils}{Texture\+Utils}}
+\begin{DoxyCompactList}\small\item\em Static utility class for texture operations. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{Tile\+Map\+Renderer}}
+\begin{DoxyCompactList}\small\item\em First-\/person 3D renderer that raycasts against a \doxylink{class_engine_1_1_tile_map}{Tile\+Map}. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_z_buffer}{ZBuffer}}
+\begin{DoxyCompactList}\small\item\em Static utility class for managing a 1D depth buffer (Z-\/buffer). Used for occlusion in 2.\+5D rendering. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_input}{Input}}
+\begin{DoxyCompactList}\small\item\em Static class for querying input state. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_xbox_controller}{Xbox\+Controller}}
+\begin{DoxyCompactList}\small\item\em Static class for querying Xbox controller state. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}
+\begin{DoxyCompactList}\small\item\em Marks a \doxylink{class_engine_1_1_game_object}{Game\+Object} as interactable when player looks at it. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_interaction_controller}{Interaction\+Controller}}
+\begin{DoxyCompactList}\small\item\em Player component that detects and interacts with \doxylink{class_engine_1_1_interactable}{Interactable} objects. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_mathf}{Mathf}}
+\begin{DoxyCompactList}\small\item\em Static class containing common math functions. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_box_collider2_d}{Box\+Collider2D}}
+\begin{DoxyCompactList}\small\item\em Axis-\/aligned rectangular collider. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_circle_collider2_d}{Circle\+Collider2D}}
+\begin{DoxyCompactList}\small\item\em Circular collider for round objects. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_bounds2_d}{Bounds2D}}
+\begin{DoxyCompactList}\small\item\em Axis-\/aligned bounding box for collision detection. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}
+\begin{DoxyCompactList}\small\item\em Base class for 2D colliders with height support for 2.\+5D games. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_collision2_d}{Collision2D}}
+\begin{DoxyCompactList}\small\item\em Contains information about a collision between two colliders. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_raycast_hit2_d}{Raycast\+Hit2D}}
+\begin{DoxyCompactList}\small\item\em Information about a raycast hit. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_physics_config}{Physics\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises physics.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_physics2_d}{Physics2D}}
+\begin{DoxyCompactList}\small\item\em Static class managing 2.\+5D physics simulation. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}
+\begin{DoxyCompactList}\small\item\em Physics body component for 2.\+5D movement with height. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d}{Tile\+Map\+Collider2D}}
+\begin{DoxyCompactList}\small\item\em Generates collision surfaces from \doxylink{class_engine_1_1_tile_map}{Tile\+Map} wall tiles. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_projection_result}{Projection\+Result}}
+\begin{DoxyCompactList}\small\item\em Results of a 2.\+5D projection calculation. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_projection_helper}{Projection\+Helper}}
+\begin{DoxyCompactList}\small\item\em Utility for projecting 3D positions into 2.\+5D screen space. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}}
+\begin{DoxyCompactList}\small\item\em Container for Game\+Objects with lifecycle methods. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_scene_manager}{Scene\+Manager}}
+\begin{DoxyCompactList}\small\item\em Static class for loading and managing scenes. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_door_config}{Door\+Config}}
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_engine_1_1_i_config}{IConfig} implementation that deserialises door.\+json. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_door}{Door}}
+\begin{DoxyCompactList}\small\item\em Interactive door component with animation support. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}}
+\begin{DoxyCompactList}\small\item\em 2D grid of tiles for raycasting \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Key\+Code}} \{ \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab8f4af5198188c63664fb77aedd34640}{Mouse0}} = AEVK\+\_\+\+LBUTTON
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a23f70ebe241b3f822fe71721a8964de1}{Mouse1}} = AEVK\+\_\+\+RBUTTON
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3eb1c47e6d5b2e6b63c073a05e669e0e}{Mouse2}} = AEVK\+\_\+\+MBUTTON
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70acd7d13ceea728b08555f7c818cfb13ef}{Backspace}} = AEVK\+\_\+\+BACK
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5c6ba25104401c9ee0650230fc6ba413}{Tab}} = AEVK\+\_\+\+TAB
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a988fd738de9c6d177440c5dcf69e73ce}{Return}} = AEVK\+\_\+\+RETURN
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a013ec032d3460d4be4431c6ab1f8f224}{Escape}} = AEVK\+\_\+\+ESCAPE
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad511f8439ecde36647437fbba67a4394}{Space}} = AEVK\+\_\+\+SPACE
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0b513090f0a012194da83d5515882b13}{Up\+Arrow}} = AEVK\+\_\+\+UP
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0a3f89b5a028cc88370ad5a49dfab276}{Down\+Arrow}} = AEVK\+\_\+\+DOWN
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1a45924fabe821ad288bd081b0bbf93b}{Left\+Arrow}} = AEVK\+\_\+\+LEFT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a026be376ee5c529a3d0a35866d1242ad}{Right\+Arrow}} = AEVK\+\_\+\+RIGHT
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a982621712db76f723b7bb88b631dc64d}{Left\+Shift}} = AEVK\+\_\+\+LSHIFT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a317d4a7487ee62605713987d4a037f83}{Right\+Shift}} = AEVK\+\_\+\+RSHIFT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a641642d3718d5db8994a79d51b43e88c}{Left\+Control}} = AEVK\+\_\+\+LCTRL
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a857bb13bb233ca520283eb9886509b65}{Right\+Control}} = AEVK\+\_\+\+RCTRL
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a96f9c4eb595a467d02e35c723f63ebf7}{Left\+Alt}} = AEVK\+\_\+\+LALT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad88bad98046b623323aa6ca28eefa6d5}{Right\+Alt}} = AEVK\+\_\+\+RALT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa458be0f08b7e4ff3c0f633c100176c0}{Insert}} = AEVK\+\_\+\+INSERT
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af2a6c498fb90ee345d997f888fce3b18}{Delete}} = AEVK\+\_\+\+DELETE
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8cf04a9734132302f96da8e113e80ce5}{Home}} = AEVK\+\_\+\+HOME
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a87557f11575c0ad78e4e28abedc13b6e}{End}} = AEVK\+\_\+\+END
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9b869c510c75c5827ac82e49d4340927}{Page\+Up}} = AEVK\+\_\+\+PAGEUP
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aee3677bcca83ece9384b01e43952bf33}{Page\+Down}} = AEVK\+\_\+\+PAGEDOWN
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f1896b0949181219100380f7328e442}{Alpha0}} = AEVK\+\_\+0
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a905b81f6ffb9ae0b60ff6184c1c099c0}{Alpha1}} = AEVK\+\_\+1
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab59cd2e6e89feb9ae15aea97bb5c6e8c}{Alpha2}} = AEVK\+\_\+2
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a45e199c3b864bd0b0b5d609860fd846c}{Alpha3}} = AEVK\+\_\+3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a01633f1e1b4af1c6933da83c8063347a}{Alpha4}} = AEVK\+\_\+4
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a83ae9b0aff3420973c79ac1d273bccb2}{Alpha5}} = AEVK\+\_\+5
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a906c322eddfed40af6ca8b789aaa917b}{Alpha6}} = AEVK\+\_\+6
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7e1401e8efcb718a68c57b20a68631ae}{Alpha7}} = AEVK\+\_\+7
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe20914526c7d83938bda15c24d3220a}{Alpha8}} = AEVK\+\_\+8
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5ab466801223a5bdd2637ae199b7f4d4}{Alpha9}} = AEVK\+\_\+9
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7fc56270e7a70fa81a5935b72eacbe29}{A}} = AEVK\+\_\+A
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9d5ed678fe57bcca610140957afab571}{B}} = AEVK\+\_\+B
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0d61f8370cad1d412f80b84d143e1257}{C}} = AEVK\+\_\+C
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af623e75af30e62bbd73d6df5b50bb7b5}{D}} = AEVK\+\_\+D
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} = AEVK\+\_\+E
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a800618943025315f869e4e1f09471012}{F}} = AEVK\+\_\+F
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70adfcf28d0734569a6a693bc8194de62bf}{G}} = AEVK\+\_\+G
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac1d9f50f86825a1a2302ec2449c17196}{H}} = AEVK\+\_\+H
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70add7536794b63bf90eccfd37f9b147d7f}{I}} = AEVK\+\_\+I
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aff44570aca8241914870afbc310cdb85}{J}} = AEVK\+\_\+J
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa5f3c6a11b03839d46af9fb43c97c188}{K}} = AEVK\+\_\+K
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad20caec3b48a1eef164cb4ca81ba2587}{L}} = AEVK\+\_\+L
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a69691c7bdcc3ce6d5d8a1361f22d04ac}{M}} = AEVK\+\_\+M
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8d9c307cb7f3c4a32822a51922d1ceaa}{N}} = AEVK\+\_\+N
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af186217753c37b9b9f958d906208506e}{O}} = AEVK\+\_\+O
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a44c29edb103a2872f519ad0c9a0fdaaa}{P}} = AEVK\+\_\+P
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af09564c9ca56850d4cd6b3319e541aee}{Q}} = AEVK\+\_\+Q
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1e1d3d40573127e9ee0480caf1283d6}{R}} = AEVK\+\_\+R
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5dbc98dcc983a70728bd082d1a47546e}{S}} = AEVK\+\_\+S
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} = AEVK\+\_\+T
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4c614360da93c0a041b22e537de151eb}{U}} = AEVK\+\_\+U
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5206560a306a2e085a437fd258eb57ce}{V}} = AEVK\+\_\+V
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a61e9c06ea9a85a5088a499df6458d276}{W}} = AEVK\+\_\+W
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a02129bb861061d1a052c592e2dc6b383}{X}} = AEVK\+\_\+X
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a57cec4137b614c87cb4e24a3d003a3e0}{Y}} = AEVK\+\_\+Y
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a21c2e59531c8710156d34a3c30ac81d5}{Z}} = AEVK\+\_\+Z
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8af088f4456f200f66e7305e32aa1e3b}{Keypad0}} = AEVK\+\_\+\+NUMPAD0
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5b32482cf767b1915b1fbeb9a3021479}{Keypad1}} = AEVK\+\_\+\+NUMPAD1
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6661e97974ef5a2783c987ea071f8a0a}{Keypad2}} = AEVK\+\_\+\+NUMPAD2
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6e29803ef8c72852fb9bc216e912e720}{Keypad3}} = AEVK\+\_\+\+NUMPAD3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad911ed9256592fc29bf18c68453614c4}{Keypad4}} = AEVK\+\_\+\+NUMPAD4
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7b62ba810df419e5c085a7cc6e120e90}{Keypad5}} = AEVK\+\_\+\+NUMPAD5
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4af249beec71483b20008b4d485ec499}{Keypad6}} = AEVK\+\_\+\+NUMPAD6
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0205068de7df3cb53ae243591d39ae95}{Keypad7}} = AEVK\+\_\+\+NUMPAD7
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a92e329d252b54f626755a38cae89a5be}{Keypad8}} = AEVK\+\_\+\+NUMPAD8
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5bb0cbdeb920a0111e1a41cbd214cb49}{Keypad9}} = AEVK\+\_\+\+NUMPAD9
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a12c8ec87631dc64e4307ab648b5e6596}{Keypad\+Multiply}} = AEVK\+\_\+\+NUM\+\_\+\+MULTIPLY
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f3b5db5dd68593d6bebb3c91cbb75c5}{Keypad\+Plus}} = AEVK\+\_\+\+NUM\+\_\+\+PLUS
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1b5cc648ff53810de4009a82d26270fe}{Keypad\+Minus}} = AEVK\+\_\+\+NUM\+\_\+\+MINUS
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9bd3b7df5e51315fec833ca03b55d054}{Keypad\+Period}} = AEVK\+\_\+\+NUM\+\_\+\+PERIOD
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1017496d0dc2f051ac948072d305f48c}{Keypad\+Divide}} = AEVK\+\_\+\+NUM\+\_\+\+DIVIDE
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1dffc8709f31a4987c8a88334107e89}{F1}} = AEVK\+\_\+\+F1
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe5c3684dce76cdd9f7f42430868aa74}{F2}} = AEVK\+\_\+\+F2
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4b6bf4b531770872d4328ce69bef5627}{F3}} = AEVK\+\_\+\+F3
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae7e0e72401a9f2718ed0f39f2861d702}{F4}} = AEVK\+\_\+\+F4
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a37f438df6a6d5ba4c17ef8ca58562f00}{F5}} = AEVK\+\_\+\+F5
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1faf42f2823f184eb2c9f0dffe5d73f2}{F6}} = AEVK\+\_\+\+F6
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a47489eb597b7db34caa24b1fc78fc839}{F7}} = AEVK\+\_\+\+F7
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4787509ad9f9d747a81a30e9dde3d4a7}{F8}} = AEVK\+\_\+\+F8
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a892a245e287c163080b23db737d3c4c9}{F9}} = AEVK\+\_\+\+F9
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab213ce22ca6ad4eda8db82966b9b6e5a}{F10}} = AEVK\+\_\+\+F10
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a643b0662422d1d0dffa3fca2e2bf28a8}{F11}} = AEVK\+\_\+\+F11
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae902674982fc99aa343cdd94da7476c3}{F12}} = AEVK\+\_\+\+F12
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9806fa37a3ecd39bf637c203aa011ed0}{Semicolon}} = AEVK\+\_\+\+SEMICOLON
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a358cfe58715d680d9ab09f82e4010cbc}{Slash}} = AEVK\+\_\+\+SLASH
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8c046c786b9034d32a14ced194f94548}{Back\+Quote}} = AEVK\+\_\+\+BACKQUOTE
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a481c09f513474b2d31ba5c2992947b17}{Left\+Bracket}} = AEVK\+\_\+\+LBRACKET
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af6c6379402dce27659f7cffee6bc1f00}{Backslash}} = AEVK\+\_\+\+BACKSLASH
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a455364d8991395f71ef9ccc5cc449e5c}{Right\+Bracket}} = AEVK\+\_\+\+RBRACKET
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac48e929b2b1eabba2ba036884433345e}{Quote}} = AEVK\+\_\+\+QUOTE
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0ccb67e7eaae09d9e4078d161eeca100}{Equals}} = AEVK\+\_\+\+EQUAL
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a453fb623e752c5993f65bc410fd74fe5}{Minus}} = AEVK\+\_\+\+MINUS
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1901606ea069a83dc7beea17881ef95a}{Period}} = AEVK\+\_\+\+PERIOD
+, \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a58be47db9455679e6a44df2eff9c9fa6}{Comma}} = AEVK\+\_\+\+COMMA
+ \}
+\begin{DoxyCompactList}\small\item\em Key codes for keyboard and mouse input (Unity-\/style naming). \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Xbox\+Button}} \{ \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a6e53ad4e24c7b597e15b2193883bf7f2}{DPad\+Up}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+UP
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a826b0ea5950d9f05469d6f3ded8b570f}{DPad\+Down}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+DOWN
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a1afff4bd4c22275dff273ca6f01952f1}{DPad\+Left}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+LEFT
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aee57d4f85b132ca155ad4f77e71b7df1}{DPad\+Right}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+DPAD\+\_\+\+RIGHT
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10aa6122a65eaa676f700ae68d393054a37}{Start}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+START
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a0557fa923dcee4d0f86b1409f5c2167f}{Back}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+BACK
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a2cd349073c4937c593353ffe98956c58}{Left\+Thumb}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+LEFT\+\_\+\+THUMB
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10ae499bf8bc6e897455b94cabc7a5c2da7}{Right\+Thumb}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+RIGHT\+\_\+\+THUMB
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a36131cbdc50218d923d0bcb0d9870e1c}{Left\+Shoulder}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+LEFT\+\_\+\+SHOULDER
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a27a5390f2d1b44a43f74d57703f8d354}{Right\+Shoulder}} = XINPUT\+\_\+\+GAMEPAD\+\_\+\+RIGHT\+\_\+\+SHOULDER
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a7fc56270e7a70fa81a5935b72eacbe29}{A}} = XINPUT\+\_\+\+GAMEPAD\+\_\+A
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a9d5ed678fe57bcca610140957afab571}{B}} = XINPUT\+\_\+\+GAMEPAD\+\_\+B
+, \newline
+\doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a02129bb861061d1a052c592e2dc6b383}{X}} = XINPUT\+\_\+\+GAMEPAD\+\_\+X
+, \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10a57cec4137b614c87cb4e24a3d003a3e0}{Y}} = XINPUT\+\_\+\+GAMEPAD\+\_\+Y
+ \}
+\begin{DoxyCompactList}\small\item\em Xbox controller button codes. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{Interactable\+Hit\+Shape}} \{ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}{Rectangle}}
+, \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052a119518c2134c46108179369f0ce81fa2}{Ellipse}}
+ \}
+\begin{DoxyCompactList}\small\item\em Shape used for interaction hit detection. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Collision\+Layer}} :\+ u32 \{ \newline
+\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a7a1920d61156abc05a60135aefe8bc67}{Default}} = 0
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c}{Tile\+Map}} = 1
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046af698f67f5666aff10729d8a1cb1c14d2}{Trigger}} = 2
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046aae7968d26b598ce434958b0825b7a4ac}{Projectile}} = 3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a636da1d35e805b00eae0fcd8333f9234}{Player}} = 4
+, \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a8c6d21187fb58b7a079d70030686b33e}{Enemy}} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Layers for filtering collisions between colliders. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{Rigidbody\+Type2D}} \{ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}{Dynamic}}
+, \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a40c78b58b86002ee38fad2d3c9dd787e}{Kinematic}}
+, \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a84a8921b25f505d0d2077aeb5db4bc16}{Static}}
+ \}
+\begin{DoxyCompactList}\small\item\em Types of rigidbody simulation. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{Door\+State}} \{ \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}{Closed}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140}{Opening}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274}{Open}}
+, \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e}{Closing}}
+ \}
+\begin{DoxyCompactList}\small\item\em Current state of the door. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{Door\+Facing}} \{ \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}{North\+South}}
+, \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}{East\+West}}
+ \}
+\begin{DoxyCompactList}\small\item\em Direction the door faces (determines collision box orientation). \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Tile\+Type}} :\+ int \{ \newline
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023dace2c8aed9c2fa0cfbed56cbda4d8bf07}{Empty}} = 0
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da94e8a499539d1a472f3b5dbbb85508c0}{Wall}} = 1
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf3c835f5aba1343c75949aadc1c7cb10}{Wall2}} = 2
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daee12db81efd581400ccc2423365347ed}{Wall3}} = 3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da342a0e1d8baf4d1404fa88678ec15f9d}{Wall4}} = 4
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8f1873c88edacc4855996e2c9a8a27d3}{NUM\+\_\+\+WALL}} = 5
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1}{Door}} = 10
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8cc3c3b8949376a67d6318e99813135b}{NUM\+\_\+\+DOOR}} = 11
+ \}
+\begin{DoxyCompactList}\small\item\em Types of tiles in the map Negative values = walkable floors with different textures Zero = empty/\+walkable Positive values 1-\/9 = walls (not walkable) Positive value 10 = door marker (spawns \doxylink{class_engine_1_1_door}{Door}, then becomes Empty) Positive value 11 = terminal marker (spawns CCTVTerminal, then becomes Empty) Positive value 12 = exit marker (marked as floor, special gameplay handling) Positive value 13 = control room door marker (spawns Control\+Room\+Door, then becomes Empty) Positive values 15-\/18 = access card markers (Green, Purple, Red, Yellow) Positive value 20 = dedicated control room door tile (easy to place in editor). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{namespace_engine_a7da48f144c21761fd6287e5734dce4e2}{operator\texorpdfstring{$\ast$}{*}}} (f32 scalar, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&v)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \doxymbox{\hyperlink{namespace_engine_a8e9dd5986bc3d18e35cfb3da5f951f0c}{operator\texorpdfstring{$\ast$}{*}}} (f32 scalar, const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&v)
+\item 
+u32 \doxymbox{\hyperlink{namespace_engine_a79ab16953ee56518a4c76f10920a3a47}{Layer\+To\+Mask}} (\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Collision\+Layer}} layer)
+\begin{DoxyCompactList}\small\item\em Convert layer to bitmask value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_engine_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}\index{Engine@{Engine}!CollisionLayer@{CollisionLayer}}
+\index{CollisionLayer@{CollisionLayer}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{CollisionLayer}{CollisionLayer}}
+{\footnotesize\ttfamily \label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046} 
+enum class \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Engine::\+\+Collision\+Layer}} :\+ u32\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Layers for filtering collisions between colliders. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Default@{Default}!Engine@{Engine}}
+\index{Engine@{Engine}!Default@{Default}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a7a1920d61156abc05a60135aefe8bc67}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a7a1920d61156abc05a60135aefe8bc67} 
+Default&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TileMap@{TileMap}!Engine@{Engine}}
+\index{Engine@{Engine}!TileMap@{TileMap}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c} 
+Tile\+Map&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Trigger@{Trigger}!Engine@{Engine}}
+\index{Engine@{Engine}!Trigger@{Trigger}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046af698f67f5666aff10729d8a1cb1c14d2}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046af698f67f5666aff10729d8a1cb1c14d2} 
+Trigger&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Projectile@{Projectile}!Engine@{Engine}}
+\index{Engine@{Engine}!Projectile@{Projectile}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046aae7968d26b598ce434958b0825b7a4ac}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046aae7968d26b598ce434958b0825b7a4ac} 
+Projectile&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Player@{Player}!Engine@{Engine}}
+\index{Engine@{Engine}!Player@{Player}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a636da1d35e805b00eae0fcd8333f9234}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a636da1d35e805b00eae0fcd8333f9234} 
+Player&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Enemy@{Enemy}!Engine@{Engine}}
+\index{Engine@{Engine}!Enemy@{Enemy}}
+}\Hypertarget{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a8c6d21187fb58b7a079d70030686b33e}\label{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a8c6d21187fb58b7a079d70030686b33e} 
+Enemy&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}\index{Engine@{Engine}!DoorFacing@{DoorFacing}}
+\index{DoorFacing@{DoorFacing}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{DoorFacing}{DoorFacing}}
+{\footnotesize\ttfamily \label{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18} 
+enum class \doxymbox{\hyperlink{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18}{Engine::\+\+Door\+Facing}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Direction the door faces (determines collision box orientation). 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NorthSouth@{NorthSouth}!Engine@{Engine}}
+\index{Engine@{Engine}!NorthSouth@{NorthSouth}}
+}\Hypertarget{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c}\label{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18a02b31218b7c58e56383cdcbdbcc77b0c} 
+North\+South&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EastWest@{EastWest}!Engine@{Engine}}
+\index{Engine@{Engine}!EastWest@{EastWest}}
+}\Hypertarget{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175}\label{namespace_engine_a7babca16d7e2f3dced88529c0ca5df18ad3b93159633c177a891e4c6de41bf175} 
+East\+West&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}\index{Engine@{Engine}!DoorState@{DoorState}}
+\index{DoorState@{DoorState}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{DoorState}{DoorState}}
+{\footnotesize\ttfamily \label{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033} 
+enum class \doxymbox{\hyperlink{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033}{Engine::\+\+Door\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Current state of the door. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Closed@{Closed}!Engine@{Engine}}
+\index{Engine@{Engine}!Closed@{Closed}}
+}\Hypertarget{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e}\label{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a03f4a47830f97377a35321051685071e} 
+Closed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Opening@{Opening}!Engine@{Engine}}
+\index{Engine@{Engine}!Opening@{Opening}}
+}\Hypertarget{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140}\label{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a9bd99a0beea48f10663fc4a7d7a33140} 
+Opening&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Open@{Open}!Engine@{Engine}}
+\index{Engine@{Engine}!Open@{Open}}
+}\Hypertarget{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274}\label{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033ac3bf447eabe632720a3aa1a7ce401274} 
+Open&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Closing@{Closing}!Engine@{Engine}}
+\index{Engine@{Engine}!Closing@{Closing}}
+}\Hypertarget{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e}\label{namespace_engine_a50c53ec69f265f6f6bd30866f6ec6033a5c8de6f894682fdb1786037b2040a26e} 
+Closing&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_a4b050479ece7c214db3d6e83e6773052}\index{Engine@{Engine}!InteractableHitShape@{InteractableHitShape}}
+\index{InteractableHitShape@{InteractableHitShape}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{InteractableHitShape}{InteractableHitShape}}
+{\footnotesize\ttfamily \label{namespace_engine_a4b050479ece7c214db3d6e83e6773052} 
+enum class \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{Engine::\+\+Interactable\+Hit\+Shape}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Shape used for interaction hit detection. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Rectangle@{Rectangle}!Engine@{Engine}}
+\index{Engine@{Engine}!Rectangle@{Rectangle}}
+}\Hypertarget{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}\label{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e} 
+Rectangle&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Ellipse@{Ellipse}!Engine@{Engine}}
+\index{Engine@{Engine}!Ellipse@{Ellipse}}
+}\Hypertarget{namespace_engine_a4b050479ece7c214db3d6e83e6773052a119518c2134c46108179369f0ce81fa2}\label{namespace_engine_a4b050479ece7c214db3d6e83e6773052a119518c2134c46108179369f0ce81fa2} 
+Ellipse&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}\index{Engine@{Engine}!KeyCode@{KeyCode}}
+\index{KeyCode@{KeyCode}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{KeyCode}{KeyCode}}
+{\footnotesize\ttfamily \label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70} 
+enum class \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{Engine::\+\+Key\+Code}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Key codes for keyboard and mouse input (Unity-\/style naming). 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mouse0@{Mouse0}!Engine@{Engine}}
+\index{Engine@{Engine}!Mouse0@{Mouse0}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab8f4af5198188c63664fb77aedd34640}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab8f4af5198188c63664fb77aedd34640} 
+Mouse0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mouse1@{Mouse1}!Engine@{Engine}}
+\index{Engine@{Engine}!Mouse1@{Mouse1}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a23f70ebe241b3f822fe71721a8964de1}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a23f70ebe241b3f822fe71721a8964de1} 
+Mouse1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Mouse2@{Mouse2}!Engine@{Engine}}
+\index{Engine@{Engine}!Mouse2@{Mouse2}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3eb1c47e6d5b2e6b63c073a05e669e0e}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3eb1c47e6d5b2e6b63c073a05e669e0e} 
+Mouse2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Backspace@{Backspace}!Engine@{Engine}}
+\index{Engine@{Engine}!Backspace@{Backspace}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70acd7d13ceea728b08555f7c818cfb13ef}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70acd7d13ceea728b08555f7c818cfb13ef} 
+Backspace&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tab@{Tab}!Engine@{Engine}}
+\index{Engine@{Engine}!Tab@{Tab}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5c6ba25104401c9ee0650230fc6ba413}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5c6ba25104401c9ee0650230fc6ba413} 
+Tab&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Return@{Return}!Engine@{Engine}}
+\index{Engine@{Engine}!Return@{Return}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a988fd738de9c6d177440c5dcf69e73ce}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a988fd738de9c6d177440c5dcf69e73ce} 
+Return&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Escape@{Escape}!Engine@{Engine}}
+\index{Engine@{Engine}!Escape@{Escape}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a013ec032d3460d4be4431c6ab1f8f224}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a013ec032d3460d4be4431c6ab1f8f224} 
+Escape&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Space@{Space}!Engine@{Engine}}
+\index{Engine@{Engine}!Space@{Space}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad511f8439ecde36647437fbba67a4394}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad511f8439ecde36647437fbba67a4394} 
+Space&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UpArrow@{UpArrow}!Engine@{Engine}}
+\index{Engine@{Engine}!UpArrow@{UpArrow}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0b513090f0a012194da83d5515882b13}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0b513090f0a012194da83d5515882b13} 
+Up\+Arrow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DownArrow@{DownArrow}!Engine@{Engine}}
+\index{Engine@{Engine}!DownArrow@{DownArrow}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0a3f89b5a028cc88370ad5a49dfab276}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0a3f89b5a028cc88370ad5a49dfab276} 
+Down\+Arrow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftArrow@{LeftArrow}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftArrow@{LeftArrow}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1a45924fabe821ad288bd081b0bbf93b}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1a45924fabe821ad288bd081b0bbf93b} 
+Left\+Arrow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightArrow@{RightArrow}!Engine@{Engine}}
+\index{Engine@{Engine}!RightArrow@{RightArrow}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a026be376ee5c529a3d0a35866d1242ad}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a026be376ee5c529a3d0a35866d1242ad} 
+Right\+Arrow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftShift@{LeftShift}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftShift@{LeftShift}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a982621712db76f723b7bb88b631dc64d}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a982621712db76f723b7bb88b631dc64d} 
+Left\+Shift&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightShift@{RightShift}!Engine@{Engine}}
+\index{Engine@{Engine}!RightShift@{RightShift}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a317d4a7487ee62605713987d4a037f83}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a317d4a7487ee62605713987d4a037f83} 
+Right\+Shift&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftControl@{LeftControl}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftControl@{LeftControl}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a641642d3718d5db8994a79d51b43e88c}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a641642d3718d5db8994a79d51b43e88c} 
+Left\+Control&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightControl@{RightControl}!Engine@{Engine}}
+\index{Engine@{Engine}!RightControl@{RightControl}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a857bb13bb233ca520283eb9886509b65}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a857bb13bb233ca520283eb9886509b65} 
+Right\+Control&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftAlt@{LeftAlt}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftAlt@{LeftAlt}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a96f9c4eb595a467d02e35c723f63ebf7}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a96f9c4eb595a467d02e35c723f63ebf7} 
+Left\+Alt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightAlt@{RightAlt}!Engine@{Engine}}
+\index{Engine@{Engine}!RightAlt@{RightAlt}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad88bad98046b623323aa6ca28eefa6d5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad88bad98046b623323aa6ca28eefa6d5} 
+Right\+Alt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Insert@{Insert}!Engine@{Engine}}
+\index{Engine@{Engine}!Insert@{Insert}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa458be0f08b7e4ff3c0f633c100176c0}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa458be0f08b7e4ff3c0f633c100176c0} 
+Insert&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Delete@{Delete}!Engine@{Engine}}
+\index{Engine@{Engine}!Delete@{Delete}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af2a6c498fb90ee345d997f888fce3b18}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af2a6c498fb90ee345d997f888fce3b18} 
+Delete&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Home@{Home}!Engine@{Engine}}
+\index{Engine@{Engine}!Home@{Home}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8cf04a9734132302f96da8e113e80ce5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8cf04a9734132302f96da8e113e80ce5} 
+Home&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{End@{End}!Engine@{Engine}}
+\index{Engine@{Engine}!End@{End}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a87557f11575c0ad78e4e28abedc13b6e}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a87557f11575c0ad78e4e28abedc13b6e} 
+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PageUp@{PageUp}!Engine@{Engine}}
+\index{Engine@{Engine}!PageUp@{PageUp}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9b869c510c75c5827ac82e49d4340927}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9b869c510c75c5827ac82e49d4340927} 
+Page\+Up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PageDown@{PageDown}!Engine@{Engine}}
+\index{Engine@{Engine}!PageDown@{PageDown}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aee3677bcca83ece9384b01e43952bf33}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aee3677bcca83ece9384b01e43952bf33} 
+Page\+Down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha0@{Alpha0}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha0@{Alpha0}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f1896b0949181219100380f7328e442}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f1896b0949181219100380f7328e442} 
+Alpha0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha1@{Alpha1}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha1@{Alpha1}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a905b81f6ffb9ae0b60ff6184c1c099c0}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a905b81f6ffb9ae0b60ff6184c1c099c0} 
+Alpha1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha2@{Alpha2}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha2@{Alpha2}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab59cd2e6e89feb9ae15aea97bb5c6e8c}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab59cd2e6e89feb9ae15aea97bb5c6e8c} 
+Alpha2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha3@{Alpha3}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha3@{Alpha3}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a45e199c3b864bd0b0b5d609860fd846c}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a45e199c3b864bd0b0b5d609860fd846c} 
+Alpha3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha4@{Alpha4}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha4@{Alpha4}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a01633f1e1b4af1c6933da83c8063347a}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a01633f1e1b4af1c6933da83c8063347a} 
+Alpha4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha5@{Alpha5}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha5@{Alpha5}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a83ae9b0aff3420973c79ac1d273bccb2}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a83ae9b0aff3420973c79ac1d273bccb2} 
+Alpha5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha6@{Alpha6}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha6@{Alpha6}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a906c322eddfed40af6ca8b789aaa917b}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a906c322eddfed40af6ca8b789aaa917b} 
+Alpha6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha7@{Alpha7}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha7@{Alpha7}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7e1401e8efcb718a68c57b20a68631ae}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7e1401e8efcb718a68c57b20a68631ae} 
+Alpha7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha8@{Alpha8}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha8@{Alpha8}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe20914526c7d83938bda15c24d3220a}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe20914526c7d83938bda15c24d3220a} 
+Alpha8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Alpha9@{Alpha9}!Engine@{Engine}}
+\index{Engine@{Engine}!Alpha9@{Alpha9}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5ab466801223a5bdd2637ae199b7f4d4}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5ab466801223a5bdd2637ae199b7f4d4} 
+Alpha9&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{A@{A}!Engine@{Engine}}
+\index{Engine@{Engine}!A@{A}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7fc56270e7a70fa81a5935b72eacbe29}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7fc56270e7a70fa81a5935b72eacbe29} 
+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B@{B}!Engine@{Engine}}
+\index{Engine@{Engine}!B@{B}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9d5ed678fe57bcca610140957afab571}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9d5ed678fe57bcca610140957afab571} 
+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C@{C}!Engine@{Engine}}
+\index{Engine@{Engine}!C@{C}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0d61f8370cad1d412f80b84d143e1257}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0d61f8370cad1d412f80b84d143e1257} 
+C&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D@{D}!Engine@{Engine}}
+\index{Engine@{Engine}!D@{D}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af623e75af30e62bbd73d6df5b50bb7b5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af623e75af30e62bbd73d6df5b50bb7b5} 
+D&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E@{E}!Engine@{Engine}}
+\index{Engine@{Engine}!E@{E}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da} 
+E&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F@{F}!Engine@{Engine}}
+\index{Engine@{Engine}!F@{F}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a800618943025315f869e4e1f09471012}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a800618943025315f869e4e1f09471012} 
+F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G@{G}!Engine@{Engine}}
+\index{Engine@{Engine}!G@{G}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70adfcf28d0734569a6a693bc8194de62bf}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70adfcf28d0734569a6a693bc8194de62bf} 
+G&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{H@{H}!Engine@{Engine}}
+\index{Engine@{Engine}!H@{H}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac1d9f50f86825a1a2302ec2449c17196}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac1d9f50f86825a1a2302ec2449c17196} 
+H&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I@{I}!Engine@{Engine}}
+\index{Engine@{Engine}!I@{I}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70add7536794b63bf90eccfd37f9b147d7f}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70add7536794b63bf90eccfd37f9b147d7f} 
+I&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{J@{J}!Engine@{Engine}}
+\index{Engine@{Engine}!J@{J}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aff44570aca8241914870afbc310cdb85}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aff44570aca8241914870afbc310cdb85} 
+J&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{K@{K}!Engine@{Engine}}
+\index{Engine@{Engine}!K@{K}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa5f3c6a11b03839d46af9fb43c97c188}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70aa5f3c6a11b03839d46af9fb43c97c188} 
+K&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{L@{L}!Engine@{Engine}}
+\index{Engine@{Engine}!L@{L}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad20caec3b48a1eef164cb4ca81ba2587}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad20caec3b48a1eef164cb4ca81ba2587} 
+L&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M@{M}!Engine@{Engine}}
+\index{Engine@{Engine}!M@{M}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a69691c7bdcc3ce6d5d8a1361f22d04ac}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a69691c7bdcc3ce6d5d8a1361f22d04ac} 
+M&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N@{N}!Engine@{Engine}}
+\index{Engine@{Engine}!N@{N}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8d9c307cb7f3c4a32822a51922d1ceaa}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8d9c307cb7f3c4a32822a51922d1ceaa} 
+N&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{O@{O}!Engine@{Engine}}
+\index{Engine@{Engine}!O@{O}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af186217753c37b9b9f958d906208506e}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af186217753c37b9b9f958d906208506e} 
+O&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P@{P}!Engine@{Engine}}
+\index{Engine@{Engine}!P@{P}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a44c29edb103a2872f519ad0c9a0fdaaa}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a44c29edb103a2872f519ad0c9a0fdaaa} 
+P&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Q@{Q}!Engine@{Engine}}
+\index{Engine@{Engine}!Q@{Q}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af09564c9ca56850d4cd6b3319e541aee}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af09564c9ca56850d4cd6b3319e541aee} 
+Q&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R@{R}!Engine@{Engine}}
+\index{Engine@{Engine}!R@{R}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1e1d3d40573127e9ee0480caf1283d6}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1e1d3d40573127e9ee0480caf1283d6} 
+R&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S@{S}!Engine@{Engine}}
+\index{Engine@{Engine}!S@{S}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5dbc98dcc983a70728bd082d1a47546e}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5dbc98dcc983a70728bd082d1a47546e} 
+S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T@{T}!Engine@{Engine}}
+\index{Engine@{Engine}!T@{T}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab9ece18c950afbfa6b0fdbfa4ff731d3}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab9ece18c950afbfa6b0fdbfa4ff731d3} 
+T&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{U@{U}!Engine@{Engine}}
+\index{Engine@{Engine}!U@{U}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4c614360da93c0a041b22e537de151eb}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4c614360da93c0a041b22e537de151eb} 
+U&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V@{V}!Engine@{Engine}}
+\index{Engine@{Engine}!V@{V}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5206560a306a2e085a437fd258eb57ce}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5206560a306a2e085a437fd258eb57ce} 
+V&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{W@{W}!Engine@{Engine}}
+\index{Engine@{Engine}!W@{W}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a61e9c06ea9a85a5088a499df6458d276}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a61e9c06ea9a85a5088a499df6458d276} 
+W&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{X@{X}!Engine@{Engine}}
+\index{Engine@{Engine}!X@{X}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a02129bb861061d1a052c592e2dc6b383}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a02129bb861061d1a052c592e2dc6b383} 
+X&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Y@{Y}!Engine@{Engine}}
+\index{Engine@{Engine}!Y@{Y}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a57cec4137b614c87cb4e24a3d003a3e0}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a57cec4137b614c87cb4e24a3d003a3e0} 
+Y&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Z@{Z}!Engine@{Engine}}
+\index{Engine@{Engine}!Z@{Z}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a21c2e59531c8710156d34a3c30ac81d5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a21c2e59531c8710156d34a3c30ac81d5} 
+Z&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad0@{Keypad0}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad0@{Keypad0}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8af088f4456f200f66e7305e32aa1e3b}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8af088f4456f200f66e7305e32aa1e3b} 
+Keypad0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad1@{Keypad1}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad1@{Keypad1}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5b32482cf767b1915b1fbeb9a3021479}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5b32482cf767b1915b1fbeb9a3021479} 
+Keypad1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad2@{Keypad2}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad2@{Keypad2}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6661e97974ef5a2783c987ea071f8a0a}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6661e97974ef5a2783c987ea071f8a0a} 
+Keypad2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad3@{Keypad3}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad3@{Keypad3}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6e29803ef8c72852fb9bc216e912e720}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a6e29803ef8c72852fb9bc216e912e720} 
+Keypad3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad4@{Keypad4}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad4@{Keypad4}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad911ed9256592fc29bf18c68453614c4}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ad911ed9256592fc29bf18c68453614c4} 
+Keypad4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad5@{Keypad5}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad5@{Keypad5}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7b62ba810df419e5c085a7cc6e120e90}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a7b62ba810df419e5c085a7cc6e120e90} 
+Keypad5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad6@{Keypad6}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad6@{Keypad6}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4af249beec71483b20008b4d485ec499}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4af249beec71483b20008b4d485ec499} 
+Keypad6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad7@{Keypad7}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad7@{Keypad7}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0205068de7df3cb53ae243591d39ae95}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0205068de7df3cb53ae243591d39ae95} 
+Keypad7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad8@{Keypad8}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad8@{Keypad8}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a92e329d252b54f626755a38cae89a5be}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a92e329d252b54f626755a38cae89a5be} 
+Keypad8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Keypad9@{Keypad9}!Engine@{Engine}}
+\index{Engine@{Engine}!Keypad9@{Keypad9}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5bb0cbdeb920a0111e1a41cbd214cb49}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a5bb0cbdeb920a0111e1a41cbd214cb49} 
+Keypad9&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeypadMultiply@{KeypadMultiply}!Engine@{Engine}}
+\index{Engine@{Engine}!KeypadMultiply@{KeypadMultiply}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a12c8ec87631dc64e4307ab648b5e6596}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a12c8ec87631dc64e4307ab648b5e6596} 
+Keypad\+Multiply&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeypadPlus@{KeypadPlus}!Engine@{Engine}}
+\index{Engine@{Engine}!KeypadPlus@{KeypadPlus}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f3b5db5dd68593d6bebb3c91cbb75c5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4f3b5db5dd68593d6bebb3c91cbb75c5} 
+Keypad\+Plus&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeypadMinus@{KeypadMinus}!Engine@{Engine}}
+\index{Engine@{Engine}!KeypadMinus@{KeypadMinus}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1b5cc648ff53810de4009a82d26270fe}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1b5cc648ff53810de4009a82d26270fe} 
+Keypad\+Minus&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeypadPeriod@{KeypadPeriod}!Engine@{Engine}}
+\index{Engine@{Engine}!KeypadPeriod@{KeypadPeriod}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9bd3b7df5e51315fec833ca03b55d054}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9bd3b7df5e51315fec833ca03b55d054} 
+Keypad\+Period&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KeypadDivide@{KeypadDivide}!Engine@{Engine}}
+\index{Engine@{Engine}!KeypadDivide@{KeypadDivide}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1017496d0dc2f051ac948072d305f48c}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1017496d0dc2f051ac948072d305f48c} 
+Keypad\+Divide&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F1@{F1}!Engine@{Engine}}
+\index{Engine@{Engine}!F1@{F1}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1dffc8709f31a4987c8a88334107e89}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae1dffc8709f31a4987c8a88334107e89} 
+F1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F2@{F2}!Engine@{Engine}}
+\index{Engine@{Engine}!F2@{F2}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe5c3684dce76cdd9f7f42430868aa74}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70afe5c3684dce76cdd9f7f42430868aa74} 
+F2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F3@{F3}!Engine@{Engine}}
+\index{Engine@{Engine}!F3@{F3}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4b6bf4b531770872d4328ce69bef5627}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4b6bf4b531770872d4328ce69bef5627} 
+F3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F4@{F4}!Engine@{Engine}}
+\index{Engine@{Engine}!F4@{F4}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae7e0e72401a9f2718ed0f39f2861d702}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae7e0e72401a9f2718ed0f39f2861d702} 
+F4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F5@{F5}!Engine@{Engine}}
+\index{Engine@{Engine}!F5@{F5}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a37f438df6a6d5ba4c17ef8ca58562f00}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a37f438df6a6d5ba4c17ef8ca58562f00} 
+F5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F6@{F6}!Engine@{Engine}}
+\index{Engine@{Engine}!F6@{F6}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1faf42f2823f184eb2c9f0dffe5d73f2}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1faf42f2823f184eb2c9f0dffe5d73f2} 
+F6&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F7@{F7}!Engine@{Engine}}
+\index{Engine@{Engine}!F7@{F7}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a47489eb597b7db34caa24b1fc78fc839}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a47489eb597b7db34caa24b1fc78fc839} 
+F7&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F8@{F8}!Engine@{Engine}}
+\index{Engine@{Engine}!F8@{F8}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4787509ad9f9d747a81a30e9dde3d4a7}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a4787509ad9f9d747a81a30e9dde3d4a7} 
+F8&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F9@{F9}!Engine@{Engine}}
+\index{Engine@{Engine}!F9@{F9}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a892a245e287c163080b23db737d3c4c9}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a892a245e287c163080b23db737d3c4c9} 
+F9&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F10@{F10}!Engine@{Engine}}
+\index{Engine@{Engine}!F10@{F10}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab213ce22ca6ad4eda8db82966b9b6e5a}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ab213ce22ca6ad4eda8db82966b9b6e5a} 
+F10&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F11@{F11}!Engine@{Engine}}
+\index{Engine@{Engine}!F11@{F11}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a643b0662422d1d0dffa3fca2e2bf28a8}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a643b0662422d1d0dffa3fca2e2bf28a8} 
+F11&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F12@{F12}!Engine@{Engine}}
+\index{Engine@{Engine}!F12@{F12}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae902674982fc99aa343cdd94da7476c3}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ae902674982fc99aa343cdd94da7476c3} 
+F12&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Semicolon@{Semicolon}!Engine@{Engine}}
+\index{Engine@{Engine}!Semicolon@{Semicolon}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9806fa37a3ecd39bf637c203aa011ed0}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a9806fa37a3ecd39bf637c203aa011ed0} 
+Semicolon&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Slash@{Slash}!Engine@{Engine}}
+\index{Engine@{Engine}!Slash@{Slash}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a358cfe58715d680d9ab09f82e4010cbc}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a358cfe58715d680d9ab09f82e4010cbc} 
+Slash&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BackQuote@{BackQuote}!Engine@{Engine}}
+\index{Engine@{Engine}!BackQuote@{BackQuote}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8c046c786b9034d32a14ced194f94548}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a8c046c786b9034d32a14ced194f94548} 
+Back\+Quote&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftBracket@{LeftBracket}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftBracket@{LeftBracket}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a481c09f513474b2d31ba5c2992947b17}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a481c09f513474b2d31ba5c2992947b17} 
+Left\+Bracket&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Backslash@{Backslash}!Engine@{Engine}}
+\index{Engine@{Engine}!Backslash@{Backslash}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af6c6379402dce27659f7cffee6bc1f00}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70af6c6379402dce27659f7cffee6bc1f00} 
+Backslash&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightBracket@{RightBracket}!Engine@{Engine}}
+\index{Engine@{Engine}!RightBracket@{RightBracket}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a455364d8991395f71ef9ccc5cc449e5c}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a455364d8991395f71ef9ccc5cc449e5c} 
+Right\+Bracket&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Quote@{Quote}!Engine@{Engine}}
+\index{Engine@{Engine}!Quote@{Quote}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac48e929b2b1eabba2ba036884433345e}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70ac48e929b2b1eabba2ba036884433345e} 
+Quote&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Equals@{Equals}!Engine@{Engine}}
+\index{Engine@{Engine}!Equals@{Equals}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0ccb67e7eaae09d9e4078d161eeca100}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a0ccb67e7eaae09d9e4078d161eeca100} 
+Equals&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Minus@{Minus}!Engine@{Engine}}
+\index{Engine@{Engine}!Minus@{Minus}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a453fb623e752c5993f65bc410fd74fe5}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a453fb623e752c5993f65bc410fd74fe5} 
+Minus&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Period@{Period}!Engine@{Engine}}
+\index{Engine@{Engine}!Period@{Period}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1901606ea069a83dc7beea17881ef95a}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a1901606ea069a83dc7beea17881ef95a} 
+Period&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Comma@{Comma}!Engine@{Engine}}
+\index{Engine@{Engine}!Comma@{Comma}}
+}\Hypertarget{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a58be47db9455679e6a44df2eff9c9fa6}\label{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a58be47db9455679e6a44df2eff9c9fa6} 
+Comma&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}\index{Engine@{Engine}!RigidbodyType2D@{RigidbodyType2D}}
+\index{RigidbodyType2D@{RigidbodyType2D}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{RigidbodyType2D}{RigidbodyType2D}}
+{\footnotesize\ttfamily \label{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22} 
+enum class \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{Engine::\+\+Rigidbody\+Type2D}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Types of rigidbody simulation. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Dynamic@{Dynamic}!Engine@{Engine}}
+\index{Engine@{Engine}!Dynamic@{Dynamic}}
+}\Hypertarget{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}\label{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c} 
+Dynamic&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Kinematic@{Kinematic}!Engine@{Engine}}
+\index{Engine@{Engine}!Kinematic@{Kinematic}}
+}\Hypertarget{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a40c78b58b86002ee38fad2d3c9dd787e}\label{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a40c78b58b86002ee38fad2d3c9dd787e} 
+Kinematic&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Static@{Static}!Engine@{Engine}}
+\index{Engine@{Engine}!Static@{Static}}
+}\Hypertarget{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a84a8921b25f505d0d2077aeb5db4bc16}\label{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a84a8921b25f505d0d2077aeb5db4bc16} 
+Static&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}\index{Engine@{Engine}!TileType@{TileType}}
+\index{TileType@{TileType}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{TileType}{TileType}}
+{\footnotesize\ttfamily \label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d} 
+enum class \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Engine::\+\+Tile\+Type}} :\+ int\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Types of tiles in the map Negative values = walkable floors with different textures Zero = empty/\+walkable Positive values 1-\/9 = walls (not walkable) Positive value 10 = door marker (spawns \doxylink{class_engine_1_1_door}{Door}, then becomes Empty) Positive value 11 = terminal marker (spawns CCTVTerminal, then becomes Empty) Positive value 12 = exit marker (marked as floor, special gameplay handling) Positive value 13 = control room door marker (spawns Control\+Room\+Door, then becomes Empty) Positive values 15-\/18 = access card markers (Green, Purple, Red, Yellow) Positive value 20 = dedicated control room door tile (easy to place in editor). 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Empty@{Empty}!Engine@{Engine}}
+\index{Engine@{Engine}!Empty@{Empty}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023dace2c8aed9c2fa0cfbed56cbda4d8bf07}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023dace2c8aed9c2fa0cfbed56cbda4d8bf07} 
+Empty&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wall@{Wall}!Engine@{Engine}}
+\index{Engine@{Engine}!Wall@{Wall}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da94e8a499539d1a472f3b5dbbb85508c0}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da94e8a499539d1a472f3b5dbbb85508c0} 
+Wall&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wall2@{Wall2}!Engine@{Engine}}
+\index{Engine@{Engine}!Wall2@{Wall2}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf3c835f5aba1343c75949aadc1c7cb10}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf3c835f5aba1343c75949aadc1c7cb10} 
+Wall2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wall3@{Wall3}!Engine@{Engine}}
+\index{Engine@{Engine}!Wall3@{Wall3}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daee12db81efd581400ccc2423365347ed}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daee12db81efd581400ccc2423365347ed} 
+Wall3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wall4@{Wall4}!Engine@{Engine}}
+\index{Engine@{Engine}!Wall4@{Wall4}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da342a0e1d8baf4d1404fa88678ec15f9d}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da342a0e1d8baf4d1404fa88678ec15f9d} 
+Wall4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NUM\_WALL@{NUM\_WALL}!Engine@{Engine}}
+\index{Engine@{Engine}!NUM\_WALL@{NUM\_WALL}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8f1873c88edacc4855996e2c9a8a27d3}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8f1873c88edacc4855996e2c9a8a27d3} 
+NUM\+\_\+\+WALL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Door@{Door}!Engine@{Engine}}
+\index{Engine@{Engine}!Door@{Door}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1} 
+Door&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NUM\_DOOR@{NUM\_DOOR}!Engine@{Engine}}
+\index{Engine@{Engine}!NUM\_DOOR@{NUM\_DOOR}}
+}\Hypertarget{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8cc3c3b8949376a67d6318e99813135b}\label{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8cc3c3b8949376a67d6318e99813135b} 
+NUM\+\_\+\+DOOR&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10}\index{Engine@{Engine}!XboxButton@{XboxButton}}
+\index{XboxButton@{XboxButton}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{XboxButton}{XboxButton}}
+{\footnotesize\ttfamily \label{namespace_engine_a420949c8e2010d15142c9236de685a10} 
+enum class \doxymbox{\hyperlink{namespace_engine_a420949c8e2010d15142c9236de685a10}{Engine::\+\+Xbox\+Button}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Xbox controller button codes. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DPadUp@{DPadUp}!Engine@{Engine}}
+\index{Engine@{Engine}!DPadUp@{DPadUp}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a6e53ad4e24c7b597e15b2193883bf7f2}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a6e53ad4e24c7b597e15b2193883bf7f2} 
+DPad\+Up&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DPadDown@{DPadDown}!Engine@{Engine}}
+\index{Engine@{Engine}!DPadDown@{DPadDown}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a826b0ea5950d9f05469d6f3ded8b570f}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a826b0ea5950d9f05469d6f3ded8b570f} 
+DPad\+Down&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DPadLeft@{DPadLeft}!Engine@{Engine}}
+\index{Engine@{Engine}!DPadLeft@{DPadLeft}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a1afff4bd4c22275dff273ca6f01952f1}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a1afff4bd4c22275dff273ca6f01952f1} 
+DPad\+Left&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DPadRight@{DPadRight}!Engine@{Engine}}
+\index{Engine@{Engine}!DPadRight@{DPadRight}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10aee57d4f85b132ca155ad4f77e71b7df1}\label{namespace_engine_a420949c8e2010d15142c9236de685a10aee57d4f85b132ca155ad4f77e71b7df1} 
+DPad\+Right&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Start@{Start}!Engine@{Engine}}
+\index{Engine@{Engine}!Start@{Start}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10aa6122a65eaa676f700ae68d393054a37}\label{namespace_engine_a420949c8e2010d15142c9236de685a10aa6122a65eaa676f700ae68d393054a37} 
+Start&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Back@{Back}!Engine@{Engine}}
+\index{Engine@{Engine}!Back@{Back}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a0557fa923dcee4d0f86b1409f5c2167f}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a0557fa923dcee4d0f86b1409f5c2167f} 
+Back&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftThumb@{LeftThumb}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftThumb@{LeftThumb}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a2cd349073c4937c593353ffe98956c58}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a2cd349073c4937c593353ffe98956c58} 
+Left\+Thumb&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightThumb@{RightThumb}!Engine@{Engine}}
+\index{Engine@{Engine}!RightThumb@{RightThumb}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10ae499bf8bc6e897455b94cabc7a5c2da7}\label{namespace_engine_a420949c8e2010d15142c9236de685a10ae499bf8bc6e897455b94cabc7a5c2da7} 
+Right\+Thumb&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LeftShoulder@{LeftShoulder}!Engine@{Engine}}
+\index{Engine@{Engine}!LeftShoulder@{LeftShoulder}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a36131cbdc50218d923d0bcb0d9870e1c}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a36131cbdc50218d923d0bcb0d9870e1c} 
+Left\+Shoulder&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RightShoulder@{RightShoulder}!Engine@{Engine}}
+\index{Engine@{Engine}!RightShoulder@{RightShoulder}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a27a5390f2d1b44a43f74d57703f8d354}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a27a5390f2d1b44a43f74d57703f8d354} 
+Right\+Shoulder&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{A@{A}!Engine@{Engine}}
+\index{Engine@{Engine}!A@{A}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a7fc56270e7a70fa81a5935b72eacbe29}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a7fc56270e7a70fa81a5935b72eacbe29} 
+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B@{B}!Engine@{Engine}}
+\index{Engine@{Engine}!B@{B}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a9d5ed678fe57bcca610140957afab571}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a9d5ed678fe57bcca610140957afab571} 
+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{X@{X}!Engine@{Engine}}
+\index{Engine@{Engine}!X@{X}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a02129bb861061d1a052c592e2dc6b383}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a02129bb861061d1a052c592e2dc6b383} 
+X&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Y@{Y}!Engine@{Engine}}
+\index{Engine@{Engine}!Y@{Y}}
+}\Hypertarget{namespace_engine_a420949c8e2010d15142c9236de685a10a57cec4137b614c87cb4e24a3d003a3e0}\label{namespace_engine_a420949c8e2010d15142c9236de685a10a57cec4137b614c87cb4e24a3d003a3e0} 
+Y&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_engine_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_engine_a79ab16953ee56518a4c76f10920a3a47}\index{Engine@{Engine}!LayerToMask@{LayerToMask}}
+\index{LayerToMask@{LayerToMask}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{LayerToMask()}{LayerToMask()}}
+{\footnotesize\ttfamily \label{namespace_engine_a79ab16953ee56518a4c76f10920a3a47} 
+u32 Engine::\+\+Layer\+To\+Mask (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Collision\+Layer}}}]{layer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convert layer to bitmask value. 
+
+\Hypertarget{namespace_engine_a7da48f144c21761fd6287e5734dce4e2}\index{Engine@{Engine}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{namespace_engine_a7da48f144c21761fd6287e5734dce4e2} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{f32}]{scalar}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{v}{}\end{DoxyParamCaption})}
+
+\Hypertarget{namespace_engine_a8e9dd5986bc3d18e35cfb3da5f951f0c}\index{Engine@{Engine}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Engine@{Engine}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{namespace_engine_a8e9dd5986bc3d18e35cfb3da5f951f0c} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} Engine::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{f32}]{scalar}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}} \&}]{v}{}\end{DoxyParamCaption})}
+

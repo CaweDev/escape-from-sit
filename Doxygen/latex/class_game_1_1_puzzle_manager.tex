@@ -1,0 +1,204 @@
+\doxysection{Game::\+Puzzle\+Manager Class Reference}
+\hypertarget{class_game_1_1_puzzle_manager}{}\label{class_game_1_1_puzzle_manager}\index{Game::PuzzleManager@{Game::PuzzleManager}}
+
+
+Owns all book data, creates in-\/world puzzle objects, and tracks quiz state.  
+
+
+
+
+{\ttfamily \+\#include $<$Puzzle\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a31d526326c0113036c805d18de00a170}{Create\+Puzzle\+Object}} (\doxymbox{\hyperlink{struct_game_1_1_book}{Book}} book)
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4}{Book\+Data\+Init}} (const std::\+string \&filepath)
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0}{Init}} ()
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_af4a9ddf117f54f6ca1c07c427096bc9f}{Free\+Manager}} ()
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae26777692878695afd712684509d73f2}{Open\+Exit\+Door}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_book}{Book}} $>$ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a0ebecd3823f9f2d01e6fc3037589c4a9}{all\+Books}} = \{\}
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_book}{Book}} $>$ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac3c55aba867c1dbabf4e24a5d440bc73}{Books}} = \{\}
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_grade_tier}{Grade\+Tier}} $>$ \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a4846ca7b3ad23761b48d512a41076463}{grade\+Tiers}} = \{\}
+\item 
+static int \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}{books\+Collected}} = 0
+\item 
+static int \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ab0feac1005a55d30ea5953041161acd5}{total\+Wrong\+Answers}} = 0
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a300e4bc74676e3a290b770811148feaf}{active\+Book\+Text}} = "{}"{}
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a9ab2aa162cdec5c39062d2fcc072f488}{active\+Book\+Title}} = "{}"{}
+\item 
+static float \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_ae2554e9605d43b5c22ec45c007749937}{popup\+Timer}} = 0.\+0f
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a8d15cb9f99c4c0695ecbc2653ec5539f}{active\+Opt1}} = "{}"{}
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6a36ce5f3fdcfad0a3a0a94bebda5947}{active\+Opt2}} = "{}"{}
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_aed8a9d54fb900874af207ee021f5e19a}{active\+Opt3}} = "{}"{}
+\item 
+static std::\+string \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6c4be9fcd0c73ad4204591bdfb94a681}{active\+Grade}} = "{}"{}
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a6eb421f6821c997b5ffb615652cdff61}{is\+Quiz\+Active}} = false
+\item 
+static int \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a797671acaeb471fe37d6b20ff32e8c47}{current\+Correct\+Answer}} = 0
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a8fbf0df03cf4087efc1d3a8bf140bcdb}{current\+Book\+Obj}} = nullptr
+\item 
+static int \doxymbox{\hyperlink{class_game_1_1_puzzle_manager_a2b507035fbcbdd70908f6d5fe60fe3b4}{current\+Book\+Id}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Owns all book data, creates in-\/world puzzle objects, and tracks quiz state. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_puzzle_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4}\index{Game::PuzzleManager@{Game::PuzzleManager}!BookDataInit@{BookDataInit}}
+\index{BookDataInit@{BookDataInit}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{BookDataInit()}{BookDataInit()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ae3dfd31b38647d90deb7066c34d790e4} 
+void Game::\+\+Puzzle\+Manager::\+\+Book\+Data\+Init (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a31d526326c0113036c805d18de00a170}\index{Game::PuzzleManager@{Game::PuzzleManager}!CreatePuzzleObject@{CreatePuzzleObject}}
+\index{CreatePuzzleObject@{CreatePuzzleObject}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{CreatePuzzleObject()}{CreatePuzzleObject()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a31d526326c0113036c805d18de00a170} 
+void Game::\+\+Puzzle\+Manager::\+\+Create\+Puzzle\+Object (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_game_1_1_book}{Book}}}]{book}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_af4a9ddf117f54f6ca1c07c427096bc9f}\index{Game::PuzzleManager@{Game::PuzzleManager}!FreeManager@{FreeManager}}
+\index{FreeManager@{FreeManager}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{FreeManager()}{FreeManager()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_af4a9ddf117f54f6ca1c07c427096bc9f} 
+void Game::\+\+Puzzle\+Manager::\+\+Free\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0}\index{Game::PuzzleManager@{Game::PuzzleManager}!Init@{Init}}
+\index{Init@{Init}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a14aea3725d3e1b0e6abbb37ee861c6f0} 
+void Game::\+\+Puzzle\+Manager::\+\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_ae26777692878695afd712684509d73f2}\index{Game::PuzzleManager@{Game::PuzzleManager}!OpenExitDoor@{OpenExitDoor}}
+\index{OpenExitDoor@{OpenExitDoor}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{OpenExitDoor()}{OpenExitDoor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ae26777692878695afd712684509d73f2} 
+void Game::\+\+Puzzle\+Manager::\+\+Open\+Exit\+Door (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_puzzle_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_puzzle_manager_a300e4bc74676e3a290b770811148feaf}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeBookText@{activeBookText}}
+\index{activeBookText@{activeBookText}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeBookText}{activeBookText}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a300e4bc74676e3a290b770811148feaf} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Book\+Text = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a9ab2aa162cdec5c39062d2fcc072f488}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeBookTitle@{activeBookTitle}}
+\index{activeBookTitle@{activeBookTitle}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeBookTitle}{activeBookTitle}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a9ab2aa162cdec5c39062d2fcc072f488} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Book\+Title = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a6c4be9fcd0c73ad4204591bdfb94a681}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeGrade@{activeGrade}}
+\index{activeGrade@{activeGrade}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeGrade}{activeGrade}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a6c4be9fcd0c73ad4204591bdfb94a681} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Grade = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a8d15cb9f99c4c0695ecbc2653ec5539f}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeOpt1@{activeOpt1}}
+\index{activeOpt1@{activeOpt1}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeOpt1}{activeOpt1}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a8d15cb9f99c4c0695ecbc2653ec5539f} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Opt1 = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a6a36ce5f3fdcfad0a3a0a94bebda5947}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeOpt2@{activeOpt2}}
+\index{activeOpt2@{activeOpt2}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeOpt2}{activeOpt2}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a6a36ce5f3fdcfad0a3a0a94bebda5947} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Opt2 = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_aed8a9d54fb900874af207ee021f5e19a}\index{Game::PuzzleManager@{Game::PuzzleManager}!activeOpt3@{activeOpt3}}
+\index{activeOpt3@{activeOpt3}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{activeOpt3}{activeOpt3}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_aed8a9d54fb900874af207ee021f5e19a} 
+std::\+string Game::\+\+Puzzle\+Manager::\+active\+Opt3 = "{}"{}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a0ebecd3823f9f2d01e6fc3037589c4a9}\index{Game::PuzzleManager@{Game::PuzzleManager}!allBooks@{allBooks}}
+\index{allBooks@{allBooks}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{allBooks}{allBooks}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a0ebecd3823f9f2d01e6fc3037589c4a9} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_book}{Book}} $>$ Game::\+\+Puzzle\+Manager::\+all\+Books = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_ac3c55aba867c1dbabf4e24a5d440bc73}\index{Game::PuzzleManager@{Game::PuzzleManager}!Books@{Books}}
+\index{Books@{Books}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{Books}{Books}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ac3c55aba867c1dbabf4e24a5d440bc73} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_book}{Book}} $>$ Game::\+\+Puzzle\+Manager::\+\+Books = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b}\index{Game::PuzzleManager@{Game::PuzzleManager}!booksCollected@{booksCollected}}
+\index{booksCollected@{booksCollected}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{booksCollected}{booksCollected}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ac693d23950f8670f64eac967f953905b} 
+int Game::\+\+Puzzle\+Manager::\+books\+Collected = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a2b507035fbcbdd70908f6d5fe60fe3b4}\index{Game::PuzzleManager@{Game::PuzzleManager}!currentBookId@{currentBookId}}
+\index{currentBookId@{currentBookId}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{currentBookId}{currentBookId}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a2b507035fbcbdd70908f6d5fe60fe3b4} 
+int Game::\+\+Puzzle\+Manager::\+current\+Book\+Id = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a8fbf0df03cf4087efc1d3a8bf140bcdb}\index{Game::PuzzleManager@{Game::PuzzleManager}!currentBookObj@{currentBookObj}}
+\index{currentBookObj@{currentBookObj}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{currentBookObj}{currentBookObj}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a8fbf0df03cf4087efc1d3a8bf140bcdb} 
+\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::\+\+Game\+Object}} \texorpdfstring{$\ast$}{*} Game::\+\+Puzzle\+Manager::\+current\+Book\+Obj = nullptr\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a797671acaeb471fe37d6b20ff32e8c47}\index{Game::PuzzleManager@{Game::PuzzleManager}!currentCorrectAnswer@{currentCorrectAnswer}}
+\index{currentCorrectAnswer@{currentCorrectAnswer}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{currentCorrectAnswer}{currentCorrectAnswer}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a797671acaeb471fe37d6b20ff32e8c47} 
+int Game::\+\+Puzzle\+Manager::\+current\+Correct\+Answer = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a4846ca7b3ad23761b48d512a41076463}\index{Game::PuzzleManager@{Game::PuzzleManager}!gradeTiers@{gradeTiers}}
+\index{gradeTiers@{gradeTiers}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{gradeTiers}{gradeTiers}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a4846ca7b3ad23761b48d512a41076463} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_grade_tier}{Grade\+Tier}} $>$ Game::\+\+Puzzle\+Manager::\+grade\+Tiers = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_a6eb421f6821c997b5ffb615652cdff61}\index{Game::PuzzleManager@{Game::PuzzleManager}!isQuizActive@{isQuizActive}}
+\index{isQuizActive@{isQuizActive}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{isQuizActive}{isQuizActive}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_a6eb421f6821c997b5ffb615652cdff61} 
+bool Game::\+\+Puzzle\+Manager::\+is\+Quiz\+Active = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_ae2554e9605d43b5c22ec45c007749937}\index{Game::PuzzleManager@{Game::PuzzleManager}!popupTimer@{popupTimer}}
+\index{popupTimer@{popupTimer}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{popupTimer}{popupTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ae2554e9605d43b5c22ec45c007749937} 
+float Game::\+\+Puzzle\+Manager::\+popup\+Timer = 0.\+0f\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_puzzle_manager_ab0feac1005a55d30ea5953041161acd5}\index{Game::PuzzleManager@{Game::PuzzleManager}!totalWrongAnswers@{totalWrongAnswers}}
+\index{totalWrongAnswers@{totalWrongAnswers}!Game::PuzzleManager@{Game::PuzzleManager}}
+\doxysubsubsection{\texorpdfstring{totalWrongAnswers}{totalWrongAnswers}}
+{\footnotesize\ttfamily \label{class_game_1_1_puzzle_manager_ab0feac1005a55d30ea5953041161acd5} 
+int Game::\+\+Puzzle\+Manager::\+total\+Wrong\+Answers = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Puzzle/\+\doxymbox{\hyperlink{_puzzle_manager_8hpp}{Puzzle\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Puzzle/\+\doxymbox{\hyperlink{_puzzle_manager_8cpp}{Puzzle\+Manager.\+cpp}}\end{DoxyCompactItemize}

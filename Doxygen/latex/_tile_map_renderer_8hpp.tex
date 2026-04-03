@@ -1,0 +1,52 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Graphics/\+\+Tile\+Map\+Renderer.hpp File Reference}
+\hypertarget{_tile_map_renderer_8hpp}{}\label{_tile_map_renderer_8hpp}\index{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/TileMapRenderer.hpp}}
+
+
+3D raycasting renderer for tile-\/based maps.  
+
+
+{\ttfamily \+\#include "{}Engine/\+\+Tile\+Map/\+\+Tile\+Map.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+IRenderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Color.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Texture\+Utils.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Math/\+\+Vector2.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Game\+Object.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Camera.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}AEEngine.\+h"{}}\newline
+{\ttfamily \+\#include $<$cmath$>$}\newline
+{\ttfamily \+\#include $<$memory$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$unordered\+\_\+map$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_tile_map_renderer}{Engine::\+\+Tile\+Map\+Renderer}}
+\begin{DoxyCompactList}\small\item\em First-\/person 3D renderer that raycasts against a \doxylink{class_engine_1_1_tile_map}{Tile\+Map}. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_tile_map_renderer_1_1_tile_sprites}{Engine::\+\+Tile\+Map\+Renderer::\+\+Tile\+Sprites}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+3D raycasting renderer for tile-\/based maps. 
+
+Renders a first-\/person 3D view using the DDA raycasting algorithm, similar to classic games like Wolfenstein 3D and DOOM. Each frame it:\+
+
+
+\begin{DoxyEnumerate}
+\item Casts one ray per COLUMN\+\_\+\+STEP pixels across the screen width (the "{}column pass"{}).
+\item Renders ceiling and floor into scaled CPU framebuffers, then uploads them as a single GPU texture each via AEGfx\+Texture\+Load\+From\+Memory.
+\item Renders textured wall columns as GPU triangle strips, batched by tile type and fog key to minimise draw calls.
+\end{DoxyEnumerate}\hypertarget{_tile_map_renderer_8hpp_perf}{}\doxysubsection{\texorpdfstring{Performance notes}{Performance notes}}\label{_tile_map_renderer_8hpp_perf}
+
+\begin{DoxyItemize}
+\item COLUMN\+\_\+\+STEP controls the horizontal raycast granularity. Higher = fewer rays = faster, but columns appear wider and "{}blocky"{}. Default 8.
+\item fb\+Scale controls the floor/\+ceiling framebuffer resolution relative to screen size. 0.\+25 = quarter-\/res (very fast, pixelated), 0.\+5 = half-\/res (good balance), 1.\+0 = full-\/res.
+\item Fog is applied via a pre-\/computed look-\/up table (fog\+LUT) to avoid per-\/pixel expf() calls. The LUT is rebuilt only when Camera::\+main\textquotesingle{}s fog\+Distance changes.
+\end{DoxyItemize}\hypertarget{_tile_map_renderer_8hpp_pipeline}{}\doxysubsection{\texorpdfstring{Render pipeline order}{Render pipeline order}}\label{_tile_map_renderer_8hpp_pipeline}
+Ceiling (framebuffer quad) → Floor (framebuffer quad) → Walls (GPU strips, on top) Sprites are drawn after this renderer by Sprite\+Renderer, using ZBuffer for occlusion. 

@@ -42,30 +42,20 @@ void DoorRenderer::Initialize(const std::string& configPath)
     // whose members are set from s_doorRendererConfig at construction or spawn time.
 }
 
-/*!
- * \brief [AUTO] CacheReferences
- */
+
 void DoorRenderer::CacheReferences() {
     if (!door && gameObject) {
         door = gameObject->GetComponent<Door>();
     }
 }
 
-/*!
- * \brief [AUTO] CreateMesh
- */
+
 void DoorRenderer::CreateMesh() {
     // Not used - we build columns dynamically
 }
 
-/*!
- * \brief [AUTO] CalculatePerpDistance
- * \return 
- */
-/*!
- * \brief [AUTO] CalculatePerpDistance
- * \return 
- */
+
+
 f32 DoorRenderer::CalculatePerpDistance() const {
     if (!door || !Camera::main || !Camera::main->transform) {
         return 1e30f;
@@ -88,21 +78,13 @@ f32 DoorRenderer::CalculatePerpDistance() const {
     return perpDist;
 }
 
-/*!
- * \brief [AUTO] GetSortingKey
- * \return 
- */
-/*!
- * \brief [AUTO] GetSortingKey
- * \return 
- */
+
+
 f32 DoorRenderer::GetSortingKey() const {
     return CalculatePerpDistance();
 }
 
-/*!
- * \brief [AUTO] Render
- */
+
 void DoorRenderer::Render() {
     if (!enabled) return;
     
@@ -287,16 +269,8 @@ void DoorRenderer::Render() {
     }
 }
 
-/*!
- * \brief [AUTO] RenderMesh
- * \param mesh [in]
- * \param fogFactor [in]
- */
-/*!
- * \brief [AUTO] RenderMesh
- * \param mesh [in]
- * \param fogFactor [in]
- */
+
+
 void DoorRenderer::RenderMesh(AEGfxVertexList* mesh, f32 fogFactor) {
     if (sprite && sprite->IsLoaded()) {
         AEGfxSetRenderMode(AE_GFX_RM_TEXTURE);

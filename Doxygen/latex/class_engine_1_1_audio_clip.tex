@@ -1,0 +1,121 @@
+\doxysection{Engine::\+Audio\+Clip Class Reference}
+\hypertarget{class_engine_1_1_audio_clip}{}\label{class_engine_1_1_audio_clip}\index{Engine::AudioClip@{Engine::AudioClip}}
+
+
+Represents an audio file that can be played.  
+
+
+
+
+{\ttfamily \+\#include $<$Audio\+Clip.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a411ef90e6ed34c7ed394f33b4e5f316a}{\texorpdfstring{$\sim$}{\string~}\+Audio\+Clip}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a0ef53c4c8ba58bec0db3c38782628152}{Audio\+Clip}} (const Audio\+Clip \&)=delete
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \& \doxymbox{\hyperlink{class_engine_1_1_audio_clip_abc17bd76c13a9236e4f967670ee9f93d}{operator=}} (const \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \&)=delete
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_ac402fe2bfa3f8f4bca43c2c9c9998e1d}{Audio\+Clip}} (Audio\+Clip \&\&other) noexcept
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \& \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a918a262da956206b86d720c597487ebc}{operator=}} (\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \&\&other) noexcept
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_audio_clip_aa6854bf02d2fc96f0a849c45dee619c3}{Load\+Sound}} (const std::\+string \&filepath)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a99abfa83e8e38ef9e2492e4030d07e60}{Load\+Music}} (const std::\+string \&filepath)
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_audio_clip_af5c3cbd8f7d777049722b10baae7ca77}{Unload}} ()
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_audio_clip_ab16c01d916ba68869c4b53d368d8723b}{Is\+Loaded}} () const
+\item 
+AEAudio \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a92c4e3b9e6aa179057a7f370412bad18}{Get\+Handle}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an audio file that can be played. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_audio_clip_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}\index{Engine::AudioClip@{Engine::AudioClip}!AudioClip@{AudioClip}}
+\index{AudioClip@{AudioClip}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{AudioClip()}{AudioClip()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8} 
+Engine::\+\+Audio\+Clip::\+\+Audio\+Clip (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_audio_clip_a411ef90e6ed34c7ed394f33b4e5f316a}\index{Engine::AudioClip@{Engine::AudioClip}!````~AudioClip@{\texorpdfstring{$\sim$}{\string~}AudioClip}}
+\index{````~AudioClip@{\texorpdfstring{$\sim$}{\string~}AudioClip}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AudioClip()}{\string~AudioClip()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a411ef90e6ed34c7ed394f33b4e5f316a} 
+Engine::\+\+Audio\+Clip::\+\texorpdfstring{$\sim$}{\string~}\+Audio\+Clip (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_audio_clip_a0ef53c4c8ba58bec0db3c38782628152}\index{Engine::AudioClip@{Engine::AudioClip}!AudioClip@{AudioClip}}
+\index{AudioClip@{AudioClip}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{AudioClip()}{AudioClip()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a0ef53c4c8ba58bec0db3c38782628152} 
+Engine::\+\+Audio\+Clip::\+\+Audio\+Clip (\begin{DoxyParamCaption}\item[{const Audio\+Clip \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_engine_1_1_audio_clip_ac402fe2bfa3f8f4bca43c2c9c9998e1d}\index{Engine::AudioClip@{Engine::AudioClip}!AudioClip@{AudioClip}}
+\index{AudioClip@{AudioClip}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{AudioClip()}{AudioClip()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_ac402fe2bfa3f8f4bca43c2c9c9998e1d} 
+Engine::\+\+Audio\+Clip::\+\+Audio\+Clip (\begin{DoxyParamCaption}\item[{Audio\+Clip \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_audio_clip_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_audio_clip_a92c4e3b9e6aa179057a7f370412bad18}\index{Engine::AudioClip@{Engine::AudioClip}!GetHandle@{GetHandle}}
+\index{GetHandle@{GetHandle}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{GetHandle()}{GetHandle()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a92c4e3b9e6aa179057a7f370412bad18} 
+AEAudio Engine::\+\+Audio\+Clip::\+\+Get\+Handle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Get internal AEAudio handle \Hypertarget{class_engine_1_1_audio_clip_ab16c01d916ba68869c4b53d368d8723b}\index{Engine::AudioClip@{Engine::AudioClip}!IsLoaded@{IsLoaded}}
+\index{IsLoaded@{IsLoaded}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{IsLoaded()}{IsLoaded()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_ab16c01d916ba68869c4b53d368d8723b} 
+bool Engine::\+\+Audio\+Clip::\+\+Is\+Loaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Check if audio is loaded \Hypertarget{class_engine_1_1_audio_clip_a99abfa83e8e38ef9e2492e4030d07e60}\index{Engine::AudioClip@{Engine::AudioClip}!LoadMusic@{LoadMusic}}
+\index{LoadMusic@{LoadMusic}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{LoadMusic()}{LoadMusic()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a99abfa83e8e38ef9e2492e4030d07e60} 
+bool Engine::\+\+Audio\+Clip::\+\+Load\+Music (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})}
+
+Load audio as music (for long background tracks) \Hypertarget{class_engine_1_1_audio_clip_aa6854bf02d2fc96f0a849c45dee619c3}\index{Engine::AudioClip@{Engine::AudioClip}!LoadSound@{LoadSound}}
+\index{LoadSound@{LoadSound}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{LoadSound()}{LoadSound()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_aa6854bf02d2fc96f0a849c45dee619c3} 
+bool Engine::\+\+Audio\+Clip::\+\+Load\+Sound (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})}
+
+Load audio as sound (for short effects) \Hypertarget{class_engine_1_1_audio_clip_a918a262da956206b86d720c597487ebc}\index{Engine::AudioClip@{Engine::AudioClip}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_a918a262da956206b86d720c597487ebc} 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \& Engine::\+\+Audio\+Clip::\+operator= (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\Hypertarget{class_engine_1_1_audio_clip_abc17bd76c13a9236e4f967670ee9f93d}\index{Engine::AudioClip@{Engine::AudioClip}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_abc17bd76c13a9236e4f967670ee9f93d} 
+\doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \& Engine::\+\+Audio\+Clip::\+operator= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_engine_1_1_audio_clip_a6fb106184098352a82828426d72a67f8}{Audio\+Clip}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_engine_1_1_audio_clip_af5c3cbd8f7d777049722b10baae7ca77}\index{Engine::AudioClip@{Engine::AudioClip}!Unload@{Unload}}
+\index{Unload@{Unload}!Engine::AudioClip@{Engine::AudioClip}}
+\doxysubsubsection{\texorpdfstring{Unload()}{Unload()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_audio_clip_af5c3cbd8f7d777049722b10baae7ca77} 
+void Engine::\+\+Audio\+Clip::\+\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Unload audio resource 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_audio_clip_8hpp}{Audio\+Clip.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_audio_clip_8cpp}{Audio\+Clip.\+cpp}}\end{DoxyCompactItemize}

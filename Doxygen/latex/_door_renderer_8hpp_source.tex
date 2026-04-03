@@ -1,0 +1,89 @@
+\doxysection{Door\+Renderer.\+hpp}
+\hypertarget{_door_renderer_8hpp_source}{}\label{_door_renderer_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Graphics/DoorRenderer.hpp@{AlphaEngine2.5D/Source/Engine/Graphics/DoorRenderer.hpp}}
+\doxymbox{\hyperlink{_door_renderer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_renderer_8hpp}{../Graphics/IRenderer.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_8hpp}{../Graphics/Sprite.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{../Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{../Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_config_manager_8hpp}{../Core/ConfigManager.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_door}{Door}};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config}{DoorRendererConfig}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{struct_engine_1_1_i_config}{IConfig}}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.6f,\ 0.4f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00027\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.5f,\ 0.35f,\ 0.18f,\ 1.0f);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2}{fov}}\ \ \ \ \ =\ 75.0f;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a58e4b522ed25a64863dc14b6c1fc0d43}{FromJson}}(\textcolor{keyword}{const}\ Json::Value\&\ j)\textcolor{keyword}{\ override}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{\ \ \ \ }\{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j.isMember(\textcolor{stringliteral}{"{}rendererColorNS"{}}))\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ c\ =\ j[\textcolor{stringliteral}{"{}rendererColorNS"{}}];}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(c.get(\textcolor{stringliteral}{"{}r"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}.r).asFloat(),}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}g"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}.g).asFloat(),}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}b"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}.b).asFloat(),}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}a"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{colorNS}}.a).asFloat());}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (j.isMember(\textcolor{stringliteral}{"{}rendererColorEW"{}}))\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ c\ =\ j[\textcolor{stringliteral}{"{}rendererColorEW"{}}];}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(c.get(\textcolor{stringliteral}{"{}r"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}.r).asFloat(),}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}g"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}.g).asFloat(),}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}b"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}.b).asFloat(),}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c.get(\textcolor{stringliteral}{"{}a"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{colorEW}}.a).asFloat());}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2}{fov}}\ \ \ \ \ =\ j.get(\textcolor{stringliteral}{"{}rendererFov"{}},\ \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2}{fov}}).asFloat();}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_door_renderer_aa6c69cdbe22b055e0e64810e2e4ff0e4}{DoorRenderer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}\ \{}
+\DoxyCodeLine{00058\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ REQUIRE\_COMPONENT(Door)}}
+\DoxyCodeLine{00060\ \ \ \ \ }
+\DoxyCodeLine{00062\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}*\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a0831af6ee294458e127da83f80a5b3a0}{sprite}};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a72fb95f971d12e0aeb446b8398b5aea5}{spritePath}}\ =\ \textcolor{stringliteral}{"{}"{}};\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00068\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a9833824c2ee604e7bbe3b77e5672e581}{colorNS}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.6f,\ 0.4f,\ 0.2f,\ 1.0f);}
+\DoxyCodeLine{00069\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_aa55e8cedfa85bd86dcbf9a61f9d26ca5}{colorEW}}\ =\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.5f,\ 0.35f,\ 0.18f,\ 1.0f);}
+\DoxyCodeLine{00072\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a9093651e9cbcdaf1c6bbe1f98309e3fc}{fov}}\ =\ 75.0f;}
+\DoxyCodeLine{00075\ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_aa6c69cdbe22b055e0e64810e2e4ff0e4}{DoorRenderer}}();}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a5463991225bebf575bdf5878c4c5b997}{\string~DoorRenderer}}();}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/door.json"{}});}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a018778b36d4b3fb0bcf850992e88f3f5}{Render}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a8e7cbc3519af9e4e99fc5739d27cf1da}{GetSortingKey}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_door_renderer_a4218c116280b8de8f9c2ae628f83b044}{SetSprite}}(\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}}\ *newSprite);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00096\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_door}{Door}}*\ door\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ AEGfxVertexList*\ doorMesh\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00100\ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ CacheReferences();}
+\DoxyCodeLine{00103\ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{void}\ CreateMesh();}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ f32\ CalculatePerpDistance()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ RenderMesh(AEGfxVertexList*\ mesh,\ f32\ fogFactor);}
+\DoxyCodeLine{00112\ \};}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

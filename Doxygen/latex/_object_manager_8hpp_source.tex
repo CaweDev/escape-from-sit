@@ -1,0 +1,43 @@
+\doxysection{Object\+Manager.\+hpp}
+\hypertarget{_object_manager_8hpp_source}{}\label{_object_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Editor/ObjectManager.hpp@{AlphaEngine2.5D/Source/Editor/ObjectManager.hpp}}
+\doxymbox{\hyperlink{_object_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ Start\ Header\ ************************************************************************/}}
+\DoxyCodeLine{00014\ \textcolor{comment}{/*\ End\ Header\ **************************************************************************/}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_reflection_8hpp}{Reflection.hpp}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <json/json.h>}}
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_game_object}{GameObject}};}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_component}{Component}};}
+\DoxyCodeLine{00024\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_a_e_editor}{AEEditor}}}
+\DoxyCodeLine{00027\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager}{ObjectManager}}}
+\DoxyCodeLine{00029\ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *\doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_a2aee7eae7067ea9ad277d87bfd5c5112}{selectedObject}};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *\doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_ad3eeba734b5b73d5846603b22be741e2}{draggingObject}};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Engine::GameObject\ *>\ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_afca9c516b6f82bbe6e4740649bbe60c1}{loadedObjects}};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_aa9ab313137c2cd4613dde458a2407a79}{DrawHierarchy}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_a731ace65e13e04b2f3775923738022ec}{DrawInspector}}();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_acf74d0984ec7ce74681f53cca8b38821}{SaveSceneToJson}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *filepath);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_a_e_editor_1_1_object_manager_adaf0f2169d67bc714e586874e88b6d7c}{LoadSceneFromJson}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *filepath);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Json::Value\ clipboardObject;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ hasClipboard;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Json::Value\ SerializeGameObject(\doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *go);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_game_object}{Engine::GameObject}}\ *DeserializeGameObject(\textcolor{keyword}{const}\ Json::Value\ \&goJson);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DrawGameObjectHeader();}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DrawComponent(\doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ *comp,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor}{TypeDescriptor}}\ \&meta,\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ *\&componentToRemove);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ DrawField(\doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ *comp,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_a_e_editor_1_1_field_descriptor}{FieldDescriptor}}\ \&field);}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}}
+
+\end{DoxyCode}

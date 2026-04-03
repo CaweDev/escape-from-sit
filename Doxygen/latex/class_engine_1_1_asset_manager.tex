@@ -1,0 +1,232 @@
+\doxysection{Engine::\+Asset\+Manager Class Reference}
+\hypertarget{class_engine_1_1_asset_manager}{}\label{class_engine_1_1_asset_manager}\index{Engine::AssetManager@{Engine::AssetManager}}
+
+
+Static class for centralized asset loading and caching.  
+
+
+
+
+{\ttfamily \+\#include $<$Asset\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}{Get\+Sprite}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Get or load a \doxylink{class_engine_1_1_sprite}{Sprite} from file. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a5687f7d8357a375498862fde904d226f}{Get\+Texture}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Get or load a \doxylink{class_engine_1_1_texture2_d}{Texture2D} from file. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a9534e25c4dac35cee621f585bbcba9d2}{Unload\+Sprite}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Unload a specific \doxylink{class_engine_1_1_sprite}{Sprite} from cache. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a0cf8cb7080b78aefae99d8a8bf1adc93}{Unload\+Texture}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Unload a specific Texture from cache. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a37435ac113a3860ab6d6158f363e779a}{Unload\+All}} ()
+\begin{DoxyCompactList}\small\item\em Unload all cached assets. \end{DoxyCompactList}\item 
+static size\+\_\+t \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2be04d3673d37badac330d5fb8ee2808}{Get\+Sprite\+Cache\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Get number of cached sprites. \end{DoxyCompactList}\item 
+static size\+\_\+t \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2307b738d4991ed5dba8a43bd06d1efa}{Get\+Texture\+Cache\+Size}} ()
+\begin{DoxyCompactList}\small\item\em Get number of cached textures. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a4931469d0d3fa9af329c8568b89bc51e}{Get\+Sprite\+Sheet}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Get or load a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from file using rows/\+cols from an optional .meta file. \end{DoxyCompactList}\item 
+static \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_asset_manager_af0013f678faa75613f27f64fd1da81d5}{Get\+Sprite\+Sheet}} (const std::\+string \&filepath, int rows, int cols)
+\begin{DoxyCompactList}\small\item\em Get or load a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from file. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a221b64ffeaf05d29d41ccf34e32b67a3}{Unload\+Sprite\+Sheet}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Unload a specific \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from cache. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a2fbab77a52dfff436bf59503f9465954}{Has\+Sprite}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Check if a sprite is cached. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_asset_manager_ab55dd8ee678011deb0f2ea96c48229ab}{Has\+Sprite\+Sheet}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Check if a spritesheet is cached. \end{DoxyCompactList}\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_asset_manager_a384f75790fcde90c8f78b376e1260203}{Has\+Texture}} (const std::\+string \&filepath)
+\begin{DoxyCompactList}\small\item\em Check if a texture is cached. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for centralized asset loading and caching. 
+
+Provides methods to load and cache Sprites and Textures. Assets are cached by file path to avoid duplicate loading. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_asset_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7}\index{Engine::AssetManager@{Engine::AssetManager}!GetSprite@{GetSprite}}
+\index{GetSprite@{GetSprite}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetSprite()}{GetSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a249299853bcba83c302277aa546d86d7} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite}{Sprite}} \texorpdfstring{$\ast$}{*} Engine::\+\+Asset\+Manager::\+\+Get\+Sprite (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get or load a \doxylink{class_engine_1_1_sprite}{Sprite} from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to the image file (PNG) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to cached \doxylink{class_engine_1_1_sprite}{Sprite} (owned by \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager}) 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_asset_manager_a2be04d3673d37badac330d5fb8ee2808}\index{Engine::AssetManager@{Engine::AssetManager}!GetSpriteCacheSize@{GetSpriteCacheSize}}
+\index{GetSpriteCacheSize@{GetSpriteCacheSize}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetSpriteCacheSize()}{GetSpriteCacheSize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a2be04d3673d37badac330d5fb8ee2808} 
+size\+\_\+t Engine::\+\+Asset\+Manager::\+\+Get\+Sprite\+Cache\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get number of cached sprites. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a4931469d0d3fa9af329c8568b89bc51e}\index{Engine::AssetManager@{Engine::AssetManager}!GetSpriteSheet@{GetSpriteSheet}}
+\index{GetSpriteSheet@{GetSpriteSheet}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetSpriteSheet()}{GetSpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a4931469d0d3fa9af329c8568b89bc51e} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} Engine::\+\+Asset\+Manager::\+\+Get\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get or load a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from file using rows/\+cols from an optional .meta file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to the spritesheet image (PNG) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to cached \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} (owned by \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager}) 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_asset_manager_af0013f678faa75613f27f64fd1da81d5}\index{Engine::AssetManager@{Engine::AssetManager}!GetSpriteSheet@{GetSpriteSheet}}
+\index{GetSpriteSheet@{GetSpriteSheet}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetSpriteSheet()}{GetSpriteSheet()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_af0013f678faa75613f27f64fd1da81d5} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} Engine::\+\+Asset\+Manager::\+\+Get\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{, }\item[{int}]{rows}{, }\item[{int}]{cols}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get or load a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to the spritesheet image (PNG) \\
+\hline
+{\em rows} & Number of rows in the spritesheet grid \\
+\hline
+{\em cols} & Number of columns in the spritesheet grid \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to cached \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} (owned by \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager}) 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_asset_manager_a5687f7d8357a375498862fde904d226f}\index{Engine::AssetManager@{Engine::AssetManager}!GetTexture@{GetTexture}}
+\index{GetTexture@{GetTexture}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetTexture()}{GetTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a5687f7d8357a375498862fde904d226f} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Asset\+Manager::\+\+Get\+Texture (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get or load a \doxylink{class_engine_1_1_texture2_d}{Texture2D} from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to the image file (PNG) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to cached \doxylink{class_engine_1_1_texture2_d}{Texture2D} (owned by \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager}) 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_asset_manager_a2307b738d4991ed5dba8a43bd06d1efa}\index{Engine::AssetManager@{Engine::AssetManager}!GetTextureCacheSize@{GetTextureCacheSize}}
+\index{GetTextureCacheSize@{GetTextureCacheSize}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{GetTextureCacheSize()}{GetTextureCacheSize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a2307b738d4991ed5dba8a43bd06d1efa} 
+size\+\_\+t Engine::\+\+Asset\+Manager::\+\+Get\+Texture\+Cache\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get number of cached textures. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a2fbab77a52dfff436bf59503f9465954}\index{Engine::AssetManager@{Engine::AssetManager}!HasSprite@{HasSprite}}
+\index{HasSprite@{HasSprite}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{HasSprite()}{HasSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a2fbab77a52dfff436bf59503f9465954} 
+bool Engine::\+\+Asset\+Manager::\+\+Has\+Sprite (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a sprite is cached. 
+
+\Hypertarget{class_engine_1_1_asset_manager_ab55dd8ee678011deb0f2ea96c48229ab}\index{Engine::AssetManager@{Engine::AssetManager}!HasSpriteSheet@{HasSpriteSheet}}
+\index{HasSpriteSheet@{HasSpriteSheet}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{HasSpriteSheet()}{HasSpriteSheet()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_ab55dd8ee678011deb0f2ea96c48229ab} 
+bool Engine::\+\+Asset\+Manager::\+\+Has\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a spritesheet is cached. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a384f75790fcde90c8f78b376e1260203}\index{Engine::AssetManager@{Engine::AssetManager}!HasTexture@{HasTexture}}
+\index{HasTexture@{HasTexture}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{HasTexture()}{HasTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a384f75790fcde90c8f78b376e1260203} 
+bool Engine::\+\+Asset\+Manager::\+\+Has\+Texture (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Check if a texture is cached. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a37435ac113a3860ab6d6158f363e779a}\index{Engine::AssetManager@{Engine::AssetManager}!UnloadAll@{UnloadAll}}
+\index{UnloadAll@{UnloadAll}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{UnloadAll()}{UnloadAll()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a37435ac113a3860ab6d6158f363e779a} 
+void Engine::\+\+Asset\+Manager::\+\+Unload\+All (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Unload all cached assets. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a9534e25c4dac35cee621f585bbcba9d2}\index{Engine::AssetManager@{Engine::AssetManager}!UnloadSprite@{UnloadSprite}}
+\index{UnloadSprite@{UnloadSprite}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{UnloadSprite()}{UnloadSprite()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a9534e25c4dac35cee621f585bbcba9d2} 
+void Engine::\+\+Asset\+Manager::\+\+Unload\+Sprite (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Unload a specific \doxylink{class_engine_1_1_sprite}{Sprite} from cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path of the sprite to unload \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_asset_manager_a221b64ffeaf05d29d41ccf34e32b67a3}\index{Engine::AssetManager@{Engine::AssetManager}!UnloadSpriteSheet@{UnloadSpriteSheet}}
+\index{UnloadSpriteSheet@{UnloadSpriteSheet}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{UnloadSpriteSheet()}{UnloadSpriteSheet()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a221b64ffeaf05d29d41ccf34e32b67a3} 
+void Engine::\+\+Asset\+Manager::\+\+Unload\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Unload a specific \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} from cache. 
+
+\Hypertarget{class_engine_1_1_asset_manager_a0cf8cb7080b78aefae99d8a8bf1adc93}\index{Engine::AssetManager@{Engine::AssetManager}!UnloadTexture@{UnloadTexture}}
+\index{UnloadTexture@{UnloadTexture}!Engine::AssetManager@{Engine::AssetManager}}
+\doxysubsubsection{\texorpdfstring{UnloadTexture()}{UnloadTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_asset_manager_a0cf8cb7080b78aefae99d8a8bf1adc93} 
+void Engine::\+\+Asset\+Manager::\+\+Unload\+Texture (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{filepath}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Unload a specific Texture from cache. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path of the texture to unload \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_asset_manager_8hpp}{Asset\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_asset_manager_8cpp}{Asset\+Manager.\+cpp}}\end{DoxyCompactItemize}

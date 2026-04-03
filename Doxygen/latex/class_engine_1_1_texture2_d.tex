@@ -1,0 +1,283 @@
+\doxysection{Engine::\+Texture2D Class Reference}
+\hypertarget{class_engine_1_1_texture2_d}{}\label{class_engine_1_1_texture2_d}\index{Engine::Texture2D@{Engine::Texture2D}}
+
+
+RAII wrapper for AEGfx\+Texture (PNG file loading).  
+
+
+
+
+{\ttfamily \+\#include $<$Texture2\+D.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor (no texture loaded). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aaf6ab1d9af94f15e0ca773550d2afeca}{Texture2D}} (const std::\+string \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Construct and load texture from file. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_af52b93c989c53def45cb2b5c799e6ae8}{\texorpdfstring{$\sim$}{\string~}\+Texture2D}} ()
+\begin{DoxyCompactList}\small\item\em Destructor -\/ automatically unloads texture. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_a53fcea92f9c3a6f1ba6dbfcc0be39e79}{Texture2D}} (const Texture2D \&)=delete
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \& \doxymbox{\hyperlink{class_engine_1_1_texture2_d_af2a007bc49a20ac8b775b304b929805f}{operator=}} (const \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \&)=delete
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_a78251dc00ea5c68aebb5ba1f14e179ca}{Texture2D}} (Texture2D \&\&other) noexcept
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \& \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aa3137e5567d73f3fefa6e1f64181637a}{operator=}} (\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \&\&other) noexcept
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a8efe2c83c7dbe47d932390276870b5e2}{Load}} (const std::\+string \&file\+Path)
+\begin{DoxyCompactList}\small\item\em Load a texture from file. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a60e45b664d285861509d45ff07662df4}{Unload}} ()
+\begin{DoxyCompactList}\small\item\em Unload the current texture. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a50856647b12f44f452002169923f8ced}{Is\+Loaded}} () const
+\begin{DoxyCompactList}\small\item\em Check if a texture is loaded. \end{DoxyCompactList}\item 
+AEGfx\+Texture \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_texture2_d_afc9dcc6dcfc7b7b06c04f5da7ec1e84b}{Get\+Native\+Texture}} () const
+\begin{DoxyCompactList}\small\item\em Get the raw AEGfx\+Texture pointer. \end{DoxyCompactList}\item 
+const std::\+string \& \doxymbox{\hyperlink{class_engine_1_1_texture2_d_ad837cb748822c54254e047fd8acbbb1d}{Get\+File\+Path}} () const
+\begin{DoxyCompactList}\small\item\em Get the file path this texture was loaded from. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_texture2_d_ac4756fe9969ba4669de5e8a0689e51ca}{Get\+Pixel\+Width}} () const
+\begin{DoxyCompactList}\small\item\em Get the pixel width of the loaded texture. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a72247a0a61f3bd5d3b6798e27b383aea}{Get\+Pixel\+Height}} () const
+\begin{DoxyCompactList}\small\item\em Get the pixel height of the loaded texture. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a7338a1a6aced4ea41cad1709b6c8e367}{Set\+Slice\+Border}} (const \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{Nine\+Slice\+Border}} \&border)
+\begin{DoxyCompactList}\small\item\em Set the 9-\/slice border widths (in source-\/texture pixels). \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{Nine\+Slice\+Border}} \& \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a2ed36afe1da524dec113bb7f7f838075}{Get\+Slice\+Border}} () const
+\begin{DoxyCompactList}\small\item\em Get the 9-\/slice border widths. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a71a6d74e87b3f824c22654393d41f526}{White\+Texture}} ()
+\begin{DoxyCompactList}\small\item\em Get a 1x1 white texture for solid color rendering. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a73364e2ab5d1e206a95512809f48e6cd}{Initialize\+Statics}} ()
+\begin{DoxyCompactList}\small\item\em Initialize static resources. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_texture2_d_a65139ab217b68a7804af7639be409312}{Shutdown\+Statics}} ()
+\begin{DoxyCompactList}\small\item\em Cleanup static resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+RAII wrapper for AEGfx\+Texture (PNG file loading). 
+
+Handles texture loading and unloading automatically. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_texture2_d_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}\index{Engine::Texture2D@{Engine::Texture2D}!Texture2D@{Texture2D}}
+\index{Texture2D@{Texture2D}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Texture2D()}{Texture2D()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172} 
+Engine::\+\+Texture2\+D::\+\+Texture2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Default constructor (no texture loaded). 
+
+\Hypertarget{class_engine_1_1_texture2_d_aaf6ab1d9af94f15e0ca773550d2afeca}\index{Engine::Texture2D@{Engine::Texture2D}!Texture2D@{Texture2D}}
+\index{Texture2D@{Texture2D}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Texture2D()}{Texture2D()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_aaf6ab1d9af94f15e0ca773550d2afeca} 
+Engine::\+\+Texture2\+D::\+\+Texture2D (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{file\+Path}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct and load texture from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & Path to PNG file \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_texture2_d_af52b93c989c53def45cb2b5c799e6ae8}\index{Engine::Texture2D@{Engine::Texture2D}!````~Texture2D@{\texorpdfstring{$\sim$}{\string~}Texture2D}}
+\index{````~Texture2D@{\texorpdfstring{$\sim$}{\string~}Texture2D}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Texture2D()}{\string~Texture2D()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_af52b93c989c53def45cb2b5c799e6ae8} 
+Engine::\+\+Texture2\+D::\+\texorpdfstring{$\sim$}{\string~}\+Texture2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Destructor -\/ automatically unloads texture. 
+
+\Hypertarget{class_engine_1_1_texture2_d_a53fcea92f9c3a6f1ba6dbfcc0be39e79}\index{Engine::Texture2D@{Engine::Texture2D}!Texture2D@{Texture2D}}
+\index{Texture2D@{Texture2D}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Texture2D()}{Texture2D()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a53fcea92f9c3a6f1ba6dbfcc0be39e79} 
+Engine::\+\+Texture2\+D::\+\+Texture2D (\begin{DoxyParamCaption}\item[{const Texture2D \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_engine_1_1_texture2_d_a78251dc00ea5c68aebb5ba1f14e179ca}\index{Engine::Texture2D@{Engine::Texture2D}!Texture2D@{Texture2D}}
+\index{Texture2D@{Texture2D}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Texture2D()}{Texture2D()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a78251dc00ea5c68aebb5ba1f14e179ca} 
+Engine::\+\+Texture2\+D::\+\+Texture2D (\begin{DoxyParamCaption}\item[{Texture2D \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_texture2_d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_texture2_d_ad837cb748822c54254e047fd8acbbb1d}\index{Engine::Texture2D@{Engine::Texture2D}!GetFilePath@{GetFilePath}}
+\index{GetFilePath@{GetFilePath}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{GetFilePath()}{GetFilePath()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_ad837cb748822c54254e047fd8acbbb1d} 
+const std::\+string \& Engine::\+\+Texture2\+D::\+\+Get\+File\+Path (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the file path this texture was loaded from. 
+
+\Hypertarget{class_engine_1_1_texture2_d_afc9dcc6dcfc7b7b06c04f5da7ec1e84b}\index{Engine::Texture2D@{Engine::Texture2D}!GetNativeTexture@{GetNativeTexture}}
+\index{GetNativeTexture@{GetNativeTexture}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{GetNativeTexture()}{GetNativeTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_afc9dcc6dcfc7b7b06c04f5da7ec1e84b} 
+AEGfx\+Texture \texorpdfstring{$\ast$}{*} Engine::\+\+Texture2\+D::\+\+Get\+Native\+Texture (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the raw AEGfx\+Texture pointer. 
+
+\begin{DoxyReturn}{Returns}
+Native texture handle (may be null) 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_texture2_d_a72247a0a61f3bd5d3b6798e27b383aea}\index{Engine::Texture2D@{Engine::Texture2D}!GetPixelHeight@{GetPixelHeight}}
+\index{GetPixelHeight@{GetPixelHeight}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{GetPixelHeight()}{GetPixelHeight()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a72247a0a61f3bd5d3b6798e27b383aea} 
+int Engine::\+\+Texture2\+D::\+\+Get\+Pixel\+Height (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the pixel height of the loaded texture. 
+
+\begin{DoxyReturn}{Returns}
+Height in pixels, or 0 if not loaded 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_texture2_d_ac4756fe9969ba4669de5e8a0689e51ca}\index{Engine::Texture2D@{Engine::Texture2D}!GetPixelWidth@{GetPixelWidth}}
+\index{GetPixelWidth@{GetPixelWidth}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{GetPixelWidth()}{GetPixelWidth()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_ac4756fe9969ba4669de5e8a0689e51ca} 
+int Engine::\+\+Texture2\+D::\+\+Get\+Pixel\+Width (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the pixel width of the loaded texture. 
+
+\begin{DoxyReturn}{Returns}
+Width in pixels, or 0 if not loaded 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_texture2_d_a2ed36afe1da524dec113bb7f7f838075}\index{Engine::Texture2D@{Engine::Texture2D}!GetSliceBorder@{GetSliceBorder}}
+\index{GetSliceBorder@{GetSliceBorder}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{GetSliceBorder()}{GetSliceBorder()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a2ed36afe1da524dec113bb7f7f838075} 
+const \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{Nine\+Slice\+Border}} \& Engine::\+\+Texture2\+D::\+\+Get\+Slice\+Border (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the 9-\/slice border widths. 
+
+\begin{DoxyReturn}{Returns}
+Current border widths 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_texture2_d_a73364e2ab5d1e206a95512809f48e6cd}\index{Engine::Texture2D@{Engine::Texture2D}!InitializeStatics@{InitializeStatics}}
+\index{InitializeStatics@{InitializeStatics}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{InitializeStatics()}{InitializeStatics()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a73364e2ab5d1e206a95512809f48e6cd} 
+void Engine::\+\+Texture2\+D::\+\+Initialize\+Statics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initialize static resources. 
+
+\Hypertarget{class_engine_1_1_texture2_d_a50856647b12f44f452002169923f8ced}\index{Engine::Texture2D@{Engine::Texture2D}!IsLoaded@{IsLoaded}}
+\index{IsLoaded@{IsLoaded}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{IsLoaded()}{IsLoaded()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a50856647b12f44f452002169923f8ced} 
+bool Engine::\+\+Texture2\+D::\+\+Is\+Loaded (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if a texture is loaded. 
+
+\Hypertarget{class_engine_1_1_texture2_d_a8efe2c83c7dbe47d932390276870b5e2}\index{Engine::Texture2D@{Engine::Texture2D}!Load@{Load}}
+\index{Load@{Load}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a8efe2c83c7dbe47d932390276870b5e2} 
+bool Engine::\+\+Texture2\+D::\+\+Load (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{file\+Path}{}\end{DoxyParamCaption})}
+
+
+
+Load a texture from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Path} & Path to PNG file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if loading succeeded 
+\end{DoxyReturn}
+\Hypertarget{class_engine_1_1_texture2_d_af2a007bc49a20ac8b775b304b929805f}\index{Engine::Texture2D@{Engine::Texture2D}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_af2a007bc49a20ac8b775b304b929805f} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \& Engine::\+\+Texture2\+D::\+operator= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_engine_1_1_texture2_d_aa3137e5567d73f3fefa6e1f64181637a}\index{Engine::Texture2D@{Engine::Texture2D}!operator=@{operator=}}
+\index{operator=@{operator=}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_aa3137e5567d73f3fefa6e1f64181637a} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \& Engine::\+\+Texture2\+D::\+operator= (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \&\&}]{other}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+\Hypertarget{class_engine_1_1_texture2_d_a7338a1a6aced4ea41cad1709b6c8e367}\index{Engine::Texture2D@{Engine::Texture2D}!SetSliceBorder@{SetSliceBorder}}
+\index{SetSliceBorder@{SetSliceBorder}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{SetSliceBorder()}{SetSliceBorder()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a7338a1a6aced4ea41cad1709b6c8e367} 
+void Engine::\+\+Texture2\+D::\+\+Set\+Slice\+Border (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_nine_slice_border}{Nine\+Slice\+Border}} \&}]{border}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the 9-\/slice border widths (in source-\/texture pixels). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em border} & Border widths for each edge \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_texture2_d_a65139ab217b68a7804af7639be409312}\index{Engine::Texture2D@{Engine::Texture2D}!ShutdownStatics@{ShutdownStatics}}
+\index{ShutdownStatics@{ShutdownStatics}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{ShutdownStatics()}{ShutdownStatics()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a65139ab217b68a7804af7639be409312} 
+void Engine::\+\+Texture2\+D::\+\+Shutdown\+Statics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Cleanup static resources. 
+
+\Hypertarget{class_engine_1_1_texture2_d_a60e45b664d285861509d45ff07662df4}\index{Engine::Texture2D@{Engine::Texture2D}!Unload@{Unload}}
+\index{Unload@{Unload}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{Unload()}{Unload()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a60e45b664d285861509d45ff07662df4} 
+void Engine::\+\+Texture2\+D::\+\+Unload (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Unload the current texture. 
+
+\Hypertarget{class_engine_1_1_texture2_d_a71a6d74e87b3f824c22654393d41f526}\index{Engine::Texture2D@{Engine::Texture2D}!WhiteTexture@{WhiteTexture}}
+\index{WhiteTexture@{WhiteTexture}!Engine::Texture2D@{Engine::Texture2D}}
+\doxysubsubsection{\texorpdfstring{WhiteTexture()}{WhiteTexture()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_texture2_d_a71a6d74e87b3f824c22654393d41f526} 
+\doxymbox{\hyperlink{class_engine_1_1_texture2_d_aeb375363268887aed123557343396172}{Texture2D}} \texorpdfstring{$\ast$}{*} Engine::\+\+Texture2\+D::\+\+White\+Texture (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get a 1x1 white texture for solid color rendering. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the shared white texture 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_texture2_d_8hpp}{Texture2\+D.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_texture2_d_8cpp}{Texture2\+D.\+cpp}}\end{DoxyCompactItemize}

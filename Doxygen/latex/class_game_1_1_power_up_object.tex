@@ -1,0 +1,239 @@
+\doxysection{Game::\+Power\+Up\+Object Class Reference}
+\hypertarget{class_game_1_1_power_up_object}{}\label{class_game_1_1_power_up_object}\index{Game::PowerUpObject@{Game::PowerUpObject}}
+
+
+Floating collectible that grants a temporary player effect.  
+
+
+
+
+{\ttfamily \+\#include $<$Power\+Up.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_power_up_object_aee1b805f0eba4bde97b794c92e627841}{Initialize}} () override
+\begin{DoxyCompactList}\small\item\em Initialize the power-\/up (components, visuals). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_power_up_object_a8a77d6f832ae9e3c65e672df264d861f}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Update floating animation and respawn timer. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_power_up_object_aed9e139c7f5b65f1ac5abaee8378cbb2}{Setup\+Interaction}} ()
+\begin{DoxyCompactList}\small\item\em Setup \doxylink{class_engine_1_1_interactable}{Interactable} callback for player pickup. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_power_up_object_a17eadd92b0f915f6e1a3b178d5dac7c5}{On\+Collect}} ()
+\begin{DoxyCompactList}\small\item\em Called when the player collects the power-\/up. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_power_up_object_a5897c241f95874fe5701a34ba5a2a585}{Get\+Highlight\+Color}} () const
+\begin{DoxyCompactList}\small\item\em Get highlight color representing power-\/up type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}} \doxymbox{\hyperlink{class_game_1_1_power_up_object_ada72e3965d5f4146384faa535ec51cd4}{reference}}
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_power_up_object_a84572f6887cb89a8145557632932cd39}{is\+Collected}} = false
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_ac80c1fce6932d2b79fd3cab21ac24f67}{float\+Time}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_a33aa235c07b45f7790ccb75f0a3e0614}{baseZ}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_a73ff633a7fb267e1853ff6690b18fb38}{float\+Height}} = 0.\+15f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_a6aac9dd5d502012b38cdec297a30d93d}{float\+Speed}} = 2.\+0f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_power_up_object_a956c1dc442b2b6ec6d5619ab0e4fb984}{allow\+Respawn}} = true
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_a5330c0309a8a70a505210829f7d496a6}{respawn\+Delay}} = 20.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_power_up_object_a8c117b77d3e996015a52ad58628b972e}{respawn\+Timer}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_power_up_object_a46664b94612351f1da95faf6f3319c6b}{sprite\+Renderer}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_power_up_object_ae66ad1d195cf186b4ffcb8136003ae3f}{interactable}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Floating collectible that grants a temporary player effect. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_power_up_object_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_power_up_object_a5897c241f95874fe5701a34ba5a2a585}\index{Game::PowerUpObject@{Game::PowerUpObject}!GetHighlightColor@{GetHighlightColor}}
+\index{GetHighlightColor@{GetHighlightColor}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{GetHighlightColor()}{GetHighlightColor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a5897c241f95874fe5701a34ba5a2a585} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+Power\+Up\+Object::\+\+Get\+Highlight\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get highlight color representing power-\/up type. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_engine_1_1_color}{Color} 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_power_up_object_aee1b805f0eba4bde97b794c92e627841}\index{Game::PowerUpObject@{Game::PowerUpObject}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_aee1b805f0eba4bde97b794c92e627841} 
+void Game::\+\+Power\+Up\+Object::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Initialize the power-\/up (components, visuals). 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_power_up_object_a17eadd92b0f915f6e1a3b178d5dac7c5}\index{Game::PowerUpObject@{Game::PowerUpObject}!OnCollect@{OnCollect}}
+\index{OnCollect@{OnCollect}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{OnCollect()}{OnCollect()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a17eadd92b0f915f6e1a3b178d5dac7c5} 
+void Game::\+\+Power\+Up\+Object::\+\+On\+Collect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Called when the player collects the power-\/up. 
+
+\Hypertarget{class_game_1_1_power_up_object_aed9e139c7f5b65f1ac5abaee8378cbb2}\index{Game::PowerUpObject@{Game::PowerUpObject}!SetupInteraction@{SetupInteraction}}
+\index{SetupInteraction@{SetupInteraction}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{SetupInteraction()}{SetupInteraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_aed9e139c7f5b65f1ac5abaee8378cbb2} 
+void Game::\+\+Power\+Up\+Object::\+\+Setup\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Setup \doxylink{class_engine_1_1_interactable}{Interactable} callback for player pickup. 
+
+\Hypertarget{class_game_1_1_power_up_object_a8a77d6f832ae9e3c65e672df264d861f}\index{Game::PowerUpObject@{Game::PowerUpObject}!Update@{Update}}
+\index{Update@{Update}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a8a77d6f832ae9e3c65e672df264d861f} 
+void Game::\+\+Power\+Up\+Object::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Update floating animation and respawn timer. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_power_up_object_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_power_up_object_a956c1dc442b2b6ec6d5619ab0e4fb984}\index{Game::PowerUpObject@{Game::PowerUpObject}!allowRespawn@{allowRespawn}}
+\index{allowRespawn@{allowRespawn}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{allowRespawn}{allowRespawn}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a956c1dc442b2b6ec6d5619ab0e4fb984} 
+bool Game::\+\+Power\+Up\+Object::\+allow\+Respawn = true}
+
+Whether the power-\/up can respawn after collection. \Hypertarget{class_game_1_1_power_up_object_a33aa235c07b45f7790ccb75f0a3e0614}\index{Game::PowerUpObject@{Game::PowerUpObject}!baseZ@{baseZ}}
+\index{baseZ@{baseZ}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{baseZ}{baseZ}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a33aa235c07b45f7790ccb75f0a3e0614} 
+float Game::\+\+Power\+Up\+Object::\+baseZ = 0.\+0f}
+
+Base Z-\/height of the object. \Hypertarget{class_game_1_1_power_up_object_a73ff633a7fb267e1853ff6690b18fb38}\index{Game::PowerUpObject@{Game::PowerUpObject}!floatHeight@{floatHeight}}
+\index{floatHeight@{floatHeight}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{floatHeight}{floatHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a73ff633a7fb267e1853ff6690b18fb38} 
+float Game::\+\+Power\+Up\+Object::\+float\+Height = 0.\+15f}
+
+Amplitude of floating motion. \Hypertarget{class_game_1_1_power_up_object_a6aac9dd5d502012b38cdec297a30d93d}\index{Game::PowerUpObject@{Game::PowerUpObject}!floatSpeed@{floatSpeed}}
+\index{floatSpeed@{floatSpeed}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{floatSpeed}{floatSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a6aac9dd5d502012b38cdec297a30d93d} 
+float Game::\+\+Power\+Up\+Object::\+float\+Speed = 2.\+0f}
+
+Frequency of floating motion. \Hypertarget{class_game_1_1_power_up_object_ac80c1fce6932d2b79fd3cab21ac24f67}\index{Game::PowerUpObject@{Game::PowerUpObject}!floatTime@{floatTime}}
+\index{floatTime@{floatTime}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{floatTime}{floatTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_ac80c1fce6932d2b79fd3cab21ac24f67} 
+float Game::\+\+Power\+Up\+Object::\+float\+Time = 0.\+0f}
+
+\doxylink{class_engine_1_1_time}{Time} elapsed for floating animation. \Hypertarget{class_game_1_1_power_up_object_ae66ad1d195cf186b4ffcb8136003ae3f}\index{Game::PowerUpObject@{Game::PowerUpObject}!interactable@{interactable}}
+\index{interactable@{interactable}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{interactable}{interactable}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_ae66ad1d195cf186b4ffcb8136003ae3f} 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}}\texorpdfstring{$\ast$}{*} Game::\+\+Power\+Up\+Object::\+interactable = nullptr}
+
+\doxylink{class_engine_1_1_interactable}{Interactable} reference. \Hypertarget{class_game_1_1_power_up_object_a84572f6887cb89a8145557632932cd39}\index{Game::PowerUpObject@{Game::PowerUpObject}!isCollected@{isCollected}}
+\index{isCollected@{isCollected}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{isCollected}{isCollected}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a84572f6887cb89a8145557632932cd39} 
+bool Game::\+\+Power\+Up\+Object::\+is\+Collected = false}
+
+True if the power-\/up is currently collected. \Hypertarget{class_game_1_1_power_up_object_ada72e3965d5f4146384faa535ec51cd4}\index{Game::PowerUpObject@{Game::PowerUpObject}!reference@{reference}}
+\index{reference@{reference}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{reference}{reference}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_ada72e3965d5f4146384faa535ec51cd4} 
+\doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}} Game::\+\+Power\+Up\+Object::\+reference}
+
+Base data for this power-\/up instance. \Hypertarget{class_game_1_1_power_up_object_a5330c0309a8a70a505210829f7d496a6}\index{Game::PowerUpObject@{Game::PowerUpObject}!respawnDelay@{respawnDelay}}
+\index{respawnDelay@{respawnDelay}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{respawnDelay}{respawnDelay}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a5330c0309a8a70a505210829f7d496a6} 
+float Game::\+\+Power\+Up\+Object::\+respawn\+Delay = 20.\+0f}
+
+Delay in seconds before respawning. \Hypertarget{class_game_1_1_power_up_object_a8c117b77d3e996015a52ad58628b972e}\index{Game::PowerUpObject@{Game::PowerUpObject}!respawnTimer@{respawnTimer}}
+\index{respawnTimer@{respawnTimer}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{respawnTimer}{respawnTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a8c117b77d3e996015a52ad58628b972e} 
+float Game::\+\+Power\+Up\+Object::\+respawn\+Timer = 0.\+0f}
+
+Current time remaining until respawn. \Hypertarget{class_game_1_1_power_up_object_a46664b94612351f1da95faf6f3319c6b}\index{Game::PowerUpObject@{Game::PowerUpObject}!spriteRenderer@{spriteRenderer}}
+\index{spriteRenderer@{spriteRenderer}!Game::PowerUpObject@{Game::PowerUpObject}}
+\doxysubsubsection{\texorpdfstring{spriteRenderer}{spriteRenderer}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_object_a46664b94612351f1da95faf6f3319c6b} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}}\texorpdfstring{$\ast$}{*} Game::\+\+Power\+Up\+Object::\+sprite\+Renderer = nullptr}
+
+\doxylink{class_engine_1_1_sprite}{Sprite} renderer reference. 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Power\+Up/\+\doxymbox{\hyperlink{_power_up_8hpp}{Power\+Up.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Power\+Up/\+\doxymbox{\hyperlink{_power_up_8cpp}{Power\+Up.\+cpp}}\end{DoxyCompactItemize}

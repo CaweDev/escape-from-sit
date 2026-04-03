@@ -1,0 +1,62 @@
+\doxysection{AEEditor::\+Registry Class Reference}
+\hypertarget{class_a_e_editor_1_1_registry}{}\label{class_a_e_editor_1_1_registry}\index{AEEditor::Registry@{AEEditor::Registry}}
+
+
+{\ttfamily \+\#include $<$Reflection.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Class\+Type$>$ }\\static void \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_a00728a51d4a396f1c715819084e95cb8}{Register\+Class\+Type}} (const std::\+string \&class\+Name)
+\item 
+{\footnotesize template$<$typename Class\+Type$>$ }\\static void \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_af1a2de8c1fc710970879ebf5d88e3858}{Register\+Field\+Type}} (const std::\+string \&field\+Name, size\+\_\+t offset, \doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{Data\+Type}} type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+unordered\+\_\+map$<$ std::\+type\+\_\+index, \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor}{Type\+Descriptor}} $>$ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}{types}}
+\item 
+static std::\+unordered\+\_\+map$<$ std::\+string, std::\+type\+\_\+index $>$ \doxymbox{\hyperlink{class_a_e_editor_1_1_registry_aa7c6dc4c0045609581204dbd0aa27563}{name\+To\+Type}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_a_e_editor_1_1_registry_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_a_e_editor_1_1_registry_a00728a51d4a396f1c715819084e95cb8}\index{AEEditor::Registry@{AEEditor::Registry}!RegisterClassType@{RegisterClassType}}
+\index{RegisterClassType@{RegisterClassType}!AEEditor::Registry@{AEEditor::Registry}}
+\doxysubsubsection{\texorpdfstring{RegisterClassType()}{RegisterClassType()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_registry_a00728a51d4a396f1c715819084e95cb8} 
+template$<$typename Class\+Type$>$ \\
+void AEEditor::\+\+Registry::\+\+Register\+Class\+Type (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{class\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\Hypertarget{class_a_e_editor_1_1_registry_af1a2de8c1fc710970879ebf5d88e3858}\index{AEEditor::Registry@{AEEditor::Registry}!RegisterFieldType@{RegisterFieldType}}
+\index{RegisterFieldType@{RegisterFieldType}!AEEditor::Registry@{AEEditor::Registry}}
+\doxysubsubsection{\texorpdfstring{RegisterFieldType()}{RegisterFieldType()}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_registry_af1a2de8c1fc710970879ebf5d88e3858} 
+template$<$typename Class\+Type$>$ \\
+void AEEditor::\+\+Registry::\+\+Register\+Field\+Type (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{field\+Name}{, }\item[{size\+\_\+t}]{offset}{, }\item[{\doxymbox{\hyperlink{namespace_a_e_editor_a812f1cdbbe37ef112776a2c60dc5f28f}{Data\+Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_a_e_editor_1_1_registry_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_a_e_editor_1_1_registry_aa7c6dc4c0045609581204dbd0aa27563}\index{AEEditor::Registry@{AEEditor::Registry}!nameToType@{nameToType}}
+\index{nameToType@{nameToType}!AEEditor::Registry@{AEEditor::Registry}}
+\doxysubsubsection{\texorpdfstring{nameToType}{nameToType}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_registry_aa7c6dc4c0045609581204dbd0aa27563} 
+std::\+unordered\+\_\+map$<$ std::\+string, std::\+type\+\_\+index $>$ AEEditor::\+\+Registry::\+name\+To\+Type\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c}\index{AEEditor::Registry@{AEEditor::Registry}!types@{types}}
+\index{types@{types}!AEEditor::Registry@{AEEditor::Registry}}
+\doxysubsubsection{\texorpdfstring{types}{types}}
+{\footnotesize\ttfamily \label{class_a_e_editor_1_1_registry_ad2684a9e94520260b8a802c462ca089c} 
+std::\+unordered\+\_\+map$<$ std::\+type\+\_\+index, \doxymbox{\hyperlink{struct_a_e_editor_1_1_type_descriptor}{Type\+Descriptor}} $>$ AEEditor::\+\+Registry::\+types\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_reflection_8hpp}{Reflection.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Editor/\+\doxymbox{\hyperlink{_reflection_8cpp}{Reflection.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,223 @@
+\doxysection{Engine::\+Tile\+Map\+Collider2D Class Reference}
+\hypertarget{class_engine_1_1_tile_map_collider2_d}{}\label{class_engine_1_1_tile_map_collider2_d}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+
+
+Generates collision surfaces from \doxylink{class_engine_1_1_tile_map}{Tile\+Map} wall tiles.  
+
+
+
+
+{\ttfamily \+\#include $<$Tile\+Map\+Collider2\+D.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Engine::\+\+Collider2D}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a019ad1397e40f657b8888a65ec4d7943}{Tile\+Map\+Collider2D}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_abb4f70cd6729363299341d3a832972b7}{Awake}} () override
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_bounds2_d}{Bounds2D}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a665946103f103196e43eef26b5ba7e75}{Get\+Bounds}} () const override
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_adae4bc30a83a63e57eae95b49b13308d}{Overlaps}} (const \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*}other) const override
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a23e86b22dc8cb112a335e1f0f4b0350c}{Overlaps\+Circle}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, f32 radius) const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a809a82c090254a2ce687d2eda0261608}{Overlaps\+Box}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&center, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&size) const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_a73e55fe1020c4f92d0431afcc4b5fc53}{Point\+In\+Wall}} (f32 x, f32 y) const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_addb970df98d1dd2148e554070e75f80c}{Is\+Walkable}} (f32 x, f32 y) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_ac917b696967b3170d8784fe3be91d6e2}{Resolve\+Movement}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&position, const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&delta, f32 radius) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Engine::\+\+Collider2D}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a2a92ade11c81f594e59c5887ca132dba}{Can\+Collide\+With}} (const \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*}other) const
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_collider2_d_ac34b7a1569961143b984cd3279482aec}{\texorpdfstring{$\sim$}{\string~}\+Collider2D}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_af6c040a2880af8bba37a30d7ae7fbc6c}{On\+Destroy}} () override
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_collider2_d_af3a79df65ce88afe176729a5cc4fd845}{Get\+Center}} () const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a71d355a9b52eea37018d3ef7c62c979e}{Height\+Overlaps}} (const \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*}other) const
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a80854a621a46888816df1f633edb6df4}{Height\+Contains}} (f32 height, f32 object\+Height) const
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_af721d7007184dab0d7c21599c2ecf8c4}{On\+Collision\+Enter2D}} (const \doxymbox{\hyperlink{struct_engine_1_1_collision2_d}{Collision2D}} \&)
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_ada0a0031955f9f4a946c363f2af431e3}{On\+Collision\+Stay2D}} (const \doxymbox{\hyperlink{struct_engine_1_1_collision2_d}{Collision2D}} \&)
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a713993cd7dd4aba5b23df6f6c5af7039}{On\+Collision\+Exit2D}} (const \doxymbox{\hyperlink{struct_engine_1_1_collision2_d}{Collision2D}} \&)
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a716664c7d8543208402b9d9cf756bceb}{On\+Trigger\+Enter2D}} (\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*})
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a0ec928fb8d4dc255b5d5c376a2d09e96}{On\+Trigger\+Stay2D}} (\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*})
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a8cf9303f9f9946da862a681f6ad97b7f}{On\+Trigger\+Exit2D}} (\doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_aa8015b5685f9664549bdb2ba0eaab913}{tile\+Map}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Engine::\+\+Collider2D}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a2d0f6de4669d9a9935c8c43bcd1d06be}{offset}}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_collider2_d_aca9c1247fb1292e669378a3b4e1b2c17}{is\+Trigger}} = false
+\item 
+\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046}{Collision\+Layer}} \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a6000a483c2e9b896a5c319fe2dc0b8c3}{layer}} = \doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046a7a1920d61156abc05a60135aefe8bc67}{Collision\+Layer::\+\+Default}}
+\item 
+u32 \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a1712e8705a22599b8ab510fac8726a7a}{collision\+Mask}} = \texorpdfstring{$\sim$}{\string~}\doxymbox{\hyperlink{namespace_engine_a79ab16953ee56518a4c76f10920a3a47}{Layer\+To\+Mask}}(\doxymbox{\hyperlink{namespace_engine_af09d172898ca5a36c842ed68e8f0c046ab9a74782b3e678c3a62bce2bd688111c}{Collision\+Layer::\+\+Tile\+Map}})
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a6f042d71a3cb23182c9829ce1f34d6e8}{min\+Height}} = 0.\+0f
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_collider2_d_abdc06a22a74d2db23e9b814b0d41e3ec}{max\+Height}} = 2.\+0f
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generates collision surfaces from \doxylink{class_engine_1_1_tile_map}{Tile\+Map} wall tiles. 
+
+Attach this to the same \doxylink{class_engine_1_1_game_object}{Game\+Object} as a \doxylink{class_engine_1_1_tile_map}{Tile\+Map} component. It will automatically use the tilemap for collision detection. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_a019ad1397e40f657b8888a65ec4d7943}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!TileMapCollider2D@{TileMapCollider2D}}
+\index{TileMapCollider2D@{TileMapCollider2D}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{TileMapCollider2D()}{TileMapCollider2D()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_a019ad1397e40f657b8888a65ec4d7943} 
+Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Tile\+Map\+Collider2D (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_abb4f70cd6729363299341d3a832972b7}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!Awake@{Awake}}
+\index{Awake@{Awake}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_abb4f70cd6729363299341d3a832972b7} 
+void Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Called when component is created -\/ registers with \doxylink{class_engine_1_1_physics2_d}{Physics2D} 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a4c3381b7e25273b1be1e508e78c1c762}{Engine::\+\+Collider2D}}.
+
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_a665946103f103196e43eef26b5ba7e75}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!GetBounds@{GetBounds}}
+\index{GetBounds@{GetBounds}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{GetBounds()}{GetBounds()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_a665946103f103196e43eef26b5ba7e75} 
+\doxymbox{\hyperlink{struct_engine_1_1_bounds2_d}{Bounds2D}} Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Get\+Bounds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get bounds -\/ returns full tilemap bounds 
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a93484ec71ec6a3d158931deefd18f322}{Engine::\+\+Collider2D}}.
+
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_addb970df98d1dd2148e554070e75f80c}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!IsWalkable@{IsWalkable}}
+\index{IsWalkable@{IsWalkable}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{IsWalkable()}{IsWalkable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_addb970df98d1dd2148e554070e75f80c} 
+bool Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Is\+Walkable (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{}\end{DoxyParamCaption}) const}
+
+Check if position is walkable (not a wall) \Hypertarget{class_engine_1_1_tile_map_collider2_d_adae4bc30a83a63e57eae95b49b13308d}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!Overlaps@{Overlaps}}
+\index{Overlaps@{Overlaps}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{Overlaps()}{Overlaps()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_adae4bc30a83a63e57eae95b49b13308d} 
+bool Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Overlaps (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a7d330a54c54b19aeac869a8d2e2fef17}{Collider2D}} \texorpdfstring{$\ast$}{*}}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check if this tilemap collider overlaps with another collider 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a1ead67502c819c710b66c1b5d7c7a4a6}{Engine::\+\+Collider2D}}.
+
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_a809a82c090254a2ce687d2eda0261608}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!OverlapsBox@{OverlapsBox}}
+\index{OverlapsBox@{OverlapsBox}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{OverlapsBox()}{OverlapsBox()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_a809a82c090254a2ce687d2eda0261608} 
+bool Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Overlaps\+Box (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{size}{}\end{DoxyParamCaption}) const}
+
+Check if a box overlaps any wall in the tilemap \Hypertarget{class_engine_1_1_tile_map_collider2_d_a23e86b22dc8cb112a335e1f0f4b0350c}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!OverlapsCircle@{OverlapsCircle}}
+\index{OverlapsCircle@{OverlapsCircle}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{OverlapsCircle()}{OverlapsCircle()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_a23e86b22dc8cb112a335e1f0f4b0350c} 
+bool Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Overlaps\+Circle (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{center}{, }\item[{f32}]{radius}{}\end{DoxyParamCaption}) const}
+
+Check if a circle overlaps any wall in the tilemap \Hypertarget{class_engine_1_1_tile_map_collider2_d_a73e55fe1020c4f92d0431afcc4b5fc53}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!PointInWall@{PointInWall}}
+\index{PointInWall@{PointInWall}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{PointInWall()}{PointInWall()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_a73e55fe1020c4f92d0431afcc4b5fc53} 
+bool Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Point\+In\+Wall (\begin{DoxyParamCaption}\item[{f32}]{x}{, }\item[{f32}]{y}{}\end{DoxyParamCaption}) const}
+
+Check if a point is inside a wall tile \Hypertarget{class_engine_1_1_tile_map_collider2_d_ac917b696967b3170d8784fe3be91d6e2}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!ResolveMovement@{ResolveMovement}}
+\index{ResolveMovement@{ResolveMovement}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{ResolveMovement()}{ResolveMovement()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_ac917b696967b3170d8784fe3be91d6e2} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} Engine::\+\+Tile\+Map\+Collider2\+D::\+\+Resolve\+Movement (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{position}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}} \&}]{delta}{, }\item[{f32}]{radius}{}\end{DoxyParamCaption}) const}
+
+Try to move from current position by delta, returns allowed position 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_tile_map_collider2_d_aa8015b5685f9664549bdb2ba0eaab913}\index{Engine::TileMapCollider2D@{Engine::TileMapCollider2D}!tileMap@{tileMap}}
+\index{tileMap@{tileMap}!Engine::TileMapCollider2D@{Engine::TileMapCollider2D}}
+\doxysubsubsection{\texorpdfstring{tileMap}{tileMap}}
+{\footnotesize\ttfamily \label{class_engine_1_1_tile_map_collider2_d_aa8015b5685f9664549bdb2ba0eaab913} 
+\doxymbox{\hyperlink{class_engine_1_1_tile_map}{Tile\+Map}}\texorpdfstring{$\ast$}{*} Engine::\+\+Tile\+Map\+Collider2\+D::\+tile\+Map = nullptr}
+
+Reference to the tilemap (auto-\/cached on Awake) 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_tile_map_collider2_d_8hpp}{Tile\+Map\+Collider2\+D.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Physics/\+\doxymbox{\hyperlink{_tile_map_collider2_d_8cpp}{Tile\+Map\+Collider2\+D.\+cpp}}\end{DoxyCompactItemize}

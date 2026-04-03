@@ -1,0 +1,99 @@
+\doxysection{Rigidbody2\+D.\+hpp}
+\hypertarget{_rigidbody2_d_8hpp_source}{}\label{_rigidbody2_d_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Physics/Rigidbody2D.hpp@{AlphaEngine2.5D/Source/Engine/Physics/Rigidbody2D.hpp}}
+\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{../Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{../Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Forward\ declaration}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{RigidbodyType2D}}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}{Dynamic}},\ \ \ \ \textcolor{comment}{//\ Fully\ simulated\ with\ forces\ and\ collisions}}
+\DoxyCodeLine{00022\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a40c78b58b86002ee38fad2d3c9dd787e}{Kinematic}},\ \ \textcolor{comment}{//\ Moved\ by\ code,\ affects\ others\ but\ not\ affected\ by\ forces}}
+\DoxyCodeLine{00023\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a84a8921b25f505d0d2077aeb5db4bc16}{Static}}\ \ \ \ \ \ \textcolor{comment}{//\ Never\ moves\ (use\ for\ walls,\ platforms)}}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a65fff0f73514f394f92a95d16ebe0bc9}{Rigidbody2D}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{//\ Physics\ properties}}
+\DoxyCodeLine{00033\ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a9e01015d7c514b68266b73eb12e6d1d5}{velocity}};}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6752c441bb0d1cbabd040ab3ba043d90}{verticalVelocity}}\ =\ 0.0f;}
+\DoxyCodeLine{00039\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a48a6b55e12c224eedb8f451e1a5ebe52}{mass}}\ =\ 1.0f;}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e5f99c8b6fdf2fe336b9c4cc57be85c}{drag}}\ =\ 0.0f;}
+\DoxyCodeLine{00045\ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6bcc473d82b5529f33bc0370c27808c9}{gravityScale}}\ =\ 1.0f;}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22}{RigidbodyType2D}}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a01a95441223142eb987be4fa75afd887}{bodyType}}\ =\ \doxymbox{\hyperlink{namespace_engine_acd3a1b9eabf3a64eb7cd4bc04df69c22a971fd8cc345d8bd9f92e9f7d88fdf20c}{RigidbodyType2D::Dynamic}};}
+\DoxyCodeLine{00051\ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a3eba850d77293a9e2e83071c0ecaf064}{freezeRotation}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ Height/crouch\ properties}}
+\DoxyCodeLine{00056\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a853e596d3e22a3572f63dc3b99007ace}{currentHeight}}\ =\ 0.0f;}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00061\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ac601dc7c9ecd19dc9f0a82bef78b598b}{standingHeight}}\ =\ 0.75f;}
+\DoxyCodeLine{00062\ \ \ \ \ }
+\DoxyCodeLine{00064\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}{crouchHeight}}\ =\ 0.3f;}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_adb8bcfe84c0cd874ad2774ac3af8dc13}{collisionHeight}}\ =\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a0e1088316a4e5bad9a1461fe5b8b16f4}{crouchHeight}};}
+\DoxyCodeLine{00068\ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a7d1b5e6a0502ba1f323af7a5a6ff6d3a}{isCrouching}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_add29642a0cc43b0992569240a7dc856b}{isGrounded}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a65fff0f73514f394f92a95d16ebe0bc9}{Rigidbody2D}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a05d118828e2a48b5c76d622ce68a9594}{Awake}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6e699ef2b9f62170ca93cf1acd7d502c}{OnDestroy}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a5bddbe1586a849cb9133730c553141bc}{FixedUpdate}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Movement\ methods}}
+\DoxyCodeLine{00084\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a97e30af5b924ebfd20193dd3adc62bff}{AddForce}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ force);}
+\DoxyCodeLine{00087\ \ \ \ \ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a98194ef65883355d5ecd1efb02c98e69}{AddImpulse}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ impulse);}
+\DoxyCodeLine{00090\ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad43707c0315fec1cf7c2e833b211da78}{SetVelocity}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ vel);}
+\DoxyCodeLine{00093\ \ \ \ \ }
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad43707c0315fec1cf7c2e833b211da78}{SetVelocity}}(f32\ x,\ f32\ y,\ f32\ vertical\ =\ 0.0f);}
+\DoxyCodeLine{00096\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aa7f65ac6d99aeac4986137f547f939d7}{MovePosition}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\&\ position);}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Jump\ and\ crouch}}
+\DoxyCodeLine{00101\ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad87d6c12215eb398eed373968c9ad0b3}{Jump}}(f32\ jumpForce);}
+\DoxyCodeLine{00104\ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aef67b22657856687697f94726c7541db}{Crouch}}();}
+\DoxyCodeLine{00107\ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a1f757cf31cc6a3a79483ad7868bffb42}{Stand}}();}
+\DoxyCodeLine{00110\ \ \ \ \ }
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ad0df95c0ac0705d8b302707e18802f8c}{ToggleCrouch}}();}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Queries}}
+\DoxyCodeLine{00115\ \ \ \ \ }
+\DoxyCodeLine{00117\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_ab420b9c4aee0952cc4c9ad52b26268b5}{GetSpeed}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00118\ \ \ \ \ }
+\DoxyCodeLine{00120\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Collider2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_aed0d27ce8ba75397a2f0d6a27bcc2d8b}{GetCollider}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00124\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ accumulatedForce;}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateColliderHeight();}
+\DoxyCodeLine{00128\ \};}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

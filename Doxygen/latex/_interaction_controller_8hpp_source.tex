@@ -1,0 +1,65 @@
+\doxysection{Interaction\+Controller.\+hpp}
+\hypertarget{_interaction_controller_8hpp_source}{}\label{_interaction_controller_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Interaction/InteractionController.hpp@{AlphaEngine2.5D/Source/Engine/Interaction/InteractionController.hpp}}
+\doxymbox{\hyperlink{_interaction_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_key_code_8hpp}{Engine/Input/KeyCode.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_i_renderer_8hpp}{Engine/Graphics/IRenderer.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_interactable_8hpp}{Interactable.hpp}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \textcolor{comment}{//\ Forward\ declarations}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_crosshair}{Crosshair}};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt}{InteractionPrompt}};}
+\DoxyCodeLine{00017\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{class\ }SpriteRenderer;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{class\ }Texture2D;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab5b1f8031f163f8b86d175c70b01ff8d}{InteractionController}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70}{KeyCode}}\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_acb42fe38b39886cde213a64f6e612596}{interactKey}}\ =\ \doxymbox{\hyperlink{namespace_engine_a66dcd1cf08e61de878504acc263ecb70a3a3ea00cfc35332cedf6e5e9a32e94da}{KeyCode::E}};\ \textcolor{comment}{//\ default\ to\ 'E'}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab421126a3844cf80f01989ab5e2e82da}{defaultCrosshairTexture}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Texture2D}}*\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a305715ee4f886f4aa4637b239a7ebeaf}{highlightCrosshairTexture}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab5b1f8031f163f8b86d175c70b01ff8d}{InteractionController}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a8d659d9e626e3fe14e18af8b7c52b3ba}{\string~InteractionController}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a9f0a4e3da32f4c7d6b3aa08a6d093ede}{GetCurrentTarget}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_currentTarget;\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lifecycle}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a7d52c39dd095fce67c20192bad336622}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a2c7ef788c412acbb6db2c09ad1443d48}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab9a7f50e54e78a350c02ccd0d1ff07a4}{OnDestroy}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ m\_currentTarget\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{IRenderer}}*\ m\_currentTargetRenderer\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hold\ interaction\ state}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_holdTimer\ =\ 0.0f;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ m\_isHolding\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ UI\ elements\ (created\ and\ owned\ by\ this\ controller)}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::Canvas}}*\ m\_canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_crosshair}{UI::Crosshair}}*\ m\_crosshair\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt}{UI::InteractionPrompt}}*\ m\_prompt\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ FindTargetAtScreenCenter();}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetTarget(\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}}*\ target);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsActiveCamera()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00089\ \ \ \ \ \};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

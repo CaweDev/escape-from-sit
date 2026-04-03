@@ -1,0 +1,93 @@
+\doxysection{Splash\+Scene.\+hpp}
+\hypertarget{_splash_scene_8hpp_source}{}\label{_splash_scene_8hpp_source}\index{AlphaEngine2.5D/Source/Game/Scenes/SplashScene/SplashScene.hpp@{AlphaEngine2.5D/Source/Game/Scenes/SplashScene/SplashScene.hpp}}
+\doxymbox{\hyperlink{_splash_scene_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_engine_8hpp}{Engine.hpp}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ namespace\ }UI;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_splash_scene_a989b85e222e5e06937ba94bc2f6fc3bc}{SplashScene}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_scene_a65ffffa622bec30d45596cf992c49781}{Scene}}\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_splash_scene_a989b85e222e5e06937ba94bc2f6fc3bc}{SplashScene}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_splash_scene_acbe361241b1705f74b45b86c9f5f854b}{OnLoad}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_splash_scene_ae786d8ef811bae1f1a13611d2350e96f}{OnUnload}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_splash_scene_a2baca3bad05bfcd9f82e8582804a0765}{OnUpdate}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Splash\ phases}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{enum\ class}\ Phase\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ FadeIn,\ \ \ \ \ \ \ \ \textcolor{comment}{//\ UIManager\ fading\ out\ overlay\ to\ reveal\ logo}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ HoldAndExpand,\ \textcolor{comment}{//\ Steady\ hold\ while\ logo\ slowly\ grows}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ Flicker,\ \ \ \ \ \ \ \textcolor{comment}{//\ Single\ quick\ flicker\ dip,\ swaps\ to\ logo2}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ FinalFlicker,\ \ \textcolor{comment}{//\ One\ last\ flicker\ dip,\ swaps\ back\ to\ white}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ FinalHold,\ \ \ \ \ \textcolor{comment}{//\ Brief\ hold\ on\ white\ logo\ before\ fade\ out}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ FadeOut\ \ \ \ \ \ \ \ \textcolor{comment}{//\ UIManager\ fading\ in\ overlay,\ then\ transition}}
+\DoxyCodeLine{00045\ \ \ \ \ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ UI\ elements}}
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}*\ m\_canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel}{Panel}}*\ \ m\_background\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \ m\_logo\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \ m\_logo2\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00052\ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_image}{Image}}*\ \ m\_ccText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ State}}
+\DoxyCodeLine{00055\ \ \ \ \ Phase\ m\_phase\ =\ Phase::FadeIn;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_phaseTimer\ =\ 0.0f;}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_transitioning\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_flickerSwapped\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Phase\ durations}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FADE\_IN\_DURATION;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ HOLD\_AND\_EXPAND\_DURATION;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FINAL\_HOLD\_DURATION;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ Canvas\ settings}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ CANVAS\_REF\_WIDTH;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ CANVAS\_REF\_HEIGHT;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ CANVAS\_SORT\_ORDER;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ Logo\ settings}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ LOGO\_RENDER\_ORDER;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ LOGO\_EXPAND\_SCALE;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ LOGO\_WIDTH;}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ LOGO\_WHITE\_PATH;}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ LOGO2\_HEIGHT;}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ LOGO2\_WIDTH;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ LOGO\_HEIGHT;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ LOGO2\_PATH;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ CC\ text\ settings}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ CC\_TEXT\_PATH;}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ CC\_TEXT\_WIDTH;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ CC\_TEXT\_HEIGHT;}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ CC\_TEXT\_RENDER\_ORDER;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ CC\_TEXT\_BOTTOM\_MARGIN;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{comment}{//\ Logo\ colors}}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ LOGO\_WHITE\_COLOR;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}\ LOGO2\_COLOR;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{comment}{//\ Flicker\ settings}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FLICKER\_DIP\_DURATION;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FLICKER\_DEPTH;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FLICKER\_DURATION;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ FINAL\_FLICKER\_DURATION;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ AdvancePhase();}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{void}\ SkipToEnd();}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ IsSkipPressed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

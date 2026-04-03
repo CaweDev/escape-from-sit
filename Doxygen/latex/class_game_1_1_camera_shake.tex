@@ -1,0 +1,142 @@
+\doxysection{Game::\+Camera\+Shake Class Reference}
+\hypertarget{class_game_1_1_camera_shake}{}\label{class_game_1_1_camera_shake}\index{Game::CameraShake@{Game::CameraShake}}
+
+
+Component applied to camera to produce shake and pulse effects.  
+
+
+
+
+{\ttfamily \+\#include $<$Camera\+Shake.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18}{Initialize}} () override
+\begin{DoxyCompactList}\small\item\em Initialize component state. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_camera_shake_a166fdf1ee4bd282cf26c7bba502d0d58}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update to apply offsets. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_camera_shake_ad1ecf29381170634f424d9ea183a1b01}{Shake}} (float duration, float intensity)
+\begin{DoxyCompactList}\small\item\em Start continuous shake. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_camera_shake_a3c1b129a4f3720a6b6f745b33de4ec66}{Pulse}} (float duration, float intensity)
+\begin{DoxyCompactList}\small\item\em Short pronounced pulse for pounding effect. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Component applied to camera to produce shake and pulse effects. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_camera_shake_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18}\index{Game::CameraShake@{Game::CameraShake}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::CameraShake@{Game::CameraShake}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18} 
+void Game::\+\+Camera\+Shake::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Initialize component state. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_camera_shake_a3c1b129a4f3720a6b6f745b33de4ec66}\index{Game::CameraShake@{Game::CameraShake}!Pulse@{Pulse}}
+\index{Pulse@{Pulse}!Game::CameraShake@{Game::CameraShake}}
+\doxysubsubsection{\texorpdfstring{Pulse()}{Pulse()}}
+{\footnotesize\ttfamily \label{class_game_1_1_camera_shake_a3c1b129a4f3720a6b6f745b33de4ec66} 
+void Game::\+\+Camera\+Shake::\+\+Pulse (\begin{DoxyParamCaption}\item[{float}]{duration}{, }\item[{float}]{intensity}{}\end{DoxyParamCaption})}
+
+
+
+Short pronounced pulse for pounding effect. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duration} & \+[in]\+ seconds\\
+\hline
+{\em intensity} & \+[in]\+ magnitude \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_camera_shake_ad1ecf29381170634f424d9ea183a1b01}\index{Game::CameraShake@{Game::CameraShake}!Shake@{Shake}}
+\index{Shake@{Shake}!Game::CameraShake@{Game::CameraShake}}
+\doxysubsubsection{\texorpdfstring{Shake()}{Shake()}}
+{\footnotesize\ttfamily \label{class_game_1_1_camera_shake_ad1ecf29381170634f424d9ea183a1b01} 
+void Game::\+\+Camera\+Shake::\+\+Shake (\begin{DoxyParamCaption}\item[{float}]{duration}{, }\item[{float}]{intensity}{}\end{DoxyParamCaption})}
+
+
+
+Start continuous shake. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duration} & \+[in]\+ seconds\\
+\hline
+{\em intensity} & \+[in]\+ magnitude \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_camera_shake_a166fdf1ee4bd282cf26c7bba502d0d58}\index{Game::CameraShake@{Game::CameraShake}!Update@{Update}}
+\index{Update@{Update}!Game::CameraShake@{Game::CameraShake}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_camera_shake_a166fdf1ee4bd282cf26c7bba502d0d58} 
+void Game::\+\+Camera\+Shake::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update to apply offsets. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+NPC/\+\doxymbox{\hyperlink{_camera_shake_8hpp}{Camera\+Shake.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+NPC/\+\doxymbox{\hyperlink{_camera_shake_8cpp}{Camera\+Shake.\+cpp}}\end{DoxyCompactItemize}

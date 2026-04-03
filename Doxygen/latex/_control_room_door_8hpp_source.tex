@@ -1,0 +1,50 @@
+\doxysection{Control\+Room\+Door.\+hpp}
+\hypertarget{_control_room_door_8hpp_source}{}\label{_control_room_door_8hpp_source}\index{AlphaEngine2.5D/Source/Game/ControlRoomDoor/ControlRoomDoor.hpp@{AlphaEngine2.5D/Source/Game/ControlRoomDoor/ControlRoomDoor.hpp}}
+\doxymbox{\hyperlink{_control_room_door_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_door}{Door}};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}};}
+\DoxyCodeLine{00012\ \}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_control_room_door}{ControlRoomDoor}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_aaa404c8d5802b33481e21d79fa039f08}{zoneId}}\ =\ 1;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a5d51c98a44efdd15bf921729829a0374}{requiredCards}}\ =\ 4;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_door}{Engine::Door}}*\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a31bb892de293cb03cd3945d73f9555ed}{door}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::Interactable}}*\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a01d4225a16bedb477aa91d21e586e3cb}{interactable}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Hold-\/to-\/unlock\ mechanic}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_ab687b368302bca501eaa9ba76437e7a7}{holdProgress}}\ =\ 0.0f;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a2abaff8c800ebf6174e27eaaf7392d0a}{holdTimeRequired}}\ =\ 2.0f;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a4f765e6712b4f396e443cde636da571e}{holdDecayMultiplier}}\ =\ 2.0f;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a850703170a9160bee193528afcc67104}{interactMaxDistance}}\ =\ 2.5f;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a18074c1cc4160e4ac6876eca4c1a89e6}{lockedSfxVolume}}\ =\ 0.8f;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_afabf8b904055763b4258801c117912fd}{unlockSfxVolume}}\ =\ 0.8f;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_ac0aeba9f4aee8da30efeec4ad96869b9}{isHolding}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Lifecycle}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a40da68388bd16edcab5eee09ba86fb5d}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a328907853782c9493f2d06d2cbe44188}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a36adae0b83cdc4786058313b71aaa7f6}{SetupInteraction}}();}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a280354226eedac4f23aacf0ff256ac56}{OnInteract}}();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_af0db4a26514d19614d0f9d17e52d719a}{HasAllCards}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_control_room_door_a9456d6a850060e14760a750a8a632613}{GetCollectedCards}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \ \ \ \ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

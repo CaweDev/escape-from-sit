@@ -1,0 +1,116 @@
+\doxysection{Engine::\+Time Class Reference}
+\hypertarget{class_engine_1_1_time}{}\label{class_engine_1_1_time}\index{Engine::Time@{Engine::Time}}
+
+
+Static class for time-\/related values.  
+
+
+
+
+{\ttfamily \+\#include $<$Time.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_a4ff0c0b1afae7f5ad5dc5e11417c3817}{Get\+Game\+Speed}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_time_af1b9775474db11827c878542a8ace725}{Set\+Game\+Speed}} (f32 new\+Game\+Speed)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_time_ae8af13d438747bd01c3bd933c6baf21a}{Update}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_time_a504f20a100cbcdd71d5cbde84a96d204}{Reset}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}{delta\+Time}} = 0
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_a5724ffc3ac3cc237d307c1a26bcaecf5}{unscaled\+Delta\+Time}} = 0.\+02f
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453}{fixed\+Delta\+Time}} = 0.\+02f
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_ad22c94164ed8b600b3b6595283836766}{time}} = 0
+\item 
+static f32 \doxymbox{\hyperlink{class_engine_1_1_time_ad35fcab2964bad92bb4c4d5b04044251}{fps}} = 0
+\item 
+static unsigned int \doxymbox{\hyperlink{class_engine_1_1_time_a79079d886f8b79b49b213ff05f69b5d0}{frame\+Count}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static class for time-\/related values. 
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_time_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_time_a4ff0c0b1afae7f5ad5dc5e11417c3817}\index{Engine::Time@{Engine::Time}!GetGameSpeed@{GetGameSpeed}}
+\index{GetGameSpeed@{GetGameSpeed}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{GetGameSpeed()}{GetGameSpeed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_a4ff0c0b1afae7f5ad5dc5e11417c3817} 
+f32 Engine::\+\+Time::\+\+Get\+Game\+Speed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_time_a504f20a100cbcdd71d5cbde84a96d204}\index{Engine::Time@{Engine::Time}!Reset@{Reset}}
+\index{Reset@{Reset}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_a504f20a100cbcdd71d5cbde84a96d204} 
+void Engine::\+\+Time::\+\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Reset time values \Hypertarget{class_engine_1_1_time_af1b9775474db11827c878542a8ace725}\index{Engine::Time@{Engine::Time}!SetGameSpeed@{SetGameSpeed}}
+\index{SetGameSpeed@{SetGameSpeed}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{SetGameSpeed()}{SetGameSpeed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_af1b9775474db11827c878542a8ace725} 
+void Engine::\+\+Time::\+\+Set\+Game\+Speed (\begin{DoxyParamCaption}\item[{f32}]{new\+Game\+Speed}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_time_ae8af13d438747bd01c3bd933c6baf21a}\index{Engine::Time@{Engine::Time}!Update@{Update}}
+\index{Update@{Update}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_ae8af13d438747bd01c3bd933c6baf21a} 
+void Engine::\+\+Time::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Update time values (called by engine each frame) 
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_time_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b}\index{Engine::Time@{Engine::Time}!deltaTime@{deltaTime}}
+\index{deltaTime@{deltaTime}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{deltaTime}{deltaTime}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_a7a4698027fab932021d7449d6dfd471b} 
+f32 Engine::\+\+Time::\+delta\+Time = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\doxylink{class_engine_1_1_time}{Time} in seconds since last frame, dependent on game speed \Hypertarget{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453}\index{Engine::Time@{Engine::Time}!fixedDeltaTime@{fixedDeltaTime}}
+\index{fixedDeltaTime@{fixedDeltaTime}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{fixedDeltaTime}{fixedDeltaTime}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_ad1c0e6e4c31d39d275b81dfd73d01453} 
+f32 Engine::\+\+Time::\+fixed\+Delta\+Time = 0.\+02f\hspace{0.3cm}{\ttfamily [static]}}
+
+Fixed timestep for physics (default 0.\+02 = 50Hz) \Hypertarget{class_engine_1_1_time_ad35fcab2964bad92bb4c4d5b04044251}\index{Engine::Time@{Engine::Time}!fps@{fps}}
+\index{fps@{fps}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{fps}{fps}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_ad35fcab2964bad92bb4c4d5b04044251} 
+f32 Engine::\+\+Time::\+fps = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_time_a79079d886f8b79b49b213ff05f69b5d0}\index{Engine::Time@{Engine::Time}!frameCount@{frameCount}}
+\index{frameCount@{frameCount}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{frameCount}{frameCount}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_a79079d886f8b79b49b213ff05f69b5d0} 
+unsigned int Engine::\+\+Time::\+frame\+Count = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+Total number of frames rendered \Hypertarget{class_engine_1_1_time_ad22c94164ed8b600b3b6595283836766}\index{Engine::Time@{Engine::Time}!time@{time}}
+\index{time@{time}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{time}{time}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_ad22c94164ed8b600b3b6595283836766} 
+f32 Engine::\+\+Time::\+time = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+Total time elapsed since game start \Hypertarget{class_engine_1_1_time_a5724ffc3ac3cc237d307c1a26bcaecf5}\index{Engine::Time@{Engine::Time}!unscaledDeltaTime@{unscaledDeltaTime}}
+\index{unscaledDeltaTime@{unscaledDeltaTime}!Engine::Time@{Engine::Time}}
+\doxysubsubsection{\texorpdfstring{unscaledDeltaTime}{unscaledDeltaTime}}
+{\footnotesize\ttfamily \label{class_engine_1_1_time_a5724ffc3ac3cc237d307c1a26bcaecf5} 
+f32 Engine::\+\+Time::\+unscaled\+Delta\+Time = 0.\+02f\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_time_8hpp}{Time.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_time_8cpp}{Time.\+cpp}}\end{DoxyCompactItemize}

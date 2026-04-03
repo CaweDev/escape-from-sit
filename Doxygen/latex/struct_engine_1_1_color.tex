@@ -1,0 +1,228 @@
+\doxysection{Engine::\+Color Struct Reference}
+\hypertarget{struct_engine_1_1_color}{}\label{struct_engine_1_1_color}\index{Engine::Color@{Engine::Color}}
+
+
+RGBA color with values 0-\/1.  
+
+
+
+
+{\ttfamily \+\#include $<$Color.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} ()
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ac9e0bf7ed8571ef73c206182657b9013}{Color}} (f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}, f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}, f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}, f32 \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}=1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a2419d3688a63001805c3e87fcf886884}{operator\texorpdfstring{$\ast$}{*}}} (f32 scalar) const
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a7f8236362e431bcbb6e2f6b60da07f38}{operator\texorpdfstring{$\ast$}{*}}} (const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&other) const
+\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_color_abe29c09be2d82c625305365dd8c6df4d}{operator==}} (const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&other) const
+\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_color_ac5d3bc676ee3e33e167456bb2f2c74e0}{operator!=}} (const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&other) const
+\item 
+u32 \doxymbox{\hyperlink{struct_engine_1_1_color_ad3771079ef6cf5a97139fa1e9c41c5e1}{To\+U32}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_ad2b3b497a7b28618b20a5a29121fbc72}{From\+RGBA}} (int \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}, int \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}, int \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}, int \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}=255)
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{white}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a7b6200472f44bf3b6593b1ec871fb5d4}{black}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a0d44e38fcebc60c404f451bcc64f6fa1}{red}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a48b1c9ba808469f48003600a8de254f9}{green}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a7ea73a031859cda1a0cd64dae2ffc0bd}{blue}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a5c0c6591b3ec4849d2789aa8e7b75a56}{yellow}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_afdd3c8100d1a84bb4bf28f3bf632c651}{cyan}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a351b7e4100a1195a31f11c316481081a}{magenta}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_af864385dbf07c336b36d363c92c3046a}{gray}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a601ad6673ae7fd168627cf8aaacc4c76}{clear}} ()
+\item 
+static \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_color_a1d4d7baa2d295810972a8935c282dabf}{Lerp}} (const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&\doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}, const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&\doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}, f32 t)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}{r}}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}{g}}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}{b}}
+\item 
+f32 \doxymbox{\hyperlink{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}{a}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+RGBA color with values 0-\/1. 
+
+\label{doc-constructors}
+\Hypertarget{struct_engine_1_1_color_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}\index{Engine::Color@{Engine::Color}!Color@{Color}}
+\index{Color@{Color}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{Color()}{Color()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9} 
+Engine::\+\+Color::\+\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_engine_1_1_color_ac9e0bf7ed8571ef73c206182657b9013}\index{Engine::Color@{Engine::Color}!Color@{Color}}
+\index{Color@{Color}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{Color()}{Color()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_ac9e0bf7ed8571ef73c206182657b9013} 
+Engine::\+\+Color::\+\+Color (\begin{DoxyParamCaption}\item[{f32}]{r}{, }\item[{f32}]{g}{, }\item[{f32}]{b}{, }\item[{f32}]{a}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_color_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_color_a7b6200472f44bf3b6593b1ec871fb5d4}\index{Engine::Color@{Engine::Color}!black@{black}}
+\index{black@{black}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{black()}{black()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a7b6200472f44bf3b6593b1ec871fb5d4} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+black (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a7ea73a031859cda1a0cd64dae2ffc0bd}\index{Engine::Color@{Engine::Color}!blue@{blue}}
+\index{blue@{blue}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{blue()}{blue()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a7ea73a031859cda1a0cd64dae2ffc0bd} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+blue (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a601ad6673ae7fd168627cf8aaacc4c76}\index{Engine::Color@{Engine::Color}!clear@{clear}}
+\index{clear@{clear}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a601ad6673ae7fd168627cf8aaacc4c76} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_afdd3c8100d1a84bb4bf28f3bf632c651}\index{Engine::Color@{Engine::Color}!cyan@{cyan}}
+\index{cyan@{cyan}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{cyan()}{cyan()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_afdd3c8100d1a84bb4bf28f3bf632c651} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+cyan (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_ad2b3b497a7b28618b20a5a29121fbc72}\index{Engine::Color@{Engine::Color}!FromRGBA@{FromRGBA}}
+\index{FromRGBA@{FromRGBA}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{FromRGBA()}{FromRGBA()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_ad2b3b497a7b28618b20a5a29121fbc72} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+\+From\+RGBA (\begin{DoxyParamCaption}\item[{int}]{r}{, }\item[{int}]{g}{, }\item[{int}]{b}{, }\item[{int}]{a}{ = {\ttfamily 255}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_af864385dbf07c336b36d363c92c3046a}\index{Engine::Color@{Engine::Color}!gray@{gray}}
+\index{gray@{gray}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{gray()}{gray()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_af864385dbf07c336b36d363c92c3046a} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+gray (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a48b1c9ba808469f48003600a8de254f9}\index{Engine::Color@{Engine::Color}!green@{green}}
+\index{green@{green}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{green()}{green()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a48b1c9ba808469f48003600a8de254f9} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+green (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a1d4d7baa2d295810972a8935c282dabf}\index{Engine::Color@{Engine::Color}!Lerp@{Lerp}}
+\index{Lerp@{Lerp}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{Lerp()}{Lerp()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a1d4d7baa2d295810972a8935c282dabf} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+\+Lerp (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&}]{a}{, }\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&}]{b}{, }\item[{f32}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a351b7e4100a1195a31f11c316481081a}\index{Engine::Color@{Engine::Color}!magenta@{magenta}}
+\index{magenta@{magenta}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{magenta()}{magenta()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a351b7e4100a1195a31f11c316481081a} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+magenta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_ac5d3bc676ee3e33e167456bb2f2c74e0}\index{Engine::Color@{Engine::Color}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_ac5d3bc676ee3e33e167456bb2f2c74e0} 
+bool Engine::\+\+Color::\+operator!= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_engine_1_1_color_a7f8236362e431bcbb6e2f6b60da07f38}\index{Engine::Color@{Engine::Color}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a7f8236362e431bcbb6e2f6b60da07f38} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_engine_1_1_color_a2419d3688a63001805c3e87fcf886884}\index{Engine::Color@{Engine::Color}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a2419d3688a63001805c3e87fcf886884} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{f32}]{scalar}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_engine_1_1_color_abe29c09be2d82c625305365dd8c6df4d}\index{Engine::Color@{Engine::Color}!operator==@{operator==}}
+\index{operator==@{operator==}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_abe29c09be2d82c625305365dd8c6df4d} 
+bool Engine::\+\+Color::\+operator== (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} \&}]{other}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{struct_engine_1_1_color_a0d44e38fcebc60c404f451bcc64f6fa1}\index{Engine::Color@{Engine::Color}!red@{red}}
+\index{red@{red}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{red()}{red()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a0d44e38fcebc60c404f451bcc64f6fa1} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+red (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_ad3771079ef6cf5a97139fa1e9c41c5e1}\index{Engine::Color@{Engine::Color}!ToU32@{ToU32}}
+\index{ToU32@{ToU32}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{ToU32()}{ToU32()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_ad3771079ef6cf5a97139fa1e9c41c5e1} 
+u32 Engine::\+\+Color::\+\+To\+U32 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Convert to AE u32 color (0x\+AARRGGBB) \Hypertarget{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}\index{Engine::Color@{Engine::Color}!white@{white}}
+\index{white@{white}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{white()}{white()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+white (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{struct_engine_1_1_color_a5c0c6591b3ec4849d2789aa8e7b75a56}\index{Engine::Color@{Engine::Color}!yellow@{yellow}}
+\index{yellow@{yellow}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{yellow()}{yellow()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a5c0c6591b3ec4849d2789aa8e7b75a56} 
+\doxymbox{\hyperlink{struct_engine_1_1_color_ae2e6f0e6063df7866f6b132d9bebd3f9}{Color}} Engine::\+\+Color::\+yellow (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_color_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d}\index{Engine::Color@{Engine::Color}!a@{a}}
+\index{a@{a}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{a}{a}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_aed3f81406402afd2f4c815c32d03066d} 
+f32 Engine::\+\+Color::\+a}
+
+\Hypertarget{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc}\index{Engine::Color@{Engine::Color}!b@{b}}
+\index{b@{b}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{b}{b}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a8d3a89b2f2196d04e3fbe0b7c6422bdc} 
+f32 Engine::\+\+Color::\+b}
+
+\Hypertarget{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d}\index{Engine::Color@{Engine::Color}!g@{g}}
+\index{g@{g}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{g}{g}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a62ce718e861bb9b227129ee970cf232d} 
+f32 Engine::\+\+Color::\+g}
+
+\Hypertarget{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149}\index{Engine::Color@{Engine::Color}!r@{r}}
+\index{r@{r}!Engine::Color@{Engine::Color}}
+\doxysubsubsection{\texorpdfstring{r}{r}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_color_a73f7c7efb3f0225eb15b6e924c9be149} 
+f32 Engine::\+\+Color::\+r}
+
+
+
+The documentation for this struct was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_color_8hpp}{Color.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_color_8cpp}{Color.\+cpp}}\end{DoxyCompactItemize}

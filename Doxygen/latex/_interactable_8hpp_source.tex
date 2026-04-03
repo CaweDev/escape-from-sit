@@ -1,0 +1,41 @@
+\doxysection{Interactable.\+hpp}
+\hypertarget{_interactable_8hpp_source}{}\label{_interactable_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Interaction/Interactable.hpp@{AlphaEngine2.5D/Source/Engine/Interaction/Interactable.hpp}}
+\doxymbox{\hyperlink{_interactable_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{InteractableHitShape}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}{Rectangle}},\ \ \textcolor{comment}{//\ Uses\ full\ bounding\ box}}
+\DoxyCodeLine{00019\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052a119518c2134c46108179369f0ce81fa2}{Ellipse}}\ \ \ \ \ \textcolor{comment}{//\ Uses\ ellipse\ inscribed\ in\ bounding\ box}}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_interactable_ad94a68141aff163c54c7282bad802af0}{Interactable}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ std::string\ \doxymbox{\hyperlink{class_engine_1_1_interactable_afb99c4caf672c0436f90bdb3515f03fd}{actionText}}\ =\ \textcolor{stringliteral}{"{}Interact"{}};}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_interactable_a087c0432f5f418a1891640cd91a05803}{maxDistance}}\ =\ 5.0f;}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052}{InteractableHitShape}}\ \doxymbox{\hyperlink{class_engine_1_1_interactable_abf046c9bf425765e05dde22953eaf74d}{hitShape}}\ =\ \doxymbox{\hyperlink{namespace_engine_a4b050479ece7c214db3d6e83e6773052ace9291906a4c3b042650b70d7f3b152e}{InteractableHitShape::Rectangle}};}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_interactable_a1442c1477350824718d446486675951a}{requireHold}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_engine_1_1_interactable_ad2f9a4feb6eed191f368be5119fde830}{holdDuration}}\ =\ 1.0f;}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ std::function<void()>\ \doxymbox{\hyperlink{class_engine_1_1_interactable_aebc0dfc56ec37fadf135311bfc02552a}{onInteract}};}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable_ad94a68141aff163c54c7282bad802af0}{Interactable}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_engine_1_1_interactable_a3b19067de9a907d8b30950509cb0573c}{\string~Interactable}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00052\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_interactable_a2af70fdd2d7458095be7b4fb30418521}{Interact}}();}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

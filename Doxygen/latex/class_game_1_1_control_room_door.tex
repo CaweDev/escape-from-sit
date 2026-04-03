@@ -1,0 +1,265 @@
+\doxysection{Game::\+Control\+Room\+Door Class Reference}
+\hypertarget{class_game_1_1_control_room_door}{}\label{class_game_1_1_control_room_door}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+
+
+\doxylink{class_engine_1_1_door}{Door} that requires a set of access cards to unlock the control room.  
+
+
+
+
+{\ttfamily \+\#include $<$Control\+Room\+Door.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_control_room_door_a40da68388bd16edcab5eee09ba86fb5d}{Initialize}} () override
+\begin{DoxyCompactList}\small\item\em Called when component is created to set up interactable. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_control_room_door_a328907853782c9493f2d06d2cbe44188}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update to handle hold/\+unlock progression. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_control_room_door_a36adae0b83cdc4786058313b71aaa7f6}{Setup\+Interaction}} ()
+\begin{DoxyCompactList}\small\item\em Configure interaction callback. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_control_room_door_a280354226eedac4f23aacf0ff256ac56}{On\+Interact}} ()
+\begin{DoxyCompactList}\small\item\em Handle player interaction attempt. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_game_1_1_control_room_door_af0db4a26514d19614d0f9d17e52d719a}{Has\+All\+Cards}} () const
+\begin{DoxyCompactList}\small\item\em Query whether player has collected all required cards. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_control_room_door_a9456d6a850060e14760a750a8a632613}{Get\+Collected\+Cards}} () const
+\begin{DoxyCompactList}\small\item\em Return number of collected cards. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_control_room_door_aaa404c8d5802b33481e21d79fa039f08}{zone\+Id}} = 1
+\begin{DoxyCompactList}\small\item\em Zone ID this door belongs to (1-\/4). \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_control_room_door_a5d51c98a44efdd15bf921729829a0374}{required\+Cards}} = 4
+\begin{DoxyCompactList}\small\item\em Required number of cards to unlock. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_control_room_door_a31bb892de293cb03cd3945d73f9555ed}{door}} = nullptr
+\begin{DoxyCompactList}\small\item\em References to door component and interactable. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_control_room_door_a01d4225a16bedb477aa91d21e586e3cb}{interactable}} = nullptr
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_ab687b368302bca501eaa9ba76437e7a7}{hold\+Progress}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_a2abaff8c800ebf6174e27eaaf7392d0a}{hold\+Time\+Required}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_a4f765e6712b4f396e443cde636da571e}{hold\+Decay\+Multiplier}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_a850703170a9160bee193528afcc67104}{interact\+Max\+Distance}} = 2.\+5f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_a18074c1cc4160e4ac6876eca4c1a89e6}{locked\+Sfx\+Volume}} = 0.\+8f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_control_room_door_afabf8b904055763b4258801c117912fd}{unlock\+Sfx\+Volume}} = 0.\+8f
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_control_room_door_ac0aeba9f4aee8da30efeec4ad96869b9}{is\+Holding}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_door}{Door} that requires a set of access cards to unlock the control room. 
+
+The door exposes an interactable which the player holds to attempt unlock. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_control_room_door_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_control_room_door_a9456d6a850060e14760a750a8a632613}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!GetCollectedCards@{GetCollectedCards}}
+\index{GetCollectedCards@{GetCollectedCards}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{GetCollectedCards()}{GetCollectedCards()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a9456d6a850060e14760a750a8a632613} 
+int Game::\+\+Control\+Room\+Door::\+\+Get\+Collected\+Cards (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Return number of collected cards. 
+
+\Hypertarget{class_game_1_1_control_room_door_af0db4a26514d19614d0f9d17e52d719a}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!HasAllCards@{HasAllCards}}
+\index{HasAllCards@{HasAllCards}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{HasAllCards()}{HasAllCards()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_af0db4a26514d19614d0f9d17e52d719a} 
+bool Game::\+\+Control\+Room\+Door::\+\+Has\+All\+Cards (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Query whether player has collected all required cards. 
+
+\begin{DoxyReturn}{Returns}
+true if collected 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_control_room_door_a40da68388bd16edcab5eee09ba86fb5d}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a40da68388bd16edcab5eee09ba86fb5d} 
+void Game::\+\+Control\+Room\+Door::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Called when component is created to set up interactable. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_control_room_door_a280354226eedac4f23aacf0ff256ac56}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!OnInteract@{OnInteract}}
+\index{OnInteract@{OnInteract}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{OnInteract()}{OnInteract()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a280354226eedac4f23aacf0ff256ac56} 
+void Game::\+\+Control\+Room\+Door::\+\+On\+Interact (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Handle player interaction attempt. 
+
+\Hypertarget{class_game_1_1_control_room_door_a36adae0b83cdc4786058313b71aaa7f6}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!SetupInteraction@{SetupInteraction}}
+\index{SetupInteraction@{SetupInteraction}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{SetupInteraction()}{SetupInteraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a36adae0b83cdc4786058313b71aaa7f6} 
+void Game::\+\+Control\+Room\+Door::\+\+Setup\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configure interaction callback. 
+
+\Hypertarget{class_game_1_1_control_room_door_a328907853782c9493f2d06d2cbe44188}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!Update@{Update}}
+\index{Update@{Update}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a328907853782c9493f2d06d2cbe44188} 
+void Game::\+\+Control\+Room\+Door::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update to handle hold/\+unlock progression. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_control_room_door_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_control_room_door_a31bb892de293cb03cd3945d73f9555ed}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!door@{door}}
+\index{door@{door}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{door}{door}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a31bb892de293cb03cd3945d73f9555ed} 
+\doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}}\texorpdfstring{$\ast$}{*} Game::\+\+Control\+Room\+Door::\+door = nullptr}
+
+
+
+References to door component and interactable. 
+
+\Hypertarget{class_game_1_1_control_room_door_a4f765e6712b4f396e443cde636da571e}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!holdDecayMultiplier@{holdDecayMultiplier}}
+\index{holdDecayMultiplier@{holdDecayMultiplier}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{holdDecayMultiplier}{holdDecayMultiplier}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a4f765e6712b4f396e443cde636da571e} 
+float Game::\+\+Control\+Room\+Door::\+hold\+Decay\+Multiplier = 2.\+0f}
+
+\Hypertarget{class_game_1_1_control_room_door_ab687b368302bca501eaa9ba76437e7a7}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!holdProgress@{holdProgress}}
+\index{holdProgress@{holdProgress}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{holdProgress}{holdProgress}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_ab687b368302bca501eaa9ba76437e7a7} 
+float Game::\+\+Control\+Room\+Door::\+hold\+Progress = 0.\+0f}
+
+\Hypertarget{class_game_1_1_control_room_door_a2abaff8c800ebf6174e27eaaf7392d0a}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!holdTimeRequired@{holdTimeRequired}}
+\index{holdTimeRequired@{holdTimeRequired}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{holdTimeRequired}{holdTimeRequired}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a2abaff8c800ebf6174e27eaaf7392d0a} 
+float Game::\+\+Control\+Room\+Door::\+hold\+Time\+Required = 2.\+0f}
+
+\Hypertarget{class_game_1_1_control_room_door_a01d4225a16bedb477aa91d21e586e3cb}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!interactable@{interactable}}
+\index{interactable@{interactable}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{interactable}{interactable}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a01d4225a16bedb477aa91d21e586e3cb} 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}}\texorpdfstring{$\ast$}{*} Game::\+\+Control\+Room\+Door::\+interactable = nullptr}
+
+\Hypertarget{class_game_1_1_control_room_door_a850703170a9160bee193528afcc67104}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!interactMaxDistance@{interactMaxDistance}}
+\index{interactMaxDistance@{interactMaxDistance}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{interactMaxDistance}{interactMaxDistance}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a850703170a9160bee193528afcc67104} 
+float Game::\+\+Control\+Room\+Door::\+interact\+Max\+Distance = 2.\+5f}
+
+\Hypertarget{class_game_1_1_control_room_door_ac0aeba9f4aee8da30efeec4ad96869b9}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!isHolding@{isHolding}}
+\index{isHolding@{isHolding}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{isHolding}{isHolding}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_ac0aeba9f4aee8da30efeec4ad96869b9} 
+bool Game::\+\+Control\+Room\+Door::\+is\+Holding = false}
+
+\Hypertarget{class_game_1_1_control_room_door_a18074c1cc4160e4ac6876eca4c1a89e6}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!lockedSfxVolume@{lockedSfxVolume}}
+\index{lockedSfxVolume@{lockedSfxVolume}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{lockedSfxVolume}{lockedSfxVolume}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a18074c1cc4160e4ac6876eca4c1a89e6} 
+float Game::\+\+Control\+Room\+Door::\+locked\+Sfx\+Volume = 0.\+8f}
+
+\Hypertarget{class_game_1_1_control_room_door_a5d51c98a44efdd15bf921729829a0374}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!requiredCards@{requiredCards}}
+\index{requiredCards@{requiredCards}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{requiredCards}{requiredCards}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_a5d51c98a44efdd15bf921729829a0374} 
+int Game::\+\+Control\+Room\+Door::\+required\+Cards = 4}
+
+
+
+Required number of cards to unlock. 
+
+\Hypertarget{class_game_1_1_control_room_door_afabf8b904055763b4258801c117912fd}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!unlockSfxVolume@{unlockSfxVolume}}
+\index{unlockSfxVolume@{unlockSfxVolume}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{unlockSfxVolume}{unlockSfxVolume}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_afabf8b904055763b4258801c117912fd} 
+float Game::\+\+Control\+Room\+Door::\+unlock\+Sfx\+Volume = 0.\+8f}
+
+\Hypertarget{class_game_1_1_control_room_door_aaa404c8d5802b33481e21d79fa039f08}\index{Game::ControlRoomDoor@{Game::ControlRoomDoor}!zoneId@{zoneId}}
+\index{zoneId@{zoneId}!Game::ControlRoomDoor@{Game::ControlRoomDoor}}
+\doxysubsubsection{\texorpdfstring{zoneId}{zoneId}}
+{\footnotesize\ttfamily \label{class_game_1_1_control_room_door_aaa404c8d5802b33481e21d79fa039f08} 
+int Game::\+\+Control\+Room\+Door::\+zone\+Id = 1}
+
+
+
+Zone ID this door belongs to (1-\/4). 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Control\+Room\+Door/\+\doxymbox{\hyperlink{_control_room_door_8hpp}{Control\+Room\+Door.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Control\+Room\+Door/\+\doxymbox{\hyperlink{_control_room_door_8cpp}{Control\+Room\+Door.\+cpp}}\end{DoxyCompactItemize}

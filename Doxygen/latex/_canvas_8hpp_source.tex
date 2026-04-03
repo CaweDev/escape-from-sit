@@ -1,0 +1,94 @@
+\doxysection{Canvas.\+hpp}
+\hypertarget{_canvas_8hpp_source}{}\label{_canvas_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/UI/Core/Canvas.hpp@{AlphaEngine2.5D/Source/Engine/UI/Core/Canvas.hpp}}
+\doxymbox{\hyperlink{_canvas_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rect_transform_8hpp}{Engine/UI/Core/RectTransform.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_element_8hpp}{Engine/UI/Core/UIElement.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_u_i}{UI}}}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{CanvasScaleMode}}}
+\DoxyCodeLine{00020\ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913aa07993906b341f3f90d4c0e59ac7c8fd}{ConstantPixelSize}},\ \ \textcolor{comment}{//\ UI\ stays\ same\ pixel\ size\ regardless\ of\ resolution}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05}{ScaleWithScreenSize}}\ \textcolor{comment}{//\ UI\ scales\ to\ match\ reference\ resolution}}
+\DoxyCodeLine{00023\ \ \ \ \ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}}}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::vector<UIElement*>\ m\_rootElements;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reference\ resolution\ for\ scaling}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ f32\ m\_referenceWidth\ =\ 1280.f;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ f32\ m\_referenceHeight\ =\ 720.0f;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{CanvasScaleMode}}\ m\_scaleMode\ =\ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913a2ac0fab43627f997005598024f98fd05}{CanvasScaleMode::ScaleWithScreenSize}};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cached\ values}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ f32\ m\_scaleFactor\ =\ 1.0f;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ \textcolor{keywordtype}{bool}\ m\_scaleFactorDirty\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a7adb85a7c20301fb8cd5d1aa64ef8a56}{\string~Canvas}}();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Prevent\ copying}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas_aeb73fc8eaeebbc8df314cd2a6d955451}{Canvas}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}}\&\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a7574c76fa9908f06479ed3f502b05163}{operator=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_af204d6c4e25efc742c2b235da20c3d77}{SetReferenceResolution}}(f32\ width,\ f32\ height);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a503e82996bf8c5ab0c3239ca298d99a3}{GetReferenceResolution}}(f32\&\ outWidth,\ f32\&\ outHeight)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a94e12b6d5ad04c477d28db8f70c05faf}{SetScaleMode}}(\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{CanvasScaleMode}}\ mode);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{CanvasScaleMode}}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a10371056c78729f75615ae1a4f63da53}{GetScaleMode}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_scaleMode;\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a8575f346b776fc51ad03f7cb0040e423}{SetSortOrder}}(s32\ order);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ s32\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0ee5504202d81f3615a2107b0f0ab0d4}{GetSortOrder}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_sortOrder;\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a4ed2bcd8301ea120221e16a61d5ffb36}{GetScaleFactor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a6488cba3b98d1b801bbbc440c2c12e65}{GetCanvasRect}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_accd63c3ac910b937deccc7961c35dd85}{Update}}(f32\ dt);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_ac4bc2e2c194caa068aaa0321799b8dd3}{Render}}();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0d5266f01eb985c942f004c6a34ddfea}{AddElement}}(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ element);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a43b9011a767a2d86410a4d1c357e8e9e}{RemoveElement}}(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ element);}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<UIElement*>\&\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a559fa87e9832cd44b13daa986c034dc0}{GetRootElements}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_rootElements;\ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ T*\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a773434c7a8c649758854f04358f626f8}{CreateChild}}()}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_base\_of<UIElement,\ T>::value,\ \textcolor{stringliteral}{"{}T\ must\ inherit\ from\ UIElement"{}});}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ T*\ element\ =\ \textcolor{keyword}{new}\ T();}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0d5266f01eb985c942f004c6a34ddfea}{AddElement}}(element);}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ element;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a4d95ca279866a16ccb4e5208a44e4a44}{ScreenToCanvasPosition}}(s32\ screenX,\ s32\ screenY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_af2106cf4ac7245c5f08eb91f74cbf4ab}{Raycast}}(f32\ worldX,\ f32\ worldY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0e87048aa4d9c7a8cc55e5abb52461a1}{SortElements}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_u_i_1_1_canvas_a611400908900d95f3245acad686366d6}{SetSortDirty}}()\ \{\ m\_sortDirty\ =\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ RaycastElement(\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}}*\ element,\ f32\ worldX,\ f32\ worldY)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ s32\ m\_sortOrder\ =\ 0;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ \textcolor{keywordtype}{bool}\ m\_sortDirty\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00163\ \ \ \ \ \};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \}\ \textcolor{comment}{//\ namespace\ UI}}
+
+\end{DoxyCode}

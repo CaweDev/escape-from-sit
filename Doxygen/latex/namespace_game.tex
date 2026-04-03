@@ -1,0 +1,413 @@
+\doxysection{Game Namespace Reference}
+\hypertarget{namespace_game}{}\label{namespace_game}\index{Game@{Game}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_editor_scene}{Editor\+Scene}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_proximity_audio}{Proximity\+Audio}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_access_card}{Access\+Card}}
+\begin{DoxyCompactList}\small\item\em Collectible access card that unlocks control room doors. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{CCTVCamera}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{CCTVTerminal}}
+\begin{DoxyCompactList}\small\item\em Terminal component that can disable/\+restore camera networks and be repaired. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_control_room_door}{Control\+Room\+Door}}
+\begin{DoxyCompactList}\small\item\em \doxylink{class_engine_1_1_door}{Door} that requires a set of access cards to unlock the control room. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_debug_manager}{Debug\+Manager}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_debug_menu}{Debug\+Menu}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}
+\begin{DoxyCompactList}\small\item\em First-\/person movement with WASD, mouse look, jumping, and crouching. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}}
+\begin{DoxyCompactList}\small\item\em Grid-\/based activity tracker used by AI and analytics. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_camera_shake}{Camera\+Shake}}
+\begin{DoxyCompactList}\small\item\em Component applied to camera to produce shake and pulse effects. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_n_p_c}{NPC}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_path_renderer}{Path\+Renderer}}
+\begin{DoxyCompactList}\small\item\em Renders visual waypoint markers on the floor showing path to destination. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_player}{Player}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_player_power_up_controller}{Player\+Power\+Up\+Controller}}
+\begin{DoxyCompactList}\small\item\em Component that tracks active timers for buffs natively on the player. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}}
+\begin{DoxyCompactList}\small\item\em Data that defines a power-\/up instance. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_power_up_object}{Power\+Up\+Object}}
+\begin{DoxyCompactList}\small\item\em Floating collectible that grants a temporary player effect. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_power_up_manager}{Power\+Up\+Manager}}
+\begin{DoxyCompactList}\small\item\em Static manager for power-\/up data and object creation. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_grade_tier}{Grade\+Tier}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_puzzle_manager}{Puzzle\+Manager}}
+\begin{DoxyCompactList}\small\item\em Owns all book data, creates in-\/world puzzle objects, and tracks quiz state. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_book}{Book}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_puzzle_object}{Puzzle\+Object}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_credit_scene}{Credit\+Scene}}
+\begin{DoxyCompactList}\small\item\em Scene that displays scrolling/\+panning credits with skip support. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{FPSScene}}
+\begin{DoxyCompactList}\small\item\em Core gameplay scene for FPS-\/style gameplay and AI systems. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_hands67}{Hands67}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_lose_screen}{Lose\+Screen}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_pause_menu}{Pause\+Menu}}
+\begin{DoxyCompactList}\small\item\em Escape-\/key pause overlay with Resume, Restart, and Main Menu. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_player_h_u_d_config}{Player\+HUDConfig}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Player\+HUD}}
+\begin{DoxyCompactList}\small\item\em Component that creates and manages \doxylink{class_u_i_1_1_minimap}{Minimap} and \doxylink{class_u_i_1_1_map}{Map} \doxylink{namespace_u_i}{UI} elements. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_win_screen}{Win\+Screen}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene}{Interaction\+Demo\+Scene}}
+\begin{DoxyCompactList}\small\item\em Demonstrates the \doxylink{class_engine_1_1_interactable}{Interactable} system with test objects. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_tips_config}{Tips\+Config}}
+\begin{DoxyCompactList}\small\item\em This struct is to read from Assets/\+\+Config/\+tips.\+json using \doxylink{class_engine_1_1_config_manager}{Config\+Manager}. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_loading_scene}{Loading\+Scene}}
+\begin{DoxyCompactList}\small\item\em Intermediate scene that displays loading \doxylink{namespace_u_i}{UI} between scene transitions. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_main_menu_scene}{Main\+Menu\+Scene}}
+\begin{DoxyCompactList}\small\item\em Scene for main menu background with infinite corridor effect. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_controls_menu}{Controls\+Menu}}
+\begin{DoxyCompactList}\small\item\em A simple overlay menu to display the controls image. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_puzzle_scene}{Puzzle\+Scene}}
+\begin{DoxyCompactList}\small\item\em Doom-\/style first-\/person demo with physics. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_splash_scene}{Splash\+Scene}}
+\begin{DoxyCompactList}\small\item\em Splash screen that shows the Digi\+Pen logo with horror effects. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_u_i_test_scene}{UITest\+Scene}}
+\begin{DoxyCompactList}\small\item\em Demonstrates and verifies all \doxylink{namespace_u_i}{UI} components. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_security_guard}{Security\+Guard}}
+\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record}{CCTVRecord}}
+\begin{DoxyCompactList}\small\item\em Record of CCTV events for the visualizer log. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown}{Zone\+Breakdown}}
+\begin{DoxyCompactList}\small\item\em Summarized contributions to zone selection scores. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Bandit\+Visualizer}}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{UCB1\+Bandit}}
+\begin{DoxyCompactList}\small\item\em Implementation of the UCB1 algorithm for exploration/\+exploitation. \end{DoxyCompactList}\item 
+class \doxymbox{\hyperlink{class_game_1_1_zone_manager}{Zone\+Manager}}
+\begin{DoxyCompactList}\small\item\em Handles map zone logic and random position generation within zones. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73}{Access\+Card\+Color}} \{ \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ad382816a3cbeed082c9e216e7392eed1}{Green}} = 0
+, \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ab9ba865fec061c9706d2fd7ce49c0cc7}{Purple}} = 1
+, \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73aee38e4d5dd68c4e440825018d549cb47}{Red}} = 2
+, \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73a51e6cd92b6c45f9affdc158ecca2b8b8}{Yellow}} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em Color/\+type of access card (matches zone assignment). \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{Terminal\+State}} \{ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{ACTIVE}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a884b897f0b13c2d7044127cda8920c82}{HACKING}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a055c1a591abb0e8cd86dc969727bcc0b}{DISABLED}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11aacc349d2cc266d1d8a2098929a8f66ad}{REPAIRING}}
+ \}
+\begin{DoxyCompactList}\small\item\em Visual and interaction state of a terminal. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{NPCType}} \{ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203aa2a40f92a337690e1a178a1032e80377}{Cleaner}}
+, \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a275370ef329a53d78342d8b3d2992e3e}{Bully}}
+, \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{Annoying}}
+ \}
+\item 
+enum class \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{Player\+State}} \{ \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a960b44c579bc2f6818d2daaf9e4c16f0}{Normal}} =0
+, \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a9cb9e5c146becbfbe208da9b67fe97e5}{Caught}}
+, \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30a19abd416eb9fe03ae7400a22446956a5}{Won}}
+ \}
+\item 
+enum class \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2}{Power\+Up\+Type}} \{ \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2ae397fdb463f1d62721c0a5aa6038efa1}{Speed\+Boost}} = 0
+, \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2ab193def31ff70853047b490c49112cee}{Infinite\+Stamina}}
+, \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2a970da5f1f2e32aeb9e488dd017160ab4}{Shield}}
+, \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2a70840564ed92bb0f351968dd5d47b5bb}{Invisibility}}
+ \}
+\begin{DoxyCompactList}\small\item\em Types of power-\/ups available in the game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \doxymbox{\hyperlink{namespace_game_adef639520defc44629cb313425e5f841}{Zone\+Id\+To\+Letter}} (int zone\+Id)
+\begin{DoxyCompactList}\small\item\em Convert zone ID (1-\/4) to zone letter (A-\/D). \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{namespace_game_af787122ee3ebcdc40733f6322afb980b}{Get\+Zone\+Name}} (int zone\+Id)
+\begin{DoxyCompactList}\small\item\em Get zone name as string (e.\+g., "{}\+Zone A"{}). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{namespace_game_ae7dde5a9626620e10e617719aa60f406}{Register\+All\+Scenes}} ()
+\begin{DoxyCompactList}\small\item\em Register all game scenes with the \doxylink{class_engine_1_1_scene_manager}{Scene\+Manager} Call this once after engine initialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_editor_scene}{Editor\+Scene}} \doxymbox{\hyperlink{namespace_game_a25ad7d2f399001c1b449460d72005aea}{editor\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{FPSScene}} \doxymbox{\hyperlink{namespace_game_ac0a09aceca88b8efe5c233de15a1d77c}{fps\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_u_i_test_scene}{UITest\+Scene}} \doxymbox{\hyperlink{namespace_game_a5de8d5d48132456ce4797f0f53b7e92a}{ui\+Test\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene}{Interaction\+Demo\+Scene}} \doxymbox{\hyperlink{namespace_game_a656963219f8da44078ad2bec28acfd26}{interaction\+Demo\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_main_menu_scene}{Main\+Menu\+Scene}} \doxymbox{\hyperlink{namespace_game_a9abcf2b7c0d594d03a5726f994ca2889}{main\+Menu\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_loading_scene}{Loading\+Scene}} \doxymbox{\hyperlink{namespace_game_a0a3fd73ec1b106fe398a79aaccb2aa52}{loading\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_splash_scene}{Splash\+Scene}} \doxymbox{\hyperlink{namespace_game_a5b67a5075c9502bfb5dbfaa38198169c}{splash\+Scene}}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_credit_scene}{Credit\+Scene}} \doxymbox{\hyperlink{namespace_game_ab296d23a31094016309b73371a373f46}{credit\+Scene}}
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{namespace_game_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73}\index{Game@{Game}!AccessCardColor@{AccessCardColor}}
+\index{AccessCardColor@{AccessCardColor}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{AccessCardColor}{AccessCardColor}}
+{\footnotesize\ttfamily \label{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73} 
+enum class \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73}{Game::\+\+Access\+Card\+Color}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Color/\+type of access card (matches zone assignment). 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Green@{Green}!Game@{Game}}
+\index{Game@{Game}!Green@{Green}}
+}\Hypertarget{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ad382816a3cbeed082c9e216e7392eed1}\label{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ad382816a3cbeed082c9e216e7392eed1} 
+Green&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Purple@{Purple}!Game@{Game}}
+\index{Game@{Game}!Purple@{Purple}}
+}\Hypertarget{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ab9ba865fec061c9706d2fd7ce49c0cc7}\label{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ab9ba865fec061c9706d2fd7ce49c0cc7} 
+Purple&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Red@{Red}!Game@{Game}}
+\index{Game@{Game}!Red@{Red}}
+}\Hypertarget{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73aee38e4d5dd68c4e440825018d549cb47}\label{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73aee38e4d5dd68c4e440825018d549cb47} 
+Red&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Yellow@{Yellow}!Game@{Game}}
+\index{Game@{Game}!Yellow@{Yellow}}
+}\Hypertarget{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73a51e6cd92b6c45f9affdc158ecca2b8b8}\label{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73a51e6cd92b6c45f9affdc158ecca2b8b8} 
+Yellow&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}\index{Game@{Game}!NPCType@{NPCType}}
+\index{NPCType@{NPCType}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{NPCType}{NPCType}}
+{\footnotesize\ttfamily \label{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203} 
+enum class \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{Game::\+\+NPCType}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Cleaner@{Cleaner}!Game@{Game}}
+\index{Game@{Game}!Cleaner@{Cleaner}}
+}\Hypertarget{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203aa2a40f92a337690e1a178a1032e80377}\label{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203aa2a40f92a337690e1a178a1032e80377} 
+Cleaner&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Bully@{Bully}!Game@{Game}}
+\index{Game@{Game}!Bully@{Bully}}
+}\Hypertarget{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a275370ef329a53d78342d8b3d2992e3e}\label{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a275370ef329a53d78342d8b3d2992e3e} 
+Bully&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Annoying@{Annoying}!Game@{Game}}
+\index{Game@{Game}!Annoying@{Annoying}}
+}\Hypertarget{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}\label{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d} 
+Annoying&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_game_a07a82632e851c73be2e1ffaf16433d30}\index{Game@{Game}!PlayerState@{PlayerState}}
+\index{PlayerState@{PlayerState}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{PlayerState}{PlayerState}}
+{\footnotesize\ttfamily \label{namespace_game_a07a82632e851c73be2e1ffaf16433d30} 
+enum class \doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{Game::\+\+Player\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Normal@{Normal}!Game@{Game}}
+\index{Game@{Game}!Normal@{Normal}}
+}\Hypertarget{namespace_game_a07a82632e851c73be2e1ffaf16433d30a960b44c579bc2f6818d2daaf9e4c16f0}\label{namespace_game_a07a82632e851c73be2e1ffaf16433d30a960b44c579bc2f6818d2daaf9e4c16f0} 
+Normal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Caught@{Caught}!Game@{Game}}
+\index{Game@{Game}!Caught@{Caught}}
+}\Hypertarget{namespace_game_a07a82632e851c73be2e1ffaf16433d30a9cb9e5c146becbfbe208da9b67fe97e5}\label{namespace_game_a07a82632e851c73be2e1ffaf16433d30a9cb9e5c146becbfbe208da9b67fe97e5} 
+Caught&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Won@{Won}!Game@{Game}}
+\index{Game@{Game}!Won@{Won}}
+}\Hypertarget{namespace_game_a07a82632e851c73be2e1ffaf16433d30a19abd416eb9fe03ae7400a22446956a5}\label{namespace_game_a07a82632e851c73be2e1ffaf16433d30a19abd416eb9fe03ae7400a22446956a5} 
+Won&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_game_ae7fea5498ee197035097c59e9832c3f2}\index{Game@{Game}!PowerUpType@{PowerUpType}}
+\index{PowerUpType@{PowerUpType}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{PowerUpType}{PowerUpType}}
+{\footnotesize\ttfamily \label{namespace_game_ae7fea5498ee197035097c59e9832c3f2} 
+enum class \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2}{Game::\+\+Power\+Up\+Type}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Types of power-\/ups available in the game. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SpeedBoost@{SpeedBoost}!Game@{Game}}
+\index{Game@{Game}!SpeedBoost@{SpeedBoost}}
+}\Hypertarget{namespace_game_ae7fea5498ee197035097c59e9832c3f2ae397fdb463f1d62721c0a5aa6038efa1}\label{namespace_game_ae7fea5498ee197035097c59e9832c3f2ae397fdb463f1d62721c0a5aa6038efa1} 
+Speed\+Boost&Increases player movement speed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{InfiniteStamina@{InfiniteStamina}!Game@{Game}}
+\index{Game@{Game}!InfiniteStamina@{InfiniteStamina}}
+}\Hypertarget{namespace_game_ae7fea5498ee197035097c59e9832c3f2ab193def31ff70853047b490c49112cee}\label{namespace_game_ae7fea5498ee197035097c59e9832c3f2ab193def31ff70853047b490c49112cee} 
+Infinite\+Stamina&Prevents stamina depletion. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Shield@{Shield}!Game@{Game}}
+\index{Game@{Game}!Shield@{Shield}}
+}\Hypertarget{namespace_game_ae7fea5498ee197035097c59e9832c3f2a970da5f1f2e32aeb9e488dd017160ab4}\label{namespace_game_ae7fea5498ee197035097c59e9832c3f2a970da5f1f2e32aeb9e488dd017160ab4} 
+Shield&Protects player from a single hit. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Invisibility@{Invisibility}!Game@{Game}}
+\index{Game@{Game}!Invisibility@{Invisibility}}
+}\Hypertarget{namespace_game_ae7fea5498ee197035097c59e9832c3f2a70840564ed92bb0f351968dd5d47b5bb}\label{namespace_game_ae7fea5498ee197035097c59e9832c3f2a70840564ed92bb0f351968dd5d47b5bb} 
+Invisibility&Makes player invisible to NPCs and cameras. \\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}\index{Game@{Game}!TerminalState@{TerminalState}}
+\index{TerminalState@{TerminalState}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{TerminalState}{TerminalState}}
+{\footnotesize\ttfamily \label{namespace_game_ac3d05b0bdd67876999deb8924aa84a11} 
+enum class \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{Game::\+\+Terminal\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Visual and interaction state of a terminal. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTIVE@{ACTIVE}!Game@{Game}}
+\index{Game@{Game}!ACTIVE@{ACTIVE}}
+}\Hypertarget{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}\label{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115} 
+ACTIVE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HACKING@{HACKING}!Game@{Game}}
+\index{Game@{Game}!HACKING@{HACKING}}
+}\Hypertarget{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a884b897f0b13c2d7044127cda8920c82}\label{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a884b897f0b13c2d7044127cda8920c82} 
+HACKING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DISABLED@{DISABLED}!Game@{Game}}
+\index{Game@{Game}!DISABLED@{DISABLED}}
+}\Hypertarget{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a055c1a591abb0e8cd86dc969727bcc0b}\label{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a055c1a591abb0e8cd86dc969727bcc0b} 
+DISABLED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REPAIRING@{REPAIRING}!Game@{Game}}
+\index{Game@{Game}!REPAIRING@{REPAIRING}}
+}\Hypertarget{namespace_game_ac3d05b0bdd67876999deb8924aa84a11aacc349d2cc266d1d8a2098929a8f66ad}\label{namespace_game_ac3d05b0bdd67876999deb8924aa84a11aacc349d2cc266d1d8a2098929a8f66ad} 
+REPAIRING&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{namespace_game_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_game_af787122ee3ebcdc40733f6322afb980b}\index{Game@{Game}!GetZoneName@{GetZoneName}}
+\index{GetZoneName@{GetZoneName}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{GetZoneName()}{GetZoneName()}}
+{\footnotesize\ttfamily \label{namespace_game_af787122ee3ebcdc40733f6322afb980b} 
+std::\+string Game::\+\+Get\+Zone\+Name (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get zone name as string (e.\+g., "{}\+Zone A"{}). 
+
+\Hypertarget{namespace_game_ae7dde5a9626620e10e617719aa60f406}\index{Game@{Game}!RegisterAllScenes@{RegisterAllScenes}}
+\index{RegisterAllScenes@{RegisterAllScenes}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{RegisterAllScenes()}{RegisterAllScenes()}}
+{\footnotesize\ttfamily \label{namespace_game_ae7dde5a9626620e10e617719aa60f406} 
+void Game::\+\+Register\+All\+Scenes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Register all game scenes with the \doxylink{class_engine_1_1_scene_manager}{Scene\+Manager} Call this once after engine initialization. 
+
+\Hypertarget{namespace_game_adef639520defc44629cb313425e5f841}\index{Game@{Game}!ZoneIdToLetter@{ZoneIdToLetter}}
+\index{ZoneIdToLetter@{ZoneIdToLetter}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{ZoneIdToLetter()}{ZoneIdToLetter()}}
+{\footnotesize\ttfamily \label{namespace_game_adef639520defc44629cb313425e5f841} 
+char Game::\+\+Zone\+Id\+To\+Letter (\begin{DoxyParamCaption}\item[{int}]{zone\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Convert zone ID (1-\/4) to zone letter (A-\/D). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em zone\+Id} & \+[in]\+ Zone numeric id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Letter representing zone 
+\end{DoxyReturn}
+
+
+\label{doc-var-members}
+\Hypertarget{namespace_game_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_game_ab296d23a31094016309b73371a373f46}\index{Game@{Game}!creditScene@{creditScene}}
+\index{creditScene@{creditScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{creditScene}{creditScene}}
+{\footnotesize\ttfamily \label{namespace_game_ab296d23a31094016309b73371a373f46} 
+\doxymbox{\hyperlink{class_game_1_1_credit_scene}{Credit\+Scene}} Game::\+credit\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a25ad7d2f399001c1b449460d72005aea}\index{Game@{Game}!editorScene@{editorScene}}
+\index{editorScene@{editorScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{editorScene}{editorScene}}
+{\footnotesize\ttfamily \label{namespace_game_a25ad7d2f399001c1b449460d72005aea} 
+\doxymbox{\hyperlink{class_game_1_1_editor_scene}{Editor\+Scene}} Game::\+editor\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_ac0a09aceca88b8efe5c233de15a1d77c}\index{Game@{Game}!fpsScene@{fpsScene}}
+\index{fpsScene@{fpsScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{fpsScene}{fpsScene}}
+{\footnotesize\ttfamily \label{namespace_game_ac0a09aceca88b8efe5c233de15a1d77c} 
+\doxymbox{\hyperlink{class_game_1_1_f_p_s_scene}{FPSScene}} Game::\+fps\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a656963219f8da44078ad2bec28acfd26}\index{Game@{Game}!interactionDemoScene@{interactionDemoScene}}
+\index{interactionDemoScene@{interactionDemoScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{interactionDemoScene}{interactionDemoScene}}
+{\footnotesize\ttfamily \label{namespace_game_a656963219f8da44078ad2bec28acfd26} 
+\doxymbox{\hyperlink{class_game_1_1_interaction_demo_scene}{Interaction\+Demo\+Scene}} Game::\+interaction\+Demo\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a0a3fd73ec1b106fe398a79aaccb2aa52}\index{Game@{Game}!loadingScene@{loadingScene}}
+\index{loadingScene@{loadingScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{loadingScene}{loadingScene}}
+{\footnotesize\ttfamily \label{namespace_game_a0a3fd73ec1b106fe398a79aaccb2aa52} 
+\doxymbox{\hyperlink{class_game_1_1_loading_scene}{Loading\+Scene}} Game::\+loading\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a9abcf2b7c0d594d03a5726f994ca2889}\index{Game@{Game}!mainMenuScene@{mainMenuScene}}
+\index{mainMenuScene@{mainMenuScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{mainMenuScene}{mainMenuScene}}
+{\footnotesize\ttfamily \label{namespace_game_a9abcf2b7c0d594d03a5726f994ca2889} 
+\doxymbox{\hyperlink{class_game_1_1_main_menu_scene}{Main\+Menu\+Scene}} Game::\+main\+Menu\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a5b67a5075c9502bfb5dbfaa38198169c}\index{Game@{Game}!splashScene@{splashScene}}
+\index{splashScene@{splashScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{splashScene}{splashScene}}
+{\footnotesize\ttfamily \label{namespace_game_a5b67a5075c9502bfb5dbfaa38198169c} 
+\doxymbox{\hyperlink{class_game_1_1_splash_scene}{Splash\+Scene}} Game::\+splash\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{namespace_game_a5de8d5d48132456ce4797f0f53b7e92a}\index{Game@{Game}!uiTestScene@{uiTestScene}}
+\index{uiTestScene@{uiTestScene}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{uiTestScene}{uiTestScene}}
+{\footnotesize\ttfamily \label{namespace_game_a5de8d5d48132456ce4797f0f53b7e92a} 
+\doxymbox{\hyperlink{class_game_1_1_u_i_test_scene}{UITest\+Scene}} Game::\+ui\+Test\+Scene\hspace{0.3cm}{\ttfamily [inline]}}
+

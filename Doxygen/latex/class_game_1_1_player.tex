@@ -1,0 +1,298 @@
+\doxysection{Game::\+Player Class Reference}
+\hypertarget{class_game_1_1_player}{}\label{class_game_1_1_player}\index{Game::Player@{Game::Player}}
+
+
+{\ttfamily \+\#include $<$Player.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a0cc997dccfc40d69637cdc5f4aa83daa}{Catch}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_ad014fd5b467a42ea8d7fb3b3e8e1c72d}{Win}} ()
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_a0773bdb76957f4519932c89fd79dc1e7}{Is\+Caught}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_a66ed000fc6470bbccfb5933128fd9b83}{Is\+Won}} () const
+\item 
+\doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{Player\+State}} \doxymbox{\hyperlink{class_game_1_1_player_a18662bfa4bc655d3f5581d2f389e090a}{Get\+State}} () const
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_a295b128cef009ed7880ae1ca1af94e29}{Can\+Sprint}} () const
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_player_adbeb925af8a94ec58d4b90350e1c1fda}{Get\+Stamina}} () const
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_player_a367c912a284c10dc73d1faafbda4decb}{Get\+Stamina\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a32c73678e4d114dd713730bd56d3571a}{Drain\+Sprint}} (float dt)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a8d72486da2264a356ecd63804b291ec3}{Regen}} (float dt)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_aee9970bda51c78d02a7a7eedfd00d003}{Reset\+Stamina}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a65e8beab79ba568b47d048eb475c1126}{Add\+Knockback}} (const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&v)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_game_1_1_player_a8e23eeaa7d86cb9856b3e8f7042a1945}{Consume\+Knockback}} ()
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_player_a0ef1aac1b551f69f1d9495ac8e8462c1}{Get\+Game\+Time}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a4c0e7d39cc85b9856581f556f0a9b0dc}{Update\+Game\+Time}} (float dt)
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_aee08068057ca9f4152b932d331bbe021}{Reset\+Game\+Time}} ()
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_player_ac2ef847f3997a5528fc5ad137d8a180c}{Get\+High\+Score}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_player_a7845ee9a7c893f9e28c9703037d1bd68}{Set\+High\+Score}} (float score)
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_a5e3a5cdc78b08ab5f8b9d52ba8a3540a}{Is\+Invulnerable}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_aa4cdeeb83ca5ac07b4a8d19d11a7c0c6}{Is\+Invisible\+Active}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_game_1_1_player_a1d73318a4f3ef217c381231bb02c8448}{is\+Sprinting}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_a456025a2e5c399ecc6061abf5fdda07e}{has\+Speed\+Boost}} = false
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_a17ae4e8512255ddc9cf88da8e8c78378}{has\+Infinite\+Stamina}} = false
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_a536f02f12e1b5b0be409fc3ac7904d2e}{has\+Shield}} = false
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_aef4fc2a9cae2948de40e47ab6146d272}{is\+Invisible}} = false
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_a787807043c904419f33a2d12365431a0}{cheat\+Infinite\+Speed}} = false
+\item 
+static bool \doxymbox{\hyperlink{class_game_1_1_player_a064bc10cd84e5fc55ab58246da7ac10e}{cheat\+Catch\+Immune}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_player_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_player_a65e8beab79ba568b47d048eb475c1126}\index{Game::Player@{Game::Player}!AddKnockback@{AddKnockback}}
+\index{AddKnockback@{AddKnockback}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{AddKnockback()}{AddKnockback()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a65e8beab79ba568b47d048eb475c1126} 
+void Game::\+\+Player::\+\+Add\+Knockback (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \&}]{v}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_a295b128cef009ed7880ae1ca1af94e29}\index{Game::Player@{Game::Player}!CanSprint@{CanSprint}}
+\index{CanSprint@{CanSprint}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{CanSprint()}{CanSprint()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a295b128cef009ed7880ae1ca1af94e29} 
+bool Game::\+\+Player::\+\+Can\+Sprint (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_a0cc997dccfc40d69637cdc5f4aa83daa}\index{Game::Player@{Game::Player}!Catch@{Catch}}
+\index{Catch@{Catch}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{Catch()}{Catch()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a0cc997dccfc40d69637cdc5f4aa83daa} 
+void Game::\+\+Player::\+\+Catch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_a8e23eeaa7d86cb9856b3e8f7042a1945}\index{Game::Player@{Game::Player}!ConsumeKnockback@{ConsumeKnockback}}
+\index{ConsumeKnockback@{ConsumeKnockback}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{ConsumeKnockback()}{ConsumeKnockback()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a8e23eeaa7d86cb9856b3e8f7042a1945} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} Game::\+\+Player::\+\+Consume\+Knockback (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_a32c73678e4d114dd713730bd56d3571a}\index{Game::Player@{Game::Player}!DrainSprint@{DrainSprint}}
+\index{DrainSprint@{DrainSprint}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{DrainSprint()}{DrainSprint()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a32c73678e4d114dd713730bd56d3571a} 
+void Game::\+\+Player::\+\+Drain\+Sprint (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_a0ef1aac1b551f69f1d9495ac8e8462c1}\index{Game::Player@{Game::Player}!GetGameTime@{GetGameTime}}
+\index{GetGameTime@{GetGameTime}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{GetGameTime()}{GetGameTime()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a0ef1aac1b551f69f1d9495ac8e8462c1} 
+float Game::\+\+Player::\+\+Get\+Game\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_ac2ef847f3997a5528fc5ad137d8a180c}\index{Game::Player@{Game::Player}!GetHighScore@{GetHighScore}}
+\index{GetHighScore@{GetHighScore}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{GetHighScore()}{GetHighScore()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_ac2ef847f3997a5528fc5ad137d8a180c} 
+float Game::\+\+Player::\+\+Get\+High\+Score (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_adbeb925af8a94ec58d4b90350e1c1fda}\index{Game::Player@{Game::Player}!GetStamina@{GetStamina}}
+\index{GetStamina@{GetStamina}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{GetStamina()}{GetStamina()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_adbeb925af8a94ec58d4b90350e1c1fda} 
+float Game::\+\+Player::\+\+Get\+Stamina (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_a367c912a284c10dc73d1faafbda4decb}\index{Game::Player@{Game::Player}!GetStaminaMax@{GetStaminaMax}}
+\index{GetStaminaMax@{GetStaminaMax}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{GetStaminaMax()}{GetStaminaMax()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a367c912a284c10dc73d1faafbda4decb} 
+float Game::\+\+Player::\+\+Get\+Stamina\+Max (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_a18662bfa4bc655d3f5581d2f389e090a}\index{Game::Player@{Game::Player}!GetState@{GetState}}
+\index{GetState@{GetState}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{GetState()}{GetState()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a18662bfa4bc655d3f5581d2f389e090a} 
+\doxymbox{\hyperlink{namespace_game_a07a82632e851c73be2e1ffaf16433d30}{Player\+State}} Game::\+\+Player::\+\+Get\+State (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_a0773bdb76957f4519932c89fd79dc1e7}\index{Game::Player@{Game::Player}!IsCaught@{IsCaught}}
+\index{IsCaught@{IsCaught}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{IsCaught()}{IsCaught()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a0773bdb76957f4519932c89fd79dc1e7} 
+bool Game::\+\+Player::\+\+Is\+Caught (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_aa4cdeeb83ca5ac07b4a8d19d11a7c0c6}\index{Game::Player@{Game::Player}!IsInvisibleActive@{IsInvisibleActive}}
+\index{IsInvisibleActive@{IsInvisibleActive}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{IsInvisibleActive()}{IsInvisibleActive()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_aa4cdeeb83ca5ac07b4a8d19d11a7c0c6} 
+bool Game::\+\+Player::\+\+Is\+Invisible\+Active (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a5e3a5cdc78b08ab5f8b9d52ba8a3540a}\index{Game::Player@{Game::Player}!IsInvulnerable@{IsInvulnerable}}
+\index{IsInvulnerable@{IsInvulnerable}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{IsInvulnerable()}{IsInvulnerable()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a5e3a5cdc78b08ab5f8b9d52ba8a3540a} 
+bool Game::\+\+Player::\+\+Is\+Invulnerable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_a66ed000fc6470bbccfb5933128fd9b83}\index{Game::Player@{Game::Player}!IsWon@{IsWon}}
+\index{IsWon@{IsWon}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{IsWon()}{IsWon()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a66ed000fc6470bbccfb5933128fd9b83} 
+bool Game::\+\+Player::\+\+Is\+Won (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_1_1_player_a8d72486da2264a356ecd63804b291ec3}\index{Game::Player@{Game::Player}!Regen@{Regen}}
+\index{Regen@{Regen}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{Regen()}{Regen()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a8d72486da2264a356ecd63804b291ec3} 
+void Game::\+\+Player::\+\+Regen (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_aee08068057ca9f4152b932d331bbe021}\index{Game::Player@{Game::Player}!ResetGameTime@{ResetGameTime}}
+\index{ResetGameTime@{ResetGameTime}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{ResetGameTime()}{ResetGameTime()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_aee08068057ca9f4152b932d331bbe021} 
+void Game::\+\+Player::\+\+Reset\+Game\+Time (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_aee9970bda51c78d02a7a7eedfd00d003}\index{Game::Player@{Game::Player}!ResetStamina@{ResetStamina}}
+\index{ResetStamina@{ResetStamina}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{ResetStamina()}{ResetStamina()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_aee9970bda51c78d02a7a7eedfd00d003} 
+void Game::\+\+Player::\+\+Reset\+Stamina (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_a7845ee9a7c893f9e28c9703037d1bd68}\index{Game::Player@{Game::Player}!SetHighScore@{SetHighScore}}
+\index{SetHighScore@{SetHighScore}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{SetHighScore()}{SetHighScore()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a7845ee9a7c893f9e28c9703037d1bd68} 
+void Game::\+\+Player::\+\+Set\+High\+Score (\begin{DoxyParamCaption}\item[{float}]{score}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_player_a4c0e7d39cc85b9856581f556f0a9b0dc}\index{Game::Player@{Game::Player}!UpdateGameTime@{UpdateGameTime}}
+\index{UpdateGameTime@{UpdateGameTime}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{UpdateGameTime()}{UpdateGameTime()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a4c0e7d39cc85b9856581f556f0a9b0dc} 
+void Game::\+\+Player::\+\+Update\+Game\+Time (\begin{DoxyParamCaption}\item[{float}]{dt}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_1_1_player_ad014fd5b467a42ea8d7fb3b3e8e1c72d}\index{Game::Player@{Game::Player}!Win@{Win}}
+\index{Win@{Win}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{Win()}{Win()}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_ad014fd5b467a42ea8d7fb3b3e8e1c72d} 
+void Game::\+\+Player::\+\+Win (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_player_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_player_a064bc10cd84e5fc55ab58246da7ac10e}\index{Game::Player@{Game::Player}!cheatCatchImmune@{cheatCatchImmune}}
+\index{cheatCatchImmune@{cheatCatchImmune}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{cheatCatchImmune}{cheatCatchImmune}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a064bc10cd84e5fc55ab58246da7ac10e} 
+bool Game::\+\+Player::\+cheat\+Catch\+Immune = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a787807043c904419f33a2d12365431a0}\index{Game::Player@{Game::Player}!cheatInfiniteSpeed@{cheatInfiniteSpeed}}
+\index{cheatInfiniteSpeed@{cheatInfiniteSpeed}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{cheatInfiniteSpeed}{cheatInfiniteSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a787807043c904419f33a2d12365431a0} 
+bool Game::\+\+Player::\+cheat\+Infinite\+Speed = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a17ae4e8512255ddc9cf88da8e8c78378}\index{Game::Player@{Game::Player}!hasInfiniteStamina@{hasInfiniteStamina}}
+\index{hasInfiniteStamina@{hasInfiniteStamina}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{hasInfiniteStamina}{hasInfiniteStamina}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a17ae4e8512255ddc9cf88da8e8c78378} 
+bool Game::\+\+Player::\+has\+Infinite\+Stamina = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a536f02f12e1b5b0be409fc3ac7904d2e}\index{Game::Player@{Game::Player}!hasShield@{hasShield}}
+\index{hasShield@{hasShield}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{hasShield}{hasShield}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a536f02f12e1b5b0be409fc3ac7904d2e} 
+bool Game::\+\+Player::\+has\+Shield = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a456025a2e5c399ecc6061abf5fdda07e}\index{Game::Player@{Game::Player}!hasSpeedBoost@{hasSpeedBoost}}
+\index{hasSpeedBoost@{hasSpeedBoost}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{hasSpeedBoost}{hasSpeedBoost}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a456025a2e5c399ecc6061abf5fdda07e} 
+bool Game::\+\+Player::\+has\+Speed\+Boost = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_aef4fc2a9cae2948de40e47ab6146d272}\index{Game::Player@{Game::Player}!isInvisible@{isInvisible}}
+\index{isInvisible@{isInvisible}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{isInvisible}{isInvisible}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_aef4fc2a9cae2948de40e47ab6146d272} 
+bool Game::\+\+Player::\+is\+Invisible = false\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_game_1_1_player_a1d73318a4f3ef217c381231bb02c8448}\index{Game::Player@{Game::Player}!isSprinting@{isSprinting}}
+\index{isSprinting@{isSprinting}!Game::Player@{Game::Player}}
+\doxysubsubsection{\texorpdfstring{isSprinting}{isSprinting}}
+{\footnotesize\ttfamily \label{class_game_1_1_player_a1d73318a4f3ef217c381231bb02c8448} 
+bool Game::\+\+Player::\+is\+Sprinting = false}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Player/\+\doxymbox{\hyperlink{_player_8hpp}{Player.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Player/\+\doxymbox{\hyperlink{_player_8cpp}{Player.\+cpp}}\end{DoxyCompactItemize}

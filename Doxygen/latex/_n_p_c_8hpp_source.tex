@@ -1,0 +1,116 @@
+\doxysection{NPC.\+hpp}
+\hypertarget{_n_p_c_8hpp_source}{}\label{_n_p_c_8hpp_source}\index{AlphaEngine2.5D/Source/Game/NPC/NPC.hpp@{AlphaEngine2.5D/Source/Game/NPC/NPC.hpp}}
+\doxymbox{\hyperlink{_n_p_c_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_transform_8hpp}{Engine/Core/Transform.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_tile_map_8hpp}{Engine/TileMap/TileMap.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Engine/Physics/Rigidbody2D.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_camera_shake_8hpp}{Game/NPC/CameraShake.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_player_8hpp}{Game/Player/Player.hpp}}"{}}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{NPCType}}}
+\DoxyCodeLine{00022\ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203aa2a40f92a337690e1a178a1032e80377}{Cleaner}},}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a275370ef329a53d78342d8b3d2992e3e}{Bully}},}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{Annoying}}}
+\DoxyCodeLine{00026\ \ \ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_n_p_c}{NPC}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}}
+\DoxyCodeLine{00029\ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::TileMap}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932}{tileMap}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::Transform}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_afc628e3fcbd7adfef7c7a0b74d7b2ee8}{playerTf}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::Rigidbody2D}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a9e29c46f3f7d15248800b8a968a74e27}{m\_rb}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::Rigidbody2D}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a94e0cbea7f8c196ed1084c2ff7f092ac}{playerRb}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_player}{Game::Player}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_adfa2f4c413c78a5585cb0dd1733f3af1}{playerData}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::CameraShake}}*\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a542eda38e86c4a6cc1ad5208be2938a7}{camShake}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203}{NPCType}}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_aa908d7027774ada4285af543fbcc9630}{type}}\ =\ \doxymbox{\hyperlink{namespace_game_a1f68572f625e1e2d3f2f986ee97ea203a06f4cde50b7b51d8c3add41f7f45528d}{NPCType::Annoying}};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a243860339214823c1b14aeb2cd5a5be0}{zoneId}}\ =\ 1;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_acb56c9ea583aabc7323916bd2b9a82f6}{speed}}\ =\ 1.0f;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a63d8b0bdba391569a2fec56eb8628a98}{arriveDistance}}\ =\ 0.10f;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Annoying\ trigger}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_aba78fdae7db603e0109c9b0ae4b56ce2}{triggerRadius}}\ =\ 2.2f;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a8039d9bc962f9ea5db6d4fa97c14f3da}{blockTime}}\ =\ 1.2f;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Cleaner\ patrol}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5f8123db7aa12edc7cc9df37a9f30f44}{patrolRepathTime}}\ =\ 2.0f;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5f0abe0d5c8730e4686b153193d43bb7}{isDistracted}}\ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a19b6a6aecc6ff47fa0c04caa81b81aba}{distractionPos}};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_ad5c8ab6dd0e47775c3cfe50710c3bf37}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_ab8bb3367950157f7256f41e9dec228d2}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ FPSScene\ passes:\ (zoneId,\ outX,\ outY)\ -\/>\ bool}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a5be2aa62b368abec00e8d9498ce87feb}{SetPickGoalInZone}}(std::function<\textcolor{keywordtype}{bool}(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int}\&,\ \textcolor{keywordtype}{int}\&)>\ fn)\ \{\ m\_pickGoalInZone\ =\ fn;\ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a9070792e8ba862c91d26ba673045af89}{OnDistracted}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ \&noisePos);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_a7d5e46dd62abbef2cc3746ed96e01a6c}{ClearDistraction}}();}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Path}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ std::vector<Engine::Vector2>\ path;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pathIndex\ =\ 0;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Timers}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ activeTimer\ =\ 0.0f;\ \textcolor{comment}{//\ Annoying}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ repathTimer\ =\ 0.0f;\ \textcolor{comment}{//\ Cleaner}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyChaseTime\ =\ 1.5f;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyRepathInterval\ =\ 0.25f;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyCooldownTime\ =\ 2.0f;}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyPushRadius\ =\ 1.0f;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyPushStrength\ =\ 18.0f;\ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyPushDistance\ =\ 1.2f;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ bullyCooldown\ =\ 0.0f;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ std::function<bool(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{int}\&,\ \textcolor{keywordtype}{int}\&)>\ m\_pickGoalInZone;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Headache\ /\ follow\ tracking\ (Annoying)}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ followTimer\ =\ 0.0f;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ time\ spent\ continuously\ following\ the\ player}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ headacheThreshold\ =\ 12.0f;\ \ \ \ \ \textcolor{comment}{//\ seconds\ before\ pounding\ starts}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pulseTimer\ =\ 0.0f;\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ timer\ for\ pounding\ pulses}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ pulseInterval\ =\ 0.6f;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ seconds\ between\ pulses}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ headacheIntensityMax\ =\ 0.18f;\ \ \textcolor{comment}{//\ max\ shake\ intensity\ from\ pounding}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ headacheNotified\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \textcolor{comment}{//\ whether\ HUD\ was\ notified\ for\ this\ follow\ session}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ per\ type}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateAnnoying(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateCleaner(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateBully(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ PlayerInRange()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Goals}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RequestGoalInZone\_BiasedNearPlayer();}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RequestGoalInZone\_Random();}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Movement}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ FollowPath(\textcolor{keywordtype}{float}\ dt);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ BFS}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildPathBFS\_ToGoal(\textcolor{keywordtype}{int}\ gx,\ \textcolor{keywordtype}{int}\ gy);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Helpers}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ GetCurrentTile(\textcolor{keywordtype}{int}\&\ tx,\ \textcolor{keywordtype}{int}\&\ ty)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iD(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ y\ *\ \doxymbox{\hyperlink{class_game_1_1_n_p_c_af580d907fc6961f21f25f3a562d0a932}{tileMap}}-\/>\doxymbox{\hyperlink{class_engine_1_1_tile_map_a006231465fb030073a5ebc42cc3a74eb}{width}}\ +\ x;\ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}\ WorldFromTile(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::Vector2}}((\textcolor{keywordtype}{float})x\ +\ 0.5f,\ (\textcolor{keywordtype}{float})y\ +\ 0.5f);\ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ DistSq(\textcolor{keywordtype}{float}\ ax,\ \textcolor{keywordtype}{float}\ ay,\ \textcolor{keywordtype}{float}\ bx,\ \textcolor{keywordtype}{float}\ by)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00112\ \ \ \ \ \};}
+\DoxyCodeLine{00113\ \}}
+
+\end{DoxyCode}

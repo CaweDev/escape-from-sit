@@ -1,0 +1,116 @@
+\doxysection{Game::\+UCB1\+Bandit Class Reference}
+\hypertarget{class_game_1_1_u_c_b1_bandit}{}\label{class_game_1_1_u_c_b1_bandit}\index{Game::UCB1Bandit@{Game::UCB1Bandit}}
+
+
+Implementation of the UCB1 algorithm for exploration/\+exploitation.  
+
+
+
+
+{\ttfamily \+\#include $<$UCB1\+Bandit.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a7ab42f2482bd2d97c601e06dfc297cae}{UCB1\+Bandit}} (int arms=0, float c=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Construct bandit with given number of arms and exploration factor c. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a7c0c48c7f3e7462bedb78da5256ae8d8}{Reset}} (int arms, float c)
+\begin{DoxyCompactList}\small\item\em Reset internal state to given arms and c. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a72464697a444d0b9145957865ce2f6f6}{Select\+Arm}} ()
+\begin{DoxyCompactList}\small\item\em Select an arm index \+[0..arms-\/1]\+ according to UCB1. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a1c72b4fc35069b2af8e311be5aa709f2}{Update}} (int arm, float reward)
+\begin{DoxyCompactList}\small\item\em Update statistics for a given arm with reward in \+[0,1]\+. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_abad602108aaec566652f66cba38c560e}{Get\+Arms}} () const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_ad1280061a835c304c32659d168e79892}{Get\+Total\+Pulls}} () const
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_afc52641aa83e453c93777b94716dd1a8}{Pulls}} (int arm) const
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit_a95fdcf3ac36a61912ff1368a3dbc0899}{Value}} (int arm) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the UCB1 algorithm for exploration/\+exploitation. 
+
+\label{doc-constructors}
+\Hypertarget{class_game_1_1_u_c_b1_bandit_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_1_1_u_c_b1_bandit_a7ab42f2482bd2d97c601e06dfc297cae}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!UCB1Bandit@{UCB1Bandit}}
+\index{UCB1Bandit@{UCB1Bandit}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{UCB1Bandit()}{UCB1Bandit()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_a7ab42f2482bd2d97c601e06dfc297cae} 
+Game::\+\+UCB1\+Bandit::\+\+UCB1\+Bandit (\begin{DoxyParamCaption}\item[{int}]{arms}{ = {\ttfamily 0}, }\item[{float}]{c}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})}
+
+
+
+Construct bandit with given number of arms and exploration factor c. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_u_c_b1_bandit_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_u_c_b1_bandit_abad602108aaec566652f66cba38c560e}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!GetArms@{GetArms}}
+\index{GetArms@{GetArms}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{GetArms()}{GetArms()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_abad602108aaec566652f66cba38c560e} 
+int Game::\+\+UCB1\+Bandit::\+\+Get\+Arms (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_u_c_b1_bandit_ad1280061a835c304c32659d168e79892}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!GetTotalPulls@{GetTotalPulls}}
+\index{GetTotalPulls@{GetTotalPulls}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{GetTotalPulls()}{GetTotalPulls()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_ad1280061a835c304c32659d168e79892} 
+int Game::\+\+UCB1\+Bandit::\+\+Get\+Total\+Pulls (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_u_c_b1_bandit_afc52641aa83e453c93777b94716dd1a8}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!Pulls@{Pulls}}
+\index{Pulls@{Pulls}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{Pulls()}{Pulls()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_afc52641aa83e453c93777b94716dd1a8} 
+int Game::\+\+UCB1\+Bandit::\+\+Pulls (\begin{DoxyParamCaption}\item[{int}]{arm}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_game_1_1_u_c_b1_bandit_a7c0c48c7f3e7462bedb78da5256ae8d8}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!Reset@{Reset}}
+\index{Reset@{Reset}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_a7c0c48c7f3e7462bedb78da5256ae8d8} 
+void Game::\+\+UCB1\+Bandit::\+\+Reset (\begin{DoxyParamCaption}\item[{int}]{arms}{, }\item[{float}]{c}{}\end{DoxyParamCaption})}
+
+
+
+Reset internal state to given arms and c. 
+
+\Hypertarget{class_game_1_1_u_c_b1_bandit_a72464697a444d0b9145957865ce2f6f6}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!SelectArm@{SelectArm}}
+\index{SelectArm@{SelectArm}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{SelectArm()}{SelectArm()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_a72464697a444d0b9145957865ce2f6f6} 
+int Game::\+\+UCB1\+Bandit::\+\+Select\+Arm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Select an arm index \+[0..arms-\/1]\+ according to UCB1. 
+
+\begin{DoxyReturn}{Returns}
+chosen arm or -\/1 if none 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_u_c_b1_bandit_a1c72b4fc35069b2af8e311be5aa709f2}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!Update@{Update}}
+\index{Update@{Update}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_a1c72b4fc35069b2af8e311be5aa709f2} 
+void Game::\+\+UCB1\+Bandit::\+\+Update (\begin{DoxyParamCaption}\item[{int}]{arm}{, }\item[{float}]{reward}{}\end{DoxyParamCaption})}
+
+
+
+Update statistics for a given arm with reward in \+[0,1]\+. 
+
+\Hypertarget{class_game_1_1_u_c_b1_bandit_a95fdcf3ac36a61912ff1368a3dbc0899}\index{Game::UCB1Bandit@{Game::UCB1Bandit}!Value@{Value}}
+\index{Value@{Value}!Game::UCB1Bandit@{Game::UCB1Bandit}}
+\doxysubsubsection{\texorpdfstring{Value()}{Value()}}
+{\footnotesize\ttfamily \label{class_game_1_1_u_c_b1_bandit_a95fdcf3ac36a61912ff1368a3dbc0899} 
+float Game::\+\+UCB1\+Bandit::\+\+Value (\begin{DoxyParamCaption}\item[{int}]{arm}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+UCB1\+Bandit/\+\doxymbox{\hyperlink{_u_c_b1_bandit_8hpp}{UCB1\+Bandit.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+UCB1\+Bandit/\+\doxymbox{\hyperlink{_u_c_b1_bandit_8cpp}{UCB1\+Bandit.\+cpp}}\end{DoxyCompactItemize}

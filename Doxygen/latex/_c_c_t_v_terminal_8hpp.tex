@@ -1,0 +1,44 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Game/\+\+CCTV/\+\+CCTVTerminal.hpp File Reference}
+\hypertarget{_c_c_t_v_terminal_8hpp}{}\label{_c_c_t_v_terminal_8hpp}\index{AlphaEngine2.5D/Source/Game/CCTV/CCTVTerminal.hpp@{AlphaEngine2.5D/Source/Game/CCTV/CCTVTerminal.hpp}}
+
+
+Component that represents an interactive CCTV terminal in the world.  
+
+
+{\ttfamily \+\#include "{}Engine/\+\+Core/\+\+Component.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Interaction/\+\+Interactable.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Sprite\+Renderer.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}Engine/\+\+Graphics/\+\+Color.\+hpp"{}}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{Game::\+\+CCTVTerminal}}
+\begin{DoxyCompactList}\small\item\em Terminal component that can disable/\+restore camera networks and be repaired. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_game}{Game}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11}{Game::\+\+Terminal\+State}} \{ \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a18ff74f43da410c5529f7d6fca84f115}{Game::\+\+ACTIVE}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a884b897f0b13c2d7044127cda8920c82}{Game::\+\+HACKING}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11a055c1a591abb0e8cd86dc969727bcc0b}{Game::\+\+DISABLED}}
+, \doxymbox{\hyperlink{namespace_game_ac3d05b0bdd67876999deb8924aa84a11aacc349d2cc266d1d8a2098929a8f66ad}{Game::\+\+REPAIRING}}
+ \}
+\begin{DoxyCompactList}\small\item\em Visual and interaction state of a terminal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \doxymbox{\hyperlink{namespace_game_adef639520defc44629cb313425e5f841}{Game::\+\+Zone\+Id\+To\+Letter}} (int zone\+Id)
+\begin{DoxyCompactList}\small\item\em Convert zone ID (1-\/4) to zone letter (A-\/D). \end{DoxyCompactList}\item 
+std::\+string \doxymbox{\hyperlink{namespace_game_af787122ee3ebcdc40733f6322afb980b}{Game::\+\+Get\+Zone\+Name}} (int zone\+Id)
+\begin{DoxyCompactList}\small\item\em Get zone name as string (e.\+g., "{}\+Zone A"{}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Component that represents an interactive CCTV terminal in the world. 
+

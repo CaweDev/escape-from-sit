@@ -1,0 +1,223 @@
+\doxysection{Engine::\+Component Class Reference}
+\hypertarget{class_engine_1_1_component}{}\label{class_engine_1_1_component}\index{Engine::Component@{Engine::Component}}
+
+
+Base class for all components attached to Game\+Objects.  
+
+
+
+
+{\ttfamily \+\#include $<$Component.\+hpp$>$}
+
+
+
+Inherited by \doxymbox{\hyperlink{class_engine_1_1_audio_source}{Engine::\+\+Audio\+Source}}, \doxymbox{\hyperlink{class_engine_1_1_camera}{Engine::\+\+Camera}}, \doxymbox{\hyperlink{class_engine_1_1_collider2_d}{Engine::\+\+Collider2D}}, \doxymbox{\hyperlink{class_engine_1_1_door}{Engine::\+\+Door}}, \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}, \doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}}, \doxymbox{\hyperlink{class_engine_1_1_interaction_controller}{Engine::\+\+Interaction\+Controller}}, \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Engine::\+\+Rigidbody2D}}, \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}, \doxymbox{\hyperlink{class_engine_1_1_transform}{Engine::\+\+Transform}}, \doxymbox{\hyperlink{class_game_1_1_access_card}{Game::\+\+Access\+Card}}, \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer}{Game::\+\+Bandit\+Visualizer}}, \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera}{Game::\+\+CCTVCamera}}, \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal}{Game::\+\+CCTVTerminal}}, \doxymbox{\hyperlink{class_game_1_1_camera_shake}{Game::\+\+Camera\+Shake}}, \doxymbox{\hyperlink{class_game_1_1_control_room_door}{Game::\+\+Control\+Room\+Door}}, \doxymbox{\hyperlink{class_game_1_1_controls_menu}{Game::\+\+Controls\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{Game::\+\+FPSController}}, \doxymbox{\hyperlink{class_game_1_1_hands67}{Game::\+\+Hands67}}, \doxymbox{\hyperlink{class_game_1_1_lose_screen}{Game::\+\+Lose\+Screen}}, \doxymbox{\hyperlink{class_game_1_1_n_p_c}{Game::\+\+NPC}}, \doxymbox{\hyperlink{class_game_1_1_pause_menu}{Game::\+\+Pause\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_player}{Game::\+\+Player}}, \doxymbox{\hyperlink{class_game_1_1_player_h_u_d}{Game::\+\+Player\+HUD}}, \doxymbox{\hyperlink{class_game_1_1_player_power_up_controller}{Game::\+\+Player\+Power\+Up\+Controller}}, \doxymbox{\hyperlink{class_game_1_1_power_up_object}{Game::\+\+Power\+Up\+Object}}, \doxymbox{\hyperlink{class_game_1_1_proximity_audio}{Game::\+\+Proximity\+Audio}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_object}{Game::\+\+Puzzle\+Object}}, \doxymbox{\hyperlink{class_game_1_1_security_guard}{Game::\+\+Security\+Guard}}, \doxymbox{\hyperlink{class_game_1_1_win_screen}{Game::\+\+Win\+Screen}}, and \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog}{UI::\+\+Confirmation\+Dialog}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all components attached to Game\+Objects. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_component_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}\index{Engine::Component@{Engine::Component}!Component@{Component}}
+\index{Component@{Component}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{Component()}{Component()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c} 
+Engine::\+\+Component::\+\+Component (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}\index{Engine::Component@{Engine::Component}!````~Component@{\texorpdfstring{$\sim$}{\string~}Component}}
+\index{````~Component@{\texorpdfstring{$\sim$}{\string~}Component}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Component()}{\string~Component()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72} 
+virtual Engine::\+\+Component::\+\texorpdfstring{$\sim$}{\string~}\+Component (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_component_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}\index{Engine::Component@{Engine::Component}!Awake@{Awake}}
+\index{Awake@{Awake}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd} 
+virtual void Engine::\+\+Component::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when component is first created 
+
+Reimplemented in \doxymbox{\hyperlink{class_engine_1_1_audio_source_a21a2fbbd789225b33b009e3660d27654}{Engine::\+\+Audio\+Source}}, \doxymbox{\hyperlink{class_engine_1_1_camera_a50c3da422fcd130529763013c0075c09}{Engine::\+\+Camera}}, \doxymbox{\hyperlink{class_engine_1_1_collider2_d_a4c3381b7e25273b1be1e508e78c1c762}{Engine::\+\+Collider2D}}, \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a05d118828e2a48b5c76d622ce68a9594}{Engine::\+\+Rigidbody2D}}, \doxymbox{\hyperlink{class_engine_1_1_tile_map_collider2_d_abb4f70cd6729363299341d3a832972b7}{Engine::\+\+Tile\+Map\+Collider2D}}, \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_afafa9820d098821423be8719576c0cb2}{Game::\+\+CCTVTerminal}}, \doxymbox{\hyperlink{class_game_1_1_controls_menu_a61d4bc2470cfd67995f6b7df083039c2}{Game::\+\+Controls\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_hands67_ab1f359e7531a0abb2d7fadfc74e06212}{Game::\+\+Hands67}}, \doxymbox{\hyperlink{class_game_1_1_lose_screen_a39ffba6843755e0aba43559a637db743}{Game::\+\+Lose\+Screen}}, \doxymbox{\hyperlink{class_game_1_1_path_renderer_a9f5b94f76536cb93a5ceddac13281bf9}{Game::\+\+Path\+Renderer}}, \doxymbox{\hyperlink{class_game_1_1_pause_menu_a1665f12d5ee41501413b5d704de86e20}{Game::\+\+Pause\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a70467b04b1d6e3336b686f901c0c5468}{Game::\+\+Player\+HUD}}, \doxymbox{\hyperlink{class_game_1_1_player_power_up_controller_a044c6b9a2d619a1e6f921f0f0cec929d}{Game::\+\+Player\+Power\+Up\+Controller}}, \doxymbox{\hyperlink{class_game_1_1_win_screen_a8007bd21bf1b9bdc0643e0212f2915b3}{Game::\+\+Win\+Screen}}, and \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_aed1737707007c321f7ac3e97a95aa6a6}{UI::\+\+Confirmation\+Dialog}}.
+
+\Hypertarget{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}\index{Engine::Component@{Engine::Component}!FixedUpdate@{FixedUpdate}}
+\index{FixedUpdate@{FixedUpdate}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{FixedUpdate()}{FixedUpdate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830} 
+virtual void Engine::\+\+Component::\+\+Fixed\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every physics step (fixed timestep) 
+
+Reimplemented in \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a5bddbe1586a849cb9133730c553141bc}{Engine::\+\+Rigidbody2D}}.
+
+\Hypertarget{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}\index{Engine::Component@{Engine::Component}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3} 
+virtual void Engine::\+\+Component::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called before the first Update, after all Awake calls 
+
+Reimplemented in \doxymbox{\hyperlink{class_engine_1_1_door_a0ac8b013ca2c3f645f952c19e081fbe0}{Engine::\+\+Door}}, \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a7d52c39dd095fce67c20192bad336622}{Engine::\+\+Interaction\+Controller}}, \doxymbox{\hyperlink{class_engine_1_1_tile_map_a4f20d4ff6eba0da07fad1b6d42404919}{Engine::\+\+Tile\+Map}}, \doxymbox{\hyperlink{class_game_1_1_access_card_a0a60b6ae361b2031f906c962ae295a9a}{Game::\+\+Access\+Card}}, \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a7808f88f0e4c7cad26791309579c80fe}{Game::\+\+Bandit\+Visualizer}}, \doxymbox{\hyperlink{class_game_1_1_camera_shake_a970761965690a5f52648c7d9a6a53a18}{Game::\+\+Camera\+Shake}}, \doxymbox{\hyperlink{class_game_1_1_control_room_door_a40da68388bd16edcab5eee09ba86fb5d}{Game::\+\+Control\+Room\+Door}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a994b2bfdb80f3b571b5f82fd63a1738d}{Game::\+\+FPSController}}, \doxymbox{\hyperlink{class_game_1_1_n_p_c_ad5c8ab6dd0e47775c3cfe50710c3bf37}{Game::\+\+NPC}}, \doxymbox{\hyperlink{class_game_1_1_power_up_object_aee1b805f0eba4bde97b794c92e627841}{Game::\+\+Power\+Up\+Object}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a6ad805ce148a85c0f0c8f112e50edd93}{Game::\+\+Puzzle\+Object}}, and \doxymbox{\hyperlink{class_game_1_1_security_guard_acd21b66a2528fbcc5cfb316ee5ccdb83}{Game::\+\+Security\+Guard}}.
+
+\Hypertarget{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}\index{Engine::Component@{Engine::Component}!LateUpdate@{LateUpdate}}
+\index{LateUpdate@{LateUpdate}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{LateUpdate()}{LateUpdate()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7} 
+virtual void Engine::\+\+Component::\+\+Late\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every frame after all Update calls 
+
+Reimplemented in \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a086fec7af5fb681f51637b7c6e4b777f}{Game::\+\+FPSController}}.
+
+\Hypertarget{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}\index{Engine::Component@{Engine::Component}!OnDestroy@{OnDestroy}}
+\index{OnDestroy@{OnDestroy}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{OnDestroy()}{OnDestroy()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c} 
+virtual void Engine::\+\+Component::\+\+On\+Destroy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when component is destroyed 
+
+Reimplemented in \doxymbox{\hyperlink{class_engine_1_1_camera_a0f0acbe7cec8c50eb954e77447bb8ade}{Engine::\+\+Camera}}, \doxymbox{\hyperlink{class_engine_1_1_collider2_d_af6c040a2880af8bba37a30d7ae7fbc6c}{Engine::\+\+Collider2D}}, \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_ab9a7f50e54e78a350c02ccd0d1ff07a4}{Engine::\+\+Interaction\+Controller}}, \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d_a6e699ef2b9f62170ca93cf1acd7d502c}{Engine::\+\+Rigidbody2D}}, \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a0866ea03757518017e5e381d88e808e5}{Game::\+\+Bandit\+Visualizer}}, \doxymbox{\hyperlink{class_game_1_1_controls_menu_a7b463562758d0fd116d462c7cf437869}{Game::\+\+Controls\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a3629d4d64a3741237e482bdc09b6d4aa}{Game::\+\+FPSController}}, \doxymbox{\hyperlink{class_game_1_1_lose_screen_ab4a4d526f27f8d22cf6b64378dbaddb1}{Game::\+\+Lose\+Screen}}, \doxymbox{\hyperlink{class_game_1_1_pause_menu_a614ee5e5c35acf02018e14c0a0313089}{Game::\+\+Pause\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_a31ac827501e0e5baea61af049e33b106}{Game::\+\+Player\+HUD}}, and \doxymbox{\hyperlink{class_game_1_1_win_screen_adcaa8c719e0b712b0834b0149997c61f}{Game::\+\+Win\+Screen}}.
+
+\Hypertarget{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}\index{Engine::Component@{Engine::Component}!OnDisable@{OnDisable}}
+\index{OnDisable@{OnDisable}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{OnDisable()}{OnDisable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0} 
+virtual void Engine::\+\+Component::\+\+On\+Disable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when component is disabled \Hypertarget{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}\index{Engine::Component@{Engine::Component}!OnEnable@{OnEnable}}
+\index{OnEnable@{OnEnable}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{OnEnable()}{OnEnable()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd} 
+virtual void Engine::\+\+Component::\+\+On\+Enable (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called when component is enabled \Hypertarget{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}\index{Engine::Component@{Engine::Component}!OnInspectorGUI@{OnInspectorGUI}}
+\index{OnInspectorGUI@{OnInspectorGUI}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{OnInspectorGUI()}{OnInspectorGUI()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550} 
+virtual void Engine::\+\+Component::\+\+On\+Inspector\+GUI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+\Hypertarget{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}\index{Engine::Component@{Engine::Component}!Update@{Update}}
+\index{Update@{Update}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4} 
+virtual void Engine::\+\+Component::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+Called every frame 
+
+Reimplemented in \doxymbox{\hyperlink{class_engine_1_1_door_a856a4e90b9583f49fee468ebf9677e43}{Engine::\+\+Door}}, \doxymbox{\hyperlink{class_engine_1_1_interaction_controller_a2c7ef788c412acbb6db2c09ad1443d48}{Engine::\+\+Interaction\+Controller}}, \doxymbox{\hyperlink{class_game_1_1_access_card_a80d805314150b47eda2451b0a3060db1}{Game::\+\+Access\+Card}}, \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_af75f68740e2059182c7251ede489a2ab}{Game::\+\+Bandit\+Visualizer}}, \doxymbox{\hyperlink{class_game_1_1_camera_shake_a166fdf1ee4bd282cf26c7bba502d0d58}{Game::\+\+Camera\+Shake}}, \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_camera_a7b039f27d2a4184a42433d546125d9af}{Game::\+\+CCTVCamera}}, \doxymbox{\hyperlink{class_game_1_1_c_c_t_v_terminal_aa751985bea2f1d1fa7de8ca37658db24}{Game::\+\+CCTVTerminal}}, \doxymbox{\hyperlink{class_game_1_1_control_room_door_a328907853782c9493f2d06d2cbe44188}{Game::\+\+Control\+Room\+Door}}, \doxymbox{\hyperlink{class_game_1_1_controls_menu_a67266157e0ae47315293f2fd72577c64}{Game::\+\+Controls\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_af81f799cff5ddd20bbf0f912d60cdb1b}{Game::\+\+FPSController}}, \doxymbox{\hyperlink{class_game_1_1_hands67_ae372ed958a45b48be369aaf5a034bf18}{Game::\+\+Hands67}}, \doxymbox{\hyperlink{class_game_1_1_lose_screen_aa2050a70d0e4653fc4d0789e14d8dffe}{Game::\+\+Lose\+Screen}}, \doxymbox{\hyperlink{class_game_1_1_n_p_c_ab8bb3367950157f7256f41e9dec228d2}{Game::\+\+NPC}}, \doxymbox{\hyperlink{class_game_1_1_path_renderer_a05ca31646ba38f58a6b6c0a73f637c69}{Game::\+\+Path\+Renderer}}, \doxymbox{\hyperlink{class_game_1_1_pause_menu_a5f49ea65fa0da4d7523c3d51563b0c64}{Game::\+\+Pause\+Menu}}, \doxymbox{\hyperlink{class_game_1_1_player_h_u_d_af34e8f49ea1f13c4c9557e57e1374827}{Game::\+\+Player\+HUD}}, \doxymbox{\hyperlink{class_game_1_1_player_power_up_controller_a73e1d5ca6f059161051a13d99dc6a042}{Game::\+\+Player\+Power\+Up\+Controller}}, \doxymbox{\hyperlink{class_game_1_1_power_up_object_a8a77d6f832ae9e3c65e672df264d861f}{Game::\+\+Power\+Up\+Object}}, \doxymbox{\hyperlink{class_game_1_1_proximity_audio_ace40e06310d282021258517570844bae}{Game::\+\+Proximity\+Audio}}, \doxymbox{\hyperlink{class_game_1_1_puzzle_object_a207d063ce343a0a7b1254c80a02661ed}{Game::\+\+Puzzle\+Object}}, \doxymbox{\hyperlink{class_game_1_1_security_guard_a98da57a4114c5a510c96400c20cbf8d5}{Game::\+\+Security\+Guard}}, and \doxymbox{\hyperlink{class_game_1_1_win_screen_aaef2ea77543bdcb796cffebe3ede7bfd}{Game::\+\+Win\+Screen}}.
+
+
+
+\label{doc-related-members}
+\Hypertarget{class_engine_1_1_component_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}\index{Engine::Component@{Engine::Component}!GameObject@{GameObject}}
+\index{GameObject@{GameObject}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{GameObject}{GameObject}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a} 
+friend class Game\+Object\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_component_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}\index{Engine::Component@{Engine::Component}!\_awoken@{\_awoken}}
+\index{\_awoken@{\_awoken}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{\_awoken}{\_awoken}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518} 
+bool Engine::\+\+Component::\+\+\_\+awoken = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}\index{Engine::Component@{Engine::Component}!\_started@{\_started}}
+\index{\_started@{\_started}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{\_started}{\_started}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8} 
+bool Engine::\+\+Component::\+\+\_\+started = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}\index{Engine::Component@{Engine::Component}!enabled@{enabled}}
+\index{enabled@{enabled}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{enabled}{enabled}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b} 
+bool Engine::\+\+Component::\+enabled = true}
+
+Whether this component is enabled \Hypertarget{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}\index{Engine::Component@{Engine::Component}!gameObject@{gameObject}}
+\index{gameObject@{gameObject}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{gameObject}{gameObject}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f} 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}}\texorpdfstring{$\ast$}{*} Engine::\+\+Component::\+game\+Object = nullptr}
+
+The \doxylink{class_engine_1_1_game_object}{Game\+Object} this component is attached to \Hypertarget{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}\index{Engine::Component@{Engine::Component}!name@{name}}
+\index{name@{name}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7} 
+std::\+string Engine::\+\+Component::\+name}
+
+\Hypertarget{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}\index{Engine::Component@{Engine::Component}!transform@{transform}}
+\index{transform@{transform}!Engine::Component@{Engine::Component}}
+\doxysubsubsection{\texorpdfstring{transform}{transform}}
+{\footnotesize\ttfamily \label{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9} 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}}\texorpdfstring{$\ast$}{*} Engine::\+\+Component::\+transform = nullptr}
+
+Quick access to transform (cached reference) 
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Core/\+\doxymbox{\hyperlink{_component_8hpp}{Component.\+hpp}}\end{DoxyCompactItemize}

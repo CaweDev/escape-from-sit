@@ -1,0 +1,62 @@
+\doxysection{Vector2.\+hpp}
+\hypertarget{_vector2_8hpp_source}{}\label{_vector2_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Math/Vector2.hpp@{AlphaEngine2.5D/Source/Engine/Math/Vector2.hpp}}
+\doxymbox{\hyperlink{_vector2_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}AEEngine.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}},\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}();}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}(f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a98ec2dd758621e4c3d43d60b8ef4151d}{x}},\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_aba65019417faab86c62043c5c1603141}{y}});}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}(\textcolor{keyword}{const}\ AEVec2\ \&v);}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Vector3}}\ \&v);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_ae0384575e4a49a0d788558312bd9f15c}{zero}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a3856642f27cd897c97ac4c8bbec21dc7}{one}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a309a81a77a010ccb5e58f5505eeebf2f}{up}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a54c638091c0c6c7cc3425bb1b5bd5415}{down}}();}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a044df1b15593c0cb00c0e1a16cb74899}{left}}();}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a0bdef6c61e018e38a723fb6c008f8730}{right}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a066209280723586e55844388ee88cb1b}{operator+}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a4179c753b21cada982551823541807ef}{operator-\/}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a4711f8a1b9456f1a9ac7ba2dc8c87183}{operator*}}(f32\ scalar)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a84e422ae8e2fc8898365f98fca48d8b1}{operator/}}(f32\ scalar)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a4179c753b21cada982551823541807ef}{operator-\/}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&\doxymbox{\hyperlink{struct_engine_1_1_vector2_ad1136870e605004eccc54dfc2971626d}{operator+=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&\doxymbox{\hyperlink{struct_engine_1_1_vector2_a4ac109882df821dadf65fc5b5c9ee468}{operator-\/=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&\doxymbox{\hyperlink{struct_engine_1_1_vector2_ab2f967beab7bba95be811d2c7804ee35}{operator*=}}(f32\ scalar);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&\doxymbox{\hyperlink{struct_engine_1_1_vector2_a9aa4c4e898bcfac1e91ec81fbb7ebbaa}{operator/=}}(f32\ scalar);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a0b089bdae8625b96e93591f55f831bea}{operator==}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a24141c25f2c234bf104be95a6bd1f793}{operator!=}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_acd101528a1f791706b3655ba8026e9fa}{Magnitude}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a645581b4d938587a58c87c24dc4b465f}{SqrMagnitude}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_ae644fa5f6e17849d26c8f11e4c207aca}{Normalized}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_ad14e3ef36c39c044c91e8affaf6fb449}{Normalize}}();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a66b8ee93bd406fe2430033638bd16838}{Dot}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&b);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a936d352a83b6c96dc495400dffceed14}{Distance}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&b);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a26cb25da7e10b785942cadcf98c74fa9}{Lerp}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&b,\ f32\ t);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_af6669143a91b93a3e91d8b40290abc6b}{LerpUnclamped}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a5e6b2b2611e389de74937b74f661a1e4}{Vector2}}\ \&b,\ f32\ t);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ AEVec2\ \doxymbox{\hyperlink{struct_engine_1_1_vector2_a7d0aa418e09f947ad05651e754dabed1}{ToAEVec2}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \doxymbox{\hyperlink{namespace_engine_a7da48f144c21761fd6287e5734dce4e2}{operator*}}(f32\ scalar,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_engine_1_1_vector2}{Vector2}}\ \&v);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

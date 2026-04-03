@@ -1,0 +1,383 @@
+\doxysection{Engine::\+Sprite\+Sheet\+Renderer Class Reference}
+\hypertarget{class_engine_1_1_sprite_sheet_renderer}{}\label{class_engine_1_1_sprite_sheet_renderer}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+
+
+\doxylink{class_engine_1_1_component}{Component} that renders animated sprites from a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}.  
+
+
+
+
+{\ttfamily \+\#include $<$Sprite\+Sheet\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_aa9e715a748cd7dd1c86eddc5c20fab95}{Sprite\+Sheet\+Renderer}} ()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a98eee46948986a63300bc4b0e473d4fd}{\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet\+Renderer}} ()
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_ab97e45c9f4547b46af38654490c85f7e}{Set\+Color}} (const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \&new\+Color)
+\item 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \& \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a5073b09a6b96aab50f1cad1616091971}{Get\+Color}} () const
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_ae7b119fff0ce26b81317e1d9421e0d8f}{Set\+Sprite\+Sheet}} (\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*}sheet)
+\begin{DoxyCompactList}\small\item\em Assign a spritesheet to this renderer Rebuilds the internal mesh to match the sheet\textquotesingle{}s grid dimensions. \end{DoxyCompactList}\item 
+const \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_ab9175b68e27b8c64f01ca7546a2283c8}{Get\+Sprite\+Sheet}} () const
+\begin{DoxyCompactList}\small\item\em Get the currently assigned Spritesheet. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_ac866d59a35df0db1de1f8296bdfe0395}{Play}} (const std::\+string \&animation\+Name)
+\begin{DoxyCompactList}\small\item\em Play a named animation from the start. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_abddd31e51c26fb5013b332ad50a1b88d}{Stop}} ()
+\begin{DoxyCompactList}\small\item\em Stop playback and reset to frame 0 of the current clip. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a738c561e967f7037ab10c4084ff23152}{Pause}} ()
+\begin{DoxyCompactList}\small\item\em Pause playback at the current frame. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a12108562b9504b9cb1fbb5e2df64840d}{Resume}} ()
+\begin{DoxyCompactList}\small\item\em Resume playback from paused state. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_aabfbdd12e5cb97f33672f8a6fb05c435}{Is\+Playing}} () const
+\begin{DoxyCompactList}\small\item\em Check if an animation is currently playing. \end{DoxyCompactList}\item 
+const std::\+string \& \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a8da35a49e3d538637fe438fb62164fde}{Get\+Current\+Animation}} () const
+\begin{DoxyCompactList}\small\item\em Get the name of the currently active animation clip. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_af2c62db62195bd1cfbb0931a23f572a2}{Set\+Frame}} (int frame)
+\begin{DoxyCompactList}\small\item\em Manually set the frame index within the current clip. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a5cec363345275000599d93fec0f410ae}{Get\+Frame}} () const
+\begin{DoxyCompactList}\small\item\em Get the current frame index within the clip. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a2bd188579dfd45e38e04eca6738f23b8}{Set\+Speed}} (float speed)
+\begin{DoxyCompactList}\small\item\em Set animation speed multiplier. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a0189be55dc85381117b1ec9366152e92}{Get\+Speed}} () const
+\begin{DoxyCompactList}\small\item\em Get animation speed multiplier. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_aa9d63477680e9cc67c86f758cc87cf28}{Render}} () override
+\item 
+f32 \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a8ee41bb8e71aa63dd07f7e72c82643e1}{Get\+Sorting\+Key}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_i_renderer_aa448a407e03cd8741291d11e9ecdbfd7}{\texorpdfstring{$\sim$}{\string~}\+IRenderer}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4c1615a84e2168a35e11937aa48bc612}{Set\+Ignore\+Fog}} (bool value)
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a950c23ddd487c4a5ddd0d71c6c519164}{Get\+Ignore\+Fog}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a57c28b22be2214b8770362cd2a4fb459}{color}} = \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{Color::\+white}}()
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a9119fc1faf403528ad66d5d0ec4a1f93}{sprite\+Sheet}} = nullptr
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a6515233ac7cb75983cbe4e921dffb29e}{sprite\+Sheet\+Path}}
+\item 
+int \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a953c72953f888c0bdf1ed11f55b82b52}{sorting\+Order}} = 0
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a555684e34b469ee6eb7d37bedde8481c}{flipX}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a5de0ef898b065f7bc181783d6cc1787c}{flipY}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet_renderer_a7f1da750901201b527b991520137512d}{billboard}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a5ccc5e2e0cf892f92f04f6a596260999}{highlighted}} = false
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{class_engine_1_1_i_renderer_ad56789ae36205f92127fe28b854895d9}{highlight\+Color}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+2f, 0.\+2f, 0.\+0f, 0.\+0f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_i_renderer}{Engine::\+\+IRenderer}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a8c0a28e81594d1d34b4086c471f215c5}{ignore\+Fog}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_engine_1_1_component}{Component} that renders animated sprites from a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}. 
+
+References a shared \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} asset and manages per-\/instance playback of named animation clips. Supports both 2D and 2.\+5D billboard rendering. 
+
+\label{doc-constructors}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_aa9e715a748cd7dd1c86eddc5c20fab95}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!SpriteSheetRenderer@{SpriteSheetRenderer}}
+\index{SpriteSheetRenderer@{SpriteSheetRenderer}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{SpriteSheetRenderer()}{SpriteSheetRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_aa9e715a748cd7dd1c86eddc5c20fab95} 
+Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Sprite\+Sheet\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a98eee46948986a63300bc4b0e473d4fd}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!````~SpriteSheetRenderer@{\texorpdfstring{$\sim$}{\string~}SpriteSheetRenderer}}
+\index{````~SpriteSheetRenderer@{\texorpdfstring{$\sim$}{\string~}SpriteSheetRenderer}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SpriteSheetRenderer()}{\string~SpriteSheetRenderer()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a98eee46948986a63300bc4b0e473d4fd} 
+Engine::\+\+Sprite\+Sheet\+Renderer::\+\texorpdfstring{$\sim$}{\string~}\+Sprite\+Sheet\+Renderer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a5073b09a6b96aab50f1cad1616091971}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetColor@{GetColor}}
+\index{GetColor@{GetColor}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetColor()}{GetColor()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a5073b09a6b96aab50f1cad1616091971} 
+const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \& Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the color tint \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a8da35a49e3d538637fe438fb62164fde}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetCurrentAnimation@{GetCurrentAnimation}}
+\index{GetCurrentAnimation@{GetCurrentAnimation}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetCurrentAnimation()}{GetCurrentAnimation()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a8da35a49e3d538637fe438fb62164fde} 
+const std::\+string \& Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Current\+Animation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the name of the currently active animation clip. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a5cec363345275000599d93fec0f410ae}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetFrame@{GetFrame}}
+\index{GetFrame@{GetFrame}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetFrame()}{GetFrame()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a5cec363345275000599d93fec0f410ae} 
+int Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Frame (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the current frame index within the clip. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a8ee41bb8e71aa63dd07f7e72c82643e1}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetSortingKey@{GetSortingKey}}
+\index{GetSortingKey@{GetSortingKey}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSortingKey()}{GetSortingKey()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a8ee41bb8e71aa63dd07f7e72c82643e1} 
+f32 Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Sorting\+Key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Get sorting key for depth sorting 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a93b49eadf36570fbae0db0915d2afb16}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a0189be55dc85381117b1ec9366152e92}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetSpeed@{GetSpeed}}
+\index{GetSpeed@{GetSpeed}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSpeed()}{GetSpeed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a0189be55dc85381117b1ec9366152e92} 
+float Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Speed (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get animation speed multiplier. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_ab9175b68e27b8c64f01ca7546a2283c8}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!GetSpriteSheet@{GetSpriteSheet}}
+\index{GetSpriteSheet@{GetSpriteSheet}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{GetSpriteSheet()}{GetSpriteSheet()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_ab9175b68e27b8c64f01ca7546a2283c8} 
+const \doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*} Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Get\+Sprite\+Sheet (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the currently assigned Spritesheet. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_aabfbdd12e5cb97f33672f8a6fb05c435}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!IsPlaying@{IsPlaying}}
+\index{IsPlaying@{IsPlaying}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{IsPlaying()}{IsPlaying()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_aabfbdd12e5cb97f33672f8a6fb05c435} 
+bool Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Is\+Playing (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if an animation is currently playing. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a738c561e967f7037ab10c4084ff23152}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!Pause@{Pause}}
+\index{Pause@{Pause}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{Pause()}{Pause()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a738c561e967f7037ab10c4084ff23152} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Pause (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Pause playback at the current frame. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_ac866d59a35df0db1de1f8296bdfe0395}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!Play@{Play}}
+\index{Play@{Play}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{Play()}{Play()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_ac866d59a35df0db1de1f8296bdfe0395} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Play (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{animation\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Play a named animation from the start. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation\+Name} & Name of the animation clip defined on the \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_aa9d63477680e9cc67c86f758cc87cf28}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!Render@{Render}}
+\index{Render@{Render}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_aa9d63477680e9cc67c86f758cc87cf28} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Render the sprite (called by renderer system) 
+
+Implements \doxymbox{\hyperlink{class_engine_1_1_i_renderer_a4083b4b8bd83b878184201a6c1c76c9a}{Engine::\+\+IRenderer}}.
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a12108562b9504b9cb1fbb5e2df64840d}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!Resume@{Resume}}
+\index{Resume@{Resume}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{Resume()}{Resume()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a12108562b9504b9cb1fbb5e2df64840d} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Resume (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Resume playback from paused state. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_ab97e45c9f4547b46af38654490c85f7e}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_ab97e45c9f4547b46af38654490c85f7e} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Set\+Color (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \&}]{new\+Color}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the color tint \Hypertarget{class_engine_1_1_sprite_sheet_renderer_af2c62db62195bd1cfbb0931a23f572a2}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!SetFrame@{SetFrame}}
+\index{SetFrame@{SetFrame}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{SetFrame()}{SetFrame()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_af2c62db62195bd1cfbb0931a23f572a2} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Set\+Frame (\begin{DoxyParamCaption}\item[{int}]{frame}{}\end{DoxyParamCaption})}
+
+
+
+Manually set the frame index within the current clip. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Frame index relative to the clip\textquotesingle{}s start (0-\/based) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a2bd188579dfd45e38e04eca6738f23b8}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!SetSpeed@{SetSpeed}}
+\index{SetSpeed@{SetSpeed}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{SetSpeed()}{SetSpeed()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a2bd188579dfd45e38e04eca6738f23b8} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Set\+Speed (\begin{DoxyParamCaption}\item[{float}]{speed}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set animation speed multiplier. 
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_ae7b119fff0ce26b81317e1d9421e0d8f}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!SetSpriteSheet@{SetSpriteSheet}}
+\index{SetSpriteSheet@{SetSpriteSheet}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{SetSpriteSheet()}{SetSpriteSheet()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_ae7b119fff0ce26b81317e1d9421e0d8f} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Set\+Sprite\+Sheet (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}} \texorpdfstring{$\ast$}{*}}]{sheet}{}\end{DoxyParamCaption})}
+
+
+
+Assign a spritesheet to this renderer Rebuilds the internal mesh to match the sheet\textquotesingle{}s grid dimensions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & Pointer to a \doxylink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet} (typically from \doxylink{class_engine_1_1_asset_manager}{Asset\+Manager}) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_abddd31e51c26fb5013b332ad50a1b88d}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!Stop@{Stop}}
+\index{Stop@{Stop}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{Stop()}{Stop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_abddd31e51c26fb5013b332ad50a1b88d} 
+void Engine::\+\+Sprite\+Sheet\+Renderer::\+\+Stop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Stop playback and reset to frame 0 of the current clip. 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a7f1da750901201b527b991520137512d}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!billboard@{billboard}}
+\index{billboard@{billboard}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{billboard}{billboard}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a7f1da750901201b527b991520137512d} 
+bool Engine::\+\+Sprite\+Sheet\+Renderer::\+billboard = false}
+
+If true, renders as a 2.\+5D billboard in raycast space \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a57c28b22be2214b8770362cd2a4fb459}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!color@{color}}
+\index{color@{color}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a57c28b22be2214b8770362cd2a4fb459} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Sprite\+Sheet\+Renderer::\+color = \doxymbox{\hyperlink{struct_engine_1_1_color_a99f2c6b14f18ae93a50b32f3d4b4f5c7}{Color::\+white}}()}
+
+\doxylink{struct_engine_1_1_color}{Color} tint multiplier \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a555684e34b469ee6eb7d37bedde8481c}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!flipX@{flipX}}
+\index{flipX@{flipX}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{flipX}{flipX}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a555684e34b469ee6eb7d37bedde8481c} 
+bool Engine::\+\+Sprite\+Sheet\+Renderer::\+flipX = false}
+
+Flip sprite horizontally \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a5de0ef898b065f7bc181783d6cc1787c}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!flipY@{flipY}}
+\index{flipY@{flipY}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{flipY}{flipY}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a5de0ef898b065f7bc181783d6cc1787c} 
+bool Engine::\+\+Sprite\+Sheet\+Renderer::\+flipY = false}
+
+Flip sprite vertically \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a953c72953f888c0bdf1ed11f55b82b52}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!sortingOrder@{sortingOrder}}
+\index{sortingOrder@{sortingOrder}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{sortingOrder}{sortingOrder}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a953c72953f888c0bdf1ed11f55b82b52} 
+int Engine::\+\+Sprite\+Sheet\+Renderer::\+sorting\+Order = 0}
+
+Sorting order for z-\/depth (higher = rendered later/\+on top) \Hypertarget{class_engine_1_1_sprite_sheet_renderer_a9119fc1faf403528ad66d5d0ec4a1f93}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!spriteSheet@{spriteSheet}}
+\index{spriteSheet@{spriteSheet}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{spriteSheet}{spriteSheet}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a9119fc1faf403528ad66d5d0ec4a1f93} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_sheet}{Sprite\+Sheet}}\texorpdfstring{$\ast$}{*} Engine::\+\+Sprite\+Sheet\+Renderer::\+sprite\+Sheet = nullptr}
+
+\Hypertarget{class_engine_1_1_sprite_sheet_renderer_a6515233ac7cb75983cbe4e921dffb29e}\index{Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}!spriteSheetPath@{spriteSheetPath}}
+\index{spriteSheetPath@{spriteSheetPath}!Engine::SpriteSheetRenderer@{Engine::SpriteSheetRenderer}}
+\doxysubsubsection{\texorpdfstring{spriteSheetPath}{spriteSheetPath}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sprite_sheet_renderer_a6515233ac7cb75983cbe4e921dffb29e} 
+std::\+string Engine::\+\+Sprite\+Sheet\+Renderer::\+sprite\+Sheet\+Path}
+
+path to sprite sheet 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_sheet_renderer_8hpp}{Sprite\+Sheet\+Renderer.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_sheet_renderer_8cpp}{Sprite\+Sheet\+Renderer.\+cpp}}\end{DoxyCompactItemize}

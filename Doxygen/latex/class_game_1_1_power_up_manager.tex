@@ -1,0 +1,97 @@
+\doxysection{Game::\+Power\+Up\+Manager Class Reference}
+\hypertarget{class_game_1_1_power_up_manager}{}\label{class_game_1_1_power_up_manager}\index{Game::PowerUpManager@{Game::PowerUpManager}}
+
+
+Static manager for power-\/up data and object creation.  
+
+
+
+
+{\ttfamily \+\#include $<$Power\+Up\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_game_1_1_power_up_manager_a366060fb5df95b55e9874d43ad64e58c}{Create\+Power\+Up\+Object}} (\doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}} data)
+\begin{DoxyCompactList}\small\item\em Spawns a \doxylink{class_game_1_1_power_up_object}{Power\+Up\+Object} in the scene based on the provided data. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_game_1_1_power_up_manager_a50692c6d9d2be7420cba74995f540a49}{Power\+Up\+Data\+Init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes static power-\/up data (hardcoded or from config). \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_game_1_1_power_up_manager_a7f231af70561c5974ad8355e5ba5373c}{Init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the power-\/up manager and spawns objects. \end{DoxyCompactList}\item 
+static void \doxymbox{\hyperlink{class_game_1_1_power_up_manager_a767b5b6bdd0b53f40352cd0125a4ade4}{Free\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Cleans up manager resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}} $>$ \doxymbox{\hyperlink{class_game_1_1_power_up_manager_aab45e0eecf743b3291e7cbc1804d43ea}{all\+Power\+Ups}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Static manager for power-\/up data and object creation. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_power_up_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_power_up_manager_a366060fb5df95b55e9874d43ad64e58c}\index{Game::PowerUpManager@{Game::PowerUpManager}!CreatePowerUpObject@{CreatePowerUpObject}}
+\index{CreatePowerUpObject@{CreatePowerUpObject}!Game::PowerUpManager@{Game::PowerUpManager}}
+\doxysubsubsection{\texorpdfstring{CreatePowerUpObject()}{CreatePowerUpObject()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_manager_a366060fb5df95b55e9874d43ad64e58c} 
+void Game::\+\+Power\+Up\+Manager::\+\+Create\+Power\+Up\+Object (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}}}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Spawns a \doxylink{class_game_1_1_power_up_object}{Power\+Up\+Object} in the scene based on the provided data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The power-\/up data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_game_1_1_power_up_manager_a767b5b6bdd0b53f40352cd0125a4ade4}\index{Game::PowerUpManager@{Game::PowerUpManager}!FreeManager@{FreeManager}}
+\index{FreeManager@{FreeManager}!Game::PowerUpManager@{Game::PowerUpManager}}
+\doxysubsubsection{\texorpdfstring{FreeManager()}{FreeManager()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_manager_a767b5b6bdd0b53f40352cd0125a4ade4} 
+void Game::\+\+Power\+Up\+Manager::\+\+Free\+Manager (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Cleans up manager resources. 
+
+\Hypertarget{class_game_1_1_power_up_manager_a7f231af70561c5974ad8355e5ba5373c}\index{Game::PowerUpManager@{Game::PowerUpManager}!Init@{Init}}
+\index{Init@{Init}!Game::PowerUpManager@{Game::PowerUpManager}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_manager_a7f231af70561c5974ad8355e5ba5373c} 
+void Game::\+\+Power\+Up\+Manager::\+\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initializes the power-\/up manager and spawns objects. 
+
+\Hypertarget{class_game_1_1_power_up_manager_a50692c6d9d2be7420cba74995f540a49}\index{Game::PowerUpManager@{Game::PowerUpManager}!PowerUpDataInit@{PowerUpDataInit}}
+\index{PowerUpDataInit@{PowerUpDataInit}!Game::PowerUpManager@{Game::PowerUpManager}}
+\doxysubsubsection{\texorpdfstring{PowerUpDataInit()}{PowerUpDataInit()}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_manager_a50692c6d9d2be7420cba74995f540a49} 
+void Game::\+\+Power\+Up\+Manager::\+\+Power\+Up\+Data\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Initializes static power-\/up data (hardcoded or from config). 
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_power_up_manager_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_power_up_manager_aab45e0eecf743b3291e7cbc1804d43ea}\index{Game::PowerUpManager@{Game::PowerUpManager}!allPowerUps@{allPowerUps}}
+\index{allPowerUps@{allPowerUps}!Game::PowerUpManager@{Game::PowerUpManager}}
+\doxysubsubsection{\texorpdfstring{allPowerUps}{allPowerUps}}
+{\footnotesize\ttfamily \label{class_game_1_1_power_up_manager_aab45e0eecf743b3291e7cbc1804d43ea} 
+std::\+vector$<$ \doxymbox{\hyperlink{struct_game_1_1_power_up_data}{Power\+Up\+Data}} $>$ Game::\+\+Power\+Up\+Manager::\+all\+Power\+Ups = \{\}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Power\+Up/\+\doxymbox{\hyperlink{_power_up_manager_8hpp}{Power\+Up\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Power\+Up/\+\doxymbox{\hyperlink{_power_up_manager_8cpp}{Power\+Up\+Manager.\+cpp}}\end{DoxyCompactItemize}

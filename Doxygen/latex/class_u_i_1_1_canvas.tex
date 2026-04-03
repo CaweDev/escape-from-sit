@@ -1,0 +1,316 @@
+\doxysection{UI::\+Canvas Class Reference}
+\hypertarget{class_u_i_1_1_canvas}{}\label{class_u_i_1_1_canvas}\index{UI::Canvas@{UI::Canvas}}
+
+
+Root container for \doxylink{namespace_u_i}{UI} elements, similar to Unity\textquotesingle{}s \doxylink{class_u_i_1_1_canvas}{Canvas}.  
+
+
+
+
+{\ttfamily \+\#include $<$Canvas.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}} ()=default
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas_a7adb85a7c20301fb8cd5d1aa64ef8a56}{\texorpdfstring{$\sim$}{\string~}\+Canvas}} ()
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas_aeb73fc8eaeebbc8df314cd2a6d955451}{Canvas}} (const Canvas \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}} \& \doxymbox{\hyperlink{class_u_i_1_1_canvas_a7574c76fa9908f06479ed3f502b05163}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}} \&)=delete
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_af204d6c4e25efc742c2b235da20c3d77}{Set\+Reference\+Resolution}} (f32 width, f32 height)
+\begin{DoxyCompactList}\small\item\em Set the reference resolution for scaling. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a503e82996bf8c5ab0c3239ca298d99a3}{Get\+Reference\+Resolution}} (f32 \&out\+Width, f32 \&out\+Height) const
+\begin{DoxyCompactList}\small\item\em Get reference resolution. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a94e12b6d5ad04c477d28db8f70c05faf}{Set\+Scale\+Mode}} (\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{Canvas\+Scale\+Mode}} mode)
+\begin{DoxyCompactList}\small\item\em Set the canvas scale mode. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{Canvas\+Scale\+Mode}} \doxymbox{\hyperlink{class_u_i_1_1_canvas_a10371056c78729f75615ae1a4f63da53}{Get\+Scale\+Mode}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a8575f346b776fc51ad03f7cb0040e423}{Set\+Sort\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Set the canvas sort order (relative to other canvases). \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0ee5504202d81f3615a2107b0f0ab0d4}{Get\+Sort\+Order}} () const
+\item 
+f32 \doxymbox{\hyperlink{class_u_i_1_1_canvas_a4ed2bcd8301ea120221e16a61d5ffb36}{Get\+Scale\+Factor}} () const
+\begin{DoxyCompactList}\small\item\em Get the current scale factor based on screen size. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_canvas_a6488cba3b98d1b801bbbc440c2c12e65}{Get\+Canvas\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the canvas world rect (used as parent rect for root elements). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_accd63c3ac910b937deccc7961c35dd85}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update all \doxylink{namespace_u_i}{UI} elements. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_ac4bc2e2c194caa068aaa0321799b8dd3}{Render}} ()
+\begin{DoxyCompactList}\small\item\em Render all \doxylink{namespace_u_i}{UI} elements. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0d5266f01eb985c942f004c6a34ddfea}{Add\+Element}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}element)
+\begin{DoxyCompactList}\small\item\em Add a root element to the canvas. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a43b9011a767a2d86410a4d1c357e8e9e}{Remove\+Element}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}element)
+\begin{DoxyCompactList}\small\item\em Remove a root element from the canvas. \end{DoxyCompactList}\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_canvas_a559fa87e9832cd44b13daa986c034dc0}{Get\+Root\+Elements}} () const
+\begin{DoxyCompactList}\small\item\em Get all root elements. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_canvas_a773434c7a8c649758854f04358f626f8}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type as root. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} \doxymbox{\hyperlink{class_u_i_1_1_canvas_a4d95ca279866a16ccb4e5208a44e4a44}{Screen\+To\+Canvas\+Position}} (s32 screenX, s32 screenY) const
+\begin{DoxyCompactList}\small\item\em Convert screen coordinates to canvas world coordinates. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_canvas_af2106cf4ac7245c5f08eb91f74cbf4ab}{Raycast}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Raycast to find the topmost element at a world position. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a0e87048aa4d9c7a8cc55e5abb52461a1}{Sort\+Elements}} () const
+\begin{DoxyCompactList}\small\item\em Sort elements by sorting order. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_canvas_a611400908900d95f3245acad686366d6}{Set\+Sort\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark the canvas elements as needing a sort. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Root container for \doxylink{namespace_u_i}{UI} elements, similar to Unity\textquotesingle{}s \doxylink{class_u_i_1_1_canvas}{Canvas}. 
+
+All \doxylink{namespace_u_i}{UI} elements must be children of a \doxylink{class_u_i_1_1_canvas}{Canvas} to be rendered. Handles resolution scaling and provides the root coordinate system. 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_canvas_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}\index{UI::Canvas@{UI::Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{Canvas()}{Canvas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f} 
+UI::\+\+Canvas::\+\+Canvas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_u_i_1_1_canvas_a7adb85a7c20301fb8cd5d1aa64ef8a56}\index{UI::Canvas@{UI::Canvas}!````~Canvas@{\texorpdfstring{$\sim$}{\string~}Canvas}}
+\index{````~Canvas@{\texorpdfstring{$\sim$}{\string~}Canvas}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Canvas()}{\string~Canvas()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a7adb85a7c20301fb8cd5d1aa64ef8a56} 
+UI::\+\+Canvas::\+\texorpdfstring{$\sim$}{\string~}\+Canvas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_canvas_aeb73fc8eaeebbc8df314cd2a6d955451}\index{UI::Canvas@{UI::Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{Canvas()}{Canvas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_aeb73fc8eaeebbc8df314cd2a6d955451} 
+UI::\+\+Canvas::\+\+Canvas (\begin{DoxyParamCaption}\item[{const Canvas \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_canvas_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_canvas_a0d5266f01eb985c942f004c6a34ddfea}\index{UI::Canvas@{UI::Canvas}!AddElement@{AddElement}}
+\index{AddElement@{AddElement}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{AddElement()}{AddElement()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a0d5266f01eb985c942f004c6a34ddfea} 
+void UI::\+\+Canvas::\+\+Add\+Element (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Add a root element to the canvas. 
+
+\Hypertarget{class_u_i_1_1_canvas_a773434c7a8c649758854f04358f626f8}\index{UI::Canvas@{UI::Canvas}!CreateChild@{CreateChild}}
+\index{CreateChild@{CreateChild}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{CreateChild()}{CreateChild()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a773434c7a8c649758854f04358f626f8} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} UI::\+\+Canvas::\+\+Create\+Child (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create a child element of the specified type as root. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of element to create \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created element 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_canvas_a6488cba3b98d1b801bbbc440c2c12e65}\index{UI::Canvas@{UI::Canvas}!GetCanvasRect@{GetCanvasRect}}
+\index{GetCanvasRect@{GetCanvasRect}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetCanvasRect()}{GetCanvasRect()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a6488cba3b98d1b801bbbc440c2c12e65} 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} UI::\+\+Canvas::\+\+Get\+Canvas\+Rect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the canvas world rect (used as parent rect for root elements). 
+
+\Hypertarget{class_u_i_1_1_canvas_a503e82996bf8c5ab0c3239ca298d99a3}\index{UI::Canvas@{UI::Canvas}!GetReferenceResolution@{GetReferenceResolution}}
+\index{GetReferenceResolution@{GetReferenceResolution}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetReferenceResolution()}{GetReferenceResolution()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a503e82996bf8c5ab0c3239ca298d99a3} 
+void UI::\+\+Canvas::\+\+Get\+Reference\+Resolution (\begin{DoxyParamCaption}\item[{f32 \&}]{out\+Width}{, }\item[{f32 \&}]{out\+Height}{}\end{DoxyParamCaption}) const}
+
+
+
+Get reference resolution. 
+
+\Hypertarget{class_u_i_1_1_canvas_a559fa87e9832cd44b13daa986c034dc0}\index{UI::Canvas@{UI::Canvas}!GetRootElements@{GetRootElements}}
+\index{GetRootElements@{GetRootElements}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetRootElements()}{GetRootElements()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a559fa87e9832cd44b13daa986c034dc0} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& UI::\+\+Canvas::\+\+Get\+Root\+Elements (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get all root elements. 
+
+\Hypertarget{class_u_i_1_1_canvas_a4ed2bcd8301ea120221e16a61d5ffb36}\index{UI::Canvas@{UI::Canvas}!GetScaleFactor@{GetScaleFactor}}
+\index{GetScaleFactor@{GetScaleFactor}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetScaleFactor()}{GetScaleFactor()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a4ed2bcd8301ea120221e16a61d5ffb36} 
+f32 UI::\+\+Canvas::\+\+Get\+Scale\+Factor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the current scale factor based on screen size. 
+
+\Hypertarget{class_u_i_1_1_canvas_a10371056c78729f75615ae1a4f63da53}\index{UI::Canvas@{UI::Canvas}!GetScaleMode@{GetScaleMode}}
+\index{GetScaleMode@{GetScaleMode}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetScaleMode()}{GetScaleMode()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a10371056c78729f75615ae1a4f63da53} 
+\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{Canvas\+Scale\+Mode}} UI::\+\+Canvas::\+\+Get\+Scale\+Mode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_canvas_a0ee5504202d81f3615a2107b0f0ab0d4}\index{UI::Canvas@{UI::Canvas}!GetSortOrder@{GetSortOrder}}
+\index{GetSortOrder@{GetSortOrder}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{GetSortOrder()}{GetSortOrder()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a0ee5504202d81f3615a2107b0f0ab0d4} 
+s32 UI::\+\+Canvas::\+\+Get\+Sort\+Order (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_canvas_a7574c76fa9908f06479ed3f502b05163}\index{UI::Canvas@{UI::Canvas}!operator=@{operator=}}
+\index{operator=@{operator=}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a7574c76fa9908f06479ed3f502b05163} 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}} \& UI::\+\+Canvas::\+operator= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_u_i_1_1_canvas_a2c041d929e998f7d4314fbc489c0b97f}{Canvas}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_u_i_1_1_canvas_af2106cf4ac7245c5f08eb91f74cbf4ab}\index{UI::Canvas@{UI::Canvas}!Raycast@{Raycast}}
+\index{Raycast@{Raycast}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{Raycast()}{Raycast()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_af2106cf4ac7245c5f08eb91f74cbf4ab} 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*} UI::\+\+Canvas::\+\+Raycast (\begin{DoxyParamCaption}\item[{f32}]{worldX}{, }\item[{f32}]{worldY}{}\end{DoxyParamCaption}) const}
+
+
+
+Raycast to find the topmost element at a world position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worldX} & World X position \\
+\hline
+{\em worldY} & World Y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The topmost element containing the point, or nullptr 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_canvas_a43b9011a767a2d86410a4d1c357e8e9e}\index{UI::Canvas@{UI::Canvas}!RemoveElement@{RemoveElement}}
+\index{RemoveElement@{RemoveElement}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{RemoveElement()}{RemoveElement()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a43b9011a767a2d86410a4d1c357e8e9e} 
+void UI::\+\+Canvas::\+\+Remove\+Element (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element}{UIElement}} \texorpdfstring{$\ast$}{*}}]{element}{}\end{DoxyParamCaption})}
+
+
+
+Remove a root element from the canvas. 
+
+\Hypertarget{class_u_i_1_1_canvas_ac4bc2e2c194caa068aaa0321799b8dd3}\index{UI::Canvas@{UI::Canvas}!Render@{Render}}
+\index{Render@{Render}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_ac4bc2e2c194caa068aaa0321799b8dd3} 
+void UI::\+\+Canvas::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Render all \doxylink{namespace_u_i}{UI} elements. 
+
+\Hypertarget{class_u_i_1_1_canvas_a4d95ca279866a16ccb4e5208a44e4a44}\index{UI::Canvas@{UI::Canvas}!ScreenToCanvasPosition@{ScreenToCanvasPosition}}
+\index{ScreenToCanvasPosition@{ScreenToCanvasPosition}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{ScreenToCanvasPosition()}{ScreenToCanvasPosition()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a4d95ca279866a16ccb4e5208a44e4a44} 
+\doxymbox{\hyperlink{struct_engine_1_1_vector2}{Engine::\+\+Vector2}} UI::\+\+Canvas::\+\+Screen\+To\+Canvas\+Position (\begin{DoxyParamCaption}\item[{s32}]{screenX}{, }\item[{s32}]{screenY}{}\end{DoxyParamCaption}) const}
+
+
+
+Convert screen coordinates to canvas world coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em screenX} & Screen X (from AEInput\+Get\+Cursor\+Position) \\
+\hline
+{\em screenY} & Screen Y (from AEInput\+Get\+Cursor\+Position) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+canvas world coordinates 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_canvas_af204d6c4e25efc742c2b235da20c3d77}\index{UI::Canvas@{UI::Canvas}!SetReferenceResolution@{SetReferenceResolution}}
+\index{SetReferenceResolution@{SetReferenceResolution}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{SetReferenceResolution()}{SetReferenceResolution()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_af204d6c4e25efc742c2b235da20c3d77} 
+void UI::\+\+Canvas::\+\+Set\+Reference\+Resolution (\begin{DoxyParamCaption}\item[{f32}]{width}{, }\item[{f32}]{height}{}\end{DoxyParamCaption})}
+
+
+
+Set the reference resolution for scaling. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Reference width in pixels \\
+\hline
+{\em height} & Reference height in pixels \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_canvas_a94e12b6d5ad04c477d28db8f70c05faf}\index{UI::Canvas@{UI::Canvas}!SetScaleMode@{SetScaleMode}}
+\index{SetScaleMode@{SetScaleMode}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{SetScaleMode()}{SetScaleMode()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a94e12b6d5ad04c477d28db8f70c05faf} 
+void UI::\+\+Canvas::\+\+Set\+Scale\+Mode (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{namespace_u_i_a17925c7951ee0cd716d2222439da2913}{Canvas\+Scale\+Mode}}}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Set the canvas scale mode. 
+
+\Hypertarget{class_u_i_1_1_canvas_a611400908900d95f3245acad686366d6}\index{UI::Canvas@{UI::Canvas}!SetSortDirty@{SetSortDirty}}
+\index{SetSortDirty@{SetSortDirty}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{SetSortDirty()}{SetSortDirty()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a611400908900d95f3245acad686366d6} 
+void UI::\+\+Canvas::\+\+Set\+Sort\+Dirty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mark the canvas elements as needing a sort. 
+
+\Hypertarget{class_u_i_1_1_canvas_a8575f346b776fc51ad03f7cb0040e423}\index{UI::Canvas@{UI::Canvas}!SetSortOrder@{SetSortOrder}}
+\index{SetSortOrder@{SetSortOrder}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{SetSortOrder()}{SetSortOrder()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a8575f346b776fc51ad03f7cb0040e423} 
+void UI::\+\+Canvas::\+\+Set\+Sort\+Order (\begin{DoxyParamCaption}\item[{s32}]{order}{}\end{DoxyParamCaption})}
+
+
+
+Set the canvas sort order (relative to other canvases). 
+
+\Hypertarget{class_u_i_1_1_canvas_a0e87048aa4d9c7a8cc55e5abb52461a1}\index{UI::Canvas@{UI::Canvas}!SortElements@{SortElements}}
+\index{SortElements@{SortElements}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{SortElements()}{SortElements()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_a0e87048aa4d9c7a8cc55e5abb52461a1} 
+void UI::\+\+Canvas::\+\+Sort\+Elements (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Sort elements by sorting order. 
+
+\Hypertarget{class_u_i_1_1_canvas_accd63c3ac910b937deccc7961c35dd85}\index{UI::Canvas@{UI::Canvas}!Update@{Update}}
+\index{Update@{Update}!UI::Canvas@{UI::Canvas}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_canvas_accd63c3ac910b937deccc7961c35dd85} 
+void UI::\+\+Canvas::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})}
+
+
+
+Update all \doxylink{namespace_u_i}{UI} elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & Delta time in seconds \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_canvas_8hpp}{Canvas.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_canvas_8cpp}{Canvas.\+cpp}}\end{DoxyCompactItemize}

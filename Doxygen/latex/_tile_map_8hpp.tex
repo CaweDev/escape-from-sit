@@ -1,0 +1,41 @@
+\doxysection{Alpha\+Engine2.5D/\+\+Source/\+\+Engine/\+\+Tile\+Map/\+\+Tile\+Map.hpp File Reference}
+\hypertarget{_tile_map_8hpp}{}\label{_tile_map_8hpp}\index{AlphaEngine2.5D/Source/Engine/TileMap/TileMap.hpp@{AlphaEngine2.5D/Source/Engine/TileMap/TileMap.hpp}}
+
+
+2D tile map for raycasting walls  
+
+
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include "{}AEEngine.\+h"{}}\newline
+{\ttfamily \+\#include "{}../\+\+Core/\+\+Component.\+hpp"{}}\newline
+{\ttfamily \+\#include "{}../\+\+Math/\+\+Vector2.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_engine_1_1_tile_map}{Engine::\+\+Tile\+Map}}
+\begin{DoxyCompactList}\small\item\em 2D grid of tiles for raycasting \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \doxymbox{\hyperlink{namespace_engine}{Engine}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023d}{Engine::\+\+Tile\+Type}} :\+ int \{ \newline
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023dace2c8aed9c2fa0cfbed56cbda4d8bf07}{Engine::\+\+Empty}} = 0
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da94e8a499539d1a472f3b5dbbb85508c0}{Engine::\+\+Wall}} = 1
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf3c835f5aba1343c75949aadc1c7cb10}{Engine::\+\+Wall2}} = 2
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daee12db81efd581400ccc2423365347ed}{Engine::\+\+Wall3}} = 3
+, \newline
+\doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da342a0e1d8baf4d1404fa88678ec15f9d}{Engine::\+\+Wall4}} = 4
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8f1873c88edacc4855996e2c9a8a27d3}{Engine::\+\+NUM\+\_\+\+WALL}} = 5
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023daf44e14d49cd011d1e873d9fe0c4624f1}{Engine::\+\+Door}} = 10
+, \doxymbox{\hyperlink{namespace_engine_ac02cff8cf69dccfe54ea72d66a05023da8cc3c3b8949376a67d6318e99813135b}{Engine::\+\+NUM\+\_\+\+DOOR}} = 11
+ \}
+\begin{DoxyCompactList}\small\item\em Types of tiles in the map Negative values = walkable floors with different textures Zero = empty/\+walkable Positive values 1-\/9 = walls (not walkable) Positive value 10 = door marker (spawns \doxylink{class_engine_1_1_door}{Door}, then becomes Empty) Positive value 11 = terminal marker (spawns CCTVTerminal, then becomes Empty) Positive value 12 = exit marker (marked as floor, special gameplay handling) Positive value 13 = control room door marker (spawns Control\+Room\+Door, then becomes Empty) Positive values 15-\/18 = access card markers (Green, Purple, Red, Yellow) Positive value 20 = dedicated control room door tile (easy to place in editor). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+2D tile map for raycasting walls 
+

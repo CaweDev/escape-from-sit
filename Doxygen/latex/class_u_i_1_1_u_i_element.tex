@@ -1,0 +1,532 @@
+\doxysection{UI::\+UIElement Class Reference}
+\hypertarget{class_u_i_1_1_u_i_element}{}\label{class_u_i_1_1_u_i_element}\index{UI::UIElement@{UI::UIElement}}
+
+
+Base class for all \doxylink{namespace_u_i}{UI} elements (\doxylink{class_u_i_1_1_image}{Image}, \doxylink{class_u_i_1_1_text}{Text}, \doxylink{class_u_i_1_1_button}{Button}, \doxylink{class_u_i_1_1_panel}{Panel}, etc.).  
+
+
+
+
+{\ttfamily \+\#include $<$UIElement.\+hpp$>$}
+
+
+
+Inherited by \doxymbox{\hyperlink{class_u_i_1_1_button}{UI::\+\+Button}}, \doxymbox{\hyperlink{class_u_i_1_1_image}{UI::\+\+Image}}, \doxymbox{\hyperlink{class_u_i_1_1_interaction_prompt}{UI::\+\+Interaction\+Prompt}}, \doxymbox{\hyperlink{class_u_i_1_1_layout_group}{UI::\+\+Layout\+Group}}, \doxymbox{\hyperlink{class_u_i_1_1_map}{UI::\+\+Map}}, \doxymbox{\hyperlink{class_u_i_1_1_minimap}{UI::\+\+Minimap}}, \doxymbox{\hyperlink{class_u_i_1_1_panel}{UI::\+\+Panel}}, \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image}{UI::\+\+Sprite\+Sheet\+Image}}, and \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::\+\+Text}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}{\texorpdfstring{$\sim$}{\string~}\+UIElement}} ()
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}{Set\+Render\+Order}} (s32 order)
+\begin{DoxyCompactList}\small\item\em Get the render order for this element relative to its siblings. \end{DoxyCompactList}\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}{Get\+Render\+Order}} () const
+\item 
+virtual s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}{Get\+Global\+Render\+Order}} () const
+\begin{DoxyCompactList}\small\item\em Get the global render order (cumulative from parents). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}{Sort\+Children}} () const
+\begin{DoxyCompactList}\small\item\em Sort the children of this element by render\+Order. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}{UIElement}} (const UIElement \&)=delete
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}{operator=}} (const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&)=delete
+\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}{Update}} (f32 dt)
+\begin{DoxyCompactList}\small\item\em Update the element (called each frame if enabled). \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}{Render}} ()
+\begin{DoxyCompactList}\small\item\em Render the element (called each frame if visible). \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}{Get\+World\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the world-\/space rectangle for this element. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}{Contains\+Point}} (f32 worldX, f32 worldY) const
+\begin{DoxyCompactList}\small\item\em Check if a world-\/space point is inside this element. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}{Set\+Parent}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}parent)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}{Get\+Parent}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}{Add\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}{Remove\+Child}} (\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}child)
+\item 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}{Get\+Children}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}{Set\+Canvas}} (\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}canvas)
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}{Get\+Canvas}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}{Set\+Anchored\+Position}} (const AEVec2 \&pos)
+\begin{DoxyCompactList}\small\item\em Set the anchored position (offset from anchor midpoint). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}{Get\+Anchored\+Position}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}{Set\+Size\+Delta}} (const AEVec2 \&size)
+\begin{DoxyCompactList}\small\item\em Set the size delta (size relative to anchors). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}{Get\+Size\+Delta}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}{Set\+Pivot}} (const AEVec2 \&pivot)
+\begin{DoxyCompactList}\small\item\em Set the pivot point (0-\/1 normalized). \end{DoxyCompactList}\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}{Get\+Pivot}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}{Set\+Anchors}} (const AEVec2 \&min, const AEVec2 \&max)
+\begin{DoxyCompactList}\small\item\em Set the anchor points (0-\/1 normalized relative to parent). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}{Set\+Anchor\+Min}} (const AEVec2 \&min)
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}{Set\+Anchor\+Max}} (const AEVec2 \&max)
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}{Get\+Anchor\+Min}} () const
+\item 
+AEVec2 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}{Get\+Anchor\+Max}} () const
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}{Set\+Dirty}} ()
+\begin{DoxyCompactList}\small\item\em Mark this element\textquotesingle{}s world rect as needing recalculation. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}{Set\+Active}} (bool active)
+\begin{DoxyCompactList}\small\item\em Set element active state (toggles both enabled and visible). \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}{Create\+Child}} ()
+\begin{DoxyCompactList}\small\item\em Create a child element of the specified type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}{rect\+Transform}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}{enabled}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}{visible}} = true
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}{raycast\+Target}} = true
+\item 
+std::\+string \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}{name}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}{Get\+Parent\+Rect}} () const
+\begin{DoxyCompactList}\small\item\em Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+s32 \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}{m\+\_\+render\+Order}} = 0
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}{m\+\_\+parent}} = nullptr
+\item 
+std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}{m\+\_\+children}}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}{m\+\_\+canvas}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}{m\+\_\+children\+Sort\+Dirty}} = true
+\item 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}{m\+\_\+cached\+World\+Rect}}
+\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}{m\+\_\+world\+Rect\+Dirty}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for all \doxylink{namespace_u_i}{UI} elements (\doxylink{class_u_i_1_1_image}{Image}, \doxylink{class_u_i_1_1_text}{Text}, \doxylink{class_u_i_1_1_button}{Button}, \doxylink{class_u_i_1_1_panel}{Panel}, etc.). 
+
+Provides:\+
+\begin{DoxyItemize}
+\item \doxylink{class_u_i_1_1_rect_transform}{Rect\+Transform} for positioning
+\item Parent/\+child hierarchy
+\item Enabled/\+visible state
+\item Virtual Update/\+\+Render methods 
+\end{DoxyItemize}
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_u_i_element_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}\index{UI::UIElement@{UI::UIElement}!UIElement@{UIElement}}
+\index{UIElement@{UIElement}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{UIElement()}{UIElement()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1} 
+UI::\+\+UIElement::\+\+UIElement (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f}\index{UI::UIElement@{UI::UIElement}!````~UIElement@{\texorpdfstring{$\sim$}{\string~}UIElement}}
+\index{````~UIElement@{\texorpdfstring{$\sim$}{\string~}UIElement}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}UIElement()}{\string~UIElement()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_af8798c2bf4f724a6eebffb44b7edb73f} 
+UI::\+\+UIElement::\+\texorpdfstring{$\sim$}{\string~}\+UIElement (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c}\index{UI::UIElement@{UI::UIElement}!UIElement@{UIElement}}
+\index{UIElement@{UIElement}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{UIElement()}{UIElement()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ab60ef2475f2a12bf798f96d8bda6de4c} 
+UI::\+\+UIElement::\+\+UIElement (\begin{DoxyParamCaption}\item[{const UIElement \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_u_i_element_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f}\index{UI::UIElement@{UI::UIElement}!AddChild@{AddChild}}
+\index{AddChild@{AddChild}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{AddChild()}{AddChild()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ada7d8b7d2e3f63c849fef852d61f048f} 
+void UI::\+\+UIElement::\+\+Add\+Child (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde}\index{UI::UIElement@{UI::UIElement}!ContainsPoint@{ContainsPoint}}
+\index{ContainsPoint@{ContainsPoint}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{ContainsPoint()}{ContainsPoint()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ad465d3dcbd909f87a9d84a0bb183dcde} 
+bool UI::\+\+UIElement::\+\+Contains\+Point (\begin{DoxyParamCaption}\item[{f32}]{worldX}{, }\item[{f32}]{worldY}{}\end{DoxyParamCaption}) const}
+
+
+
+Check if a world-\/space point is inside this element. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worldX} & X position in world coordinates \\
+\hline
+{\em worldY} & Y position in world coordinates \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if point is inside 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f}\index{UI::UIElement@{UI::UIElement}!CreateChild@{CreateChild}}
+\index{CreateChild@{CreateChild}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{CreateChild()}{CreateChild()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a0a78bd4fc2c840a46a85d146f126fd8f} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} UI::\+\+UIElement::\+\+Create\+Child (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create a child element of the specified type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of element to create (must inherit from \doxylink{class_u_i_1_1_u_i_element}{UIElement}) \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the created element 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d}\index{UI::UIElement@{UI::UIElement}!GetAnchoredPosition@{GetAnchoredPosition}}
+\index{GetAnchoredPosition@{GetAnchoredPosition}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetAnchoredPosition()}{GetAnchoredPosition()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a1a26503f610bd37c8b5163cfb360902d} 
+AEVec2 UI::\+\+UIElement::\+\+Get\+Anchored\+Position (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab}\index{UI::UIElement@{UI::UIElement}!GetAnchorMax@{GetAnchorMax}}
+\index{GetAnchorMax@{GetAnchorMax}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetAnchorMax()}{GetAnchorMax()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_aac9a270fb01472cf1ca5271b22b6a6ab} 
+AEVec2 UI::\+\+UIElement::\+\+Get\+Anchor\+Max (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5}\index{UI::UIElement@{UI::UIElement}!GetAnchorMin@{GetAnchorMin}}
+\index{GetAnchorMin@{GetAnchorMin}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetAnchorMin()}{GetAnchorMin()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a302f3287e59f3532bc6c4ce7308562a5} 
+AEVec2 UI::\+\+UIElement::\+\+Get\+Anchor\+Min (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013}\index{UI::UIElement@{UI::UIElement}!GetCanvas@{GetCanvas}}
+\index{GetCanvas@{GetCanvas}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetCanvas()}{GetCanvas()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_acba4286c16b6f32c2133a0eda946a013} 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*} UI::\+\+UIElement::\+\+Get\+Canvas (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263}\index{UI::UIElement@{UI::UIElement}!GetChildren@{GetChildren}}
+\index{GetChildren@{GetChildren}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetChildren()}{GetChildren()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a2981825bb32293ee1b0e5cf82a12c263} 
+const std::\+vector$<$ \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} $>$ \& UI::\+\+UIElement::\+\+Get\+Children (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4}\index{UI::UIElement@{UI::UIElement}!GetGlobalRenderOrder@{GetGlobalRenderOrder}}
+\index{GetGlobalRenderOrder@{GetGlobalRenderOrder}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetGlobalRenderOrder()}{GetGlobalRenderOrder()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_acae3a8a4340a7ca0367e5fb69a627de4} 
+s32 UI::\+\+UIElement::\+\+Get\+Global\+Render\+Order (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Get the global render order (cumulative from parents). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571}\index{UI::UIElement@{UI::UIElement}!GetParent@{GetParent}}
+\index{GetParent@{GetParent}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetParent()}{GetParent()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a0f3e93b735b9b0e1579e27c70cb51571} 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*} UI::\+\+UIElement::\+\+Get\+Parent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a}\index{UI::UIElement@{UI::UIElement}!GetParentRect@{GetParentRect}}
+\index{GetParentRect@{GetParentRect}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetParentRect()}{GetParentRect()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a91862a0a6cc8914f8d42ad84c762da5a} 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} UI::\+\+UIElement::\+\+Get\+Parent\+Rect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Get the parent\textquotesingle{}s world rect (or canvas rect for root elements). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444}\index{UI::UIElement@{UI::UIElement}!GetPivot@{GetPivot}}
+\index{GetPivot@{GetPivot}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetPivot()}{GetPivot()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ae5edb90ce313e46d8f5a051641616444} 
+AEVec2 UI::\+\+UIElement::\+\+Get\+Pivot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577}\index{UI::UIElement@{UI::UIElement}!GetRenderOrder@{GetRenderOrder}}
+\index{GetRenderOrder@{GetRenderOrder}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetRenderOrder()}{GetRenderOrder()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a2ce7e145270113f5a9ed75cdee0d1577} 
+s32 UI::\+\+UIElement::\+\+Get\+Render\+Order (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce}\index{UI::UIElement@{UI::UIElement}!GetSizeDelta@{GetSizeDelta}}
+\index{GetSizeDelta@{GetSizeDelta}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetSizeDelta()}{GetSizeDelta()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a300e29669f88e7ef213d59c09a3591ce} 
+AEVec2 UI::\+\+UIElement::\+\+Get\+Size\+Delta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c}\index{UI::UIElement@{UI::UIElement}!GetWorldRect@{GetWorldRect}}
+\index{GetWorldRect@{GetWorldRect}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{GetWorldRect()}{GetWorldRect()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_af9f5ded18daa40bf71e3a5eed6174b9c} 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} UI::\+\+UIElement::\+\+Get\+World\+Rect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get the world-\/space rectangle for this element. 
+
+\begin{DoxyReturn}{Returns}
+World rect calculated from parent hierarchy 
+\end{DoxyReturn}
+\Hypertarget{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd}\index{UI::UIElement@{UI::UIElement}!operator=@{operator=}}
+\index{operator=@{operator=}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a79ac129b5c0b5cc37f383ec6323476dd} 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \& UI::\+\+UIElement::\+operator= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \&}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788}\index{UI::UIElement@{UI::UIElement}!RemoveChild@{RemoveChild}}
+\index{RemoveChild@{RemoveChild}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{RemoveChild()}{RemoveChild()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a7debef69ef8b077471d8107f440a4788} 
+void UI::\+\+UIElement::\+\+Remove\+Child (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}}]{child}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351}\index{UI::UIElement@{UI::UIElement}!Render@{Render}}
+\index{Render@{Render}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{Render()}{Render()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_aeb6626682344acb06dfbf58309bde351} 
+void UI::\+\+UIElement::\+\+Render (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Render the element (called each frame if visible). 
+
+
+
+Reimplemented in \doxymbox{\hyperlink{class_u_i_1_1_button_a8e40abfdad0c063d00485f4ba616d5be}{UI::\+\+Button}}, \doxymbox{\hyperlink{class_u_i_1_1_heatmap_overlay_a65cbbdc9cac3bdd99f906227bdedce53}{UI::\+\+Heatmap\+Overlay}}, \doxymbox{\hyperlink{class_u_i_1_1_image_a0edcd3381db499cf1836e26d9d22da73}{UI::\+\+Image}}, \doxymbox{\hyperlink{class_u_i_1_1_map_a85f7ace9ce88b748bb1789366131786c}{UI::\+\+Map}}, \doxymbox{\hyperlink{class_u_i_1_1_minimap_a5c003575f273da4f5e0d753b14a5b414}{UI::\+\+Minimap}}, \doxymbox{\hyperlink{class_u_i_1_1_panel_a5248393b4d3ba4fcdc3fd4792ba90525}{UI::\+\+Panel}}, \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_ac7da2ad657f030f840ec05299c46c1eb}{UI::\+\+Sprite\+Sheet\+Image}}, and \doxymbox{\hyperlink{class_u_i_1_1_text_a1230395d29456ecf99995929a33c540a}{UI::\+\+Text}}.
+
+\Hypertarget{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99}\index{UI::UIElement@{UI::UIElement}!SetActive@{SetActive}}
+\index{SetActive@{SetActive}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetActive()}{SetActive()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ad8d91d906c4674360db3dc85eceb4f99} 
+void UI::\+\+UIElement::\+\+Set\+Active (\begin{DoxyParamCaption}\item[{bool}]{active}{}\end{DoxyParamCaption})}
+
+
+
+Set element active state (toggles both enabled and visible). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em active} & True to enable and show, false to disable and hide \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a}\index{UI::UIElement@{UI::UIElement}!SetAnchoredPosition@{SetAnchoredPosition}}
+\index{SetAnchoredPosition@{SetAnchoredPosition}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetAnchoredPosition()}{SetAnchoredPosition()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a0f2a9ad896d4275c5eec7cd5ca426d5a} 
+void UI::\+\+UIElement::\+\+Set\+Anchored\+Position (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{pos}{}\end{DoxyParamCaption})}
+
+
+
+Set the anchored position (offset from anchor midpoint). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00}\index{UI::UIElement@{UI::UIElement}!SetAnchorMax@{SetAnchorMax}}
+\index{SetAnchorMax@{SetAnchorMax}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetAnchorMax()}{SetAnchorMax()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ac0afa0af11014688db7396e5280f8b00} 
+void UI::\+\+UIElement::\+\+Set\+Anchor\+Max (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{max}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa}\index{UI::UIElement@{UI::UIElement}!SetAnchorMin@{SetAnchorMin}}
+\index{SetAnchorMin@{SetAnchorMin}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetAnchorMin()}{SetAnchorMin()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a366e1669d9fc1030cf3f42ad60b03eaa} 
+void UI::\+\+UIElement::\+\+Set\+Anchor\+Min (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{min}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69}\index{UI::UIElement@{UI::UIElement}!SetAnchors@{SetAnchors}}
+\index{SetAnchors@{SetAnchors}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetAnchors()}{SetAnchors()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ac2b4fdc5d841110ea6760f7b33686a69} 
+void UI::\+\+UIElement::\+\+Set\+Anchors (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{min}{, }\item[{const AEVec2 \&}]{max}{}\end{DoxyParamCaption})}
+
+
+
+Set the anchor points (0-\/1 normalized relative to parent). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae}\index{UI::UIElement@{UI::UIElement}!SetCanvas@{SetCanvas}}
+\index{SetCanvas@{SetCanvas}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetCanvas()}{SetCanvas()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a2564fd442ac3975f80011ffd3a0175ae} 
+void UI::\+\+UIElement::\+\+Set\+Canvas (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}} \texorpdfstring{$\ast$}{*}}]{canvas}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973}\index{UI::UIElement@{UI::UIElement}!SetDirty@{SetDirty}}
+\index{SetDirty@{SetDirty}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetDirty()}{SetDirty()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a39f81b41e583e1e67f791429beced973} 
+void UI::\+\+UIElement::\+\+Set\+Dirty (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Mark this element\textquotesingle{}s world rect as needing recalculation. 
+
+\Hypertarget{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e}\index{UI::UIElement@{UI::UIElement}!SetParent@{SetParent}}
+\index{SetParent@{SetParent}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetParent()}{SetParent()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_afbac5ffae7d2832a0f28db8bca52285e} 
+void UI::\+\+UIElement::\+\+Set\+Parent (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}} \texorpdfstring{$\ast$}{*}}]{parent}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275}\index{UI::UIElement@{UI::UIElement}!SetPivot@{SetPivot}}
+\index{SetPivot@{SetPivot}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetPivot()}{SetPivot()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a78dbaa427d7e9e01517a6d15c53e5275} 
+void UI::\+\+UIElement::\+\+Set\+Pivot (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{pivot}{}\end{DoxyParamCaption})}
+
+
+
+Set the pivot point (0-\/1 normalized). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878}\index{UI::UIElement@{UI::UIElement}!SetRenderOrder@{SetRenderOrder}}
+\index{SetRenderOrder@{SetRenderOrder}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetRenderOrder()}{SetRenderOrder()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a4ef6c7b9dc6b2ad18aa7cfecb70a8878} 
+void UI::\+\+UIElement::\+\+Set\+Render\+Order (\begin{DoxyParamCaption}\item[{s32}]{order}{}\end{DoxyParamCaption})}
+
+
+
+Get the render order for this element relative to its siblings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em order} & Higher values are rendered later (on top) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8}\index{UI::UIElement@{UI::UIElement}!SetSizeDelta@{SetSizeDelta}}
+\index{SetSizeDelta@{SetSizeDelta}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SetSizeDelta()}{SetSizeDelta()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a1405f8bba8f9d32779e9650a810a40e8} 
+void UI::\+\+UIElement::\+\+Set\+Size\+Delta (\begin{DoxyParamCaption}\item[{const AEVec2 \&}]{size}{}\end{DoxyParamCaption})}
+
+
+
+Set the size delta (size relative to anchors). 
+
+\Hypertarget{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82}\index{UI::UIElement@{UI::UIElement}!SortChildren@{SortChildren}}
+\index{SortChildren@{SortChildren}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{SortChildren()}{SortChildren()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a21eb4c76cd5783bbad16201a2f5d8f82} 
+void UI::\+\+UIElement::\+\+Sort\+Children (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Sort the children of this element by render\+Order. 
+
+\Hypertarget{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a}\index{UI::UIElement@{UI::UIElement}!Update@{Update}}
+\index{Update@{Update}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a224bf3a0086f09fdc1d5b4f0ffdf143a} 
+void UI::\+\+UIElement::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{dt}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Update the element (called each frame if enabled). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dt} & Delta time in seconds \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_u_i_1_1_button_a894121f9656055e5182875e84ec4fdc4}{UI::\+\+Button}}, \doxymbox{\hyperlink{class_u_i_1_1_layout_group_a84b48e62f343f74613ed839d9dbcecf4}{UI::\+\+Layout\+Group}}, \doxymbox{\hyperlink{class_u_i_1_1_panel_a2ad2ae6fd5c7f28d021bc3665b259178}{UI::\+\+Panel}}, and \doxymbox{\hyperlink{class_u_i_1_1_sprite_sheet_image_af7daa6c7197100a36dea2a3d86a17331}{UI::\+\+Sprite\+Sheet\+Image}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_u_i_1_1_u_i_element_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666}\index{UI::UIElement@{UI::UIElement}!enabled@{enabled}}
+\index{enabled@{enabled}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{enabled}{enabled}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ad6e5623a7e0ebdbe79aa6827be055666} 
+bool UI::\+\+UIElement::\+enabled = true}
+
+\Hypertarget{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a}\index{UI::UIElement@{UI::UIElement}!m\_cachedWorldRect@{m\_cachedWorldRect}}
+\index{m\_cachedWorldRect@{m\_cachedWorldRect}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_cachedWorldRect}{m\_cachedWorldRect}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_aaba818859ae81bf8b7b8899f3846950a} 
+\doxymbox{\hyperlink{struct_u_i_1_1_rect}{Rect}} UI::\+\+UIElement::\+m\+\_\+cached\+World\+Rect\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40}\index{UI::UIElement@{UI::UIElement}!m\_canvas@{m\_canvas}}
+\index{m\_canvas@{m\_canvas}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_canvas}{m\_canvas}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ae676cc04ab4413d8a836a62a6787de40} 
+\doxymbox{\hyperlink{class_u_i_1_1_canvas}{Canvas}}\texorpdfstring{$\ast$}{*} UI::\+\+UIElement::\+m\+\_\+canvas = nullptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325}\index{UI::UIElement@{UI::UIElement}!m\_children@{m\_children}}
+\index{m\_children@{m\_children}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_children}{m\_children}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a324cad4fd896a33cf626063c0f086325} 
+std::\+vector$<$\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}\texorpdfstring{$\ast$}{*}$>$ UI::\+\+UIElement::\+m\+\_\+children\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b}\index{UI::UIElement@{UI::UIElement}!m\_childrenSortDirty@{m\_childrenSortDirty}}
+\index{m\_childrenSortDirty@{m\_childrenSortDirty}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_childrenSortDirty}{m\_childrenSortDirty}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a60b8248df32cb6a7878ca61d19a7dc9b} 
+bool UI::\+\+UIElement::\+m\+\_\+children\+Sort\+Dirty = true\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304}\index{UI::UIElement@{UI::UIElement}!m\_parent@{m\_parent}}
+\index{m\_parent@{m\_parent}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_parent}{m\_parent}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_addd1603e44f0668fabed0024bcb43304} 
+\doxymbox{\hyperlink{class_u_i_1_1_u_i_element_a4a6e9798de3d0c266bace92b447092a1}{UIElement}}\texorpdfstring{$\ast$}{*} UI::\+\+UIElement::\+m\+\_\+parent = nullptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380}\index{UI::UIElement@{UI::UIElement}!m\_renderOrder@{m\_renderOrder}}
+\index{m\_renderOrder@{m\_renderOrder}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_renderOrder}{m\_renderOrder}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_ae8b3341836b7f7428c04ade7d0605380} 
+s32 UI::\+\+UIElement::\+m\+\_\+render\+Order = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9}\index{UI::UIElement@{UI::UIElement}!m\_worldRectDirty@{m\_worldRectDirty}}
+\index{m\_worldRectDirty@{m\_worldRectDirty}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{m\_worldRectDirty}{m\_worldRectDirty}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a63565861c8025745969efe67d6c28cb9} 
+bool UI::\+\+UIElement::\+m\+\_\+world\+Rect\+Dirty = true\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a}\index{UI::UIElement@{UI::UIElement}!name@{name}}
+\index{name@{name}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_a3af3fc15292b5e1e8fd362415fa0647a} 
+std::\+string UI::\+\+UIElement::\+name}
+
+\Hypertarget{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5}\index{UI::UIElement@{UI::UIElement}!raycastTarget@{raycastTarget}}
+\index{raycastTarget@{raycastTarget}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{raycastTarget}{raycastTarget}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_abbb39858569c816f939973bb5d8022a5} 
+bool UI::\+\+UIElement::\+raycast\+Target = true}
+
+\Hypertarget{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998}\index{UI::UIElement@{UI::UIElement}!rectTransform@{rectTransform}}
+\index{rectTransform@{rectTransform}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{rectTransform}{rectTransform}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_abd96ebcd98759ecd8e2d2a1406ff6998} 
+\doxymbox{\hyperlink{class_u_i_1_1_rect_transform}{Rect\+Transform}} UI::\+\+UIElement::\+rect\+Transform}
+
+\Hypertarget{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136}\index{UI::UIElement@{UI::UIElement}!visible@{visible}}
+\index{visible@{visible}!UI::UIElement@{UI::UIElement}}
+\doxysubsubsection{\texorpdfstring{visible}{visible}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_u_i_element_aa24562b020f65d984e6e9b1c9ff5c136} 
+bool UI::\+\+UIElement::\+visible = true}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_u_i_element_8hpp}{UIElement.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Core/\+\doxymbox{\hyperlink{_u_i_element_8cpp}{UIElement.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,85 @@
+\doxysection{Engine::\+Animation\+Clip Struct Reference}
+\hypertarget{struct_engine_1_1_animation_clip}{}\label{struct_engine_1_1_animation_clip}\index{Engine::AnimationClip@{Engine::AnimationClip}}
+
+
+Defines a named animation as a range of frames within a spritesheet.  
+
+
+
+
+{\ttfamily \+\#include $<$Sprite\+Sheet.\+hpp$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_acf02b4d99e32f1953c72c94b588ea9ac}{name}}
+\item 
+int \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_ae2a5118ddfdf848bba4a97fed888056b}{start\+Frame}} = 0
+\begin{DoxyCompactList}\small\item\em First frame index (row-\/major, 0-\/based). Read from meta file later. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a3a6e1ef2d049b3925cdda853ebafaf8a}{frame\+Count}} = 1
+\begin{DoxyCompactList}\small\item\em Number of frames in this clip. Read from meta file later. \end{DoxyCompactList}\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a13a677c4152eeafc8cad78e758595dca}{frame\+Rate}} = 10.\+0f
+\begin{DoxyCompactList}\small\item\em Playback speed (frames per second). Read from meta file later. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{struct_engine_1_1_animation_clip_a6233c9ff0594c35bd54be2849015c7a3}{loop}} = true
+\begin{DoxyCompactList}\small\item\em Whether this clip loops. Read from meta file later. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines a named animation as a range of frames within a spritesheet. 
+
+Frames are indexed in row-\/major order (left-\/to-\/right, top-\/to-\/bottom), starting from 0 at the top-\/left cell of the spritesheet. 
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_animation_clip_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_animation_clip_a3a6e1ef2d049b3925cdda853ebafaf8a}\index{Engine::AnimationClip@{Engine::AnimationClip}!frameCount@{frameCount}}
+\index{frameCount@{frameCount}!Engine::AnimationClip@{Engine::AnimationClip}}
+\doxysubsubsection{\texorpdfstring{frameCount}{frameCount}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_animation_clip_a3a6e1ef2d049b3925cdda853ebafaf8a} 
+int Engine::\+\+Animation\+Clip::\+frame\+Count = 1}
+
+
+
+Number of frames in this clip. Read from meta file later. 
+
+\Hypertarget{struct_engine_1_1_animation_clip_a13a677c4152eeafc8cad78e758595dca}\index{Engine::AnimationClip@{Engine::AnimationClip}!frameRate@{frameRate}}
+\index{frameRate@{frameRate}!Engine::AnimationClip@{Engine::AnimationClip}}
+\doxysubsubsection{\texorpdfstring{frameRate}{frameRate}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_animation_clip_a13a677c4152eeafc8cad78e758595dca} 
+float Engine::\+\+Animation\+Clip::\+frame\+Rate = 10.\+0f}
+
+
+
+Playback speed (frames per second). Read from meta file later. 
+
+\Hypertarget{struct_engine_1_1_animation_clip_a6233c9ff0594c35bd54be2849015c7a3}\index{Engine::AnimationClip@{Engine::AnimationClip}!loop@{loop}}
+\index{loop@{loop}!Engine::AnimationClip@{Engine::AnimationClip}}
+\doxysubsubsection{\texorpdfstring{loop}{loop}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_animation_clip_a6233c9ff0594c35bd54be2849015c7a3} 
+bool Engine::\+\+Animation\+Clip::\+loop = true}
+
+
+
+Whether this clip loops. Read from meta file later. 
+
+\Hypertarget{struct_engine_1_1_animation_clip_acf02b4d99e32f1953c72c94b588ea9ac}\index{Engine::AnimationClip@{Engine::AnimationClip}!name@{name}}
+\index{name@{name}!Engine::AnimationClip@{Engine::AnimationClip}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_animation_clip_acf02b4d99e32f1953c72c94b588ea9ac} 
+std::\+string Engine::\+\+Animation\+Clip::\+name}
+
+\Hypertarget{struct_engine_1_1_animation_clip_ae2a5118ddfdf848bba4a97fed888056b}\index{Engine::AnimationClip@{Engine::AnimationClip}!startFrame@{startFrame}}
+\index{startFrame@{startFrame}!Engine::AnimationClip@{Engine::AnimationClip}}
+\doxysubsubsection{\texorpdfstring{startFrame}{startFrame}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_animation_clip_ae2a5118ddfdf848bba4a97fed888056b} 
+int Engine::\+\+Animation\+Clip::\+start\+Frame = 0}
+
+
+
+First frame index (row-\/major, 0-\/based). Read from meta file later. 
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_sprite_sheet_8hpp}{Sprite\+Sheet.\+hpp}}\end{DoxyCompactItemize}

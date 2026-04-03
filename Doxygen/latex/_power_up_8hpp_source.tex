@@ -1,0 +1,65 @@
+\doxysection{Power\+Up.\+hpp}
+\hypertarget{_power_up_8hpp_source}{}\label{_power_up_8hpp_source}\index{AlphaEngine2.5D/Source/Game/PowerUp/PowerUp.hpp@{AlphaEngine2.5D/Source/Game/PowerUp/PowerUp.hpp}}
+\doxymbox{\hyperlink{_power_up_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector3_8hpp}{Engine/Math/Vector3.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_color_8hpp}{Engine/Graphics/Color.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_player_power_up_controller_8hpp}{Game/Player/PlayerPowerUpController.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{SpriteRenderer}};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_engine_1_1_interactable}{Interactable}};}
+\DoxyCodeLine{00018\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_power_up_data}{PowerUpData}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_vector3}{Engine::Vector3}}\ \doxymbox{\hyperlink{struct_game_1_1_power_up_data_a1056e2f30cc2cace386bd1fd3c6548a2}{position}};\ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2}{PowerUpType}}\ \doxymbox{\hyperlink{struct_game_1_1_power_up_data_aaa1df9e7526e117b1f32a9454f6cda64}{type}}\ =\ \doxymbox{\hyperlink{namespace_game_ae7fea5498ee197035097c59e9832c3f2ae397fdb463f1d62721c0a5aa6038efa1}{PowerUpType::SpeedBoost}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::string\ \doxymbox{\hyperlink{struct_game_1_1_power_up_data_ac0c294d4f0e270c3880b0c2cb6bbc1be}{name}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_power_up_data_ad2051fd66cfbbdde756e10dfb8dfeb77}{duration}}\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_power_up_object}{PowerUpObject}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::Component}}\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_game_1_1_power_up_data}{PowerUpData}}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_ada72e3965d5f4146384faa535ec51cd4}{reference}};\ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a84572f6887cb89a8145557632932cd39}{isCollected}}\ =\ \textcolor{keyword}{false};\ \ \ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_ac80c1fce6932d2b79fd3cab21ac24f67}{floatTime}}\ =\ 0.0f;\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a33aa235c07b45f7790ccb75f0a3e0614}{baseZ}}\ =\ 0.0f;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a73ff633a7fb267e1853ff6690b18fb38}{floatHeight}}\ =\ 0.15f;\ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a6aac9dd5d502012b38cdec297a30d93d}{floatSpeed}}\ =\ 2.0f;\ \ \ \ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Respawn\ settings}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a956c1dc442b2b6ec6d5619ab0e4fb984}{allowRespawn}}\ =\ \textcolor{keyword}{true};\ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a5330c0309a8a70a505210829f7d496a6}{respawnDelay}}\ =\ 20.0f;\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a8c117b77d3e996015a52ad58628b972e}{respawnTimer}}\ =\ 0.0f;\ \ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::SpriteRenderer}}*\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a46664b94612351f1da95faf6f3319c6b}{spriteRenderer}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::Interactable}}*\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_ae66ad1d195cf186b4ffcb8136003ae3f}{interactable}}\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_aee1b805f0eba4bde97b794c92e627841}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a8a77d6f832ae9e3c65e672df264d861f}{Update}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_aed9e139c7f5b65f1ac5abaee8378cbb2}{SetupInteraction}}();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a17eadd92b0f915f6e1a3b178d5dac7c5}{OnCollect}}();}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::Color}}\ \doxymbox{\hyperlink{class_game_1_1_power_up_object_a5897c241f95874fe5701a34ba5a2a585}{GetHighlightColor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ SetPickupEnabled(\textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}});}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ Respawn();}
+\DoxyCodeLine{00077\ \ \ \ \ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

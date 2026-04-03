@@ -1,0 +1,254 @@
+\doxysection{Game::\+Access\+Card Class Reference}
+\hypertarget{class_game_1_1_access_card}{}\label{class_game_1_1_access_card}\index{Game::AccessCard@{Game::AccessCard}}
+
+
+Collectible access card that unlocks control room doors.  
+
+
+
+
+{\ttfamily \+\#include $<$Access\+Card.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{class_game_1_1_access_card_a0a60b6ae361b2031f906c962ae295a9a}{Initialize}} () override
+\begin{DoxyCompactList}\small\item\em Component initialization. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_access_card_a80d805314150b47eda2451b0a3060db1}{Update}} () override
+\begin{DoxyCompactList}\small\item\em Per-\/frame update for float/\+rotation and timers. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_access_card_a02eb44ed9ddd34fe1ec5400df2ad06c1}{Setup\+Interaction}} ()
+\begin{DoxyCompactList}\small\item\em Configure \doxylink{class_engine_1_1_interactable}{Interactable} callback for pickup. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_1_1_access_card_a2015ed6435693c617826bc998f83c330}{On\+Collect}} ()
+\begin{DoxyCompactList}\small\item\em Handle card collection logic (HUD notify, hide, SFX). \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_access_card_af2b192a92eca45d6474c6e6c7ba031ef}{Get\+Color\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Get human-\/readable color name. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} \doxymbox{\hyperlink{class_game_1_1_access_card_a3919088820147dcd2d54609ec115d99a}{Get\+Highlight\+Color}} () const
+\begin{DoxyCompactList}\small\item\em Get configured highlight tint for this card. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Awake}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73}{Access\+Card\+Color}} \doxymbox{\hyperlink{class_game_1_1_access_card_a23372b29e1576c53e26371369662555d}{card\+Color}} = \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ad382816a3cbeed082c9e216e7392eed1}{Access\+Card\+Color::\+\+Green}}
+\item 
+int \doxymbox{\hyperlink{class_game_1_1_access_card_a0890a9e150aa100381e00d749930beb3}{card\+Id}} = 0
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_a6a019d2984eabc3115162370bfbd4adc}{float\+Time}} = 0.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_a1191a9889ca85224a3290fdba3326f83}{baseZ}} = 0.\+5f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_aaf4ea29844c19701b430a283f6cedca9}{float\+Height}} = 0.\+15f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_a661bb052b52df156b0d7b0f9426a7e34}{float\+Speed}} = 2.\+0f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_ae4f8808d319ab260cb11060d81adf2d4}{spawn\+Safe\+Delay}} = 0.\+6f
+\item 
+float \doxymbox{\hyperlink{class_game_1_1_access_card_a53060cc96fdc87711dd3e2ac773765ba}{spawn\+Safe\+Timer}} = 0.\+0f
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_access_card_af9f6cea2a2bb3a695f59eefb8cc65c54}{sprite\+Renderer}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_game_1_1_access_card_a9ee96f5f7ce9b5c5c03fee9f350f40e8}{interactable}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Collectible access card that unlocks control room doors. 
+
+\label{doc-func-members}
+\Hypertarget{class_game_1_1_access_card_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_1_1_access_card_af2b192a92eca45d6474c6e6c7ba031ef}\index{Game::AccessCard@{Game::AccessCard}!GetColorName@{GetColorName}}
+\index{GetColorName@{GetColorName}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{GetColorName()}{GetColorName()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_af2b192a92eca45d6474c6e6c7ba031ef} 
+const char \texorpdfstring{$\ast$}{*} Game::\+\+Access\+Card::\+\+Get\+Color\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get human-\/readable color name. 
+
+Get the textual name for the card color.
+
+\begin{DoxyReturn}{Returns}
+C-\/string of color name
+
+C-\/string name of the card color 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_access_card_a3919088820147dcd2d54609ec115d99a}\index{Game::AccessCard@{Game::AccessCard}!GetHighlightColor@{GetHighlightColor}}
+\index{GetHighlightColor@{GetHighlightColor}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{GetHighlightColor()}{GetHighlightColor()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a3919088820147dcd2d54609ec115d99a} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Engine::\+\+Color}} Game::\+\+Access\+Card::\+\+Get\+Highlight\+Color (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Get configured highlight tint for this card. 
+
+Get the configured highlight color for this card type.
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_engine_1_1_color}{Color}
+
+\doxylink{struct_engine_1_1_color}{Engine::\+\+Color} value 
+\end{DoxyReturn}
+\Hypertarget{class_game_1_1_access_card_a0a60b6ae361b2031f906c962ae295a9a}\index{Game::AccessCard@{Game::AccessCard}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a0a60b6ae361b2031f906c962ae295a9a} 
+void Game::\+\+Access\+Card::\+\+Initialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Component initialization. 
+
+Component initialization:\+ cache components and apply visual config. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Engine::\+\+Component}}.
+
+\Hypertarget{class_game_1_1_access_card_a2015ed6435693c617826bc998f83c330}\index{Game::AccessCard@{Game::AccessCard}!OnCollect@{OnCollect}}
+\index{OnCollect@{OnCollect}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{OnCollect()}{OnCollect()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a2015ed6435693c617826bc998f83c330} 
+void Game::\+\+Access\+Card::\+\+On\+Collect (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Handle card collection logic (HUD notify, hide, SFX). 
+
+Handle collection:\+ notify HUD, hide object and play SFX. \Hypertarget{class_game_1_1_access_card_a02eb44ed9ddd34fe1ec5400df2ad06c1}\index{Game::AccessCard@{Game::AccessCard}!SetupInteraction@{SetupInteraction}}
+\index{SetupInteraction@{SetupInteraction}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{SetupInteraction()}{SetupInteraction()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a02eb44ed9ddd34fe1ec5400df2ad06c1} 
+void Game::\+\+Access\+Card::\+\+Setup\+Interaction (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configure \doxylink{class_engine_1_1_interactable}{Interactable} callback for pickup. 
+
+Configure the \doxylink{class_engine_1_1_interactable}{Interactable} callback with spawn-\/safe guard. \Hypertarget{class_game_1_1_access_card_a80d805314150b47eda2451b0a3060db1}\index{Game::AccessCard@{Game::AccessCard}!Update@{Update}}
+\index{Update@{Update}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a80d805314150b47eda2451b0a3060db1} 
+void Game::\+\+Access\+Card::\+\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Per-\/frame update for float/\+rotation and timers. 
+
+Per-\/frame update:\+ floating animation, rotation, and spawn timer. 
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Engine::\+\+Component}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{class_game_1_1_access_card_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_game_1_1_access_card_a1191a9889ca85224a3290fdba3326f83}\index{Game::AccessCard@{Game::AccessCard}!baseZ@{baseZ}}
+\index{baseZ@{baseZ}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{baseZ}{baseZ}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a1191a9889ca85224a3290fdba3326f83} 
+float Game::\+\+Access\+Card::\+baseZ = 0.\+5f}
+
+\Hypertarget{class_game_1_1_access_card_a23372b29e1576c53e26371369662555d}\index{Game::AccessCard@{Game::AccessCard}!cardColor@{cardColor}}
+\index{cardColor@{cardColor}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{cardColor}{cardColor}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a23372b29e1576c53e26371369662555d} 
+\doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73}{Access\+Card\+Color}} Game::\+\+Access\+Card::\+card\+Color = \doxymbox{\hyperlink{namespace_game_a3d22544ac5ef09fc6da4e12e2c45eb73ad382816a3cbeed082c9e216e7392eed1}{Access\+Card\+Color::\+\+Green}}}
+
+Card color/\+type \Hypertarget{class_game_1_1_access_card_a0890a9e150aa100381e00d749930beb3}\index{Game::AccessCard@{Game::AccessCard}!cardId@{cardId}}
+\index{cardId@{cardId}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{cardId}{cardId}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a0890a9e150aa100381e00d749930beb3} 
+int Game::\+\+Access\+Card::\+card\+Id = 0}
+
+Card ID (0-\/3) \Hypertarget{class_game_1_1_access_card_aaf4ea29844c19701b430a283f6cedca9}\index{Game::AccessCard@{Game::AccessCard}!floatHeight@{floatHeight}}
+\index{floatHeight@{floatHeight}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{floatHeight}{floatHeight}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_aaf4ea29844c19701b430a283f6cedca9} 
+float Game::\+\+Access\+Card::\+float\+Height = 0.\+15f}
+
+\Hypertarget{class_game_1_1_access_card_a661bb052b52df156b0d7b0f9426a7e34}\index{Game::AccessCard@{Game::AccessCard}!floatSpeed@{floatSpeed}}
+\index{floatSpeed@{floatSpeed}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{floatSpeed}{floatSpeed}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a661bb052b52df156b0d7b0f9426a7e34} 
+float Game::\+\+Access\+Card::\+float\+Speed = 2.\+0f}
+
+\Hypertarget{class_game_1_1_access_card_a6a019d2984eabc3115162370bfbd4adc}\index{Game::AccessCard@{Game::AccessCard}!floatTime@{floatTime}}
+\index{floatTime@{floatTime}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{floatTime}{floatTime}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a6a019d2984eabc3115162370bfbd4adc} 
+float Game::\+\+Access\+Card::\+float\+Time = 0.\+0f}
+
+Floating animation \Hypertarget{class_game_1_1_access_card_a9ee96f5f7ce9b5c5c03fee9f350f40e8}\index{Game::AccessCard@{Game::AccessCard}!interactable@{interactable}}
+\index{interactable@{interactable}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{interactable}{interactable}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a9ee96f5f7ce9b5c5c03fee9f350f40e8} 
+\doxymbox{\hyperlink{class_engine_1_1_interactable}{Engine::\+\+Interactable}}\texorpdfstring{$\ast$}{*} Game::\+\+Access\+Card::\+interactable = nullptr}
+
+\Hypertarget{class_game_1_1_access_card_ae4f8808d319ab260cb11060d81adf2d4}\index{Game::AccessCard@{Game::AccessCard}!spawnSafeDelay@{spawnSafeDelay}}
+\index{spawnSafeDelay@{spawnSafeDelay}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{spawnSafeDelay}{spawnSafeDelay}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_ae4f8808d319ab260cb11060d81adf2d4} 
+float Game::\+\+Access\+Card::\+spawn\+Safe\+Delay = 0.\+6f}
+
+\Hypertarget{class_game_1_1_access_card_a53060cc96fdc87711dd3e2ac773765ba}\index{Game::AccessCard@{Game::AccessCard}!spawnSafeTimer@{spawnSafeTimer}}
+\index{spawnSafeTimer@{spawnSafeTimer}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{spawnSafeTimer}{spawnSafeTimer}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_a53060cc96fdc87711dd3e2ac773765ba} 
+float Game::\+\+Access\+Card::\+spawn\+Safe\+Timer = 0.\+0f}
+
+\Hypertarget{class_game_1_1_access_card_af9f6cea2a2bb3a695f59eefb8cc65c54}\index{Game::AccessCard@{Game::AccessCard}!spriteRenderer@{spriteRenderer}}
+\index{spriteRenderer@{spriteRenderer}!Game::AccessCard@{Game::AccessCard}}
+\doxysubsubsection{\texorpdfstring{spriteRenderer}{spriteRenderer}}
+{\footnotesize\ttfamily \label{class_game_1_1_access_card_af9f6cea2a2bb3a695f59eefb8cc65c54} 
+\doxymbox{\hyperlink{class_engine_1_1_sprite_renderer}{Engine::\+\+Sprite\+Renderer}}\texorpdfstring{$\ast$}{*} Game::\+\+Access\+Card::\+sprite\+Renderer = nullptr}
+
+References 
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Access\+Card/\+\doxymbox{\hyperlink{_access_card_8hpp}{Access\+Card.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Game/\+\+Access\+Card/\+\doxymbox{\hyperlink{_access_card_8cpp}{Access\+Card.\+cpp}}\end{DoxyCompactItemize}

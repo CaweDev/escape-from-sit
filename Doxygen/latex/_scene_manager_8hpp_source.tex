@@ -1,0 +1,89 @@
+\doxysection{Scene\+Manager.\+hpp}
+\hypertarget{_scene_manager_8hpp_source}{}\label{_scene_manager_8hpp_source}\index{AlphaEngine2.5D/Source/Engine/Scene/SceneManager.hpp@{AlphaEngine2.5D/Source/Engine/Scene/SceneManager.hpp}}
+\doxymbox{\hyperlink{_scene_manager_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_scene_8hpp}{Scene.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_engine}{Engine}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }SceneManager\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{/*\ Default\ fade\ durations\ */}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_defaultLoadScreenFadeInDuration;\ \ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_defaultLoadScreenFadeOutDuration;\ \ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_ad4853579ad69ac3ad9b072a3c0344a25}{GetDefaultFadeInDuration}}()\ \{\ \textcolor{keywordflow}{return}\ s\_defaultLoadScreenFadeInDuration;\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a56212071c359d5cdb50d4fba87081c52}{GetDefaultFadeOutDuration}}()\ \{\ \textcolor{keywordflow}{return}\ s\_defaultLoadScreenFadeOutDuration;\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f686ef392e6e9f6a1b686160480402a}{LoadScene}}(\textcolor{keyword}{const}\ std::string\&\ sceneName);}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f686ef392e6e9f6a1b686160480402a}{LoadScene}}(\textcolor{keywordtype}{int}\ buildIndex);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_af3cf725f94bddbf0d1bcc85f3795cfdf}{LoadWithLoadingScreen}}(\textcolor{keyword}{const}\ std::string\&\ sceneName);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_af3cf725f94bddbf0d1bcc85f3795cfdf}{LoadWithLoadingScreen}}(\textcolor{keyword}{const}\ std::string\&\ sceneName,\ f32\ fadeInDuration,\ f32\ fadeOutDuration);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a434ab4c0ea8cd52b7328c5a776b46cde}{LoadWithFade}}(\textcolor{keyword}{const}\ std::string\&\ sceneName);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a434ab4c0ea8cd52b7328c5a776b46cde}{LoadWithFade}}(\textcolor{keyword}{const}\ std::string\&\ sceneName,\ f32\ fadeInDuration,\ f32\ fadeOutDuration);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a95b8a8ec4d0e1c65da6bd0d53454c294}{LoadSceneDeferred}}(\textcolor{keyword}{const}\ std::string\&\ sceneName);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\&\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a0832bb018df801d3c9510a907adf069a}{GetLoadWithScreenTarget}}()\ \{\ \textcolor{keywordflow}{return}\ s\_loadWithScreenTarget;\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a84f5892d5132ac48e0a9ce5ed49a2095}{GetLoadWithScreenFadeInDuration}}()\ \{\ \textcolor{keywordflow}{return}\ s\_loadWithScreenFadeInDuration;\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{static}\ f32\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a5ca30793cd5327607e08731baf5a0f2d}{GetLoadWithScreenFadeOutDuration}}()\ \{\ \textcolor{keywordflow}{return}\ s\_loadWithScreenFadeOutDuration;\ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}}*\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a09c888ee24de4179c69e7d4a53a2d8f6}{GetActiveScene}}();}
+\DoxyCodeLine{00064\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a2f91ce1d15a4f0fb5a1987c3426a79c7}{RegisterScene}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}}*\ scene);}
+\DoxyCodeLine{00067\ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_adbd548dee643d814b7a0af94a823209a}{GetSceneCount}}();}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a82b5830d8ee4c158857b341a7577f2ff}{RequestFadeOutAfterNextSceneLoad}}(f32\ duration);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Internal\ methods\ (called\ by\ engine)}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a4c6bc4dd408e4744fa315e5abd4fa13c}{UpdateActiveScene}}();}
+\DoxyCodeLine{00078\ \ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a6183b368d220385c6c03cc9eb495e5da}{RenderActiveScene}}();}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a97d9a2f88fcc41dd96072b7c249a9ec2}{LoadFirstScene}}();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_a156347d8cef2e3f3f817493fa213f1bd}{UnloadActiveScene}}();}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_engine_1_1_scene_manager_ace7d01cf13d8091a6d669aff9aab6353}{Initialize}}(\textcolor{keyword}{const}\ std::string\&\ configPath\ =\ \textcolor{stringliteral}{"{}Assets/Config/Engine/game.json"{}});}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}}*\ s\_activeScene;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{static}\ std::unordered\_map<std::string,\ Scene*>\ s\_sceneRegistry;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ s\_pendingScene;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_hasPendingScene;}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keyword}{static}\ std::string\ s\_loadWithScreenTarget;}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_loadWithScreenFadeInDuration;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_loadWithScreenFadeOutDuration;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ s\_hasPendingPostLoadFadeOut;}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{static}\ f32\ s\_pendingPostLoadFadeOutDuration;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ LoadSceneInternal(\doxymbox{\hyperlink{class_engine_1_1_scene}{Scene}}*\ newScene);}
+\DoxyCodeLine{00114\ \ \ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_scene_manager}{SceneManager}}()\ =\ \textcolor{keyword}{delete};\ \textcolor{comment}{//\ Static\ class}}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \}\ \textcolor{comment}{//\ namespace\ Engine}}
+
+\end{DoxyCode}

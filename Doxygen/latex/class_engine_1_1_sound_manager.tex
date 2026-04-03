@@ -1,0 +1,193 @@
+\doxysection{Engine::\+Sound\+Manager Class Reference}
+\hypertarget{class_engine_1_1_sound_manager}{}\label{class_engine_1_1_sound_manager}\index{Engine::SoundManager@{Engine::SoundManager}}
+
+
+{\ttfamily \+\#include $<$Sound\+Manager.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Distance\+Loop\+Config}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a0b8e2c6ee6db12d82c037feed86210ca}{Initialize}} (const std::\+string \&config\+Path="{}Assets/\+Config/\+audio\+\_\+config\+\_\+custom.\+json"{})
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a7cec7dbd94242fd8fba4341a429f0bfe}{Shutdown}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a94beeb60bdbf124b45cb1a824a073ece}{Update}} (f32 delta\+Time)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aafd52fde9e3e7128098bfd0a9ec8900b}{Play\+BGM}} (const std::\+string \&key, bool loop=true)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a02165d8eb342f21a2491031582b1fff7}{Stop\+BGM}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9}{Play\+SFX}} (const std::\+string \&key, f32 volume\+Scale=1.\+0f)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aeb5b3f35003c7d99287c713178869e86}{Stop\+All\+SFX}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a0de9ca93011cebbceb9cdb3ea5c3462b}{Set\+SFXEnabled}} (bool enabled)
+\item 
+static bool \doxymbox{\hyperlink{class_engine_1_1_sound_manager_ad0ed42cb1b9f8b7e4303bf5b8bab0496}{Is\+SFXEnabled}} ()
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a6e003c4103c14a3b56eec930ea79caeb}{Set\+BGMVolume}} (f32 volume)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a33fbcf1f2047adaa53416d5bd4ae4075}{Set\+SFXVolume}} (f32 volume)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a472c4ae098e373c9e76e87414bde6b68}{Update\+Distance\+Loop}} (const std::\+string \&key, f32 distance, f32 near\+Distance, f32 far\+Distance, f32 max\+Volume=1.\+0f)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a61c7ac62b4b62d53c30dbc1d915f8f59}{Update\+Guard\+Proximity\+Loop}} (f32 nearest\+Distance)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aa1ef4154bdf1e1702af3f579f74d76df}{Update\+CCTVHum\+Loop}} (f32 nearest\+Distance)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a00e69a4404d7085b5b51514a1d005ac3}{Update\+Terminal\+Buzz\+Loop}} (f32 nearest\+Distance)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a19e6efb05c2a51a801d478393e690fb8}{Stop\+Distance\+Loop}} (const std::\+string \&key)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a430a95997305a920de9d521279927f7f}{Play\+Loop}} (const std::\+string \&key, f32 volume=1.\+0f)
+\item 
+static void \doxymbox{\hyperlink{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443}{Stop\+Loop}} (const std::\+string \&key)
+\item 
+static const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Distance\+Loop\+Config}} \& \doxymbox{\hyperlink{class_engine_1_1_sound_manager_add79c1d521ee783ff5337af5bc4bd311}{Get\+Guard\+Loop\+Config}} ()
+\item 
+static const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Distance\+Loop\+Config}} \& \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a5819aa9057f158de7288eb54a04365b8}{Get\+CCTVLoop\+Config}} ()
+\item 
+static const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Distance\+Loop\+Config}} \& \doxymbox{\hyperlink{class_engine_1_1_sound_manager_a1098c85af864c3b3a8bd238f4d78b20f}{Get\+Terminal\+Loop\+Config}} ()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{class_engine_1_1_sound_manager_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_engine_1_1_sound_manager_a5819aa9057f158de7288eb54a04365b8}\index{Engine::SoundManager@{Engine::SoundManager}!GetCCTVLoopConfig@{GetCCTVLoopConfig}}
+\index{GetCCTVLoopConfig@{GetCCTVLoopConfig}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{GetCCTVLoopConfig()}{GetCCTVLoopConfig()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a5819aa9057f158de7288eb54a04365b8} 
+const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Sound\+Manager::\+\+Distance\+Loop\+Config}} \& Engine::\+\+Sound\+Manager::\+\+Get\+CCTVLoop\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_add79c1d521ee783ff5337af5bc4bd311}\index{Engine::SoundManager@{Engine::SoundManager}!GetGuardLoopConfig@{GetGuardLoopConfig}}
+\index{GetGuardLoopConfig@{GetGuardLoopConfig}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{GetGuardLoopConfig()}{GetGuardLoopConfig()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_add79c1d521ee783ff5337af5bc4bd311} 
+const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Sound\+Manager::\+\+Distance\+Loop\+Config}} \& Engine::\+\+Sound\+Manager::\+\+Get\+Guard\+Loop\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a1098c85af864c3b3a8bd238f4d78b20f}\index{Engine::SoundManager@{Engine::SoundManager}!GetTerminalLoopConfig@{GetTerminalLoopConfig}}
+\index{GetTerminalLoopConfig@{GetTerminalLoopConfig}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{GetTerminalLoopConfig()}{GetTerminalLoopConfig()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a1098c85af864c3b3a8bd238f4d78b20f} 
+const \doxymbox{\hyperlink{struct_engine_1_1_sound_manager_1_1_distance_loop_config}{Sound\+Manager::\+\+Distance\+Loop\+Config}} \& Engine::\+\+Sound\+Manager::\+\+Get\+Terminal\+Loop\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a0b8e2c6ee6db12d82c037feed86210ca}\index{Engine::SoundManager@{Engine::SoundManager}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a0b8e2c6ee6db12d82c037feed86210ca} 
+void Engine::\+\+Sound\+Manager::\+\+Initialize (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{config\+Path}{ = {\ttfamily "{}Assets/\+Config/\+audio\+\_\+config\+\_\+custom.json"{}}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_ad0ed42cb1b9f8b7e4303bf5b8bab0496}\index{Engine::SoundManager@{Engine::SoundManager}!IsSFXEnabled@{IsSFXEnabled}}
+\index{IsSFXEnabled@{IsSFXEnabled}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{IsSFXEnabled()}{IsSFXEnabled()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_ad0ed42cb1b9f8b7e4303bf5b8bab0496} 
+bool Engine::\+\+Sound\+Manager::\+\+Is\+SFXEnabled (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_aafd52fde9e3e7128098bfd0a9ec8900b}\index{Engine::SoundManager@{Engine::SoundManager}!PlayBGM@{PlayBGM}}
+\index{PlayBGM@{PlayBGM}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{PlayBGM()}{PlayBGM()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_aafd52fde9e3e7128098bfd0a9ec8900b} 
+void Engine::\+\+Sound\+Manager::\+\+Play\+BGM (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{, }\item[{bool}]{loop}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a430a95997305a920de9d521279927f7f}\index{Engine::SoundManager@{Engine::SoundManager}!PlayLoop@{PlayLoop}}
+\index{PlayLoop@{PlayLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{PlayLoop()}{PlayLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a430a95997305a920de9d521279927f7f} 
+void Engine::\+\+Sound\+Manager::\+\+Play\+Loop (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{, }\item[{f32}]{volume}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9}\index{Engine::SoundManager@{Engine::SoundManager}!PlaySFX@{PlaySFX}}
+\index{PlaySFX@{PlaySFX}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{PlaySFX()}{PlaySFX()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a9263ba9b47266e84db49f8050324a2a9} 
+void Engine::\+\+Sound\+Manager::\+\+Play\+SFX (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{, }\item[{f32}]{volume\+Scale}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a6e003c4103c14a3b56eec930ea79caeb}\index{Engine::SoundManager@{Engine::SoundManager}!SetBGMVolume@{SetBGMVolume}}
+\index{SetBGMVolume@{SetBGMVolume}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{SetBGMVolume()}{SetBGMVolume()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a6e003c4103c14a3b56eec930ea79caeb} 
+void Engine::\+\+Sound\+Manager::\+\+Set\+BGMVolume (\begin{DoxyParamCaption}\item[{f32}]{volume}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a0de9ca93011cebbceb9cdb3ea5c3462b}\index{Engine::SoundManager@{Engine::SoundManager}!SetSFXEnabled@{SetSFXEnabled}}
+\index{SetSFXEnabled@{SetSFXEnabled}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{SetSFXEnabled()}{SetSFXEnabled()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a0de9ca93011cebbceb9cdb3ea5c3462b} 
+void Engine::\+\+Sound\+Manager::\+\+Set\+SFXEnabled (\begin{DoxyParamCaption}\item[{bool}]{enabled}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a33fbcf1f2047adaa53416d5bd4ae4075}\index{Engine::SoundManager@{Engine::SoundManager}!SetSFXVolume@{SetSFXVolume}}
+\index{SetSFXVolume@{SetSFXVolume}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{SetSFXVolume()}{SetSFXVolume()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a33fbcf1f2047adaa53416d5bd4ae4075} 
+void Engine::\+\+Sound\+Manager::\+\+Set\+SFXVolume (\begin{DoxyParamCaption}\item[{f32}]{volume}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a7cec7dbd94242fd8fba4341a429f0bfe}\index{Engine::SoundManager@{Engine::SoundManager}!Shutdown@{Shutdown}}
+\index{Shutdown@{Shutdown}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{Shutdown()}{Shutdown()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a7cec7dbd94242fd8fba4341a429f0bfe} 
+void Engine::\+\+Sound\+Manager::\+\+Shutdown (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_aeb5b3f35003c7d99287c713178869e86}\index{Engine::SoundManager@{Engine::SoundManager}!StopAllSFX@{StopAllSFX}}
+\index{StopAllSFX@{StopAllSFX}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{StopAllSFX()}{StopAllSFX()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_aeb5b3f35003c7d99287c713178869e86} 
+void Engine::\+\+Sound\+Manager::\+\+Stop\+All\+SFX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a02165d8eb342f21a2491031582b1fff7}\index{Engine::SoundManager@{Engine::SoundManager}!StopBGM@{StopBGM}}
+\index{StopBGM@{StopBGM}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{StopBGM()}{StopBGM()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a02165d8eb342f21a2491031582b1fff7} 
+void Engine::\+\+Sound\+Manager::\+\+Stop\+BGM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a19e6efb05c2a51a801d478393e690fb8}\index{Engine::SoundManager@{Engine::SoundManager}!StopDistanceLoop@{StopDistanceLoop}}
+\index{StopDistanceLoop@{StopDistanceLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{StopDistanceLoop()}{StopDistanceLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a19e6efb05c2a51a801d478393e690fb8} 
+void Engine::\+\+Sound\+Manager::\+\+Stop\+Distance\+Loop (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443}\index{Engine::SoundManager@{Engine::SoundManager}!StopLoop@{StopLoop}}
+\index{StopLoop@{StopLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{StopLoop()}{StopLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_aaa09cf5714ddb3ebc078930b1502c443} 
+void Engine::\+\+Sound\+Manager::\+\+Stop\+Loop (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a94beeb60bdbf124b45cb1a824a073ece}\index{Engine::SoundManager@{Engine::SoundManager}!Update@{Update}}
+\index{Update@{Update}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a94beeb60bdbf124b45cb1a824a073ece} 
+void Engine::\+\+Sound\+Manager::\+\+Update (\begin{DoxyParamCaption}\item[{f32}]{delta\+Time}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_aa1ef4154bdf1e1702af3f579f74d76df}\index{Engine::SoundManager@{Engine::SoundManager}!UpdateCCTVHumLoop@{UpdateCCTVHumLoop}}
+\index{UpdateCCTVHumLoop@{UpdateCCTVHumLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{UpdateCCTVHumLoop()}{UpdateCCTVHumLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_aa1ef4154bdf1e1702af3f579f74d76df} 
+void Engine::\+\+Sound\+Manager::\+\+Update\+CCTVHum\+Loop (\begin{DoxyParamCaption}\item[{f32}]{nearest\+Distance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a472c4ae098e373c9e76e87414bde6b68}\index{Engine::SoundManager@{Engine::SoundManager}!UpdateDistanceLoop@{UpdateDistanceLoop}}
+\index{UpdateDistanceLoop@{UpdateDistanceLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{UpdateDistanceLoop()}{UpdateDistanceLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a472c4ae098e373c9e76e87414bde6b68} 
+void Engine::\+\+Sound\+Manager::\+\+Update\+Distance\+Loop (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{key}{, }\item[{f32}]{distance}{, }\item[{f32}]{near\+Distance}{, }\item[{f32}]{far\+Distance}{, }\item[{f32}]{max\+Volume}{ = {\ttfamily 1.0f}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a61c7ac62b4b62d53c30dbc1d915f8f59}\index{Engine::SoundManager@{Engine::SoundManager}!UpdateGuardProximityLoop@{UpdateGuardProximityLoop}}
+\index{UpdateGuardProximityLoop@{UpdateGuardProximityLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{UpdateGuardProximityLoop()}{UpdateGuardProximityLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a61c7ac62b4b62d53c30dbc1d915f8f59} 
+void Engine::\+\+Sound\+Manager::\+\+Update\+Guard\+Proximity\+Loop (\begin{DoxyParamCaption}\item[{f32}]{nearest\+Distance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_engine_1_1_sound_manager_a00e69a4404d7085b5b51514a1d005ac3}\index{Engine::SoundManager@{Engine::SoundManager}!UpdateTerminalBuzzLoop@{UpdateTerminalBuzzLoop}}
+\index{UpdateTerminalBuzzLoop@{UpdateTerminalBuzzLoop}!Engine::SoundManager@{Engine::SoundManager}}
+\doxysubsubsection{\texorpdfstring{UpdateTerminalBuzzLoop()}{UpdateTerminalBuzzLoop()}}
+{\footnotesize\ttfamily \label{class_engine_1_1_sound_manager_a00e69a4404d7085b5b51514a1d005ac3} 
+void Engine::\+\+Sound\+Manager::\+\+Update\+Terminal\+Buzz\+Loop (\begin{DoxyParamCaption}\item[{f32}]{nearest\+Distance}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_sound_manager_8hpp}{Sound\+Manager.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Audio/\+\doxymbox{\hyperlink{_sound_manager_8cpp}{Sound\+Manager.\+cpp}}\end{DoxyCompactItemize}

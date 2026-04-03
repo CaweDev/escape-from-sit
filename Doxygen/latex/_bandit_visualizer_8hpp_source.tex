@@ -1,0 +1,145 @@
+\doxysection{Bandit\+Visualizer.\+hpp}
+\hypertarget{_bandit_visualizer_8hpp_source}{}\label{_bandit_visualizer_8hpp_source}\index{AlphaEngine2.5D/Source/Game/UCB1Bandit/BanditVisualizer.hpp@{AlphaEngine2.5D/Source/Game/UCB1Bandit/BanditVisualizer.hpp}}
+\doxymbox{\hyperlink{_bandit_visualizer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_i_8hpp}{Engine/UI/UI.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_u_c_b1_bandit_8hpp}{Game/UCB1Bandit/UCB1Bandit.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_security_guard_8hpp}{Game/SecurityGuard/SecurityGuard.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_sprite_sheet_renderer_8hpp}{Engine/Graphics/SpriteSheetRenderer.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_heatmap_8hpp}{Game/Heatmap/Heatmap.hpp}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{using\ namespace\ }UI;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record}{CCTVRecord}}\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_afbf380739187d9748babc2b9dc512e84}{timestamp}}\ =\ 0.0f;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_ae5a2f16d9b1d917f66f90dbcc7598de9}{posX}}\ =\ 0.0f;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_a13e8f5911a4eab5a29cf7127eafa3002}{posY}}\ =\ 0.0f;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_a26b8307b5b268794e2e6708b1ba51f36}{zone}}\ =\ 0;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_a696b6e0c174adcd88b51c74329b59748}{lostSight}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record_aa36ea476b9bf2d321bcab4deaae9cd2a}{reDetected}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00031\ \ \ \ \ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_game_1_1_zone_breakdown}{ZoneBreakdown}}\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown_a6be9387f9d99efd66792dfb3cf50d5eb}{exploitation}}\ =\ 0.0f;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown_a8345ade8ea61e980b79ce2e01c7d591e}{exploration}}\ =\ 0.0f;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown_a81fc28e8cddf5d4491b0e5ed74ad4c8d}{heatInfluence}}\ =\ 0.0f;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown_abbf8cd139b6c8549b1dfc58fde9a35b4}{cctvInfluence}}\ =\ 0.0f;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown_ab7ea97d0500cefb4151ee697c01bbb3e}{finalScore}}\ =\ 0.0f;}
+\DoxyCodeLine{00043\ \ \ \ \ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a2e2e09c61def36c2e7d94269bcc472a2}{BanditVisualizer}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_u_c_b1_bandit}{UCB1Bandit}}*\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a10154fbac2d32e10febb9713a0a02cf3}{bandit}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ std::vector<Game::SecurityGuard*>*\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a418a8c288a8c049173e8434f9bba2ebc}{guards}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a7fecfd0afa6fa6f54229b04e62160b81}{updateInterval}}\ =\ 0.25f;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a2e2e09c61def36c2e7d94269bcc472a2}{BanditVisualizer}}();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ab5da20c5500f78d2a8faaf2f16e66158}{\string~BanditVisualizer}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a7808f88f0e4c7cad26791309579c80fe}{Initialize}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_af75f68740e2059182c7251ede489a2ab}{Update}}()\ \ \ \ \ \textcolor{keyword}{override};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a0866ea03757518017e5e381d88e808e5}{OnDestroy}}()\ \ \textcolor{keyword}{override};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_aedeac6ee9b59a307e73fa3712d8c400a}{SetGuardsPointer}}(std::vector<Game::SecurityGuard*>*\ g)\ \{\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a418a8c288a8c049173e8434f9bba2ebc}{guards}}\ =\ g;\ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a3cabda8254c69bb15cb036543552b90d}{SetCCTVScorePointer}}(\textcolor{keywordtype}{float}*\ p)\ \{\ cctvScores\ =\ p;\ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a4d70f3a9ad7de32288b0ab4e3d835703}{SetHeatmapPointer}}(\doxymbox{\hyperlink{class_game_1_1_heatmap}{Heatmap}}*\ h)\ \{\ m\_heatmap\ =\ h;\ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a312c0bfcab2fc52bd262f48048dee142}{SetZoneGridPointer}}(std::vector<int>*\ g)\ \{\ m\_zoneGrid\ =\ g;\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a66576d0fbe895a2c78a307eaa232d5ad}{SetSelectedZone}}(\textcolor{keywordtype}{int}\ zid);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a9b3d96da111476f1f09c9a86fd0dd885}{ToggleVisibility}}();}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a8c4a49c6193e2ac03212c4beb92215bb}{SetVisible}}(\textcolor{keywordtype}{bool}\ v);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_a67613a4aeecebaea896383d015541124}{SetMLSummary}}(\textcolor{keywordtype}{int}\ priorityZone,\ \textcolor{keywordtype}{float}\ hotTimer,\ \textcolor{keywordtype}{bool}\ fullEscalation,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \ \ pulls[4],}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ means[4],}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ cctv[5],}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ heatZones[5],}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_game_1_1_zone_breakdown}{ZoneBreakdown}}*\ breakdown\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ reason\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ab79e31244ada7908bb371a1c7f0e695f}{PushCCTVRecord}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_game_1_1_c_c_t_v_record}{CCTVRecord}}\&\ rec);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_bandit_visualizer_ad6a2808c640b9c24a5eb9764878fc75d}{SetCCTVStatus}}(\textcolor{keywordtype}{int}\ zone,\ \textcolor{keywordtype}{float}\ posX,\ \textcolor{keywordtype}{float}\ posY,\ \textcolor{keywordtype}{bool}\ visible);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_canvas}{UI::Canvas}}*\ m\_canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel}{UI::Panel}}*\ m\_panel\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_headerTitle\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_selectedZoneText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_escalationText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_hotTimerText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_reasonText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_panel}{UI::Panel}}*\ m\_zoneCards[4]\ =\ \{\};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_u_i_1_1_text}{UI::Text}}*\ m\_zonePulls[4]\ =\ \{\};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ UI::Text*\ m\_zoneMeans[4]\ =\ \{\};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ UI::Text*\ m\_zoneHeat[4]\ =\ \{\};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ UI::Panel*\ m\_zoneHeatBar[4]\ =\ \{\};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ UI::Text*\ m\_zoneCCTV[4]\ =\ \{\};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ UI::Panel*\ m\_zoneCCTVBar[4]\ =\ \{\};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ UI::Text*\ m\_breakdownZoneLabel\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ UI::Text*\ m\_detailLines[5]\ =\ \{\};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ UI::Text*\ m\_cctvCurrent\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ UI::Text*\ m\_cctvCurrentPos\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ UI::Text*\ m\_cctvCurrentStatus\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ UI::Text*\ m\_cctvEntries[10]\ =\ \{\};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ UI::Text*\ m\_texts[9]\ =\ \{\};}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ UI::Text*\ m\_summary\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ UI::Text*\ m\_priorityText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ UI::Text*\ m\_cctvText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ UI::Text*\ m\_heatTexts[4]\ =\ \{\};}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}*\ cctvScores\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ Heatmap*\ m\_heatmap\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ std::vector<int>*\ m\_zoneGrid\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ m\_selectedZone\ =\ -\/1;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_timer\ =\ 0.0f;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ std::deque<CCTVRecord>\ m\_cctvHistory;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ \ \ kMaxCCTVEntries\ =\ 10;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ ZoneBreakdown\ m\_lastBreakdown\ =\ \{\};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ layout\ metrics\ (pixels,\ set\ during\ Initialize)}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_panelWidth\ =\ 0.0f;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_panelHeight\ =\ 0.0f;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_headerHeight\ =\ 0.0f;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_gridRightAnchor\ =\ 0.60f;}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_lastCCTVVisible\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ m\_lastCCTVZone\ =\ 0;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_lastCCTVPosX\ =\ 0.0f;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_lastCCTVPosY\ =\ 0.0f;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ m\_hasCCTVState\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_cctvLogCooldown\ =\ 0.0f;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ m\_elapsedTime\ =\ 0.0f;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildHeader(UI::Panel*\ parent);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildZoneGrid(UI::Panel*\ parent);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildBreakdownPanel(UI::Panel*\ parent);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ BuildCCTVPanel(UI::Panel*\ parent);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RefreshUI();}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RefreshZoneCards();}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RefreshBreakdown();}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ RefreshCCTVLog();}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateBarFill(UI::Panel*\ bar,\ \textcolor{keywordtype}{float}\ value,\ \textcolor{keywordtype}{float}\ maxValue);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ FmtFloat(\textcolor{keywordtype}{float}\ v,\ \textcolor{keywordtype}{int}\ decimals\ =\ 2);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ ZoneName(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::string\ ZoneLetter(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00154\ \ \ \ \ \};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}

@@ -1,0 +1,181 @@
+\doxysection{UI::\+Confirmation\+Dialog Class Reference}
+\hypertarget{class_u_i_1_1_confirmation_dialog}{}\label{class_u_i_1_1_confirmation_dialog}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+
+
+Modal confirmation dialog with message text and confirm/\+cancel buttons.  
+
+
+
+
+{\ttfamily \+\#include $<$Confirmation\+Dialog.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_a3cb5974d2ddd9d400a2aac153a2ff796}{Confirmation\+Dialog}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_a96bc476b004023ccb759f92ecaefa02d}{\texorpdfstring{$\sim$}{\string~}\+Confirmation\+Dialog}} ()=default
+\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_aed1737707007c321f7ac3e97a95aa6a6}{Awake}} () override
+\begin{DoxyCompactList}\small\item\em Component lifecycle — builds the \doxylink{namespace_u_i}{UI} hierarchy. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_a2e99ad03071d05fd2db7516586f3955b}{Show}} (const std::\+string \&message, const std::\+string \&confirm\+Text, const std::\+string \&cancel\+Text, std::\+function$<$ void()$>$ on\+Confirm, std::\+function$<$ void()$>$ on\+Cancel=nullptr)
+\begin{DoxyCompactList}\small\item\em Show the dialog with the given parameters. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_a84a506e8deb48ac7ea57467bdd6d079d}{Hide}} ()
+\begin{DoxyCompactList}\small\item\em Hide the dialog and clear callbacks. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_aff42290becfe394e4ffdaa0b832ea484}{Is\+Visible}} () const
+\begin{DoxyCompactList}\small\item\em Check if the dialog is currently visible. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_u_i_1_1_confirmation_dialog_a9c2ccd198ef38f79577ea90661f11faf}{Set\+Background}} (\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}texture)
+\begin{DoxyCompactList}\small\item\em Set a 9-\/slice background texture for the dialog panel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}} ()=default
+\item 
+virtual \doxymbox{\hyperlink{class_engine_1_1_component_ad899f7cac32ee1ce08cbd7da7b408e72}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()=default
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7c474a1f136dee559fe23d5325d57de3}{Initialize}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a4961be6b6dabda99a6c4f704450524a4}{Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a8e82f16df638f529c6f57205c3aa0ca7}{Late\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_ae51194ae21ac5f36f2a7b61c2b03c830}{Fixed\+Update}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a2d1600491533c9de41cfc1e41ece9d5c}{On\+Destroy}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a82af05c584c2638ea8537605ad7d9ecd}{On\+Enable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_a7605c0e11329477cb72130041df0cea0}{On\+Disable}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_engine_1_1_component_acbc01439ed6cb25b8d60211cac1a4550}{On\+Inspector\+GUI}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+std::\+string \doxymbox{\hyperlink{class_engine_1_1_component_a16430c46ae4aef5d146149a269ea19a7}{name}}
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_component_a00df87c957d8f7ee0fc51f07a0542f4a}{Game\+Object}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_afd204c06d0aab086ab1091c9eb87a63f}{game\+Object}} = nullptr
+\item 
+\doxymbox{\hyperlink{class_engine_1_1_transform}{Transform}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{class_engine_1_1_component_a65a34e77536089f88eb02019a80bc0b9}{transform}} = nullptr
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a587318ebe0c5f74a785291361cd4bc5b}{enabled}} = true
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_engine_1_1_component}{Engine::\+\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a1c5bc4fe40964b99c2c8e244cea5e4f8}{\+\_\+started}} = false
+\item 
+bool \doxymbox{\hyperlink{class_engine_1_1_component_a796922ca946a8a74926063c7bf573518}{\+\_\+awoken}} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Modal confirmation dialog with message text and confirm/\+cancel buttons. 
+
+Inherits from \doxylink{class_engine_1_1_component}{Engine::\+\+Component} so it participates in the Game\+Object lifecycle.
+
+Hierarchy:\+ \doxylink{class_u_i_1_1_canvas}{Canvas} (sort\+Order = 9998) └── \doxylink{class_u_i_1_1_panel}{Panel} (overlay, full-\/screen semi-\/transparent black) └── \doxylink{class_u_i_1_1_panel}{Panel} (dialog box, centered) ├── \doxylink{class_u_i_1_1_text}{Text} (message) ├── \doxylink{class_u_i_1_1_button}{Button} (confirm) └── \doxylink{class_u_i_1_1_button}{Button} (cancel) 
+
+\label{doc-constructors}
+\Hypertarget{class_u_i_1_1_confirmation_dialog_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_u_i_1_1_confirmation_dialog_a3cb5974d2ddd9d400a2aac153a2ff796}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!ConfirmationDialog@{ConfirmationDialog}}
+\index{ConfirmationDialog@{ConfirmationDialog}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{ConfirmationDialog()}{ConfirmationDialog()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_a3cb5974d2ddd9d400a2aac153a2ff796} 
+UI::\+\+Confirmation\+Dialog::\+\+Confirmation\+Dialog (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{class_u_i_1_1_confirmation_dialog_a96bc476b004023ccb759f92ecaefa02d}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!````~ConfirmationDialog@{\texorpdfstring{$\sim$}{\string~}ConfirmationDialog}}
+\index{````~ConfirmationDialog@{\texorpdfstring{$\sim$}{\string~}ConfirmationDialog}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ConfirmationDialog()}{\string~ConfirmationDialog()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_a96bc476b004023ccb759f92ecaefa02d} 
+virtual UI::\+\+Confirmation\+Dialog::\+\texorpdfstring{$\sim$}{\string~}\+Confirmation\+Dialog (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{class_u_i_1_1_confirmation_dialog_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_u_i_1_1_confirmation_dialog_aed1737707007c321f7ac3e97a95aa6a6}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!Awake@{Awake}}
+\index{Awake@{Awake}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{Awake()}{Awake()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_aed1737707007c321f7ac3e97a95aa6a6} 
+void UI::\+\+Confirmation\+Dialog::\+\+Awake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Component lifecycle — builds the \doxylink{namespace_u_i}{UI} hierarchy. 
+
+
+
+Reimplemented from \doxymbox{\hyperlink{class_engine_1_1_component_ab99993bfbe7b380957b09677bb66facd}{Engine::\+\+Component}}.
+
+\Hypertarget{class_u_i_1_1_confirmation_dialog_a84a506e8deb48ac7ea57467bdd6d079d}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!Hide@{Hide}}
+\index{Hide@{Hide}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{Hide()}{Hide()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_a84a506e8deb48ac7ea57467bdd6d079d} 
+void UI::\+\+Confirmation\+Dialog::\+\+Hide (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Hide the dialog and clear callbacks. 
+
+\Hypertarget{class_u_i_1_1_confirmation_dialog_aff42290becfe394e4ffdaa0b832ea484}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!IsVisible@{IsVisible}}
+\index{IsVisible@{IsVisible}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{IsVisible()}{IsVisible()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_aff42290becfe394e4ffdaa0b832ea484} 
+bool UI::\+\+Confirmation\+Dialog::\+\+Is\+Visible (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Check if the dialog is currently visible. 
+
+\Hypertarget{class_u_i_1_1_confirmation_dialog_a9c2ccd198ef38f79577ea90661f11faf}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!SetBackground@{SetBackground}}
+\index{SetBackground@{SetBackground}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{SetBackground()}{SetBackground()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_a9c2ccd198ef38f79577ea90661f11faf} 
+void UI::\+\+Confirmation\+Dialog::\+\+Set\+Background (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_engine_1_1_texture2_d}{Engine::\+\+Texture2D}} \texorpdfstring{$\ast$}{*}}]{texture}{}\end{DoxyParamCaption})}
+
+
+
+Set a 9-\/slice background texture for the dialog panel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em texture} & Texture with Nine\+Slice\+Border already set \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_u_i_1_1_confirmation_dialog_a2e99ad03071d05fd2db7516586f3955b}\index{UI::ConfirmationDialog@{UI::ConfirmationDialog}!Show@{Show}}
+\index{Show@{Show}!UI::ConfirmationDialog@{UI::ConfirmationDialog}}
+\doxysubsubsection{\texorpdfstring{Show()}{Show()}}
+{\footnotesize\ttfamily \label{class_u_i_1_1_confirmation_dialog_a2e99ad03071d05fd2db7516586f3955b} 
+void UI::\+\+Confirmation\+Dialog::\+\+Show (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{message}{, }\item[{const std::\+string \&}]{confirm\+Text}{, }\item[{const std::\+string \&}]{cancel\+Text}{, }\item[{std::\+function$<$ void()$>$}]{on\+Confirm}{, }\item[{std::\+function$<$ void()$>$}]{on\+Cancel}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})}
+
+
+
+Show the dialog with the given parameters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Message text to display \\
+\hline
+{\em confirm\+Text} & Label for the confirm button \\
+\hline
+{\em cancel\+Text} & Label for the cancel button \\
+\hline
+{\em on\+Confirm} & Callback invoked when confirm is clicked \\
+\hline
+{\em on\+Cancel} & Callback invoked when cancel is clicked (optional) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Game\+Object/\+\doxymbox{\hyperlink{_confirmation_dialog_8hpp}{Confirmation\+Dialog.\+hpp}}\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+UI/\+\+Game\+Object/\+\doxymbox{\hyperlink{_confirmation_dialog_8cpp}{Confirmation\+Dialog.\+cpp}}\end{DoxyCompactItemize}

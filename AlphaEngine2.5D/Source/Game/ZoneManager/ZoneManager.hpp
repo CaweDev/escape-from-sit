@@ -1,6 +1,6 @@
 /**
  * @file ZoneManager.hpp
- * @description Header for the ZoneManager system that handles spatial partitioning of the map into zones.
+ * @brief Header for the ZoneManager system that handles spatial partitioning of the map into zones.
  */
 #pragma once
 #include <vector>
@@ -11,7 +11,7 @@ namespace Game {
 
     /**
      * @class ZoneManager
-     * @description Handles map zone logic and random position generation within zones.
+     * @brief Handles map zone logic and random position generation within zones.
      */
     class ZoneManager
     {

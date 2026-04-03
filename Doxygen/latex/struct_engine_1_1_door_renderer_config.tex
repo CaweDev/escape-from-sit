@@ -1,0 +1,80 @@
+\doxysection{Engine::\+Door\+Renderer\+Config Struct Reference}
+\hypertarget{struct_engine_1_1_door_renderer_config}{}\label{struct_engine_1_1_door_renderer_config}\index{Engine::DoorRendererConfig@{Engine::DoorRendererConfig}}
+
+
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation for \doxylink{class_engine_1_1_door_renderer}{Door\+Renderer}, deserialised from door.\+json.  
+
+
+
+
+{\ttfamily \+\#include $<$Door\+Renderer.\+hpp$>$}
+
+
+
+Inherits \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}.
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a58e4b522ed25a64863dc14b6c1fc0d43}{From\+Json}} (const Json::\+\+Value \&j) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{struct_engine_1_1_i_config}{Engine::\+\+IConfig}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \doxymbox{\hyperlink{struct_engine_1_1_i_config_a8ca2b0e21c42d07eaffbe4702329cdfd}{\texorpdfstring{$\sim$}{\string~}\+IConfig}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}{color\+NS}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+4f, 0.\+2f, 1.\+0f)
+\item 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}{color\+EW}} = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+5f, 0.\+35f, 0.\+18f, 1.\+0f)
+\item 
+float \doxymbox{\hyperlink{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2}{fov}} = 75.\+0f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{struct_engine_1_1_i_config}{IConfig} implementation for \doxylink{class_engine_1_1_door_renderer}{Door\+Renderer}, deserialised from door.\+json. 
+
+\label{doc-func-members}
+\Hypertarget{struct_engine_1_1_door_renderer_config_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{struct_engine_1_1_door_renderer_config_a58e4b522ed25a64863dc14b6c1fc0d43}\index{Engine::DoorRendererConfig@{Engine::DoorRendererConfig}!FromJson@{FromJson}}
+\index{FromJson@{FromJson}!Engine::DoorRendererConfig@{Engine::DoorRendererConfig}}
+\doxysubsubsection{\texorpdfstring{FromJson()}{FromJson()}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_renderer_config_a58e4b522ed25a64863dc14b6c1fc0d43} 
+void Engine::\+\+Door\+Renderer\+Config::\+\+From\+Json (\begin{DoxyParamCaption}\item[{const Json::\+\+Value \&}]{j}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{struct_engine_1_1_i_config_a4b49f9af04b7f8757b64883af482d035}{Engine::\+\+IConfig}}.
+
+
+
+\label{doc-variable-members}
+\Hypertarget{struct_engine_1_1_door_renderer_config_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6}\index{Engine::DoorRendererConfig@{Engine::DoorRendererConfig}!colorEW@{colorEW}}
+\index{colorEW@{colorEW}!Engine::DoorRendererConfig@{Engine::DoorRendererConfig}}
+\doxysubsubsection{\texorpdfstring{colorEW}{colorEW}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_renderer_config_a5f78db8e46486a22efaa75d938c18fd6} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Door\+Renderer\+Config::\+color\+EW = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+5f, 0.\+35f, 0.\+18f, 1.\+0f)}
+
+\Hypertarget{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39}\index{Engine::DoorRendererConfig@{Engine::DoorRendererConfig}!colorNS@{colorNS}}
+\index{colorNS@{colorNS}!Engine::DoorRendererConfig@{Engine::DoorRendererConfig}}
+\doxysubsubsection{\texorpdfstring{colorNS}{colorNS}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_renderer_config_a272cff8f9d89720503eab9cc01751c39} 
+\doxymbox{\hyperlink{struct_engine_1_1_color}{Color}} Engine::\+\+Door\+Renderer\+Config::\+color\+NS = \doxymbox{\hyperlink{struct_engine_1_1_color}{Color}}(0.\+6f, 0.\+4f, 0.\+2f, 1.\+0f)}
+
+\Hypertarget{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2}\index{Engine::DoorRendererConfig@{Engine::DoorRendererConfig}!fov@{fov}}
+\index{fov@{fov}!Engine::DoorRendererConfig@{Engine::DoorRendererConfig}}
+\doxysubsubsection{\texorpdfstring{fov}{fov}}
+{\footnotesize\ttfamily \label{struct_engine_1_1_door_renderer_config_abfd0bb428c2b442fbefec3b02b30a2a2} 
+float Engine::\+\+Door\+Renderer\+Config::\+fov = 75.\+0f}
+
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+Alpha\+Engine2.\+5\+D/\+\+Source/\+\+Engine/\+\+Graphics/\+\doxymbox{\hyperlink{_door_renderer_8hpp}{Door\+Renderer.\+hpp}}\end{DoxyCompactItemize}

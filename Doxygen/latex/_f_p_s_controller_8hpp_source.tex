@@ -1,0 +1,65 @@
+\doxysection{FPSController.\+hpp}
+\hypertarget{_f_p_s_controller_8hpp_source}{}\label{_f_p_s_controller_8hpp_source}\index{AlphaEngine2.5D/Source/Game/FPSController.hpp@{AlphaEngine2.5D/Source/Game/FPSController.hpp}}
+\doxymbox{\hyperlink{_f_p_s_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_component_8hpp}{Engine/Core/Component.hpp}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_time_8hpp}{Engine/Core/Time.hpp}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_input_8hpp}{Engine/Input/Input.hpp}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_vector2_8hpp}{Engine/Math/Vector2.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_rigidbody2_d_8hpp}{Engine/Physics/Rigidbody2D.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{_player_8hpp}{Game/Player/Player.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespace_game}{Game}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{using\ namespace\ }Engine;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_1_1_f_p_s_controller}{FPSController}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_engine_1_1_component_a3cb698fda8574209162148a53e60857c}{Component}}\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{_component_8hpp_aa196eb8fbe9315fd6dd7470e5e619290}{REQUIRE\_COMPONENT}}(\doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}})}
+\DoxyCodeLine{00025\ \ \ \ \ }
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a9f05103e1219b11cd950678e5ea4496f}{moveSpeed}}\ =\ 3.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_ad19797ca408780c325e4579df3dcb106}{sprintSpeed}}\ =\ 6.0f;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00033\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_aa093df8c5a421b79c8e6e782e31f6c26}{rotateSpeed}}\ =\ 60.0f;}
+\DoxyCodeLine{00034\ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a0b57dfed18b73b071954bf10ec5208b6}{mouseSensitivity}}\ =\ 0.15f;}
+\DoxyCodeLine{00037\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a571189e68662c4f34179ea33e58a39c9}{jumpForce}}\ =\ 3.0f;}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_ae9e35bd2947ecfbee72ff0c29a20125c}{eyeHeight}}\ =\ 0.5f;}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ f32\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a20d9c4e28469559ad1ad506966987599}{viewHeightSmoothSpeed}}\ =\ 15.0f;}
+\DoxyCodeLine{00046\ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \doxymbox{\hyperlink{class_engine_1_1_rigidbody2_d}{Rigidbody2D}}*\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a35c4727bacec50a12d04da177dda1fbc}{rigidbody}}\ =\ \textcolor{keywordtype}{nullptr};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Audio\ loop\ state\ for\ movement\ SFX}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a373a57b4448ec536244838d9b640391c}{walkingLoopActive}}\ =\ false;}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_aa2017ae5b7398f0ab2a42578e2c4de36}{runningLoopActive}}\ =\ false;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a994b2bfdb80f3b571b5f82fd63a1738d}{Initialize}}()\ override;}
+\DoxyCodeLine{00055\ \ \ \ \ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_af81f799cff5ddd20bbf0f912d60cdb1b}{Update}}()\ override;}
+\DoxyCodeLine{00057\ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a086fec7af5fb681f51637b7c6e4b777f}{LateUpdate}}()\ override;}
+\DoxyCodeLine{00059\ \ \ \ \ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_1_1_f_p_s_controller_a3629d4d64a3741237e482bdc09b6d4aa}{OnDestroy}}()\ override;}
+\DoxyCodeLine{00061\ \ }
+\DoxyCodeLine{00062\ private:}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ prevSpace\ =\ false;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ f32\ jumpCooldown\ =\ 0.0f;}
+\DoxyCodeLine{00066\ \ \ \ \ }
+\DoxyCodeLine{00068\ \ \ \ \ f32\ currentViewHeight\ =\ 0.5f;}
+\DoxyCodeLine{00069\ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ f32\ targetViewHeight\ =\ 0.5f;}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \}\ \textcolor{comment}{//\ namespace\ Game}}
+
+\end{DoxyCode}
