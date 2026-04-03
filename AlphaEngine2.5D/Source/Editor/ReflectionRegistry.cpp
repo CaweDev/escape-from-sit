@@ -1,8 +1,8 @@
 /* Start Header ************************************************************************/
 /*!
 \file		ReflectionRegistry.cpp
-\author 	
-\par	
+\author
+\par
 \date	March, 29, 2026
 \brief		[AUTO] ReflectionRegistry
 
@@ -21,6 +21,10 @@ Technology is prohibited.
 #include "Engine/Graphics/SpriteSheetRenderer.hpp"
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Physics/Rigidbody2D.hpp"
+#include "Engine/Physics/CircleCollider2D.hpp"
+#include "Engine/Physics/BoxCollider2D.hpp"
+#include "Engine/Graphics/DoorRenderer.hpp"
+#include "Engine/Tilemap/Door.hpp"
 
 #include "game/Items/SodaCanItem.hpp"
 #include "game/Items/LaptopItem.hpp"
@@ -42,6 +46,7 @@ Technology is prohibited.
 #include "game/Scenes/MainMenuScene/UI/ControlsMenu.hpp"
 #include "game/Player/PlayerPowerUpController.hpp"
 #include "game/SecurityGuard/SecurityGuard.hpp"
+#include "game/CCTV/CCTVTerminal.hpp"
 
 namespace AEEditor
 {
@@ -75,6 +80,32 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipX", offsetof(Engine::SpriteSheetRenderer, flipX), DataType::Bool);
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("flipY", offsetof(Engine::SpriteSheetRenderer, flipY), DataType::Bool);
         Registry::RegisterFieldType<Engine::SpriteSheetRenderer>("billboard", offsetof(Engine::SpriteSheetRenderer, billboard), DataType::Bool);
+    }
+
+    void RegisterDoorRenderer()
+    {
+        Registry::RegisterClassType<Engine::DoorRenderer>("DoorRenderer");
+
+        Registry::RegisterFieldType<Engine::DoorRenderer>("spritePath", offsetof(Engine::DoorRenderer, spritePath), DataType::Sprite);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("colorNS", offsetof(Engine::DoorRenderer, colorNS), DataType::Color);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("colorEW", offsetof(Engine::DoorRenderer, colorEW), DataType::Color);
+        Registry::RegisterFieldType<Engine::DoorRenderer>("fov", offsetof(Engine::DoorRenderer, fov), DataType::Float);
+    }
+
+    void RegisterDoor()
+    {
+        Registry::RegisterClassType<Engine::Door>("Door");
+
+        Registry::RegisterFieldType<Engine::Door>("tileX", offsetof(Engine::Door, tileX), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("tileY", offsetof(Engine::Door, tileY), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("doorType", offsetof(Engine::Door, doorType), DataType::Int);
+
+        Registry::RegisterFieldType<Engine::Door>("facing", offsetof(Engine::Door, facing), DataType::Int);
+        Registry::RegisterFieldType<Engine::Door>("state", offsetof(Engine::Door, state), DataType::Int);
+
+        Registry::RegisterFieldType<Engine::Door>("openAmount", offsetof(Engine::Door, openAmount), DataType::Float);
+        Registry::RegisterFieldType<Engine::Door>("animationSpeed", offsetof(Engine::Door, animationSpeed), DataType::Float);
+        Registry::RegisterFieldType<Engine::Door>("autoCloseDelay", offsetof(Engine::Door, autoCloseDelay), DataType::Float);
     }
 
     void RegisterInteractable()
@@ -165,6 +196,8 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::NPC>("blockTime", offsetof(Game::NPC, blockTime), DataType::Float);
 
         Registry::RegisterFieldType<Game::NPC>("patrolRepathTime", offsetof(Game::NPC, patrolRepathTime), DataType::Float);
+        Registry::RegisterFieldType<Game::NPC>("isDistracted", offsetof(Game::NPC, isDistracted), DataType::Bool);
+        Registry::RegisterFieldType<Game::NPC>("distractionPos", offsetof(Game::NPC, distractionPos), DataType::Vector2);
     }
 
     void RegisterPlayer()
@@ -224,6 +257,14 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::Camera>("fogMaxVisibility", offsetof(Engine::Camera, fogMaxVisibility), DataType::Float);
     }
 
+    void RegisterBoxCollider2D()
+    {
+        Registry::RegisterClassType<Engine::BoxCollider2D>("BoxCollider2D");
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("size", offsetof(Engine::BoxCollider2D, size), DataType::Vector2);
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("minHeight", offsetof(Engine::BoxCollider2D, minHeight), DataType::Float);
+        Registry::RegisterFieldType<Engine::BoxCollider2D>("maxHeight", offsetof(Engine::BoxCollider2D, maxHeight), DataType::Float);
+    }
+
     void RegisterCircleCollider2D()
     {
         Registry::RegisterClassType<Engine::CircleCollider2D>("CircleCollider2D");
@@ -276,7 +317,58 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::SecurityGuard>("searchDuration", offsetof(Game::SecurityGuard, searchDuration), DataType::Float);
     }
 
-    void ReflectionRegistry::InitializeMetaRegistry()
+    void RegisterCCTVTerminal()
+    {
+        Registry::RegisterClassType<Game::CCTVTerminal>("CCTVTerminal");
+
+        // Configuration
+        Registry::RegisterFieldType<Game::CCTVTerminal>("controlledZone", offsetof(Game::CCTVTerminal, controlledZone), DataType::Int);
+
+        // State
+        Registry::RegisterFieldType<Game::CCTVTerminal>("isDisabled", offsetof(Game::CCTVTerminal, isDisabled), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledTimer", offsetof(Game::CCTVTerminal, disabledTimer), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledDuration", offsetof(Game::CCTVTerminal, disabledDuration), DataType::Float);
+
+        // Repair system
+        Registry::RegisterFieldType<Game::CCTVTerminal>("guardIsRepairing", offsetof(Game::CCTVTerminal, guardIsRepairing), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairProgress", offsetof(Game::CCTVTerminal, repairProgress), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairTime", offsetof(Game::CCTVTerminal, repairTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairMaxDistance", offsetof(Game::CCTVTerminal, repairMaxDistance), DataType::Float);
+
+        // Interaction
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactionTime", offsetof(Game::CCTVTerminal, interactionTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactionProgress", offsetof(Game::CCTVTerminal, interactionProgress), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("playerIsInteracting", offsetof(Game::CCTVTerminal, playerIsInteracting), DataType::Bool);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownTimer", offsetof(Game::CCTVTerminal, cooldownTimer), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownDuration", offsetof(Game::CCTVTerminal, cooldownDuration), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactMaxDistance", offsetof(Game::CCTVTerminal, interactMaxDistance), DataType::Float);
+
+        // Floating icon & Visuals
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatAnimTime", offsetof(Game::CCTVTerminal, floatAnimTime), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatSpeed", offsetof(Game::CCTVTerminal, floatSpeed), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatAmplitude", offsetof(Game::CCTVTerminal, floatAmplitude), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("floatBaseHeightOffset", offsetof(Game::CCTVTerminal, floatBaseHeightOffset), DataType::Float);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("pulseSpeed", offsetof(Game::CCTVTerminal, pulseSpeed), DataType::Float);
+
+        // Text configuration
+        Registry::RegisterFieldType<Game::CCTVTerminal>("interactText", offsetof(Game::CCTVTerminal, interactText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("zoneHackTextPrefix", offsetof(Game::CCTVTerminal, zoneHackTextPrefix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("zoneHackTextSuffix", offsetof(Game::CCTVTerminal, zoneHackTextSuffix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledTextSuffix", offsetof(Game::CCTVTerminal, disabledTextSuffix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("cooldownText", offsetof(Game::CCTVTerminal, cooldownText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairingText", offsetof(Game::CCTVTerminal, repairingText), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackStatusPrefix", offsetof(Game::CCTVTerminal, hackStatusPrefix), DataType::String);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackStatusDuration", offsetof(Game::CCTVTerminal, hackStatusDuration), DataType::Float);
+
+        // Colors
+        Registry::RegisterFieldType<Game::CCTVTerminal>("activeColor", offsetof(Game::CCTVTerminal, activeColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("hackingColor", offsetof(Game::CCTVTerminal, hackingColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("disabledColor", offsetof(Game::CCTVTerminal, disabledColor), DataType::Color);
+        Registry::RegisterFieldType<Game::CCTVTerminal>("repairingColor", offsetof(Game::CCTVTerminal, repairingColor), DataType::Color);
+    }
+
+    void
+    ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
         Registry::nameToType.clear();
@@ -292,6 +384,7 @@ namespace AEEditor
         RegisterAccessCard();
         RegisterCCTVCamera();
         RegisterControlRoomDoor();
+        RegisterDoor();
         RegisterNPC();
         RegisterPlayer();
         RegisterPowerUpObject();
@@ -303,8 +396,9 @@ namespace AEEditor
         RegisterInteractionController();
         RegisterPlayerUIComponents();
         RegisterSecurityGuard();
-
+        RegisterCCTVTerminal();
+        RegisterDoorRenderer();
+        RegisterBoxCollider2D();
     }
-
 
 }

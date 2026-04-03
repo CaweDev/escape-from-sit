@@ -144,9 +144,6 @@
     <ClCompile Include="Source\Game\CCTV\CCTVCamera.cpp">
       <Filter>Source\Game\CCTV</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\CCTV\CCTVPlacement.cpp">
-      <Filter>Source\Game\CCTV</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\CCTV\CCTVTerminal.cpp">
       <Filter>Source\Game\CCTV</Filter>
     </ClCompile>
@@ -655,9 +652,6 @@
       <Filter>Source\Game\NPC</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp">
-      <Filter>Source\Game\CCTV</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\CCTV\CCTVPlacement.hpp">
       <Filter>Source\Game\CCTV</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\NPC\NPC.hpp">

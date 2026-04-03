@@ -44,7 +44,7 @@ namespace Game {
         
         // Lifecycle
         /*! \brief Called when component is created to set up interactable. */
-        void Awake() override;
+        void Initialize() override;
         /*! \brief Per-frame update to handle hold/unlock progression. */
         void Update() override;
         

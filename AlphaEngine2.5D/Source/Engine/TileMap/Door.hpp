@@ -96,7 +96,7 @@ public:
     virtual ~Door() = default;
     
     // Lifecycle
-    void Awake() override;
+    void Initialize() override;
     void Update() override;
     
     // Door control
@@ -156,11 +156,6 @@ public:
     }
     static Door* FindAtTile(int tileX, int tileY);
 
-    /**
-     * @brief Load door configuration from door.json.
-     * Call once at startup before any doors are created.
-     */
-    static void Initialize(const std::string& configPath = "Assets/Config/Engine/door.json");
 
 private:
     

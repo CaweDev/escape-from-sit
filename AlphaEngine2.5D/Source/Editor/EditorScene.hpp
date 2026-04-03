@@ -46,9 +46,7 @@ namespace Game
         void OnUnload() override;
 
     private:
-        void SpawnExistingDoors(Engine::TileMap *map, Engine::TileMapRenderer *renderer);
-        void SpawnExistingTerminals(Engine::TileMap *map);
-        void SpawnExistingCCTVs(Engine::TileMap *map);
+
     };
 
 } // namespace Game

@@ -61,7 +61,8 @@ namespace Game {
 /*!
  * \brief [AUTO] Awake
  */
-void ControlRoomDoor::Awake() {
+void ControlRoomDoor::Initialize()
+{
     const auto& cfg = GetControlRoomDoorConfig();
     requiredCards = cfg.requiredCards;
     holdTimeRequired = cfg.holdTimeRequired;

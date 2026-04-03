@@ -25,7 +25,6 @@
 #include "Engine/Core/Time.hpp"
 
 #include "Editor/GameEditor.hpp"
-#include "Game/CCTV/CCTVPlacement.hpp"
 #include "Game/AccessCard/AccessCard.hpp"
 #include "Game/CCTV/CCTVCamera.hpp"
 
@@ -178,9 +177,9 @@ namespace Game
         // }
         // else
         // {
-        SpawnExistingDoors(map, renderer);
-        SpawnExistingTerminals(map);
-        SpawnExistingCCTVs(map);
+        // SpawnExistingDoors(map, renderer);
+        // SpawnExistingTerminals(map);
+        // SpawnExistingCCTVs(map);
         // }
     }
 
@@ -273,113 +272,7 @@ namespace Game
     /*! \brief Unload editor scene (no-op). */
     void EditorScene::OnUnload() {}
 
-    /*! \brief Spawn door GameObjects for existing door markers in the map. */
-    void EditorScene::SpawnExistingDoors(TileMap *map, TileMapRenderer *renderer)
-    {
-        auto controlRoomDoorPositions = map->GetSpawnedDoorPositionsPublic();
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
-        {
-            Vector2 pos = controlRoomDoorPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
 
-            if (zoneId < 1 || zoneId > 4)
-                continue;
 
-            std::string doorName = "Editor_ControlRoomDoor_Zone" + std::to_string(zoneId);
-            auto doorGO = CreateGameObject(doorName);
-            doorGO->transform->position = Vector3(pos.x, pos.y, 0.0f);
-
-            bool wallNorth = map->IsWall(tileX, tileY + 1);
-            bool wallSouth = map->IsWall(tileX, tileY - 1);
-
-            auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
-            doorCollider->minHeight = 0.0f;
-            doorCollider->maxHeight = 2.0f;
-            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
-
-            auto door = doorGO->AddComponent<Engine::Door>();
-            door->tileX = tileX;
-            door->tileY = tileY;
-            door->doorType = 10;
-            door->facing = facing;
-            door->collider = doorCollider;
-            door->state = Engine::DoorState::Closed;
-
-            auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
-            doorRenderer->fov = renderer->fov;
-            doorRenderer->sprite = renderer->GetDoorSprite();
-        }
-    }
-
-    /*! \brief Spawn terminal GameObjects for existing terminal markers. */
-    void EditorScene::SpawnExistingTerminals(TileMap *map)
-    {
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
-        auto terminalPositions = map->GetTerminalPositions();
-
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-
-            auto terminalObj = CreateGameObject("Editor_CCTVTerminal_" + std::to_string(i));
-            terminalObj->transform->position = Vector3(pos.x, pos.y, 0.5f);
-            terminalObj->transform->localScale = Vector2(0.5f, 0.5f);
-
-            auto sr = terminalObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(terminalSprite);
-            sr->billboard = true;
-            sr->sortingOrder = 250;
-            sr->highlightColor = Engine::Color(0.3f, 0.3f, 0.0f, 0.0f);
-        }
-    }
-
-    /*! \brief Spawn CCTV GameObjects for placement preview in editor. */
-    void EditorScene::SpawnExistingCCTVs(TileMap *map)
-    {
-        std::vector<int> zoneGrid(mapWidth * mapHeight, 0);
-        for (int y = 0; y < mapHeight; ++y)
-        {
-            for (int x = 0; x < mapWidth; ++x)
-            {
-                int zid = GetZoneId(x, y);
-                zoneGrid[y * mapWidth + x] = (zid > 0) ? zid : 0;
-            }
-        }
-
-        const float CCTV_Z = 0.85f;
-        const float EPS = 0.02f;
-        auto placements = Game::GenerateCCTVsPerZone(
-            map, zoneGrid, mapWidth, mapHeight,
-            10, 1, 3.5f, CCTV_Z, EPS);
-
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
-        for (size_t i = 0; i < placements.size(); ++i)
-        {
-            auto &p = placements[i];
-            auto camObj = CreateGameObject("Editor_CCTV_" + std::to_string(i + 1));
-            camObj->transform->position = p.pos;
-            camObj->transform->rotation = p.rot;
-            camObj->transform->localScale = Vector2(0.25f, 0.25f);
-
-            auto sr = camObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(cctvSprite);
-            sr->billboard = true;
-            sr->sortingOrder = 300;
-
-            auto sensor = camObj->AddComponent<CCTVCamera>();
-            sensor->id = static_cast<int>(i) + 1;
-            sensor->tile = map;
-            sensor->tf = nullptr;
-            sensor->hud = nullptr;
-            sensor->minimap =  nullptr; // Connect to minimap for vision cones
-            sensor->detectRadius = 3.0f;
-            sensor->maxRange = 6.0f;
-            sensor->coneWidth = 70.0f;
-            sensor->needLOS = true;
-            sensor->spriteRenderer = sr; // Store sprite renderer for color changes
-        }
-    }
 
 } // namespace Game

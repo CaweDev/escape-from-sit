@@ -31,43 +31,8 @@ namespace
         float cctvSpikeAmount = 1.0f;
         float fullEscalationThreshold = 30.0f;
 
-        float spawnExcludeX = 2.5f;
-        float spawnExcludeY = 2.5f;
-        float spawnExcludeRadius = 7.0f;
-        int spawnPickAttempts = 100;
-        int spawnFallbackMaxRadius = 20;
 
-        float bullyNPCSpeed = 2.0f;
-        float bullyNPCTriggerRadius = 3.0f;
-        float annoyingNPCSpeed = 1.2f;
-        float annoyingNPCTriggerRadius = 2.5f;
-        float annoyingNPCBlockTime = 1.5f;
-        float spawnedNPCColliderRadius = 0.25f;
-        float spawnedGuardColliderRadius = 0.3f;
-
-        int cctvPerZone = 10;
-        int cctvPlacementStep = 1;
-        float cctvPlacementMinDist = 3.5f;
-        float cctvPlacementZ = 0.85f;
-        float cctvPlacementEpsilon = 0.02f;
-
-        float cctvViewZ = 1.6f;
-        float cctvScaleX = 0.25f;
-        float cctvScaleY = 0.25f;
-        int cctvSortingOrder = 300;
-        float cctvDetectRadius = 3.0f;
-        float cctvMaxRange = 6.0f;
-        float cctvConeWidth = 70.0f;
-
-        float terminalPosZ = 0.5f;
-        float terminalScaleX = 0.5f;
-        float terminalScaleY = 0.5f;
-        int terminalSortingOrder = 250;
-
-        float doorInteractMaxDistance = 2.5f;
-        float accessCardInteractMaxDistance = 2.5f;
-
-
+     
         float npcNoticeRadius = 6.0f;
         float guardShakeDistance = 6.0f;
         float guardShakeDuration = 0.1f;
@@ -76,10 +41,7 @@ namespace
 
         float tileMapColliderMinHeight = 0.0f;
         float tileMapColliderMaxHeight = 3.0f;
-        float controlRoomDoorPosZ = 0.0f;
-        float doorColliderMinHeight = 0.0f;
-        float doorColliderMaxHeight = 2.0f;
-        float cardSpawnDedupThreshold = 0.1f;
+
         float debugCirclePi = 3.14159265f;
         float distanceSentinel = 999999.0f;
         float escalationStage2Ratio = 0.33f;
@@ -127,42 +89,6 @@ namespace
             cctvSpikeAmount = j.get("cctvSpikeAmount", cctvSpikeAmount).asFloat();
             fullEscalationThreshold = j.get("fullEscalationThreshold", fullEscalationThreshold).asFloat();
 
-            spawnExcludeX = j.get("spawnExcludeX", spawnExcludeX).asFloat();
-            spawnExcludeY = j.get("spawnExcludeY", spawnExcludeY).asFloat();
-            spawnExcludeRadius = j.get("spawnExcludeRadius", spawnExcludeRadius).asFloat();
-            spawnPickAttempts = j.get("spawnPickAttempts", spawnPickAttempts).asInt();
-            spawnFallbackMaxRadius = j.get("spawnFallbackMaxRadius", spawnFallbackMaxRadius).asInt();
-
-            bullyNPCSpeed = j.get("bullyNPCSpeed", bullyNPCSpeed).asFloat();
-            bullyNPCTriggerRadius = j.get("bullyNPCTriggerRadius", bullyNPCTriggerRadius).asFloat();
-            annoyingNPCSpeed = j.get("annoyingNPCSpeed", annoyingNPCSpeed).asFloat();
-            annoyingNPCTriggerRadius = j.get("annoyingNPCTriggerRadius", annoyingNPCTriggerRadius).asFloat();
-            annoyingNPCBlockTime = j.get("annoyingNPCBlockTime", annoyingNPCBlockTime).asFloat();
-            spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
-            spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
-
-
-            cctvPerZone = j.get("cctvPerZone", cctvPerZone).asInt();
-            cctvPlacementStep = j.get("cctvPlacementStep", cctvPlacementStep).asInt();
-            cctvPlacementMinDist = j.get("cctvPlacementMinDist", cctvPlacementMinDist).asFloat();
-            cctvPlacementZ = j.get("cctvPlacementZ", cctvPlacementZ).asFloat();
-            cctvPlacementEpsilon = j.get("cctvPlacementEpsilon", cctvPlacementEpsilon).asFloat();
-
-            cctvViewZ = j.get("cctvViewZ", cctvViewZ).asFloat();
-            cctvScaleX = j.get("cctvScaleX", cctvScaleX).asFloat();
-            cctvScaleY = j.get("cctvScaleY", cctvScaleY).asFloat();
-            cctvSortingOrder = j.get("cctvSortingOrder", cctvSortingOrder).asInt();
-            cctvDetectRadius = j.get("cctvDetectRadius", cctvDetectRadius).asFloat();
-            cctvMaxRange = j.get("cctvMaxRange", cctvMaxRange).asFloat();
-            cctvConeWidth = j.get("cctvConeWidth", cctvConeWidth).asFloat();
-
-            terminalPosZ = j.get("terminalPosZ", terminalPosZ).asFloat();
-            terminalScaleX = j.get("terminalScaleX", terminalScaleX).asFloat();
-            terminalScaleY = j.get("terminalScaleY", terminalScaleY).asFloat();
-            terminalSortingOrder = j.get("terminalSortingOrder", terminalSortingOrder).asInt();
-
-            doorInteractMaxDistance = j.get("doorInteractMaxDistance", doorInteractMaxDistance).asFloat();
-            accessCardInteractMaxDistance = j.get("accessCardInteractMaxDistance", accessCardInteractMaxDistance).asFloat();
 
             npcNoticeRadius = j.get("npcNoticeRadius", npcNoticeRadius).asFloat();
             guardShakeDistance = j.get("guardShakeDistance", guardShakeDistance).asFloat();
@@ -172,10 +98,6 @@ namespace
 
             tileMapColliderMinHeight = j.get("tileMapColliderMinHeight", tileMapColliderMinHeight).asFloat();
             tileMapColliderMaxHeight = j.get("tileMapColliderMaxHeight", tileMapColliderMaxHeight).asFloat();
-            controlRoomDoorPosZ = j.get("controlRoomDoorPosZ", controlRoomDoorPosZ).asFloat();
-            doorColliderMinHeight = j.get(" doorColliderMinHeight", doorColliderMinHeight).asFloat();
-            doorColliderMaxHeight = j.get("doorColliderMaxHeight", doorColliderMaxHeight).asFloat();
-            cardSpawnDedupThreshold = j.get("cardSpawnDedupThreshold", cardSpawnDedupThreshold).asFloat();
             debugCirclePi = j.get("debugCirclePi", debugCirclePi).asFloat();
             distanceSentinel = j.get("distanceSentinel", distanceSentinel).asFloat();
             escalationStage2Ratio = j.get("escalationStage2Ratio", escalationStage2Ratio).asFloat();
@@ -227,20 +149,6 @@ namespace Game
         cctvSpikeCooldown = cfg.cctvSpikeCooldown;
         cctvSpikeAmount = cfg.cctvSpikeAmount;
         fullEscalationThreshold = cfg.fullEscalationThreshold;
-
-        spawnExcludeX = cfg.spawnExcludeX;
-        spawnExcludeY = cfg.spawnExcludeY;
-        spawnExcludeRadius = cfg.spawnExcludeRadius;
-        spawnPickAttempts = cfg.spawnPickAttempts;
-        spawnFallbackMaxRadius = cfg.spawnFallbackMaxRadius;
-
-        bullyNPCSpeed = cfg.bullyNPCSpeed;
-        bullyNPCTriggerRadius = cfg.bullyNPCTriggerRadius;
-        annoyingNPCSpeed = cfg.annoyingNPCSpeed;
-        annoyingNPCTriggerRadius = cfg.annoyingNPCTriggerRadius;
-        annoyingNPCBlockTime = cfg.annoyingNPCBlockTime;
-        spawnedNPCColliderRadius = cfg.spawnedNPCColliderRadius;
-        spawnedGuardColliderRadius = cfg.spawnedGuardColliderRadius;
 
         gameEnded = false;
         printedWin = false;
@@ -315,24 +223,6 @@ namespace Game
                     tileValue = 0; // Floor
                 else if (c == '1')
                     tileValue = 1; // Wall
-                else if (c == 'D')
-                    tileValue = 10; // Door
-                else if (c == 'T')
-                    tileValue = 11; // Terminal
-                else if (c == 'E')
-                    tileValue = 12; // Exit
-                else if (c == 'C')
-                    tileValue = 13; // Control Room Door (old marker)
-                else if (c == 'K')
-                    tileValue = 20; // Control Room Door (NEW dedicated tile)
-                else if (c == 'F')
-                    tileValue = 15; // Green Access Card
-                else if (c == 'G')
-                    tileValue = 16; // Purple Access Card
-                else if (c == 'H')
-                    tileValue = 17; // Red Access Card
-                else if (c == 'J')
-                    tileValue = 18; // Yellow Access Card
                 else
                     tileValue = c - '0'; // Fallback numeric
 
@@ -343,7 +233,6 @@ namespace Game
         auto world = CreateGameObject("World");
         auto map = world->AddComponent<TileMap>();
         map->LoadFromArray(worldMap.data(), loadedMapWidth, loadedMapHeight);
-
         auto renderer = world->AddComponent<TileMapRenderer>();
         renderer->wallColorNS = cfg.wallColorNS;
         renderer->wallColorEW = cfg.wallColorEW;
@@ -415,11 +304,158 @@ namespace Game
         }
         zoneMgr.SetZoneGrid(zoneGrid);
 
-        // ===== Read exit position from map (fallback to default) =====
-        auto mapExitPositions = map->GetExitPositions();
-        if (!mapExitPositions.empty())
+        // ===== CCTV  =====
+
+        auto terminals = GameObject::FindGameObjectsWithTag("Terminal");
+
+        for (auto &tObj : terminals)
         {
-            exitPos = mapExitPositions[0];
+            auto terminal = tObj->GetComponent<CCTVTerminal>();
+            terminal->playerHUD = playerHUD;
+            terminal->spriteRenderer = tObj->GetComponent<SpriteRenderer>();
+            terminal->allGuards = guards;
+
+            playerHUD->SetTerminalPosition(terminal->controlledZone, tObj->transform->position);
+            cctvTerminals.push_back(terminal);
+        }
+
+        auto cctvs = GameObject::FindGameObjectsWithTag("Sensor");
+        for (auto &cctv : cctvs)
+        {
+            auto sensor = cctv->GetComponent<CCTVCamera>();
+            sensor->tile = map;
+            sensor->tf = playerTf;
+            sensor->hud = playerHUD;
+            sensor->spriteRenderer = cctv->GetComponent<SpriteRenderer>();
+            sensor->minimap = playerHUD->GetMinimap();
+            cctvSensors.push_back(sensor);
+            playerHUD->AddCCTVTransform(cctv->transform);
+
+            int camTx = (int)cctv->transform->position.x;
+            int camTy = (int)cctv->transform->position.y;
+            int camZone = GetZoneId(camTx, camTy);
+
+            for (auto &terminal : cctvTerminals)
+            {
+                if (camZone == terminal->controlledZone)
+                {
+                    terminal->controlledCameras.push_back(sensor);
+                }
+            }
+        }
+        cctvCooldown.assign(cctvSensors.size(), 0.0f);
+
+        // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
+
+        // 1. Initialize All Doors (Calculate Facing & FOV)
+        auto doorObjs = GameObject::FindGameObjectsWithTag("Door");
+        for (auto *doorGO : doorObjs)
+        {
+            auto *door = doorGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
+            auto *doorRenderer = doorGO->GetComponent<Engine::DoorRenderer>();
+
+            // Connect the dynamic FOV from the TileMapRenderer
+            if (doorRenderer && renderer)
+            {
+                doorRenderer->fov = renderer->fov;
+            }
+
+            // Calculate facing dynamically based on the TileMap walls
+            if (door && map)
+            {
+                bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                door->state = Engine::DoorState::Closed;
+            }
+
+            playerHUD->AddDoor(door);
+        }
+
+        // 2. Initialize Exit Door (Custom Interaction Lambda)
+        auto exitDoors = Engine::GameObject::FindGameObjectsWithTag("ExitDoor");
+        for (auto *exitGO : exitDoors)
+        {
+            auto *door = exitGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
+
+            auto *interactable = exitGO->GetComponent<Engine::Interactable>();
+
+            if (door && interactable)
+            {
+                int totalBooks = (int)Game::PuzzleManager::allBooks.size();
+
+                if (Game::PuzzleManager::booksCollected < totalBooks)
+                {
+                    interactable->actionText = "EXIT LOCKED: Collect all books";
+                }
+
+                interactable->onInteract = [door, totalBooks, interactable]()
+                {
+                    if (Game::PuzzleManager::booksCollected >= totalBooks)
+                    {
+                        door->Toggle();
+                        interactable->actionText = "Close";
+                        Game::PuzzleManager::OpenExitDoor();
+                    }
+                    else
+                    {
+                        int collected = Game::PuzzleManager::booksCollected;
+                        Game::PuzzleManager::activeBookTitle = "DOOR LOCKED";
+                        Game::PuzzleManager::activeBookText = std::to_string(collected) + "/" + std::to_string(totalBooks) + " books collected";
+                        Game::PuzzleManager::popupTimer = 3.0f;
+                    }
+                };
+
+                if (door && map)
+                {
+                    bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                    bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                    door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                    door->state = Engine::DoorState::Closed;
+                }
+                door->state = Engine::DoorState::Closed;
+            }
+
+            playerHUD->AddDoor(door);
+        }
+
+        exitPos = exitDoors[0]->transform->position;
+
+        // 3. Initialize Control Room Doors (Link Components & HUD)
+        auto controlDoors = Engine::GameObject::FindGameObjectsWithTag("ControlDoor");
+        for (auto *cdGO : controlDoors)
+        {
+            auto *controlDoor = cdGO->GetComponent<Game::ControlRoomDoor>();
+            auto *door = cdGO->GetComponent<Engine::Door>();
+            doors.push_back(door);
+
+            auto *interactable = cdGO->GetComponent<Engine::Interactable>();
+
+            if (controlDoor && door && interactable)
+            {
+                // Link pointers internally
+                controlDoor->door = door;
+                controlDoor->interactable = interactable;
+
+                // Register with Player HUD for pathfinding
+                if (playerHUD)
+                {
+                    playerHUD->SetControlRoomPosition(controlDoor->zoneId, Vector2(cdGO->transform->position.x, cdGO->transform->position.y));
+                }
+
+                if (door && map)
+                {
+                    bool wallNorth = map->IsWall(door->tileX, door->tileY + 1);
+                    bool wallSouth = map->IsWall(door->tileX, door->tileY - 1);
+                    door->facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
+                    door->state = Engine::DoorState::Closed;
+                }
+                door->state = Engine::DoorState::Closed;
+            }
+
+            playerHUD->AddDoor(door);
         }
 
         // ===== spawn 4 guards (1 per zone) =====
@@ -435,6 +471,7 @@ namespace Game
             guard->zoneMgr = &zoneMgr;
             guard->heatmap = &heatmap;
             guard->SetPatrolZoneOverride(guard->homeZoneId);
+            guard->SetTerminals(&cctvTerminals);
 
             g->GetComponent<SpriteSheetRenderer>()->Play("Patrol");
 
@@ -448,227 +485,51 @@ namespace Game
         prevChosenZoneId = 1;
         ApplyPriorityZone_AssistNearest(prevChosenZoneId);
 
-        // ===== CCTV placement =====
-        Sprite *cctvSprite = AssetManager::GetSprite("Assets/Sprites/cctv.png");
-
-        auto placements = Game::GenerateCCTVsPerZone(
-            map, zoneGrid, loadedMapWidth, loadedMapHeight,
-            cfg.cctvPerZone,
-            cfg.cctvPlacementStep,
-            cfg.cctvPlacementMinDist,
-            cfg.cctvPlacementZ,
-            cfg.cctvPlacementEpsilon);
-
-        for (int i = 0; i < (int)placements.size(); ++i)
-        {
-            auto &p = placements[i];
-
-            Vector3 view = p.pos;
-            view.z = cfg.cctvViewZ;
-            cctvViewPos.push_back(view);
-            cctvViewRot.push_back(p.rot);
-
-            auto camObj = CreateGameObject("CCTV_" + std::to_string(i + 1));
-            camObj->transform->position = p.pos;
-            camObj->transform->rotation = p.rot;
-            camObj->transform->localScale = Vector2(cfg.cctvScaleX, cfg.cctvScaleY);
-
-            auto sr = camObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(cctvSprite);
-            sr->billboard = true;
-            sr->sortingOrder = cfg.cctvSortingOrder;
-
-            playerHUD->AddCCTVTransform(camObj->transform);
-
-            auto sensor = camObj->AddComponent<CCTVCamera>();
-            sensor->id = i + 1;
-            sensor->tile = map;
-            sensor->tf = playerTf;
-            sensor->hud = playerHUD;
-            sensor->minimap = playerHUD->GetMinimap();
-            sensor->detectRadius = cfg.cctvDetectRadius;
-            sensor->maxRange = cfg.cctvMaxRange;
-            sensor->coneWidth = cfg.cctvConeWidth;
-            sensor->needLOS = true;
-            sensor->spriteRenderer = sr;
-
-            cctvSensors.push_back(sensor);
-        }
-
-        cctvCooldown.assign(cctvSensors.size(), 0.0f);
-
-        // ===== CCTV Terminals - Spawn from map markers ('T' in map.txt) =====
-        Sprite *terminalSprite = AssetManager::GetSprite("Assets/Sprites/powerup3.png");
-
-        // Get terminal positions from map
-        auto terminalPositions = map->GetTerminalPositions();
-
-        if (terminalPositions.empty())
-        {
-        }
-
-        // Spawn terminals at marked positions
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-
-            // Determine zone from position (use floor to get tile coordinates)
-            // Terminal positions are at tile center (x.5, y.5), so floor gives the tile
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId < 1 || zoneId > 4)
-            {
-                continue;
-            }
-
-            // Create terminal GameObject
-            auto terminalObj = CreateGameObject("CCTVTerminal_Zone" + std::to_string(zoneId));
-            terminalObj->transform->position = Vector3(pos.x, pos.y, cfg.terminalPosZ);
-            terminalObj->transform->localScale = Vector2(cfg.terminalScaleX, cfg.terminalScaleY);
-
-            auto sr = terminalObj->AddComponent<SpriteRenderer>();
-            sr->SetSprite(terminalSprite);
-            sr->billboard = true;
-            sr->sortingOrder = cfg.terminalSortingOrder;
-
-            auto terminal = terminalObj->AddComponent<CCTVTerminal>();
-            terminal->controlledZone = zoneId;
-            terminal->playerHUD = playerHUD;
-            terminal->spriteRenderer = sr;
-            terminal->allGuards = guards;
-
-            // CCTVTerminal's SetupInteraction() is called in Awake()
-            // It will automatically create and configure the Interactable component
-
-            // Assign cameras to terminals based on zone
-            for (size_t j = 0; j < cctvSensors.size(); ++j)
-            {
-                auto *cam = cctvSensors[j];
-                if (!cam)
-                    continue;
-
-                // Determine camera's zone
-                int camTx = (int)cam->transform->position.x;
-                int camTy = (int)cam->transform->position.y;
-                int camZone = GetZoneId(camTx, camTy);
-
-                if (camZone == zoneId)
-                {
-                    terminal->controlledCameras.push_back(cam);
-                }
-            }
-
-            cctvTerminals.push_back(terminal);
-        }
-
-        // Register terminal positions with PlayerHUD for pathfinding
-        for (size_t i = 0; i < terminalPositions.size(); ++i)
-        {
-            Vector2 pos = terminalPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId >= 1 && zoneId <= 4)
-            {
-                playerHUD->SetTerminalPosition(zoneId, pos);
-            }
-        }
-
-        // ===== Spawn Control Room Doors from map markers ('C' / tile 13) =====
-        auto controlRoomDoorPositions = map->GetControlRoomDoorPositions();
-
-        // Register control room door positions with PlayerHUD for pathfinding
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
-        {
-            Vector2 pos = controlRoomDoorPositions[i];
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId >= 1 && zoneId <= 4)
-            {
-                playerHUD->SetControlRoomPosition(zoneId, pos);
-            }
-        }
-
-        for (size_t i = 0; i < controlRoomDoorPositions.size(); ++i)
-        {
-            Vector2 pos = controlRoomDoorPositions[i];
-
-            // Determine zone from position
-            int tileX = (int)std::floor(pos.x);
-            int tileY = (int)std::floor(pos.y);
-            int zoneId = GetZoneId(tileX, tileY);
-            if (zoneId < 1 || zoneId > 4)
-            {
-                continue;
-            }
-
-            // Create door GameObject
-            std::string doorName = "ControlRoomDoor_Zone" + std::to_string(zoneId);
-            auto doorGO = CreateGameObject(doorName);
-            doorGO->transform->position = Vector3(pos.x, pos.y, cfg.controlRoomDoorPosZ);
-
-            // Determine door facing based on surrounding walls
-            bool wallNorth = map->IsWall(tileX, tileY + 1);
-            bool wallSouth = map->IsWall(tileX, tileY - 1);
-            Engine::DoorFacing facing = (wallNorth || wallSouth) ? Engine::DoorFacing::EastWest : Engine::DoorFacing::NorthSouth;
-
-            // Add BoxCollider2D
-            auto doorCollider = doorGO->AddComponent<Engine::BoxCollider2D>();
-            doorCollider->minHeight = cfg.doorColliderMinHeight;
-            doorCollider->maxHeight = cfg.doorColliderMaxHeight;
-            doorCollider->isTrigger = false;
-
-            // Add Door component
-            auto door = doorGO->AddComponent<Engine::Door>();
-            door->tileX = tileX;
-            door->tileY = tileY;
-            door->doorType = 10;
-            door->facing = facing;
-            door->collider = doorCollider;
-            door->state = Engine::DoorState::Closed;
-
-            // Add DoorRenderer
-            auto doorRenderer = doorGO->AddComponent<Engine::DoorRenderer>();
-            doorRenderer->fov = renderer->fov;
-            doorRenderer->sprite = renderer->GetDoorSprite();
-
-            // Add Interactable
-            auto interactable = doorGO->AddComponent<Engine::Interactable>();
-            interactable->actionText = "LOCKED - Access Cards Required (0/4)";
-            interactable->maxDistance = cfg.doorInteractMaxDistance;
-
-            // Add ControlRoomDoor component
-            auto controlDoor = doorGO->AddComponent<Game::ControlRoomDoor>();
-            controlDoor->zoneId = zoneId;
-            controlDoor->door = door;
-            controlDoor->interactable = interactable;
-        }
-
-        // Connect terminals to guards
-        for (auto *guard : guards)
-        {
-            if (guard)
-            {
-                guard->SetTerminals(&cctvTerminals);
-            }
-        }
-
         // ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
+
         npcs.clear();
-        for (int z = 1; z <= 4; ++z)
+        auto npcObjects = Engine::GameObject::FindGameObjectsWithTag("NPC");
+
+        for (auto &npcGO : npcObjects)
         {
-            // Spawn with extra checks - avoid player spawn and doors
-            SpawnNPCInZone(z, NPCType::Bully, map, "Assets/Sprites/bully.png");
-            SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/Sprites/annoying_classmate.png");
+            auto npc = npcGO->GetComponent<Game::NPC>();
+            if (!npc)
+                continue;
+
+            npc->tileMap = map;
+            npc->playerTf = playerTf;
+            npc->playerData = playerData;
+
+            if (playerCam)
+            {
+                auto shake = playerCam->gameObject->GetComponent<Game::CameraShake>();
+                if (!shake)
+                {
+                    shake = playerCam->gameObject->AddComponent<Game::CameraShake>();
+                    shake->Initialize();
+                }
+                npc->camShake = shake;
+            }
+
+            npc->SetPickGoalInZone([this](int zId, int &outX, int &outY) -> bool
+                                   { return zoneMgr.PickRandomWalkableInZone(zId, outX, outY); });
+
+            // Start patrol animation
+            auto sr = npcGO->GetComponent<Engine::SpriteSheetRenderer>();
+            if (sr)
+            {
+                sr->Play("Patrol");
+            }
+
+            npcs.push_back(npc);
         }
 
         // Add terminal icons to minimap
         if (playerHUD && playerHUD->GetMinimap())
         {
-            for (auto &pos : terminalPositions)
+            for (auto &tObj : terminals)
             {
+                auto pos = tObj->transform->position;
                 playerHUD->GetMinimap()->AddTerminalIcon(
                     pos,
                     AssetManager::GetSprite("Assets/Sprites/hill_top_smile.png"));
@@ -679,7 +540,7 @@ namespace Game
         SwitchToPlayerCam();
 
         // Initialize Level Editor
-        levelEditor.Initialize(this, map, playerCam, playerTf);
+        // AddDoorTransform(Engine::Transform * doorTransform).Initialize(this, map, playerCam, playerTf);
 
         Game::PuzzleManager::BookDataInit("Assets/Config/Game/books.json");
         Game::PuzzleManager::Init();
@@ -711,7 +572,7 @@ namespace Game
     inline void FPSScene::OnAfterRender()
     {
         // Render level editor overlay on top of everything
-        levelEditor.Render();
+        // AddDoorTransform(Engine::Transform * doorTransform).Render();
     }
 
     /*! \brief Main per-frame update handling game logic, AI and HUD updates. */
@@ -720,19 +581,19 @@ namespace Game
         const auto &cfg = GetFPSSceneConfig();
 
         // Toggle Level Editor
-        if (Input::GetKeyDown(KeyCode::F1))
-        {
-            levelEditor.ToggleEditor();
-        }
+        // if (Input::GetKeyDown(KeyCode::F1))
+        // {
+        //     AddDoorTransform(Engine::Transform * doorTransform).ToggleEditor();
+        // }
 
         // Update editor (only if active)
-        levelEditor.Update();
+        // AddDoorTransform(Engine::Transform * doorTransform).Update();
 
         // If editor is active, skip game logic
-        if (levelEditor.IsActive())
-        {
-            return;
-        }
+        // if (AddDoorTransform(Engine::Transform * doorTransform).IsActive())
+        // {
+        //     return;
+        // }
 
         if (showControlsAtStart && controlsMenu)
         {
@@ -768,21 +629,6 @@ namespace Game
             }
         }
 
-        // CCTV view switching (silent)
-        int camCount = (int)cctvViewPos.size();
-        if (camCount > 0)
-        {
-            /* if (Input::GetKeyDown(KeyCode::DownArrow)) {
-                 if (activeCCTV < 0) activeCCTV = 0;
-                 else activeCCTV = (activeCCTV + 1) % camCount;
-                 SwitchToCCTV(activeCCTV);
-             }
-             if (Input::GetKeyDown(KeyCode::UpArrow)) {
-                 if (activeCCTV < 0) activeCCTV = camCount - 1;
-                 else activeCCTV = (activeCCTV - 1 + camCount) % camCount;
-                 SwitchToCCTV(activeCCTV);
-             }*/
-        }
         if (Input::GetKeyDown(KeyCode::Alpha0))
         {
             SwitchToPlayerCam();
@@ -1152,8 +998,6 @@ namespace Game
         // Clear all scene-owned lists to avoid keeping stale pointers across reload
         cctvSensors.clear();
         cctvTerminals.clear();
-        cctvViewPos.clear();
-        cctvViewRot.clear();
         cctvCooldown.clear();
 
         guards.clear();

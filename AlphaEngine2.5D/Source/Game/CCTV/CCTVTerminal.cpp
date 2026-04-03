@@ -1,8 +1,8 @@
 /*!
- * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVTerminal.cpp
+ * \file CCTVTerminal.cpp
  * \author DigiPen Student
  * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Component that represents an interactive CCTV terminal in the world
  */
 
 #include "CCTVTerminal.hpp"
@@ -14,554 +14,318 @@
 #include "Engine/Interaction/Interactable.hpp"
 #include "Engine/Scene/SceneManager.hpp"
 #include "Engine/Audio/SoundManager.hpp"
-#include "Engine/Core/ConfigManager.hpp"
 #include <iostream>
 #include <cmath>
 
-namespace
+namespace Game
 {
-    struct CCTVTerminalConfig : public Engine::IConfig
+
+    /*!
+     * \brief [AUTO] Awake
+     */
+    void CCTVTerminal::Awake()
     {
-        float interactMaxDistance = 2.5f;
-        float holdDuration = 3.0f;
-        float disabledDuration = 30.0f;
-        float repairTime = 5.0f;
-        float cooldownDuration = 10.0f;
-        float hackStatusDuration = 3.0f;
-        float repairMaxDistance = 2.0f;
+        UpdateVisualState();
+        SetupInteraction();
+    }
 
-        float floatSpeed = 2.0f;
-        float floatAmplitude = 0.15f;
-        float floatBaseHeightOffset = 0.8f;
-        float pulseSpeed = 3.0f;
-
-        Engine::Color activeColor = Engine::Color(0.2f, 0.8f, 1.0f, 1.0f);
-        Engine::Color hackingColor = Engine::Color(1.0f, 1.0f, 0.0f, 1.0f);
-        Engine::Color disabledColor = Engine::Color(0.5f, 0.0f, 0.0f, 1.0f);
-        Engine::Color repairingColor = Engine::Color(1.0f, 0.5f, 0.0f, 1.0f);
-
-        std::string interactText = "Hold E to Hack Terminal";
-        std::string zoneHackTextPrefix = "Hold E to Hack ";
-        std::string zoneHackTextSuffix = " Cameras";
-        std::string disabledTextSuffix = " CAMERAS OFFLINE";
-        std::string cooldownText = "TERMINAL COOLING DOWN";
-        std::string repairingText = "GUARD REPAIRING SYSTEM";
-        std::string hackStatusPrefix = " CAMERAS DISABLED FOR 30s";
-
-        static Engine::Color ParseColor(const Json::Value& j, const char* key, const Engine::Color& fallback)
-        {
-            if (!j.isMember(key) || !j[key].isObject()) return fallback;
-            const auto& c = j[key];
-            return Engine::Color(
-                c.get("r", fallback.r).asFloat(),
-                c.get("g", fallback.g).asFloat(),
-                c.get("b", fallback.b).asFloat(),
-                c.get("a", fallback.a).asFloat());
-        }
-
-        void FromJson(const Json::Value& j) override
-        {
-            interactMaxDistance = j.get("interactMaxDistance", interactMaxDistance).asFloat();
-            holdDuration = j.get("holdDuration", holdDuration).asFloat();
-            disabledDuration = j.get("disabledDuration", disabledDuration).asFloat();
-            repairTime = j.get("repairTime", repairTime).asFloat();
-            cooldownDuration = j.get("cooldownDuration", cooldownDuration).asFloat();
-            hackStatusDuration = j.get("hackStatusDuration", hackStatusDuration).asFloat();
-            repairMaxDistance = j.get("repairMaxDistance", repairMaxDistance).asFloat();
-
-            floatSpeed = j.get("floatSpeed", floatSpeed).asFloat();
-            floatAmplitude = j.get("floatAmplitude", floatAmplitude).asFloat();
-            floatBaseHeightOffset = j.get("floatBaseHeightOffset", floatBaseHeightOffset).asFloat();
-            pulseSpeed = j.get("pulseSpeed", pulseSpeed).asFloat();
-
-            activeColor = ParseColor(j, "activeColor", activeColor);
-            hackingColor = ParseColor(j, "hackingColor", hackingColor);
-            disabledColor = ParseColor(j, "disabledColor", disabledColor);
-            repairingColor = ParseColor(j, "repairingColor", repairingColor);
-
-            interactText = j.get("interactText", interactText).asString();
-            zoneHackTextPrefix = j.get("zoneHackTextPrefix", zoneHackTextPrefix).asString();
-            zoneHackTextSuffix = j.get("zoneHackTextSuffix", zoneHackTextSuffix).asString();
-            disabledTextSuffix = j.get("disabledTextSuffix", disabledTextSuffix).asString();
-            cooldownText = j.get("cooldownText", cooldownText).asString();
-            repairingText = j.get("repairingText", repairingText).asString();
-            hackStatusPrefix = j.get("hackStatusPrefix", hackStatusPrefix).asString();
-        }
-    };
-
-    CCTVTerminalConfig g_cctvTerminalConfig;
-    bool g_cctvTerminalConfigLoaded = false;
-
-    const CCTVTerminalConfig& GetCCTVTerminalConfig()
+    /*!
+     * \brief [AUTO] SetupInteraction
+     */
+    void CCTVTerminal::SetupInteraction()
     {
-        if (!g_cctvTerminalConfigLoaded)
+        auto interactable = gameObject->GetComponent<Engine::Interactable>();
+        if (interactable)
         {
-            Engine::ConfigManager::ReadConfig("Assets/Config/Game/cctv_terminal.json", g_cctvTerminalConfig);
-            if (g_cctvTerminalConfig.interactMaxDistance < 0.1f) g_cctvTerminalConfig.interactMaxDistance = 0.1f;
-            if (g_cctvTerminalConfig.holdDuration < 0.01f) g_cctvTerminalConfig.holdDuration = 0.01f;
-            if (g_cctvTerminalConfig.disabledDuration < 0.0f) g_cctvTerminalConfig.disabledDuration = 0.0f;
-            if (g_cctvTerminalConfig.repairTime < 0.01f) g_cctvTerminalConfig.repairTime = 0.01f;
-            if (g_cctvTerminalConfig.cooldownDuration < 0.0f) g_cctvTerminalConfig.cooldownDuration = 0.0f;
-            if (g_cctvTerminalConfig.hackStatusDuration < 0.0f) g_cctvTerminalConfig.hackStatusDuration = 0.0f;
-            if (g_cctvTerminalConfig.repairMaxDistance < 0.1f) g_cctvTerminalConfig.repairMaxDistance = 0.1f;
-            g_cctvTerminalConfigLoaded = true;
-        }
-        return g_cctvTerminalConfig;
-    }
-}
-
-namespace Game {
-
-/*!
- * \brief [AUTO] Awake
- */
-void CCTVTerminal::Awake() {
-    const auto& cfg = GetCCTVTerminalConfig();
-    disabledDuration = cfg.disabledDuration;
-    repairTime = cfg.repairTime;
-    cooldownDuration = cfg.cooldownDuration;
-    interactionTime = cfg.holdDuration;
-
-    //std::cout << "[CCTVTerminal::Awake] Terminal spawned for Zone " << controlledZone << "\n";
-    
-
-    UpdateVisualState();
-    SetupInteraction();
-}
-
-/*!
- * \brief [AUTO] SetupInteraction
- */
-void CCTVTerminal::SetupInteraction() {
-    //std::cout << "[CCTVTerminal::SetupInteraction] Setting up interaction for Zone " << controlledZone << "\n";
-    const auto& cfg = GetCCTVTerminalConfig();
-    
-    // Add Interactable component
-    auto interactable = gameObject->GetComponent<Engine::Interactable>();
-    if (!interactable) {
-        interactable = gameObject->AddComponent<Engine::Interactable>();
-        //std::cout << "[CCTVTerminal::SetupInteraction] Created new Interactable component\n";
-    } else {
-        //std::cout << "[CCTVTerminal::SetupInteraction] Using existing Interactable component\n";
-    }
-    
-    interactable->actionText = cfg.interactText;
-    interactable->maxDistance = cfg.interactMaxDistance;
-    interactable->requireHold = true;
-    interactable->holdDuration = cfg.holdDuration;
-    interactable->onInteract = [this]() { OnTerminalInteract(); };
-    
-    //std::cout << "[CCTVTerminal::SetupInteraction] Interaction setup complete!\n";
-}
-
-/*!
- * \brief [AUTO] OnTerminalInteract
- */
-void CCTVTerminal::OnTerminalInteract() {
-    const auto& cfg = GetCCTVTerminalConfig();
-    /*std::cout << "[CCTVTerminal] OnTerminalInteract called! Zone=" << controlledZone 
-              << " (" << ZoneIdToLetter(controlledZone) << ")"
-              << " isDisabled=" << isDisabled << " cooldown=" << cooldownTimer 
-              << " playerHUD=" << (playerHUD ? "YES" : "NULL") << "\n";*/
-              
-    if (!CanHack()) {
-        //std::cout << "[CCTVTerminal] CanHack returned false!\n";
-        return;
-    }
-    
-    Engine::SoundManager::PlaySFX("terminal_hack");
-
-    // For now, instant hack (TODO: add hold-E mechanic)
-    DisableCameras();
-    // Play cctv disabled SFX
-    Engine::SoundManager::PlaySFX("cctv_disabled");
-    
-    // Provide HUD feedback
-    if (playerHUD) {
-        char zoneLetter = ZoneIdToLetter(controlledZone);
-        std::string message = std::string("ZONE ") + zoneLetter + cfg.hackStatusPrefix;
-        //std::cout << "[CCTVTerminal] Showing HUD message: " << message << "\n";
-        playerHUD->ShowHackStatus(message, cfg.hackStatusDuration);
-    } else {
-        //std::cout << "[CCTVTerminal] playerHUD is NULL! Message not shown!\n";
-    }
-}
-
-/*!
- * \brief [AUTO] CanHack
- * \return 
- */
-/*!
- * \brief [AUTO] CanHack
- * \return 
- */
-/*!
- * \brief [AUTO] CanHack
- * \return 
- */
-/*!
- * \brief [AUTO] CanHack
- * \return 
- */
-/*!
- * \brief [AUTO] CanHack
- * \return 
- */
-bool CCTVTerminal::CanHack() const {
-    if (isDisabled) return false;
-    if (cooldownTimer > 0.0f) return false;
-    if (guardIsRepairing) return false;
-    return true;
-}
-
-/*!
- * \brief [AUTO] Update
- */
-void CCTVTerminal::Update() {
-const auto& cfg = GetCCTVTerminalConfig();
-// Update floating icon animation
-if (floatingIcon) {
-    floatAnimTime += Engine::Time::deltaTime;
-    float floatOffset = std::sin(floatAnimTime * cfg.floatSpeed) * cfg.floatAmplitude;
-    floatingIcon->transform->position = Engine::Vector3(
-        transform->position.x,
-        transform->position.y,
-        transform->position.z + cfg.floatBaseHeightOffset + floatOffset
-    );
-        
-    // Hide icon when disabled or being repaired
-    floatingIcon->active = !isDisabled && !guardIsRepairing;
-}
-    
-// Update interaction prompt text AND enabled state
-auto interactable = gameObject->GetComponent<Engine::Interactable>();
-if (interactable) {
-    // DISABLE interaction when terminal is offline, cooling down, or being repaired
-    // ENABLE interaction only when terminal is active and ready
-    bool canInteract = !isDisabled && cooldownTimer <= 0.0f && !guardIsRepairing;
-    
-    // Log only when interaction state changes
-    static bool lastInteractState = true;
-    if (canInteract != lastInteractState) {
-        /*std::cout << "[CCTVTerminal] Zone " << controlledZone 
-                  << " interaction " << (canInteract ? "ENABLED" : "DISABLED")
-                  << " (isDisabled=" << isDisabled 
-                  << " cooldown=" << cooldownTimer 
-                  << " repairing=" << guardIsRepairing << ")\n";*/
-        lastInteractState = canInteract;
-    }
-    
-    interactable->enabled = canInteract;
-    
-    // Update text based on state
-    if (isDisabled) {
-        interactable->actionText = GetZoneName(controlledZone) + cfg.disabledTextSuffix;
-    } else if (cooldownTimer > 0.0f) {
-        interactable->actionText = cfg.cooldownText;
-    } else if (guardIsRepairing) {
-        interactable->actionText = cfg.repairingText;
-    } else {
-        interactable->actionText = cfg.zoneHackTextPrefix + GetZoneName(controlledZone) + cfg.zoneHackTextSuffix;
-    }
-}
-    
-    if (isDisabled) {
-        UpdateDisabledState(Engine::Time::deltaTime);
-    }
-    
-    if (cooldownTimer > 0.0f) {
-        UpdateCooldown(Engine::Time::deltaTime);
-    }
-    
-    if (guardIsRepairing) {
-        UpdateRepair(Engine::Time::deltaTime);
-    }
-    
-    UpdateVisualState();
-}
-
-/*!
- * \brief [AUTO] DisableCameras
- */
-void CCTVTerminal::DisableCameras() {
-    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras DISABLED for " << disabledDuration << " seconds\n";
-    
-    isDisabled = true;
-    disabledTimer = disabledDuration;
-    state = TerminalState::DISABLED;
-    cooldownTimer = cooldownDuration;
-    
-    // Disable all cameras in this zone
-    int disabledCount = 0;
-    for (auto* camera : controlledCameras) {
-        if (camera) {
-            camera->isDisabled = true;
-            camera->disabledTimeRemaining = disabledDuration;
-            disabledCount++;
-            //std::cout << "[CCTVTerminal] Disabled camera ID " << camera->id << "\n";
+            interactable->onInteract = [this]()
+            { OnTerminalInteract(); };
         }
     }
-    //std::cout << "[CCTVTerminal] Disabled " << disabledCount << "/" << controlledCameras.size() << " cameras\n";
-    
-    // Notify guards
-    //std::cout << "[CCTVTerminal] Notifying " << allGuards.size() << " guards of sabotage\n";
-    NotifyGuardsOfSabotage();
-}
 
-/*!
- * \brief [AUTO] RestoreCameras
- */
-void CCTVTerminal::RestoreCameras() {
-    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " cameras RESTORED\n";
-    
-    isDisabled = false;
-    disabledTimer = 0.0f;
-    state = TerminalState::ACTIVE;
-    guardIsRepairing = false;
-    repairingGuard = nullptr;
-    repairProgress = 0.0f;
-    
-    // Restore all cameras in this zone
-    for (auto* camera : controlledCameras) {
-        if (camera) {
-            camera->isDisabled = false;
-            camera->disabledTimeRemaining = 0.0f;
+    /*!
+     * \brief [AUTO] OnTerminalInteract
+     */
+    void CCTVTerminal::OnTerminalInteract()
+    {
+        if (!CanHack())
+        {
+            return;
+        }
+
+        Engine::SoundManager::PlaySFX("terminal_hack");
+
+        // For now, instant hack
+        DisableCameras();
+        Engine::SoundManager::PlaySFX("cctv_disabled");
+
+        if (playerHUD)
+        {
+            char zoneLetter = ZoneIdToLetter(controlledZone);
+            std::string message = std::string("ZONE ") + zoneLetter + hackStatusPrefix;
+            playerHUD->ShowHackStatus(message, hackStatusDuration);
         }
     }
-}
 
-/*!
- * \brief [AUTO] StartRepair
- * \param guard [in]
- */
-/*!
- * \brief [AUTO] StartRepair
- * \param guard [in]
- */
-/*!
- * \brief [AUTO] StartRepair
- * \param guard [in]
- */
-/*!
- * \brief [AUTO] StartRepair
- * \param guard [in]
- */
-/*!
- * \brief [AUTO] StartRepair
- * \param guard [in]
- */
-void CCTVTerminal::StartRepair(SecurityGuard* guard) {
-    if (!isDisabled) return;
-    
-    guardIsRepairing = true;
-    repairingGuard = guard;
-    repairProgress = 0.0f;
-    state = TerminalState::REPAIRING;
-    
-    //std::cout << "[CCTVTerminal] Guard started repairing Zone " << controlledZone << " terminal\n";
-}
-
-/*!
- * \brief [AUTO] CancelRepair
- */
-void CCTVTerminal::CancelRepair() {
-    guardIsRepairing = false;
-    repairingGuard = nullptr;
-    repairProgress = 0.0f;
-    state = TerminalState::DISABLED;
-    
-    //std::cout << "[CCTVTerminal] Repair cancelled\n";
-}
-
-/*!
- * \brief [AUTO] UpdateRepair
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateRepair
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateRepair
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateRepair
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateRepair
- * \param deltaTime [in]
- */
-void CCTVTerminal::UpdateRepair(float deltaTime) {
-    const auto& cfg = GetCCTVTerminalConfig();
-    if (!guardIsRepairing || !repairingGuard) {
-        CancelRepair();
-        return;
+    /*!
+     * \brief [AUTO] CanHack
+     * \return
+     */
+    bool CCTVTerminal::CanHack() const
+    {
+        if (isDisabled)
+            return false;
+        if (cooldownTimer > 0.0f)
+            return false;
+        if (guardIsRepairing)
+            return false;
+        return true;
     }
-    
-    // Check if guard is still nearby
-    Engine::Vector2 guardPos(repairingGuard->transform->position.x, 
-                             repairingGuard->transform->position.y);
-    Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
-    float distance = Engine::Vector2::Distance(guardPos, terminalPos);
-    
-    if (distance > cfg.repairMaxDistance) {
-        // Guard moved away
-        CancelRepair();
-        return;
-    }
-    
-    // Progress repair
-    repairProgress += deltaTime / repairTime;
-    
-    if (repairProgress >= 1.0f) {
-        // Repair complete!
-        RestoreCameras();
-    }
-}
 
-/*!
- * \brief [AUTO] NotifyGuardsOfSabotage
- */
-void CCTVTerminal::NotifyGuardsOfSabotage() {
-    Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
-    
-    //std::cout << "[CCTVTerminal] Zone " << controlledZone << " sabotaged at (" 
-    //          << terminalPos.x << ", " << terminalPos.y << ")\n";
-    
-    // ONLY notify the guard from this zone's home
-    int notified = 0;
-    for (auto* guard : allGuards) {
-        if (!guard) continue;
-        
-        // Only the home zone guard should respond
-        if (guard->homeZoneId == controlledZone) {
-            /*std::cout << "[CCTVTerminal] Notifying home guard from Zone " 
-                      << controlledZone << "\n";*/
-            guard->OnCCTVSystemSabotaged(terminalPos, controlledZone);
-            notified++;
-            break; // Only one guard needed
+    /*!
+     * \brief [AUTO] Update
+     */
+    void CCTVTerminal::Update()
+    {
+        if (floatingIcon)
+        {
+            floatAnimTime += Engine::Time::deltaTime;
+            float floatOffset = std::sin(floatAnimTime * floatSpeed) * floatAmplitude;
+            floatingIcon->transform->position = Engine::Vector3(
+                transform->position.x,
+                transform->position.y,
+                transform->position.z + floatBaseHeightOffset + floatOffset);
+
+            floatingIcon->active = !isDisabled && !guardIsRepairing;
+        }
+
+        auto interactable = gameObject->GetComponent<Engine::Interactable>();
+        if (interactable)
+        {
+            bool canInteract = !isDisabled && cooldownTimer <= 0.0f && !guardIsRepairing;
+            interactable->enabled = canInteract;
+
+            if (isDisabled)
+            {
+                interactable->actionText = GetZoneName(controlledZone) + disabledTextSuffix;
+            }
+            else if (cooldownTimer > 0.0f)
+            {
+                interactable->actionText = cooldownText;
+            }
+            else if (guardIsRepairing)
+            {
+                interactable->actionText = repairingText;
+            }
+            else
+            {
+                interactable->actionText = zoneHackTextPrefix + GetZoneName(controlledZone) + zoneHackTextSuffix;
+            }
+        }
+
+        if (isDisabled)
+        {
+            UpdateDisabledState(Engine::Time::deltaTime);
+        }
+
+        if (cooldownTimer > 0.0f)
+        {
+            UpdateCooldown(Engine::Time::deltaTime);
+        }
+
+        if (guardIsRepairing)
+        {
+            UpdateRepair(Engine::Time::deltaTime);
+        }
+
+        UpdateVisualState();
+    }
+
+    /*!
+     * \brief [AUTO] DisableCameras
+     */
+    void CCTVTerminal::DisableCameras()
+    {
+        isDisabled = true;
+        disabledTimer = disabledDuration;
+        state = TerminalState::DISABLED;
+        cooldownTimer = cooldownDuration;
+
+        for (auto *camera : controlledCameras)
+        {
+            if (camera)
+            {
+                camera->isDisabled = true;
+                camera->disabledTimeRemaining = disabledDuration;
+            }
+        }
+
+        NotifyGuardsOfSabotage();
+    }
+
+    /*!
+     * \brief [AUTO] RestoreCameras
+     */
+    void CCTVTerminal::RestoreCameras()
+    {
+        isDisabled = false;
+        disabledTimer = 0.0f;
+        state = TerminalState::ACTIVE;
+        guardIsRepairing = false;
+        repairingGuard = nullptr;
+        repairProgress = 0.0f;
+
+        for (auto *camera : controlledCameras)
+        {
+            if (camera)
+            {
+                camera->isDisabled = false;
+                camera->disabledTimeRemaining = 0.0f;
+            }
         }
     }
-    
-   /* if (notified == 0) {
-        std::cout << "[CCTVTerminal] WARNING: No home zone guard found for Zone " 
-                  << controlledZone << "!\n";
-    } else {
-        std::cout << "[CCTVTerminal] Notified " << notified << " guard (home zone only)\n";
-    }*/
-}
 
-/*!
- * \brief [AUTO] UpdateDisabledState
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateDisabledState
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateDisabledState
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateDisabledState
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateDisabledState
- * \param deltaTime [in]
- */
-void CCTVTerminal::UpdateDisabledState(float deltaTime) {
-    disabledTimer -= deltaTime;
-    
-    if (disabledTimer <= 0.0f && !guardIsRepairing) {
-        // Auto-restore if guard didn't repair
-        RestoreCameras();
+    /*!
+     * \brief [AUTO] StartRepair
+     * \param guard [in]
+     */
+    void CCTVTerminal::StartRepair(SecurityGuard *guard)
+    {
+        if (!isDisabled)
+            return;
+
+        guardIsRepairing = true;
+        repairingGuard = guard;
+        repairProgress = 0.0f;
+        state = TerminalState::REPAIRING;
     }
-}
 
-/*!
- * \brief [AUTO] UpdateCooldown
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateCooldown
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateCooldown
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateCooldown
- * \param deltaTime [in]
- */
-/*!
- * \brief [AUTO] UpdateCooldown
- * \param deltaTime [in]
- */
-void CCTVTerminal::UpdateCooldown(float deltaTime) {
-    cooldownTimer -= deltaTime;
-    if (cooldownTimer < 0.0f) {
-        cooldownTimer = 0.0f;
+    /*!
+     * \brief [AUTO] CancelRepair
+     */
+    void CCTVTerminal::CancelRepair()
+    {
+        guardIsRepairing = false;
+        repairingGuard = nullptr;
+        repairProgress = 0.0f;
+        state = TerminalState::DISABLED;
     }
-}
 
-/*!
- * \brief [AUTO] UpdateVisualState
- */
-void CCTVTerminal::UpdateVisualState() {
-    if (!spriteRenderer) return;
-    const auto& cfg = GetCCTVTerminalConfig();
-    
-    Engine::Color color = GetStateColor();
-    
-    // Add pulsing effect for HACKING and REPAIRING states
-    if (state == TerminalState::HACKING || state == TerminalState::REPAIRING) {
-        float pulse = 0.5f + 0.5f * sinf(Engine::Time::time * cfg.pulseSpeed);
-        color.a = pulse;
+    /*!
+     * \brief [AUTO] UpdateRepair
+     * \param deltaTime [in]
+     */
+    void CCTVTerminal::UpdateRepair(float deltaTime)
+    {
+        if (!guardIsRepairing || !repairingGuard)
+        {
+            CancelRepair();
+            return;
+        }
+
+        Engine::Vector2 guardPos(repairingGuard->transform->position.x,
+                                 repairingGuard->transform->position.y);
+        Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
+        float distance = Engine::Vector2::Distance(guardPos, terminalPos);
+
+        if (distance > repairMaxDistance)
+        {
+            CancelRepair();
+            return;
+        }
+
+        repairProgress += deltaTime / repairTime;
+
+        if (repairProgress >= 1.0f)
+        {
+            RestoreCameras();
+        }
     }
-    
-    spriteRenderer->SetColor(color);
-}
 
-/*!
- * \brief [AUTO] GetStateColor
- * \return 
- */
-/*!
- * \brief [AUTO] GetStateColor
- * \return 
- */
-/*!
- * \brief [AUTO] GetStateColor
- * \return 
- */
-/*!
- * \brief [AUTO] GetStateColor
- * \return 
- */
-/*!
- * \brief [AUTO] GetStateColor
- * \return 
- */
-Engine::Color CCTVTerminal::GetStateColor() const {
-    const auto& cfg = GetCCTVTerminalConfig();
-    switch (state) {
+    /*!
+     * \brief [AUTO] NotifyGuardsOfSabotage
+     */
+    void CCTVTerminal::NotifyGuardsOfSabotage()
+    {
+        Engine::Vector2 terminalPos(transform->position.x, transform->position.y);
+
+        for (auto *guard : allGuards)
+        {
+            if (!guard)
+                continue;
+
+            if (guard->homeZoneId == controlledZone)
+            {
+                guard->OnCCTVSystemSabotaged(terminalPos, controlledZone);
+                break;
+            }
+        }
+    }
+
+    /*!
+     * \brief [AUTO] UpdateDisabledState
+     * \param deltaTime [in]
+     */
+    void CCTVTerminal::UpdateDisabledState(float deltaTime)
+    {
+        disabledTimer -= deltaTime;
+
+        if (disabledTimer <= 0.0f && !guardIsRepairing)
+        {
+            RestoreCameras();
+        }
+    }
+
+    /*!
+     * \brief [AUTO] UpdateCooldown
+     * \param deltaTime [in]
+     */
+    void CCTVTerminal::UpdateCooldown(float deltaTime)
+    {
+        cooldownTimer -= deltaTime;
+        if (cooldownTimer < 0.0f)
+        {
+            cooldownTimer = 0.0f;
+        }
+    }
+
+    /*!
+     * \brief [AUTO] UpdateVisualState
+     */
+    void CCTVTerminal::UpdateVisualState()
+    {
+        if (!spriteRenderer)
+            return;
+
+        Engine::Color color = GetStateColor();
+
+        if (state == TerminalState::HACKING || state == TerminalState::REPAIRING)
+        {
+            float pulse = 0.5f + 0.5f * std::sin(Engine::Time::time * pulseSpeed);
+            color.a = pulse;
+        }
+
+        spriteRenderer->SetColor(color);
+    }
+
+    /*!
+     * \brief [AUTO] GetStateColor
+     * \return
+     */
+    Engine::Color CCTVTerminal::GetStateColor() const
+    {
+        switch (state)
+        {
         case TerminalState::ACTIVE:
-            return cfg.activeColor;
+            return activeColor;
         case TerminalState::HACKING:
-            return cfg.hackingColor;
+            return hackingColor;
         case TerminalState::DISABLED:
-            return cfg.disabledColor;
+            return disabledColor;
         case TerminalState::REPAIRING:
-            return cfg.repairingColor;
+            return repairingColor;
         default:
             return Engine::Color::white();
+        }
     }
-}
 
 } // namespace Game
-

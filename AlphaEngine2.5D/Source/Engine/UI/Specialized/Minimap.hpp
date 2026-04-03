@@ -10,6 +10,7 @@
 #include "Engine/Graphics/Color.hpp"
 #include "Engine/Graphics/Sprite.hpp"
 #include "Engine/Math/Mathf.hpp"
+#include "Engine/TileMap/Door.hpp"
 #include <memory>
 #include <vector>
 
@@ -65,7 +66,9 @@ namespace UI
         Engine::Transform* m_playerTransform = nullptr;   // Pointer to player transform for tracking
         std::vector<Engine::Transform*> m_enemyTransforms;
         std::vector<Engine::Transform*> m_cctvTransforms;
+        std::vector<Engine::Door*> m_doors;
         Engine::Sprite* m_cctvSprite = nullptr;
+        
         
         // Terminal icons
         struct TerminalIcon {
@@ -135,6 +138,7 @@ namespace UI
         const Engine::Color& GetEnemyColor() const { return m_enemyColor; }
         void AddCCTVTransform(Engine::Transform* transform);
         void ClearCCTVs();
+        void AddDoor(Engine::Door* door);
         void SetCCTVSprites(Engine::Sprite* sprite);
         
         // Terminal icon management
