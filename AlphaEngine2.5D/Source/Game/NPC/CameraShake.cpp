@@ -105,9 +105,10 @@ namespace Game
             m_timeLeft -= dt;
             float t = (m_duration > 0.0f) ? (m_timeLeft / m_duration) : 0.0f;
             float scale = (t < 0.0f) ? 0.0f : t;
-            m_lastShakeOffset = RandNeg1To1() * m_intensity * scale * cfg.shakePitchScale;
+            const float dtScale = dt * 60.0f;
+            m_lastShakeOffset = RandNeg1To1() * m_intensity * scale * dtScale * cfg.shakePitchScale;
             cam->pitch += m_lastShakeOffset;
-            float rotShake = RandNeg1To1() * m_intensity * scale * cfg.shakeRotationScale;
+            float rotShake = RandNeg1To1() * m_intensity * scale * dtScale * cfg.shakeRotationScale;
             transform->rotation += rotShake;
         }
 
