@@ -22,7 +22,7 @@
   "bgm": {
     "main_menu": "Assets/Audio/BGM/main menu BGM.mp3",
     "fps_gameplay": "Assets/Audio/BGM/Game BGM.mp3",
-    "credits": "Assets/Audio/BGM/credits.mp3"
+    "credits": "Assets/Audio/BGM/Game BGM.mp3"
   },
   "sfx": {
     "ui_click": "Assets/Audio/UI/UI click.mp3",
@@ -32,12 +32,12 @@
     "access_card": "Assets/Audio/AccessCardPickup/Access card.wav",
     "card_collect": "Assets/Audio/AccessCardPickup/Access card.wav",
 
-    "terminal_hack": "Assets/Audio/Door/Access Denied.wav",
+    "terminal_hack": "Assets/Audio/Door/Access Denied.mp3",
     "cctv_disabled": "Assets/Audio/CCTV/CCTV shutdown.mp3",
 
-    "door_open": "Assets/Audio/Door/Door open.wav",
-    "door_close": "Assets/Audio/Door/Door close.wav",
-    "door_locked": "Assets/Audio/Door/Access Denied.wav",
+    "door_open": "Assets/Audio/Door/Door open.mp3",
+    "door_close": "Assets/Audio/Door/Door close.mp3",
+    "door_locked": "Assets/Audio/Door/Access Denied.mp3",
 
     "zone_enter": "Assets/Audio/UI/Notif.mp3",
     "cctv_alert": "Assets/Audio/CCTV/CCTV caught.mp3",
