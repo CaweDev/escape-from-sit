@@ -684,6 +684,7 @@ namespace Game
         Game::PuzzleManager::BookDataInit();
         Game::PuzzleManager::Init();
 
+		// Initialize Power-Up system
         Game::PowerUpManager::Init();
 
         // Create Bandit visualizer (hidden by default)
@@ -798,6 +799,7 @@ namespace Game
             }
         }*/
 
+		// lose condition check - if player is caught by any guard, show lose screen and stop guard chase sound
         if (!gameEnded && playerData && playerData->IsCaught())
         {
             gameEnded = true;
@@ -1107,6 +1109,7 @@ namespace Game
                 }
             }
 
+            // Trigger win state and show win screen
             playerData->Win();
             if (winScreen)
             {

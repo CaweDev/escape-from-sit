@@ -51,6 +51,11 @@ namespace Game {
 	bool Player::hasShield = false;
 	bool Player::isInvisible = false;
 
+	bool Player::IsInvisibleActive()
+	{
+		return isInvisible;
+	}
+
 	void Player::Catch()
 	{
 		bool immune = false;

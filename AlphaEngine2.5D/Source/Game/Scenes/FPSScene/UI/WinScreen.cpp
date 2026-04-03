@@ -239,6 +239,7 @@ namespace Game
         m_title->SetColor(cfg.titleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+		// Time spent and high score texts
         m_timeSpentText = m_panel->CreateChild<UI::Text>();
         m_timeSpentText->name = "WinTimeSpent";
         m_timeSpentText->SetAnchors({ 0.0f, 0.5f }, { 1.0f, 0.5f });

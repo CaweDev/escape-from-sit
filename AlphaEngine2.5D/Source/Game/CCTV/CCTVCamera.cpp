@@ -281,9 +281,10 @@ namespace Game {
         bool inRange = (dist <= maxRange);
         bool inDetectRange = (dist <= detectRadius);
         bool inFov = inRange && InFov(dx, dy);
-        bool los = Player::isInvisible ? false : (inFov && HasLineOfSighttoPlayer());
+        bool los = inFov && HasLineOfSighttoPlayer();
 
-        bool nowSeeing = (inDetectRange && inFov && los);
+		// Player invisibility power-up check: if player is invisible, they cannot be seen regardless of other conditions
+        bool nowSeeing = Player::IsInvisibleActive() ? false : (inDetectRange && inFov && los);
 
         if (nowSeeing && !isSeeingPlayer)
         {

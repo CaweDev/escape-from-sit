@@ -56,6 +56,9 @@ namespace Game {
 		static bool hasShield;
 		static bool isInvisible;
 
+		// Accessor for invisibility state (use this instead of direct flag checks)
+		static bool IsInvisibleActive();
+
 		// Cheat flags (toggled by DebugMenu, only active in FPSScene)
 		static bool cheatInfiniteSpeed;
 		static bool cheatCatchImmune;
