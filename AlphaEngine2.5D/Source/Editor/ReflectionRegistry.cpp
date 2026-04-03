@@ -1,8 +1,8 @@
 /* Start Header ************************************************************************/
 /*!
 \file		ReflectionRegistry.cpp
-\author 	
-\par	
+\author
+\par
 \date	March, 29, 2026
 \brief		[AUTO] ReflectionRegistry
 
@@ -100,8 +100,6 @@ namespace AEEditor
         Registry::RegisterFieldType<Engine::Door>("tileY", offsetof(Engine::Door, tileY), DataType::Int);
         Registry::RegisterFieldType<Engine::Door>("doorType", offsetof(Engine::Door, doorType), DataType::Int);
 
-        // Note: DoorFacing and DoorState are enums. If your reflection system uses DataType::Int
-        // for enums, cast it. Otherwise, you may need a custom DataType::Enum handler.
         Registry::RegisterFieldType<Engine::Door>("facing", offsetof(Engine::Door, facing), DataType::Int);
         Registry::RegisterFieldType<Engine::Door>("state", offsetof(Engine::Door, state), DataType::Int);
 
@@ -369,8 +367,8 @@ namespace AEEditor
         Registry::RegisterFieldType<Game::CCTVTerminal>("repairingColor", offsetof(Game::CCTVTerminal, repairingColor), DataType::Color);
     }
 
-        void
-        ReflectionRegistry::InitializeMetaRegistry()
+    void
+    ReflectionRegistry::InitializeMetaRegistry()
     {
         Registry::types.clear();
         Registry::nameToType.clear();
@@ -402,6 +400,5 @@ namespace AEEditor
         RegisterDoorRenderer();
         RegisterBoxCollider2D();
     }
-
 
 }

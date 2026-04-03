@@ -31,20 +31,8 @@ namespace
         float cctvSpikeAmount = 1.0f;
         float fullEscalationThreshold = 30.0f;
 
-        float spawnExcludeX = 2.5f;
-        float spawnExcludeY = 2.5f;
-        float spawnExcludeRadius = 7.0f;
-        int spawnPickAttempts = 100;
-        int spawnFallbackMaxRadius = 20;
 
-        float bullyNPCSpeed = 2.0f;
-        float bullyNPCTriggerRadius = 3.0f;
-        float annoyingNPCSpeed = 1.2f;
-        float annoyingNPCTriggerRadius = 2.5f;
-        float annoyingNPCBlockTime = 1.5f;
-        float spawnedNPCColliderRadius = 0.25f;
-        float spawnedGuardColliderRadius = 0.3f;
-
+     
         float npcNoticeRadius = 6.0f;
         float guardShakeDistance = 6.0f;
         float guardShakeDuration = 0.1f;
@@ -101,19 +89,6 @@ namespace
             cctvSpikeAmount = j.get("cctvSpikeAmount", cctvSpikeAmount).asFloat();
             fullEscalationThreshold = j.get("fullEscalationThreshold", fullEscalationThreshold).asFloat();
 
-            spawnExcludeX = j.get("spawnExcludeX", spawnExcludeX).asFloat();
-            spawnExcludeY = j.get("spawnExcludeY", spawnExcludeY).asFloat();
-            spawnExcludeRadius = j.get("spawnExcludeRadius", spawnExcludeRadius).asFloat();
-            spawnPickAttempts = j.get("spawnPickAttempts", spawnPickAttempts).asInt();
-            spawnFallbackMaxRadius = j.get("spawnFallbackMaxRadius", spawnFallbackMaxRadius).asInt();
-
-            bullyNPCSpeed = j.get("bullyNPCSpeed", bullyNPCSpeed).asFloat();
-            bullyNPCTriggerRadius = j.get("bullyNPCTriggerRadius", bullyNPCTriggerRadius).asFloat();
-            annoyingNPCSpeed = j.get("annoyingNPCSpeed", annoyingNPCSpeed).asFloat();
-            annoyingNPCTriggerRadius = j.get("annoyingNPCTriggerRadius", annoyingNPCTriggerRadius).asFloat();
-            annoyingNPCBlockTime = j.get("annoyingNPCBlockTime", annoyingNPCBlockTime).asFloat();
-            spawnedNPCColliderRadius = j.get("spawnedNPCColliderRadius", spawnedNPCColliderRadius).asFloat();
-            spawnedGuardColliderRadius = j.get("spawnedGuardColliderRadius", spawnedGuardColliderRadius).asFloat();
 
             npcNoticeRadius = j.get("npcNoticeRadius", npcNoticeRadius).asFloat();
             guardShakeDistance = j.get("guardShakeDistance", guardShakeDistance).asFloat();
@@ -174,20 +149,6 @@ namespace Game
         cctvSpikeCooldown = cfg.cctvSpikeCooldown;
         cctvSpikeAmount = cfg.cctvSpikeAmount;
         fullEscalationThreshold = cfg.fullEscalationThreshold;
-
-        spawnExcludeX = cfg.spawnExcludeX;
-        spawnExcludeY = cfg.spawnExcludeY;
-        spawnExcludeRadius = cfg.spawnExcludeRadius;
-        spawnPickAttempts = cfg.spawnPickAttempts;
-        spawnFallbackMaxRadius = cfg.spawnFallbackMaxRadius;
-
-        bullyNPCSpeed = cfg.bullyNPCSpeed;
-        bullyNPCTriggerRadius = cfg.bullyNPCTriggerRadius;
-        annoyingNPCSpeed = cfg.annoyingNPCSpeed;
-        annoyingNPCTriggerRadius = cfg.annoyingNPCTriggerRadius;
-        annoyingNPCBlockTime = cfg.annoyingNPCBlockTime;
-        spawnedNPCColliderRadius = cfg.spawnedNPCColliderRadius;
-        spawnedGuardColliderRadius = cfg.spawnedGuardColliderRadius;
 
         gameEnded = false;
         printedWin = false;
@@ -361,32 +322,6 @@ namespace Game
         }
         zoneMgr.SetZoneGrid(zoneGrid);
 
-        // ===== spawn 4 guards (1 per zone) =====
-        guards.clear();
-
-        auto guardObjects = GameObject::FindGameObjectsWithTag("Guard");
-        for (auto &g : guardObjects)
-        {
-            auto guard = g->GetComponent<SecurityGuard>();
-            guard->tileMap = map;
-            guard->playerTf = playerTf;
-            guard->playerData = playerData;
-            guard->zoneMgr = &zoneMgr;
-            guard->heatmap = &heatmap;
-            guard->SetPatrolZoneOverride(guard->homeZoneId);
-
-            g->GetComponent<SpriteSheetRenderer>()->Play("Patrol");
-
-            if (playerHUD)
-                playerHUD->AddEnemyTransform(g->transform);
-
-            guards.push_back(guard);
-        }
-
-        // start with zone 1 priority
-        prevChosenZoneId = 1;
-        ApplyPriorityZone_AssistNearest(prevChosenZoneId);
-
         // ===== CCTV  =====
 
         auto terminals = GameObject::FindGameObjectsWithTag("Terminal");
@@ -541,22 +476,70 @@ namespace Game
             playerHUD->AddDoor(door);
         }
 
-        // Connect terminals to guards
-        for (auto *guard : guards)
+        // ===== spawn 4 guards (1 per zone) =====
+        guards.clear();
+
+        auto guardObjects = GameObject::FindGameObjectsWithTag("Guard");
+        for (auto &g : guardObjects)
         {
-            if (guard)
-            {
-                guard->SetTerminals(&cctvTerminals);
-            }
+            auto guard = g->GetComponent<SecurityGuard>();
+            guard->tileMap = map;
+            guard->playerTf = playerTf;
+            guard->playerData = playerData;
+            guard->zoneMgr = &zoneMgr;
+            guard->heatmap = &heatmap;
+            guard->SetPatrolZoneOverride(guard->homeZoneId);
+            guard->SetTerminals(&cctvTerminals);
+
+            g->GetComponent<SpriteSheetRenderer>()->Play("Patrol");
+
+            if (playerHUD)
+                playerHUD->AddEnemyTransform(g->transform);
+
+            guards.push_back(guard);
         }
 
+        // start with zone 1 priority
+        prevChosenZoneId = 1;
+        ApplyPriorityZone_AssistNearest(prevChosenZoneId);
+
         // ===== Spawn NPCs: 2 Bully + 2 Annoying per zone (16 total) =====
+
         npcs.clear();
-        for (int z = 1; z <= 4; ++z)
+        auto npcObjects = Engine::GameObject::FindGameObjectsWithTag("NPC");
+
+        for (auto &npcGO : npcObjects)
         {
-            // Spawn with extra checks - avoid player spawn and doors
-            SpawnNPCInZone(z, NPCType::Bully, map, "Assets/Sprites/bully.png");
-            SpawnNPCInZone(z, NPCType::Annoying, map, "Assets/Sprites/annoying_classmate.png");
+            auto npc = npcGO->GetComponent<Game::NPC>();
+            if (!npc)
+                continue;
+
+            npc->tileMap = map;
+            npc->playerTf = playerTf;
+            npc->playerData = playerData;
+
+            if (playerCam)
+            {
+                auto shake = playerCam->gameObject->GetComponent<Game::CameraShake>();
+                if (!shake)
+                {
+                    shake = playerCam->gameObject->AddComponent<Game::CameraShake>();
+                    shake->Initialize();
+                }
+                npc->camShake = shake;
+            }
+
+            npc->SetPickGoalInZone([this](int zId, int &outX, int &outY) -> bool
+                                   { return zoneMgr.PickRandomWalkableInZone(zId, outX, outY); });
+
+            // Start patrol animation
+            auto sr = npcGO->GetComponent<Engine::SpriteSheetRenderer>();
+            if (sr)
+            {
+                sr->Play("Patrol");
+            }
+
+            npcs.push_back(npc);
         }
 
         // Add terminal icons to minimap

@@ -20,7 +20,12 @@
 #include "Game/Player/Player.hpp"
 namespace Game
 {
-    enum class NPCType { Annoying, Cleaner, Bully };
+    enum class NPCType
+    {
+        Cleaner,
+        Bully,
+        Annoying
+    };
 
     class NPC : public Engine::Component
     {
