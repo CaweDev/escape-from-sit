@@ -1,7 +1,5 @@
 /*!
  * \file PowerUp.hpp
- * \author Chim Kin Ho, Caleb
- * \date 2026-03-29
  * \brief Header for power-up collectible component and its data
  */
 #pragma once
