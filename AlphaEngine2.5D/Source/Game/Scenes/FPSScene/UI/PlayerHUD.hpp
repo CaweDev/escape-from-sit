@@ -305,6 +305,7 @@ namespace Game
         // Get color for each access card (for minimap path coloring)
         Engine::Color GetCardColor(int cardId) const;
 
+		// update power-up HUD on pickup, expiration, or each frame for timers      
         void UpdatePowerUpUI();
 
         void UpdateInventory();

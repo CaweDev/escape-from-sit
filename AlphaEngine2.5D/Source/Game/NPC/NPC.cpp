@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\NPC\NPC.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief NPC behavior
  */
 
 #include "NPC.hpp"
@@ -161,7 +159,8 @@ namespace Game
 
     void NPC::UpdateAnnoying(float dt)
     {
-        if (PlayerInRange() && playerTf && !Player::isInvisible)
+		// Check if player is in range and visible (not invisible power-up)
+        if (PlayerInRange() && playerTf && !Player::IsInvisibleActive())
         {
             // NPC is actively following / annoying the player
             activeTimer = blockTime;
@@ -260,7 +259,7 @@ namespace Game
         bullyCooldown -= dt;
 
         // start chase when player walks past (enters range) and bully is not cooling down
-        if (PlayerInRange() && bullyCooldown <= 0.0f && activeTimer <= 0.0f && !Player::isInvisible)
+        if (PlayerInRange() && bullyCooldown <= 0.0f && activeTimer <= 0.0f && !Player::IsInvisibleActive())
         {
             activeTimer = bullyChaseTime;   // chasing window
             repathTimer = 0.0f;             // force immediate repath

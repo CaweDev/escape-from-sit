@@ -1,7 +1,5 @@
 /*!
  * \file SplashScene.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Implementation of horror-themed DigiPen splash screen
  */
 #include "SplashScene.hpp"

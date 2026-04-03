@@ -1,7 +1,5 @@
 /*!
  * \file Inventory.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Implementation of a small item inventory component
  */
 #include "Inventory.hpp"

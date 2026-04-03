@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\LoseScreen.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Ui popup that appears when the player loses, with options to return to main menu or restart the level
  */
 
 #include "LoseScreen.hpp"
@@ -113,13 +111,16 @@ namespace Game
 
         if (m_isFadingIn)
         {
+			// check current timer against duration and apply fade
             m_fadeTimer += Engine::Time::unscaledDeltaTime;
             float t = (m_fadeDuration > 0.0f) ? (m_fadeTimer / m_fadeDuration) : 1.0f;
+			// clamp t to [0,1]
             if (t < 0.0f) t = 0.0f;
             if (t > 1.0f) t = 1.0f;
 
             ApplyFade(t);
 
+			// once fade-in is complete, stop fading
             if (t >= 1.0f)
             {
                 m_isFadingIn = false;
@@ -141,6 +142,7 @@ namespace Game
                 m_isFadingOut = false;
                 CompleteHide();
 
+				// load the pending scene after fade-out is complete
                 if (m_pendingAction == PendingAction::LoadMainMenu)
                 {
                     m_pendingAction = PendingAction::None;
@@ -172,14 +174,14 @@ namespace Game
 
         Engine::Color btn = cfg.buttonColor;
         btn.a *= t;
-        if (m_button) m_button->SetBackgroundColor(btn);
+        if (m_menuButton) m_menuButton->SetBackgroundColor(btn);
         if (m_restartButton) m_restartButton->SetBackgroundColor(btn);
 
-        if (m_button && m_button->GetLabel())
+        if (m_menuButton && m_menuButton->GetLabel())
         {
             Engine::Color c = Engine::Color::white();
             c.a = t;
-            m_button->GetLabel()->SetColor(c);
+            m_menuButton->GetLabel()->SetColor(c);
         }
 
         if (m_restartButton && m_restartButton->GetLabel())
@@ -206,7 +208,7 @@ namespace Game
             m_overlay = nullptr;
             m_panel = nullptr;
             m_title = nullptr;
-            m_button = nullptr;
+            m_menuButton = nullptr;
             m_restartButton = nullptr;
         }
     }
@@ -261,18 +263,18 @@ namespace Game
         m_restartButton->GetBackground()->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
         m_restartButton->onClick = [this]() { OnRestartButtonClicked(); };
 
-        m_button = m_panel->CreateChild<UI::Button>();
-        m_button->name = "LoseButton";
-        m_button->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
-        m_button->SetPivot({ 0.5f, 0.0f });
-        m_button->SetAnchoredPosition({ 0.0f, cfg.mainMenuButtonPosY });
-        m_button->SetSizeDelta({ cfg.buttonWidth, cfg.buttonHeight });
-        m_button->SetText("Main Menu");
-        m_button->SetBackgroundColor(cfg.buttonColor);
-        m_button->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonTexturePath.c_str()));
-        m_button->GetBackground()->SetImageType(UI::ImageType::Sliced);
-        m_button->GetBackground()->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
-        m_button->onClick = [this]() { OnButtonClicked(); };
+        m_menuButton = m_panel->CreateChild<UI::Button>();
+        m_menuButton->name = "LoseButton";
+        m_menuButton->SetAnchors({ 0.5f, 0.0f }, { 0.5f, 0.0f });
+        m_menuButton->SetPivot({ 0.5f, 0.0f });
+        m_menuButton->SetAnchoredPosition({ 0.0f, cfg.mainMenuButtonPosY });
+        m_menuButton->SetSizeDelta({ cfg.buttonWidth, cfg.buttonHeight });
+        m_menuButton->SetText("Main Menu");
+        m_menuButton->SetBackgroundColor(cfg.buttonColor);
+        m_menuButton->SetBackgroundSprite(Engine::AssetManager::GetTexture(cfg.buttonTexturePath.c_str()));
+        m_menuButton->GetBackground()->SetImageType(UI::ImageType::Sliced);
+        m_menuButton->GetBackground()->SetPixelsPerUnitMultiplier(cfg.buttonPixelsPerUnitMultiplier);
+        m_menuButton->onClick = [this]() { OnButtonClicked(); };
 
         ApplyFade(1.0f);
     }
@@ -286,7 +288,7 @@ namespace Game
         m_visible = true;
         m_overlay->visible = true;
 
-        if (m_button) m_button->enabled = true;
+        if (m_menuButton) m_menuButton->enabled = true;
         if (m_restartButton) m_restartButton->enabled = true;
 
         m_fadeTimer = 0.0f;
@@ -307,7 +309,7 @@ namespace Game
         m_isFadingOut = true;
         m_fadeTimer = 0.0f;
 
-        if (m_button) m_button->enabled = false;
+        if (m_menuButton) m_menuButton->enabled = false;
         if (m_restartButton) m_restartButton->enabled = false;
     }
 

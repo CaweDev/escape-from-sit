@@ -6,8 +6,6 @@
 
 /*!
  * \file FPSScene.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Implementation of the FPSScene including map loading and game logic
  */
 
@@ -545,6 +543,7 @@ namespace Game
         Game::PuzzleManager::BookDataInit("Assets/Config/Game/books.json");
         Game::PuzzleManager::Init();
 
+		// Initialize Power-Up system
         Game::PowerUpManager::Init();
 
         // Create Bandit visualizer (hidden by default)
@@ -644,6 +643,7 @@ namespace Game
             }
         }*/
 
+		// lose condition check - if player is caught by any guard, show lose screen and stop guard chase sound
         if (!gameEnded && playerData && playerData->IsCaught())
         {
             gameEnded = true;
@@ -953,6 +953,7 @@ namespace Game
                 }
             }
 
+            // Trigger win state and show win screen
             playerData->Win();
             if (winScreen)
             {

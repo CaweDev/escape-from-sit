@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\PowerUp\PowerUp.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief PowerUpObject component that represents a collectible power-up in the world, with floating and respawn behavior
  */
 
 #include "PowerUp.hpp"
@@ -226,6 +224,7 @@ namespace Game {
      */
     Engine::Color PowerUpObject::GetHighlightColor() const {
         const auto& cfg = GetPowerUpObjectConfig();
+		// set highlight color based on power-up type, with a default fallback
         switch (reference.type) {
         case PowerUpType::SpeedBoost:      return cfg.speedBoostHighlight;
         case PowerUpType::InfiniteStamina: return cfg.infiniteStaminaHighlight;

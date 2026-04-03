@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\ZoneManager\ZoneManager.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief ZoneManager system that handles spatial partitioning of the map into zones
  */
 
 #include "ZoneManager.hpp"

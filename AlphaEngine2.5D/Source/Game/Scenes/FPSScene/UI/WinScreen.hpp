@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\WinScreen.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief ui component for the win screen that appears after beating the game, showing stats and a button to return to the main menu
  */
 
 #pragma once

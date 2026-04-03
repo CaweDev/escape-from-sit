@@ -1,10 +1,3 @@
-/*!
- * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVCamera.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
- */
-
 #include "CCTVCamera.hpp"
 #include "Game/Scenes/FPSScene/UI/PlayerHUD.hpp"
 #include "Game/Player/Player.hpp"
@@ -18,8 +11,6 @@
 
 /*!
  * \file CCTVCamera.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Implementation of CCTV camera detection and visualization
  */
 
@@ -277,9 +268,10 @@ namespace Game {
         bool inRange = (dist <= maxRange);
         bool inDetectRange = (dist <= detectRadius);
         bool inFov = inRange && InFov(dx, dy);
-        bool los = Player::isInvisible ? false : (inFov && HasLineOfSighttoPlayer());
+        bool los = inFov && HasLineOfSighttoPlayer();
 
-        bool nowSeeing = (inDetectRange && inFov && los);
+		// Player invisibility power-up check: if player is invisible, they cannot be seen regardless of other conditions
+        bool nowSeeing = Player::IsInvisibleActive() ? false : (inDetectRange && inFov && los);
 
         if (nowSeeing && !isSeeingPlayer)
         {

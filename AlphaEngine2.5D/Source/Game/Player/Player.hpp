@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Player\Player.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Player component Manager
  */
 
 #pragma once
@@ -55,6 +53,9 @@ namespace Game {
 		static bool hasInfiniteStamina;
 		static bool hasShield;
 		static bool isInvisible;
+
+		// Accessor for invisibility state (use this instead of direct flag checks)
+		static bool IsInvisibleActive();
 
 		// Cheat flags (toggled by DebugMenu, only active in FPSScene)
 		static bool cheatInfiniteSpeed;

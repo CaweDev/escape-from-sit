@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\NPC\CameraShake.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Component that applies procedural camera shake effects
  */
 
 #include "CameraShake.hpp"

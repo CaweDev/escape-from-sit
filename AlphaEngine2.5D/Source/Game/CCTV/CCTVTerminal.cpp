@@ -1,7 +1,5 @@
 /*!
  * \file CCTVTerminal.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Component that represents an interactive CCTV terminal in the world
  */
 

@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\UCB1Bandit\UCB1Bandit.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief simple UCB1 multi-armed bandit implementation
  */
 
 #include "UCB1Bandit.hpp"

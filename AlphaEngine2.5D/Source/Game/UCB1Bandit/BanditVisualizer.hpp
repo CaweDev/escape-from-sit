@@ -1,8 +1,6 @@
 #pragma once
 /*!
  * \file BanditVisualizer.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief UI component for visualizing UCB1 bandit decisions and CCTV logs
  */
 #include "Engine/Core/Component.hpp"

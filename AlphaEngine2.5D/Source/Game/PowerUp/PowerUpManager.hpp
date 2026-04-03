@@ -15,7 +15,7 @@ namespace Game {
      */
     class PowerUpManager {
     public:
-        static std::vector<PowerUpData> allPowerUps; ///< Master list of all power-up data.
+        static std::vector<PowerUpData> allPowerUps; // Master list of all power-up data.
 
         /**
          * @brief Spawns a PowerUpObject in the scene based on the provided data.
