@@ -12,7 +12,10 @@
 *.iobj
 *.ipdb
 .tmp
-bin
+bin/*
+!bin/Debug-x64/
+bin/Debug-x64/*
+!bin/Debug-x64/LaunchEditor.bat
 Debug
 Release
 .vscode
