@@ -20,8 +20,6 @@
 #include "Engine/Audio/SoundManager.hpp"
 #include "Game/Player/PlayerPowerUpController.hpp"
 #include "Game/Puzzle/PuzzleManager.hpp"
-#include "Game/Inventory/Inventory.hpp"
-#include "Game/Items/Item.hpp"
 
 namespace Game
 {
@@ -772,31 +770,6 @@ namespace Game
             m_powerUpTimers[i]->SetAnchor(UI::TextAnchor::MiddleCenter);
         }
 
-        inventoryPanel = m_canvas->CreateChild<UI::Panel>();
-        inventoryPanel->name = "InventoryPanel";
-        inventoryPanel->SetAnchors({0.5f, 0.0f}, {0.5f, 0.0f}); // Bottom center
-        inventoryPanel->SetPivot({0.5f, 0.0f});
-        inventoryPanel->SetAnchoredPosition({0.0f, 20.0f});
-        inventoryPanel->SetSizeDelta({200.0f, 60.0f});
-        inventoryPanel->SetBackgroundColor(Engine::Color(0.1f, 0.1f, 0.1f, 0.8f));
-
-        for (int i = 0; i < 3; ++i)
-        {
-            inventorySlots[i] = inventoryPanel->CreateChild<UI::Panel>();
-            inventorySlots[i]->SetAnchors({0.0f, 0.5f}, {0.0f, 0.5f});
-            inventorySlots[i]->SetPivot({0.0f, 0.5f});
-            // Space them out horizontally
-            inventorySlots[i]->SetAnchoredPosition({15.0f + (i * 60.0f), 0.0f});
-            inventorySlots[i]->SetSizeDelta({50.0f, 50.0f});
-            inventorySlots[i]->SetBackgroundColor(Engine::Color(0.2f, 0.2f, 0.2f, 1.0f));
-
-            inventoryIcons[i] = inventorySlots[i]->CreateChild<UI::Image>();
-            inventoryIcons[i]->SetAnchors({0.5f, 0.5f}, {0.5f, 0.5f});
-            inventoryIcons[i]->SetPivot({0.5f, 0.5f});
-            inventoryIcons[i]->SetSizeDelta({40.0f, 40.0f});
-            inventoryIcons[i]->SetColor(Engine::Color(0, 0, 0, 0)); // Hidden by default
-        }
-
         // If we have a transform, use it as player transform by default
         if (transform && !m_playerTransform)
         {
@@ -1092,7 +1065,6 @@ namespace Game
         }
 
         UpdatePowerUpUI();
-        UpdateInventory();
     }
 
     void PlayerHUD::UpdatePowerUpUI()
@@ -1778,48 +1750,5 @@ namespace Game
             m_minimap->SetPathColor(GetCardColor(m_activePathCardId)); // SET COLOR BASED ON CARD!
         }
     }
-
-    void PlayerHUD::UpdateInventory()
-    {
-        if (m_playerTransform && m_playerTransform->gameObject)
-        {
-            auto inventory = m_playerTransform->gameObject->GetComponent<Game::Inventory>();
-            if (inventory)
-            {
-                for (int i = 0; i < Game::Inventory::MAX_SLOTS; ++i)
-                {
-                    Engine::Color bgColor = (i == inventory->activeSlot)
-                                                ? Engine::Color(0.8f, 0.8f, 0.2f, 1.0f)
-                                                : Engine::Color(0.2f, 0.2f, 0.2f, 1.0f);
-
-                    if (inventorySlots[i])
-                    {
-                        inventorySlots[i]->SetBackgroundColor(bgColor);
-                    }
-
-                    // Update item icons
-                    if (inventoryIcons[i])
-                    {
-                        if (inventory->slots[i])
-                        {
-                            auto item = inventory->slots[i]->GetComponent<Game::SpriteRenderer>();
-                            if (item && !item->spritePath.empty())
-                            {
-                                inventoryIcons[i]->SetTexture(Engine::AssetManager::GetTexture(item->spritePath));
-                                inventoryIcons[i]->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f));
-                            }
-                        }
-                        else
-                        {
-                            inventoryIcons[i]->SetTexture(nullptr);
-                            inventoryIcons[i]->SetColor(Engine::Color(0.0f, 0.0f, 0.0f, 0.0f));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
 
 } // namespace Game

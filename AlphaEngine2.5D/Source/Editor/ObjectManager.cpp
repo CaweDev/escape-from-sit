@@ -21,6 +21,7 @@ Technology is prohibited.
 #include <filesystem>
 #include <algorithm>
 #include <cctype>
+#include <iostream>
 
 #include "Reflection.hpp"
 #include "Engine/Core/GameObject.hpp"
@@ -693,16 +694,34 @@ namespace AEEditor
     {
         std::ifstream file(filepath);
         if (!file.is_open())
+        {
+            std::cerr << "[ObjectManager] Failed to open scene file: " << filepath << "\n";
             return;
+        }
 
         Json::Value root;
-        file >> root;
-        file.close();
+        Json::CharReaderBuilder builder;
+        builder["collectComments"] = false;
+        JSONCPP_STRING parseErrors;
+
+        if (!Json::parseFromStream(builder, file, &root, &parseErrors))
+        {
+            std::cerr << "[ObjectManager] Failed to parse scene JSON: " << filepath << "\n"
+                      << parseErrors << "\n";
+            return;
+        }
+
+        const Json::Value &goArray = root["GameObjects"];
+        if (!goArray.isArray())
+        {
+            std::cerr << "[ObjectManager] Invalid scene format in " << filepath
+                      << ": missing or non-array 'GameObjects'.\n";
+            return;
+        }
 
         loadedObjects.clear();
         selectedObject = nullptr;
 
-        const Json::Value &goArray = root["GameObjects"];
         for (const auto &goJson : goArray)
         {
             loadedObjects.push_back(DeserializeGameObject(goJson));

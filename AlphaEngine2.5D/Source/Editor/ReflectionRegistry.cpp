@@ -26,9 +26,6 @@ Technology is prohibited.
 #include "Engine/Graphics/DoorRenderer.hpp"
 #include "Engine/Tilemap/Door.hpp"
 
-#include "game/Items/SodaCanItem.hpp"
-#include "game/Items/LaptopItem.hpp"
-#include "game/Inventory/Inventory.hpp"
 #include "game/AccessCard/AccessCard.hpp"
 #include "game/CCTV/CCTVCamera.hpp"
 #include "game/ControlRoomDoor/ControlRoomDoor.hpp"
@@ -116,21 +113,6 @@ namespace AEEditor
         AEEditor::Registry::RegisterFieldType<Engine::Interactable>("hitShape", offsetof(Engine::Interactable, hitShape), AEEditor::DataType::Int);
         AEEditor::Registry::RegisterFieldType<Engine::Interactable>("requireHold", offsetof(Engine::Interactable, requireHold), AEEditor::DataType::Bool);
         AEEditor::Registry::RegisterFieldType<Engine::Interactable>("holdDuration", offsetof(Engine::Interactable, holdDuration), AEEditor::DataType::Float);
-    }
-
-    void RegisterInventory()
-    {
-        Registry::RegisterClassType<Game::Inventory>("Inventory");
-    }
-
-    void RegisterItems()
-    {
-        Registry::RegisterClassType<Game::SodaCanItem>("SodaCanItem");
-        Registry::RegisterFieldType<Game::SodaCanItem>("itemName", offsetof(Game::SodaCanItem, itemName), DataType::String);
-
-        Registry::RegisterClassType<Game::LaptopItem>("LaptopItem");
-        Registry::RegisterFieldType<Game::LaptopItem>("itemName", offsetof(Game::LaptopItem, itemName), DataType::String);
-        Registry::RegisterFieldType<Game::LaptopItem>("timer", offsetof(Game::LaptopItem, timer), DataType::Float);
     }
 
     void RegisterAccessCard()
@@ -379,8 +361,6 @@ namespace AEEditor
         RegisterRigidbody2D();
 
         RegisterInteractable();
-        RegisterInventory();
-        RegisterItems();
         RegisterAccessCard();
         RegisterCCTVCamera();
         RegisterControlRoomDoor();

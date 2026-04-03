@@ -138,10 +138,6 @@ namespace Game
         UI::Text* m_powerUpTimers[4] = { nullptr, nullptr, nullptr, nullptr };
         Engine::Texture2D* m_powerUpTextures[4] = { nullptr, nullptr, nullptr, nullptr };
 
-        UI::Panel *inventoryPanel = nullptr;
-        UI::Panel *inventorySlots[3] = {nullptr, nullptr, nullptr};
-        UI::Image *inventoryIcons[3] = {nullptr, nullptr, nullptr};
-
         Game::BanditVisualizer* m_banditVisualizer = nullptr;
     public:
         PlayerHUD() = default;
@@ -307,7 +303,6 @@ namespace Game
 
         void UpdatePowerUpUI();
 
-        void UpdateInventory();
     };
 
 } // namespace Game

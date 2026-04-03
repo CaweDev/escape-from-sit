@@ -37,10 +37,6 @@
     <ClCompile Include="Source\Game\Debugger\DebugManager.cpp" />
     <ClCompile Include="Source\Game\Debugger\DebugMenu.cpp" />
     <ClCompile Include="Source\Game\Heatmap\Heatmap.cpp" />
-    <ClCompile Include="Source\Game\Inventory\Inventory.cpp" />
-    <ClCompile Include="Source\Game\Items\Item.cpp" />
-    <ClCompile Include="Source\Game\Items\LaptopItem.cpp" />
-    <ClCompile Include="Source\Game\Items\SodaCanItem.cpp" />
     <ClCompile Include="Source\Game\LevelEditor\LevelEditor.cpp" />
     <ClCompile Include="Source\Game\NPC\CameraShake.cpp" />
     <ClCompile Include="Source\Game\NPC\NPC.cpp" />
@@ -215,10 +211,6 @@
     <ClInclude Include="Source\Game\Debugger\DebugManager.hpp" />
     <ClInclude Include="Source\Game\Debugger\DebugMenu.hpp" />
     <ClInclude Include="Source\Game\Heatmap\Heatmap.hpp" />
-    <ClInclude Include="Source\Game\Inventory\Inventory.hpp" />
-    <ClInclude Include="Source\Game\Items\Item.hpp" />
-    <ClInclude Include="Source\Game\Items\LaptopItem.hpp" />
-    <ClInclude Include="Source\Game\Items\SodaCanItem.hpp" />
     <ClInclude Include="Source\Game\LevelEditor\LevelEditor.hpp" />
     <ClInclude Include="Source\Game\NPC\CameraShake.hpp" />
     <ClInclude Include="Source\Game\CCTV\CCTVCamera.hpp" />
