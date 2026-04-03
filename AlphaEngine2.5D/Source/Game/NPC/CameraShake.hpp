@@ -1,7 +1,5 @@
 /*!
  * \file CameraShake.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Component that applies procedural camera shake effects
  */
 

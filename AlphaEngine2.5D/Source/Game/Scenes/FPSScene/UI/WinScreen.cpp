@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\WinScreen.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief ui component for the win screen that appears after beating the game, showing stats and a button to return to the main menu
  */
 
 #include "WinScreen.hpp"
@@ -239,6 +237,7 @@ namespace Game
         m_title->SetColor(cfg.titleColor);
         m_title->SetAnchor(UI::TextAnchor::MiddleCenter);
 
+		// Time spent and high score texts
         m_timeSpentText = m_panel->CreateChild<UI::Text>();
         m_timeSpentText->name = "WinTimeSpent";
         m_timeSpentText->SetAnchors({ 0.0f, 0.5f }, { 1.0f, 0.5f });

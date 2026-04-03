@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\Hands67.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief UI helper that toggles hands overlay when 6+7 pressed
  */
 
 #pragma once

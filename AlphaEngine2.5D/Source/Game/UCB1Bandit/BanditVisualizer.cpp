@@ -1,10 +1,3 @@
-/*!
- * \file AlphaEngine2.5D\Source\Game\UCB1Bandit\BanditVisualizer.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
- */
-
 #include "BanditVisualizer.hpp"
 #include "Engine/Core/Application.hpp"
 #include "Engine/Core/Time.hpp"
@@ -19,8 +12,6 @@
 
 /*!
  * \file BanditVisualizer.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Implementation of BanditVisualizer UI component
  */
 

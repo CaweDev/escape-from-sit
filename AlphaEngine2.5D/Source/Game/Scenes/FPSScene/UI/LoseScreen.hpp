@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\FPSScene\UI\LoseScreen.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Ui popup that appears when the player loses, with options to return to main menu or restart the level
  */
 
 #pragma once
@@ -26,7 +24,7 @@ namespace Game
         UI::Panel* m_overlay = nullptr;
         UI::Panel* m_panel = nullptr;
         UI::Text* m_title = nullptr;
-        UI::Button* m_button = nullptr;          // Main Menu
+        UI::Button* m_menuButton = nullptr;          // Main Menu
         UI::Button* m_restartButton = nullptr;   // Restart
         bool m_visible = false;
 

@@ -1,6 +1,6 @@
 /*!
  * \file PowerUp.hpp
- * \author DigiPen Student
+ * \author Chim Kin Ho, Caleb
  * \date 2026-03-29
  * \brief Header for power-up collectible component and its data
  */
@@ -24,11 +24,11 @@ namespace Game {
      * \brief Data that defines a power-up instance
      */
     struct PowerUpData {
-        int id;                     /*!< Unique ID for the power-up. */
+        int id = 0;                     /*!< Unique ID for the power-up. */
         Engine::Vector3 position;   /*!< World position of the power-up. */
-        PowerUpType type;           /*!< Type of power-up (from PlayerPowerUpController). */
+        PowerUpType type = PowerUpType::SpeedBoost;           /*!< Type of power-up (from PlayerPowerUpController). */
         std::string name;           /*!< Display name of the power-up. */
-        float duration;             /*!< Duration of the effect in seconds. */
+        float duration = 0;             /*!< Duration of the effect in seconds. */
     };
 
     /*!

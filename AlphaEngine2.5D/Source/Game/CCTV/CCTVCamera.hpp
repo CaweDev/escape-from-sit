@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\CCTV\CCTVCamera.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Implementation of CCTV camera detection and visualization
  */
 
 #pragma once

@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Player\Player.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Player component Manager
  */
 
 #include "Player.hpp"
@@ -50,6 +48,11 @@ namespace Game {
 	bool Player::hasInfiniteStamina = false;
 	bool Player::hasShield = false;
 	bool Player::isInvisible = false;
+
+	bool Player::IsInvisibleActive()
+	{
+		return isInvisible;
+	}
 
 	void Player::Catch()
 	{

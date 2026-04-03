@@ -1,7 +1,5 @@
 /*!
  * \file ControlRoomDoor.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Special door that requires access cards to unlock
  */
 #pragma once

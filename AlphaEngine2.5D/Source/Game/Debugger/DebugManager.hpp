@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Debugger\DebugManager.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief DebugManager implementation that manages the debug menu and its input handling
  */
 
 #pragma once

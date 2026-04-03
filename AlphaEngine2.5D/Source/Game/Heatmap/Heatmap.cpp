@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Heatmap\Heatmap.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Heatmap used to track activity on the tilemap
  */
 
 #include "Heatmap.hpp"

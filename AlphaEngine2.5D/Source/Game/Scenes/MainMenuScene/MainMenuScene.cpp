@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\MainMenuScene\MainMenuScene.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief MainMenuScene implementation
  */
 
 #include "MainMenuScene.hpp"

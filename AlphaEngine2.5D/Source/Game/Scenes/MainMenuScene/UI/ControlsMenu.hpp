@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Scenes\MainMenuScene\UI\ControlsMenu.hpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief Controls Menu UI implementation for displaying game controls
  */
 
 #pragma once

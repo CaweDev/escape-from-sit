@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Debugger\DebugMenu.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief DebugMenu visual implementation and logic for the in-game debug menu system
  */
 
 #include "DebugMenu.hpp"

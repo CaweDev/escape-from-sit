@@ -1,7 +1,5 @@
 /*!
  * \file UCB1Bandit.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Header for a simple UCB1 multi-armed bandit implementation
  */
 

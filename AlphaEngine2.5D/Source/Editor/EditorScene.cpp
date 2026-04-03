@@ -1,7 +1,5 @@
 /*!
  * \file EditorScene.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief EditorScene implementation and helper spawners for editor mode
  */
 #include "imgui.h"

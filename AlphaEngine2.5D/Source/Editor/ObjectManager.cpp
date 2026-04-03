@@ -35,8 +35,6 @@ Technology is prohibited.
 
 /*!
  * \file ObjectManager.cpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Editor utilities to serialize/inspect and manage GameObjects
  */
 

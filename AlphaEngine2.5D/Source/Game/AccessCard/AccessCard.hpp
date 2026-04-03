@@ -1,7 +1,5 @@
 /*!
  * \file AccessCard.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Access card collectible that unlocks control room doors
  */
 #pragma once

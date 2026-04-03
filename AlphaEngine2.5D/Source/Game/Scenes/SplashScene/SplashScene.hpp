@@ -1,8 +1,6 @@
 #pragma once
 /*!
  * \file SplashScene.hpp
- * \author DigiPen Student
- * \date 2026-03-29
  * \brief Horror-themed DigiPen splash screen displayed on launch
  */
 

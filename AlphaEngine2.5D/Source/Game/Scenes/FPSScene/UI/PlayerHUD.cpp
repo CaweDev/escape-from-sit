@@ -697,11 +697,12 @@ namespace Game
         m_powerUpTextures[2] = Engine::AssetManager::GetTexture("Assets/Sprites/Shield.png"); // Shield
         m_powerUpTextures[3] = Engine::AssetManager::GetTexture("Assets/Sprites/Invis.png"); // Invisibility
 
+		// texture for power-up panel background and slots (editable via s_powerUpPanelTexturePath)
         Engine::Texture2D* powerUpPanelTexture = Engine::AssetManager::GetTexture(s_powerUpPanelTexturePath.c_str());
-        constexpr float powerUpPanelScale = 1.15f; // +15% panel size
 
-        const float panelWidth = (240.0f * powerUpPanelScale) + 100.0f; 
-        const float panelHeight = (56.0f * powerUpPanelScale) + 25.0f;  // +50 total on Y axis
+		// Panel dimensions and layout constants
+        const float panelWidth = 380.0f; 
+        const float panelHeight = 90.0f;  
 
         const int slotCount = 4;
         const float slotWidth = 72.0f;
@@ -759,6 +760,7 @@ namespace Game
             m_powerUpIcons[i]->SetTexture(m_powerUpTextures[i]);
             m_powerUpIcons[i]->SetColor(Engine::Color(1, 1, 1, 0.25f)); // inactive dim
 
+			// Timer text below each icon
             m_powerUpTimers[i] = slot->CreateChild<UI::Text>();
             m_powerUpTimers[i]->SetAnchors({ 0.0f, 0.0f }, { 1.0f, 0.0f });
             m_powerUpTimers[i]->SetPivot({ 0.5f, 0.0f });

@@ -1,8 +1,6 @@
 /*!
  * \file AlphaEngine2.5D\Source\Game\Player\PlayerPowerUpController.cpp
- * \author DigiPen Student
- * \date 2026-03-29
- * \brief [AUTO] Added Doxygen file header
+ * \brief PlayerPowerUpController component that tracks active buffs on the player.
  */
 
 #include "PlayerPowerUpController.hpp"
@@ -98,6 +96,7 @@ void PlayerPowerUpController::AddPowerUp(PowerUpType type, float duration) {
     if (!player) return;
     activeTimers[type] = duration;
     UpdatePlayerFlags(type, true);
+	// debug log
     /*if (GetPlayerPowerUpControllerConfig().logEnabled)
         std::cout << "[POWERUP CONTROLLER] Started/Refreshed Type " << (int)type << " for " << duration << "s\n";*/
 }
@@ -174,6 +173,7 @@ void PlayerPowerUpController::RemovePowerUp(PowerUpType type) {
     if (it != activeTimers.end()) {
         UpdatePlayerFlags(type, false);
         activeTimers.erase(it);
+        // debug log
         /*if (GetPlayerPowerUpControllerConfig().logEnabled)
             std::cout << "[POWERUP CONTROLLER] Type " << (int)type << " was removed prematurely.\n";*/
     }
