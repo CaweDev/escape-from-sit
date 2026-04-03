@@ -15,6 +15,7 @@ extern "C"
 #endif
 
 // Windows includes
+#include <windows.h>
 #include <crtdbg.h>
 
 // Alpha Engine
@@ -50,9 +51,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+    //UNREFERENCED_PARAMETER(lpCmdLine);
 
-    bool isEditorMode = (wcsstr(lpCmdLine, L"-game") == nullptr);
+    bool isEditorMode = (wcsstr(lpCmdLine, L"-editor") != nullptr);
 
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1600, 900, 0, 60, false, NULL);
@@ -60,6 +61,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     AESysSetWindowIcon("Assets/Brocsama.ico", 32, 32);
 
     HWND hwnd = AESysGetWindowHandle();
+
+    HICON largeIcon = static_cast<HICON>(LoadImageW(nullptr,
+        L"Assets\\Brocsama.ico",
+        IMAGE_ICON,
+        GetSystemMetrics(SM_CXICON),
+        GetSystemMetrics(SM_CYICON),
+        LR_LOADFROMFILE)); // Used for taskbar/Alt+Tab surfaces.
+
+    HICON smallIcon = static_cast<HICON>(LoadImageW(nullptr,
+        L"Assets\\Brocsama.ico",
+        IMAGE_ICON,
+        GetSystemMetrics(SM_CXSMICON),
+        GetSystemMetrics(SM_CYSMICON),
+        LR_LOADFROMFILE)); // Used for title bar/small shell surfaces.
+
+    if (hwnd)
+    {
+		if (largeIcon) // Set Big Icon (Taskbar/Alt+Tab)
+        {
+            SendMessage(hwnd, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(largeIcon));
+            SetClassLongPtr(hwnd, GCLP_HICON, reinterpret_cast<LONG_PTR>(largeIcon));
+        }
+
+		if (smallIcon) // Set Small Icon (Title Bar)
+        {
+            SendMessage(hwnd, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(smallIcon));
+            SetClassLongPtr(hwnd, GCLP_HICONSM, reinterpret_cast<LONG_PTR>(smallIcon));
+        }
+    }
 
     if (isEditorMode)
     {
@@ -190,6 +220,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // Cleanup
     AESysExit();
+
+    if (smallIcon)
+    {
+        DestroyIcon(smallIcon);
+    }
+
+    if (largeIcon)
+    {
+        DestroyIcon(largeIcon);
+    }
 
     return 0;
 }
