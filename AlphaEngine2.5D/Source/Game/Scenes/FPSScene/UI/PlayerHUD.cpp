@@ -651,6 +651,16 @@ namespace Game
         m_option3Text->SetColor(Engine::Color(0.8f, 0.8f, 0.8f, 1.0f));
         m_option3Text->SetAnchor(UI::TextAnchor::MiddleLeft);
 
+        m_bookGradeText = m_bookPopupPanel->CreateChild<UI::Text>();
+        m_bookGradeText->name = "BookGradeText";
+        m_bookGradeText->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
+        m_bookGradeText->SetPivot({ 0.5f, 0.5f });
+        m_bookGradeText->SetAnchoredPosition({ 0.0f, -15.0f });
+        m_bookGradeText->SetSizeDelta({ 100.0f, 100.0f });
+        m_bookGradeText->SetFontSize(20.0f); 
+        m_bookGradeText->SetAnchor(UI::TextAnchor::MiddleCenter);
+        m_bookGradeText->visible = false;
+
         
         // Access Card Display (top-left, below book count)
         Engine::Texture2D* cardPanelTexture = Engine::AssetManager::GetTexture(s_cardPanelTexturePath.c_str());
@@ -1035,32 +1045,49 @@ namespace Game
 
         if (Game::PuzzleManager::popupTimer > 0.0f) {
 
-            // Ensure the panel is visible and the text is updated
+            // Only set everything to visible on the exact frame the timer starts
             if (!m_bookPopupPanel->visible) {
-                // Turn on the Book panel (Removed m_popupPanel)
                 m_bookPopupPanel->visible = true;
-
-                // FORCE VISIBILITY ON CHILDREN
                 m_bookTitleText->visible = true;
                 m_bookLoreText->visible = true;
 
                 m_bookTitleText->SetText(Game::PuzzleManager::activeBookTitle);
                 m_bookLoreText->SetText(Game::PuzzleManager::activeBookText);
+
+                // --- THIS IS WHERE THE GRADE ACTUALLY PRINTS ---
+                if (!Game::PuzzleManager::activeGrade.empty()) {
+                    m_bookGradeText->visible = true;
+                    m_bookGradeText->SetText(Game::PuzzleManager::activeGrade);
+
+                    // Dynamic Colors with low Alpha (0.3f) so it acts like a watermark!
+                    if (Game::PuzzleManager::activeGrade == "S") {
+                        m_bookGradeText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 0.3f)); // Neon Green
+                    }
+                    else if (Game::PuzzleManager::activeGrade == "F") {
+                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 0.3f)); // Blood Red
+                    }
+                    else {
+                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 0.3f)); // Gold/Yellow
+                    }
+                }
+                else {
+                    // Normal books don't have grades, so hide the massive letter
+                    m_bookGradeText->visible = false;
+                }
             }
 
-            // Count down the timer
+            // Tick down the timer
             Game::PuzzleManager::popupTimer -= Engine::Time::deltaTime;
 
-            // If the timer just hit zero, hide the panel!
+            // When the timer finishes, hide everything
             if (Game::PuzzleManager::popupTimer <= 0.0f) {
-                // WE NOW PROPERLY HIDE THE BOOK PANEL
                 m_bookPopupPanel->visible = false;
                 m_bookTitleText->visible = false;
                 m_bookLoreText->visible = false;
 
-                m_option1Text->visible = false;
-                m_option2Text->visible = false;
-                m_option3Text->visible = false;
+                // Hide and clear the grade stamp when the timer ends
+                if (m_bookGradeText) m_bookGradeText->visible = false;
+                Game::PuzzleManager::activeGrade = "";
             }
         }
 

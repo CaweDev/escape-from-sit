@@ -3,22 +3,22 @@
     {
       "letter": "S",
       "maxMistakes": 0,
-      "text": "Flawless! Straight to university.\nFaster go home lah."
+      "text": "Flawless! Straight to Internship."
     },
     {
       "letter": "A",
       "maxMistakes": 2,
-      "text": "Great job, but room for improvement.\nGo home and rest."
+      "text": "Great job, but room for improvement."
     },
     {
       "letter": "B",
       "maxMistakes": 5,
-      "text": "You barely passed.\nFaster go home lah."
+      "text": "You barely passed."
     },
     {
       "letter": "F",
       "maxMistakes": 999,
-      "text": "GG... See you in summer school.\nJust go home."
+      "text": "GG... See you in summer school."
     }
   ],
   "books": [

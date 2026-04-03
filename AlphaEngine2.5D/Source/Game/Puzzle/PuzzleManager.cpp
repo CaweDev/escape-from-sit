@@ -221,6 +221,13 @@ namespace Game {
     {
         PuzzleManager::activeBookTitle = "FINAL RESULT";
 
+        // --- THE FIX: Clear the old quiz data! ---
+        PuzzleManager::activeOpt1 = "";
+        PuzzleManager::activeOpt2 = "";
+        PuzzleManager::activeOpt3 = "";
+        PuzzleManager::isQuizActive = false; // Lock out the 1, 2, 3 number keys
+        // -----------------------------------------
+
         // Set a default fail state just in case the JSON is missing
         PuzzleManager::activeGrade = "F";
         PuzzleManager::activeBookText = "Missing Grade Data";
