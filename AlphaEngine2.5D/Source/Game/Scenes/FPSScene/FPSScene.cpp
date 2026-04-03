@@ -223,24 +223,6 @@ namespace Game
                     tileValue = 0; // Floor
                 else if (c == '1')
                     tileValue = 1; // Wall
-                else if (c == 'D')
-                    tileValue = 10; // Door
-                else if (c == 'T')
-                    tileValue = 11; // Terminal
-                else if (c == 'E')
-                    tileValue = 12; // Exit
-                else if (c == 'C')
-                    tileValue = 13; // Control Room Door (old marker)
-                else if (c == 'K')
-                    tileValue = 20; // Control Room Door (NEW dedicated tile)
-                else if (c == 'F')
-                    tileValue = 15; // Green Access Card
-                else if (c == 'G')
-                    tileValue = 16; // Purple Access Card
-                else if (c == 'H')
-                    tileValue = 17; // Red Access Card
-                else if (c == 'J')
-                    tileValue = 18; // Yellow Access Card
                 else
                     tileValue = c - '0'; // Fallback numeric
 

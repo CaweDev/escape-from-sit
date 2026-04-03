@@ -5,14 +5,14 @@
       "Components": [
         {
           "Position": {
-            "x": 6.71875,
-            "y": 3.53125,
+            "x": 7.4218754768371582,
+            "y": 2.9999961853027344,
             "z": 0.0
           },
           "Rotation": 0.0,
           "Scale": {
-            "x": 1.0,
-            "y": 1.0
+            "x": 0.5,
+            "y": 0.5
           },
           "Type": "Transform"
         },
@@ -30,7 +30,7 @@
           "flipX": false,
           "flipY": false,
           "sortingOrder": 200,
-          "spritePath": "Assets/Sprites/Shield.png"
+          "spritePath": "Assets/Sprites/laptopsprite.png"
         },
         {
           "Type": "Rigidbody2D",
@@ -54,70 +54,10 @@
         {
           "Type": "LaptopItem",
           "itemName": "Laptop",
-          "timer": 1.5
+          "timer": 3.0
         }
       ],
       "Name": "Laptop 1",
-      "Tag": "Item"
-    },
-    {
-      "Active": true,
-      "Components": [
-        {
-          "Position": {
-            "x": 8.375,
-            "y": 3.5,
-            "z": 0.0
-          },
-          "Rotation": 0.0,
-          "Scale": {
-            "x": 1.0,
-            "y": 1.0
-          },
-          "Type": "Transform"
-        },
-        {
-          "Type": "Interactable",
-          "actionText": "Pick Up Laptop",
-          "hitShape": 0,
-          "holdDuration": 1.0,
-          "maxDistance": 5.0,
-          "requireHold": false
-        },
-        {
-          "Type": "SpriteRenderer",
-          "billboard": true,
-          "flipX": false,
-          "flipY": false,
-          "sortingOrder": 200,
-          "spritePath": "Assets/Sprites/Shield.png"
-        },
-        {
-          "Type": "Rigidbody2D",
-          "bodyType": 0,
-          "collisionHeight": 0.75,
-          "crouchHeight": 0.30000001192092896,
-          "currentHeight": 0.0,
-          "drag": 0.0,
-          "freezeRotation": true,
-          "gravityScale": 1.0,
-          "isCrouching": false,
-          "isGrounded": true,
-          "mass": 1.0,
-          "standingHeight": 0.75,
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "verticalVelocity": 0.0
-        },
-        {
-          "Type": "LaptopItem",
-          "itemName": "Laptop",
-          "timer": 1.5
-        }
-      ],
-      "Name": "Laptop 1 (Copy)",
       "Tag": "Item"
     },
     {
@@ -508,8 +448,8 @@
       "Components": [
         {
           "Position": {
-            "x": 12.21875,
-            "y": 8.0,
+            "x": 13.945313453674316,
+            "y": 3.3515586853027344,
             "z": 0.15000000596046448
           },
           "Rotation": 0.0,
@@ -560,8 +500,8 @@
       "Components": [
         {
           "Position": {
-            "x": 5.78125,
-            "y": 8.625,
+            "x": 9.3359384536743164,
+            "y": 2.7656211853027344,
             "z": 0.15000000596046448
           },
           "Rotation": 0.0,
@@ -612,8 +552,8 @@
       "Components": [
         {
           "Position": {
-            "x": 10.28125,
-            "y": 6.96875,
+            "x": 12.578125953674316,
+            "y": 2.6874961853027344,
             "z": 0.15000000596046448
           },
           "Rotation": 0.0,
@@ -664,8 +604,8 @@
       "Components": [
         {
           "Position": {
-            "x": 7.6875,
-            "y": 7.1875,
+            "x": 10.898438453674316,
+            "y": 2.5312461853027344,
             "z": 0.15000000596046448
           },
           "Rotation": 0.0,
@@ -2874,7 +2814,6 @@
             "r": 1.0
           },
           "repairingText": "GUARD REPAIRING SYSTEM",
-          "state": 0,
           "zoneHackTextPrefix": "Hold E to Hack ",
           "zoneHackTextSuffix": " Cameras"
         }
@@ -2965,7 +2904,6 @@
             "r": 1.0
           },
           "repairingText": "GUARD REPAIRING SYSTEM",
-          "state": 0,
           "zoneHackTextPrefix": "Hold E to Hack ",
           "zoneHackTextSuffix": " Cameras"
         }
@@ -3056,7 +2994,6 @@
             "r": 1.0
           },
           "repairingText": "GUARD REPAIRING SYSTEM",
-          "state": 0,
           "zoneHackTextPrefix": "Hold E to Hack ",
           "zoneHackTextSuffix": " Cameras"
         }
@@ -3147,7 +3084,6 @@
             "r": 1.0
           },
           "repairingText": "GUARD REPAIRING SYSTEM",
-          "state": 0,
           "zoneHackTextPrefix": "Hold E to Hack ",
           "zoneHackTextSuffix": " Cameras"
         }
@@ -7171,8 +7107,8 @@
       "Components": [
         {
           "Position": {
-            "x": 5.4687504768371582,
-            "y": 35.760414123535156,
+            "x": 5.2272725105285645,
+            "y": 35.897727966308594,
             "z": 0.0
           },
           "Rotation": 0.0,
@@ -7609,6 +7545,46 @@
       ],
       "Name": "Annoying_Z4",
       "Tag": "NPC"
+    },
+    {
+      "Active": true,
+      "Components": [
+        {
+          "Position": {
+            "x": 5.4687504768371582,
+            "y": 2.8046836853027344,
+            "z": 0.0
+          },
+          "Rotation": 0.0,
+          "Scale": {
+            "x": 0.34999999403953552,
+            "y": 0.34999999403953552
+          },
+          "Type": "Transform"
+        },
+        {
+          "Type": "Interactable",
+          "actionText": "Pick Up Soda Can",
+          "hitShape": 0,
+          "holdDuration": 1.0,
+          "maxDistance": 5.0,
+          "requireHold": false
+        },
+        {
+          "Type": "SpriteRenderer",
+          "billboard": true,
+          "flipX": false,
+          "flipY": false,
+          "sortingOrder": 200,
+          "spritePath": "Assets/Sprites/soda.png"
+        },
+        {
+          "Type": "SodaCanItem",
+          "itemName": "Soda Can"
+        }
+      ],
+      "Name": "Soda Can",
+      "Tag": "Item"
     }
   ]
 }
