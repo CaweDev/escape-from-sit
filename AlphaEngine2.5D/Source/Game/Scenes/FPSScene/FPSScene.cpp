@@ -382,24 +382,30 @@ namespace Game
 
             if (door && interactable)
             {
-                int totalBooks = (int)Game::PuzzleManager::allBooks.size();
+                // Exit door uses puzzle-progression interaction, not base Door toggle.
+                // This must happen before assigning the custom callback so Door
+                // never reclaims `onInteract` with its default handler.
+                door->DisableInteraction();
+                interactable->actionText = "EXIT LOCKED: Collect all books";
 
-                if (Game::PuzzleManager::booksCollected < totalBooks)
+                interactable->onInteract = [door, interactable]()
                 {
-                    interactable->actionText = "EXIT LOCKED: Collect all books";
-                }
+                    // Evaluate book totals at interaction time because PuzzleManager
+                    // data is initialized later in OnLoad().
+                    const int totalBooks = (int)Game::PuzzleManager::allBooks.size();
+                    const int collected = Game::PuzzleManager::booksCollected;
 
-                interactable->onInteract = [door, totalBooks, interactable]()
-                {
-                    if (Game::PuzzleManager::booksCollected >= totalBooks)
+                    if (collected >= totalBooks)
                     {
+                        // Keep door behavior/animation in Door component.
                         door->Toggle();
                         interactable->actionText = "Close";
+                        // Triggers grade/result popup flow in PuzzleManager.
                         Game::PuzzleManager::OpenExitDoor();
                     }
                     else
                     {
-                        int collected = Game::PuzzleManager::booksCollected;
+                        // Reuse the puzzle popup channel as an immediate HUD message.
                         Game::PuzzleManager::activeBookTitle = "DOOR LOCKED";
                         Game::PuzzleManager::activeBookText = std::to_string(collected) + "/" + std::to_string(totalBooks) + " books collected";
                         Game::PuzzleManager::popupTimer = 3.0f;
@@ -419,6 +425,7 @@ namespace Game
             playerHUD->AddDoor(door);
         }
 
+        // Win check uses this world position each frame in OnUpdate().
         exitPos = exitDoors[0]->transform->position;
 
         // 3. Initialize Control Room Doors (Link Components & HUD)

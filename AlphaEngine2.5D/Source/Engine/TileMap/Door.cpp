@@ -64,7 +64,12 @@ namespace Engine
         s_passableThreshold = config.passableThreshold;
         s_colliderChangeThreshold = config.colliderChangeThreshold;
 
-        SetupInteractable(gameObject->GetComponent<Engine::Interactable>(), "Open", "Close");
+        // Bind default open/close interaction only when no other system has
+        // claimed ownership (e.g., control-room or exit-door custom logic).
+        if (!m_interactionDisabled)
+        {
+            SetupInteractable(gameObject->GetComponent<Engine::Interactable>(), "Open", "Close");
+        }
         UpdateCollider();
     }
 
@@ -248,6 +253,10 @@ namespace Engine
     
     void Door::DisableInteraction()
     {
+        // Make disable persistent so later lifecycle calls do not restore
+        // Door's default interaction callback.
+        m_interactionDisabled = true;
+
         // Clear the interaction callback so Door doesn't respond to interactions
         // This allows other components (like ControlRoomDoor) to take full control
         if (m_interactable)

@@ -54,6 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //UNREFERENCED_PARAMETER(lpCmdLine);
 
     bool isEditorMode = (wcsstr(lpCmdLine, L"-editor") != nullptr);
+    // `-editor` switches boot path to EditorScene + editor UI loop.
 
     // Initialize Alpha Engine
     AESysInit(hInstance, nCmdShow, 1600, 900, 0, 60, false, NULL);
@@ -93,6 +94,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     if (isEditorMode)
     {
+        // Editor host must be initialized before scene/game systems start.
         AEEditor::EditorManager::Initialize(hwnd);
     }
 
@@ -147,6 +149,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         if (isEditorMode)
         {
+            // Skip gameplay updates while the external editor process owns control.
             if (AEEditor::EditorManager::CheckExternalProcess(hwnd))
             {
                 AESysFrameEnd();
@@ -167,6 +170,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
 
             AEEditor::EditorManager::RenderUI();
+            // Keep cursor unlocked while editing so ImGui/editor widgets remain usable.
             Input::RegisterCursorUnlock("EditorMode");
         }
         else

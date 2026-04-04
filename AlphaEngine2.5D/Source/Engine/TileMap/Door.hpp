@@ -141,7 +141,10 @@ public:
     
     /**
      * @brief Disable this door's interaction (for when another component takes over)
-     * Used by ControlRoomDoor to prevent base Door from handling interactions
+     * Used by ControlRoomDoor/ExitDoor flows to prevent base Door from handling interactions.
+     *
+     * This is persistent for the lifetime of the component: once disabled, Door will
+     * not auto-bind its default `Interactable` callback during `Initialize()`.
      */
     void DisableInteraction();
 
@@ -169,6 +172,13 @@ private:
     const char* m_openText = "Open";
     const char* m_closeText = "Close";
     Interactable* m_interactable = nullptr;
+    /**
+     * @brief Persistent guard for default interaction binding.
+     *
+     * Prevents `Initialize()` from restoring the default open/close callback after
+     * another system has explicitly taken ownership of interaction behavior.
+     */
+    bool m_interactionDisabled = false;
 
     std::unordered_set<const void*>m_holders;
 

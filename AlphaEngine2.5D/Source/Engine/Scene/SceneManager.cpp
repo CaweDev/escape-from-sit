@@ -89,7 +89,8 @@ void SceneManager::UpdateActiveScene() {
         s_activeScene->UpdateInternal();
     }
 
-    // Process deferred scene load at end of update cycle
+    // Process deferred scene load only after the current scene's update finishes.
+    // This avoids unloading/swapping scenes in the middle of component updates.
     if (s_hasPendingScene) {
         s_hasPendingScene = false;
         std::string target = s_pendingScene;
@@ -101,6 +102,7 @@ void SceneManager::UpdateActiveScene() {
 
 
 void SceneManager::LoadSceneDeferred(const std::string& sceneName) {
+    // Mark request and let UpdateActiveScene() perform the actual swap at a safe point.
     s_pendingScene = sceneName;
     s_hasPendingScene = true;
 }
@@ -118,7 +120,8 @@ void SceneManager::LoadWithLoadingScreen(const std::string& sceneName, f32 fadeI
     s_loadWithScreenFadeInDuration = fadeInDuration;
     s_loadWithScreenFadeOutDuration = fadeOutDuration;
 
-    SoundManager::StopBGM(); // stops bgm everytime loading screen appears
+    // Stop current BGM before entering Loading scene to prevent track overlap.
+    SoundManager::StopBGM();
 
   
   
@@ -188,6 +191,7 @@ void SceneManager::LoadSceneInternal(Scene* newScene) {
     if (!newScene) return;
     
     if (s_activeScene) {
+        // Scene-local one-shots/loops should not leak into the next scene.
         SoundManager::StopAllSFX();
         s_activeScene->UnloadInternal();
     }
@@ -195,6 +199,7 @@ void SceneManager::LoadSceneInternal(Scene* newScene) {
     s_activeScene = newScene;
     s_activeScene->LoadInternal();
 
+    // Used by loading-screen flow: fade from black after target scene is ready.
     if (s_hasPendingPostLoadFadeOut) {
         s_hasPendingPostLoadFadeOut = false;
         UI::FadeService::FadeOut(s_pendingPostLoadFadeOutDuration);
