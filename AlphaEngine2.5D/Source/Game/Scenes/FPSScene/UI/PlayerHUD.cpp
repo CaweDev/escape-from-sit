@@ -612,7 +612,7 @@ namespace Game
         m_bookLoreText->SetPivot({ 0.5f, 1.0f });
         m_bookLoreText->SetAnchoredPosition({ 0.0f, -100.0f });
         m_bookLoreText->SetSizeDelta({ -40.0f, 60.0f });
-        m_bookLoreText->SetFontSize(1.5f);
+        m_bookLoreText->SetFontSize(1.3f);
         m_bookLoreText->SetColor(Engine::Color(1.0f, 1.0f, 1.0f, 1.0f));
         m_bookLoreText->SetAnchor(UI::TextAnchor::UpperCenter);
 

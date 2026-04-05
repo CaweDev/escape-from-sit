@@ -1,17 +1,17 @@
 {
   "grades": [
     {
-      "letter": "S",
+      "letter": "A",
       "maxMistakes": 0,
       "text": "Flawless! Straight to Internship."
     },
     {
-      "letter": "A",
+      "letter": "B",
       "maxMistakes": 2,
       "text": "Great job, but room for improvement."
     },
     {
-      "letter": "B",
+      "letter": "C",
       "maxMistakes": 5,
       "text": "You barely passed."
     },

@@ -197,7 +197,19 @@ namespace Game {
 
     void PuzzleManager::Init()
     {
+        // 1. RESET GLOBALS: Clear the "Memory" of the previous game
+        Game::PuzzleManager::booksCollected = 0;
+        Game::PuzzleManager::totalWrongAnswers = 0;
+        Game::PuzzleManager::isQuizActive = false; // This closes the UI panel on restart
+        Game::PuzzleManager::popupTimer = 0.0f;
+        Game::PuzzleManager::activeGrade = "";
+        Game::PuzzleManager::currentBookObj = nullptr; // CRITICAL: Fixes the crash by clearing the "ghost" pointer
+        Game::PuzzleManager::activeBookTitle = "";
+        Game::PuzzleManager::activeBookText = "";
+
+        // 2. RESET DATA & SPAWN: Mark all books as uncollected and create them
         for (int i{}; i < allBooks.size(); ++i) {
+            allBooks[i].bookCollected = false; // Reset the JSON data state
             CreatePuzzleObject(allBooks[i]);
         }
     }
