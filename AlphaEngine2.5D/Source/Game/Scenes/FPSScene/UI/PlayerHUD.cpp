@@ -653,9 +653,9 @@ namespace Game
         m_bookGradeText->name = "BookGradeText";
         m_bookGradeText->SetAnchors({ 0.5f, 0.5f }, { 0.5f, 0.5f }); // Dead Center
         m_bookGradeText->SetPivot({ 0.5f, 0.5f });
-        m_bookGradeText->SetAnchoredPosition({ 0.0f, -15.0f });
+        m_bookGradeText->SetAnchoredPosition({ 0.0f, -30.0f });
         m_bookGradeText->SetSizeDelta({ 100.0f, 100.0f });
-        m_bookGradeText->SetFontSize(20.0f); 
+        m_bookGradeText->SetFontSize(10.0f); 
         m_bookGradeText->SetAnchor(UI::TextAnchor::MiddleCenter);
         m_bookGradeText->visible = false;
 
@@ -1035,14 +1035,14 @@ namespace Game
                     m_bookGradeText->SetText(Game::PuzzleManager::activeGrade);
 
                     // Dynamic Colors with low Alpha (0.3f) so it acts like a watermark!
-                    if (Game::PuzzleManager::activeGrade == "S") {
-                        m_bookGradeText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 0.3f)); // Neon Green
+                    if (Game::PuzzleManager::activeGrade == "A") {
+                        m_bookGradeText->SetColor(Engine::Color(0.2f, 1.0f, 0.2f, 1.0f)); // Neon Green
                     }
                     else if (Game::PuzzleManager::activeGrade == "F") {
-                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 0.3f)); // Blood Red
+                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.2f, 0.2f, 1.0f)); // Blood Red
                     }
                     else {
-                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 0.3f)); // Gold/Yellow
+                        m_bookGradeText->SetColor(Engine::Color(1.0f, 0.8f, 0.2f, 1.0f)); // Gold/Yellow
                     }
                 }
                 else {
