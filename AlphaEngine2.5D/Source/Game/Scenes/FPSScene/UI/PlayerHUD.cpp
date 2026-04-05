@@ -1015,6 +1015,11 @@ namespace Game
                 }
             }
         }
+        else {
+            if (m_option1Text) m_option1Text->visible = false;
+            if (m_option2Text) m_option2Text->visible = false;
+            if (m_option3Text) m_option3Text->visible = false;
+        }
         // ==========================================
 
 
